@@ -1,0 +1,69 @@
+@import './keyframes';
+
+.expand-field-enter-active {
+  animation: expandField .25s ease-in-out;
+}
+
+.expand-field-leave-active {
+  animation: expandField .25s ease-in-out reverse;
+}
+
+.slide-enter-active {
+  animation: slide .15s linear;
+}
+
+.slide-leave-active {
+  animation: slide .15s reverse linear;
+}
+
+.effectiveForm-enter-active {
+  animation: expand .20s linear;
+  transform-origin: bottom left;
+}
+
+.effectiveForm-leave-active {
+  animation: slideLeft .20s linear;
+  position: absolute;
+}
+
+
+.effectiveDetails-enter-active {
+  animation: expand .20s linear;
+  transform-origin: bottom right;
+}
+
+.appearFromFar-enter-active {
+  animation: appearFromFar .20s linear;
+}
+
+.appearFromFar-leave-active {
+  animation: appearFromFar .20s linear reverse;
+}
+
+.statusPopup-enter-active {
+  animation: shakeWhenCenterredHorizontally .35s linear;
+  transform-origin: top center;
+}
+
+.statusPopup-leave-active {
+  animation: fade .20s ease-in-out reverse;
+  transform-origin: top center;
+}
+
+.popup-enter-active {
+  animation: expandWhenCenterred .1s cubic-bezier(.39,.37,.64,1.49);
+  transform-origin: center center;
+}
+
+.popup-leave-active {
+  animation: expandWhenCenterred .1s cubic-bezier(.39,.37,.64,1.49) reverse;
+  transform-origin: center center;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .15s
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}

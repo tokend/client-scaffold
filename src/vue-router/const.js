@@ -1,0 +1,32 @@
+export const vueRoutes = Object.freeze({
+  hredir: { name: 'horizon-redirect' },
+  login: { name: 'login' },
+  signup: { name: 'signup' },
+  email: { name: 'email' },
+  support: { name: 'contact-us' },
+  app: { name: 'app' },
+
+  sunWallet: { name: 'app.SUN-wallet' },
+  sunWalletOverview: { name: 'SUN-wallet.overview' },
+  send: { name: 'SUN-wallet.send' },
+  deposit: { name: 'SUN-wallet.deposit' },
+  confirmSend: { name: 'send.confirm' },
+
+  portfolioTokens: { name: 'portfolio.tokens' },
+  portfolioFunds: { name: 'portfolio/funds' },
+  requestHistory: { name: 'portfolio.request-history' },
+  invest: { name: 'app.invest' },
+  investOverview: { name: 'invest.overview' },
+  exploreTokens: { name: 'invest.explore-tokens' },
+  fundDetails: { name: 'invest.fund-details' },
+  starredFunds: { name: 'invest.starred' },
+  trade: { name: 'app.trade' },
+  createFund: { name: 'app.create-fund' },
+  editFund: { name: 'app.edit-fund' },
+  myFunds: { name: 'app.my-funds' },
+  settings: { name: 'app.settings' },
+  security: { name: 'settings.security' },
+  limits: { name: 'settings.limits' },
+  verification: { name: 'settings.verification' },
+  fundRequestHistory: { name: 'my-funds.history' }
+})

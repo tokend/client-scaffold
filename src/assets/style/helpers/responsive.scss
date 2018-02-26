@@ -1,0 +1,35 @@
+.mobile-hidden {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.tablet-hidden {
+  @media (max-width: 1023px) {
+    display: none;
+  }
+}
+
+.tablet-hidden-only {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    display: none;
+  }
+}
+
+.mobile-only {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.tablet-only {
+  @media (max-width: 767px) and (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.desktop-hidden {
+  @media (min-width: 1024px) {
+    display: none;
+  }
+}

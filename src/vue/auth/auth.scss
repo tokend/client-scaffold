@@ -1,0 +1,32 @@
+@import '../../assets/style/variables';
+
+.auth-page {
+  padding-top: 100px;
+
+  @media (max-width: 1023px) {
+    padding-top: 50px;
+  }
+
+  @media (max-width: 767px) {
+    padding-top: 0;
+  }
+}
+
+.auth-form {
+  margin: auto;
+  max-width: 440px;
+  position: relative;
+
+  .tips {
+    font-size: $fs-tip;
+    line-height: 160%;
+
+    a {
+      color: $col-active;
+    }
+  }
+
+  .btn-outer {
+    margin: 60px 0 30px;
+  }
+}

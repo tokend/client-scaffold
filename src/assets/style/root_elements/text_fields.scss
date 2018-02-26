@@ -1,0 +1,145 @@
+@import '../variables';
+
+input,
+select,
+button {
+  background: none;
+  border: none;
+}
+
+$focused: $col-active;
+$unfocused: $col-unfocused;
+$transition-duration: .2s;
+
+@mixin material-border($color) {
+  background: radial-gradient($color, $color) bottom -1px center no-repeat;
+  background-size: 0px 2px;
+  -webkit-transition-property: background-size, border-color;
+  -moz-transition-property: background-size, border-color;
+  -ms-transition-property: background-size, border-color;
+  -o-transition-property: background-size, border-color;
+  padding-top: 1px;
+  transition-property: background-size, border-color;
+  transition-duration: $transition-duration;
+
+  &:focus {
+    border-bottom-color: transparent;
+    background-size: 100% 2px;
+  }
+}
+
+.field {
+  position: relative;
+  padding-top: 16px;
+  width: 100%;
+
+  input:not([type="checkbox"]),
+  select {
+    border: none;
+    border-bottom: 1px solid $unfocused;
+    caret-color: $focused;
+    color: $col-text;
+    padding-bottom: 6px;
+    width: 100%;
+    @include material-border($focused);
+
+    &:disabled {
+      opacity: .5;
+    }
+  }
+
+  select {
+    cursor: pointer;
+    width: 100%;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &::-ms-expand {
+      display: none;
+    }
+  }
+
+  label {
+    color: $unfocused;
+    font-size: $fs-label;
+    left: 0;
+    top: 0;
+    position: absolute;
+    pointer-events: none;
+    transition: all $transition-duration;
+  }
+
+  select:focus ~ label,
+  input:not([type="checkbox"]):focus ~ label {
+    color: $focused;
+  }
+
+  select:not(:valid):not(:disabled) ~ label,
+  input:not([type="checkbox"]):not(:focus):placeholder-shown ~ label {
+    font-size: $fs-root;
+    opacity: .75;
+    position: absolute;
+    top: 14px;
+  }
+
+  input:not([type="checkbox"]) {
+    @mixin placeholder {
+      color: $unfocused;
+      opacity: .85;
+      transition: opacity .2s;
+    }
+
+    &::-webkit-input-placeholder {
+      @include placeholder()
+    }
+
+    &::-moz-placeholder {
+      @include placeholder()
+    }
+
+    &:-ms-input-placeholder {
+      @include placeholder()
+    }
+
+    &:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+      opacity: 0;
+    }
+
+    &:placeholder-shown:not(:focus)::-moz-placeholder {
+      opacity: 0;
+    }
+  }
+
+  &.field--error {
+
+    input:not([type="checkbox"]),
+    select {
+      border-bottom-color: $col-danger;
+      caret-color: $col-danger;
+      @include material-border($col-danger);
+
+      & ~ label,
+      &:focus ~ label {
+        color: $col-danger
+      }
+    }
+  }
+
+  & + .error {
+    color: $col-danger;
+    font-size: $fs-tip;
+
+    &--hidden {
+      visibility: hidden;
+    }
+  }
+
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+  }
+}
+
+.flex-row > .field {
+  margin-right: 30px;
+}

@@ -1,0 +1,120 @@
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bubble-anim {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scaleY(0.95) scaleX(1.05);
+  }
+  48% {
+    transform: scaleY(1.1) scaleX(0.9);
+  }
+  68% {
+    transform: scaleY(0.98) scaleX(1.02);
+  }
+  80% {
+    transform: scaleY(1.02) scaleX(0.98);
+  }
+  97%, 100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes expand {
+  0% {
+    transform: scaleX(0) scaleY(0)
+  }
+
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translate(30px); }
+  20% { transform: translate(-30px); }
+  40% { transform: translate(15px); }
+  60% { transform: translate(-15px); }
+  80% { transform: translate(8px); }
+  100% { transform: translate(0px); }
+}
+
+@keyframes shakeWhenCenterredHorizontally {
+  0% { transform: translateX(calc(-15px - 50%)) }
+  30% { transform: translateX(calc(6px - 50%)) }
+  60% { transform: translateX(calc(-6px - 50%)) }
+  80% { transform: translateX(calc(2px - 50%)) }
+  100% { transform: translateX(calc(0px - 50%)) }
+}
+
+@keyframes expandWhenCenterredHorizontally {
+  0% {
+    transform: translateX(-50%) scaleX(.5) scaleY(.5)
+  }
+
+  100% {
+    transform: translateX(-50%) scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes expandWhenCenterred {
+  0% {
+    transform: translate(-50%, -50%) scale(.5)
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes appearFromFar {
+  0% {
+    opacity: 0;
+    transform: scale(.4);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes expandField {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}

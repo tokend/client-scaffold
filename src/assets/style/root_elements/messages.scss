@@ -1,0 +1,52 @@
+@import '../variables';
+@import '../helpers/mixins';
+
+$image-size: 30px;
+$image-margin: 15px;
+
+.status-message {
+  @include center-horizontally;
+
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  color: $col-msg-text;
+  cursor: pointer;
+  padding: 5px 15px 15px;
+  position: fixed;
+  max-width: 500px;
+  top: 25px;
+  width: 100%;
+  z-index: $z-status-message;
+
+  @media (max-width: 767px) {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .status-heading {
+    font-size: $fs-heading;
+    font-weight: 200;
+
+    i {
+      color: $col-msg-text;
+      font-size: $image-size;
+      margin-right: $image-margin;
+    }
+  }
+
+  .status-text {
+    padding-left: $image-size + $image-margin;
+  }
+
+  &--success {
+    background: $col-success;
+  }
+
+  &--error {
+    background: $col-danger;
+  }
+
+  &--info {
+    background: $col-info;
+  }
+}

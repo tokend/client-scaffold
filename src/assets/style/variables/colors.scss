@@ -1,0 +1,42 @@
+// CAUTION: do not use these colors externally
+
+$black: #3f4244;
+$gray:#e2e3e3;
+$green: #3fa595;
+$red: #c2243b;
+$blue: #578ebd;
+$orange: #fb9823;
+$white: #ffffff;
+
+// Use these ones instead
+
+$col-hover: $black;
+
+$col-primary: $black;
+$col-background: $gray;
+
+$col-text: $black;
+$col-text-secondary: rgba($color: $black, $alpha: 0.5);
+
+$col-content-block: $white;
+
+$col-btn-text: $white;
+$col-msg-text: $white;
+
+$col-success: $green;
+$col-danger: $red;
+$col-info: $blue;
+
+$col-nav-text: $white;
+
+$col-active: $orange;
+$col-inactive: lighten($orange, 35%);
+$col-unfocused: lighten($black, 30%);
+
+$col-chart-line: $orange;
+$col-chart-fill: $col-inactive;
+$col-chart-ticks: $black;
+$col-chart-text: $col-text;
+$col-chart-tip-text: $white;
+
+$col-btc: #FF9900;
