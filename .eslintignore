@@ -1,0 +1,6 @@
+build/*.js
+config/*.js
+playground
+test
+*.spec.js
+index.html
