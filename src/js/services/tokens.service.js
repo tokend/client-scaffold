@@ -1,5 +1,4 @@
 import { xdr, Operation, ManageAssetBuilder, Keypair } from 'swarm-js-sdk'
-import { ReviewableRequestFactory } from '../factories/reviewable_requests/reviewable_request_factory'
 import { Service } from './service'
 
 export class TokensService extends Service {
@@ -153,15 +152,15 @@ export class TokensService extends Service {
       .callWithSignature(this._keypair)
   }
 
-  // TODO: move to reviewable requests
-  loadReviewableRequestById (id) {
-    return this._horizonRequestBuilder
-      .reviewableRequests()
-      .reviewableRequest(id)
-      .order('desc')
-      .callWithSignature(this._keypair)
-      .then(result => Promise.resolve(ReviewableRequestFactory.createTokenCreationRequest(result)))
-  }
+  // // TODO: move to reviewable requests
+  // loadReviewableRequestById (id) {
+  //   return this._horizonRequestBuilder
+  //     .reviewableRequests()
+  //     .reviewableRequest(id)
+  //     .order('desc')
+  //     .callWithSignature(this._keypair)
+  //     .then(result => Promise.resolve(ReviewableRequestFactory.createTokenCreationRequest(result)))
+  // }
 }
 
 export const tokensService = new TokensService()

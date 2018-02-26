@@ -13,7 +13,6 @@ import plugins from './plugins'
 import account from './modules/account.module'
 import offers from './modules/offers.module'
 import prices from './modules/prices.module'
-import reviewableRequests from './modules/reviewable_requests.module'
 import sales from './modules/sales.module'
 import tokens from './modules/tokens.module'
 import transactions from './modules/transactions.module'
@@ -33,7 +32,6 @@ const store = new Vuex.Store({
     account,
     offers,
     prices,
-    reviewableRequests,
     sales,
     tokens,
     transactions,

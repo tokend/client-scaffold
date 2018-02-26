@@ -1,7 +1,4 @@
 import { Service } from './service'
-import { ReviewableRequestFactory } from '../factories/reviewable_requests/reviewable_request_factory'
-import { xdr } from 'swarm-js-sdk'
-import { ErrorFactory, errorTypes } from '../errors/error_factory'
 import config from '../../config'
 
 export class ReviewableRequestsService extends Service {
@@ -35,21 +32,6 @@ export class ReviewableRequestsService extends Service {
       .callWithSignature(this._keypair)
   }
 
-  async loadAssetsReviewableRequestsWithCorrespondingFund (nextPageCaller) {
-    const requestor = nextPageCaller || this.loadTokensReviewableRequests
-
-    const response = await requestor()
-    const tokenRequests = response.records.map(record => createRequestEntity(record))
-    const next = response.next
-
-    const map = tokenRequests.map(request => this.loadSalesReviewableRequestByTokenCode(request.code))
-    return Promise.all(map)
-      .then(saleRequests => {
-        const requestPairs = tokenRequests.map((tokenRequest, i) => ({ tokenRequest, saleRequest: saleRequests[i] }))
-        return Promise.resolve({ requestPairs, next })
-      })
-  }
-
   /**
    * Load token creation reviewable request by id
    *
@@ -62,7 +44,6 @@ export class ReviewableRequestsService extends Service {
       .reviewableRequest(id)
       .order('desc')
       .callWithSignature(this._keypair)
-      .then(result => Promise.resolve(createRequestEntity(result)))
   }
 
   /**
@@ -76,20 +57,8 @@ export class ReviewableRequestsService extends Service {
       .forBaseAsset(code)
       .forRequestor(this._accountId)
       .callWithSignature(this._keypair)
-      .then(response => Promise.resolve(createRequestEntity(response.records[0])))
+      .then(response => response.records[0])
   }
 }
 
 export const reviewableRequestsService = new ReviewableRequestsService()
-
-function createRequestEntity (record) {
-  if (!record) return null
-  switch (record.details.request_type_i) {
-    case xdr.ReviewableRequestType.assetCreate().value:
-      return ReviewableRequestFactory.createTokenCreationRequest(record)
-    case xdr.ReviewableRequestType.sale().value:
-      return ReviewableRequestFactory.createSaleCreationRequest(record)
-    default:
-      ErrorFactory.throwError(errorTypes.UnknownReviewableRequestError, record)
-  }
-}
