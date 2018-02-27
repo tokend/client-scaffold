@@ -16,7 +16,7 @@ export class WalletService extends Service {
    * @returns {string} walletId - wallet id of created wallet
    */
   async signup (credentials, recoveryKeypair) {
-    const kdf = await common.getDefaultKDF()
+    const kdf = await walletService.loadDefaultKdfParams()
     const { rawKeychainData, accountId } = common.generateKeychainData()
     const walletData = common.generateWalletData(
       credentials.password,
@@ -49,10 +49,10 @@ export class WalletService extends Service {
    * @param credentials.email
    * @param credentials.password
    *
-   * @returns {Promise<boolean>}
+   * @returns {Promise<true>}
    */
   async login (credentials) {
-    const kdf = await common.getWalletKDF(credentials.email)
+    const kdf = await this.loadKdfParamsForEmail(credentials.email)
     const { walletId, walletKey } = common.calculateWalletParams(
       credentials.password,
       credentials.email,
@@ -84,7 +84,7 @@ export class WalletService extends Service {
    * @param kdfData
    * @param factorData
    * @param recoveryData
-   * @return {*|void}
+   * @return {ResponseBuilder}
    */
   // TODO: write proper detailed doc
   createWallet (walletData, kdfData, factorData, recoveryData) {
@@ -97,6 +97,31 @@ export class WalletService extends Service {
       .relationship('recovery', recoveryData)
       .json()
       .post()
+  }
+
+  /**
+   * Loads default Kdf params
+   * @return {ResponseBuilder}
+   */
+  loadDefaultKdfParams () {
+    return this._apiRequestBuilder
+      .kdf()
+      .get()
+  }
+
+  /**
+   * Loads kdf params for specified email
+   *
+   * @param email
+   * @param isRecovery
+   * @return {ResponseBuilder}
+   */
+  loadKdfParamsForEmail (email, isRecovery = false) {
+    return this._apiRequestBuilder
+      .kdf()
+      .forEmail(email)
+      .isRecovery(isRecovery)
+      .get()
   }
 }
 

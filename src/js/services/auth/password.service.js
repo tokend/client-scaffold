@@ -1,14 +1,13 @@
 import { Keypair } from 'swarm-js-sdk'
-// import config from '../../config'
-import store from '../../store/index'
-
+import store from '../../../vuex'
 import common from './helpers/common'
 
 import { createTransaction } from './helpers/password_transaction'
-import { ErrorFactory, errorTypes } from '../../factories/errors/error_factory'
-import { TxHelper } from '../../helpers/tx.helper'
+import { ErrorFactory, errorTypes } from '../../errors/error_factory'
+
 import request from '../../builders/request_builder/index'
 
+import { TxHelper } from '../../helpers/tx.helper'
 import { walletService } from '../wallet.service'
 
 export default {
@@ -16,7 +15,7 @@ export default {
     const email = store.getters.email
     const newKeypair = Keypair.random()
     const envelope = await createTransaction(newKeypair)
-    const kdf = await common.getDefaultKDF()
+    const kdf = await walletService.loadDefaultKdfParams()
     const factorData = await common.generateFactorData(
       newPassword,
       email,
@@ -37,7 +36,7 @@ export default {
 
   async makeRecovery (recoverySeed, email, newPassword) {
     const newKeypair = Keypair.random()
-    const kdf = await common.getWalletKDF(email, true)
+    const kdf = await walletService.loadKdfParamsForEmail(email, true)
     const factorData = await common.generateFactorData(
       newPassword,
       email,
@@ -59,7 +58,7 @@ export default {
 export async function checkPassword (password) {
   const email = store.getters.email
   const targetWalletId = store.getters.walletId
-  const kdf = await common.getWalletKDF(email)
+  const kdf = await walletService.loadKdfParamsForEmail(email)
   const { walletId } = common.calculateWalletParams(
     password,
     email,

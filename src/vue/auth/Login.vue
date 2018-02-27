@@ -171,7 +171,7 @@
         )) return
         this.disable()
         try {
-          const kdf = await common.getWalletKDF(this.email)
+          const kdf = await walletService.loadKdfParamsForEmail(this.email)
           const { walletId } = common.calculateWalletParams(
             this.password,
             this.email,

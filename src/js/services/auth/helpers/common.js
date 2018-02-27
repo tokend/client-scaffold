@@ -4,10 +4,6 @@ import { Keypair } from 'swarm-js-sdk'
 import store from '../../../../vuex'
 
 export default {
-  getDefaultKDF () {
-    return request.kdf().get()
-  },
-
   getWalletKDF (email, isRecovery = false) {
     return request.kdf()
       .forEmail(email)
