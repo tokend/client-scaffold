@@ -19,6 +19,7 @@
 
 <script>
   import { vueRoutes } from '../../vue-router/const'
+  import { vuexTypes } from '../../vuex/types'
 
   export default {
     name: 'registered-successfully',
@@ -26,7 +27,7 @@
     methods: {
       goRoot () {
         this.$store.dispatch('LOG_OUT')
-        this.$router.push(routes.signup)
+        this.$router.push(vueRoutes.signup)
       }
     }
   }
