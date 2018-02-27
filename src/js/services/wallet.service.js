@@ -1,5 +1,6 @@
 import { Service } from './service'
 import common from './auth/helpers/common'
+import { WalletHelper } from '../helpers/wallet.helper'
 
 export class WalletService extends Service {
   /**
@@ -17,27 +18,32 @@ export class WalletService extends Service {
    */
   async signup (credentials, recoveryKeypair) {
     const kdf = await walletService.loadDefaultKdfParams()
-    const { rawKeychainData, accountId } = common.generateKeychainData()
-    const walletData = common.generateWalletData(
+
+    const { rawKeychainData, accountId } = WalletHelper.getRandomKeychainData()
+
+    const walletAttributes = WalletHelper.getRandomWalletAttributes(
       credentials.password,
       credentials.email,
       kdf.attributes(),
       rawKeychainData,
       accountId
     )
-    const factorData = await common.generateFactorData(
+
+    const factorAttributes = await WalletHelper.getRandomFactorAttributes(
       credentials.password,
       credentials.email,
       kdf.attributes()
     )
-    const recoveryData = await common.generateRecoveryData(
+
+    const recoveryAttributes = await WalletHelper.getRandomRecoveryAttributes(
       recoveryKeypair.secret(),
       credentials.email,
       kdf.attributes(),
       rawKeychainData,
       recoveryKeypair.accountId()
     )
-    const wallet = await this.createWallet(walletData, kdf.data(), factorData, recoveryData)
+
+    const wallet = await this.createWallet(walletAttributes, kdf.data(), factorAttributes, recoveryAttributes)
     return wallet.data('id')
   }
 
@@ -53,14 +59,14 @@ export class WalletService extends Service {
    */
   async login (credentials) {
     const kdf = await this.loadKdfParamsForEmail(credentials.email)
-    const { walletId, walletKey } = common.calculateWalletParams(
+    const { walletId, walletKey } = WalletHelper.calculateWalletParams(
       credentials.password,
       credentials.email,
       kdf.attributes().salt,
       kdf.attributes()
     )
     const wallet = await this.loadWallet(walletId)
-    const keychainData = common.decryptKeychainData(wallet.attribute('keychain_data'), walletKey)
+    const keychainData = WalletHelper.decryptKeychainData(wallet.attribute('keychain_data'), walletKey)
     common.storeLoginData(deriveLoginData(wallet, keychainData))
     return Promise.resolve(true)
   }
@@ -80,21 +86,21 @@ export class WalletService extends Service {
   /**
    * Creates user wallet
    *
-   * @param walletData
+   * @param walletAttributes
    * @param kdfData
-   * @param factorData
-   * @param recoveryData
+   * @param factorAttributes
+   * @param recoveryAttributes
    * @return {ResponseBuilder}
    */
   // TODO: write proper detailed doc
-  createWallet (walletData, kdfData, factorData, recoveryData) {
+  createWallet (walletAttributes, kdfData, factorAttributes, recoveryAttributes) {
     const kdf = { data: { type: kdfData.type, id: kdfData.id } }
     return this._apiRequestBuilder.wallets()
-      .data(walletData)
+      .data(walletAttributes)
       .type('wallet')
       .relationship('kdf', kdf)
-      .relationship('factor', factorData)
-      .relationship('recovery', recoveryData)
+      .relationship('factor', factorAttributes)
+      .relationship('recovery', recoveryAttributes)
       .json()
       .post()
   }

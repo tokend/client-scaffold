@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import store from '../../vuex'
-import common from '../services/auth/helpers/common'
 import { factorsService } from '../services/factors.service'
 import { ErrorFactory } from '../errors/error_factory'
 
@@ -8,6 +7,7 @@ import i18n from '../i18n/auth'
 
 import FormMixin from '../../vue/common/mixins/form.mixin'
 import { EventDispatcher } from '../events/event_dispatcher'
+import { WalletHelper } from '../helpers/wallet.helper'
 
 const template = `
   <div>
@@ -56,7 +56,7 @@ export function createPasswordDialog (onSubmit, { salt, kdf, token, keychainData
           this.disable()
           let walletParams
           try {
-            walletParams = common.calculateWalletParams(
+            walletParams = WalletHelper.calculateWalletParams(
               this.password,
               this.$store.getters.email,
               salt,
@@ -71,7 +71,7 @@ export function createPasswordDialog (onSubmit, { salt, kdf, token, keychainData
           const walletKey = walletParams.walletKey
           let signedToken
           try {
-            signedToken = common.signToken(token, keychainData, walletKey)
+            signedToken = WalletHelper.signToken(token, keychainData, walletKey)
           } catch (e) {
             this.enable()
             EventDispatcher.dispatchShowErrorEvent(i18n.password_not_verified)

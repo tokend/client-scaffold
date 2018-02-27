@@ -9,6 +9,7 @@ import request from '../../builders/request_builder/index'
 
 import { TxHelper } from '../../helpers/tx.helper'
 import { walletService } from '../wallet.service'
+import { WalletHelper } from '../../helpers/wallet.helper'
 
 export default {
   async changePassword (newPassword) {
@@ -16,7 +17,7 @@ export default {
     const newKeypair = Keypair.random()
     const envelope = await createTransaction(newKeypair)
     const kdf = await walletService.loadDefaultKdfParams()
-    const factorData = await common.generateFactorData(
+    const factorData = await WalletHelper.getRandomFactorAttributes(
       newPassword,
       email,
       kdf.attributes()
@@ -37,12 +38,12 @@ export default {
   async makeRecovery (recoverySeed, email, newPassword) {
     const newKeypair = Keypair.random()
     const kdf = await walletService.loadKdfParamsForEmail(email, true)
-    const factorData = await common.generateFactorData(
+    const factorData = await WalletHelper.getRandomFactorAttributes(
       newPassword,
       email,
       kdf.attributes()
     )
-    const walletParams = common.calculateWalletParams(recoverySeed,
+    const walletParams = WalletHelper.calculateWalletParams(recoverySeed,
       email,
       kdf.attributes().salt,
       kdf.attributes()
@@ -59,7 +60,7 @@ export async function checkPassword (password) {
   const email = store.getters.email
   const targetWalletId = store.getters.walletId
   const kdf = await walletService.loadKdfParamsForEmail(email)
-  const { walletId } = common.calculateWalletParams(
+  const { walletId } = WalletHelper.calculateWalletParams(
     password,
     email,
     kdf.attributes().salt,
@@ -87,7 +88,7 @@ function composeOptions (kdf, envelope, keypair, newPassword, email = store.gett
 
   const kdfData = kdf.data()
 
-  const walletData = common.generateWalletData(
+  const walletData = WalletHelper.getRandomWalletAttributes(
     newPassword,
     email,
     kdf.attributes(),
@@ -103,7 +104,7 @@ async function updateWallet ({ walletData, transactionData, kdfData, factorData 
   const kdf = { data: { type: kdfData.type, id: kdfData.id } }
   const requestBuilder = request.wallets()
 
-  const response = await requestBuilder
+  return requestBuilder
     .walletId(walletId)
     .data(walletData)
     .type('wallet')
@@ -113,7 +114,6 @@ async function updateWallet ({ walletData, transactionData, kdfData, factorData 
     .sign(this._keypair)
     .json()
     .put()
-  return response
 }
 
 async function updateWalletToRecover ({ recoveryWalletId, transactionData, walletData, kdfData, factorData, recoverySeed }) {
