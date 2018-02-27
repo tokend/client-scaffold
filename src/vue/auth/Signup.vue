@@ -1,7 +1,6 @@
 <template>
   <div class="auth-page">
 
-
     <form class="app__specified-form auth-form material" @submit.prevent="signup">
 
       <load-indicator class="load-indicator"/>
@@ -54,33 +53,23 @@
 </template>
 
 <script>
+  import LoadIndicator from '../common/LoadIndicator'
   import form from '../common/mixins/form.mixin'
 
   import { ErrorFactory, errorTypes, errors } from '../../js/errors/error_factory'
   import { vueRoutes } from '../../vue-router/const'
-  import i18n from '../../js/i18n/auth'
-
-  import LoadIndicator from '../common/LoadIndicator'
-  import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
 
   import { Keypair } from 'swarm-js-sdk'
-
-  import { conversionCustomEvents } from '../../js/const/conversion_events.const'
-  import {
-    sendPixelsEvents,
-    sendFacebookPixelStandardEvent,
-    sendMixPanelEvent,
-    sendGoogleAnalyticsEvent
-  } from '../../js/services/integrations.service'
+  import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
 
   import config from '../../config'
+  import i18n from '../../js/i18n/auth'
 
   import { walletService } from '../../js/services/wallet.service'
   import { emailService } from '../../js/services/email.service'
 
   export default {
     mixins: [form],
-
     components: { LoadIndicator },
 
     data () {
@@ -116,7 +105,9 @@
       async checkEmail () {
         this.disable()
         if (!config.VALIDATE_EMAILS) return Promise.resolve(true)
+
         const emailDetails = await emailService.validateOnMailgun(this.email)
+
         if (emailDetails.is_valid === false) {
           ErrorFactory.throwError(errorTypes.InvalidEmailError)
         }
@@ -130,7 +121,6 @@
       },
 
       goShowEmail (walletId) {
-        this.sendConversionEvents()
         const route = { ...vueRoutes.email, query: { walletId, email: this.email } }
         this.$router.push(route)
       },
@@ -149,13 +139,6 @@
       async generateRecoveryKeypair () {
         this.recoveryKeypair = Keypair.random()
         return Promise.resolve(true)
-      },
-
-      sendConversionEvents () {
-        sendFacebookPixelStandardEvent(conversionCustomEvents.CompleteRegistration, { em: this.email })
-        sendPixelsEvents(conversionCustomEvents.signUp, { em: this.email })
-        sendMixPanelEvent(conversionCustomEvents.signUp, { email: this.email })
-        sendGoogleAnalyticsEvent(conversionCustomEvents.signUp, { email: this.email })
       },
 
       handleReject (error) {

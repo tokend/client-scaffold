@@ -74,14 +74,6 @@
   import { emailService } from '../../js/services/email.service'
   import { usersService } from '../../js/services/users.service'
 
-  import {
-    sendPixelsEvents,
-    sendMixPanelEvent,
-    sendGoogleAnalyticsEvent
-  } from '../../js/services/integrations.service'
-
-  import { conversionCustomEvents } from '../../js/const/conversion_events.const'
-
   export default {
     mixins: [auth],
 
@@ -144,7 +136,6 @@
       enterApplication () {
         this.setUserLoggedIn()
         dispatchEvent(commonEvents.enterAppEvent)
-        this.sendConversionEvents()
         const redirectParams = this.isRedirectToDiscourse && this.redirectParams
         const redirectPath = { ...vueRoutes.app, params: { redirect: redirectParams } }
         this.$router.push(redirectPath)
@@ -210,12 +201,6 @@
         } catch (error) {
           this.handleReject(error)
         }
-      },
-
-      sendConversionEvents () {
-        sendPixelsEvents(conversionCustomEvents.logIn)
-        sendMixPanelEvent(conversionCustomEvents.logIn)
-        sendGoogleAnalyticsEvent(conversionCustomEvents.logIn)
       },
 
       handleReject (error) {

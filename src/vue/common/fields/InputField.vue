@@ -136,7 +136,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../assets/scss/colors";
 @import "scss/fields-variables";
 
 .input-field {
