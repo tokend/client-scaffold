@@ -1,4 +1,4 @@
-import common from '../services/auth/helpers/common'
+import common from '../services/common/common'
 import { Keypair } from 'swarm-js-sdk'
 
 export function signToken (token, encryptedKeychain, key) {

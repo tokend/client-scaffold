@@ -65,8 +65,8 @@
   import config from '../../config'
   import i18n from '../../js/i18n/auth'
 
-  import { walletService } from '../../js/services/wallet.service'
   import { emailService } from '../../js/services/email.service'
+  import { authService } from '../../js/services/auth.service'
 
   export default {
     mixins: [form],
@@ -127,7 +127,7 @@
 
       sendCreateUserRequest () {
         this.disable()
-        return walletService.signup({ email: this.email, password: this.password }, this.recoveryKeypair)
+        return authService.signup({ email: this.email, password: this.password }, this.recoveryKeypair)
       },
 
       async showSeedMessage (arg) {

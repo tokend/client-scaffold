@@ -7,7 +7,7 @@ import { createPasswordDialog } from '../../modals/password_dialog.modal'
 import { showStatusMessage } from '../../modals/status_message.modal'
 import { initHorizonServer } from '../../../../src/js/helpers/server.helper'
 import { errors } from '../../errors/error_factory'
-import common from '../../services/auth/helpers/common'
+import common from '../../services/common/common'
 
 import response from '../response_builder/index'
 

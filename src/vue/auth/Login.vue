@@ -65,14 +65,15 @@
   import { mapActions } from 'vuex'
   import { vuexTypes } from '../../vuex/types'
   import { vueRoutes } from '../../vue-router/const'
+
   import LoadIndicator from '../common/LoadIndicator'
-  import common from '../../js/services/auth/helpers/common'
 
   import { confirmAction } from '../../js/modals/confirmation_message'
-
+  import { WalletHelper } from '../../js/helpers/wallet.helper'
   import { walletService } from '../../js/services/wallet.service'
   import { emailService } from '../../js/services/email.service'
   import { usersService } from '../../js/services/users.service'
+  import { authService } from '../../js/services/auth.service'
 
   export default {
     mixins: [auth],
@@ -152,7 +153,7 @@
       },
 
       sendLoginRequest () {
-        return walletService.login({ email: this.email, password: this.password })
+        return authService.login({ email: this.email, password: this.password })
       },
 
       sendCreateUserRequest ({ exists, accountId }) {
@@ -172,7 +173,7 @@
         this.disable()
         try {
           const kdf = await walletService.loadKdfParamsForEmail(this.email)
-          const { walletId } = common.calculateWalletParams(
+          const { walletId } = WalletHelper.calculateWalletParams(
             this.password,
             this.email,
             kdf.attributes().salt,

@@ -65,7 +65,7 @@ export class WalletHelper {
    * @param password
    * @param email
    * @param kdfAttributes
-   * @return {{data: {type: string, id: string, attributes: {account_id: string, salt: string, keychain_data: string}}}}
+   * @return {object}
    */
   static getRandomFactorAttributes (password, email, kdfAttributes) {
     return walletUtil.generateFactorData(...arguments)

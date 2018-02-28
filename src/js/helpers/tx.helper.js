@@ -10,6 +10,16 @@ export class TxHelper {
     return this._createReplaceSignerTransaction(newKeypair, accountId, Keypair.fromSecret(recoverySeed))
   }
 
+  /**
+   * @param newKeypair
+   * @param accountId
+   * @param keypair
+   * @return {Promise<string>} transactionEnvelope
+   */
+  static createChangePasswordTx (newKeypair, accountId, keypair) {
+    return this._createReplaceSignerTransaction(newKeypair, accountId, keypair)
+  }
+
   static async _createReplaceSignerTransaction (newKeypair, accountId, keypair) {
     let signers
     let operations

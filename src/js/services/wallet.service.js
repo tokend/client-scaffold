@@ -1,76 +1,5 @@
 import { Service } from './service'
-import common from './auth/helpers/common'
-import { WalletHelper } from '../helpers/wallet.helper'
-
 export class WalletService extends Service {
-  /**
-   * Sign up user to the system
-   *
-   * @async
-   *
-   * @param credentials
-   * @param credentials.email
-   * @param credentials.password
-   * @param recoveryKeypair - random keypair containing recovery seed. IMPORTANT: User will need to copy this seed to make account
-   *                          recovery possible. Seed itself is NOT being stored anywhere, so user should know he has the
-   *                          only possibility to save it
-   * @returns {string} walletId - wallet id of created wallet
-   */
-  async signup (credentials, recoveryKeypair) {
-    const kdf = await walletService.loadDefaultKdfParams()
-
-    const { rawKeychainData, accountId } = WalletHelper.getRandomKeychainData()
-
-    const walletAttributes = WalletHelper.getRandomWalletAttributes(
-      credentials.password,
-      credentials.email,
-      kdf.attributes(),
-      rawKeychainData,
-      accountId
-    )
-
-    const factorAttributes = await WalletHelper.getRandomFactorAttributes(
-      credentials.password,
-      credentials.email,
-      kdf.attributes()
-    )
-
-    const recoveryAttributes = await WalletHelper.getRandomRecoveryAttributes(
-      recoveryKeypair.secret(),
-      credentials.email,
-      kdf.attributes(),
-      rawKeychainData,
-      recoveryKeypair.accountId()
-    )
-
-    const wallet = await this.createWallet(walletAttributes, kdf.data(), factorAttributes, recoveryAttributes)
-    return wallet.data('id')
-  }
-
-  /**
-   * Log in user to the system
-   *
-   * @async
-   * @param credentials
-   * @param credentials.email
-   * @param credentials.password
-   *
-   * @returns {Promise<true>}
-   */
-  async login (credentials) {
-    const kdf = await this.loadKdfParamsForEmail(credentials.email)
-    const { walletId, walletKey } = WalletHelper.calculateWalletParams(
-      credentials.password,
-      credentials.email,
-      kdf.attributes().salt,
-      kdf.attributes()
-    )
-    const wallet = await this.loadWallet(walletId)
-    const keychainData = WalletHelper.decryptKeychainData(wallet.attribute('keychain_data'), walletKey)
-    common.storeLoginData(deriveLoginData(wallet, keychainData))
-    return Promise.resolve(true)
-  }
-
   /**
    * Loads wallet details by id
    *
@@ -106,8 +35,43 @@ export class WalletService extends Service {
   }
 
   /**
+   * Updates wallet for recovery or change password ops
+   *
+   * @param {object} opts
+   * @param {object} opts.transactionAttributes
+   * @param {object} opts.walletAttributes
+   * @param {object} opts.kdfAttributes
+   * @param {object} opts.factorAttributes
+   * @param {object} [opts.recoveryWalletId]
+   * @param {object} [opts.recoverySeed]
+   */
+  updateWallet (opts) {
+    const recoveryWalletId = opts.recoveryWalletId
+    const recoverySeed = opts.recoverySeed
+    const transactionAttributes = opts.transactionAttributes
+    const walletAttributes = opts.walletAttributes
+    const factorAttributes = opts.factorAttributes
+    const kdfAttributes = opts.kdfAttributes
+    const kdf = { data: { type: kdfAttributes.type, id: kdfAttributes.id } }
+
+    const keypair = recoverySeed ? Keypair.fromSecret(recoverySeed) : this._keypair
+    const walletId = recoveryWalletId || this._walletId
+
+    return this._apiRequestBuilder
+      .walletId(walletId)
+      .data(walletAttributes)
+      .type('wallet')
+      .relationship('transaction', transactionAttributes)
+      .relationship('kdf', kdf)
+      .relationship('factor', factorAttributes)
+      .sign(keypair)
+      .json()
+      .put()
+  }
+
+  /**
    * Loads default Kdf params
-   * @return {ResponseBuilder}
+   * @return {Promise<ResponseBuilder>}
    */
   loadDefaultKdfParams () {
     return this._apiRequestBuilder
@@ -132,13 +96,3 @@ export class WalletService extends Service {
 }
 
 export const walletService = new WalletService()
-
-function deriveLoginData (wallet, keychainData) {
-  const publicKey = keychainData.accountId
-  const seed = keychainData.seed
-  const accountId = wallet.attribute('account_id')
-  const email = wallet.attribute('email')
-  const walletId = wallet.data('id')
-
-  return { accountId, publicKey, seed, walletId, email }
-}
