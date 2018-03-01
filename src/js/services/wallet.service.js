@@ -1,4 +1,6 @@
 import { Service } from './service'
+import { Keypair } from 'swarm-js-sdk'
+
 export class WalletService extends Service {
   /**
    * Loads wallet details by id

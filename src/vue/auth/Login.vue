@@ -1,61 +1,63 @@
 <template>
-  <div class="auth-page">
+  <div class="auth-page md-layout md-alignment-center-center">
+    <form novalidate
+          class="auth-page__form
+                 md-layout
+                 md-alignment-center-center"
+                @submit.prevent="login">
 
-    <p class="redirect-explain" v-if="isRedirectToDiscourse">
-      * By providing valid credentials, you will be automatically redirected to your Discource account. If you want just to
-      login to Swarm, click <button class="just-login-btn" @click="isRedirectToDiscourse = false">close <i class="mdi mdi-close"></i></button>
-    </p>
+      <md-card
+        class="auth-page__card
+               md-layout-item
+               md-size-30
+               md-small-size-65
+               md-xsmall-size-100">
+        <md-card-header>
+          <div class="md-title">Sign in</div>
+        </md-card-header>
 
-    <form class="app__specified-form auth-form material" @submit.prevent="login">
+        <md-card-content>
+          <input-field class="input-field"
+            id="login-email"
+            v-model.trim="form.email"
+            label="Email"
+            name="email"
+            :errorMessage="errorMessage('email')"
+          />
+          <input-field
+            class="input-field"
+            id="login-password"
+            v-model.trim="form.password"
+            type="password"
+            togglePassword="true"
+            label="Password"
+            name="password"
+            :errorMessage="errorMessage('password')"
+          />
 
-      <load-indicator class="auth-page__load-indicator"/>
+          <div class="auth-page__bottom">
+            <div class="auth-page__tips">
+              <div class="tips__register-tip">
+                Don't have an account?
+                <router-link :to="{ name: 'signup' }">Register now</router-link>
+              </div>
+              <div class="tips__register-tip">
+                Forgot your password?
+                <router-link :to="{ name: 'recovery' }">Recover it</router-link>
+              </div>
+            </div>
+            <md-button class="md-raised md-primary" :disabled="isPending">Sign in</md-button>
+          </div>
 
-      <h2>Sign in</h2>
-
-      <input-field class="input-field"
-                   id="login-field"
-                   v-model.trim="email"
-                   title="Email"
-                   name="email"
-                   placeholder="example@mail.com"
-                   :error="errors.first('email')"
-                   v-validate="'required'"
-      />
-
-      <input-field class="input-field"
-                   v-model.trim="password"
-                   type="password"
-                   name="password"
-                   title="Password"
-                   :error="errors.first('password')"
-                   v-validate="'required'"
-      />
-
-      <div class="btn-outer">
-        <button class="btn" :disabled="isPending">Sign in</button>
-      </div>
-
-      <div class="tips">
-
-        <div class="tips__register-tip">
-          Don't have an account?
-          <router-link :to="{ name: 'signup' }">Register now</router-link>
-        </div>
-
-        <div class="tips__register-tip">
-          Forgot your password?
-          <router-link :to="{ name: 'recovery' }">Recover it</router-link>
-        </div>
-
-      </div>
-
+        </md-card-content>
+      </md-card>
     </form>
-
   </div>
 </template>
 
 <script>
-  import auth from '../common/mixins/form.mixin'
+  import formMixin from '../common/mixins/form.mixin'
+  import { required } from 'vuelidate/lib/validators'
 
   import i18n from '../../js/i18n/auth'
   import { errors } from '../../js/errors/error_factory'
@@ -66,8 +68,6 @@
   import { vuexTypes } from '../../vuex/types'
   import { vueRoutes } from '../../vue-router/const'
 
-  import LoadIndicator from '../common/LoadIndicator'
-
   import { confirmAction } from '../../js/modals/confirmation_message'
   import { WalletHelper } from '../../js/helpers/wallet.helper'
   import { walletService } from '../../js/services/wallet.service'
@@ -76,15 +76,19 @@
   import { authService } from '../../js/services/auth.service'
 
   export default {
-    mixins: [auth],
+    mixins: [formMixin],
 
-    components: { LoadIndicator },
-
-    data () {
-      return {
-        email: '',
+    data: () => ({
+      form: {
         password: '',
-        isRedirectToDiscourse: false
+        email: ''
+      }
+    }),
+
+    validations: {
+      form: {
+        password: { required },
+        email: { required }
       }
     },
 
@@ -116,18 +120,18 @@
       }),
 
       async login () {
-        if (!await this.$validator.validateAll()) {
-          EventDispatcher.dispatchShowErrorEvent('Please fill all the fields correctly before continuing')
-          return
-        }
-
+        if (!this.isValid) return
         this.disable()
-          .then(this.sendLoginRequest)
-          .then(this.checkIfUserExists)
-          .then(this.sendCreateUserRequest)
-          .then(this.storeUserDetails)
-          .then(this.enterApplication)
-          .catch(this.handleReject)
+
+        try {
+          await this.sendLoginRequest()
+          await this.checkIfUserExists()
+          await this.sendCreateUserRequest()
+          await this.storeUserDetails()
+          await this.enterApplication()
+        } catch (e) {
+          this.handleReject(e)
+        }
       },
 
       checkIfUserExists (accountId) {
@@ -223,25 +227,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/style/form';
-  @import 'auth';
-
-  .redirect-explain {
-    border-left: 2px solid $col-info;
-    font-size: $fs-tip;
-    max-width: 440px;
-    margin: 0 auto 20px;
-    padding-left: 10px;
-    width: 100%;
-
-    .just-login-btn {
-      cursor: pointer;
-      &, i {
-        font-size: $fs-tip;
-        color: $col-active;
-        text-decoration: underline;
-      }
-
-    }
-  }
+  @import './auth';
 </style>

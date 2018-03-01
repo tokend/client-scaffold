@@ -1,32 +1,19 @@
 @import '../../assets/style/variables';
+@import '../../assets/style/helpers/mixins';
 
 .auth-page {
-  padding-top: 100px;
-
-  @media (max-width: 1023px) {
-    padding-top: 50px;
-  }
-
-  @media (max-width: 767px) {
-    padding-top: 0;
-  }
+  height: 100%;
 }
 
-.auth-form {
-  margin: auto;
-  max-width: 440px;
-  position: relative;
+.auth-page__card {
+  padding: 10px 20px;
+}
 
-  .tips {
-    font-size: $fs-tip;
-    line-height: 160%;
+.auth-page__tips {
+  font-size: .8rem;
+}
 
-    a {
-      color: $col-active;
-    }
-  }
-
-  .btn-outer {
-    margin: 60px 0 30px;
-  }
+.auth-page__bottom {
+  display: flex;
+  justify-content: space-between;
 }

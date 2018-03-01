@@ -10,6 +10,15 @@
 
 @import '~mdi/css/materialdesignicons.min.css';
 
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme("default", (
+  primary: #1565c0, // The primary color of your brand
+  accent: #003c8f // The secondary color of your brand
+));
+
+@import "~vue-material/dist/theme/all";
+
 /* Global styles */
 
 * {
@@ -26,8 +35,8 @@ body,
 input, select,
 textarea {
   background: $col-background;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: $fs-root;
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.005em;
 }
@@ -36,6 +45,10 @@ html,body{
   height: 100% !important;
   overflow: auto !important;
   -webkit-overflow-scrolling : touch !important;
+}
+
+#app {
+  height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -63,6 +76,10 @@ p {
 
 a {
   color: $col-active;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 .container {
