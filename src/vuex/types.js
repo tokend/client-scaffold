@@ -14,7 +14,9 @@ const mutations = {
   SET_USER_CREATED_AT: 'SET_USER_CREATED_AT',
 
   // account:
-  SET_ACCOUNT_KEYS: 'SET_ACCOUNT_KEYS'
+  SET_ACCOUNT_KEYS: 'SET_ACCOUNT_KEYS',
+  SET_ACCOUNT_BALANCES: 'SET_ACCOUNT_BALANCES',
+  SET_ACCOUNT_DETAILS: 'SET_ACCOUNT_DETAILS'
 }
 
 const actions = {
@@ -28,7 +30,11 @@ const actions = {
 
   // user:
   GET_USER_DETAILS: 'GET_USER_DETAILS',
-  GET_USER_FAVORITES: 'GET_USER_FAVORITES'
+  GET_USER_FAVORITES: 'GET_USER_FAVORITES',
+
+  // account:
+  GET_ACCOUNT_DETAILS: 'GET_ACCOUNT_DETAILS',
+  GET_ACCOUNT_BALANCES: 'GET_ACCOUNT_BALANCES'
 }
 
 const getters = {
@@ -43,7 +49,19 @@ const getters = {
   userFavorites: 'userFavorites',
 
   // account:
-  userAccountId: 'userAccountId'
+  // TODO: need 'userAccountId' and 'keypair' for backwards compatibility only
+  userAccountId: 'accountId',
+  keypair: 'accountKeypair',
+  account: 'account',
+  accountId: 'accountId',
+  accountSeed: 'accountSeed',
+  accountPublicKey: 'accountPublicKey',
+  accountKeypair: 'accountKeypair',
+  accountCreatedAt: 'accountCreatedAt',
+  accountTokens: 'accountTokens',
+  accountBalances: 'accountBalances',
+  accountRawBalances: 'accountRawBalances',
+  accountExternalAddresses: 'accountExternalAddresses'
 }
 
 export const vuexTypes = {
