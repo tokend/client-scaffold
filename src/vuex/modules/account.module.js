@@ -6,7 +6,7 @@ import { Keypair } from 'swarm-js-sdk'
 
 export const state = {
   account: {
-    external_accounts: {}
+    external_accounts: []
   },
   balances: [],
   keys: {
