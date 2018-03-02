@@ -2,14 +2,25 @@ import { vuexTypes } from '../types'
 import { StateHelper } from '../helpers/state.helper'
 import { RecordFactory } from '../../js/factories/records/record_factory'
 import { accountsService } from '../../js/services/accounts.service'
+import {Keypair} from 'swarm-js-sdk'
 
 export const state = {
+  keys: {
+    accountId: '',
+    publicKey: '',
+    seed: ''
+  },
+
   account: {},
   balances: [],
   external_accounts: {}
 }
 
 export const mutations = {
+  SET_ACCOUNT_KEYS (state, keys) {
+    state.keys = keys
+  },
+
   SET_ACCOUNT_DATA (state, account) {
     state.account = account
   },
@@ -41,6 +52,12 @@ export const actions = {
 export const getters = {
   account: state => state.account,
   createdAt: state => state.account.createdAt,
+
+  userAccountId: state => state.keys.accountId,
+  userPublicKey: state => state.keys.publicKey,
+  userSeed: state => state.keys.seed,
+  keypair: state => state.keys.seed ? Keypair.fromSecret(state.keys.seed) : {},
+
   assets: state => state.balances.map(balance => balance.asset),
   externalAccounts: state => ({
     ...state.external_accounts,
