@@ -10,11 +10,13 @@
       :id="id"
       :type="type"
       :name="name"
+      :value="value"
       :counter="counter"
       :required="required"
       :disabled="disabled"
       :maxlength="maxlength"
       :placeholder="placeholder"
+      :readonly="readonly"
       @input="onInput"
       @blur="onBlur"
     />
@@ -38,7 +40,8 @@
       name: { type: String, default: '' },
       disabled: { type: Boolean, default: false },
       maxlength: { type: [Number, null], default: null },
-      counter: { type: [Number, null], default: null }
+      counter: { type: [Number, null], default: null },
+      readonly: { type: Boolean, default: false }
       // TODO: need handle number properties:
       // step: { type: Number, default: 0.000001 },
       // min: { type: Number, default: 0 },
