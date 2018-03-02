@@ -104,6 +104,30 @@ export class WalletHelper {
     const signed = keypair.sign(data)
     return _arrayBufferToBase64(signed)
   }
+
+  /**
+   * NEED DOC
+   * @param wallet
+   * @param walletKey
+   * @return {*}
+   */
+  static deriveUserDataFromWallet (wallet, walletKey) {
+    const walletId = wallet.data('id')
+    const encryptedKeychainData = wallet.attribute('keychain_data')
+    const accountId = wallet.attribute('account_id')
+    const email = wallet.attribute('email')
+    const keychainData = this.decryptKeychainData(encryptedKeychainData, walletKey)
+    const publicKey = keychainData.accountId
+    const seed = keychainData.seed
+    return {
+      walletId,
+      accountId,
+      email,
+      keychainData,
+      publicKey,
+      seed
+    }
+  }
 }
 
 function _arrayBufferToBase64 (buffer) {

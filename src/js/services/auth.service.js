@@ -51,45 +51,6 @@ export class AuthService extends WalletService {
   }
 
   /**
-   * Log in user to the system
-   *
-   * @async
-   * @param credentials
-   * @param credentials.email
-   * @param credentials.password
-   *
-   * @returns {Promise<void>}
-   */
-  async login (credentials) {
-    const kdf = await this.loadKdfParamsForEmail(credentials.email)
-    const { walletId, walletKey } = WalletHelper.calculateWalletParams(
-      credentials.password,
-      credentials.email,
-      kdf.attributes().salt,
-      kdf.attributes()
-    )
-    const wallet = await this.loadWallet(walletId)
-    const keychainData = WalletHelper.decryptKeychainData(wallet.attribute('keychain_data'), walletKey)
-    StateHelper.storeLoginData(this._deriveLoginData(wallet, keychainData))
-  }
-
-  _deriveLoginData (wallet, keychainData) {
-    const publicKey = keychainData.accountId
-    const seed = keychainData.seed
-    const accountId = wallet.attribute('account_id')
-    const email = wallet.attribute('email')
-    const walletId = wallet.data('id')
-
-    return {
-      accountId,
-      publicKey,
-      walletId,
-      email,
-      seed
-    }
-  }
-
-  /**
    * Changes users password
    *
    * @async

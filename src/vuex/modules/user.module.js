@@ -30,14 +30,11 @@ export const state = {
 }
 
 export const mutations = {
-  SET_EMAIL: (state, email) => {
+  SET_USER_EMAIL: (state, email) => {
     state.email = email
   },
   SET_KEYS: (state, keys) => {
     state.keys = keys
-  },
-  SET_WALLET_ID: (state, id) => {
-    state.wallet.id = id
   },
   SET_USER_DETAILS: (state, details) => {
     state.details = details
@@ -52,6 +49,7 @@ export const mutations = {
 
 export const actions = {
   STORE_LOGIN_DATA: ({ commit }, { accountId, email, publicKey, seed, walletId }) => {
+    console.log(arguments)
     commit(vuexTypes.SET_KEYS, { accountId, seed, publicKey })
     commit(vuexTypes.SET_WALLET_ID, walletId)
     commit(vuexTypes.SET_EMAIL, email)

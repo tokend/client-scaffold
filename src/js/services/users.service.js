@@ -1,4 +1,5 @@
 import { Service } from './service'
+import {errors} from '../errors/error_factory'
 
 export class UsersService extends Service {
   /**
@@ -30,6 +31,15 @@ export class UsersService extends Service {
       .accountId(accountId)
       .sign(this._keypair)
       .get()
+  }
+
+  /**
+   * Checks if user with current account id exists
+   */
+  checkIfUserExists () {
+    return this.loadUser()
+      .then(_ => true)
+      .catch(error => error instanceof errors.NotFoundError ? false : Promise.reject(error))
   }
 
   /**
