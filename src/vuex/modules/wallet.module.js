@@ -23,9 +23,11 @@ export const actions = {
       kdf.attributes().salt,
       kdf.attributes()
     )
-    const wallet = walletService.loadWallet(walletId)
-    const userData = WalletHelper.deriveUserDataFromWallet(wallet, walletKey)
-    dispatch(vuexTypes.STORE_USER_DATA_FROM_WALLET, userData)
+    const wallet = await walletService.loadWallet(walletId)
+    dispatch(
+      vuexTypes.STORE_USER_DATA_FROM_WALLET,
+      WalletHelper.deriveUserDataFromWallet(wallet, walletKey)
+    )
   },
 
   STORE_USER_DATA_FROM_WALLET ({ commit }, userData) {

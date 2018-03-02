@@ -4,7 +4,7 @@
           class="auth-page__form
                  md-layout
                  md-alignment-center-center"
-          @submit.prevent="login">
+          @submit.prevent="submit">
 
       <md-card
         class="auth-page__card
@@ -48,7 +48,7 @@
                 <router-link :to="{ name: 'recovery' }">Recover it</router-link>
               </div>
             </div>
-            <md-button class="md-raised md-primary" :disabled="isPending">Sign in</md-button>
+            <md-button class="md-raised md-primary" :disabled="isPending" @click="submit">Sign in</md-button>
           </div>
 
         </md-card-content>
@@ -65,7 +65,7 @@
   import { EventDispatcher } from '../../js/events/event_dispatcher'
   import { dispatchAppEvent } from '../../js/events/helpers'
   import { commonEvents } from '../../js/events/common_events'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   import { vuexTypes } from '../../vuex/types'
   import { vueRoutes } from '../../vue-router/const'
 
@@ -74,7 +74,6 @@
   import { walletService } from '../../js/services/wallet.service'
   import { emailService } from '../../js/services/email.service'
   import { usersService } from '../../js/services/users.service'
-  import { authService } from '../../js/services/auth.service'
 
   export default {
     mixins: [formMixin],
@@ -87,80 +86,72 @@
     }),
 
     created () {
-      if (this.redirectParams) this.setRedirectMessage()
-      if (this.emailParams) return this.verifyEmail()
+      if (this.verifyEmailParams) return this.verifyEmail()
     },
 
     computed: {
-      emailParams () {
+      ...mapGetters([
+        vuexTypes.accountId
+      ]),
+      verifyEmailParams () {
         const token = this.$route.params.token
         const walletId = this.$route.params.walletId
         if (token && walletId) return { token, walletId }
-        else return null
-      },
-
-      redirectParams () {
-        return this.$route.params.redirect
+        return null
       }
     },
 
     methods: {
       ...mapActions({
-        setUserLoggedIn: vuexTypes.LOG_IN,
+        setUserLoggedIn: vuexTypes.LOG_IN, // TODO
+
+        processUserWallet: vuexTypes.PROCESS_USER_WALLET,
         loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
         loadUser: vuexTypes.GET_USER_DETAILS,
-        loadKyc: vuexTypes.GET_INDIVIDUAL_DATA,
-        loadBalances: vuexTypes.GET_BALANCES
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
 
-      async login () {
+      async submit () {
         if (!await this.isValid) return
         this.disable()
-
         try {
-          await this.sendLoginRequest()
-          await this.checkIfUserExists()
-          await this.sendCreateUserRequest()
-          await this.storeUserDetails()
+          await this.processUserWallet(this.form)
+          if (!await usersService.checkIfUserExists()) {
+            await usersService.createUser(this.accountId)
+          }
+          await this.fetchUserDetails()
           await this.enterApplication()
-        } catch (e) {
-          this.handleReject(e)
+        } catch (error) {
+          console.error(error)
+          if (!error.showBanner) {
+            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error)
+          }
+          switch (error.constructor) {
+            case errors.NotFoundError:
+              error.showBanner(i18n.not_found)
+              break
+            case errors.EmailNotVerifiedError:
+              this.handleNotVerifiedError()
+              break
+            default:
+              error.showBanner(i18n.unexpected_error)
+          }
         }
+        this.enable()
       },
 
-      checkIfUserExists (accountId) {
-        return this.$services.users.checkIfUserExists(accountId)
-      },
-
-      enterApplication () {
-        this.setUserLoggedIn()
-        dispatchAppEvent(commonEvents.enterAppEvent)
-        const redirectParams = this.isRedirectToDiscourse && this.redirectParams
-        const redirectPath = { ...vueRoutes.app, params: { redirect: redirectParams } }
-        this.$router.push(redirectPath)
-      },
-
-      async storeUserDetails () {
+      async fetchUserDetails () {
         await Promise.all([
           this.loadUser(),
           this.loadAccount(),
           this.loadBalances()
         ])
-        await this.loadKyc()
-        return Promise.resolve(true)
       },
 
-      sendLoginRequest () {
-        return authService.login({ email: this.email, password: this.password })
-      },
-
-      sendCreateUserRequest ({ exists, accountId }) {
-        if (exists) return Promise.resolve(true)
-        return usersService.createUser(accountId)
-      },
-
-      setRedirectMessage () {
-        this.isRedirectToDiscourse = true
+      enterApplication () {
+        this.setUserLoggedIn()
+        dispatchAppEvent(commonEvents.enterAppEvent)
+        this.$router.push(vueRoutes.app)
       },
 
       async handleNotVerifiedError () {
@@ -177,7 +168,7 @@
             kdf.attributes().salt,
             kdf.attributes()
           )
-          await this.resendEmail(walletId)
+          await emailService.sendResendEmailRequest(walletId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent)
         } catch (error) {
           if (error.showBanner) {
@@ -189,31 +180,12 @@
         this.enable()
       },
 
-      resendEmail (walletId) {
-        return emailService.sendResendEmailRequest(walletId)
-      },
-
       async verifyEmail () {
         try {
           await emailService.sendVerifyEmailRequest(this.emailParams.token, this.emailParams.walletId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.email_verified)
         } catch (error) {
           this.handleReject(error)
-        }
-      },
-
-      handleReject (error) {
-        console.error(error)
-        this.enable()
-        switch (error.constructor) {
-          case errors.NotFoundError:
-            error.showBanner(i18n.not_found)
-            break
-          case errors.EmailNotVerifiedError:
-            this.handleNotVerifiedError()
-            break
-          default:
-            error.showBanner(i18n.unexpected_error)
         }
       }
     }

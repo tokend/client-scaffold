@@ -26,11 +26,11 @@ export class Service {
   }
 
   get _accountId () {
-    return this._overwrittenAccountId || store.getters.userAccountId
+    return this._overwrittenAccountId || store.getters.accountId
   }
 
   get _keypair () {
-    return this._overwrittenKeypair || store.getters.keypair
+    return this._overwrittenKeypair || store.getters.accountKeypair
   }
 
   get _walletId () {
