@@ -48,7 +48,7 @@
                 <router-link :to="{ name: 'recovery' }">Recover it</router-link>
               </div>
             </div>
-            <md-button class="md-raised md-primary" :disabled="isPending" @click="submit">Sign in</md-button>
+            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">Sign in</md-button>
           </div>
 
         </md-card-content>
@@ -112,7 +112,7 @@
       }),
 
       async submit () {
-        if (!await this.isValid) return
+        if (!await this.isValid()) return
         this.disable()
         try {
           await this.processUserWallet(this.form)

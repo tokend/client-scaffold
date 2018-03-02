@@ -5,7 +5,7 @@
           class="auth-page__form
                  md-layout
                  md-alignment-center-center"
-          @submit.prevent="signup">
+          @submit.prevent="submit">
 
       <md-card class="auth-page__card">
         <md-card-header>
@@ -54,7 +54,7 @@
               <router-link :to="routes.login">Sign in now</router-link>
             </div>
           </div>
-          <md-button class="md-raised md-primary" :disabled="isPending">Sign up</md-button>
+          <md-button type="submit" class="md-raised md-primary" :disabled="isPending">Sign up</md-button>
         </div>
       </md-card>
     </form>
@@ -68,7 +68,7 @@
   import { vueRoutes } from '../../vue-router/const'
   import { Keypair } from 'swarm-js-sdk'
   import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
-
+  import { EventDispatcher } from '../../js/events/event_dispatcher'
   import config from '../../config'
   import i18n from '../../js/i18n/auth'
 
@@ -80,30 +80,43 @@
 
     data () {
       return {
-        email: '',
-        password: '',
-        confirmPassword: '',
+        form: {
+          email: '',
+          password: '',
+          confirmPassword: ''
+        },
         recoveryKeypair: '',
         routes: vueRoutes
       }
     },
 
-    computed: {
-      passwordDoNotMatchError () {
-        return this.password &&
-               this.confirmPassword &&
-               this.password !== this.confirmPassword &&
-               i18n.password_do_not_match
-      }
-    },
-
     methods: {
-      signup () {
-        this.validate()
+      async submit () {
+        if (!await this.isValid()) return
+        this.disable()
+        try {
+          await this.checkEmailValidity()
+          const recoveryKeypair = Keypair.random()
+          const walletId = await authService.signup(this.form, recoveryKeypair)
+          await showRememberSeedMessage(recoveryKeypair.secret())
+          this.goShowEmail(walletId)
+        } catch (error) {
+          console.error(error)
+          if (!error.showBanner) {
+            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error)
+          }
+          switch (error.constructor) {
+            case errors.ConflictError:
+              error.showBanner(i18n.user_exists)
+              break
+            default:
+              error.showBanner(i18n.unexpected_error)
+          }
+        }
+        this.enable()
       },
 
-      async checkEmail () {
-        this.disable()
+      async checkEmailValidity () {
         if (!config.VALIDATE_EMAILS) return Promise.resolve(true)
 
         const emailDetails = await emailService.validateOnMailgun(this.email)
@@ -123,34 +136,6 @@
       goShowEmail (walletId) {
         const route = { ...vueRoutes.email, query: { walletId, email: this.email } }
         this.$router.push(route)
-      },
-
-      sendCreateUserRequest () {
-        this.disable()
-        return authService.signup({ email: this.email, password: this.password }, this.recoveryKeypair)
-      },
-
-      async showSeedMessage (arg) {
-        const recoveryKeypair = this.recoveryKeypair
-        await showRememberSeedMessage(recoveryKeypair.secret())
-        return Promise.resolve(arg)
-      },
-
-      async generateRecoveryKeypair () {
-        this.recoveryKeypair = Keypair.random()
-        return Promise.resolve(true)
-      },
-
-      handleReject (error) {
-        console.error(error)
-        this.enable()
-        switch (error.constructor) {
-          case errors.ConflictError:
-            error.showBanner(i18n.user_exists)
-            break
-          default:
-            error.showBanner(i18n.unexpected_error)
-        }
       }
     }
   }
