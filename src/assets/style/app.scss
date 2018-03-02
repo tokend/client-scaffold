@@ -101,6 +101,10 @@ input:-webkit-autofill {
   }
 }
 
+.app__dialog {
+  padding: 30px 40px;
+}
+
 .material {
   background: $col-content-block;
   box-shadow: 0 2px 5px rgba(0,0,0,0.16), 0 2px 5px rgba(0,0,0,0.23);

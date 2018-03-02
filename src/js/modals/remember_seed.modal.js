@@ -1,60 +1,61 @@
 import Vue from 'vue'
+import InputField from '../../vue/common/fields/InputField'
+
+// :successMessage="isSeedValid ? 'Your seed is valid. Please don't forget to save it' : ''"
 
 const template = `
-
-      <div>
-          <div class="cover"></div>
-          <div class="remember-seed-message form material">
-            <h2>Save this seed to your offline device</h2>
-            <p>
-              For security reasons, please put this seed in some secret place.
-              You will need it to recover access in case if your account will be lost.
-            </p>
-            <div class="field input-field">
-              <input type="text"
-                     id="seed"
-                     v-model="seed"
-                     readonly
-              />
-              <label for="seed">Seed</label>
-            </div>
-
-            <p>Please validate this seed in the field below to ensure that you copied it properly</p>
-            
-            <div class="field input-field">
-              <input type="text"
-                     id="seed-provide"
-                     v-model="provideSeed"
-              />
-              <label for="seed-provide">Validate seed</label>
-
-              <div class="success-tip" v-if="isSeedValid">Your seed is valid. Please don't forget to save it</div>
-              <div class="error-tip" v-else>Provided seed does not match with generated one</div>
-            </div>
-            
-            <div class="btn-outer">
-            <button class="btn" @click="submit" :disabled="!isSeedValid">
-              Continue
-            </button>
-            </div>
-            
-          </div>
-        </div>          
-    
+<div>
+  <md-dialog :md-active="opened" class="app__dialog">
+     <md-dialog-title>Save this seed to your offline device</md-dialog-title>
+     
+     <p>
+       For security reasons, please put this seed in some secret place.
+       You will need it to recover access in case if your account will be lost.
+     </p>
+     
+     <input-field
+       :value="seed"
+       id="signup-recovery-seed"
+       type="password"
+       :togglePassword="true"
+       label="Seed"
+       name="recovery-seed"
+       :readonly="true"
+     />
+     
+     <p>Please validate this seed in the field below to ensure that you copied it properly</p>
+     
+     <input-field
+       v-model.trim="provideSeed"
+       id="signup-provide-seed"
+       type="password"
+       :togglePassword="true"
+       label="Validate seed"
+       name="recovery-seed"
+       :errorMessage="isSeedValid ? '' : 'Provided seed does not match with generated one'"
+     />
+     
+     <md-dialog-actions>
+       <md-button class="md-primary" @click="submit">OK</md-button>
+     </md-dialog-actions>
+   </md-dialog>
+ </div>
 `
 
 export function showRememberSeedMessage (seed) {
   const message = document.createElement('div')
-  const app = document.querySelector('#app')
+  const app = document.querySelector('#app main')
   app.appendChild(message)
 
   return new Promise((resolve) => {
     const messageEl = new Vue({
       template,
+      components: { InputField },
       data () {
         return {
           seed,
-          provideSeed: ''
+          provideSeed: '',
+          opened: true
         }
       },
 
@@ -66,9 +67,12 @@ export function showRememberSeedMessage (seed) {
 
       methods: {
         close () {
+          if (!this.isSeedValid) return
+          this.opened = false
           this.$el.parentNode.removeChild(this.$el)
         },
         async submit () {
+          if (!this.isSeedValid) return
           this.close()
           return resolve(true)
         }
