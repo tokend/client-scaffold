@@ -4,12 +4,12 @@ const workspaces = {
     fileStorage: 'http://18.196.70.215:9000/api',
     networkPassphrase: 'SUN Staging Network ; December 2017'
   },
-  staging: {
+  prod: {
     horizonServer: 'https://invest.swarm.fund/_/api/',
     fileStorage: 'https://storage.swarm.fund/api',
     networkPassphrase: 'Swarm Production Network!'
   },
-  prod: {
+  staging: {
     horizonServer: 'https://staging.app.sun.swarm.fund/_/api/',
     fileStorage: 'https://staging.storage.sun.swarm.fund/api',
     networkPassphrase: 'SUN Staging Network ; December 2017'
