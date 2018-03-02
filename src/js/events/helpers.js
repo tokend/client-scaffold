@@ -1,7 +1,7 @@
 import Bus from './event_bus'
 import { AppEvent, ShowErrorEvent, ShowSuccessEvent } from './event_types'
 
-export function dispatchEvent (event, payload) {
+export function dispatchAppEvent (event, payload) {
   validateEvent(event)
   Bus.$emit(event.type, payload || event.payload || event.message || '')
 }

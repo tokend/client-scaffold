@@ -3,16 +3,10 @@ import SelectField from '../inputs/SelectField.vue'
 import InputDateField from '../inputs/InputDateField.vue'
 import ImageInput from '../inputs/ImageInput.vue'
 import FileInput from '../inputs/FileInput'
-
 import SubmitterMixin from './submitter.mixin'
-import { validationMixin } from 'vuelidate'
-
-const validationMessages = Object.freeze({
-  required: (field) => `${field} field is required`
-})
 
 export default {
-  mixins: [SubmitterMixin, validationMixin],
+  mixins: [SubmitterMixin],
 
   data () {
     return {
@@ -30,25 +24,19 @@ export default {
 
   methods: {
     isValid () {
-      this.$v.$touch()
-      return (this.$v.$invalid)
+      return this.$validator.validateAll()
     },
     clear () {
-      this.$v.reset()
+      this.errors.clear()
       for (const key in this.form) {
         this.form[key] = ''
       }
     },
-    hasError (field, validator = 'required') {
-      return !this.$v.form[field][validator]
+    hasError (field) {
+      return this.errors.has(field)
     },
-    errorMessage (field, validator = 'required') {
-      if (!this.hasError(field, validator)) return ''
-      const msg = validationMessages[validator](field)
-      return msg
-        .charAt(0)
-        .toUpperCase()
-        .concat(msg.slice(1))
+    errorMessage (field) {
+      return this.errors.first(field)
     }
   }
 }

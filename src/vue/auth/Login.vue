@@ -4,7 +4,7 @@
           class="auth-page__form
                  md-layout
                  md-alignment-center-center"
-                @submit.prevent="login">
+          @submit.prevent="login">
 
       <md-card
         class="auth-page__card
@@ -23,25 +23,27 @@
             label="Email"
             name="email"
             :errorMessage="errorMessage('email')"
+                       v-validate="'required'"
           />
           <input-field
             class="input-field"
             id="login-password"
             v-model.trim="form.password"
             type="password"
-            togglePassword="true"
+            :togglePassword="true"
             label="Password"
             name="password"
             :errorMessage="errorMessage('password')"
+            v-validate="'required'"
           />
 
           <div class="auth-page__bottom">
             <div class="auth-page__tips">
-              <div class="tips__register-tip">
+              <div class="tips__tip">
                 Don't have an account?
                 <router-link :to="{ name: 'signup' }">Register now</router-link>
               </div>
-              <div class="tips__register-tip">
+              <div class="tips__tip">
                 Forgot your password?
                 <router-link :to="{ name: 'recovery' }">Recover it</router-link>
               </div>
@@ -57,12 +59,11 @@
 
 <script>
   import formMixin from '../common/mixins/form.mixin'
-  import { required } from 'vuelidate/lib/validators'
 
   import i18n from '../../js/i18n/auth'
   import { errors } from '../../js/errors/error_factory'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
-  import { dispatchEvent } from '../../js/events/helpers'
+  import { dispatchAppEvent } from '../../js/events/helpers'
   import { commonEvents } from '../../js/events/common_events'
   import { mapActions } from 'vuex'
   import { vuexTypes } from '../../vuex/types'
@@ -84,13 +85,6 @@
         email: ''
       }
     }),
-
-    validations: {
-      form: {
-        password: { required },
-        email: { required }
-      }
-    },
 
     created () {
       if (this.redirectParams) this.setRedirectMessage()
@@ -120,7 +114,7 @@
       }),
 
       async login () {
-        if (!this.isValid) return
+        if (!await this.isValid) return
         this.disable()
 
         try {
@@ -140,7 +134,7 @@
 
       enterApplication () {
         this.setUserLoggedIn()
-        dispatchEvent(commonEvents.enterAppEvent)
+        dispatchAppEvent(commonEvents.enterAppEvent)
         const redirectParams = this.isRedirectToDiscourse && this.redirectParams
         const redirectPath = { ...vueRoutes.app, params: { redirect: redirectParams } }
         this.$router.push(redirectPath)

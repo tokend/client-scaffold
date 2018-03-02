@@ -10,13 +10,14 @@
 
 @import '~mdi/css/materialdesignicons.min.css';
 
-@import "~vue-material/dist/theme/engine"; // Import the theme engine
+@import "~vue-material/dist/theme/engine";
+
 
 @include md-register-theme("default", (
-  primary: #1565c0, // The primary color of your brand
-  accent: #003c8f // The secondary color of your brand
+  primary: md-get-palette-color(blue, A200),
+  accent: md-get-palette-color(red, A200),
+  theme: light
 ));
-
 @import "~vue-material/dist/theme/all";
 
 /* Global styles */
@@ -45,6 +46,10 @@ html,body{
   height: 100% !important;
   overflow: auto !important;
   -webkit-overflow-scrolling : touch !important;
+}
+
+body {
+  background-color: #0b78ff;
 }
 
 #app {

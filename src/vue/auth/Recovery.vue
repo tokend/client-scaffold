@@ -1,61 +1,68 @@
 <template>
-  <div class="auth-page">
+  <div class="auth-page md-layout md-alignment-center-center">
+    <form novalidate
+          class="auth-page__form
+                 md-layout
+                 md-alignment-center-center"
+          @submit.prevent="submit">
 
-    <form class="app__specified-form auth-form material" @submit.prevent="submit">
+      <md-card>
+        <md-card-header>
+          <div class="md-title">Account recovery</div>
+        </md-card-header>
+        <md-card-content>
+          <input-field class="input-field"
+                       id="recovery-email"
+                       v-model.trim="form.email"
+                       label="Email"
+                       name="email"
+                       :errorMessage="errorMessage('email')"
+                       v-validate="'required|email'"
+          />
+          <input-field class="input-field"
+                       id="recovery-seed"
+                       v-model.trim="form.seed"
+                       label="Recovery seed"
+                       name="seed"
+                       :errorMessage="errorMessage('seed')"
+                       v-validate="'required|secret_key'"
+          />
+          <input-field
+            v-model.trim="form.password"
+            class="input-field"
+            id="recovery-password"
+            type="password"
+            :togglePassword="true"
+            label="Password"
+            name="password"
+            :errorMessage="errorMessage('password')"
+            v-validate="'required|min:6'"
+          />
+          <input-field
+            v-model.trim="form.confirmPassword"
+            id="recovery-confirm-password"
+            name="confirm-password"
+            :togglePassword="true"
+            class="input-field"
+            type="password"
+            label="Confirm password"
+            :errorMessage="errorMessage('confirm-password')"
+            v-validate="'required|confirmed:password'"
+            data-vv-as="password"
+          />
 
-      <load-indicator class="load-indicator"/>
+          <div class="auth-page__bottom">
+            <div class="auth-page__tips">
+              <div class="tips__tip">
+                Know your credentials?
+                <router-link :to="routes.login">Sign in now</router-link>
+              </div>
+            </div>
+            <md-button class="md-raised md-primary" :disabled="isPending">Submit recovery</md-button>
+          </div>
 
-      <h2 class="form-heading">Account recovery</h2>
-
-      <input-field class="input-field"
-                   v-model.trim="email"
-                   name="email"
-                   title="Email"
-                   placeholder="example@mail.com"
-                   :error="errors.first('email')"
-                   v-validate="'required|email'"
-      >
-      </input-field>
-
-      <input-field class="input-field"
-                   v-model.trim="recoverySeed"
-                   name="recovery-seed"
-                   title="Recovery seed"
-                   :error="errors.first('recovery-seed')"
-                   v-validate="'secret_key'"
-      >
-      </input-field>
-
-      <input-field class="input-field"
-                   v-model.trim="password"
-                   type="password"
-                   name="password"
-                   title="New password"
-                   :error="errors.first('password')"
-                   v-validate="'required|min:6'"
-      >
-      </input-field>
-
-      <input-field class="input-field"
-                   v-model.trim="confirmPassword"
-                   type="password"
-                   name="confirm_password"
-                   title="Confirm password"
-                   :error="passwordDoNotMatchError || errors.first('confirm_password')"
-                   v-validate="'required'"
-      >
-      </input-field>
-
-      <div class="btn-outer">
-        <button class="btn form-btn" :disabled="!isAllowedToSubmit">Submit recovery</button>
-      </div>
-
-      <div class="tips">
-        <div class="register-tip">
-          Know your credentials?
-          <router-link :to="routes.login">Sign in now</router-link>
-        </div>
-      </div>
+        </md-card-content>
+      </md-card>
 
     </form>
   </div>
@@ -81,10 +88,12 @@
 
     data () {
       return {
-        email: '',
-        recoverySeed: '',
-        password: '',
-        confirmPassword: '',
+        form: {
+          email: '',
+          password: '',
+          recoverySeed: '',
+          confirmPassword: ''
+        },
         routes: vueRoutes
       }
     },
@@ -144,6 +153,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/style/form';
   @import 'auth';
 </style>

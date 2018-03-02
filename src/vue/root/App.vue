@@ -1,12 +1,17 @@
 <template>
-  <div id="app">
+  <md-app id="app">
 
-    <root-navbar v-if="!isLoggedIn"/>
+    <md-app-toolbar class="md-primary">
+      <root-navbar v-if="!isLoggedIn"/>
+    </md-app-toolbar>
+
     <sidebar v-if="isLoggedIn"/>
 
-    <router-view/>
+    <md-app-content>
+      <router-view/>
+    </md-app-content>
 
-  </div>
+  </md-app>
 </template>
 
 <script>
@@ -18,7 +23,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../vuex/types'
 
-  import { dispatchEvent } from '../../js/events/helpers'
+  import { dispatchAppEvent } from '../../js/events/helpers'
   import { commonEvents } from '../../js/events/common_events'
 
   import moment from 'moment'
@@ -60,7 +65,7 @@
         loadBalances: vuexTypes.GET_BALANCES
       }),
       performLoggedInActions () {
-        dispatchEvent(commonEvents.enterAppEvent)
+        dispatchAppEvent(commonEvents.enterAppEvent)
         this.loadUserData()
       },
       performLoggedOutActions () {

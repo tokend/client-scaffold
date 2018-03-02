@@ -1,64 +1,71 @@
 <template>
-  <div class="auth-page">
+  <div class="auth-page md-layout md-alignment-center-center">
 
-    <form class="app__specified-form auth-form material" @submit.prevent="signup">
+    <form novalidate
+          class="auth-page__form
+                 md-layout
+                 md-alignment-center-center"
+          @submit.prevent="signup">
 
-      <load-indicator class="load-indicator"/>
+      <md-card class="auth-page__card">
+        <md-card-header>
+          <div class="md-title">Sign up</div>
+        </md-card-header>
 
-      <h2 class="form-heading">Sign up</h2>
+        <input-field
+          v-model.trim="form.email"
+          class="input-field"
+          id="login-email"
+          label="Email"
+          name="email"
+          :errorMessage="errorMessage('email')"
+          v-validate="'required|email'"
+        />
 
-      <input-field class="input-field"
-                   v-model.trim="email"
-                   name="email"
-                   title="Email"
-                   placeholder="example@mail.com"
-                   :error="errors.first('email')"
-                   v-validate="'required|email'"
-      >
-      </input-field>
+        <input-field
+          v-model.trim="form.password"
+          class="input-field"
+          id="login-password"
+          type="password"
+          :togglePassword="true"
+          label="Password"
+          name="password"
+          :errorMessage="errorMessage('password')"
+          v-validate="'required|min:6'"
+        />
 
-      <input-field class="input-field"
-                   v-model.trim="password"
-                   type="password"
-                   name="password"
-                   title="Password"
-                   :error="errors.first('password')"
-                   v-validate="'required|min:6'"
-      >
-      </input-field>
+        <input-field
+          v-model.trim="form.confirmPassword"
+          id="login-confirm-password"
+          name="confirm-password"
+          :togglePassword="true"
+          class="input-field"
+          type="password"
+          label="Confirm password"
+          :errorMessage="errorMessage('confirm-password')"
+          v-validate="'required|confirmed:password'"
+          data-vv-as="password"
+        />
 
-      <input-field class="input-field"
-                   v-model.trim="confirmPassword"
-                   type="password"
-                   name="confirm_password"
-                   title="Confirm password"
-                   :error="passwordDoNotMatchError || errors.first('confirm_password')"
-                   v-validate="'required'"
-      >
-      </input-field>
-
-      <div class="btn-outer">
-        <button class="btn form-btn" :disabled="isPending || passwordDoNotMatchError">Sign up</button>
-      </div>
-
-      <div class="tips">
-        <div class="register-tip">
-          Already have an account?
-          <router-link :to="routes.login">Sign in now</router-link>
+        <div class="auth-page__bottom">
+          <div class="auth-page__tips">
+            <div class="tips__tip">
+              Already have an account?
+              <router-link :to="routes.login">Sign in now</router-link>
+            </div>
+          </div>
+          <md-button class="md-raised md-primary" :disabled="isPending">Sign up</md-button>
         </div>
-      </div>
-
+      </md-card>
     </form>
   </div>
 </template>
 
 <script>
-  import LoadIndicator from '../common/LoadIndicator'
-  import form from '../common/mixins/form.mixin'
+  import formMixin from '../common/mixins/form.mixin'
 
   import { ErrorFactory, errorTypes, errors } from '../../js/errors/error_factory'
   import { vueRoutes } from '../../vue-router/const'
-
   import { Keypair } from 'swarm-js-sdk'
   import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
 
@@ -69,8 +76,7 @@
   import { authService } from '../../js/services/auth.service'
 
   export default {
-    mixins: [form],
-    components: { LoadIndicator },
+    mixins: [formMixin],
 
     data () {
       return {
@@ -93,13 +99,7 @@
 
     methods: {
       signup () {
-        return this.validateParams()
-          .then(this.checkEmail)
-          .then(this.generateRecoveryKeypair)
-          .then(this.sendCreateUserRequest)
-          .then(this.showSeedMessage)
-          .then(this.goShowEmail)
-          .catch(this.handleReject)
+        this.validate()
       },
 
       async checkEmail () {
@@ -157,6 +157,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/style/form';
   @import 'auth';
 </style>

@@ -18,7 +18,8 @@ const busEvents = Object.freeze({
   closeDiscourseConfirmation: new AppEvent('close-discource-confirmation'),
   enterAppEvent: new AppEvent('enter-app'),
   showAirdropMessage: new AppEvent('show-airdrop-message'),
-  selectOfferEvent: new AppEvent('select-offer')
+  selectOfferEvent: new AppEvent('select-offer'),
+  touchEvent: new AppEvent('touch-event')
 })
 
 const componentEvents = Object.freeze({

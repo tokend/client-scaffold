@@ -1,10 +1,10 @@
 import { ShowErrorEvent, ShowSuccessEvent } from './event_types'
 
-import { dispatchEvent, attachEventHandler } from './helpers'
+import { dispatchAppEvent, attachEventHandler } from './helpers'
 
 export class EventDispatcher {
   static dispatchShowErrorEvent (message) {
-    dispatchEvent(new ShowErrorEvent(message))
+    dispatchAppEvent(new ShowErrorEvent(message))
   }
 
   static attachToShowErrorEvent (handler) {
@@ -12,7 +12,7 @@ export class EventDispatcher {
   }
 
   static dispatchShowSuccessEvent (message) {
-    dispatchEvent(new ShowSuccessEvent(message))
+    dispatchAppEvent(new ShowSuccessEvent(message))
   }
 
   static attachToShowSuccessEvent (handler) {

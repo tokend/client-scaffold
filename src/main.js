@@ -19,14 +19,17 @@ import VueSimpleMDE from 'vue-simplemde'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 
-// validator
+// validator:
 import VeeValidate from 'vee-validate'
+import { extendValidator } from './validators/validator'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(VeeValidate)
 Vue.use(VueMaterial)
 Vue.use(VueSimpleMDE)
+
+VeeValidate.Validator = extendValidator(VeeValidate.Validator)
 
 /* eslint-disable no-new */
 new Vue({

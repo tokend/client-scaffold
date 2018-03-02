@@ -18,7 +18,7 @@
 
 <script>
   import { commonEvents } from '../../../js/events/common_events'
-  import { dispatchEvent } from '../../../js/events/helpers'
+  import { dispatchAppEvent } from '../../../js/events/helpers'
   import config from '../../../config'
 
   export default {
@@ -40,7 +40,7 @@
 
     methods: {
       view () {
-        dispatchEvent(commonEvents.openFileViewEvent, this.file)
+        dispatchAppEvent(commonEvents.openFileViewEvent, this.file)
       }
     }
   }

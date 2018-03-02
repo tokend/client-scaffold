@@ -1,4 +1,4 @@
-import { dispatchEvent } from '../../../js/events/helpers'
+import { dispatchAppEvent } from '../../../js/events/helpers'
 import { commonEvents } from '../../../js/events/common_events'
 
 export default {
@@ -12,19 +12,19 @@ export default {
     disable () {
       this.isButtonDisabled = true
       this.isPending = true
-      dispatchEvent(commonEvents.showLoadIndicator)
+      dispatchAppEvent(commonEvents.showLoadIndicator)
       return Promise.resolve(true)
     },
     enable () {
       this.isButtonDisabled = false
       this.isPending = false
-      dispatchEvent(commonEvents.hideLoadIndicator)
+      dispatchAppEvent(commonEvents.hideLoadIndicator)
       return Promise.resolve(true)
     },
     disableLong () {
       this.isPending = true
       this.isButtonDisabled = true
-      dispatchEvent(commonEvents.showLoadIndicator)
+      dispatchAppEvent(commonEvents.showLoadIndicator)
       return Promise.resolve(true)
     }
   }
