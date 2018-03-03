@@ -1,16 +1,25 @@
 <template>
-  <div class="auth-page">
+  <div class="auth-page md-layout md-alignment-center-center">
+    <md-card>
 
-    <div class="form-block resend-email-block material">
-      <i class="mdi mdi-email"></i>
+      <md-card-header>
+        <div class="md-title">Almost done</div>
+      </md-card-header>
 
-      <h2>Almost done</h2>
-      <p class="check-email"> A confirmation email was sent to <span class="info">{{ email }}</span>. Please check your inbox to verify your account</p>
-      <p class="bad-happens">If you didn't receive a confirmation email, check your spam folder or</p>
+      <md-card-content>
 
-      <button class="btn" @click="requestNew" :disabled="isButtonDisabled">Request new email</button>
-    </div>
+        <p>A confirmation email was sent to <span class="info">{{ email }}</span>. Please check your inbox to verify your account</p>
+        <p>If you didn't receive a confirmation email, check your spam folder.</p>
 
+        <div class="md-layout md-alignment-center-right">
+          <md-button @click="requestNew"
+                    :disabled="isButtonDisabled">
+            Request new email
+          </md-button>
+        </div>
+
+      </md-card-content>
+    </md-card>
   </div>
 </template>
 
@@ -37,40 +46,21 @@
     },
 
     methods: {
-      requestNew () {
+      async requestNew () {
         this.disable()
-          .then(this.sendResendEmailRequest)
-          .then(this.enable)
-          .then(_ => EventDispatcher.dispatchShowSuccessEvent('Request successfully sent. Please check your inbox'))
-          .catch(_ => EventDispatcher.dispatchShowErrorEvent('Email already confirmed'))
-      },
-      sendResendEmailRequest () {
-        return emailService.sendResendEmailRequest(this.walletId)
+        try {
+          await emailService.sendResendEmailRequest(this.walletId)
+          EventDispatcher.dispatchShowSuccessEvent('Request successfully sent. Please check your inbox')
+        } catch (error) {
+          console.error(error)
+          EventDispatcher.dispatchShowErrorEvent('Email already confirmed')
+        }
+        this.enable()
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/style/form';
   @import 'auth';
-  @import '../../assets/style/variables';
-
-  .resend-email-block {
-    max-width: 770px;
-    text-align: center;
-    i {
-      font-size: $material-icon-xx-super-big;
-    }
-
-    .check-email {
-      margin-bottom: 50px;
-    }
-
-    .bad-happens {
-      font-size: $fs-tip;
-      color: $col-unfocused;
-      margin-bottom: 10px;
-    }
-  }
 </style>

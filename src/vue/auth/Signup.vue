@@ -85,7 +85,6 @@
           password: '',
           confirmPassword: ''
         },
-        recoveryKeypair: '',
         routes: vueRoutes
       }
     },
@@ -134,7 +133,7 @@
       },
 
       goShowEmail (walletId) {
-        const route = { ...vueRoutes.email, query: { walletId, email: this.email } }
+        const route = { ...vueRoutes.email, query: { walletId, email: this.form.email } }
         this.$router.push(route)
       }
     }
