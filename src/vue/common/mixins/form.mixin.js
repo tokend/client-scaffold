@@ -1,8 +1,8 @@
 import InputField from '../fields/InputField.vue'
-import SelectField from '../inputs/SelectField.vue'
-import InputDateField from '../inputs/InputDateField.vue'
-import ImageInput from '../inputs/ImageInput.vue'
-import FileInput from '../inputs/FileInput'
+import SelectField from '../DEPRECATED.inputs/SelectField.vue'
+import InputDateField from '../DEPRECATED.inputs/InputDateField.vue'
+import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
+import FileInput from '../DEPRECATED.inputs/FileInput'
 import SubmitterMixin from './submitter.mixin'
 
 export default {
