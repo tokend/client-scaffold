@@ -11,14 +11,14 @@ import plugins from './plugins'
 
 // modules:
 import account from './modules/account.module'
-import offers from './modules/offers.module'
-import prices from './modules/prices.module'
-import sales from './modules/sales.module'
-import tokens from './modules/tokens.module'
-import transactions from './modules/transactions.module'
+// import offers from './modules/offers.module'
+// import prices from './modules/prices.module'
+// import sales from './modules/sales.module'
+// import tokens from './modules/tokens.module'
+// import transactions from './modules/transactions.module'
 import user from './modules/user.module'
 import wallet from './modules/wallet.module'
-import withdrawals from './modules/withdrawals.module'
+// import withdrawals from './modules/withdrawals.module'
 
 Vue.use(Vuex)
 checkForSavedData()
@@ -31,14 +31,14 @@ const store = new Vuex.Store({
   state,
   modules: {
     account,
-    offers,
-    prices,
-    sales,
-    tokens,
-    transactions,
+    // offers,
+    // prices,
+    // sales,
+    // tokens,
+    // transactions,
     user,
-    wallet,
-    withdrawals
+    wallet
+    // withdrawals
   }
 })
 
