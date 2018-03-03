@@ -2,7 +2,7 @@
   <md-snackbar
     class="md-accent"
     :md-position="config.position"
-    :md-duration="isInfinity ? Infinity : duration"
+    :md-duration="config.isInfinity ? Infinity : config.duration"
     :md-active.sync="isActive"
     md-persistent
   >
