@@ -98,24 +98,6 @@
       }
     },
 
-    computed: {
-      passwordDoNotMatchError () {
-        return this.password &&
-          this.confirmPassword &&
-          this.password !== this.confirmPassword &&
-          i18n.password_do_not_match
-      },
-      isAllowedToSubmit () {
-        return this.password &&
-               this.confirmPassword &&
-               this.email &&
-               this.recoverySeed &&
-              !this.isPending &&
-              !this.passwordDoNotMatchError &&
-               this.errors.count() === 0
-      }
-    },
-
     methods: {
       async submit () {
         this.disable()

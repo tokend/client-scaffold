@@ -154,6 +154,7 @@
         this.$router.push(vueRoutes.app)
       },
 
+      // TODO: wtf, need drop this away
       async handleNotVerifiedError () {
         if (!await confirmAction({
           title: 'Email not verified',
