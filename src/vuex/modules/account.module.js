@@ -6,7 +6,7 @@ import { Keypair } from 'swarm-js-sdk'
 
 export const state = {
   account: {
-    external_accounts: []
+    external_system_accounts: []
   },
   balances: [],
   keys: {
@@ -50,7 +50,7 @@ export const getters = {
   accountBalances: state => StateHelper.groupBalances(state.balances),
   accountRawBalances: state => state.balances,
   accountExternalAddresses: state =>
-    state.account.external_accounts
+    state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
       .reduce((accounts, account) => { accounts[account.asset] = account.address; return accounts }, {})
 }
