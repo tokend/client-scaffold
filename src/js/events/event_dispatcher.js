@@ -1,21 +1,35 @@
-import { ShowErrorEvent, ShowSuccessEvent } from './event_types'
+import { dispatchAppEvent } from './helpers'
+import { commonEvents } from './common_events'
 
-import { dispatchAppEvent, attachEventHandler } from './helpers'
+const duration = 7000
 
 export class EventDispatcher {
-  static dispatchShowErrorEvent (message) {
-    dispatchAppEvent(new ShowErrorEvent(message))
+  static dispatchShowSnackbarEvent (config) {
+    dispatchAppEvent(commonEvents.showSnackbarEvent, config)
   }
 
-  static attachToShowErrorEvent (handler) {
-    attachEventHandler(new ShowErrorEvent(), handler)
+  static dispatchShowErrorEvent (msg) {
+    const config = {
+      position: 'center',
+      isInfinity: false,
+      showButton: false,
+      type: 'success',
+      duration,
+      msg
+    }
+    dispatchAppEvent(commonEvents.showSnackbarEvent, config)
   }
 
-  static dispatchShowSuccessEvent (message) {
-    dispatchAppEvent(new ShowSuccessEvent(message))
-  }
-
-  static attachToShowSuccessEvent (handler) {
-    attachEventHandler(new ShowSuccessEvent(), handler)
+  static dispatchShowSuccessEvent (msg) {
+    const config = {
+      position: 'center',
+      isInfinity: false,
+      showButton: true,
+      btnText: 'Close',
+      type: 'error',
+      duration,
+      msg
+    }
+    dispatchAppEvent(commonEvents.showSnackbarEvent, config)
   }
 }

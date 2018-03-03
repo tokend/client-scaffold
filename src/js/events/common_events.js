@@ -5,6 +5,7 @@ const common = {
 }
 
 const busEvents = Object.freeze({
+  showSnackbarEvent: new AppEvent('show-snackbar'),
   accountOptionsOpenedEvent: new AppEvent('account-options-opened'),
   destroyFundEvent: new AppEvent('destroy-fund'),
   detailsOpenedEvent: new AppEvent('details-opened'),

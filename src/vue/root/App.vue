@@ -9,6 +9,7 @@
 
     <md-app-content>
       <router-view/>
+      <snackbar/>
     </md-app-content>
 
   </md-app>
@@ -17,6 +18,7 @@
 <script>
   import RootNavbar from '../navigation/RootNavbar.vue'
   import Sidebar from '../navigation/Sidebar.vue'
+  import Snackbar from '../common/messages/Snackbar'
 
   import { vueRoutes } from '../../vue-router/const'
 
@@ -31,7 +33,11 @@
   export default {
     name: 'app',
 
-    components: { RootNavbar, Sidebar },
+    components: {
+      RootNavbar,
+      Sidebar,
+      Snackbar
+    },
 
     computed: {
       ...mapGetters([

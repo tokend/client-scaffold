@@ -1,5 +1,5 @@
 import Bus from './event_bus'
-import { AppEvent, ShowErrorEvent, ShowSuccessEvent } from './event_types'
+import { AppEvent } from './event_types'
 
 export function dispatchAppEvent (event, payload) {
   validateEvent(event)
@@ -12,10 +12,7 @@ export function attachEventHandler (event, handler) {
 }
 
 function validateEvent (event) {
-  if (!(event instanceof ShowErrorEvent ||
-        event instanceof ShowSuccessEvent ||
-        event instanceof AppEvent
-    )) {
+  if (!(event instanceof AppEvent)) {
     throw new Error(`Error. ${event} is not an instance of allowed events`)
   }
 }
