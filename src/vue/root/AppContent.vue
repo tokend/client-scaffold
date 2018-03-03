@@ -1,7 +1,5 @@
 <template>
-  <div class="app-content" :class="{ 'app-content--logged-in': isLoggedIn }">
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <script>

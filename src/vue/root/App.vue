@@ -1,11 +1,13 @@
 <template>
-  <md-app id="app">
+  <md-app id="app" md-waterfall md-mode="fixed">
 
     <md-app-toolbar class="md-primary">
-      <root-navbar v-if="!isLoggedIn"/>
+      <navbar/>
     </md-app-toolbar>
 
-    <sidebar v-if="isLoggedIn"/>
+    <md-app-drawer md-permanent="full" v-if="isLoggedIn">
+      <sidebar/>
+    </md-app-drawer>
 
     <md-app-content>
       <router-view/>
@@ -16,7 +18,7 @@
 </template>
 
 <script>
-  import RootNavbar from '../navigation/RootNavbar.vue'
+  import Navbar from '../navigation/Navbar.vue'
   import Sidebar from '../navigation/Sidebar.vue'
   import Snackbar from '../common/messages/Snackbar'
 
@@ -34,7 +36,7 @@
     name: 'app',
 
     components: {
-      RootNavbar,
+      Navbar,
       Sidebar,
       Snackbar
     },
@@ -68,7 +70,7 @@
     methods: {
       ...mapActions({
         loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
-        loadBalances: vuexTypes.GET_BALANCES
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       performLoggedInActions () {
         dispatchAppEvent(commonEvents.enterAppEvent)
