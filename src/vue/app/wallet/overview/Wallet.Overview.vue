@@ -3,7 +3,9 @@
     <md-card-header>
       <div class="md-title">Wallet tokens</div>
     </md-card-header>
-    <token-list :tokens="userWalletTokens"/>
+    <token-list
+      v-model="tokenCode"
+      :tokens="userWalletTokens"/>
   </md-card>
 </template>
 
@@ -15,6 +17,9 @@
   export default {
     name: 'wallet-overview',
     components: { TokenList },
+    data: _ => ({
+      tokenCode: ''
+    }),
     computed: {
       ...mapGetters([
         vuexTypes.userWalletTokens
