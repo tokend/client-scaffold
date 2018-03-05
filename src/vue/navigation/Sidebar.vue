@@ -1,10 +1,7 @@
 <template>
   <div>
 
-    <md-toolbar class="md-transparent" md-elevation="0">
-      TokenD
-      <!--<router-link>TokenD</router-link>-->
-    </md-toolbar>
+    <md-toolbar class="md-transparent" md-elevation="0">TokenD</md-toolbar>
 
     <md-list>
       <md-list-item to="/dashboard">
@@ -31,6 +28,10 @@
         <md-icon>swap_horiz</md-icon>
         <span class="md-list-item-text">Trade</span>
       </md-list-item>
+
+      <md-divider></md-divider>
+
+      <md-subheader>Syndicate</md-subheader>
 
       <md-list-item to="/dashboard">
         <md-icon>monetization_on</md-icon>
