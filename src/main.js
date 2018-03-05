@@ -21,7 +21,7 @@ import 'vue-material/dist/vue-material.min.css'
 
 // validator:
 import VeeValidate from 'vee-validate'
-import { extendValidator } from './validators/validator'
+import { extendValidator } from './validator/validator'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)
