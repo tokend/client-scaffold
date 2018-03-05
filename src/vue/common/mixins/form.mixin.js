@@ -1,5 +1,6 @@
 import InputField from '../fields/InputField.vue'
-import SelectField from '../DEPRECATED.inputs/SelectField.vue'
+import SelectField from '../fields/SelectField.vue'
+
 import InputDateField from '../DEPRECATED.inputs/InputDateField.vue'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import FileInput from '../DEPRECATED.inputs/FileInput'
