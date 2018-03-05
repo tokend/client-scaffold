@@ -1,13 +1,13 @@
-import { number } from '../plugins/number'
+import { localizeNum } from '../utils/number-formatter'
 
 export function localizeBase (value) {
-  return number.localize(value)
+  return localizeNum(value)
 }
 
 export function localizeQuote (value) {
-  return number.localize(value, 2)
+  return localizeNum(value, 2)
 }
 
 export function localize (value) {
-  return number.localize(value)
+  return localizeNum(value)
 }

@@ -1,10 +1,10 @@
 import { transactionsService } from '../../js/services/transactions.service'
 import { accountsService } from '../../js/services/accounts.service'
 import { Keypair } from 'swarm-js-sdk'
-import { object } from '../../js/plugins/object'
 import { parseTransaction } from '../../js/parsers/tx.parser'
 import { Paginator } from '../../js/helpers/paginator'
 import { vuexTypes } from '../types'
+import cloneDeep from 'lodash/cloneDeep'
 
 const state = {
   next: () => {},
@@ -21,7 +21,7 @@ export const mutations = {
   },
 
   SET_TX_PAGINATOR (state, { code, paginator }) {
-    const tokens = object.clone(state.tokens)
+    const tokens = cloneDeep(state.tokens)
     tokens[code] = paginator
     state.tokens = tokens
   }
