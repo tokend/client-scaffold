@@ -55,7 +55,7 @@ describe('module.account', () => {
       action: module.actions.GET_ACCOUNT_DETAILS,
       actionPayload: null,
       expectedMutations: [{ type: 'SET_ACCOUNT_DETAILS' }],
-      expectedMutationPayloads: [],
+      expectedMutationPayloads: [accountResponse],
       state: []
     }, done)
   })
@@ -65,7 +65,7 @@ describe('module.account', () => {
       action: module.actions.GET_ACCOUNT_BALANCES,
       actionPayload: null,
       expectedMutations: [{ type: 'SET_ACCOUNT_BALANCES' }],
-      expectedMutationPayloads: [],
+      expectedMutationPayloads: [balancesResponse],
       state: []
     }, done)
   })
