@@ -43,18 +43,17 @@ export class StateHelper {
       .filter(id => id)
   }
 
-  static deriveTokensFromBalancesDetails () {
-    return store.getters.rawBalances
-      .map(balance => {
-        const token = RecordFactory.createTokenRecord(get(balance, 'asset_details'))
-        const sale = RecordFactory.createSaleRecord(get(balance, 'asset_details.sales[0]'))
-        token.attachSale(sale)
-        token.attachDetails({
+  static deriveTokensFromBalancesDetails (filter = () => true) {
+    return store.getters.accountRawBalances
+      .map(balance => RecordFactory.createTokenRecord(
+        get(balance, 'asset_details'), {
+          balance: balance.balance,
+          balanceLocked: balance.locked,
           convertedBalance: balance.converted_balance,
-          convertedLocked: balance.converted_locked
-        })
-        return token
-      })
+          convertedBalanceLocked: balance.converted_locked
+        }
+      ))
+      .filter(filter)
   }
 
   static storeLoginData (opts) {
