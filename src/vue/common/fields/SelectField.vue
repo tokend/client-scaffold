@@ -1,5 +1,6 @@
 <template>
   <md-field>
+    <label :for="id">Movie</label>
     <md-select
       :placeholder="placeholder"
       :disabled="disabled"
