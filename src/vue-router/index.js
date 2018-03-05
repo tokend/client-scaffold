@@ -14,6 +14,7 @@ import EmailResend from '../vue/auth/ConfirmEmail.vue'
 import AppContent from '../vue/root/AppContent.vue'
 
 import Dashboard from '../vue/app/Dashboard'
+import Wallet from '../vue/app/wallet/Wallet.Entry'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ const router = new Router({
           name: 'app.dashboard',
           path: '/dashboard',
           component: Dashboard
+        },
+        {
+          name: 'app.wallet',
+          path: '/wallet',
+          component: Wallet
         }
       ]
     }

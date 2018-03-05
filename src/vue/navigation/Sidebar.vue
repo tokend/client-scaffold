@@ -9,7 +9,7 @@
         <span class="md-list-item-text">Dashboard</span>
       </md-list-item>
 
-      <md-list-item to="/dashboard">
+      <md-list-item to="/wallet">
         <md-icon>account_balance_wallet</md-icon>
         <span class="md-list-item-text">Wallet</span>
       </md-list-item>
