@@ -7,7 +7,12 @@
 
   export default {
     name: 'wallet',
-    mixins: [RouteEntryMixin]
+    mixins: [RouteEntryMixin],
+    data: _ => ({
+      routes: [
+        { path: '/wallet/overview', label: 'Overview' }
+      ]
+    })
   }
 </script>
 

@@ -14,7 +14,9 @@ import EmailResend from '../vue/auth/ConfirmEmail.vue'
 import AppContent from '../vue/root/AppContent.vue'
 
 import Dashboard from '../vue/app/Dashboard'
+
 import Wallet from '../vue/app/wallet/Wallet.Entry'
+import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
 
 Vue.use(Router)
 
@@ -69,7 +71,15 @@ const router = new Router({
         {
           name: 'app.wallet',
           path: '/wallet',
-          component: Wallet
+          component: Wallet,
+          redirect: { path: '/wallet/overview' },
+          children: [
+            {
+              path: '/wallet/overview',
+              name: 'wallet.overview',
+              component: WalletOverview
+            }
+          ]
         }
       ]
     }
