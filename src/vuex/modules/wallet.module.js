@@ -3,14 +3,12 @@ import { WalletHelper } from '../../js/helpers/wallet.helper'
 import { vuexTypes } from '../types'
 
 export const state = {
-  wallet: {
-    id: ''
-  }
+  id: ''
 }
 
 export const mutations = {
   SET_WALLET_ID (state, walletId) {
-    state.wallet.id = walletId
+    state.id = walletId
   }
 }
 
@@ -42,7 +40,7 @@ export const actions = {
 }
 
 export const getters = {
-  userWalletId: state => state.wallet.id
+  walletId: state => state.id
 }
 
 export default {
