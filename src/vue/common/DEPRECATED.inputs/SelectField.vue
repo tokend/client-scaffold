@@ -15,7 +15,6 @@
 
         <label> {{ title }} </label>
 
-        <dropdown-arrow></dropdown-arrow>
       </div>
 
       <div class="error" :class="{ 'error--hidden': !error }">
@@ -27,16 +26,11 @@
 
 <script>
   import input from './input.mixin'
-  import DropdownArrow from './DropdownArrow.vue'
 
   export default {
     name: 'select-field',
 
     mixins: [input],
-
-    components: {
-      DropdownArrow
-    },
 
     props: {
       values: {
