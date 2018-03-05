@@ -30,7 +30,7 @@ export const mutations = {
     state.createdAt = createdAt
   },
   SET_FAVORITES: (state, favorites) => {
-    state.favorites = favorites
+    state.details.favorites = favorites
   }
 }
 
