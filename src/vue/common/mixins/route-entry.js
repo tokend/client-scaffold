@@ -8,9 +8,5 @@ export default {
 
   created () {
     dispatchAppEvent(commonEvents.routesUpdateEvent, this.routes)
-  },
-
-  updated () {
-    dispatchAppEvent(commonEvents.routesUpdateEvent, this.routes)
   }
 }
