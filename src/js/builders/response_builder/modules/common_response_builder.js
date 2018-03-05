@@ -9,7 +9,7 @@ export class CommonResponseBuilder extends ResponseBuilder {
       try {
         this._parsedData = JSON.parse(response.body)
       } catch (err) {
-        this._parsedData = response.body
+        this._parsedData = response.body || response
       }
     }
   }
@@ -28,8 +28,7 @@ export class CommonResponseBuilder extends ResponseBuilder {
   }
 
   data (field) {
-    const data = this._parsedData.data || this._parsedData
-
+    const data = this._parsedData.data || this._parsedData || this._rawResponse.data || this._rawResponse
     if (!field) {
       return data
     }
