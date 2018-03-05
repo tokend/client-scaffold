@@ -1,3 +1,27 @@
+@import 'variables/colors';
+@import 'variables/fonts';
+
+$sidebar-width: 210px;
+$material-icons-small: 14px;
+$material-icon-size: 18px;
+$material-icon-medium: 24px;
+$material-icon-big: 32px;
+$material-icon-big-but-not-so-big: 48px;
+$material-icon-super-big: 64px;
+$material-icon-xx-super-big: 128px;
+
+$z-status-message: 20;
+$z-dd-menu: 15;
+$z-sidebar: 10;
+$z-open-sidebar-btn: 5;
+$z-secondary-navbar: 3;
+$z-cover: 17;
+$z-sidebar-cover: 9;
+$z-modal-dialog: 20;
+$z-embed-page: 45;
+$z-markdown-editor: 45;
+
+// colors:
 // CAUTION: do not use these colors externally
 
 $black: #3f4244;
@@ -44,3 +68,12 @@ $col-btc: #FF9900;
 
 $col-md-primary: #1565c0;
 $col-md-accent: #ef5350;
+
+
+// fonts:
+$fs-top-heading: 32px;
+$fs-heading: 24px;
+$fs-offer-input: 24px;
+$fs-root: 16px;
+$fs-tip: 12px;
+$fs-label: 12px;

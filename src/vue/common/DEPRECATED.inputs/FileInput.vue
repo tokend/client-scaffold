@@ -65,7 +65,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/variables';
+  @import '../../../scss/variables';
 
   .file-input {
     display: inline-block;

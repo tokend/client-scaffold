@@ -71,7 +71,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/variables';
+  @import '../../../scss/variables';
 
   .image-input {
     border: 1px dashed $col-unfocused;

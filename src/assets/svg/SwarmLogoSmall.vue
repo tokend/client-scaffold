@@ -69,5 +69,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/style/variables.scss';
+  @import '../../scss/variables.scss';
 </style>

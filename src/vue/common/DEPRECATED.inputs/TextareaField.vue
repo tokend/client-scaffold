@@ -34,7 +34,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/variables';
+  @import '../../../scss/variables';
 
   .textarea-field {
     label {

@@ -12,7 +12,7 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
-  output: { 
+  output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
@@ -75,7 +75,7 @@ module.exports = {
     loaders: [
       {
         test: /\.s[a|c]ss$/,
-        loader: 'style!css!sass'
+        loader: 'scss!css!sass'
       }
     ]
   }

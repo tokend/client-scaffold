@@ -156,8 +156,8 @@
 
 
 <style scoped lang="scss">
-  @import "../../assets/style/variables";
-  @import "../../assets/style/helpers/mixins";
+  @import "../../scss/variables";
+  @import "../../scss/mixins";
 
   .user-account-widget {
     display: inline-block;

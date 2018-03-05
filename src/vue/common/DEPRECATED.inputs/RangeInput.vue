@@ -82,8 +82,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/variables';
-  @import '../../../assets/style/helpers/mixins';
+  @import '../../../scss/variables';
+  @import '../../../scss/mixins';
 
   .range-input {
     position: relative;

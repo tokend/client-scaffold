@@ -3,7 +3,7 @@
 
 import Vue from 'vue'
 import App from './vue/root/App'
-import './assets/style/app.scss'
+import './scss/app.scss'
 
 // vue default plugins
 import router from './vue-router'
