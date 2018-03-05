@@ -9,7 +9,7 @@ import { resolveRedirect } from './redirection_resolver'
 import Login from '../vue/auth/Login.vue'
 import Signup from '../vue/auth/Signup.vue'
 import Recovery from '../vue/auth/Recovery.vue'
-import EmailResend from '../vue/auth/EmailResend.vue'
+import EmailResend from '../vue/auth/ConfirmEmail.vue'
 
 import AppContent from '../vue/root/AppContent.vue'
 
