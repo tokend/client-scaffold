@@ -5,7 +5,8 @@
       <navbar/>
     </md-app-toolbar>
 
-    <md-app-drawer md-permanent="full" v-if="isLoggedIn">
+    <md-app-drawer md-permanent="full"
+                   v-if="isLoggedIn">
       <sidebar/>
     </md-app-drawer>
 
@@ -40,6 +41,10 @@
       Sidebar,
       Snackbar
     },
+
+    data: () => ({
+      menuVisible: false
+    }),
 
     computed: {
       ...mapGetters([
@@ -99,5 +104,13 @@
 </script>
 
 <style lang="scss">
+  .md-app {
+    height: 100%;
+  }
+
+  .md-drawer {
+    width: 230px;
+    max-width: calc(100vw - 125px);
+  }
 
 </style>
