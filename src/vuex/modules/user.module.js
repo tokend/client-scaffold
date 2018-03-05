@@ -57,8 +57,8 @@ export const getters = {
   userEmail: state => state.email,
   userState: state => state.state,
   userType: state => state.type,
-  userRejectReason: state => state.reject_reason,
-  userCreatedAt: state => state.created_at,
+  userRejectReason: state => state.rejectReason,
+  userCreatedAt: state => state.createdAt,
   userFavorites: state => state.details.favorites
 }
 
