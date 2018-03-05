@@ -2,7 +2,7 @@ import { TxRecord } from './tx.record'
 
 import store from '../../../../../vuex'
 
-import { convertAmount } from '../../../../helpers/prices.helper'
+import { PricesHelper } from '../../../../../vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from '../../help/records.const'
 
 import get from 'lodash/get'
@@ -40,6 +40,6 @@ export class IssuanceRecord extends TxRecord {
   }
 
   _getSUNAmount () {
-    return convertAmount(this.amount, this.asset, 'SUN')
+    return PricesHelper.baseToQuote(this.amount, this.asset, 'SUN')
   }
 }
