@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import store from '../vuex'
 
-import { resolveRedirect } from './redirection_resolver'
+import { resolveRedirect } from './redirect'
 
 // route components:
 import Login from '../vue/auth/Login.vue'
