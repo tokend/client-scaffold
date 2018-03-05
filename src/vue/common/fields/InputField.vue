@@ -31,14 +31,7 @@
     name: 'input-field',
     mixins: [InputMixin],
     props: {
-      value: { type: [String, Number, Boolean, Array], default: '' },
-      label: { type: String, default: '' },
       type: { type: String, default: 'text' },
-      placeholder: { type: String, default: '' },
-      required: { type: Boolean, default: false },
-      id: { type: String, default: '' },
-      name: { type: String, default: '' },
-      disabled: { type: Boolean, default: false },
       maxlength: { type: [Number, null], default: null },
       counter: { type: [Number, null], default: null },
       readonly: { type: Boolean, default: false }
