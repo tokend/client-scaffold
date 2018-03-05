@@ -1,4 +1,4 @@
-import store from '../../vuex'
+import store from '../index'
 
 /**
  * Finds sale for provided token in store if exists
