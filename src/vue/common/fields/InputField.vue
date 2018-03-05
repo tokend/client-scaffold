@@ -25,11 +25,11 @@
 </template>
 
 <script>
-  import InputMixin from './input.mixin'
+  import FieldMixin from './field.mixin'
 
   export default {
     name: 'input-field',
-    mixins: [InputMixin],
+    mixins: [FieldMixin],
     props: {
       type: { type: String, default: 'text' },
       maxlength: { type: [Number, null], default: null },
