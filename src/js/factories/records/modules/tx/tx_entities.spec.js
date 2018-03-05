@@ -6,18 +6,6 @@ import { IssuanceRecord } from './issuance.record'
 // TODO: resolve store dependency injection
 
 describe('TxRecord record parsers', () => {
-  it ('should properly parse withdraw record', () => {
-    const withdraw = new WithdrawalRecord(withdawRecord)
-    expect(withdraw.amount).to.equal('45.0000')
-    expect(withdraw.fixedFee).to.equal("0.0000")
-    expect(withdraw.percentFee).to.equal("0.0000")
-    expect(withdraw.counterparty).to.equal("2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF")
-    expect(withdraw.direction).to.equal('out')
-    expect(withdraw.destinationAsset).to.equal('BTC')
-    expect(withdraw.destinationAmount).to.equal('0.0022')
-    expect(withdraw.state).to.equal('pending')
-  })
-
   it ('should properly parse issuance record', () => {
     const issuance = new IssuanceRecord(issuanceRecord)
     expect(issuance.amount).to.equal('1000.0000')

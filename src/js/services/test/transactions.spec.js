@@ -12,10 +12,6 @@ import { IssuanceRecord } from '../../factories/records/modules/tx/issuance.reco
 import { UnknownTransactionError } from '../../../js/errors/modules/unknown_transaction_error'
 
 describe('correctly parses transactions', () => {
-  it ('should correctly define withdraw entity', () => {
-     expect(parseTransaction(withdawRecord).constructor).to.equal(WithdrawalRecord)
-  })
-
   it ('should correctly define transfer entity', () => {
      expect(parseTransaction(transferRecord).constructor).to.equal(TransferRecord)
   })
