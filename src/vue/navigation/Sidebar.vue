@@ -1,55 +1,46 @@
 <template>
   <div>
+
+    <md-toolbar class="md-transparent" md-elevation="0">
+      TokenD
+      <!--<router-link>TokenD</router-link>-->
+    </md-toolbar>
+
     <md-list>
-      <router-link :to="{ name: 'app.dashboard' }">
-        <md-list-item>
-          <md-icon>dashboard</md-icon>
-          <span class="md-list-item-text">Dashboard</span>
-        </md-list-item>
-      </router-link>
+      <md-list-item to="/dashboard">
+        <md-icon>dashboard</md-icon>
+        <span class="md-list-item-text">Dashboard</span>
+      </md-list-item>
 
-      <router-link :to="{ name: 'app.SUN-wallet' }">
-        <md-list-item>
-          <md-icon>account_balance_wallet</md-icon>
-          <span class="md-list-item-text">Wallet</span>
-        </md-list-item>
-      </router-link>
+      <md-list-item to="/dashboard">
+        <md-icon>account_balance_wallet</md-icon>
+        <span class="md-list-item-text">Wallet</span>
+      </md-list-item>
 
-      <router-link :to="{ name: 'app.portfolio' }">
-        <md-list-item>
-          <md-icon>work</md-icon>
-          <span class="md-list-item-text">Portfolio</span>
-        </md-list-item>
-      </router-link>
+      <md-list-item to="/dashboard">
+        <md-icon>work</md-icon>
+        <span class="md-list-item-text">Portfolio</span>
+      </md-list-item>
 
-      <router-link :to="{ name: 'app.invest' }">
-        <md-list-item>
-          <md-icon>show_chart</md-icon>
-          <span class="md-list-item-text">Invest</span>
-        </md-list-item>
-      </router-link>
+      <md-list-item to="/dashboard">
+        <md-icon>show_chart</md-icon>
+        <span class="md-list-item-text">Invest</span>
+      </md-list-item>
 
-      <router-link :to="{ name: 'app.trade' }">
-        <md-list-item>
-          <md-icon>swap_horiz</md-icon>
-          <span class="md-list-item-text">Trade</span>
-        </md-list-item>
-      </router-link>
+      <md-list-item to="/dashboard">
+        <md-icon>swap_horiz</md-icon>
+        <span class="md-list-item-text">Trade</span>
+      </md-list-item>
 
+      <md-list-item to="/dashboard">
+        <md-icon>monetization_on</md-icon>
+        <span class="md-list-item-text">Create fund</span>
+      </md-list-item>
 
-      <router-link :to="{ name: 'app.create-fund' }">
-        <md-list-item>
-          <md-icon>monetization_on</md-icon>
-          <span class="md-list-item-text">Create fund</span>
-        </md-list-item>
-      </router-link>
-
-      <router-link :to="{ name: 'app.my-funds' }">
-        <md-list-item>
-          <md-icon>gavel</md-icon>
-          <span class="md-list-item-text">My funds</span>
-        </md-list-item>
-      </router-link>
+      <md-list-item to="/dashboard">
+        <md-icon>gavel</md-icon>
+        <span class="md-list-item-text">My funds</span>
+      </md-list-item>
 
     </md-list>
   </div>
