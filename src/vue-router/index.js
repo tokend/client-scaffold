@@ -14,8 +14,6 @@ import EmailResend from '../vue/auth/EmailResend.vue'
 import AppContent from '../vue/root/AppContent.vue'
 
 import Dashboard from '../vue/app/Dashboard'
-import Dashboard1 from '../vue/app/Dashboard1'
-import Dashboard2 from '../vue/app/Dashboard2'
 
 Vue.use(Router)
 
@@ -65,20 +63,7 @@ const router = new Router({
         {
           name: 'app.dashboard',
           path: '/dashboard',
-          component: Dashboard,
-          redirect: { name: 'dashboard.p1' },
-          children: [
-            {
-              name: 'dashboard.p1',
-              path: '/dashboard/1',
-              component: Dashboard1
-            },
-            {
-              name: 'dashboard.p2',
-              path: '/dashboard/2',
-              component: Dashboard2
-            }
-          ]
+          component: Dashboard
         }
       ]
     }
