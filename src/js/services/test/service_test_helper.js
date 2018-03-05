@@ -1,7 +1,10 @@
 import MockAdapter from 'axios-mock-adapter'
-import config from '../../config'
-import axios from 'swarm-js-sdk/node_modules/axios'
+import config from '../../../config'
+import axios from 'axios'
 import Vue from 'vue'
+import VueResourse from 'vue-resource'
+
+Vue.use(VueResourse)
 
 export class ServiceTestHelper {
   static doAxiosMockedRequest (service, prefix, response) {

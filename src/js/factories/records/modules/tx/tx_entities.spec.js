@@ -1,4 +1,4 @@
-import { withdawRecord, issuanceRecord, transferRecord } from '../../../../../test/unit/mock_data/records'
+import { withdawRecord, issuanceRecord, transferRecord } from '../../../../../../test/unit/mock_data/records'
 import { WithdrawalRecord } from './withdraw.record'
 import { TransferRecord } from './transfer.record'
 import { IssuanceRecord } from './issuance.record'

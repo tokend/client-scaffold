@@ -27,9 +27,9 @@
 <script>
   import moment from 'moment'
   import { mapActions } from 'vuex'
-  import { vuexTypes } from '../../../store/types'
-  import { attachEventHandler } from '../../../factories/events/helpers'
-  import { commonEvents } from '../../../factories/events/common_events'
+  import { vuexTypes } from '../../../vuex/types'
+  import { attachEventHandler } from '../../../js/events/helpers'
+  import { commonEvents } from '../../../js/events/common_events'
 
   const popupShowLimit = 15 * 60
   const idleDelay = 60

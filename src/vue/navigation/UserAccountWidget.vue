@@ -74,10 +74,10 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import SwarmLogo from '../../assets/svg/SwarmLogoSmallBlack'
-  import { localizeQuote } from '../../helpers/numbers.helper'
-  import { vuexTypes } from '../../store/types'
-  import { blobTypes, blobFilters } from '../../const/const'
-  import { usersService } from '../../services/users.service'
+  import { localizeQuote } from '../../js/helpers/numbers.helper'
+  import { vuexTypes } from '../../vuex/types'
+  import { blobTypes, blobFilters } from '../../js/const/documents.const'
+  import { usersService } from '../../js/services/users.service'
 
   export default {
     components: {
