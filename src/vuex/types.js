@@ -61,7 +61,11 @@ const getters = {
   accountTokens: 'accountTokens',
   accountBalances: 'accountBalances',
   accountRawBalances: 'accountRawBalances',
-  accountExternalAddresses: 'accountExternalAddresses'
+  accountExternalAddresses: 'accountExternalAddresses',
+
+  // tokens:
+  userAcquiredTokens: 'userAcquiredTokens',
+  userWalletTokens: 'userWalletTokens'
 }
 
 export const vuexTypes = {

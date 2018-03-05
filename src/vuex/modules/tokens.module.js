@@ -37,7 +37,8 @@ export const actions = {
 export const getters = {
   tokens: state => state.tokens,
   userOwnedTokens: state => state.userOwnedTokens,
-  userAcquiredTokens: _ => StateHelper.deriveTokensFromBalancesDetails()
+  userAcquiredTokens: _ => StateHelper.deriveTokensFromBalancesDetails(),
+  userWalletTokens: _ => StateHelper.deriveTokensFromBalancesDetails(token => token.isWalletToken)
 }
 
 export default {
