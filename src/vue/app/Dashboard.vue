@@ -3,23 +3,11 @@
 </template>
 
 <script>
-  import { dispatchAppEvent } from '../../js/events/helpers'
-  import { commonEvents } from '../../js/events/common_events'
+  import RouteEntryMixin from '../common/mixins/route-entry'
 
   export default {
     name: 'dashboard',
-
-    data: () => ({
-      routes: []
-    }),
-
-    created () {
-      dispatchAppEvent(commonEvents.routesUpdateEvent, this.routes)
-    },
-
-    updated () {
-      dispatchAppEvent(commonEvents.routesUpdateEvent, this.routes)
-    }
+    mixins: [RouteEntryMixin]
   }
 </script>
 
