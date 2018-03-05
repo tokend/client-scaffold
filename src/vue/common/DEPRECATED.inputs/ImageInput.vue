@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-  import fileParser from '../../../js/parsers/file.parser'
+  import { FileHelper } from '../../../js/helpers/file.helper'
 
   export default {
     name: 'image-input',
@@ -56,8 +56,8 @@
 
     methods: {
       async handleImageUpload (event) {
-        const image = fileParser.deriveFileFromChangeEvent(event)
-        const { dataURL } = await fileParser.readFileAsDataURL(image)
+        const image = FileHelper.deriveFileFromChangeEvent(event)
+        const { dataURL } = await FileHelper.readFileAsDataURL(image)
         this.imageDataUrl = dataURL
       },
       attachHandlers () {

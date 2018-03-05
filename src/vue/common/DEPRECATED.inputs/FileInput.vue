@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import fileParser from '../../../js/parsers/file.parser'
+  import { FileHelper } from '../../../js/helpers/file.helper'
   import { commonEvents } from '../../../js/events/common_events'
   import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from '../../../js/const/const'
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
@@ -55,7 +55,7 @@
         }
         this.name = file.name
         this.type = file.type
-        const extracted = await fileParser.readFileAsArrayBuffer(file)
+        const extracted = await FileHelper.readFileAsArrayBuffer(file)
         const mimeType = file.type
         const name = file.name
         this.$emit(commonEvents.inputEvent, { file: extracted, mimeType, name })
