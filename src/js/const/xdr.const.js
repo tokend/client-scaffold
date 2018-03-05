@@ -1,4 +1,4 @@
-import { xdrEnumToConstant } from '../utils/xdr_enum_to_constant'
+import { xdrEnumToConstant } from '../utils/xdr_enum_to_constant.util'
 
 export const REQUEST_TYPES = Object.freeze(
   xdrEnumToConstant('ReviewableRequestType')

@@ -1,5 +1,5 @@
 import store from '../../vuex'
-import { multiply, divide } from '../utils/math'
+import { multiply, divide } from '../utils/math.util'
 
 const MEDIUM_ASSET = 'SUN'
 

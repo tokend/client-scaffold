@@ -74,7 +74,7 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import SwarmLogo from '../../assets/svg/SwarmLogoSmallBlack'
-  import { localizeQuote } from '../../js/helpers/numbers.helper'
+  import { localizeQuote } from '../../js/utils/format-num.util'
   import { vuexTypes } from '../../vuex/types'
   import { blobTypes, blobFilters } from '../../js/const/documents.const'
   import { usersService } from '../../js/services/users.service'

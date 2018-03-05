@@ -1,7 +1,7 @@
 import store from '../../../../../vuex'
 import { TxRecord } from './tx.record'
 
-import { add } from '../../../../utils/math'
+import { add } from '../../../../utils/math.util'
 import { convertAmount } from '../../../../helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from '../../help/records.const'
 

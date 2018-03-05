@@ -1,4 +1,4 @@
-import { humanizePastDate } from '../../../../helpers/dates.helper'
+import { humanizePastDate } from '../../../../utils/dates.util'
 import { feeAsset } from '../../../../const/const'
 
 export class TxRecord {

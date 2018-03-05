@@ -4,7 +4,7 @@ import { Service } from './service'
 import { ManageOfferBuilder } from 'swarm-js-sdk'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../const/const'
 import { feeService } from './fees.service'
-import { multiply } from '../utils/math'
+import { multiply } from '../utils/math.util'
 
 export class OffersService extends Service {
   /**
