@@ -38,10 +38,10 @@ var cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: 'vue-scss-loader'
+        fallback: 'vue-style-loader'
       })
     } else {
-      return ['vue-scss-loader'].concat(loaders)
+      return ['vue-style-loader'].concat(loaders)
     }
   }
 
