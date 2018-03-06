@@ -2,7 +2,7 @@ import { TxRecord } from './tx.record'
 import store from '../../../../../vuex'
 import get from 'lodash/get'
 import { PricesHelper } from '../../../../../vuex/helpers/prices.helper'
-import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from '../../help/records.const'
+import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class WithdrawalRecord extends TxRecord {
   constructor (record) {

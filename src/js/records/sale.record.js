@@ -1,14 +1,14 @@
 import moment from 'moment'
 import get from 'lodash/get'
 
-import config from '../../../../config'
+import config from '../../../config/index'
 import store from '../../../../vuex'
 
 import { tokensService } from '../../../services/tokens.service'
 import { accountsService } from '../../../services/accounts.service'
 import { usersService } from '../../../services/users.service'
 
-import { RecordFactory } from '../factory'
+import { RecordFactory } from './factory'
 import { blobFilters, blobTypes } from '../../../const/const'
 
 const STATES = {

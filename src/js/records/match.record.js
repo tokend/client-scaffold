@@ -3,7 +3,7 @@ import { TxRecord } from './tx.record'
 import store from '../../../../../vuex'
 
 import { PricesHelper } from '../../../../../vuex/helpers/prices.helper'
-import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from '../../help/records.const'
+import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class MatchRecord extends TxRecord {
   constructor (record, asset) {

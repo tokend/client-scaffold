@@ -1,6 +1,6 @@
-import config from '../../../../config'
+import config from '../../../config/index'
 import get from 'lodash/get'
-import { xdr } from 'swarm-js-sdk'
+import { xdr } from '../../../../js-sdk/lib/index'
 import { ASSET_POLICIES } from '../../../const/xdr.const'
 
 export class TokenRecord {

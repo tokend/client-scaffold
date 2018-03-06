@@ -1,13 +1,13 @@
-import { TransferRecord } from './modules/tx/transfer.record'
-import { TokenRecord } from './modules/token.record'
+import { TransferRecord } from './transfer.record'
+import { TokenRecord } from './token.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
-import { IssuanceRecord } from './modules/tx/issuance.record'
-import { WithdrawalRecord } from './modules/tx/withdraw.record'
-import { SaleRecord } from './modules/sale.record'
-import { OfferRecord } from './modules/offer.record'
-import { MatchRecord } from './modules/tx/match.record'
-import { AssetPairRecord } from './modules/asset_pair.record'
-import { TradeRecord } from './modules/trade.record'
+import { IssuanceRecord } from './issuance.record'
+import { WithdrawalRecord } from './withdraw.record'
+import { SaleRecord } from './sale.record'
+import { OfferRecord } from './offer.record'
+import { MatchRecord } from './match.record'
+import { AssetPairRecord } from './asset_pair.record'
+import { TradeRecord } from './trade.record'
 
 export class RecordFactory {
   static createTransferRecord () {

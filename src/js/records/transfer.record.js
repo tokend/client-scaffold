@@ -3,7 +3,7 @@ import { TxRecord } from './tx.record'
 
 import { add } from '../../../../utils/math.util'
 import { PricesHelper } from '../../../../../vuex/helpers/prices.helper'
-import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from '../../help/records.const'
+import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class TransferRecord extends TxRecord {
   constructor (record) {

@@ -1,6 +1,6 @@
 import { offersService } from '../../../services/offer.service'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../const/const'
-import { RECORDS_VERBOSE } from '../help/records.const'
+import { RECORDS_VERBOSE } from './help/records.const'
 
 export class OfferRecord {
   constructor (record) {
