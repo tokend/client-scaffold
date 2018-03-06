@@ -23,15 +23,15 @@ export const actions = {
 export const getters = {
   assetPairs: state => state.asset_pairs,
   assetRates: state => state.asset_pairs
-    .map(pair => ({ code: pair.base, price: pair.current_price }))
+    .map(pair => ({ code: pair.base, price: pair.currentPrice }))
     .reduce((rates, pair) => { rates[pair.code] = pair.price; return rates }, {}),
   assetRatesUSD: state => state.asset_pairs
     .filter(pair => pair.quote === 'USD')
-    .map(pair => ({ code: pair.base, price: pair.current_price }))
+    .map(pair => ({ code: pair.base, price: pair.currentPrice }))
     .reduce((rates, pair) => { rates[pair.code] = pair.price; return rates }, {}),
   assetRatesSUN: state => state.asset_pairs
     .filter(pair => pair.quote === 'SUN')
-    .map(pair => ({ code: pair.base, price: pair.current_price }))
+    .map(pair => ({ code: pair.base, price: pair.currentPrice }))
     .reduce((rates, pair) => { rates[pair.code] = pair.price; return rates }, {})
 }
 

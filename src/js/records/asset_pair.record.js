@@ -11,12 +11,6 @@ export class AssetPairRecord {
     this.maxPriceStep = record.max_price_step
     this.policy = record.policy
     this.policies = record.policies
-
-    // TODO: left for backwards compatibility, find usages and replace:
-    this.current_price = record.current_price
-    this.physical_price_correction = record.physical_price_correction
-    this.physical_price = record.physical_price
-    this.max_price_step = record.max_price_step
   }
 
   get isTradable () {
