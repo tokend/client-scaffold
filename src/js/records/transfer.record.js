@@ -1,4 +1,3 @@
-import store from '../../vuex'
 import { TxRecord } from './tx.record'
 
 import { add } from '../utils/math.util'
@@ -6,8 +5,9 @@ import { PricesHelper } from '../../vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class TransferRecord extends TxRecord {
-  constructor (record) {
+  constructor (record, userAccountId) {
     super(record, RECORDS_VERBOSE.transfer)
+    this.userAccountId = userAccountId
     this.amount = record.amount
     this.asset = record.asset
     this.id = record.id
@@ -22,7 +22,7 @@ export class TransferRecord extends TxRecord {
   }
 
   _getDirection () {
-    const userAccountId = store.getters.userAccountId
+    const userAccountId = this.userAccountId
     return this._record.from === userAccountId ? DIRECTION_VERBOSE.out : DIRECTION_VERBOSE.in
   }
 

@@ -1,8 +1,7 @@
 import moment from 'moment'
 import get from 'lodash/get'
 
-import config from '../../../config/index'
-import store from '../../vuex'
+import config from '../../config'
 
 import { tokensService } from '../services/tokens.service'
 import { accountsService } from '../services/accounts.service'
@@ -18,8 +17,9 @@ const STATES = {
 }
 
 export class SaleRecord {
-  constructor (record) {
+  constructor (record, userAccountId) {
     this._record = record
+    this.userAccountId = userAccountId
 
     this.id = record.id
     this.owner = record.owner_id
@@ -126,7 +126,7 @@ export class SaleRecord {
   }
 
   get isMy () {
-    return this.owner === store.getters.userAccountId
+    return this.owner === this.userAccountId
   }
 
   // api:
@@ -152,14 +152,5 @@ export class SaleRecord {
     const syndicateDetails = (await usersService.blobsOf(this.owner).getAll(filters))[0]
     this.syndicate = details.email
     this.syndicateDetails = syndicateDetails
-  }
-
-  async followSelf () {
-    if (!this.baseAsset) return
-    await accountsService.createBalance(this.baseAsset)
-  }
-
-  async isFollowing () {
-    return Boolean(store.getters.balances[this.baseAsset])
   }
 }

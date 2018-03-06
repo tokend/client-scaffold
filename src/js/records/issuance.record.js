@@ -1,11 +1,11 @@
 import { TxRecord } from './tx.record'
-import store from '../../vuex'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 import get from 'lodash/get'
 
 export class IssuanceRecord extends TxRecord {
-  constructor (record) {
+  constructor (record, userAccountId) {
     super(record, RECORDS_VERBOSE.issuance)
+    this.userAccountId = userAccountId
     this.amount = record.amount
     this.asset = record.asset
     this.fixedFee = record.fee_fixed
@@ -21,7 +21,7 @@ export class IssuanceRecord extends TxRecord {
       this._record
         .participants
         .find(participant =>
-              participant.account_id !== store.getters.userAccountId
+              participant.account_id !== this.userAccountId
          )
     return get(counterparty, 'account_id') || ''
   }
