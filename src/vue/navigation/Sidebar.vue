@@ -10,37 +10,23 @@
       </md-list-item>
 
       <md-list-item to="/wallet">
-        <md-icon>account_balance_wallet</md-icon>
-        <span class="md-list-item-text">Wallet</span>
+        <md-icon>file_download</md-icon>
+        <span class="md-list-item-text">Deposit</span>
       </md-list-item>
 
       <md-list-item to="/dashboard">
-        <md-icon>work</md-icon>
-        <span class="md-list-item-text">Portfolio</span>
+        <md-icon>withdraw</md-icon>
+        <span class="md-list-item-text">Withdraw</span>
       </md-list-item>
 
       <md-list-item to="/dashboard">
-        <md-icon>show_chart</md-icon>
-        <span class="md-list-item-text">Invest</span>
+        <md-icon>send</md-icon>
+        <span class="md-list-item-text">Send</span>
       </md-list-item>
 
       <md-list-item to="/dashboard">
-        <md-icon>swap_horiz</md-icon>
-        <span class="md-list-item-text">Trade</span>
-      </md-list-item>
-
-      <md-divider></md-divider>
-
-      <md-subheader>Syndicate</md-subheader>
-
-      <md-list-item to="/dashboard">
-        <md-icon>monetization_on</md-icon>
-        <span class="md-list-item-text">Create fund</span>
-      </md-list-item>
-
-      <md-list-item to="/dashboard">
-        <md-icon>gavel</md-icon>
-        <span class="md-list-item-text">My funds</span>
+        <md-icon>featured_play_list</md-icon>
+        <span class="md-list-item-text">History</span>
       </md-list-item>
 
     </md-list>
