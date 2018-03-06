@@ -1,6 +1,6 @@
 import { ExtendableError } from './extendable_error.error'
 import { EventDispatcher } from '../events/event_dispatcher'
-import i18n from '../i18n/email'
+import { i18n } from '../i18n'
 
 export class InvalidEmailError extends ExtendableError {
   constructor () {

@@ -1,7 +1,4 @@
-import defaultMsg from './default'
-
 export default {
-  ...defaultMsg,
   offer_created: 'Offer successfully created',
   offer_cancelled: 'Offer successfully cancelled',
   failed_to_cancel: 'Failed to cancel offer',

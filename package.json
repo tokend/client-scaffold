@@ -34,6 +34,7 @@
     "mdi": "^2.0.46",
     "mock-require": "^2.0.2",
     "moment": "^2.19.1",
+    "node-polyglot": "^2.2.2",
     "raven-js": "^3.22.1",
     "swarm-js-sdk": "git+ssh://git@gitlab.com/swarmfund/js-sdk.git#dev",
     "ua-parser-js": "^0.7.17",

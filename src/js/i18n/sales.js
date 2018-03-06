@@ -1,7 +1,4 @@
-import defaultMsg from './default'
-
 export default {
-  ...defaultMsg,
   date_range_overlap: 'Sale end date cannot must be after start date',
   cap_overlap: 'Hard cap must be higher than soft cap',
   failed: 'Failed to create fund',

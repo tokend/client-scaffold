@@ -13,7 +13,7 @@
                md-small-size-65
                md-xsmall-size-100">
         <md-card-header>
-          <div class="md-title">Sign in</div>
+          <div class="md-title">{{ i18n.login() }}</div>
         </md-card-header>
 
         <md-card-content>
@@ -60,7 +60,6 @@
 <script>
   import formMixin from '../common/mixins/form.mixin'
 
-  import i18n from '../../js/i18n/auth'
   import { errors } from '../../js/errors/factory'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
   import { dispatchAppEvent } from '../../js/events/helpers'
@@ -75,6 +74,8 @@
   import { emailService } from '../../js/services/email.service'
   import { usersService } from '../../js/services/users.service'
 
+  import { i18n } from '../../js/i18n'
+
   export default {
     mixins: [formMixin],
 
@@ -82,7 +83,8 @@
       form: {
         password: '',
         email: ''
-      }
+      },
+      i18n
     }),
 
     created () {
