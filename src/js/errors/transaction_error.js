@@ -1,5 +1,5 @@
-import { ExtendableError } from '../parents/extendable_error'
-import { EventDispatcher } from '../../events/event_dispatcher'
+import { ExtendableError } from './extendable_error'
+import { EventDispatcher } from '../events/event_dispatcher'
 
 export class TransactionError extends ExtendableError {
   constructor (message, code) {

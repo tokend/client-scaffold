@@ -1,4 +1,4 @@
-import { EventDispatcher } from '../../events/event_dispatcher'
+import { EventDispatcher } from '../events/event_dispatcher'
 
 export class ExtendableError extends Error {
   constructor (message) {

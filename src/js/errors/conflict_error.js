@@ -1,4 +1,4 @@
-import { ExtendableError } from '../parents/extendable_error'
+import { ExtendableError } from './extendable_error'
 
 export class ConflictError extends ExtendableError {
   constructor () {

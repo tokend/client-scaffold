@@ -1,6 +1,6 @@
-import { ExtendableError } from '../parents/extendable_error'
-import { EventDispatcher } from '../../events/event_dispatcher'
-import i18n from '../../i18n/auth'
+import { ExtendableError } from './extendable_error'
+import { EventDispatcher } from '../events/event_dispatcher'
+import i18n from '../i18n/auth'
 
 export class ExpiredSignatureError extends ExtendableError {
   constructor () {

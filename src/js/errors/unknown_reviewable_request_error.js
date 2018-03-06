@@ -1,4 +1,4 @@
-import { ExtendableError } from '../parents/extendable_error'
+import { ExtendableError } from './extendable_error'
 
 export class UnknownReviewableRequestError extends ExtendableError {
   constructor (request) {
