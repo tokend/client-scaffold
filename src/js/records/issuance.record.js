@@ -6,11 +6,11 @@ export class IssuanceRecord extends TxRecord {
   constructor (record, userAccountId) {
     super(record, RECORDS_VERBOSE.issuance)
     this.userAccountId = userAccountId
+
     this.amount = record.amount
     this.asset = record.asset
     this.fixedFee = record.fee_fixed
     this.percentFee = record.fee_percent
-    this.id = record.id
     this.subject = record.reference
     this.counterparty = this._getCounterparty()
     this.direction = this._getDirection()

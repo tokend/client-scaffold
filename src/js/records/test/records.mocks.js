@@ -1,3 +1,6 @@
+export const mockAccountId = 'GDHQUMVTZM2DEWWNUCN7LM7HQWDQE4DD3VC43BQE7SYDY3IMBONUHZ6X'
+export const mockCounterpartyId = 'GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636'
+
 export const recordResponses = {
   assetPair: {
     "base": "SWM4",
@@ -36,10 +39,10 @@ export const recordResponses = {
     "ledger_close_time": "2018-03-05T15:18:21Z",
     "participants": [
       {
-        "account_id": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636"
+        "account_id": mockCounterpartyId
       },
       {
-        "account_id": "GDHQUMVTZM2DEWWNUCN7LM7HQWDQE4DD3VC43BQE7SYDY3IMBONUHZ6X",
+        "account_id": mockAccountId,
         "balance_id": "BA2T5HDBZDWNQLGRCCNAHZQPCU3T3AWYE36OSRTFHYTD5HUA6UJPXGGN"
       }
     ],

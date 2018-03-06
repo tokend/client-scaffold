@@ -5,6 +5,7 @@ export class TxRecord {
   constructor (record, name) {
     this._record = record
     this.name = name
+    this.id = record.id
 
     this.date = this._getDate()
     this.state = this._record.state // TODO: resolve the state from xdr
