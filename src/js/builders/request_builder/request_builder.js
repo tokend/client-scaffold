@@ -4,12 +4,12 @@ import store from '../../../vuex'
 import { parseError } from '../../parsers/error.parser'
 import { createTfaDialog } from '../../modals/tfa_dalog.modal'
 import { createPasswordDialog } from '../../modals/password_dialog.modal'
-import { showStatusMessage } from '../../modals/status_message.modal'
 import { initHorizonServer } from '../../../../src/js/helpers/server.helper'
 import { errors } from '../../errors/error_factory'
+import response from '../response_builder/index'
 import common from '../../services/common/common'
 
-import response from '../response_builder/index'
+import set from 'lodash/set'
 
 export class RequestBuilder {
   constructor (serverUrl) {
@@ -21,27 +21,15 @@ export class RequestBuilder {
     this.httpClient = Vue.http
     this.query = []
     this.config = {}
-    this.messages = {
-      success: {
-        text: ''
-      }
-    }
   }
 
   sign (keypair) {
-    const server = initHorizonServer()
-    this.config = server._getConfig(this._getPrefix(), keypair)
-    return this
-  }
-
-  success (text) {
-    this.messages.success.text = text
+    this.config = initHorizonServer()._getConfig(this._getPrefix(), keypair)
     return this
   }
 
   header (header, value) {
-    if (!this.config.headers) this.config.headers = {}
-    this.config.headers[header] = value
+    set(this.config, `headers[${header}]`, value)
     return this
   }
 
@@ -56,46 +44,32 @@ export class RequestBuilder {
   }
 
   dataItem (key, item) {
-    if (!this.params) this.params = {}
-    if (!this.params.data) this.params.data = {}
-    this.params.data[key] = item
+    set(this.params, `data[${key}]`, item)
+    return this
   }
 
   attributes (attributes) {
-    if (!this.params) this.params = {}
-    if (!this.params.data) this.params.data = {}
-    this.params.data.attributes = attributes
+    set(this.params, `data.attributes`, attributes)
     return this
   }
 
   attribute (key, attribute) {
-    if (!this.params) this.params = {}
-    if (!this.params.data) this.params.data = {}
-    if (!this.params.data.attributes) this.params.data.attributes = {}
-    this.params.data.attributes[key] = attribute
+    set(this.params, `data.attributes[${key}]`, attribute)
     return this
   }
 
   relationships (relationships) {
-    if (!this.params) this.params = {}
-    if (!this.params) this.params = {}
-    if (!this.params.data) this.params.data = {}
-    this.params.data.relationships = relationships
+    set(this.params, `data.relationships`, relationships)
     return this
   }
 
-  relationship (key, attribute) {
-    if (!this.params) this.params = {}
-    if (!this.params.data) this.params.data = {}
-    if (!this.params.data.relationships) this.params.data.relationships = {}
-    this.params.data.relationships[key] = attribute
+  relationship (key, relationship) {
+    set(this.params, `data.relationships[${key}]`, relationship)
     return this
   }
 
   type (type) {
-    if (!this.params) this.params = {}
-    if (!this.params.data) this.params.data = {}
-    this.params.data.type = type
+    set(this.params, 'data.type', type)
     return this
   }
 
@@ -111,35 +85,35 @@ export class RequestBuilder {
   get () {
     this.method = 'get'
     return this.httpClient.get(this._composeURL(), this.config)
-      .then(response => this._handleSuccess(response))
+      .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
 
   post () {
     this.method = 'post'
     return this.httpClient.post(this._composeURL(), this.params, this.config)
-      .then(response => this._handleSuccess(response))
+      .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
 
   put () {
     this.method = 'put'
     return this.httpClient.put(this._composeURL(), this.params, this.config)
-      .then(response => this._handleSuccess(response))
+      .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
 
   patch () {
     this.method = 'patch'
     return this.httpClient.patch(this._composeURL(), this.params, this.config)
-      .then(response => this._handleSuccess(response))
+      .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
 
   delete () {
     this.method = 'delete'
     return this.httpClient.delete(this._composeURL(), this.config)
-      .then(response => this._handleSuccess(response))
+      .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
 
@@ -161,14 +135,6 @@ export class RequestBuilder {
     return `/${this.filters.reduce((url, filter) => url.concat(`/${filter}`), this.segment)}${this._getQuery()}`
   }
 
-  _handleSuccess (response) {
-    const text = this.messages.success.text
-    if (this.messages.success.text) {
-      showStatusMessage({ text, type: 'success' })
-    }
-    return this._parseResponse(response)
-  }
-
   async _handleError (error) {
     const parsedError = parseError(error)
     if (parsedError.message === 'TFA required') {
@@ -188,11 +154,11 @@ export class RequestBuilder {
   repeat () {
     if (this.method === 'get' || this.method === 'delete') {
       return this.httpClient[this.method](this._composeURL(), this.config)
-        .then(response => this._handleSuccess(response))
+        .then(response => this._parseResponse(response))
         .catch(err => this._handleError(err))
     }
     return this.httpClient[this.method](this._composeURL(), this.params, this.config)
-      .then(response => this._handleSuccess(response))
+      .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
 }
