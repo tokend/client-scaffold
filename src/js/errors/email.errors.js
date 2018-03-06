@@ -1,4 +1,4 @@
-import { ExtendableError } from './extendable_error'
+import { ExtendableError } from './extendable_error.error'
 import { EventDispatcher } from '../events/event_dispatcher'
 import i18n from '../i18n/email'
 

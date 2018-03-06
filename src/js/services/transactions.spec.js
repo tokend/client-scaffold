@@ -9,7 +9,7 @@ import { WithdrawalRecord } from '../records/withdrawal.record'
 import { TransferRecord } from '../records/transfer.record'
 import { IssuanceRecord } from '../records/issuance.record'
 
-import { UnknownTransactionError } from '../errors/unknown_transaction_error'
+import { UnknownTransactionError } from '../errors/unknown_transaction.error'
 
 describe('correctly parses transactions', () => {
   it ('should correctly define transfer entity', () => {
