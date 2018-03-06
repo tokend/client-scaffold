@@ -67,11 +67,13 @@ $col-md-primary: #0066cc;
 $col-md-background: #e8e8e8;
 $col-md-accent: #ef5350;
 $col-md-primary-txt: #fff;
+$col-md-unfocused: rgba(0, 0, 0, 0.54);
 
 // fonts:
 $fs-top-heading: 32px;
 $fs-heading: 24px;
 $fs-offer-input: 24px;
-$fs-root: 16px;
-$fs-tip: 12px;
+$fs-root: 1rem;
+$fs-tip: .8rem;
+$fs-tip-smaller: .74rem;
 $fs-label: 12px;
