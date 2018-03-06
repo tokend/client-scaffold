@@ -9,7 +9,7 @@
         <span class="md-list-item-text">Dashboard</span>
       </md-list-item>
 
-      <md-list-item to="/wallet">
+      <md-list-item to="/deposit">
         <md-icon>file_download</md-icon>
         <span class="md-list-item-text">Deposit</span>
       </md-list-item>
