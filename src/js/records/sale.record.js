@@ -19,43 +19,31 @@ const STATES = {
 
 export class SaleRecord {
   constructor (record) {
-    record ? this._record = record : this._fillEmpty()
+    this._record = record
 
-    this._fill()
+    this.id = record.id
+    this.owner = record.owner_id
+    this.baseAsset = record.base_asset
+    this.defaultQuoteAsset = record.default_quote_asset
+    this.quoteAssets = get(record, 'quote_assets.quote_assets') || []
+    this.baseHardCap = record.base_hard_cap
+    this.startTime = record.start_time
+    this.endTime = record.end_time
+    this.price = record.price
+    this.softCap = record.soft_cap
+    this.hardCap = record.hard_cap
+    this.currentCap = record.current_cap
+    this.name = get(record, 'details.name')
+    this.descriptionID = get(record, 'details.description')
+    this.shortDescription = get(record, 'details.short_description')
+    this.youTubeVideoId = get(record, 'details.youtube_video_id')
+    this.statistics = record.statistics
+    this.investors = get(record, 'statistics.investors')
+    this.averageInvestment = get(record, 'statistics.average_amount')
     this.syndicate = ''
     this.syndicateDetails = { members: [] }
     this.token = { details: { logo: '' } }
     this.description = ''
-  }
-
-  _fill () {
-    this.id = this._record.id
-    this.owner = this._record.owner_id
-    this.baseAsset = this._record.base_asset
-    this.defaultQuoteAsset = this._record.default_quote_asset
-    this.quoteAssets = get(this._record, 'quote_assets.quote_assets') || []
-    this.baseHardCap = this._record.base_hard_cap
-    this.startTime = this._record.start_time
-    this.endTime = this._record.end_time
-    this.price = this._record.price
-    this.softCap = this._record.soft_cap
-    this.hardCap = this._record.hard_cap
-    this.currentCap = this._record.current_cap
-    this.name = get(this._record, 'details.name')
-    this.descriptionID = get(this._record, 'details.description')
-    this.shortDescription = get(this._record, 'details.short_description')
-    this.youTubeVideoId = get(this._record, 'details.youtube_video_id')
-    this.statistics = this._record.statistics
-    this.investors = get(this._record, 'statistics.investors')
-    this.averageInvestment = get(this._record, 'statistics.average_amount')
-  }
-
-  _fillEmpty () {
-    this._record = {
-      details: {},
-      state: {},
-      statistics: {}
-    }
   }
 
   get quoteAssetCodes () {

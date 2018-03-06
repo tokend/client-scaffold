@@ -6,12 +6,12 @@ export class TxRecord {
     this._record = record
     this.name = name
 
-    this.date = this._parseDate()
+    this.date = this._getDate()
     this.state = this._record.state // TODO: resolve the state from xdr
     this.feeAsset = feeAsset
   }
 
-  _parseDate () {
+  _getDate () {
     return humanizePastDate(this._record.ledger_close_time)
   }
 }

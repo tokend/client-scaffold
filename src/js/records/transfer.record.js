@@ -8,21 +8,17 @@ import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 export class TransferRecord extends TxRecord {
   constructor (record) {
     super(record, RECORDS_VERBOSE.transfer)
-    this.parse()
-  }
-
-  parse () {
-    this.amount = this._record.amount
-    this.asset = this._record.asset
+    this.amount = record.amount
+    this.asset = record.asset
+    this.id = record.id
+    this.receiver = record.to
+    this.sender = record.from
+    this.subject = record.subject
     this.amountSUN = this._getSUNAmount()
     this.counterparty = this._getCounterParty()
     this.direction = this._getDirection()
     this.fee = this._getFee() // TODO: need parse fees separately later to show in extended details
-    this.id = this._record.id
     this.participants = this._getParticipants()
-    this.receiver = this._record.to
-    this.sender = this._record.from
-    this.subject = this._record.subject
   }
 
   _getDirection () {

@@ -9,13 +9,9 @@ export class MatchRecord extends TxRecord {
   constructor (record, asset) {
     super(record, record.type_i === 16 ? RECORDS_VERBOSE.match : RECORDS_VERBOSE.investment)
     this.asset = asset
-    this._parse()
-  }
 
-  _parse () {
-    this.participants = this._record.participants
+    this.participants = record.participants
     this.participant = this._getParticipant()
-
     this.effects = this._getEffects()
     this.transactions = this._getTransactions()
   }

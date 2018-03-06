@@ -5,19 +5,19 @@ import { RECORDS_VERBOSE } from './help/records.const'
 export class OfferRecord {
   constructor (record) {
     this._record = record
-    this.id = this._record.offer_id
-    this.owner = this._record.owner_id
-    this.baseAmount = this._record.base_amount
-    this.baseAssetCode = this._record.base_asset_code
-    this.quoteAssetCode = this._record.quote_asset_code
-    this.baseBalanceId = this._record.base_balance_id
-    this.quoteBalanceId = this._record.quote_balance_id
-    this.quoteAmount = this._record.quote_amount
-    this.fee = this._record.fee
-    this.isBuy = this._record.is_buy
-    this.price = this._record.price
-    this.createdAt = this._record.created_at
-    this.orderBookId = this._record.order_book_id
+    this.id = record.offer_id
+    this.owner = record.owner_id
+    this.baseAmount = record.base_amount
+    this.baseAssetCode = record.base_asset_code
+    this.quoteAssetCode = record.quote_asset_code
+    this.baseBalanceId = record.base_balance_id
+    this.quoteBalanceId = record.quote_balance_id
+    this.quoteAmount = record.quote_amount
+    this.fee = record.fee
+    this.isBuy = record.is_buy
+    this.price = record.price
+    this.createdAt = record.created_at
+    this.orderBookId = record.order_book_id
   }
 
   get offerType () {
