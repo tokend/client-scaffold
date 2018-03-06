@@ -4,6 +4,7 @@ import { mockDocumentId } from './files.mocks'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../const/offers.const'
 import { mockBaseTokenCode, mockOrderBookId, mockQuoteTokenCode } from './offers.mocks'
 import config from '../../../config'
+import {mockConvertAmount} from './prices.mocks'
 
 export const mockAccountId = 'GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ'
 export const mockBalanceId = 'BBU5CSWOEKKMCPXMSV6X3PMJ2FHVHPQF56T4CLTMQP7O36DBFNOUC2CW'
@@ -59,11 +60,17 @@ export const offerResponses = {
   [offerPrefixes.trades]: 'request for trades built!'
 }
 
+export const pricesResponses = {
+  [`asset_pairs`]: 'request for asset pairs built!',
+  [ `asset_pairs/convert?amount=${mockConvertAmount}&source_asset=${mockBaseTokenCode}&dest_asset=${mockQuoteTokenCode}`]: 'request for convert asset built!'
+}
+
 export const mockResponses = {
   ...accountResponses,
   ...chartResponses,
   ...walletResponses,
   ...feesResponses,
   ...fileResponses,
-  ...offerResponses
+  ...offerResponses,
+  ...pricesResponses
 }
