@@ -1,13 +1,13 @@
 import { TxRecord } from './tx.record'
-import store from '../../vuex'
 import get from 'lodash/get'
 import { PricesHelper } from '../../vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class WithdrawalRecord extends TxRecord {
-  constructor (record) {
+  constructor (record, userBalances = {}) {
     super(record, RECORDS_VERBOSE.withdrawal)
     this.amount = record.amount
+    this.userBalances = userBalances
     this.fixedFee = record.fee_fixed
     this.percentFee = record.fee_percent
     this.counterparty = get(record, 'external_details.address')
@@ -15,7 +15,6 @@ export class WithdrawalRecord extends TxRecord {
     this.destinationAsset = record.dest_asset
     this.destinationAmount = record.dest_amount
     this.asset = this._getAsset(record.balance)
-    this.amountSUN = this._getSUNAmount()
   }
 
   _getSUNAmount () {
@@ -23,7 +22,7 @@ export class WithdrawalRecord extends TxRecord {
   }
 
   _getAsset (balanceId) {
-    for (const entry of Object.entries(store.getters.balances)) {
+    for (const entry of Object.entries(this.userBalances)) {
       const asset = entry[0]
       const balance = entry[1]
       if (balance.balance_id === balanceId) {
