@@ -1,7 +1,7 @@
 import { mutations, getters } from './user.module'
 import {} from '../test/default.mocks'
 import { testAction } from '../test/vuex-test.helper'
-import { userResponse, mockUserFavorites } from './user.mocks'
+import { userResponse, mockUserFavorites } from '../test/user.mocks'
 import { Response } from '../../js/builders/response_builder'
 
 const moduleInjector = require('inject-loader!./user.module')

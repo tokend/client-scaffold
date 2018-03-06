@@ -4,7 +4,7 @@ import {
   mockPublicKey,
   mockSeed
 } from '../test/default.mocks'
-import { accountResponse, balancesResponse } from './account.mocks'
+import { accountResponse, balancesResponse } from '../test/account.mocks'
 import { testAction } from '../test/vuex-test.helper'
 
 const moduleInjector = require('inject-loader!./account.module')

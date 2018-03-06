@@ -1,7 +1,7 @@
 import {mutations, actions, getters} from './wallet.module'
 import {} from '../test/default.mocks'
 import {testAction} from '../test/vuex-test.helper'
-import {mockWalletId, mockUserData} from './wallet.mocks'
+import {mockWalletId, mockUserData} from '../test/wallet.mocks'
 
 const {SET_WALLET_ID} = mutations
 const { walletId } = getters
