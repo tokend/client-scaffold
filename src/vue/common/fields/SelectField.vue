@@ -1,6 +1,6 @@
 <template>
   <md-field>
-    <label :for="id">Movie</label>
+    <label :for="id">{{ label }}</label>
     <md-select
       :placeholder="placeholder"
       :disabled="disabled"
@@ -10,7 +10,7 @@
       :value="value"
       :name="name"
       :id="id"
-      @change="onInput"
+      @input="onInput"
     >
       <md-option v-for="(value, i) in values" :value="value" :key="i">{{ value }}</md-option>
     </md-select>
