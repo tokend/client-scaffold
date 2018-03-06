@@ -1,6 +1,6 @@
 import { FileService  } from './file.service'
 import {mockAccountId, mockBalanceId, mockEmail, mockResponses, mockWalletId} from './test/default.mocks'
-import { mockDocumentId, mockMimeType, mockDocumentType } from './files.mocks'
+import { mockDocumentId, mockMimeType, mockDocumentType } from './test/files.mocks'
 import { ServiceTestHelper } from './test/service_test_helper'
 import { Keypair } from 'swarm-js-sdk'
 

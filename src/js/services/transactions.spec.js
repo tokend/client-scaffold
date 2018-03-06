@@ -1,15 +1,15 @@
-import { parseTransaction } from '../../parsers/tx.parser'
+import { parseTransaction } from '../parsers/tx.parser'
 import {
   withdawRecord,
   transferRecord,
   issuanceRecord
-} from '../../../../test/unit/mock_data/records'
+} from '../../../test/unit/mock_data/records'
 
-import { WithdrawalRecord } from '../../factories/records/modules/tx/withdraw.record'
-import { TransferRecord } from '../../factories/records/modules/tx/transfer.record'
-import { IssuanceRecord } from '../../factories/records/modules/tx/issuance.record'
+import { WithdrawalRecord } from '../factories/records/modules/tx/withdraw.record'
+import { TransferRecord } from '../factories/records/modules/tx/transfer.record'
+import { IssuanceRecord } from '../factories/records/modules/tx/issuance.record'
 
-import { UnknownTransactionError } from '../../../js/errors/modules/unknown_transaction_error'
+import { UnknownTransactionError } from '../errors/modules/unknown_transaction_error'
 
 describe('correctly parses transactions', () => {
   it ('should correctly define transfer entity', () => {

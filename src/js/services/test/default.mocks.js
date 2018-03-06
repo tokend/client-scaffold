@@ -1,8 +1,8 @@
 import { FEE_TYPES } from '../../const/xdr.const'
-import { mockFeeAmount, mockFeeAsset } from '../fees.mocks'
-import { mockDocumentId } from '../files.mocks'
+import { mockFeeAmount, mockFeeAsset } from './fees.mocks'
+import { mockDocumentId } from './files.mocks'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../const/offers.const'
-import { mockBaseTokenCode, mockOrderBookId, mockQuoteTokenCode } from '../offers.mocks'
+import { mockBaseTokenCode, mockOrderBookId, mockQuoteTokenCode } from './offers.mocks'
 import config from '../../../config'
 
 export const mockAccountId = 'GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ'

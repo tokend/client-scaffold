@@ -2,7 +2,7 @@ import { OffersService } from './offer.service'
 import { mockAccountId, mockBalanceId, mockEmail, mockResponses, offerPrefixes } from './test/default.mocks'
 import { ServiceTestHelper}  from './test/service_test_helper'
 import { Keypair } from 'swarm-js-sdk'
-import { mockOrderBookId, mockBaseTokenCode, mockQuoteTokenCode  } from './offers.mocks'
+import { mockOrderBookId, mockBaseTokenCode, mockQuoteTokenCode  } from './test/offers.mocks'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 

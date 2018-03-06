@@ -3,7 +3,7 @@ import { mockAccountId, mockResponses } from './test/default.mocks'
 import { ServiceTestHelper } from './test/service_test_helper'
 import { Keypair } from 'swarm-js-sdk'
 import { FEE_TYPES } from '../const/xdr.const'
-import { mockFeeAmount, mockFeeAsset } from './fees.mocks'
+import { mockFeeAmount, mockFeeAsset } from './test/fees.mocks'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 
