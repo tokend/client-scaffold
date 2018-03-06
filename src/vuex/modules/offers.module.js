@@ -1,5 +1,5 @@
 import { OffersService } from '../../js/services/offer.service'
-import { RecordFactory } from '../../js/factories/records/record_factory'
+import { RecordFactory } from '../../js/factories/records/factory'
 import { vuexTypes } from '../types'
 import { Paginator } from '../../js/helpers/paginator'
 

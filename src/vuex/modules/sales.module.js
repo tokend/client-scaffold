@@ -1,6 +1,6 @@
 import { Keypair } from 'swarm-js-sdk'
 import { Paginator } from '../../js/helpers/paginator'
-import { RecordFactory } from '../../js/factories/records/record_factory'
+import { RecordFactory } from '../../js/factories/records/factory'
 import { vuexTypes } from '../types'
 import { accountsService } from '../../js/services/accounts.service'
 import { salesService } from '../../js/services/sales.service'

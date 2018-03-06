@@ -1,5 +1,5 @@
 import { reviewableRequestsService } from '../../js/services/reviewable_requests.service'
-import { RecordFactory } from '../../js/factories/records/record_factory'
+import { RecordFactory } from '../../js/factories/records/factory'
 import { Paginator } from '../../js/helpers/paginator'
 
 const state = {

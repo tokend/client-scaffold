@@ -8,7 +8,7 @@ import { tokensService } from '../../../services/tokens.service'
 import { accountsService } from '../../../services/accounts.service'
 import { usersService } from '../../../services/users.service'
 
-import { RecordFactory } from '../record_factory'
+import { RecordFactory } from '../factory'
 import { blobFilters, blobTypes } from '../../../const/const'
 
 const STATES = {

@@ -1,4 +1,4 @@
-import {RecordFactory} from '../factories/records/record_factory'
+import {RecordFactory} from '../factories/records/factory'
 import {ErrorFactory, errorTypes} from '../errors/error_factory'
 
 export function parseTransaction (transaction, asset) {

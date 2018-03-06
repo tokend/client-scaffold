@@ -1,6 +1,6 @@
 import { vuexTypes } from '../types'
 import { StateHelper } from '../helpers/state.helper'
-import { RecordFactory } from '../../js/factories/records/record_factory'
+import { RecordFactory } from '../../js/factories/records/factory'
 import { accountsService } from '../../js/services/accounts.service'
 import { Keypair } from 'swarm-js-sdk'
 
