@@ -7,16 +7,20 @@ import { SaleRecord } from './sale.record'
 import { OfferRecord } from './offer.record'
 import { MatchRecord, MatchTransaction } from './match.record'
 import { TxRecord } from './tx.record'
+import { AssetPairRecord } from './asset_pair.record'
+import { TradeRecord } from './trade.record'
 
 export const RecordTypes = {
+  AssetPairRecord,
   TransferRecord,
   TokenRecord,
   ExternalAccountEntity,
   IssuanceRecord,
-  WithdrawRecord: WithdrawalRecord,
+  WithdrawalRecord,
   SaleRecord,
   OfferRecord,
   MatchRecord,
+  TradeRecord,
   TxRecord,
   MatchTransaction
 }
