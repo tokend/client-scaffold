@@ -61,7 +61,7 @@ const getters = {
   accountTokens: 'accountTokens',
   accountBalances: 'accountBalances',
   accountRawBalances: 'accountRawBalances',
-  accountExternalAddresses: 'accountExternalAddresses',
+  accountDepositAddresses: 'accountDepositAddresses',
 
   // tokens:
   userAcquiredTokens: 'userAcquiredTokens',

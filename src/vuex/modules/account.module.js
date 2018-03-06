@@ -49,7 +49,7 @@ export const getters = {
   accountTokens: state => state.balances.map(balance => balance.asset),
   accountBalances: state => StateHelper.groupBalances(state.balances),
   accountRawBalances: state => state.balances,
-  accountExternalAddresses: state =>
+  accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
       .reduce((accounts, account) => { accounts[account.asset] = account.address; return accounts }, {})
