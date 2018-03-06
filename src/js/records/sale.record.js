@@ -3,11 +3,8 @@ import get from 'lodash/get'
 
 import config from '../../config'
 
-import { tokensService } from '../services/tokens.service'
 import { accountsService } from '../services/accounts.service'
 import { usersService } from '../services/users.service'
-
-import { RecordFactory } from './factory'
 import { blobFilters, blobTypes } from '../const/const'
 
 const STATES = {
@@ -29,7 +26,6 @@ export class SaleRecord {
     this.baseHardCap = record.base_hard_cap
     this.startTime = record.start_time
     this.endTime = record.end_time
-    this.price = record.price
     this.softCap = record.soft_cap
     this.hardCap = record.hard_cap
     this.currentCap = record.current_cap
@@ -40,9 +36,8 @@ export class SaleRecord {
     this.statistics = record.statistics
     this.investors = get(record, 'statistics.investors')
     this.averageInvestment = get(record, 'statistics.average_amount')
-    this.syndicate = ''
-    this.syndicateDetails = { members: [] }
-    this.token = { details: { logo: '' } }
+    this.syndicateEmail = ''
+    this.syndicateDetails = {}
     this.description = ''
   }
 
@@ -94,10 +89,6 @@ export class SaleRecord {
     return `${config.FILE_STORAGE}/${key}`
   }
 
-  get attachedToken () {
-    return this.token
-  }
-
   get isOpened () {
     return this._record.state.value === STATES.Open
   }
@@ -137,20 +128,14 @@ export class SaleRecord {
     this.descriptionBlob = blobDetails.attribute('value')
   }
 
-  async loadToken () {
-    if (!this.baseAsset) return
-    this.token = RecordFactory.createTokenRecord(await tokensService.loadTokenByCode(this.baseAsset))
-  }
-
   async loadSyndicateDetails () {
-    if (!this.owner) return
     const details = await accountsService.loadEmailByAccountId(this.owner)
     const filters = {
       [blobFilters.fundOwner]: this.owner,
       [blobFilters.type]: blobTypes.syndicate_kyc.num
     }
     const syndicateDetails = (await usersService.blobsOf(this.owner).getAll(filters))[0]
-    this.syndicate = details.email
+    this.syndicateEmail = details.email
     this.syndicateDetails = syndicateDetails
   }
 }

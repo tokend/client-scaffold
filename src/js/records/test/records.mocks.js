@@ -460,7 +460,8 @@ export const recordResponses = {
       "value": 1
     },
     "statistics": {
-      "investors": 0
+      "investors": 0,
+      "average_amount": 0
     },
     "quote_assets": {
       "quote_assets": [
@@ -468,19 +469,132 @@ export const recordResponses = {
           "asset": "BTC",
           "price": "1.000000",
           "quote_balance_id": "BBU5CSWOEKKMCPXMSV6X3PMJ2FHVHPQF56T4CLTMQP7O36DBFNOUC2CW",
-          "current_cap": "3.033394"
+          "current_cap": "3.033394",
+          "total_current_cap": "3.033394",
         },
         {
           "asset": "ETH",
           "price": "1.000000",
           "quote_balance_id": "BBJ5WHSYJH6QVVLKZKKC5IH2DQ5NQB2PJ3AINJDMXGRKNZGWUNLK7JTY",
-          "current_cap": "8.453505"
+          "current_cap": "8.453505",
+          "total_current_cap": "8.453505",
         },
         {
           "asset": "SWM",
           "price": "1.000000",
           "quote_balance_id": "BD572YPMGIIUHQG4SMUSXOHEHQIYTCBO3E6TEIP5FAD57QXYT7MBEF2B",
-          "current_cap": "14.300869"
+          "current_cap": "14.300869",
+          "total_current_cap": "14.300869",
+        }
+      ]
+    },
+    "base_hard_cap": "1000000000.000000",
+    "base_current_cap": "0.000000",
+    "current_cap": "39703.057031",
+    "sale_type": {
+      "name": "crowd_funding",
+      "value": 2
+    }
+  },
+  saleNoETH: {
+    "paging_token": "10",
+    "id": "10",
+    "owner_id": "GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ",
+    "base_asset": "heyhey",
+    "default_quote_asset": "SUN",
+    "start_time": "2018-02-20T10:00:00Z",
+    "end_time": "2018-03-20T10:00:00Z",
+    "soft_cap": "1000000000.000000",
+    "hard_cap": "2000000000.000000",
+    "details": {
+      "description": "QO467VLENFWLSCAQT74PYTR2G4NIFNFKEV2BWJNVJECNCNEQ26YA",
+      "logo": {
+        "key": "dpurah4infpebjhcost7fvniwuyaam7ki4ou3e5u2ly7o2yqelwegy63",
+        "type": "image/png",
+        "url": "https://staging.storage.sun.swarm.fund/api/dpurah4infpebjhcost7fvniwuyaam7ki4ou3e5u2ly7o2yqelwegy63"
+      },
+      "name": "1qwqe",
+      "short_description": "eqeq",
+      "youtube_video_id": "sW17ETznjl8"
+    },
+    "state": {
+      "name": "open",
+      "value": 1
+    },
+    "statistics": {
+      "investors": 0,
+      "average_amount": 0
+    },
+    "quote_assets": {
+      "quote_assets": [
+        {
+          "asset": "BTC",
+          "price": "1.000000",
+          "quote_balance_id": "BBU5CSWOEKKMCPXMSV6X3PMJ2FHVHPQF56T4CLTMQP7O36DBFNOUC2CW",
+          "current_cap": "3.033394",
+          "total_current_cap": "3.033394",
+        },
+        {
+          "asset": "SWM",
+          "price": "1.000000",
+          "quote_balance_id": "BD572YPMGIIUHQG4SMUSXOHEHQIYTCBO3E6TEIP5FAD57QXYT7MBEF2B",
+          "current_cap": "14.300869",
+          "total_current_cap": "14.300869",
+        }
+      ]
+    },
+    "base_hard_cap": "1000000000.000000",
+    "base_current_cap": "0.000000",
+    "current_cap": "39703.057031",
+    "sale_type": {
+      "name": "crowd_funding",
+      "value": 2
+    }
+  },
+  saleNoBTC: {
+    "paging_token": "10",
+    "id": "10",
+    "owner_id": "GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ",
+    "base_asset": "heyhey",
+    "default_quote_asset": "SUN",
+    "start_time": "2018-02-20T10:00:00Z",
+    "end_time": "2018-03-20T10:00:00Z",
+    "soft_cap": "1000000000.000000",
+    "hard_cap": "2000000000.000000",
+    "details": {
+      "description": "QO467VLENFWLSCAQT74PYTR2G4NIFNFKEV2BWJNVJECNCNEQ26YA",
+      "logo": {
+        "key": "dpurah4infpebjhcost7fvniwuyaam7ki4ou3e5u2ly7o2yqelwegy63",
+        "type": "image/png",
+        "url": "https://staging.storage.sun.swarm.fund/api/dpurah4infpebjhcost7fvniwuyaam7ki4ou3e5u2ly7o2yqelwegy63"
+      },
+      "name": "1qwqe",
+      "short_description": "eqeq",
+      "youtube_video_id": "sW17ETznjl8"
+    },
+    "state": {
+      "name": "open",
+      "value": 1
+    },
+    "statistics": {
+      "investors": 0,
+      "average_amount": 0
+    },
+    "quote_assets": {
+      "quote_assets": [
+        {
+          "asset": "ETH",
+          "price": "1.000000",
+          "quote_balance_id": "BBJ5WHSYJH6QVVLKZKKC5IH2DQ5NQB2PJ3AINJDMXGRKNZGWUNLK7JTY",
+          "current_cap": "8.453505",
+          "total_current_cap": "8.453505",
+        },
+        {
+          "asset": "SWM",
+          "price": "1.000000",
+          "quote_balance_id": "BD572YPMGIIUHQG4SMUSXOHEHQIYTCBO3E6TEIP5FAD57QXYT7MBEF2B",
+          "current_cap": "14.300869",
+          "total_current_cap": "14.300869",
         }
       ]
     },
