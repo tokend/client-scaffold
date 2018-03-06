@@ -9,14 +9,14 @@
 
       <md-card class="auth-page__card">
         <md-card-header>
-          <div class="md-title">Sign up</div>
+          <div class="md-title">{{ i18n.su_sign_up() }}</div>
         </md-card-header>
 
         <input-field
           v-model.trim="form.email"
           class="input-field"
           id="login-email"
-          label="Email"
+          :label="i18n.su__email()"
           name="email"
           :errorMessage="errorMessage('email')"
           v-validate="'required|email'"
@@ -28,7 +28,7 @@
           id="login-password"
           type="password"
           :togglePassword="true"
-          label="Password"
+          :label="i18n.su_pwd()"
           name="password"
           :errorMessage="errorMessage('password')"
           v-validate="'required|min:6'"
@@ -41,7 +41,7 @@
           :togglePassword="true"
           class="input-field"
           type="password"
-          label="Confirm password"
+          :label="i18n.su_confirm()"
           :errorMessage="errorMessage('confirm-password')"
           v-validate="'required|confirmed:password'"
           data-vv-as="password"
@@ -50,11 +50,11 @@
         <div class="auth-page__bottom">
           <div class="auth-page__tips">
             <div class="tips__tip">
-              Already have an account?
-              <router-link :to="routes.login">Sign in now</router-link>
+              {{ i18n.su_already_have_an_account() }}
+              <router-link :to="routes.login">{{ i18n.su_sign_in() }}</router-link>
             </div>
           </div>
-          <md-button type="submit" class="md-raised md-primary" :disabled="isPending">Sign up</md-button>
+          <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.su_sign_up() }}</md-button>
         </div>
       </md-card>
     </form>
@@ -70,10 +70,10 @@
   import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
   import config from '../../config'
-  import i18n from '../../js/i18n/auth'
 
   import { emailService } from '../../js/services/email.service'
   import { authService } from '../../js/services/auth.service'
+  import { i18n } from '../../js/i18n'
 
   export default {
     mixins: [formMixin],
@@ -85,7 +85,8 @@
           password: '',
           confirmPassword: ''
         },
-        routes: vueRoutes
+        routes: vueRoutes,
+        i18n
       }
     },
 

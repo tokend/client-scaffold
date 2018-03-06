@@ -13,14 +13,14 @@
                md-small-size-65
                md-xsmall-size-100">
         <md-card-header>
-          <div class="md-title">{{ i18n.login() }}</div>
+          <div class="md-title">{{ i18n.login_view_signin() }}</div>
         </md-card-header>
 
         <md-card-content>
           <input-field class="input-field"
             id="login-email"
             v-model.trim="form.email"
-            label="Email"
+            :label="i18n.login_view_email()"
             name="email"
             :errorMessage="errorMessage('email')"
                        v-validate="'required'"
@@ -31,7 +31,7 @@
             v-model.trim="form.password"
             type="password"
             :togglePassword="true"
-            label="Password"
+            :label="i18n.login_view_password()"
             name="password"
             :errorMessage="errorMessage('password')"
             v-validate="'required'"
@@ -40,15 +40,15 @@
           <div class="auth-page__bottom">
             <div class="auth-page__tips">
               <div class="tips__tip">
-                Don't have an account?
-                <router-link :to="{ name: 'signup' }">Register now</router-link>
+                {{ i18n.login_view_dont_have_an_account() }}
+                <router-link :to="{ name: 'signup' }">{{ i18n.login_view_register_now() }}</router-link>
               </div>
               <div class="tips__tip">
-                Forgot your password?
-                <router-link :to="{ name: 'recovery' }">Recover it</router-link>
+                {{ i18n.login_view_forgot_password() }}
+                <router-link :to="{ name: 'recovery' }">{{ i18n.login_view_recover_it() }}</router-link>
               </div>
             </div>
-            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">Sign in</md-button>
+            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.login_view_signin() }}</md-button>
           </div>
 
         </md-card-content>

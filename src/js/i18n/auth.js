@@ -17,7 +17,5 @@ export default {
   tfa_wrong_code: 'Wrong code',
   user_exists: 'User with such email already exists',
   wrong_password: 'Wrong Password',
-  tfa_disabled: '2-Factor authentication successfully disabled',
-
-  login: 'Sign in'
+  tfa_disabled: '2-Factor authentication successfully disabled'
 }
