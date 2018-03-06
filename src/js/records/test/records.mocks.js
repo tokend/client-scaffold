@@ -490,6 +490,80 @@ export const recordResponses = {
     }
   },
   token: {
+    "code": "QQQ",
+    "owner": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
+    "available_for_issuance": "9994346.663003",
+    "preissued_asset_signer": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
+    "max_issuance_amount": "100000000.000000",
+    "issued": "5631.116997",
+    "pending_issuance": "0.000000",
+    "policy": 24,
+    "policies": [
+      {
+        "name": "AssetPolicyWithdrawable",
+        "value": 8
+      },
+      {
+        "name": "AssetPolicyTwoStepWithdrawal",
+        "value": 16
+      }
+    ],
+    "details": {
+      "logo": {
+        "key": "",
+        "type": "logo_type",
+        "url": "logo_url"
+      },
+      "name": "ETH name",
+      "terms": {
+        "key": "",
+        "name": "",
+        "type": ""
+      }
+    }
+  },
+  tokenRequiresKYC: {
+    "code": "ETH",
+    "owner": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
+    "available_for_issuance": "9994346.663003",
+    "preissued_asset_signer": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
+    "max_issuance_amount": "100000000.000000",
+    "issued": "5631.116997",
+    "pending_issuance": "0.000000",
+    "policy": 48,
+    "policies": [
+      {
+        "name": "AssetPolicyBaseAsset",
+        "value": 2
+      },
+      {
+        "name": "AssetPolicyWithdrawable",
+        "value": 8
+      },
+      {
+        "name": "AssetPolicyTwoStepWithdrawal",
+        "value": 16
+      },
+      {
+        "name": "AssetPolicyRequiresKyc",
+        "value": 32
+      }
+    ],
+    "details": {
+      "logo": {
+        "key": "",
+        "type": "logo_type",
+        "url": "logo_url"
+      },
+      "name": "ETH name",
+      "terms": {
+        "key": "",
+        "name": "",
+        "type": ""
+      }
+    }
+  },
+  tokenBase: {
     "code": "ETH",
     "owner": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
     "available_for_issuance": "9994346.663003",
@@ -515,6 +589,43 @@ export const recordResponses = {
     "details": {
       "logo": {
         "key": "",
+        "type": "logo_type",
+        "url": "logo_url"
+      },
+      "name": "ETH name",
+      "terms": {
+        "key": "",
+        "name": "",
+        "type": ""
+      }
+    }
+  },
+  tokenWithLogo: {
+    "code": "ETH",
+    "owner": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
+    "available_for_issuance": "9994346.663003",
+    "preissued_asset_signer": "GD7AHJHCDSQI6LVMEJEE2FTNCA2LJQZ4R64GUI3PWANSVEO4GEOWB636",
+    "max_issuance_amount": "100000000.000000",
+    "issued": "5631.116997",
+    "pending_issuance": "0.000000",
+    "policy": 26,
+    "policies": [
+      {
+        "name": "AssetPolicyBaseAsset",
+        "value": 2
+      },
+      {
+        "name": "AssetPolicyWithdrawable",
+        "value": 8
+      },
+      {
+        "name": "AssetPolicyTwoStepWithdrawal",
+        "value": 16
+      }
+    ],
+    "details": {
+      "logo": {
+        "key": "rqw2114rterw22131123w",
         "type": "logo_type",
         "url": "logo_url"
       },
