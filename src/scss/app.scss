@@ -5,7 +5,7 @@
 @import "../../node_modules/vue-material/dist/theme/engine";
 
 @include md-register-theme("default", (
-  primary: md-get-palette-color(blue, A200),
+  primary: $col-md-primary,
   accent: md-get-palette-color(red, A200),
   theme: light
 ));
@@ -39,12 +39,14 @@ html,body{
   -webkit-overflow-scrolling : touch !important;
 }
 
-body {
-  background-color: #0b78ff;
-}
-
 #app {
   height: 100%;
+
+  &,
+  & main,
+  & .md-content {
+    background-color: $col-md-background;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
