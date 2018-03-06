@@ -3,7 +3,8 @@ export const RECORDS_VERBOSE = Object.freeze({
   investment: 'Investment',
   match: 'Offer match',
   withdrawal: 'Withdrawal',
-  transfer: 'Transfer'
+  transfer: 'Transfer',
+  offer: 'Offer'
 })
 
 export const DIRECTION_VERBOSE = Object.freeze({
