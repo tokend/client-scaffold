@@ -153,13 +153,9 @@ export class RequestBuilder {
 
   repeat () {
     const params = this.method === 'get' || this.method === 'delete' ?
-      [this._composeURL(), this.config]
-    if () {
-      return this.httpClient[this.method]()
-        .then(response => this._parseResponse(response))
-        .catch(err => this._handleError(err))
-    }
-    return this.httpClient[this.method](this._composeURL(), this.params, this.config)
+      [this._composeURL(), this.config] : [this._composeURL(), this.params, this.config]
+
+    return this.httpClient[this.method](...params)
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
