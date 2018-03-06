@@ -1,5 +1,5 @@
 import { vuexTypes } from '../types'
-import { RecordFactory } from '../../js/factories/records/factory'
+import { RecordFactory } from '../../js/records/factory'
 import { pricesService } from '../../js/services/prices.service'
 
 const state = {

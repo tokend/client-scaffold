@@ -1,7 +1,7 @@
 import { vuexTypes } from '../types'
 
 import { tokensService } from '../../js/services/tokens.service'
-import { RecordFactory } from '../../js/factories/records/factory'
+import { RecordFactory } from '../../js/records/factory'
 import { StateHelper } from '../helpers/state.helper'
 
 export const state = {

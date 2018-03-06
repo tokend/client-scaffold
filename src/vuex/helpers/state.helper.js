@@ -1,7 +1,7 @@
 import store from '../index'
 import { vuexTypes } from '../types'
 import { accountsService } from '../../js/services/accounts.service'
-import { RecordFactory } from '../../js/factories/records/factory'
+import { RecordFactory } from '../../js/records/factory'
 import get from 'lodash/get'
 
 export class StateHelper {

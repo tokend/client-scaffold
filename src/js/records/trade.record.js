@@ -1,4 +1,4 @@
-import { multiply } from '../../../utils/math.util'
+import { multiply } from '../utils/math.util'
 
 export class TradeRecord {
   constructor (record) {

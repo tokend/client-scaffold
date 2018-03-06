@@ -1,5 +1,5 @@
-import { humanizePastDate } from '../../../../utils/dates.util'
-import { feeAsset } from '../../../../const/const'
+import { humanizePastDate } from '../utils/dates.util'
+import { feeAsset } from '../const/const'
 
 export class TxRecord {
   constructor (record, name) {

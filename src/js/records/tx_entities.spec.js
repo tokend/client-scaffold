@@ -1,9 +1,6 @@
-import { withdawRecord, issuanceRecord, transferRecord } from '../../../../../../test/unit/mock_data/records'
-import { WithdrawalRecord } from './withdraw.record'
+import { issuanceRecord, transferRecord } from '../../../test/unit/mock_data/records'
 import { TransferRecord } from './transfer.record'
 import { IssuanceRecord } from './issuance.record'
-
-// TODO: resolve store dependency injection
 
 describe('TxRecord record parsers', () => {
   it ('should properly parse issuance record', () => {

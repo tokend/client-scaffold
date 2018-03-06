@@ -1,8 +1,8 @@
 import { TxRecord } from './tx.record'
 
-import store from '../../../../../vuex'
+import store from '../../vuex'
 
-import { PricesHelper } from '../../../../../vuex/helpers/prices.helper'
+import { PricesHelper } from '../../vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 import get from 'lodash/get'

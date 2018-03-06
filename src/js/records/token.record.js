@@ -1,7 +1,7 @@
 import config from '../../../config/index'
 import get from 'lodash/get'
 import { xdr } from '../../../../js-sdk/lib/index'
-import { ASSET_POLICIES } from '../../../const/xdr.const'
+import { ASSET_POLICIES } from '../const/xdr.const'
 
 export class TokenRecord {
   constructor (record, attachedDetails = {}) {

@@ -1,4 +1,4 @@
-import { ASSET_PAIR_POLICIES } from '../../../const/xdr.const'
+import { ASSET_PAIR_POLICIES } from '../const/xdr.const'
 
 export class AssetPairRecord {
   constructor (record) {
