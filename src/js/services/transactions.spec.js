@@ -5,7 +5,7 @@ import {
   issuanceRecord
 } from '../../../test/unit/mock_data/records'
 
-import { WithdrawalRecord } from '../records/withdraw.record'
+import { WithdrawalRecord } from '../records/withdrawal.record'
 import { TransferRecord } from '../records/transfer.record'
 import { IssuanceRecord } from '../records/issuance.record'
 

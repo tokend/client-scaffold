@@ -1,4 +1,4 @@
-import { WithdrawalRecord } from './withdraw.record'
+import { WithdrawalRecord } from './withdrawal.record'
 import { recordResponses } from './test/records.mocks'
 
 describe('record.withdraw', () => {
