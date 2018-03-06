@@ -636,5 +636,12 @@ export const recordResponses = {
         "type": ""
       }
     }
+  },
+  trade: {
+    base_asset: 'ETH',
+    quote_asset: 'BTC',
+    base_amount: '0.11',
+    price: '21.000000',
+    created_at: '2018-03-06T09:59:04Z'
   }
 }
