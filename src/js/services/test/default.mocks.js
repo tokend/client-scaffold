@@ -5,6 +5,7 @@ import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../const/offers.const'
 import { mockBaseTokenCode, mockOrderBookId, mockQuoteTokenCode } from './offers.mocks'
 import config from '../../../config'
 import {mockConvertAmount} from './prices.mocks'
+import {mockReviewableRequestId, mockReviewableRequestTokenCode} from './reviewable_requests.mocks'
 
 export const mockAccountId = 'GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ'
 export const mockBalanceId = 'BBU5CSWOEKKMCPXMSV6X3PMJ2FHVHPQF56T4CLTMQP7O36DBFNOUC2CW'
@@ -65,6 +66,13 @@ export const pricesResponses = {
   [ `asset_pairs/convert?amount=${mockConvertAmount}&source_asset=${mockBaseTokenCode}&dest_asset=${mockQuoteTokenCode}`]: 'request for convert asset built!'
 }
 
+export const reviewableRequestResponses = {
+  [`request/assets?requestor=${mockAccountId}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`]: 'request for assets built!',
+  [`request/withdrawals?requestor=${mockAccountId}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`]: 'request for withdrawals built!',
+  [`requests/${mockReviewableRequestId}`]: 'request by rr id built!',
+  [`request/sales?base_asset=${mockReviewableRequestTokenCode}&requestor=${mockAccountId}`]: { _embedded: { records:['some record!'] } },
+}
+
 export const mockResponses = {
   ...accountResponses,
   ...chartResponses,
@@ -72,5 +80,6 @@ export const mockResponses = {
   ...feesResponses,
   ...fileResponses,
   ...offerResponses,
-  ...pricesResponses
+  ...pricesResponses,
+  ...reviewableRequestResponses
 }

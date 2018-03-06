@@ -42,7 +42,6 @@ export class ReviewableRequestsService extends Service {
     return this._horizonRequestBuilder.reviewableRequestsHelper()
       .assets()
       .reviewableRequest(id)
-      .order('desc')
       .callWithSignature(this._keypair)
   }
 
