@@ -1,5 +1,5 @@
-import { recordResponses } from './records.mocks'
-import { AssetPairRecord } from '../asset_pair.record'
+import { recordResponses } from './test/records.mocks'
+import { AssetPairRecord } from './asset_pair.record'
 
 describe('record.asset_pair', () => {
   let assetPairRecord

@@ -1,6 +1,6 @@
-import { TradeRecord } from '../trade.record'
-import { recordResponses } from './records.mocks'
-import { multiply } from '../../utils/math.util'
+import { TradeRecord } from './trade.record'
+import { recordResponses } from './test/records.mocks'
+import { multiply } from '../utils/math.util'
 
 describe('record.trade', () => {
   let tradeRecord

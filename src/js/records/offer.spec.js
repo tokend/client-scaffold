@@ -1,5 +1,5 @@
-import { OfferRecord } from '../offer.record'
-import { recordResponses } from './records.mocks'
+import { OfferRecord } from './offer.record'
+import { recordResponses } from './test/records.mocks'
 
 describe('record.offer', () => {
   let offerRecord

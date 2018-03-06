@@ -1,6 +1,6 @@
-import { recordResponses } from './records.mocks'
-import { TokenRecord } from '../token.record'
-import config from '../../../config'
+import { recordResponses } from './test/records.mocks'
+import { TokenRecord } from './token.record'
+import config from '../../config'
 
 describe('record.token', () => {
   const details = {
