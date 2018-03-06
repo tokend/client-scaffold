@@ -83,7 +83,9 @@
       i18n
     }),
     mounted () {
-      this.clipboard = new Clipboard(document.querySelector('#clipboard-btn'))
+      const btn = document.querySelector('#clipboard-btn')
+      if (!btn) return
+      this.clipboard = new Clipboard(btn)
     },
     computed: {
       ...mapGetters([

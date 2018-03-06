@@ -2,7 +2,7 @@ import { RecordFactory } from './factory'
 import { RecordTypes } from './types'
 import { recordResponses } from './test/records.mocks'
 
-describe('', () => {
+describe('record factory', () => {
   // TODO: uncomment after removing store dependency in transfer.record
   // it('createTransferRecord() should create valid instance', () => {
   //   expect(RecordFactory.createTransferRecord({})).to.be.instanceof(RecordTypes.TransferRecord)
