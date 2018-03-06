@@ -13,6 +13,7 @@ export class AssetPairRecord {
     this.policies = record.policies
   }
 
+  // TODO: add unit test for this getter
   get isTradable () {
     if (!this.policies) return false
     return this.policies.filter(policy => policy.value === ASSET_PAIR_POLICIES.tradeableSecondaryMarket).length
