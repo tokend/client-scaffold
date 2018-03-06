@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import store from '../../vuex'
 
-import { ErrorFactory, errors } from '../errors/error_factory'
+import { ErrorFactory, errors } from '../errors/factory'
 import { EventDispatcher } from '../events/event_dispatcher'
 
 import i18n from '../i18n/auth'

@@ -1,5 +1,5 @@
 import { Service } from './service'
-import {errors} from '../errors/error_factory'
+import {errors} from '../errors/factory'
 
 export class UsersService extends Service {
   /**

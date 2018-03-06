@@ -2,7 +2,7 @@ import { Keypair, TransactionBuilder, SetOptionsBuilder } from 'swarm-js-sdk'
 import { defaultSignerParams } from '../const/const'
 import { initHorizonServer } from './server.helper'
 import { parseError } from '../parsers/error.parser'
-import { errors } from '../errors/error_factory'
+import { errors } from '../errors/factory'
 import get from 'lodash/get'
 
 export class TxHelper {

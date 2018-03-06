@@ -64,7 +64,7 @@
 <script>
   import formMixin from '../common/mixins/form.mixin'
 
-  import { ErrorFactory, errorTypes, errors } from '../../js/errors/error_factory'
+  import { ErrorFactory, errorTypes, errors } from '../../js/errors/factory'
   import { vueRoutes } from '../../vue-router/const'
   import { Keypair } from 'swarm-js-sdk'
   import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'

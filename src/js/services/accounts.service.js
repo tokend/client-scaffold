@@ -1,5 +1,5 @@
 import { xdr, Operation } from 'swarm-js-sdk'
-import { ErrorFactory, errorTypes } from '../errors/error_factory'
+import { ErrorFactory, errorTypes } from '../errors/factory'
 import { Service } from './service'
 
 /**

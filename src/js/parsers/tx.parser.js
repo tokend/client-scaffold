@@ -1,5 +1,5 @@
 import {RecordFactory} from '../records/factory'
-import {ErrorFactory, errorTypes} from '../errors/error_factory'
+import {ErrorFactory, errorTypes} from '../errors/factory'
 
 export function parseTransaction (transaction, asset) {
   switch (transaction.type_i) {

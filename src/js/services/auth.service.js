@@ -3,7 +3,7 @@ import { TxHelper } from '../helpers/tx.helper'
 import { walletService, WalletService } from './wallet.service'
 import { WalletHelper } from '../helpers/wallet.helper'
 import { StateHelper } from '../../vuex/helpers/state.helper'
-import { ErrorFactory, errorTypes } from '../errors/error_factory'
+import { ErrorFactory, errorTypes } from '../errors/factory'
 
 export class AuthService extends WalletService {
   /**

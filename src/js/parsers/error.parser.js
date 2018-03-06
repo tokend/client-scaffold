@@ -1,4 +1,4 @@
-import { ErrorFactory } from '../errors/error_factory'
+import { ErrorFactory } from '../errors/factory'
 import get from 'lodash/get'
 
 const expiredSignatureStr = 'expired signature'

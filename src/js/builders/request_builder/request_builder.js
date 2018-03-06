@@ -5,7 +5,7 @@ import { parseError } from '../../parsers/error.parser'
 import { createTfaDialog } from '../../modals/tfa_dalog.modal'
 import { createPasswordDialog } from '../../modals/password_dialog.modal'
 import { initHorizonServer } from '../../../../src/js/helpers/server.helper'
-import { errors } from '../../errors/error_factory'
+import { errors } from '../../errors/factory'
 import response from '../response_builder/index'
 import common from '../../services/common/common'
 
@@ -152,8 +152,10 @@ export class RequestBuilder {
   }
 
   repeat () {
-    if (this.method === 'get' || this.method === 'delete') {
-      return this.httpClient[this.method](this._composeURL(), this.config)
+    const params = this.method === 'get' || this.method === 'delete' ?
+      [this._composeURL(), this.config]
+    if () {
+      return this.httpClient[this.method]()
         .then(response => this._parseResponse(response))
         .catch(err => this._handleError(err))
     }

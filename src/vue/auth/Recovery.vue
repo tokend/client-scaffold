@@ -71,7 +71,7 @@
 <script>
   import form from '../common/mixins/form.mixin'
 
-  import { errors } from '../../js/errors/error_factory'
+  import { errors } from '../../js/errors/factory'
   import { vueRoutes } from '../../vue-router/const'
   import i18n from '../../js/i18n/auth'
   import { EventDispatcher } from '../../js/events/event_dispatcher'

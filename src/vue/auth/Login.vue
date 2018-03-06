@@ -61,7 +61,7 @@
   import formMixin from '../common/mixins/form.mixin'
 
   import i18n from '../../js/i18n/auth'
-  import { errors } from '../../js/errors/error_factory'
+  import { errors } from '../../js/errors/factory'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
   import { dispatchAppEvent } from '../../js/events/helpers'
   import { commonEvents } from '../../js/events/common_events'
