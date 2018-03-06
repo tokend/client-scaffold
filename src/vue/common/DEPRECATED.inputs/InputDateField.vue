@@ -26,7 +26,6 @@
 
 <script>
   import FlatPickr from 'vue-flatpickr-component'
-  import 'flatpickr/dist/flatpickr.css'
   import moment from 'moment'
   import input from './input.mixin'
 
