@@ -76,9 +76,10 @@ const getters = {
 
   // tokens:
   userAcquiredTokens: 'userAcquiredTokens',
-  userWalletTokens: 'userWalletTokens'
+  userWalletTokens: 'userWalletTokens',
 
   // transactions:
+  transactions: 'transactions'
 }
 
 export const vuexTypes = {
