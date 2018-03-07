@@ -17,7 +17,7 @@
 
       <template v-for="(tx, i) in list">
 
-        <md-table-row class="tx-history__row">
+        <md-table-row class="tx-history__row" @click="toggleDetails(i)">
           <md-table-cell class="tx-history__table-cell">{{ tx.date }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.name }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
@@ -28,7 +28,7 @@
           </md-table-cell>
 
           <md-table-cell>
-            <md-button class="md-icon-button" @click="toggleDetails(i)">
+            <md-button class="tx-history__open-details-btn md-icon-button">
               <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
               <md-icon v-else>keyboard_arrow_down</md-icon>
             </md-button>
@@ -136,6 +136,10 @@
     &--counterparty {
       max-width: 10rem;
     }
+  }
+
+  .tx-history__open-details-btn {
+    
   }
 
   .tx-history__details {
