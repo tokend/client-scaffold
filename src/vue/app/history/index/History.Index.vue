@@ -1,8 +1,9 @@
 <template>
   <div class="tx-history">
+
     <md-table md-card class="tx-history__table">
       <md-table-toolbar>
-        <h1 class="md-title">Transaction history</h1>
+        <h1 class="md-title">{{ i18n.th_transaction_history() }}</h1>
       </md-table-toolbar>
 
       <md-table-row class="tx-history__row">
@@ -22,7 +23,7 @@
           <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.asset }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.amount }}</md-table-cell>
-          <md-table-cell class="tx-history__table-cell tx-history__table-cell--counterparty" md-label="Counterparty">
+          <md-table-cell class="tx-history__table-cell tx-history__table-cell--counterparty">
             {{ tx.counterparty }}
           </md-table-cell>
 

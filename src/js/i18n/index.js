@@ -5,9 +5,10 @@ import sales from './to_replace/sales'
 import transactions from './to_replace/transactions'
 import transfers from './to_replace/transfers'
 
-import loginView from './views/login_view'
-import signupView from './views/signup_view'
+import txHistoryView from './views/tx-history_view'
 import depositView from './views/deposit_view'
+import signupView from './views/signup_view'
+import loginView from './views/login_view'
 import labels from './views/labels'
 
 import Polyglot from 'node-polyglot'
@@ -24,6 +25,7 @@ const dictionary = {
   ...loginView,
   ...signupView,
   ...depositView,
+  ...txHistoryView,
   ...labels
 }
 polyglot.extend(dictionary)
