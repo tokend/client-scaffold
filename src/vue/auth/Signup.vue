@@ -16,7 +16,7 @@
           v-model.trim="form.email"
           class="input-field"
           id="login-email"
-          :label="i18n.su__email()"
+          :label="i18n.su_email()"
           name="email"
           :errorMessage="errorMessage('email')"
           v-validate="'required|email'"

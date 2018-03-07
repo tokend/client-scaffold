@@ -13,14 +13,14 @@
                md-small-size-65
                md-xsmall-size-100">
         <md-card-header>
-          <div class="md-title">{{ i18n.login_view_signin() }}</div>
+          <div class="md-title">{{ i18n.log_signin() }}</div>
         </md-card-header>
 
         <md-card-content>
           <input-field class="input-field"
             id="login-email"
             v-model.trim="form.email"
-            :label="i18n.login_view_email()"
+            :label="i18n.lbl_email()"
             name="email"
             :errorMessage="errorMessage('email')"
                        v-validate="'required'"
@@ -31,7 +31,7 @@
             v-model.trim="form.password"
             type="password"
             :togglePassword="true"
-            :label="i18n.login_view_password()"
+            :label="i18n.lbl_pwd()"
             name="password"
             :errorMessage="errorMessage('password')"
             v-validate="'required'"
@@ -40,15 +40,15 @@
           <div class="auth-page__bottom">
             <div class="auth-page__tips">
               <div class="tips__tip">
-                {{ i18n.login_view_dont_have_an_account() }}
-                <router-link :to="{ name: 'signup' }">{{ i18n.login_view_register_now() }}</router-link>
+                {{ i18n.log_dont_have_an_account() }}
+                <router-link :to="{ name: 'signup' }">{{ i18n.log_register_now() }}</router-link>
               </div>
               <div class="tips__tip">
-                {{ i18n.login_view_forgot_password() }}
-                <router-link :to="{ name: 'recovery' }">{{ i18n.login_view_recover_it() }}</router-link>
+                {{ i18n.log_forgot_password() }}
+                <router-link :to="{ name: 'recovery' }">{{ i18n.log_recover_it() }}</router-link>
               </div>
             </div>
-            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.login_view_signin() }}</md-button>
+            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.log_signin() }}</md-button>
           </div>
 
         </md-card-content>

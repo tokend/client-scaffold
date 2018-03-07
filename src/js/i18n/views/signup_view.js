@@ -1,5 +1,5 @@
 export default {
-  su__email: 'Email',
+  su_email: 'Email',
   su_pwd: 'Password',
   su_confirm: 'Confirm password',
   su_already_have_an_account: 'Already have an account?',
