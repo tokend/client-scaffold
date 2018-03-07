@@ -40,7 +40,7 @@ export const actions = {
   },
 
   async GET_TX_LIST ({ state, dispatch, commit }, tokenCode) {
-    if (state.isInitialized) dispatch(vuexTypes.INIT_TX_LIST)
+    if (!state.isInitialized) dispatch(vuexTypes.INIT_TX_LIST)
 
     const paginator = state.lists[tokenCode]
     paginator.attachInitLoader(() => transactionsService.loadTransactionHistory(tokenCode))
