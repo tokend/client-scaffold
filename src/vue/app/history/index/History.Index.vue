@@ -20,6 +20,7 @@
         <md-table-head>{{ i18n.lbl_status() }}</md-table-head>
         <md-table-head>{{ i18n.lbl_asset() }}</md-table-head>
         <md-table-head>{{ i18n.lbl_amount() }}</md-table-head>
+        <md-table-head>{{ i18n.lbl_counterparty() }}</md-table-head>
         <md-table-head><!--Button--></md-table-head>
       </md-table-row>
 
