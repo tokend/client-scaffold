@@ -1,5 +1,5 @@
-import { transactionsService } from '../../js/services/transactions.service'
 import { accountsService } from '../../js/services/accounts.service'
+import { transactionsService } from '../../js/services/transactions.service'
 import { parseTransaction } from '../../js/parsers/tx.parser'
 import { Paginator } from '../../js/helpers/paginator'
 import { vuexTypes } from '../types'
@@ -33,8 +33,8 @@ export const mutations = {
 }
 
 export const actions = {
-  INIT_TX_LIST ({ commit, getters }) {
-    const tokenCodes = Object.keys(getters.balances)
+  INIT_TX_LIST ({ commit, rootGetters }) {
+    const tokenCodes = Object.keys(rootGetters.accountBalances)
     commit(vuexTypes.UPDATE_TX_LIST, tokenCodes)
     commit(vuexTypes.SET_TX_LIST_INITIALIZED)
   },
