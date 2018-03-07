@@ -2,9 +2,17 @@
   <div class="tx-history">
 
     <md-table md-card class="tx-history__table">
-      <md-table-toolbar>
+      <md-table-toolbar class="md-layout md-alignment-center-right">
         <h1 class="md-title">{{ i18n.th_transaction_history() }}</h1>
       </md-table-toolbar>
+
+      <div class="tx-history__select-outer">
+        <select-field
+          :label="i18n.lbl_asset()"
+           v-model="tokenCode"
+          :values="tokens"
+        />
+      </div>
 
       <md-table-row class="tx-history__row">
         <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
@@ -58,6 +66,7 @@
 
 <script>
   import TxDetails from './History.TxDetails'
+  import SelectField from '../../../common/fields/SelectField'
 
   import { mapGetters, mapActions } from 'vuex'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
@@ -66,12 +75,14 @@
   import { i18n } from '../../../../js/i18n'
   import get from 'lodash/get'
 
+  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
+
   export default {
     name: 'history-index',
-    components: { TxDetails },
+    components: { TxDetails, SelectField },
     data: _ => ({
       isLoading: false,
-      tokenCode: 'BTC',
+      tokenCode: DEFAULT_SELECTED_ASSET,
       index: -1,
       i18n
     }),
@@ -80,7 +91,8 @@
     },
     computed: {
       ...mapGetters([
-        vuexTypes.transactions
+        vuexTypes.transactions,
+        vuexTypes.userWalletTokens
       ]),
       list () {
         return (get(this.transactions, `${this.tokenCode}.records`) || [])
@@ -95,6 +107,9 @@
       },
       isLoaded () {
         return get(this.transactions, `${this.tokenCode}.isLoaded`)
+      },
+      tokens () {
+        return this.userWalletTokens.map(token => token.code)
       }
     },
     methods: {
@@ -130,6 +145,8 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
 
+  $padding: 20px 25px;
+
   .tx-history__table-cell {
     overflow: hidden;
 
@@ -138,12 +155,12 @@
     }
   }
 
-  .tx-history__open-details-btn {
-    
+  .tx-history__select-outer {
+    padding: $padding;
   }
 
   .tx-history__details {
-    padding: 20px 25px;
+    padding: $padding;
     max-width: 25rem;
     width: 100%;
   }
