@@ -126,17 +126,17 @@
         } catch (error) {
           console.error(error)
           if (!error.showBanner) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error)
+            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
           }
           switch (error.constructor) {
             case errors.NotFoundError:
-              error.showBanner(i18n.not_found)
+              error.showBanner(i18n.not_found())
               break
             case errors.EmailNotVerifiedError:
               this.handleNotVerifiedError()
               break
             default:
-              error.showBanner(i18n.unexpected_error)
+              error.showBanner(i18n.unexpected_error())
           }
         }
         this.enable()
@@ -172,12 +172,12 @@
             kdf.attributes()
           )
           await emailService.sendResendEmailRequest(walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent)
+          EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent())
         } catch (error) {
           if (error.showBanner) {
-            error.showBanner(i18n.unexpected_error)
+            error.showBanner(i18n.unexpected_error())
           } else {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error)
+            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
           }
         }
         this.enable()
@@ -186,7 +186,7 @@
       async verifyEmail () {
         try {
           await emailService.sendVerifyEmailRequest(this.emailParams.token, this.emailParams.walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.email_verified)
+          EventDispatcher.dispatchShowSuccessEvent(i18n.email_verified())
         } catch (error) {
           this.handleReject(error)
         }

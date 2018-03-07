@@ -1,12 +1,12 @@
 import { ExtendableError } from './extendable_error.error'
 import { EventDispatcher } from '../events/event_dispatcher'
-import i18n from '../i18n/auth'
+import { i18n } from '../i18n'
 
 export class ExpiredSignatureError extends ExtendableError {
   constructor () {
     super('EmailNotVerifiedError')
     this.errorType = 'Email not verified'
-    this.message = i18n.expired_signature
+    this.message = i18n.expired_signature()
   }
 
   showBanner () {

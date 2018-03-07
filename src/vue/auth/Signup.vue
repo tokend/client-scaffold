@@ -103,14 +103,14 @@
         } catch (error) {
           console.error(error)
           if (!error.showBanner) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error)
+            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
           }
           switch (error.constructor) {
             case errors.ConflictError:
-              error.showBanner(i18n.user_exists)
+              error.showBanner(i18n.user_exists())
               break
             default:
-              error.showBanner(i18n.unexpected_error)
+              error.showBanner(i18n.unexpected_error())
           }
         }
         this.enable()

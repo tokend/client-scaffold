@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import store from '../../vuex'
+import FormMixin from '../../vue/common/mixins/form.mixin'
+
+import { EventDispatcher } from '../events/event_dispatcher'
 import { factorsService } from '../services/factors.service'
 import { ErrorFactory } from '../errors/factory'
-
-import i18n from '../i18n/auth'
-
-import FormMixin from '../../vue/common/mixins/form.mixin'
-import { EventDispatcher } from '../events/event_dispatcher'
 import { WalletHelper } from '../helpers/wallet.helper'
+import { i18n } from '../i18n'
 
 const template = `
   <div>
@@ -65,7 +64,7 @@ export function createPasswordDialog (onSubmit, { salt, kdf, token, keychainData
           } catch (error) {
             console.error(error)
             this.enable()
-            EventDispatcher.dispatchShowErrorEvent(i18n.password_not_verified)
+            EventDispatcher.dispatchShowErrorEvent(i18n.password_not_verified())
             return
           }
           const walletKey = walletParams.walletKey
@@ -74,14 +73,14 @@ export function createPasswordDialog (onSubmit, { salt, kdf, token, keychainData
             signedToken = WalletHelper.signToken(token, keychainData, walletKey)
           } catch (e) {
             this.enable()
-            EventDispatcher.dispatchShowErrorEvent(i18n.password_not_verified)
+            EventDispatcher.dispatchShowErrorEvent(i18n.password_not_verified())
             return
           }
           try {
             await factorsService.verifyFactor(factorId, token, signedToken)
           } catch (e) {
             this.enable()
-            EventDispatcher.dispatchShowErrorEvent(i18n.default)
+            EventDispatcher.dispatchShowErrorEvent(i18n.default())
             return
           }
           this.enable()

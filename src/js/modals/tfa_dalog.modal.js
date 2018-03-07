@@ -1,14 +1,11 @@
 import Vue from 'vue'
 import store from '../../vuex'
+import FormMixin from '../../vue/common/mixins/form.mixin'
 
 import { ErrorFactory, errors } from '../errors/factory'
 import { EventDispatcher } from '../events/event_dispatcher'
-
-import i18n from '../i18n/auth'
-
-import FormMixin from '../../vue/common/mixins/form.mixin'
-
 import { factorsService } from '../services/factors.service'
+import { i18n } from '../i18n'
 
 const template = `
   <div>
@@ -59,7 +56,7 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
             .catch(err => {
               this.enable()
               if (err instanceof errors.TFAWrongCodeError) {
-                EventDispatcher.dispatchShowErrorEvent(i18n.tfa_wrong_code)
+                EventDispatcher.dispatchShowErrorEvent(i18n.tfa_wrong_code())
               }
               return Promise.reject(err)
             })

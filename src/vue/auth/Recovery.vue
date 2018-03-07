@@ -73,7 +73,7 @@
 
   import { errors } from '../../js/errors/factory'
   import { vueRoutes } from '../../vue-router/const'
-  import i18n from '../../js/i18n/auth'
+  import { i18n } from '../../js/i18n'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
   import LoadIndicator from '../common/LoadIndicator'
 
@@ -103,22 +103,22 @@
         this.disable()
         try {
           await this.makeRecovery()
-          EventDispatcher.dispatchShowSuccessEvent(i18n.recovered)
+          EventDispatcher.dispatchShowSuccessEvent(i18n.recovered())
           this.goLogin()
         } catch (error) {
           console.error(error)
           switch (error.constructor) {
             case errors.NotFoundError:
-              error.showBanner(i18n.recovery_wallet_not_found)
+              error.showBanner(i18n.recovery_wallet_not_found())
               break
             case errors.EmailNotVerifiedError:
-              error.showBanner(i18n.email_not_verified_on_recovery)
+              error.showBanner(i18n.email_not_verified_on_recovery())
               break
             default:
               if (error.showBanner) {
-                error.showBanner(i18n.unexpected_error)
+                error.showBanner(i18n.unexpected_error())
               } else {
-                EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error)
+                EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
               }
           }
         }
