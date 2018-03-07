@@ -21,6 +21,9 @@ import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
 import Deposit from '../vue/app/deposit/Deposit.Entry'
 import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 
+import History from '../vue/app/history/History.Entry'
+import HistoryIndex from '../vue/app/history/index/History.Index'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -94,6 +97,19 @@ const router = new Router({
               path: '/deposit/make',
               name: 'deposit.make',
               component: DepositMake
+            }
+          ]
+        },
+        {
+          name: 'app.history',
+          path: '/history',
+          component: History,
+          redirect: { path: '/history/index' },
+          children: [
+            {
+              path: '/history/index',
+              name: 'history.index',
+              component: HistoryIndex
             }
           ]
         }
