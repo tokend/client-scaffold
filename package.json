@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@std/esm": "^0.18.0",
-    "@tokend/wallet.js": "git+ssh://git@gitlab.com:tokend/wallet.js.git",
+    "@tokend/wallet.js": "git+ssh://git@gitlab.com/tokend/wallet.js.git",
     "@vue/test-utils": "^1.0.0-beta.11",
     "axios": "^0.18.0",
     "bignumber": "^1.1.0",
