@@ -6,7 +6,16 @@ export default {
   lbl_amount: 'Amount',
   lbl_settings: 'Settings',
   lbl_signout: 'Sign Out',
+  lbl_signin: 'Sign In',
+  lbl_signup: 'Sign Up',
+  lbl_logout: 'Log out',
   lbl_account: 'My Account',
   lbl_verified: 'Verified user',
-  lbl_unverified: 'Unverified user'
+  lbl_unverified: 'Unverified user',
+  lbl_dashboard: 'Dashboard',
+  lbl_deposit: 'Deposit',
+  lbl_withdraw: 'Withdraw',
+  lbl_send: 'Send',
+  lbl_history: 'History',
+  lbl_cancel: 'Cancel'
 }

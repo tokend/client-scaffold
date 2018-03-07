@@ -7,13 +7,13 @@
                    class="md-button"
                    v-if="!isLoggedIn"
                    :to="{ name: 'signup' }">
-        Sign up
+        {{ i18n.lbl_signup() }}
       </router-link>
       <router-link tag="button"
                    class="md-button md-accent"
                    v-if="!isLoggedIn"
                    :to="{ name: 'login' }">
-        Sign in
+        {{ i18n.lbl_signin() }}
       </router-link>
     </div>
   </nav>
