@@ -14,25 +14,27 @@
         <md-table-head><!--Button--></md-table-head>
       </md-table-row>
 
-      <template v-for="item in list">
+      <template v-for="(tx, i) in list">
 
         <md-table-row>
-          <md-table-cell class="tx-history__table-cell">{{ item.date }}</md-table-cell>
-          <md-table-cell class="tx-history__table-cell">{{ item.name }}</md-table-cell>
-          <md-table-cell class="tx-history__table-cell">{{ item.state }}</md-table-cell>
-          <md-table-cell class="tx-history__table-cell">{{ item.asset }}</md-table-cell>
-          <md-table-cell class="tx-history__table-cell">{{ item.amount }}</md-table-cell>
+          <md-table-cell class="tx-history__table-cell">{{ tx.date }}</md-table-cell>
+          <md-table-cell class="tx-history__table-cell">{{ tx.name }}</md-table-cell>
+          <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
+          <md-table-cell class="tx-history__table-cell">{{ tx.asset }}</md-table-cell>
+          <md-table-cell class="tx-history__table-cell">{{ tx.amount }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell tx-history__table-cell--counterparty" md-label="Counterparty">
-            {{ item.counterparty }}
+            {{ tx.counterparty }}
           </md-table-cell>
 
           <md-table-cell>
-            <md-button class="md-icon-button" @click="openDetails">
+            <md-button class="md-icon-button" @click="toggleDetails(i)">
               <md-icon>keyboard_arrow_down</md-icon>
             </md-button>
           </md-table-cell>
 
         </md-table-row>
+
+        <tx-details class="tx-history__details" v-if="index === i" :tx="tx"/>
 
       </template>
     </md-table>
@@ -40,6 +42,8 @@
 </template>
 
 <script>
+  import TxDetails from './History.TxDetails'
+
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { RecordTypes } from '../../../../js/records/types'
@@ -48,9 +52,10 @@
 
   export default {
     name: 'history-index',
+    components: { TxDetails },
     data: _ => ({
       tokenCode: 'BTC',
-      selectedItem: '',
+      index: -1,
       i18n
     }),
     created () {
@@ -76,8 +81,8 @@
       ...mapActions({
         loadList: vuexTypes.GET_TX_LIST
       }),
-      openDetails (item) {
-        this.selectedItem = this.selectedItem ? null : item.id
+      toggleDetails (index) {
+        this.index = this.index === index ? -1 : index
       }
     },
     watch: {
@@ -91,16 +96,14 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
 
-  .tx-history__table {
-    .md-table-content {
-      background: $col-md-block !important;
-    }
-  }
-
   .tx-history__table-cell {
     overflow: hidden;
     &--counterparty {
       max-width: 10rem;
     }
+  }
+
+  .tx-history__details {
+    padding: 10px 25px;
   }
 </style>

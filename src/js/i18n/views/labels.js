@@ -4,8 +4,21 @@ export default {
   lbl_confirm: 'Confirm password',
   lbl_asset: 'Asset',
   lbl_amount: 'Amount',
+  lbl_wallet: 'wallet',
   lbl_date: 'Date',
   lbl_tx_type: 'Transaction type',
   lbl_status: 'Status',
-  lbl_counterparty: 'Counterparty'
+  lbl_counterparty: 'Counterparty',
+  lbl_sender: 'Sender',
+  lbl_receiver: 'Receiver',
+  lbl_fixed_fee: 'Fixed fee',
+  lbl_percent_fee: 'Percent fee',
+  lbl_description: 'Description',
+  lbl_fund_name: 'Fund name',
+  lbl_base_asset: 'Base asset',
+  lbl_fee_paid: 'Fee paid',
+  lbl_price: 'Price',
+  lbl_transfer_fee: 'Transfer fee',
+  lbl_destination_asset: 'Destination asset',
+  lbl_destination_amount: 'Destination amount'
 }
