@@ -5,7 +5,7 @@
         <h1 class="md-title">Transaction history</h1>
       </md-table-toolbar>
 
-      <md-table-row>
+      <md-table-row class="tx-history__row">
         <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
         <md-table-head>{{ i18n.lbl_tx_type() }}</md-table-head>
         <md-table-head>{{ i18n.lbl_status() }}</md-table-head>
@@ -28,13 +28,18 @@
 
           <md-table-cell>
             <md-button class="md-icon-button" @click="toggleDetails(i)">
-              <md-icon>keyboard_arrow_down</md-icon>
+              <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
+              <md-icon v-else>keyboard_arrow_down</md-icon>
             </md-button>
           </md-table-cell>
 
         </md-table-row>
 
-        <tx-details class="tx-history__details" v-if="index === i" :tx="tx"/>
+        <md-table-row class="th-history__expandable-row" v-if="isSelected(i)">
+          <md-table-cell colspan="7">
+            <tx-details class="tx-history__details" :tx="tx"/>
+          </md-table-cell>
+        </md-table-row>
 
       </template>
     </md-table>
@@ -83,6 +88,9 @@
       }),
       toggleDetails (index) {
         this.index = this.index === index ? -1 : index
+      },
+      isSelected (i) {
+        return this.index === i
       }
     },
     watch: {
@@ -105,6 +113,9 @@
   }
 
   .tx-history__details {
-    padding: 10px 25px;
+    padding: 20px 25px;
+    max-width: 25rem;
+    width: 100%;
   }
+
 </style>

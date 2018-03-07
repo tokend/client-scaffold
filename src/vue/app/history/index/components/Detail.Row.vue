@@ -21,10 +21,12 @@
 
   .detail-row {
     display: flex;
+    justify-content: space-between;
+    line-height: 1.6rem;
+    width: 100%;
   }
 
   .detail-row__key {
     color: $col-md-unfocused;
-    margin-right: 8rem;
   }
 </style>
