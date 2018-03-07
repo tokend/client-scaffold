@@ -1,9 +1,9 @@
 <template>
   <div>
-    <detail :key="i18n.counterpartyRole()" :value="tx.counterparty"/>
-    <detail :key="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
-    <detail :key="i18n.lbl_transfer_fee()" :value="`${transferFee} ${tx.feeAsset}`"/>
-    <detail :key="i18n.lbl_date()" :value="tx.date"/>
+    <detail :prop="i18n.counterpartyRole()" :value="tx.counterparty"/>
+    <detail :prop="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
+    <detail :prop="i18n.lbl_transfer_fee()" :value="`${transferFee} ${tx.feeAsset}`"/>
+    <detail :prop="i18n.lbl_date()" :value="tx.date"/>
   </div>
 </template>
 

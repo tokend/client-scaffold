@@ -26,7 +26,6 @@ const dictionary = {
   ...depositView,
   ...labels
 }
-
 polyglot.extend(dictionary)
 export const i18n = Object.keys(dictionary)
   .reduce((obj, key) => {

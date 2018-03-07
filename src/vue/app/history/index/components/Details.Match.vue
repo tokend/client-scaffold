@@ -1,11 +1,11 @@
 <template>
   <div>
-    <detail :key="i18n.lbl_fund_name()" :value="`${tx.counterparty} ${tx.counterparty}`"/>
-    <detail :key="i18n.lbl_base_asset()" :value="tx.baseAsset"/>
-    <detail :key="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
-    <detail :key="i18n.lbl_fee_paid()" :value="`${tx.feePaid} ${tx.feeAsset}`"/>
-    <detail :key="i18n.lbl_price()" :value="`${tx.price} ${tx.quoteAsset}`"/>
-    <detail :key="i18n.lbl_date()" :value="tx.date"/>
+    <detail :prop="i18n.lbl_fund_name()" :value="`${tx.counterparty} ${tx.counterparty}`"/>
+    <detail :prop="i18n.lbl_base_asset()" :value="tx.baseAsset"/>
+    <detail :prop="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
+    <detail :prop="i18n.lbl_fee_paid()" :value="`${tx.feePaid} ${tx.feeAsset}`"/>
+    <detail :prop="i18n.lbl_price()" :value="`${tx.price} ${tx.quoteAsset}`"/>
+    <detail :prop="i18n.lbl_date()" :value="tx.date"/>
   </div>
 </template>
 

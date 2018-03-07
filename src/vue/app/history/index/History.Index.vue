@@ -16,7 +16,7 @@
 
       <template v-for="(tx, i) in list">
 
-        <md-table-row>
+        <md-table-row class="tx-history__row">
           <md-table-cell class="tx-history__table-cell">{{ tx.date }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.name }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
@@ -98,6 +98,7 @@
 
   .tx-history__table-cell {
     overflow: hidden;
+
     &--counterparty {
       max-width: 10rem;
     }
