@@ -1,4 +1,4 @@
-import { parseTransaction } from '../parsers/tx.parser'
+import { parseTransaction } from './tx.parser'
 import {
   withdawRecord,
   transferRecord,
