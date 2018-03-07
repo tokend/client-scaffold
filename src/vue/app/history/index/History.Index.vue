@@ -14,6 +14,11 @@
         <md-table-cell class="tx-history__table-cell tx-history__table-cell--counterparty" md-label="Counterparty">
           {{ item.counterparty }}
         </md-table-cell>
+        <md-table-cell>
+          <md-button class="md-icon-button" @click="openDetails">
+            <md-icon>keyboard_arrow_down</md-icon>
+          </md-button>
+        </md-table-cell>
       </md-table-row>
     </md-table>
   </div>
