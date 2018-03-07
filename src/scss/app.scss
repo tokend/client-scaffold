@@ -9,6 +9,7 @@
   accent: md-get-palette-color(red, A200),
   theme: light
 ));
+
 @import "../../node_modules/vue-material/dist/theme/all";
 
 /* Global styles */
@@ -44,7 +45,7 @@ html,body{
 
   &,
   & main,
-  & .md-content {
+  & .md-app-content {
     background-color: $col-md-background;
   }
 }
