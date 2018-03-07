@@ -43,6 +43,15 @@
         </md-table-row>
 
       </template>
+
+      <md-table-row v-if="!isLoaded">
+        <md-table-cell colspan="7">
+          <div class="tx-history__btn-outer">
+            <md-button @click="more" :disabled="isLoading">More</md-button>
+          </div>
+        </md-table-cell>
+      </md-table-row>
+
     </md-table>
   </div>
 </template>
@@ -51,6 +60,7 @@
   import TxDetails from './History.TxDetails'
 
   import { mapGetters, mapActions } from 'vuex'
+  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { vuexTypes } from '../../../../vuex/types'
   import { RecordTypes } from '../../../../js/records/types'
   import { i18n } from '../../../../js/i18n'
@@ -60,6 +70,7 @@
     name: 'history-index',
     components: { TxDetails },
     data: _ => ({
+      isLoading: false,
       tokenCode: 'BTC',
       index: -1,
       i18n
@@ -81,17 +92,31 @@
             list.push(item)
             return list
           }, [])
+      },
+      isLoaded () {
+        return get(this.transactions, `${this.tokenCode}.isLoaded`)
       }
     },
     methods: {
       ...mapActions({
-        loadList: vuexTypes.GET_TX_LIST
+        loadList: vuexTypes.GET_TX_LIST,
+        loadNext: vuexTypes.NEXT_TX_LIST
       }),
       toggleDetails (index) {
         this.index = this.index === index ? -1 : index
       },
       isSelected (i) {
         return this.index === i
+      },
+      async more () {
+        this.isLoading = true
+        try {
+          await this.loadNext(this.tokenCode)
+        } catch (e) {
+          console.error(e)
+          EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
+        }
+        this.isLoading = false
       }
     },
     watch: {
@@ -117,6 +142,10 @@
     padding: 20px 25px;
     max-width: 25rem;
     width: 100%;
+  }
+
+  .tx-history__btn-outer {
+    text-align: center;
   }
 
 </style>
