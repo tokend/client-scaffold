@@ -16,7 +16,12 @@ const mutations = {
   // account:
   SET_ACCOUNT_KEYS: 'SET_ACCOUNT_KEYS',
   SET_ACCOUNT_BALANCES: 'SET_ACCOUNT_BALANCES',
-  SET_ACCOUNT_DETAILS: 'SET_ACCOUNT_DETAILS'
+  SET_ACCOUNT_DETAILS: 'SET_ACCOUNT_DETAILS',
+
+  // transactions:
+  SET_TX_LIST_INITIALIZED: 'SET_TX_LIST_INITIALIZED',
+  UPDATE_TX_LIST: 'UPDATE_TX_LIST',
+  UPDATE_TX_LIST_ITEM: 'UPDATE_TX_LIST_ITEM'
 }
 
 const actions = {
@@ -34,7 +39,13 @@ const actions = {
 
   // account:
   GET_ACCOUNT_DETAILS: 'GET_ACCOUNT_DETAILS',
-  GET_ACCOUNT_BALANCES: 'GET_ACCOUNT_BALANCES'
+  GET_ACCOUNT_BALANCES: 'GET_ACCOUNT_BALANCES',
+
+  // transactions:
+  INIT_TX_LIST: 'INIT_TX_LIST',
+  GET_TX_LIST: 'GET_TX_LIST',
+  NEXT_TX_LIST: 'NEXT_TX_LIST',
+  UPDATE_TX_COUNTERPARTIES: 'UPDATE_TX_COUNTERPARTIES'
 }
 
 const getters = {
@@ -66,6 +77,8 @@ const getters = {
   // tokens:
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens'
+
+  // transactions:
 }
 
 export const vuexTypes = {
