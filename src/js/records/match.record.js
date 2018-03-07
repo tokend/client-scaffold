@@ -17,9 +17,9 @@ export class MatchRecord extends TxRecord {
   }
 
   _getParticipant () {
-    const balance = get(store.getters.balances, `[${this.asset}].balance_id`)
+    const balance = get(store.getters.accountBalances, `[${this.asset}].balance_id`)
     return this.participants
-      .filter(participant => participant.account_id === store.getters.userAccountId)
+      .filter(participant => participant.account_id === store.getters.accountId)
       .filter(participant => participant.balance_id === balance)[0]
   }
 
