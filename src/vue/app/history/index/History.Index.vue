@@ -2,17 +2,20 @@
   <div class="tx-history">
 
     <md-table md-card class="tx-history__table">
-      <md-table-toolbar class="md-layout md-alignment-center-right">
+      <md-table-toolbar class="
+         tx-history__table-toolbar
+      ">
         <h1 class="md-title">{{ i18n.th_transaction_history() }}</h1>
+        <div class="tx-history__select-outer">
+          <select-field
+            :label="i18n.lbl_asset()"
+            v-model="tokenCode"
+            :values="tokens"
+          />
+        </div>
       </md-table-toolbar>
 
-      <div class="tx-history__select-outer">
-        <select-field
-          :label="i18n.lbl_asset()"
-           v-model="tokenCode"
-          :values="tokens"
-        />
-      </div>
+
 
       <md-table-row class="tx-history__row">
         <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
@@ -146,10 +149,27 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
 
-  $padding: 20px 25px;
+  $padding-vertical: 20px;
+  $padding-horizontal: 25px;
+  $padding: $padding-vertical $padding-horizontal;
+
+  .tx-history {
+    width: 100%;
+  }
+
+  .tx-history__table-toolbar {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 840px) {
+      flex-direction: column;
+      padding-top: $padding-vertical;
+    }
+  }
 
   .tx-history__table-cell {
     overflow: hidden;
+    white-space: nowrap;
 
     &--counterparty {
       max-width: 10rem;
