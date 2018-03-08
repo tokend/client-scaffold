@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail :prop="i18n.counterpartyRole()" :value="tx.counterparty"/>
+    <detail :prop="i18n.counterpartyRole()" :value="tx.counterparty" :copiable="true"/>
     <detail :prop="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
     <detail :prop="i18n.lbl_transfer_fee()" :value="`${transferFee} ${tx.feeAsset}`"/>
     <detail :prop="i18n.lbl_date()" :value="tx.date"/>

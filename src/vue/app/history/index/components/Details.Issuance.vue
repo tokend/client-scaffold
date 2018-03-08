@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail :prop="i18n.lbl_sender()" :value="tx.counterparty"/>
+    <detail :prop="i18n.lbl_sender()" :value="tx.counterparty" :copiable="true"/>
     <detail :prop="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
     <detail :prop="i18n.lbl_fixed_fee()" :value="`${tx.fixedFee} ${tx.feeAsset}`"/>
     <detail :prop="i18n.lbl_percent_fee()" :value="`${tx.percentFee} ${tx.feeAsset}`"/>
