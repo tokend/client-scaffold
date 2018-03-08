@@ -29,6 +29,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
       </md-list-item>
 
+      <md-list-item to="/settings">
+        <md-icon>settings</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>
+      </md-list-item>
+
     </md-list>
   </div>
 </template>
