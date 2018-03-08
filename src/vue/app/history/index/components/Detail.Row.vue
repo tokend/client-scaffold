@@ -2,7 +2,7 @@
   <p class="detail-row">
     <span class="detail-row__key">{{ prop }}</span>
     <span class="detail-row__value">
-      <span id="clipboard-target">{{ value }}</span>
+      <span class="detail-row__value-text" id="clipboard-target">{{ value }}</span>
       <md-button
         v-if="copiable"
         class="detail-row__clipboard-btn md-icon-button"
@@ -68,5 +68,12 @@
       position: absolute;
       right: -48px;
     }
+  }
+
+  .detail-row__value-text {
+    display: block;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>
