@@ -6,6 +6,7 @@ import { mockBaseTokenCode, mockOrderBookId, mockQuoteTokenCode } from './offers
 import config from '../../../config'
 import {mockConvertAmount} from './prices.mocks'
 import {mockReviewableRequestId, mockReviewableRequestTokenCode} from './reviewable_requests.mocks'
+import { mockTxTokenCode } from './transactions.mocks'
 
 export const mockAccountId = 'GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ'
 export const mockBalanceId = 'BBU5CSWOEKKMCPXMSV6X3PMJ2FHVHPQF56T4CLTMQP7O36DBFNOUC2CW'
@@ -73,6 +74,10 @@ export const reviewableRequestResponses = {
   [`request/sales?base_asset=${mockReviewableRequestTokenCode}&requestor=${mockAccountId}`]: { _embedded: { records:['some record!'] } },
 }
 
+export const transactionResponses = {
+  [`accounts/${mockAccountId}/payments?asset=${mockTxTokenCode}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`]: 'request for payments made'
+}
+
 export const mockResponses = {
   ...accountResponses,
   ...chartResponses,
@@ -81,5 +86,6 @@ export const mockResponses = {
   ...fileResponses,
   ...offerResponses,
   ...pricesResponses,
-  ...reviewableRequestResponses
+  ...reviewableRequestResponses,
+  ...transactionResponses
 }
