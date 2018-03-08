@@ -2,9 +2,7 @@
   <div class="tx-history">
 
     <md-table md-card class="tx-history__table">
-      <md-table-toolbar class="
-         tx-history__table-toolbar
-      ">
+      <md-table-toolbar class="tx-history__table-toolbar">
         <h1 class="md-title">{{ i18n.th_transaction_history() }}</h1>
         <div class="tx-history__select-outer">
           <select-field
@@ -14,8 +12,6 @@
           />
         </div>
       </md-table-toolbar>
-
-
 
       <md-table-row class="tx-history__row">
         <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
