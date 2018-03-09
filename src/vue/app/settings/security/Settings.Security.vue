@@ -30,5 +30,9 @@
 </script>
 
 <style scoped>
-
+  .security-settings__change-password-outer,
+  .security-settings__tfa-settings-outer {
+    max-width: 36rem;
+    margin: auto;
+  }
 </style>
