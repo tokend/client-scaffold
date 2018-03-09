@@ -9,6 +9,7 @@ function createState () {
     state.auth = oldState.auth || state.auth
     state.account = oldState.account || state.account
     state.user = oldState.user || state.user
+    state.wallet = oldState.wallet || state.wallet
   }
   return state
 }

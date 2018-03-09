@@ -60,6 +60,7 @@ export class WalletService extends Service {
     const walletId = recoveryWalletId || this._walletId
 
     return this._apiRequestBuilder
+      .wallets()
       .walletId(walletId)
       .data(walletAttributes)
       .type('wallet')

@@ -2,7 +2,6 @@ import { Keypair } from 'swarm-js-sdk'
 import { TxHelper } from '../helpers/tx.helper'
 import { walletService, WalletService } from './wallet.service'
 import { WalletHelper } from '../helpers/wallet.helper'
-import { StateHelper } from '../../vuex/helpers/state.helper'
 import { ErrorFactory, errorTypes } from '../errors/factory'
 
 export class AuthService extends WalletService {
@@ -77,11 +76,11 @@ export class AuthService extends WalletService {
 
     await this.updateWallet(options)
 
-    StateHelper.storeLoginData({
-      seed: newKeypair.secret(),
-      publicKey: newKeypair.accountId(),
-      walletId: options.walletAttributes.id
-    })
+    // StateHelper.storeLoginData({
+    //   seed: newKeypair.secret(),
+    //   publicKey: newKeypair.accountId(),
+    //   walletId: options.walletAttributes.id
+    // })
   }
 
   /**

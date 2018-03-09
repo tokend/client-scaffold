@@ -8,7 +8,7 @@
 
     <md-card class="change-password__card">
       <md-card-header>
-        <div class="md-title">Provide a new password</div>
+        <div class="md-title">{{ i18n.set_provide_pwd() }}</div>
       </md-card-header>
 
       <md-card-content>
@@ -52,7 +52,11 @@
 </template>
 
 <script>
-  import {i18n} from '../../../../js/i18n'
+  import { i18n } from '../../../../js/i18n'
+  import { authService } from '../../../../js/services/auth.service'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../vuex/types'
+
   import Form from '../../../common/mixins/form.mixin'
 
   export default {
@@ -65,9 +69,18 @@
         confirmPassword: ''
       }
     }),
+    computed: {
+      ...mapGetters([
+        vuexTypes.userEmail
+      ])
+    },
     methods: {
-      submit () {
-        // wip
+      async submit () {
+        if (!await this.isValid()) return
+        await authService.changePassword({
+          email: this.userEmail,
+          newPassword: this.form.password
+        })
       }
     }
   }
