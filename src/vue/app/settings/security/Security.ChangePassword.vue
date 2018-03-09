@@ -2,48 +2,49 @@
 
   <form novalidate
         class="change-password
-                 md-layout"
+               md-layout"
         @submit.prevent="submit">
 
 
     <md-card class="change-password__card">
-      <md-card-header>
-        <div class="md-title">{{ i18n.set_provide_pwd() }}</div>
-      </md-card-header>
 
-      <md-card-content>
+      <div class="change-password__inner">
+        <p class="change-password__explain">{{ i18n.set_help_pwd() }}</p>
 
-        <input-field
-          v-model.trim="form.password"
-          id="login-password"
-          class="input-field"
-          name="password"
-          type="password"
-          :togglePassword="true"
-          :label="i18n.lbl_pwd()"
-          :errorMessage="errorMessage('password')"
-          v-validate="'required|min:6'"
-        />
+        <md-card-content>
 
-        <input-field
-          v-model.trim="form.confirmPassword"
-          id="login-confirm-password"
-          name="confirm-password"
-          class="input-field"
-          type="password"
-          :togglePassword="true"
-          :label="i18n.lbl_confirm()"
-          :errorMessage="errorMessage('confirm-password')"
-          v-validate="'required|confirmed:password'"
-          data-vv-as="password"
-          data-vv-validate-on="input"
-        />
+          <input-field
+            v-model.trim="form.password"
+            id="login-password"
+            class="input-field"
+            name="password"
+            type="password"
+            :togglePassword="true"
+            :label="i18n.lbl_pwd()"
+            :errorMessage="errorMessage('password')"
+            v-validate="'required|min:6'"
+          />
 
-        <div class="md-layout md-alignment-center-right">
-          <md-button type="submit" class="md-raised md-primary">Submit</md-button>
-        </div>
+          <input-field
+            v-model.trim="form.confirmPassword"
+            id="login-confirm-password"
+            name="confirm-password"
+            class="input-field"
+            type="password"
+            :togglePassword="true"
+            :label="i18n.lbl_confirm()"
+            :errorMessage="errorMessage('confirm-password')"
+            v-validate="'required|confirmed:password'"
+            data-vv-as="password"
+            data-vv-validate-on="input"
+          />
 
-      </md-card-content>
+          <div class="md-layout md-alignment-center-right">
+            <md-button type="submit" class="md-raised md-primary">Submit</md-button>
+          </div>
+
+        </md-card-content>
+      </div>
 
     </md-card>
 
@@ -87,7 +88,13 @@
 </script>
 
 <style scoped>
+  .change-password__inner {
+    padding: 1.2rem 1.5rem 0;
+  }
   .change-password__card {
     width: 100%;
+  }
+  .change-password__explain {
+    text-align: center;
   }
 </style>
