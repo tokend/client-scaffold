@@ -59,6 +59,9 @@ const getters = {
   userCreatedAt: 'userCreatedAt',
   userFavorites: 'userFavorites',
 
+  // wallet:
+  walletId: 'walletId',
+
   // account:
   // TODO: need 'userAccountId' and 'keypair' for backwards compatibility only
   userAccountId: 'accountId',

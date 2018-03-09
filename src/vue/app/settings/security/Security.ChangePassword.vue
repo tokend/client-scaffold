@@ -53,10 +53,10 @@
 </template>
 
 <script>
-  import { i18n } from '../../../../js/i18n'
   import { authService } from '../../../../js/services/auth.service'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
+  import { i18n } from '../../../../js/i18n'
 
   import Form from '../../../common/mixins/form.mixin'
 

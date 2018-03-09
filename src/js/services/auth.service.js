@@ -2,7 +2,6 @@ import { Keypair } from 'swarm-js-sdk'
 import { TxHelper } from '../helpers/tx.helper'
 import { walletService, WalletService } from './wallet.service'
 import { WalletHelper } from '../helpers/wallet.helper'
-import { ErrorFactory, errorTypes } from '../errors/factory'
 
 export class AuthService extends WalletService {
   /**
@@ -165,30 +164,6 @@ export class AuthService extends WalletService {
       transactionAttributes,
       walletAttributes
     }
-  }
-
-  /**
-   * Checks provided password is correct
-   *
-   * @param opts
-   * @param opts.email
-   * @param opts.password
-   * @param opts.walletId
-   * @return {Promise<void>}
-   */
-  async checkPassword (opts) {
-    const email = opts.email
-    const password = opts.password
-    const targetWalletId = opts.walletId || this._walletId
-    const kdf = await walletService.loadKdfParamsForEmail(email)
-
-    const { walletId } = WalletHelper.calculateWalletParams(
-      password,
-      email,
-      kdf.attributes().salt,
-      kdf.attributes()
-    )
-    if (targetWalletId !== walletId) ErrorFactory.throwError(errorTypes.WrongPasswordError)
   }
 }
 
