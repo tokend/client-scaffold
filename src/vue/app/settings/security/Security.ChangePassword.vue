@@ -94,7 +94,4 @@
   .change-password__card {
     width: 100%;
   }
-  .change-password__explain {
-    text-align: center;
-  }
 </style>
