@@ -68,8 +68,8 @@ export class AuthService extends WalletService {
       oldKeypair: this._keypair,
       newKeypair
     })
-    const kdf = await this.loadDefaultKdfParams()
 
+    const kdf = await this.loadDefaultKdfParams()
     const options = this._composeOptions({
       kdf,
       envelope,
@@ -77,11 +77,10 @@ export class AuthService extends WalletService {
       newPassword,
       email
     })
-
     await this.updateWallet(options)
 
     return {
-      newSeed: newKeypair.seed,
+      newSeed: newKeypair.seed(),
       newPublicKey: newKeypair.accountId(),
       newWalletId: options.walletAttributes.id
     }
