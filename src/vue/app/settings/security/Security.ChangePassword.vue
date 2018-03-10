@@ -54,7 +54,7 @@
 
 <script>
   import { authService } from '../../../../js/services/auth.service'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
 
@@ -72,15 +72,26 @@
     }),
     computed: {
       ...mapGetters([
-        vuexTypes.userEmail
+        vuexTypes.userEmail,
+        vuexTypes.accountId
       ])
     },
     methods: {
+      ...mapActions({
+        storeNewData: vuexTypes.STORE_USER_DATA_FROM_WALLET
+      }),
       async submit () {
         if (!await this.isValid()) return
-        await authService.changePassword({
+        const newKeys = await authService.changePassword({
           email: this.userEmail,
           newPassword: this.form.password
+        })
+        this.storeNewData({
+          publicKey: newKeys.newPublicKey,
+          walletId: newKeys.newWalletId,
+          seed: newKeys.newSeed,
+          accountId: this.accountId,
+          email: this.userEmail
         })
       }
     }

@@ -56,7 +56,7 @@ export class AuthService extends WalletService {
    * @param {string} opts.email
    * @param {string} opts.newPassword
    * @param opts
-   * @return {Promise<void>}
+   * @return {Promise<object>} newKeys
    */
   async changePassword (opts) {
     const email = opts.email
@@ -75,11 +75,11 @@ export class AuthService extends WalletService {
 
     await this.updateWallet(options)
 
-    // StateHelper.storeLoginData({
-    //   seed: newKeypair.secret(),
-    //   publicKey: newKeypair.accountId(),
-    //   walletId: options.walletAttributes.id
-    // })
+    return {
+      newSeed: newKeypair.seed,
+      newPublicKey: newKeypair.accountId(),
+      newWalletId: options.walletAttributes.id
+    }
   }
 
   /**
