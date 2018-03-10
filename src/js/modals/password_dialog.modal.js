@@ -102,6 +102,7 @@ export function createPasswordDialog (onSubmit, opts) {
           reject(ErrorFactory.getOTPCancelledError())
         },
         removeElement () {
+          this.isOpened = false
           this.$el.parentNode.removeChild(this.$el)
         }
       }
