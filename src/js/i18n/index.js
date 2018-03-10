@@ -12,6 +12,7 @@ import loginView from './views/login_view'
 import labels from './views/labels'
 import inactivitymessage from './views/inactivity_message'
 import settingsView from './views/settings_view'
+import modals from './views/modals'
 
 import Polyglot from 'node-polyglot'
 
@@ -31,7 +32,8 @@ const dictionary = {
   ...inactivitymessage,
   ...txHistoryView,
   ...settingsView,
-  ...labels
+  ...labels,
+  ...modals
 }
 
 polyglot.extend(dictionary)

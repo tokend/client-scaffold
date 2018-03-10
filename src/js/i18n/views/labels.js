@@ -34,5 +34,6 @@ export default {
   lbl_price: 'Price',
   lbl_transfer_fee: 'Transfer fee',
   lbl_destination_asset: 'Destination asset',
-  lbl_destination_amount: 'Destination amount'
+  lbl_destination_amount: 'Destination amount',
+  lbl_ok: 'OK'
 }

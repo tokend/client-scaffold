@@ -6,6 +6,7 @@ import { createTfaDialog } from '../../modals/tfa_dalog.modal'
 import { createPasswordDialog } from '../../modals/password_dialog.modal'
 import { initHorizonServer } from '../../../../src/js/helpers/server.helper'
 import { errors } from '../../errors/factory'
+import { vuexTypes } from '../../../vuex/types'
 import response from '../response_builder/index'
 import common from '../../services/common/common'
 
@@ -137,13 +138,23 @@ export class RequestBuilder {
 
   async _handleError (error) {
     const parsedError = parseError(error)
-    if (parsedError.message === 'TFA required') {
-      return createTfaDialog(this.repeat.bind(this), parsedError.meta)
-    } else if (parsedError instanceof errors.PasswordFactorError) {
-      const kdf = await common.getWalletKDF(store.getters.email)
-      return createPasswordDialog(this.repeat.bind(this), { ...parsedError.meta, kdf: kdf.attributes() })
-    } else {
-      return Promise.reject(parsedError)
+
+    switch (parsedError.constructor) {
+      case errors.OtpError:
+        return createTfaDialog(this.repeat.bind(this), parsedError.meta)
+
+      case errors.PasswordFactorError:
+        const email = store.getters[vuexTypes.userEmail]
+        const kdf = await common.getWalletKDF(email)
+        return createPasswordDialog(
+          this.repeat.bind(this), {
+            ...parsedError.meta,
+            kdf: kdf.attributes(),
+            email
+          })
+
+      default:
+        return Promise.reject(parsedError)
     }
   }
 

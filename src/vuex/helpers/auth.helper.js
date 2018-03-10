@@ -1,6 +1,6 @@
 import { WalletHelper } from '../../js/helpers/wallet.helper'
-import { walletService } from '../../js/services/wallet.service'
 import { vuexTypes } from '../types'
+import common from '../../js/services/common/common'
 import store from '../index'
 
 export class AuthStateHelper {
@@ -14,7 +14,7 @@ export class AuthStateHelper {
     const email = store.getters[vuexTypes.userEmail]
     const targetWalletId = store.getters[vuexTypes.walletId]
 
-    const kdf = await walletService.loadKdfParamsForEmail(email)
+    const kdf = await common.getWalletKDF(email)
 
     const { walletId } = WalletHelper.calculateWalletParams(
       password,
