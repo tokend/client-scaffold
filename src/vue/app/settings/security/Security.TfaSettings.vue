@@ -1,14 +1,8 @@
 <template>
-  <md-card class="tfa-settings">
-    <div class="tfa-settings__inner">
-      <div class="md-layout md-alignment-center-space-between">
-        <label class="md-layout-item">
-          {{i18n.set_tfa_enable() }}
-        </label>
-        <md-switch class="md-layout-item md-primary md-layout md-alignment-center-right" v-model="isTfaEnabled"></md-switch>
-      </div>
-    </div>
-  </md-card>
+  <md-list-item class="tfa-settings">
+    <span class="md-list-item-text"> {{ i18n.set_tfa_enable() }}</span>
+    <md-switch class="md-primary" v-model="isTfaEnabled"></md-switch>
+  </md-list-item>
 </template>
 
 <script>
@@ -23,9 +17,6 @@
   }
 </script>
 
-<style scoped>
-  .tfa-settings__inner {
-    width: 100%;
-    padding: 1.2rem 1.5rem;
-  }
+<style lang="scss" scoped>
+  @import './settings.scss';
 </style>
