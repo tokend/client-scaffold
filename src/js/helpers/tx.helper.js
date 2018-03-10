@@ -6,26 +6,76 @@ import { errors } from '../errors/factory'
 import get from 'lodash/get'
 
 export class TxHelper {
-  static createRecoveryTx (newKeypair, recoverySeed, accountId) {
-    return this._createReplaceSignerTransaction(newKeypair, accountId, Keypair.fromSecret(recoverySeed))
+  /**
+   * @param opts.
+   * @param opts.newKeypair
+   * @param opts.recoverySeed
+   * @param opts.accountId
+   * @return {Promise<void>}
+   */
+  static createRecoveryTx (opts) {
+    const newKeypair = opts.newKeypair
+    const recoveryKeypair = Keypair.fromSecret(opts.recoverySeed)
+    const accountId = opts.accountId
+
+    return this._createReplaceSignerTransaction({
+      keypairToSign: recoveryKeypair,
+      signerToReplace: null,
+      newKeypair,
+      accountId
+    })
   }
 
   /**
-   * @param newKeypair
-   * @param accountId
-   * @param keypair
+   * @param opts
+   * @param opts.newKeypair
+   * @param opts.oldKeypair
+   * @param opts.accountId
+   * @param opts.signerPublicKey
    * @return {Promise<string>} transactionEnvelope
    */
-  static createChangePasswordTx (newKeypair, accountId, keypair) {
-    return this._createReplaceSignerTransaction(newKeypair, accountId, keypair)
+  static createChangePasswordTx (opts) {
+    const newKeypair = opts.newKeypair
+    const oldKeypair = opts.oldKeypair
+    const accountId = opts.accountId
+    const signerToReplace = opts.signerPublicKey
+
+    return this._createReplaceSignerTransaction({
+      keypairToSign: oldKeypair,
+      signerToReplace,
+      newKeypair,
+      accountId
+    })
   }
 
-  static async _createReplaceSignerTransaction (newKeypair, accountId, keypair) {
+  /**
+   * @param opts
+   * @param opts.newKeypair
+   * @param opts.accountId
+   * @param opts.signerToReplace
+   * @param opts.keypairToSign
+   * @return {Promise<void>}
+   * @private
+   */
+  static async _createReplaceSignerTransaction (opts) {
+    const newKeypair = opts.newKeypair
+    const accountId = opts.accountId
+    const keypairToSign = opts.keypairToSign
+    const signerToReplace = opts.signerToReplace
+
     let signers
     let operations
+
     try {
       signers = get(await this._loadAccountSigners(accountId), 'signers')
-      operations = [ this._addSignerOp(newKeypair.accountId()), ...this._removeAllSignersOps(signers, accountId) ]
+      operations = [
+        this._addSignerOp(newKeypair.accountId()),
+        ...(
+          signerToReplace
+          ? this._removeAllSignersOps(signers, accountId)
+          : this._removeMasterAndCurrentSignerOps(signers, accountId, signerToReplace)
+        )
+      ]
     } catch (error) {
       switch (parseError(error).constructor) {
         case errors.NotFoundError:
@@ -40,9 +90,19 @@ export class TxHelper {
     tx.operations = operations
 
     const txEnv = tx.build()
-    txEnv.sign(keypair)
+    txEnv.sign(keypairToSign)
 
     return txEnv.toEnvelope().toXDR().toString('base64')
+  }
+
+  static _removeMasterAndCurrentSignerOps (signers, accountId, publicKey) {
+    return signers
+      .filter(signer => signer.account_id !== accountId && signer.account_id !== publicKey)
+      .map(signer => isMaster(signer, accountId) ? this._removeMasterOp() : this._removeOneSignerOp(signer))
+
+    function isMaster (signer, masterAccountId) {
+      return signer.public_key === masterAccountId
+    }
   }
 
   static _removeAllSignersOps (signers, accountId) {
