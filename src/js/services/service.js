@@ -29,6 +29,10 @@ export class Service {
     return this._overwrittenAccountId || store.getters.accountId
   }
 
+  get _publicKey () {
+    return store.getters.accountPublicKey
+  }
+
   get _keypair () {
     return this._overwrittenKeypair || store.getters.accountKeypair
   }

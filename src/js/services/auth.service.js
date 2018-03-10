@@ -62,7 +62,12 @@ export class AuthService extends WalletService {
     const email = opts.email
     const newPassword = opts.newPassword
     const newKeypair = Keypair.random()
-    const envelope = await TxHelper.createChangePasswordTx(newKeypair, this._accountId, this._keypair)
+    const envelope = await TxHelper.createChangePasswordTx({
+      signerPublicKey: this._publicKey,
+      accountId: this._accountId,
+      oldKeypair: this._keypair,
+      newKeypair
+    })
     const kdf = await this.loadDefaultKdfParams()
 
     const options = this._composeOptions({
