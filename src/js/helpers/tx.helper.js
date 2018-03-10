@@ -40,8 +40,6 @@ export class TxHelper {
     const accountId = opts.accountId
     const signerToReplace = opts.signerPublicKey
 
-    console.log(signerToReplace)
-
     return this._createReplaceSignerTransaction({
       keypairToSign: oldKeypair,
       signerToReplace,
@@ -90,16 +88,14 @@ export class TxHelper {
 
     const tx = new TransactionBuilder(this._createFakeAccountStruct(accountId))
     tx.operations = operations
-
     const txEnv = tx.build()
     txEnv.sign(keypairToSign)
-
     return txEnv.toEnvelope().toXDR().toString('base64')
   }
 
   static _removeMasterAndCurrentSignerOps (signers, accountId, publicKey) {
     return signers
-      .filter(signer => signer.account_id !== accountId && signer.account_id !== publicKey)
+      .filter(signer => signer.public_key !== accountId && signer.public_key !== publicKey)
       .map(signer => isMaster(signer, accountId) ? this._removeMasterOp() : this._removeOneSignerOp(signer))
 
     function isMaster (signer, masterAccountId) {
