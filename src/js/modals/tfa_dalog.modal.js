@@ -8,24 +8,25 @@ import { factorsService } from '../services/factors.service'
 import { i18n } from '../i18n'
 
 const template = `
-  <div>
-    <div class="cover"></div>
-    <div class="tfa-dialog form material">
-      <button class="close-btn" @click="close"><i class="mdi mdi-close"></i></button>
-      <h2>{{ tfaHeading }}</h2>
-      <p>{{ tfaMessage }}</p>
-      <div class="field input-field">
-        <input type="text" name="tfa-code" id="tfa"
-               placeholder="12345"
-               v-model="otp"
-        >
-        <label for="tfa">Code</label>
-      </div>
-      <button class="btn" @click="submit" :disabled="isPending || !otp">
-        {{ isPending ? 'Pending...' : 'Submit' }}
-      </button>
-    </div>
-  </div>
+  <form novalidate>
+   <md-dialog :md-active.sync="isOpened" class="app__dialog">
+    <md-dialog-title>{{ i18n.mod_tfa_required() }}</md-dialog-title>
+    
+    <input-field
+     v-model="form.code"
+     v-validate="'required'"
+       id="modal-tfa-code"
+       name="code"
+      :errorMessage="errorMessage('code')"
+      :label="i18n.lbl_tfa_code()"
+    />
+      
+    <md-dialog-actions>
+     <md-button class="md-primary md-raised" :disabled="isPending" @click="submit">{{ i18n.lbl_submit() }}</md-button>
+    </md-dialog-actions>
+    
+   </md-dialog>
+  </form>   
  `
 
 export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
@@ -38,37 +39,46 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
       template,
       store,
       mixins: [FormMixin],
-      data () {
-        return {
-          tfaHeading: '2-factor authentication',
-          tfaMessage: 'Enter 2FA code',
-          otp: ''
-        }
-      },
-      methods: {
-        removeEl () {
-          this.$el.parentNode.removeChild(this.$el)
-          return Promise.resolve(true)
+      data: _ => ({
+        form: {
+          code: ''
         },
+        isOpened: true,
+        i18n
+      }),
+      methods: {
         async submit () {
+          if (!await this.isValid()) return
           this.disable()
-          await factorsService.verifyFactor(factorId, token, this.otp, walletId)
-            .catch(err => {
+
+          try {
+            await factorsService.verifyFactor(factorId, token, this.form.code, walletId)
+          } catch (error) {
+            if (error instanceof errors.TFAWrongCodeError) {
+              EventDispatcher.dispatchShowErrorEvent(i18n.tfa_wrong_code())
               this.enable()
-              if (err instanceof errors.TFAWrongCodeError) {
-                EventDispatcher.dispatchShowErrorEvent(i18n.tfa_wrong_code())
-              }
-              return Promise.reject(err)
-            })
+              return
+            }
+            return reject(error)
+          }
+
           this.enable()
           this.removeEl()
-          const result = await onSubmit()
-            .catch(err => reject(err))
-          return resolve(result)
+
+          try {
+            return resolve(await onSubmit())
+          } catch (error) {
+            return reject(error)
+          }
         },
         close () {
-          this.removeEl()
+          this.isOpened = false
+          this.removeElement()
           reject(ErrorFactory.getOTPCancelledError())
+        },
+        removeElement () {
+          this.isOpened = false
+          this.$el.parentNode.removeChild(this.$el)
         }
       }
     })

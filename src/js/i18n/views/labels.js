@@ -35,5 +35,7 @@ export default {
   lbl_transfer_fee: 'Transfer fee',
   lbl_destination_asset: 'Destination asset',
   lbl_destination_amount: 'Destination amount',
-  lbl_ok: 'OK'
+  lbl_ok: 'OK',
+  lbl_tfa_code: '2FA code',
+  lbl_submit: 'Submit'
 }

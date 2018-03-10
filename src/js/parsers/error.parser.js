@@ -77,6 +77,7 @@ function parseConfictError () {
 
 function parseBadRequestError (error) {
   const { message, code } = getTransactionError(error)
+  console.log(error)
   if (message) {
     return ErrorFactory.getTransactionError(message, code)
   }

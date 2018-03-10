@@ -121,4 +121,7 @@
 
 <style lang="scss" scoped>
   @import './settings.scss';
+  .md-dialog {
+    width: 36rem;
+  }
 </style>
