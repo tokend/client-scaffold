@@ -110,13 +110,33 @@
         this.factor.id = factors[0].id
       },
       async createFactor () {
-        const factor = await factorsService.createFactor('totp')
-        this.factor.secret = factor.attribute('secret')
-        this.factor.qr = factor.attribute('seed')
-        this.factor.id = factor.data('id')
+        try {
+          const factor = await factorsService.createFactor('totp')
+          this.factor.secret = factor.attribute('secret')
+          this.factor.qr = factor.attribute('seed')
+          this.factor.id = factor.data('id')
+        } catch (error) {
+          console.error(error)
+          if (error.showBanner) {
+            error.showBanner(i18n.unexpected_error())
+            return
+          }
+          EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
+        }
       },
       async updateFactor () {
-        await factorsService.updateFactor(this.factor.id, ENABLED_FACTOR_PRIORITY)
+        try {
+          await factorsService.updateFactor(
+            this.factor.id,
+            ENABLED_FACTOR_PRIORITY
+          )
+        } catch (error) {
+          if (error.showBanner) {
+            error.showBanner(i18n.unexpected_error())
+            return
+          }
+          EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
+        }
       }
     }
   }
