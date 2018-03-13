@@ -17,6 +17,12 @@
 
       <p class="tfa-settings__explain-additional">{{ i18n.set_or_manually_enter() }}</p>
 
+      <clipboard-field
+        class="tfa-settings__copy-secret"
+        :value="factor.secret"
+        :label="i18n.lbl_secret()"
+      />
+
       <md-dialog-actions class="md-layout md-alignment-center-right">
         <md-button @click="updateFactor" class="md-raised md-primary">Confirm</md-button>
       </md-dialog-actions>
@@ -27,6 +33,8 @@
 </template>
 
 <script>
+  import ClipboardField from '../../../common/fields/ClipboardField'
+
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { factorsService } from '../../../../js/services/factors.service'
   import { i18n } from '../../../../js/i18n'
@@ -45,7 +53,7 @@
 
   export default {
     name: 'tfa-settings',
-    components: { Qrcode },
+    components: { Qrcode, ClipboardField },
     data: _ => ({
       tfaState: TFA_STATES.off,
       inputMode: INPUT_MODES.qr,
@@ -130,5 +138,8 @@
     margin-bottom: 20px;
   }
 
-
+  .tfa-settings__explain-additional,
+  .tfa-settings__copy-secret {
+    margin-bottom: 10px;
+  }
 </style>

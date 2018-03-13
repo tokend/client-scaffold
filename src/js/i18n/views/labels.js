@@ -37,5 +37,6 @@ export default {
   lbl_destination_amount: 'Destination amount',
   lbl_ok: 'OK',
   lbl_tfa_code: '2FA code',
-  lbl_submit: 'Submit'
+  lbl_submit: 'Submit',
+  lbl_secret: 'Secret'
 }
