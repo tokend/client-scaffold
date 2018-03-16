@@ -63,12 +63,6 @@ html,body{
   }
 }
 
-.md-dialog {
-  .md-dialog-title {
-    padding: 0;
-  }
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
   margin: 0;
@@ -115,8 +109,9 @@ input:-webkit-autofill {
   }
 }
 
-.app__dialog {
-  padding: 30px 40px;
+.app__dialog,
+.app__dialog-inner {
+  padding: 30px 31px;
 }
 
 .material {

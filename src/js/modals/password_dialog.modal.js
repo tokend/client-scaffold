@@ -1,17 +1,16 @@
 import Vue from 'vue'
 import store from '../../vuex'
-import FormMixin from '../../vue/common/mixins/form.mixin'
+import FlowBlockingModalMixin from './flow-blocking-modal.mixin'
 
 import { EventDispatcher } from '../events/event_dispatcher'
 import { factorsService } from '../services/factors.service'
 import { AuthStateHelper } from '../../vuex/helpers/auth.helper'
-import { ErrorFactory } from '../errors/factory'
 import { WalletHelper } from '../helpers/wallet.helper'
 import { i18n } from '../i18n'
 
 const template = `
   <form novalidate>
-   <md-dialog :md-active.sync="isOpened">
+   <md-dialog :md-active.sync="isOpened" @md-closed="removeElement">
     <md-dialog-title>{{ i18n.mod_pwd_required() }}</md-dialog-title>
     <div class="app__dialog-inner">
       <input-field
@@ -63,16 +62,16 @@ export function createPasswordDialog (onSubmit, opts) {
     const TFADialog = new Vue({
       template,
       store,
-      mixins: [FormMixin],
+      mixins: [FlowBlockingModalMixin],
       data () {
         return {
           form: {
             password: ''
-          },
-          isOpened: true,
-
-          i18n
+          }
         }
+      },
+      created () {
+        this.setResolvers(resolve, reject)
       },
       methods: {
         async submit () {
@@ -93,25 +92,9 @@ export function createPasswordDialog (onSubmit, opts) {
           this.enable()
           this.removeElement()
           try {
-            return resolve(await onSubmit())
+            return this.resolvers.resolve(await onSubmit())
           } catch (error) {
-            return reject(error)
-          }
-        },
-        close () {
-          this.isOpened = false
-          this.removeElement()
-          reject(ErrorFactory.getOTPCancelledError())
-        },
-        removeElement () {
-          this.isOpened = false
-          this.$el.parentNode.removeChild(this.$el)
-        }
-      },
-      watch: {
-        isOpened (val) {
-          if (!val) {
-            this.close()
+            return this.resolvers.reject(error)
           }
         }
       }

@@ -1,25 +1,27 @@
 import Vue from 'vue'
 import store from '../../vuex'
-import FormMixin from '../../vue/common/mixins/form.mixin'
+import FlowBlockingModalMixin from './flow-blocking-modal.mixin'
 
-import { ErrorFactory, errors } from '../errors/factory'
+import { errors } from '../errors/factory'
 import { EventDispatcher } from '../events/event_dispatcher'
 import { factorsService } from '../services/factors.service'
 import { i18n } from '../i18n'
 
 const template = `
   <form novalidate>
-   <md-dialog :md-active.sync="isOpened" class="app__dialog">
+   <md-dialog :md-active.sync="isOpened">
     <md-dialog-title>{{ i18n.mod_tfa_required() }}</md-dialog-title>
     
-    <input-field
-     v-model="form.code"
-     v-validate="'required'"
-       id="modal-tfa-code"
-       name="code"
-      :errorMessage="errorMessage('code')"
-      :label="i18n.lbl_tfa_code()"
-    />
+    <div class="app__dialog-inner">
+      <input-field
+       v-model="form.code"
+       v-validate="'required'"
+         id="modal-tfa-code"
+         name="code"
+        :errorMessage="errorMessage('code')"
+        :label="i18n.lbl_tfa_code()"
+      />
+    </div>
       
     <md-dialog-actions>
      <md-button class="md-primary md-raised" :disabled="isPending" @click="submit">{{ i18n.lbl_submit() }}</md-button>
@@ -38,14 +40,15 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
     const TFADialog = new Vue({
       template,
       store,
-      mixins: [FormMixin],
+      mixins: [FlowBlockingModalMixin],
       data: _ => ({
         form: {
           code: ''
-        },
-        isOpened: true,
-        i18n
+        }
       }),
+      created () {
+        this.setResolvers(resolve, reject)
+      },
       methods: {
         async submit () {
           if (!await this.isValid()) return
@@ -59,26 +62,17 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
               this.enable()
               return
             }
-            return reject(error)
+            return this.resolvers.reject(error)
           }
 
           this.enable()
-          this.removeEl()
+          this.removeElement()
 
           try {
-            return resolve(await onSubmit())
+            return this.resolvers.resolve(await onSubmit())
           } catch (error) {
-            return reject(error)
+            return this.resolvers.reject(error)
           }
-        },
-        close () {
-          this.isOpened = false
-          this.removeElement()
-          reject(ErrorFactory.getOTPCancelledError())
-        },
-        removeElement () {
-          this.isOpened = false
-          this.$el.parentNode.removeChild(this.$el)
         }
       }
     })

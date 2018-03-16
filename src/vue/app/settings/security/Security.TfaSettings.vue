@@ -3,28 +3,28 @@
     <span class="md-list-item-text"> {{ i18n.set_tfa_enable() }}</span>
     <md-switch class="md-primary" @change="changeState" :value="tfaState"/>
 
-    <md-dialog class="app__dialog" :md-active.sync="isSettingsOpened">
+    <md-dialog :md-active.sync="isSettingsOpened">
       <md-dialog-title>{{ i18n.set_tfa_enable() }}</md-dialog-title>
-      <p class="tfa-settings__explain">{{ i18n.set_tfa_scan_the_qr_code() }}</p>
 
-      <div class="tfa-settings__qr-outer" v-if="inputMode === INPUT_MODES.qr">
-        <qrcode class="tfa-settings__qr-code"
-                :text="factor.qr"
-                :size="225"
-                color="#3f4244"
+      <div class="app__dialog-inner">
+        <p class="tfa-settings__explain">{{ i18n.set_tfa_scan_the_qr_code() }}</p>
+        <div class="tfa-settings__qr-outer" v-if="inputMode === INPUT_MODES.qr">
+          <qrcode class="tfa-settings__qr-code"
+                  :text="factor.qr"
+                  :size="225"
+                  color="#3f4244"
+          />
+        </div>
+        <p class="tfa-settings__explain-additional">{{ i18n.set_or_manually_enter() }}</p>
+        <clipboard-field
+          class="tfa-settings__copy-secret"
+          :value="factor.secret"
+          :label="i18n.lbl_secret()"
         />
       </div>
 
-      <p class="tfa-settings__explain-additional">{{ i18n.set_or_manually_enter() }}</p>
-
-      <clipboard-field
-        class="tfa-settings__copy-secret"
-        :value="factor.secret"
-        :label="i18n.lbl_secret()"
-      />
-
       <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button @click="updateFactor" class="md-raised md-primary">Confirm</md-button>
+        <md-button @click="updateFactor" class="md-primary">Confirm</md-button>
       </md-dialog-actions>
 
     </md-dialog>
@@ -76,7 +76,8 @@
             await this.createFactor()
             break
           case TFA_STATES.on: {
-            this.tfaState = TFA_STATES.off
+            await this.deleteFactor()
+            break
           }
         }
       },
@@ -110,6 +111,9 @@
       },
       async createFactor () {
         try {
+          if (this.factor.id !== -1) {
+            await factorsService.deleteFactor(this.factor.id)
+          }
           const factor = await factorsService.createFactor('totp')
           this.factor.secret = factor.attribute('secret')
           this.factor.qr = factor.attribute('seed')
@@ -130,6 +134,20 @@
             this.factor.id,
             ENABLED_FACTOR_PRIORITY
           )
+          this.tfaState = TFA_STATES.on
+          this.isSettingsOpened = false
+        } catch (error) {
+          if (error.showBanner) {
+            error.showBanner(i18n.unexpected_error())
+            return
+          }
+          EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
+        }
+      },
+      async deleteFactor () {
+        try {
+          await factorsService.deleteFactor(this.factor.id)
+          this.tfaState = TFA_STATES.off
         } catch (error) {
           if (error.showBanner) {
             error.showBanner(i18n.unexpected_error())
