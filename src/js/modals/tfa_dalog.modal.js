@@ -2,7 +2,7 @@ import Vue from 'vue'
 import store from '../../vuex'
 import FlowBlockingModalMixin from './flow-blocking-modal.mixin'
 
-import { errors } from '../errors/factory'
+import {ErrorFactory, errors} from '../errors/factory'
 import { EventDispatcher } from '../events/event_dispatcher'
 import { factorsService } from '../services/factors.service'
 import { i18n } from '../i18n'
@@ -65,13 +65,26 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
             return this.resolvers.reject(error)
           }
 
+          this.resetResolvers()
           this.enable()
           this.removeElement()
 
           try {
-            return this.resolvers.resolve(await onSubmit())
+            await this.resolvers.resolve(await onSubmit())
           } catch (error) {
             return this.resolvers.reject(error)
+          }
+        }
+      },
+      // TODO: this watcher doesn't work if placed in mixin, resolve why and remove code duplication from here and
+      // tfa modal
+      watch: {
+        isOpened (val) {
+          if (!val) {
+            if (!this.isResolved) {
+              this.resolvers.reject(ErrorFactory.getOTPCancelledError())
+            }
+            this.removeElement()
           }
         }
       }

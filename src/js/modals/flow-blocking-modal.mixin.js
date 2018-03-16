@@ -13,6 +13,7 @@ export default {
       reject: () => {}
     },
     isOpened: true,
+    isResolved: false,
     i18n
   }),
   methods: {
@@ -20,10 +21,14 @@ export default {
       this.resolvers.resolve = resolve
       this.resolvers.reject = reject
     },
-    close (reject = this.reject) {
+    resetResolvers () {
+      this.isResolved = true
+    },
+    close () {
+      this.resolvers.reject(ErrorFactory.getOTPCancelledError())
+      this.resetResolvers()
       this.isOpened = false
       this.removeElement()
-      reject(ErrorFactory.getOTPCancelledError())
     },
     removeElement () {
       this.isOpened = false

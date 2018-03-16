@@ -7,10 +7,11 @@ import { factorsService } from '../services/factors.service'
 import { AuthStateHelper } from '../../vuex/helpers/auth.helper'
 import { WalletHelper } from '../helpers/wallet.helper'
 import { i18n } from '../i18n'
+import {ErrorFactory} from '../errors/factory'
 
 const template = `
   <form novalidate>
-   <md-dialog :md-active.sync="isOpened" @md-closed="removeElement">
+   <md-dialog :md-active.sync="isOpened" @md-closed="isOpened = false">
     <md-dialog-title>{{ i18n.mod_pwd_required() }}</md-dialog-title>
     <div class="app__dialog-inner">
       <input-field
@@ -89,12 +90,27 @@ export function createPasswordDialog (onSubmit, opts) {
             EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
             return
           }
+
+          this.resetResolvers()
           this.enable()
           this.removeElement()
+
           try {
-            return this.resolvers.resolve(await onSubmit())
+            await this.resolvers.resolve(await onSubmit())
           } catch (error) {
             return this.resolvers.reject(error)
+          }
+        }
+      },
+      // TODO: this watcher doesn't work if placed in mixin, resolve why and remove code duplication from here and
+      // tfa modal
+      watch: {
+        isOpened (val) {
+          if (!val) {
+            if (!this.isResolved) {
+              this.resolvers.reject(ErrorFactory.getOTPCancelledError())
+            }
+            this.removeElement()
           }
         }
       }

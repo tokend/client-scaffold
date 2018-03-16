@@ -5,42 +5,39 @@
     <md-icon class="md-icon--half-sized">play_arrow</md-icon>
 
     <md-dialog class="change-password__dialog" :md-active.sync="isFormOpened">
-      <md-progress-bar md-mode="indeterminate" v-if="isPending"></md-progress-bar>
-
-      <div class="app__dialog">
-        <form novalidate
-              class="change-password
-                   md-layout"
+      <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+      <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title>
+      <form novalidate
+              class="change-password"
               @submit.prevent="submit">
 
-          <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title>
 
-          <input-field
-            v-model="form.password"
-            id="settings-password"
-            name="password"
-            type="password"
-            :togglePassword="true"
-            :label="i18n.lbl_pwd()"
-            :errorMessage="errorMessage('password')"
-            v-validate="'required|min:6'"
-          />
-
-          <input-field
-            v-model="form.confirmPassword"
-            id="settings-confirm-password"
-            name="confirm-password"
-            type="password"
-            :label="i18n.lbl_confirm()"
-            v-validate="'required'"
-            :errorMessage="pwdUnconfirmedMessage"
-          />
+          <div class="app__dialog-inner">
+            <input-field
+              v-model="form.password"
+              id="settings-password"
+              name="password"
+              type="password"
+              :togglePassword="true"
+              :label="i18n.lbl_pwd()"
+              :errorMessage="errorMessage('password')"
+              v-validate="'required|min:6'"
+            />
+            <input-field
+              v-model="form.confirmPassword"
+              id="settings-confirm-password"
+              name="confirm-password"
+              type="password"
+              :label="i18n.lbl_confirm()"
+              v-validate="'required'"
+              :errorMessage="pwdUnconfirmedMessage"
+            />
+          </div>
 
           <md-dialog-actions class="md-layout md-alignment-center-right">
-            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">Submit</md-button>
+            <md-button type="submit" class="md-primary" :disabled="isPending">Submit</md-button>
           </md-dialog-actions>
         </form>
-      </div>
     </md-dialog>
   </md-list-item>
 </template>
