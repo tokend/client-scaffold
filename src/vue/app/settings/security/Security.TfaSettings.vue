@@ -74,7 +74,6 @@
         switch (this.tfaState) {
           case TFA_STATES.off:
             await this.createFactor()
-            this.isSettingsOpened = true
             break
           case TFA_STATES.on: {
             this.tfaState = TFA_STATES.off
@@ -115,6 +114,7 @@
           this.factor.secret = factor.attribute('secret')
           this.factor.qr = factor.attribute('seed')
           this.factor.id = factor.data('id')
+          this.isSettingsOpened = true
         } catch (error) {
           console.error(error)
           if (error.showBanner) {
