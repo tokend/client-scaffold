@@ -11,22 +11,24 @@ import { i18n } from '../i18n'
 
 const template = `
   <form novalidate>
-   <md-dialog :md-active.sync="isOpened" class="app__dialog">
+   <md-dialog :md-active.sync="isOpened">
     <md-dialog-title>{{ i18n.mod_pwd_required() }}</md-dialog-title>
-    
-    <input-field
-     v-model="form.password"
-     v-validate="'required'"
-       id="signup-recovery-seed"
-       type="password"
-       name="password"
-      :errorMessage="errorMessage('password')"
-      :label="i18n.lbl_pwd()"
-      :togglePassword="true"
-    />
+    <div class="app__dialog-inner">
+      <input-field
+        v-model="form.password"
+        v-validate="'required'"
+         id="signup-recovery-seed"
+         type="password"
+         name="password"
+        :errorMessage="errorMessage('password')"
+        :label="i18n.lbl_pwd()"
+        :togglePassword="true"
+      />
+    </div> 
       
     <md-dialog-actions>
-     <md-button class="md-primary md-raised" @click="submit">{{ i18n.lbl_ok() }}</md-button>
+     <md-button class="md-primary" @click="close">{{ i18n.lbl_cancel() }}</md-button>
+     <md-button class="md-primary" @click="submit">{{ i18n.lbl_ok() }}</md-button>
     </md-dialog-actions>
     
    </md-dialog>
@@ -104,6 +106,13 @@ export function createPasswordDialog (onSubmit, opts) {
         removeElement () {
           this.isOpened = false
           this.$el.parentNode.removeChild(this.$el)
+        }
+      },
+      watch: {
+        isOpened (val) {
+          if (!val) {
+            this.close()
+          }
         }
       }
     })
