@@ -4,7 +4,7 @@
     <span class="md-list-item-text">{{i18n.set_change_password() }}</span>
     <md-icon class="md-icon--half-sized">play_arrow</md-icon>
 
-    <md-dialog class="change-password__dialog" :md-active.sync="isFormOpened">
+    <md-dialog class="change-password__dialog" :md-active.sync="isFormOpened" :md-click-outside-to-close="!isPending">
       <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
       <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title>
       <form novalidate
@@ -19,7 +19,7 @@
               name="password"
               type="password"
               :togglePassword="true"
-              :label="i18n.lbl_pwd()"
+              :label="i18n.lbl_new_pwd()"
               :errorMessage="errorMessage('password')"
               v-validate="'required|min:6'"
             />
@@ -35,6 +35,7 @@
           </div>
 
           <md-dialog-actions class="md-layout md-alignment-center-right">
+            <md-button type="button" class="md-primary" :disabled="isPending" @click="isFormOpened = !isFormOpened">Cancel</md-button>
             <md-button type="submit" class="md-primary" :disabled="isPending">Submit</md-button>
           </md-dialog-actions>
         </form>

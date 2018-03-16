@@ -1,6 +1,7 @@
 export default {
   lbl_email: 'Email',
   lbl_pwd: 'Password',
+  lbl_new_pwd: 'New password',
   lbl_confirm: 'Confirm password',
   lbl_asset: 'Asset',
   lbl_amount: 'Amount',
