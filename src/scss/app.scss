@@ -61,6 +61,10 @@ html,body{
     height: $size;
     font-size: $size!important;
   }
+
+  & .router-link-active {
+    color: $col-md-primary;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -93,7 +97,6 @@ a {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
-
 
 .container {
   min-width: 320px;
