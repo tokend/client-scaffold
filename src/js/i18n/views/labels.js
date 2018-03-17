@@ -39,5 +39,6 @@ export default {
   lbl_ok: 'OK',
   lbl_tfa_code: '2FA code',
   lbl_submit: 'Submit',
-  lbl_secret: 'Secret'
+  lbl_secret: 'Secret',
+  lbl_recovery_seed: 'Recovery seed'
 }
