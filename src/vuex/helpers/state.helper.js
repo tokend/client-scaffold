@@ -55,17 +55,4 @@ export class StateHelper {
       ))
       .filter(filter)
   }
-
-  static storeLoginData (opts) {
-    const data = {
-      accountId: opts.accountId || store.getters.userAccountId,
-      email: opts.email || store.getters.userEmail,
-      publicKey: opts.publicKey,
-      seed: opts.seed,
-      walletId: opts.walletId
-    }
-
-    store.dispatch(vuexTypes.STORE_LOGIN_DATA, data)
-    return Promise.resolve(true)
-  }
 }

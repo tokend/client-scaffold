@@ -22,11 +22,11 @@ const sessionStoragePlugin = store => {
       sessionStorage.clear()
       return
     }
-
     const forSave = {
       auth: state.auth,
       account: state.account,
-      user: state.user
+      user: state.user,
+      wallet: state.wallet
     }
 
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(forSave))

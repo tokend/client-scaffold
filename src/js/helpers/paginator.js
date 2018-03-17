@@ -1,6 +1,7 @@
 import config from '../../config'
 import get from 'lodash/get'
 import store from '../../vuex'
+import cloneDeep from 'lodash'
 
 const emptyWrp = r => r
 const emptyAsync = () => Promise.resolve({
@@ -61,6 +62,19 @@ export class Paginator {
 
     this._checkLoadState(response.records)
     return records
+  }
+
+  _pages () {
+    const records = cloneDeep(this.records)
+    const pages = []
+    while (records.length) {
+      pages.push(records.splice(0, this._txPerPage))
+    }
+    return pages
+  }
+
+  page (index) {
+    return this._pages()[index] || []
   }
 
   _parseRecords (records) {

@@ -1,32 +1,31 @@
-import { parseTransaction } from '../parsers/tx.parser'
-import {
-  withdawRecord,
-  transferRecord,
-  issuanceRecord
-} from '../../../test/unit/mock_data/records'
+import { TransactionsService } from './transactions.service'
+import { mockAccountId, mockBalanceId, mockEmail, mockResponses } from './test/default.mocks'
+import { ServiceTestHelper } from './test/service_test_helper'
+import { Keypair} from 'swarm-js-sdk'
+import config from '../../config'
+import { mockTxTokenCode } from './test/transactions.mocks'
 
-import { WithdrawalRecord } from '../records/withdrawal.record'
-import { TransferRecord } from '../records/transfer.record'
-import { IssuanceRecord } from '../records/issuance.record'
+ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 
-import { UnknownTransactionError } from '../errors/unknown_transaction.error'
+describe('transactions.service test', () => {
+  let transactionsService
 
-describe('correctly parses transactions', () => {
-  it ('should correctly define transfer entity', () => {
-     expect(parseTransaction(transferRecord).constructor).to.equal(TransferRecord)
+  beforeEach(() => {
+    transactionsService = new TransactionsService({accountId: mockAccountId, keypair: Keypair.random()})
+
   })
 
-  it ('should correctly define issuance entity', () => {
-     expect(parseTransaction(issuanceRecord).constructor).to.equal(IssuanceRecord)
+  /** requests to horizon: **/
+
+  it('loadTransactionHistory() should properly build request url', () => {
+    const prefix = `accounts/${mockAccountId}/payments?asset=${mockTxTokenCode}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`
+    console.log(prefix)
+    console.log(mockResponses[prefix])
+    return ServiceTestHelper.doAxiosMockedRequest(
+      () => transactionsService.loadTransactionHistory(mockTxTokenCode),
+      prefix,
+      mockResponses[prefix]
+    )
   })
 
-  it ('should throw unknown tx error', (done) => {
-    const unknownTx = { foo: 'foo', bar: 'bar' }
-    try {
-      parseTransaction(unknownTx)
-    } catch (err) {
-      expect(err.constructor).to.equal(UnknownTransactionError)
-      done()
-    }
-  })
 })

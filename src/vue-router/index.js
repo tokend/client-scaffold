@@ -23,6 +23,11 @@ import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 
 import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
 import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
+import History from '../vue/app/history/History.Entry'
+import HistoryIndex from '../vue/app/history/index/History.Index'
+
+import Settings from '../vue/app/settings/Settings.Entry'
+import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
 
 Vue.use(Router)
 
@@ -110,6 +115,32 @@ const router = new Router({
               path: '/withdrawal/make',
               name: 'withdrawal.make',
               component: WithdrawalMake
+            }
+          ]
+        },
+        {
+          name: 'app.history',
+          path: '/history',
+          component: History,
+          redirect: { path: '/history/index' },
+          children: [
+            {
+              path: '/history/index',
+              name: 'history.index',
+              component: HistoryIndex
+            }
+          ]
+        },
+        {
+          name: 'app.settings',
+          path: '/settings',
+          component: Settings,
+          redirect: { path: '/settings/security' },
+          children: [
+            {
+              path: '/settings/security',
+              name: 'settings.security',
+              component: SettingsSecurity
             }
           ]
         }

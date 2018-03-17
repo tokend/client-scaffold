@@ -1,0 +1,1 @@
+export const mockTxTokenCode = 'BTC'

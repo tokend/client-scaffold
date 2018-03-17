@@ -2,8 +2,6 @@ import { Keypair } from 'swarm-js-sdk'
 import { TxHelper } from '../helpers/tx.helper'
 import { walletService, WalletService } from './wallet.service'
 import { WalletHelper } from '../helpers/wallet.helper'
-import { StateHelper } from '../../vuex/helpers/state.helper'
-import { ErrorFactory, errorTypes } from '../errors/factory'
 
 export class AuthService extends WalletService {
   /**
@@ -58,15 +56,20 @@ export class AuthService extends WalletService {
    * @param {string} opts.email
    * @param {string} opts.newPassword
    * @param opts
-   * @return {Promise<void>}
+   * @return {Promise<object>} newKeys
    */
   async changePassword (opts) {
     const email = opts.email
     const newPassword = opts.newPassword
     const newKeypair = Keypair.random()
-    const envelope = await TxHelper.createChangePasswordTx(newKeypair, this._accountId, this._keypair)
-    const kdf = await this.loadDefaultKdfParams()
+    const envelope = await TxHelper.createChangePasswordTx({
+      signerPublicKey: this._publicKey,
+      accountId: this._accountId,
+      oldKeypair: this._keypair,
+      newKeypair
+    })
 
+    const kdf = await this.loadDefaultKdfParams()
     const options = this._composeOptions({
       kdf,
       envelope,
@@ -74,14 +77,13 @@ export class AuthService extends WalletService {
       newPassword,
       email
     })
-
     await this.updateWallet(options)
 
-    StateHelper.storeLoginData({
-      seed: newKeypair.secret(),
-      publicKey: newKeypair.accountId(),
-      walletId: options.walletAttributes.id
-    })
+    return {
+      newSeed: newKeypair.seed(),
+      newPublicKey: newKeypair.accountId(),
+      newWalletId: options.walletAttributes.id
+    }
   }
 
   /**
@@ -109,14 +111,18 @@ export class AuthService extends WalletService {
 
     const recoveryWalletId = walletParams.walletId
     const wallet = await this.loadWallet(recoveryWalletId)
-    const envelope = await TxHelper.createRecoveryTx(newKeypair, recoverySeed, wallet.attribute('account_id'))
+    const envelope = await TxHelper.createRecoveryTx({
+      accountId: wallet.attribute('account_id'),
+      recoverySeed,
+      newKeypair
+    })
 
     const options = this._composeOptions({
-      kdf,
-      envelope,
-      newKeypair,
       newPassword,
-      email
+      newKeypair,
+      envelope,
+      email,
+      kdf
     })
 
     await this.updateWallet({
@@ -166,30 +172,6 @@ export class AuthService extends WalletService {
       transactionAttributes,
       walletAttributes
     }
-  }
-
-  /**
-   * Checks provided password is correct
-   *
-   * @param opts
-   * @param opts.email
-   * @param opts.password
-   * @param opts.walletId
-   * @return {Promise<void>}
-   */
-  async checkPassword (opts) {
-    const email = opts.email
-    const password = opts.password
-    const targetWalletId = opts.walletId || this._walletId
-    const kdf = await walletService.loadKdfParamsForEmail(email)
-
-    const { walletId } = WalletHelper.calculateWalletParams(
-      password,
-      email,
-      kdf.attributes().salt,
-      kdf.attributes()
-    )
-    if (targetWalletId !== walletId) ErrorFactory.throwError(errorTypes.WrongPasswordError)
   }
 }
 

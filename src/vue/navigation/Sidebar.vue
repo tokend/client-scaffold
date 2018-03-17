@@ -24,9 +24,14 @@
         <span class="md-list-item-text">{{ i18n.lbl_send() }}</span>
       </md-list-item>
 
-      <md-list-item to="/dashboard">
+      <md-list-item to="/history">
         <md-icon>featured_play_list</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
+      </md-list-item>
+
+      <md-list-item to="/settings">
+        <md-icon>settings</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>
       </md-list-item>
 
     </md-list>

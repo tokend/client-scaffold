@@ -60,6 +60,7 @@ export class WalletService extends Service {
     const walletId = recoveryWalletId || this._walletId
 
     return this._apiRequestBuilder
+      .wallets()
       .walletId(walletId)
       .data(walletAttributes)
       .type('wallet')
@@ -86,7 +87,7 @@ export class WalletService extends Service {
    *
    * @param email
    * @param isRecovery
-   * @return {ResponseBuilder}
+   * @return {Promise<ResponseBuilder>}
    */
   loadKdfParamsForEmail (email, isRecovery = false) {
     return this._apiRequestBuilder

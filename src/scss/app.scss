@@ -9,6 +9,7 @@
   accent: md-get-palette-color(red, A200),
   theme: light
 ));
+
 @import "../../node_modules/vue-material/dist/theme/all";
 
 /* Global styles */
@@ -49,8 +50,25 @@ html,body{
 
   &,
   & main,
-  & .md-content {
+  & .md-app-content {
     background-color: $col-md-background;
+  }
+
+  & .md-app-content {
+    padding-bottom: 30px;
+    height: auto;
+  }
+
+  & .md-icon--half-sized {
+    $size: 12px;
+    width: $size;
+    min-width: $size;
+    height: $size;
+    font-size: $size!important;
+  }
+
+  & .router-link-active {
+    color: $col-md-primary;
   }
 }
 
@@ -99,8 +117,9 @@ input:-webkit-autofill {
   }
 }
 
-.app__dialog {
-  padding: 30px 40px;
+.app__dialog,
+.app__dialog-inner {
+  padding: 30px 31px;
 }
 
 .material {

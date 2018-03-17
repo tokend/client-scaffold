@@ -10,45 +10,46 @@
         <md-card-header>
           <div class="md-title">Account recovery</div>
         </md-card-header>
+
         <md-card-content>
+
           <input-field class="input-field"
                        id="recovery-email"
-                       v-model.trim="form.email"
-                       label="Email"
                        name="email"
-                       :errorMessage="errorMessage('email')"
-                       v-validate="'required|email'"
+                     v-model.trim="form.email"
+                     v-validate="'required|email'"
+                      :label="i18n.lbl_email()"
+                      :errorMessage="errorMessage('email')"
           />
           <input-field class="input-field"
+                       type="password"
                        id="recovery-seed"
-                       v-model.trim="form.seed"
-                       label="Recovery seed"
                        name="seed"
-                       :errorMessage="errorMessage('seed')"
-                       v-validate="'required|secret_key'"
+                     v-model.trim="form.recoverySeed"
+                     v-validate="'required|secret_key'"
+                      :label="i18n.lbl_recovery_seed()"
+                      :errorMessage="errorMessage('seed')"
           />
-          <input-field
-            v-model.trim="form.password"
-            class="input-field"
-            id="recovery-password"
-            type="password"
-            :togglePassword="true"
-            label="Password"
-            name="password"
-            :errorMessage="errorMessage('password')"
-            v-validate="'required|min:6'"
+          <input-field class="input-field"
+                       id="recovery-password"
+                       type="password"
+                       name="password"
+                     v-model.trim="form.password"
+                     v-validate="'required|min:6'"
+                      :togglePassword="true"
+                      :label="i18n.lbl_pwd()"
+                      :errorMessage="errorMessage('password')"
           />
-          <input-field
-            v-model.trim="form.confirmPassword"
-            id="recovery-confirm-password"
-            name="confirm-password"
-            :togglePassword="true"
-            class="input-field"
-            type="password"
-            label="Confirm password"
-            :errorMessage="errorMessage('confirm-password')"
-            v-validate="'required|confirmed:password'"
-            data-vv-as="password"
+          <input-field class="input-field"
+                       id="recovery-confirm-password"
+                       type="password"
+                       name="confirm-password"
+                     v-model.trim="form.confirmPassword"
+                     v-validate="'required|confirmed:password'"
+                      :togglePassword="true"
+                      :label="i18n.lbl_confirm()"
+                      :errorMessage="errorMessage('confirm-password')"
+                      :data-vv-as="i18n.lbl_pwd().toLowerCase()"
           />
 
           <div class="auth-page__bottom">
@@ -58,7 +59,7 @@
                 <router-link :to="routes.login">Sign in now</router-link>
               </div>
             </div>
-            <md-button class="md-raised md-primary" :disabled="isPending">Submit recovery</md-button>
+            <md-button class="md-raised md-primary" type="submit" :disabled="isPending">Submit recovery</md-button>
           </div>
 
         </md-card-content>
@@ -69,22 +70,18 @@
 </template>
 
 <script>
-  import form from '../common/mixins/form.mixin'
+  import FormMixin from '../common/mixins/form.mixin'
 
-  import { errors } from '../../js/errors/factory'
-  import { vueRoutes } from '../../vue-router/const'
-  import { i18n } from '../../js/i18n'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
-  import LoadIndicator from '../common/LoadIndicator'
+  import { vueRoutes } from '../../vue-router/const'
+  import { errors } from '../../js/errors/factory'
+  import { i18n } from '../../js/i18n'
+
+  import { authService } from '../../js/services/auth.service'
 
   export default {
     name: 'recovery',
-
-    components: {
-      LoadIndicator
-    },
-
-    mixins: [form],
+    mixins: [FormMixin],
 
     data () {
       return {
@@ -94,7 +91,8 @@
           recoverySeed: '',
           confirmPassword: ''
         },
-        routes: vueRoutes
+        routes: vueRoutes,
+        i18n
       }
     },
 
@@ -102,9 +100,13 @@
       async submit () {
         this.disable()
         try {
-          await this.makeRecovery()
+          await authService.makeRecovery({
+            recoverySeed: this.form.recoverySeed,
+            newPassword: this.form.password,
+            email: this.form.email
+          })
           EventDispatcher.dispatchShowSuccessEvent(i18n.recovered())
-          this.goLogin()
+          this.$router.push(vueRoutes.login)
         } catch (error) {
           console.error(error)
           switch (error.constructor) {
@@ -123,12 +125,6 @@
           }
         }
         this.enable()
-      },
-      makeRecovery () {
-        return this.$services.password.makeRecovery(this.recoverySeed, this.email, this.password)
-      },
-      goLogin () {
-        this.$router.push(vueRoutes.login)
       }
     }
   }

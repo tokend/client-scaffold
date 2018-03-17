@@ -6,7 +6,7 @@ export const factorsService = {
     return request.wallets()
       .walletId(store.getters.walletId)
       .factors()
-      .sign(this._keypair)
+      .sign(store.getters.accountKeypair)
       .get()
   },
 
@@ -17,7 +17,7 @@ export const factorsService = {
       .walletId(store.getters.walletId)
       .factors()
       .data(data)
-      .sign(this._keypair)
+      .sign(store.getters.accountKeypair)
       .json()
       .post()
   },
@@ -41,7 +41,7 @@ export const factorsService = {
       .walletId(store.getters.walletId)
       .factorId(id)
       .attributes(attributes)
-      .sign(this._keypair)
+      .sign(store.getters.accountKeypair)
       .json()
       .patch()
   },
@@ -50,7 +50,7 @@ export const factorsService = {
     return request.wallets()
       .walletId(store.getters.walletId)
       .factorId(id)
-      .sign(this._keypair)
+      .sign(store.getters.accountKeypair)
       .delete()
   }
 }
