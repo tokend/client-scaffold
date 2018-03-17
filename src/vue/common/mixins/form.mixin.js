@@ -1,5 +1,6 @@
 import InputField from '../fields/InputField.vue'
 import SelectField from '../fields/SelectField.vue'
+import TextareaField from '../fields/TextareaField'
 
 import InputDateField from '../DEPRECATED.inputs/InputDateField.vue'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
@@ -19,6 +20,7 @@ export default {
     InputField,
     SelectField,
     InputDateField,
+    TextareaField,
     ImageInput,
     FileInput
   },
