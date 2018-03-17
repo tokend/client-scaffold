@@ -25,7 +25,7 @@
                        type="password"
                        id="recovery-seed"
                        name="seed"
-                     v-model.trim="form.seed"
+                     v-model.trim="form.recoverySeed"
                      v-validate="'required|secret_key'"
                       :label="i18n.lbl_recovery_seed()"
                       :errorMessage="errorMessage('seed')"
@@ -59,7 +59,7 @@
                 <router-link :to="routes.login">Sign in now</router-link>
               </div>
             </div>
-            <md-button class="md-raised md-primary" :disabled="isPending">Submit recovery</md-button>
+            <md-button class="md-raised md-primary" type="submit" :disabled="isPending">Submit recovery</md-button>
           </div>
 
         </md-card-content>
@@ -72,19 +72,15 @@
 <script>
   import FormMixin from '../common/mixins/form.mixin'
 
-  import { errors } from '../../js/errors/factory'
-  import { vueRoutes } from '../../vue-router/const'
-  import { i18n } from '../../js/i18n'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
-  import LoadIndicator from '../common/LoadIndicator'
+  import { vueRoutes } from '../../vue-router/const'
+  import { errors } from '../../js/errors/factory'
+  import { i18n } from '../../js/i18n'
+
+  import { authService } from '../../js/services/auth.service'
 
   export default {
     name: 'recovery',
-
-    components: {
-      LoadIndicator
-    },
-
     mixins: [FormMixin],
 
     data () {
@@ -104,9 +100,13 @@
       async submit () {
         this.disable()
         try {
-          await this.makeRecovery()
+          await authService.makeRecovery({
+            recoverySeed: this.form.recoverySeed,
+            newPassword: this.form.password,
+            email: this.form.email
+          })
           EventDispatcher.dispatchShowSuccessEvent(i18n.recovered())
-          this.goLogin()
+          this.$router.push(vueRoutes.login)
         } catch (error) {
           console.error(error)
           switch (error.constructor) {
@@ -125,12 +125,6 @@
           }
         }
         this.enable()
-      },
-      makeRecovery () {
-        return this.$services.password.makeRecovery(this.recoverySeed, this.email, this.password)
-      },
-      goLogin () {
-        this.$router.push(vueRoutes.login)
       }
     }
   }

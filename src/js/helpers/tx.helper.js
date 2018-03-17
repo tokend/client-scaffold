@@ -11,7 +11,7 @@ export class TxHelper {
    * @param opts.newKeypair
    * @param opts.recoverySeed
    * @param opts.accountId
-   * @return {Promise<void>}
+   * @return {Promise<string>} transactionEnvelope
    */
   static createRecoveryTx (opts) {
     const newKeypair = opts.newKeypair
@@ -54,7 +54,7 @@ export class TxHelper {
    * @param opts.accountId
    * @param opts.signerToReplace
    * @param opts.keypairToSign
-   * @return {Promise<void>}
+   * @return {Promise<string>}
    * @private
    */
   static async _createReplaceSignerTransaction (opts) {

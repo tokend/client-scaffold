@@ -111,14 +111,18 @@ export class AuthService extends WalletService {
 
     const recoveryWalletId = walletParams.walletId
     const wallet = await this.loadWallet(recoveryWalletId)
-    const envelope = await TxHelper.createRecoveryTx(newKeypair, recoverySeed, wallet.attribute('account_id'))
+    const envelope = await TxHelper.createRecoveryTx({
+      accountId: wallet.attribute('account_id'),
+      recoverySeed,
+      newKeypair
+    })
 
     const options = this._composeOptions({
-      kdf,
-      envelope,
-      newKeypair,
       newPassword,
-      email
+      newKeypair,
+      envelope,
+      email,
+      kdf
     })
 
     await this.updateWallet({

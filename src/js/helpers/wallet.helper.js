@@ -55,6 +55,7 @@ export class WalletHelper {
    * @return {object}
    */
   static getRandomRecoveryAttributes (recoverySeed, email, kdfParams, rawKeychainData, accountId) {
+    console.log(arguments)
     return walletUtil.generateRecoveryData(...arguments)
   }
 

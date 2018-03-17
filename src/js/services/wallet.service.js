@@ -87,7 +87,7 @@ export class WalletService extends Service {
    *
    * @param email
    * @param isRecovery
-   * @return {ResponseBuilder}
+   * @return {Promise<ResponseBuilder>}
    */
   loadKdfParamsForEmail (email, isRecovery = false) {
     return this._apiRequestBuilder
