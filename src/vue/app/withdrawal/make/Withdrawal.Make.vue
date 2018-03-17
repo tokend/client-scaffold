@@ -68,7 +68,6 @@
             "
           />
           <md-button type="submit" class="md-dense md-primary withdraw__submit">withdraw</md-button>
-          <!-- :disabled="!isAllowedToSubmit" -->
 
         </form>
       </md-card-content>
@@ -126,15 +125,6 @@
         vuexTypes.accountDepositAddresses,
         vuexTypes.accountRawBalances
       ]),
-      isAllowedToSubmit () {
-        return this.fixedFee &&
-               this.percentFee &&
-               this.form.amount &&
-               this.form.wallet &&
-               this.errors.count() === 0 &&
-               !this.isLimitExceeded &&
-               this.isValidWallet
-      },
       tokenCodes () {
         return this.userWalletTokens.map(token => token.code)
       },
@@ -151,12 +141,11 @@
         this.disableLong()
         try {
           const options = this.composeOptions()
-          console.log(options)
           await withdrawService.createWithdrawalRequest(options)
-          // this.reset()
+          this.reset()
         } catch (error) {
           console.error(error)
-          // error.showBanner(i18n.unexpected_error)
+          error.showBanner(i18n.unexpected_error)
         }
         this.enable()
       },
@@ -179,7 +168,6 @@
           this.fixedFee = fees.fixed
           this.percentFee = fees.percent
           this.isFeesLoadFailed = false
-          console.log(fees)
         } catch (err) {
           this.isFeesLoadFailed = true
         }
