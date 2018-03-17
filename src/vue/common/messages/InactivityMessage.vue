@@ -26,7 +26,7 @@
   import moment from 'moment'
   import { mapActions } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
-  import { i18n } from '../../js/i18n'
+  import { i18n } from '../../../js/i18n'
   import { attachEventHandler } from '../../../js/events/helpers'
   import { commonEvents } from '../../../js/events/common_events'
 
