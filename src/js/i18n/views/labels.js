@@ -40,5 +40,6 @@ export default {
   lbl_tfa_code: '2FA code',
   lbl_submit: 'Submit',
   lbl_secret: 'Secret',
-  lbl_recovery_seed: 'Recovery seed'
+  lbl_recovery_seed: 'Recovery seed',
+  lbl_recipient: 'Recipient email or account id'
 }
