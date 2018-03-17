@@ -25,6 +25,7 @@ $black: #3f4244;
 $gray:#e2e3e3;
 $green: #3fa595;
 $red: #c2243b;
+$md-invalid: #ff1744;
 $blue: #578ebd;
 $orange: #fb9823;
 $white: #ffffff;
@@ -50,7 +51,7 @@ $col-info: $blue;
 
 $col-nav-text: $white;
 
-$col-active: $orange;
+$col-active: $blue;
 $col-inactive: lighten($orange, 35%);
 $col-unfocused: lighten($black, 30%);
 

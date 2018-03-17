@@ -33,6 +33,11 @@ textarea {
   letter-spacing: 0.005em;
 }
 
+input,
+textarea {
+  width: 100%;
+}
+
 html,body{
   height: 100% !important;
   overflow: auto !important;
@@ -238,4 +243,21 @@ button {
 
   position: fixed;
   z-index: $z-modal-dialog;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.md-field.md-theme-default.md-invalid.md-focused label,
+.md-field.md-theme-default.md-focused.md-invalid .md-input {
+  color: $md-invalid;
+}
+
+.md-field.md-theme-default.md-invalid:before {
+  background-color: $md-invalid;
 }

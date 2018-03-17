@@ -8,7 +8,9 @@ import transfers from './to_replace/transfers'
 import loginView from './views/login_view'
 import signupView from './views/signup_view'
 import depositView from './views/deposit_view'
+import withdrawView from './views/withdrawal_view'
 import labels from './views/labels'
+import inactivitymessage from './views/inactivity_message'
 
 import Polyglot from 'node-polyglot'
 
@@ -24,7 +26,9 @@ const dictionary = {
   ...loginView,
   ...signupView,
   ...depositView,
-  ...labels
+  ...withdrawView,
+  ...labels,
+  ...inactivitymessage
 }
 
 polyglot.extend(dictionary)

@@ -1,8 +1,8 @@
 const workspaces = {
   dev: {
-    horizonServer: 'http://18.196.70.215:8000',
-    fileStorage: 'http://18.196.70.215:9000/api',
-    networkPassphrase: 'SUN Staging Network ; December 2017'
+    horizonServer: 'https://api-dev.swarm.fund',
+    fileStorage: 'https://storage-dev.swarm.fund',
+    networkPassphrase: 'Swarm New Dev; Feb 18'
   },
   prod: {
     horizonServer: 'https://invest.swarm.fund/_/api/',
@@ -16,7 +16,7 @@ const workspaces = {
   }
 }
 
-const currentMode = 'staging'
+const currentMode = 'dev'
 
 export default {
   HORIZON_SERVER: (() => process.env.NODE_ENV === 'development' ? workspaces[currentMode].horizonServer : process.env.HORIZON_SERVER)(),
