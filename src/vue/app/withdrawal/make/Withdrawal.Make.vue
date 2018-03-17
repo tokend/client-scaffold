@@ -6,6 +6,8 @@
                     md-small-size-100
                     md-xsmall-size-100"
     >
+      <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+
       <md-card-header>
         <div class="md-title">{{ i18n.withdraw_withdrawal() }}</div>
       </md-card-header>
@@ -30,12 +32,12 @@
               class="md-layout-item withdraw__field"
               v-model.trim="form.amount"
               :label="i18n.lbl_amount()"
-              name="sun-amount"
+              name="amount"
               type="number"
               title="Amount"
               align="right"
-              v-validate="'amount'"
-              :errorMessage="errors.first('sun-amount') || (isLimitExceeded ? 'Insufficient funds' : '')"
+              v-validate="'required|amount'"
+              :errorMessage="errors.first('amount') || (isLimitExceeded ? 'Insufficient funds' : '')"
             />
           </div>
 
@@ -60,14 +62,14 @@
             v-model.trim="form.wallet"
             :label="i18n.withdraw_wallet({ asset: form.tokenCode })"
             name="wallet-address"
-            v-validate="'wallet_address'"
+            v-validate="'required|wallet_address'"
             :errorMessage="
               errors.first('wallet-address') ||
               (isTryingToSendToYourself ? 'Sender can\'t be a recipient! Make sure the address is correct' : '') ||
               (!isValidWallet ? 'Invalid wallet address' : '')
             "
           />
-          <md-button type="submit" class="md-dense md-primary withdraw__submit">withdraw</md-button>
+          <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit" :disabled="isPending">withdraw</md-button>
 
         </form>
       </md-card-content>
@@ -90,6 +92,7 @@
   import { feeService } from '../../../../js/services/fees.service'
   import { validateAddress } from '../../../../validator/address_validation'
   import { withdrawService } from '../../../../js/services/withdraw.service'
+  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
   import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
 
@@ -116,20 +119,18 @@
       feesDebouncedRequest: null,
       i18n
     }),
-    mounted () {
-
-    },
     computed: {
       ...mapGetters([
         vuexTypes.userWalletTokens,
         vuexTypes.accountDepositAddresses,
+        vuexTypes.accountBalances,
         vuexTypes.accountRawBalances
       ]),
       tokenCodes () {
         return this.userWalletTokens.map(token => token.code)
       },
       balance () {
-        return this.userWalletTokens.filter(token => token.code === this.form.tokenCode)[0].attachedDetails.balance
+        return this.accountBalances[this.form.tokenCode]
       },
       isLimitExceeded () {
         return Number(this.form.amount) > Number(this.balance) &&
@@ -138,11 +139,13 @@
     },
     methods: {
       async submit () {
+        if (!await this.isValid()) return
         this.disableLong()
         try {
           const options = this.composeOptions()
           await withdrawService.createWithdrawalRequest(options)
-          this.reset()
+          EventDispatcher.dispatchShowSuccessEvent(i18n.withdraw_success())
+          this.clear()
         } catch (error) {
           console.error(error)
           error.showBanner(i18n.unexpected_error)
@@ -151,7 +154,7 @@
       },
       composeOptions () {
         return {
-          balance: this.accountRawBalances.filter(id => id.asset === this.form.tokenCode)[0].balance_id,
+          balance: this.balance.balance_id,
           amount: this.form.amount,
           externalDetails: { address: this.form.wallet },
           destAsset: this.form.tokenCode,
@@ -179,10 +182,6 @@
           this.feesDebouncedRequest = debounce(() => this.getFees(), 300)
         }
         return this.feesDebouncedRequest()
-      },
-      reset () {
-        this.form.amount = ''
-        this.form.wallet = ''
       }
     },
     watch: {
