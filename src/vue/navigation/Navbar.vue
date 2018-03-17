@@ -204,10 +204,6 @@
     @include respond-to-custom(800px) {
       word-break: break-word;
     }
-
-    @include respond-to(small) {
-      word-break: break-word;
-    }
   }
 
   .navbar__user-status {

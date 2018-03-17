@@ -21,6 +21,9 @@ import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
 import Deposit from '../vue/app/deposit/Deposit.Entry'
 import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 
+import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
+import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -94,6 +97,19 @@ const router = new Router({
               path: '/deposit/make',
               name: 'deposit.make',
               component: DepositMake
+            }
+          ]
+        },
+        {
+          name: 'app.withdrawal',
+          path: '/withdrawal',
+          component: Withdrawal,
+          redirect: { path: '/withdrawal/make' },
+          children: [
+            {
+              path: '/withdrawal/make',
+              name: 'withdrawal.make',
+              component: WithdrawalMake
             }
           ]
         }

@@ -14,8 +14,8 @@
         <span class="md-list-item-text">{{ i18n.lbl_deposit() }}</span>
       </md-list-item>
 
-      <md-list-item to="/dashboard">
-        <md-icon>withdraw</md-icon>
+      <md-list-item to="/withdrawal">
+        <md-icon>file_upload</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_withdraw() }}</span>
       </md-list-item>
 

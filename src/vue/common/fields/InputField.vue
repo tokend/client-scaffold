@@ -17,6 +17,7 @@
       :maxlength="maxlength"
       :placeholder="placeholder"
       :readonly="readonly"
+      :class="'text-align-' + align"
       @input="onInput"
       @blur="onBlur"
     />
@@ -34,7 +35,8 @@
       type: { type: String, default: 'text' },
       maxlength: { type: [Number, null], default: null },
       counter: { type: [Number, null], default: null },
-      readonly: { type: Boolean, default: false }
+      readonly: { type: Boolean, default: false },
+      align: { type: String, default: 'left' }
       // TODO: need handle number properties:
       // step: { type: Number, default: 0.000001 },
       // min: { type: Number, default: 0 },
