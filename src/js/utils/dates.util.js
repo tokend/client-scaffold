@@ -1,5 +1,9 @@
 import moment from 'moment'
 
+export function formatDate (date) {
+  return moment(date).format('MMMM DD hh:mm a')
+}
+
 export function humanizeDate (date) {
   return moment(date).calendar(null, {
     lastWeek: 'DD MMM LT',
