@@ -1,6 +1,6 @@
 <template>
   <md-field>
-    <label :for="id">{{ label }}</label>
+    <label :for="id" v-if="label">{{ label }}</label>
     <md-textarea
       :placeholder="placeholder"
       :disabled="disabled"
