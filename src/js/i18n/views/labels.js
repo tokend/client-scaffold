@@ -29,6 +29,7 @@ export default {
   lbl_receiver: 'Receiver',
   lbl_fixed_fee: 'Fixed fee',
   lbl_percent_fee: 'Percent fee',
+  lbl_add_note: 'Add note (under 250 symbols)',
   lbl_description: 'Description',
   lbl_fund_name: 'Fund name',
   lbl_base_asset: 'Base asset',
@@ -59,5 +60,6 @@ export default {
   lbl_token_code: 'Token code',
   lbl_fees: 'Fees',
   lbl_sender_fees: 'Sender fees',
-  lbl_recipient_fees: 'Recipient fees'
+  lbl_recipient_fees: 'Recipient fees',
+  lbl_go_back: 'Go back'
 }
