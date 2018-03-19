@@ -47,7 +47,7 @@
                      v-model.trim="form.confirmPassword"
                      v-validate="'required|confirmed:password'"
                       :togglePassword="true"
-                      :label="i18n.lbl_confirm()"
+                      :label="i18n.lbl_pwd_confirm()"
                       :errorMessage="errorMessage('confirm-password')"
                       :data-vv-as="i18n.lbl_pwd().toLowerCase()"
           />
