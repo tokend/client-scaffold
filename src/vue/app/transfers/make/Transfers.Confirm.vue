@@ -1,5 +1,7 @@
 <template>
   <md-card class="transfer-confirm">
+    <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+
     <md-card-header>
       <div class="md-title">{{ i18n.tr_confirm() }}</div>
     </md-card-header>
@@ -47,10 +49,10 @@
       </div>
 
       <div class="transfer-confirm__btn-outer md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)">
+        <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)" :disabled="isPending">
           {{ i18n.lbl_cancel() }}
         </md-button>
-        <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)">
+        <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)" :disabled="isPending">
           {{ i18n.lbl_confirm() }}
         </md-button>
       </div>
@@ -73,7 +75,7 @@
   export default {
     name: 'transfers-confirm',
     components: { DetailRow, TextareaField },
-    props: { opts: { type: Object, required: true } },
+    props: { opts: { type: Object, required: true }, isPending: { type: Boolean, default: false } },
     data: _ => ({
       i18n,
       assetMap,

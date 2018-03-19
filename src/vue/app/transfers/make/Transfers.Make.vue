@@ -57,7 +57,7 @@
             />
 
             <div class="md-layout md-alignment-center-right">
-              <md-button type="submit" class="md-dense md-raised md-primary" :disabled="isPending">
+              <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
                 {{ i18n.lbl_send() }}
               </md-button>
             </div>
@@ -74,6 +74,7 @@
                               md-medium-size-45
                               md-small-size-100
                               md-xsmall-size-100"
+                         :disabled="isPending"
                          @cancel-click="updateView(VIEW_MODES.submit)"
                          @confirm-click="submit"
       />
@@ -116,6 +117,7 @@
 
   import { accountsService } from '../../../../js/services/accounts.service'
   import { feeService } from '../../../../js/services/fees.service'
+  import { transferService } from '../../../../js/services/transfers.service'
 
   import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
 
@@ -153,8 +155,20 @@
       }
     },
     methods: {
-      async submit (sourcePaysForDest) {
-        console.log(sourcePaysForDest)
+      async submit (feeFromSource) {
+        this.disable()
+        try {
+          await transferService.createTransfer({
+            ...this.view.opts,
+            feeFromSource,
+            asset: this.form.tokenCode
+          })
+          this.view.mode = VIEW_MODES.success
+        } catch (error) {
+          console.error(error)
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
       },
       async processTransfer () {
         if (!await this.isValid()) return
