@@ -76,6 +76,13 @@ html,body {
   }
 }
 
+h4 {
+  font-size: $fs-tip;
+  font-weight: bold;
+  opacity: .65;
+  padding: 1.3rem 0 .3rem;
+}
+
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
