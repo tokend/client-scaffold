@@ -29,24 +29,30 @@
           <div class="md-layout-item md-size-40 md-small-size-100">
             <h4>{{ i18n.lbl_sender_fees() }}</h4>
 
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${opts.sourceFixedFee} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${opts.sourcePercentFee} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${senderFee.fixed} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${senderFee.percent} ${opts.tokenCode}`" />
           </div>
           <div class="md-layout-item  md-size-40 md-small-size-100 text-align-right">
             <h4>{{ i18n.lbl_recipient_fees() }}</h4>
 
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${opts.destinationFixedFee} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${opts.destinationPercentFee} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${recipientFee.fixed} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${recipientFee.percent} ${opts.tokenCode}`" />
           </div>
         </div>
+
+        <md-checkbox v-model="form.sourcePaysForDest">{{ i18n.tr_pay_fee_for_rec() }}</md-checkbox>
 
         <h4>{{ i18n.lbl_subject() }}</h4>
         <textarea-field class="transfer-confirm__subject-field" :value="opts.subject" disabled/>
       </div>
 
       <div class="transfer-confirm__btn-outer md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)">{{ i18n.lbl_cancel() }}</md-button>
-        <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent)">{{ i18n.lbl_confirm() }}</md-button>
+        <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)">
+          {{ i18n.lbl_cancel() }}
+        </md-button>
+        <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)">
+          {{ i18n.lbl_confirm() }}
+        </md-button>
       </div>
 
     </md-card-content>
@@ -56,11 +62,13 @@
 
 <script>
   import DetailRow from '../../common/Detail.Row'
-  import { i18n } from '../../../../js/i18n'
+  import TextareaField from '../../../common/fields/TextareaField'
+
+  import { commonEvents } from '../../../../js/events/common_events'
   import { formatDate } from '../../../../js/utils/dates.util'
   import { assetMap } from '../../../../js/const/asset_map'
-  import TextareaField from '../../../common/fields/TextareaField'
-  import { commonEvents } from '../../../../js/events/common_events'
+  import { i18n } from '../../../../js/i18n'
+  import { add } from '../../../../js/utils/math.util'
 
   export default {
     name: 'transfers-confirm',
@@ -69,8 +77,34 @@
     data: _ => ({
       i18n,
       assetMap,
-      commonEvents
+      commonEvents,
+      form: {
+        sourcePaysForDest: false
+      }
     }),
+    computed: {
+      senderFee () {
+        if (this.form.sourcePaysForDest) {
+          return {
+            fixed: add(this.opts.sourceFixedFee, this.opts.destinationFixedFee),
+            percent: add(this.opts.sourcePercentFee, this.opts.destinationPercentFee)
+          }
+        }
+        return {
+          fixed: this.opts.sourceFixedFee,
+          percent: this.opts.sourcePercentFee
+        }
+      },
+      recipientFee () {
+        if (this.form.sourcePaysForDest) {
+          return { fixed: 0, percent: 0 }
+        }
+        return {
+          fixed: this.opts.destinationFixedFee,
+          percent: this.opts.destinationPercentFee
+        }
+      }
+    },
     methods: {
       formatDate
     }

@@ -50,9 +50,9 @@
             <textarea-field id="transfer-description"
                             name="description"
                             v-model="form.subject"
-                            v-validate="'max: 180'"
-                            :label="i18n.lbl_description()"
-                            :maxlength="180"
+                            v-validate="'max:250'"
+                            :label="i18n.lbl_add_note()"
+                            :maxlength="250"
                             :errorMessage="errorMessage('recipient')"
             />
 
@@ -68,7 +68,6 @@
     </template>
 
     <template v-if="view.mode === VIEW_MODES.confirm">
-
       <confirm-transfer :opts="view.opts"
                          class="md-layout-item
                               md-size-50
@@ -78,6 +77,27 @@
                          @cancel-click="updateView(VIEW_MODES.submit)"
                          @confirm-click="submit"
       />
+    </template>
+
+    <template v-if="view.mode === VIEW_MODES.success">
+      <md-card class="transfer__success-msg
+                      md-layout-item
+                      md-size-50
+                      md-medium-size-45
+                      md-small-size-100
+                      md-xsmall-size-100">
+        <md-card-header>
+          <div class="md-title">{{ i18n.tr_successful() }}</div>
+        </md-card-header>
+        <md-card-content>
+          <div>
+            <div class="transfer__success-amount">
+              {{ form.amount }} {{ form.tokenCode }}
+            </div>
+            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
+          </div>
+        </md-card-content>
+      </md-card>
     </template>
 
   </div>
@@ -133,8 +153,8 @@
       }
     },
     methods: {
-      async submit () {
-        console.log('submitted')
+      async submit (sourcePaysForDest) {
+        console.log(sourcePaysForDest)
       },
       async processTransfer () {
         if (!await this.isValid()) return
@@ -200,13 +220,27 @@
         fees.destination.percent = recipientFees.percent
         return fees
       },
-      updateView (mode, opts = {}) {
+      updateView (mode, opts = {}, clear = false) {
         this.view.mode = mode
         this.view.opts = opts
+        if (clear) {
+          this.clear()
+        }
       }
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '../../../../scss/variables';
+
+  .transfer__success-msg {
+    text-align: center;
+  }
+
+  .transfer__success-amount {
+    color: $col-md-primary;
+    font-size: $fs-heading;
+    margin: 1rem 0 .5rem;
+  }
 </style>
