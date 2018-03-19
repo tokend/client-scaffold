@@ -27,6 +27,7 @@ const busEvents = Object.freeze({
 
 const componentEvents = Object.freeze({
   cancelClickEvent: 'cancel-click',
+  confirmClickEvent: 'confirm-click',
   cancelFailEvent: 'cancel-fail',
   closeEvent: 'close',
   editClickEvent: 'edit-click',
