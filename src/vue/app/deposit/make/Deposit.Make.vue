@@ -36,22 +36,10 @@
             />
           </div>
 
-          <div class="deposit__clipboard-outer">
-            <p class="deposit__clipboard-tip">{{ i18n.dep_where_to() }}</p>
-            <div class="deposit__clipboard md-layout md-alignment-center-space-between">
-              <span class="deposit__address" id="clipboard-target">{{ address }}</span>
-              <md-button
-                class="md-icon-button"
-                id="clipboard-btn"
-                @click="showSuccess"
-                ref="clipboardBtn"
-                data-clipboard-target="#clipboard-target"
-              >
-                <md-icon class="deposit__clipboard-icon">content_copy</md-icon>
-                <md-tooltip>Copy</md-tooltip>
-              </md-button>
-            </div>
-          </div>
+          <clipboard-field
+            :value="address"
+            :label="i18n.dep_where_to()"
+          />
 
         </md-card-content>
 
@@ -64,6 +52,7 @@
   import SelectField from '../../../common/fields/SelectField'
   import InputField from '../../../common/fields/InputField'
   import Qrcode from 'vue-qrcode-component'
+  import ClipboardField from '../../../common/fields/ClipboardField'
 
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
@@ -75,7 +64,7 @@
 
   export default {
     name: 'deposit-make',
-    components: { SelectField, InputField, Qrcode },
+    components: { SelectField, InputField, Qrcode, ClipboardField },
     data: _ => ({
       form: {
         tokenCode: DEFAULT_SELECTED_ASSET
