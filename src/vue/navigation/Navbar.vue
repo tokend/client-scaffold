@@ -36,7 +36,7 @@
               </div>
             </div>
             <div class="navbar__user-actions md-layout md-alignment-center-space-between">
-              <md-button class="navbar__user-action-btn md-raised">{{ i18n.lbl_settings() }}</md-button>
+              <md-button class="navbar__user-action-btn md-raised" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
               <md-button class="navbar__user-action-btn md-raised" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
             </div>
           </md-card-content>
@@ -52,6 +52,7 @@
   import { mapActions, mapGetters } from 'vuex'
   import { commonEvents } from '../../js/events/common_events'
   import { attachEventHandler } from '../../js/events/helpers'
+  import { vueRoutes } from '../../vue-router/const'
 
   export default {
     name: 'root-navbar',
@@ -86,6 +87,10 @@
       },
       signOut () {
         this.LOG_OUT()
+      },
+      goSettings () {
+        this.isUserCardOpen = false
+        this.$router.push(vueRoutes.settings)
       }
     }
   }
