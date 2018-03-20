@@ -50,10 +50,6 @@
     border-bottom: 1px solid $col-unfocused;
   }
 
-  .clipboard__icon {
-    font-size: $fs-root !important;
-  }
-
   .clipboard__value-outer {
     display: flex;
     flex-direction: column;

@@ -59,12 +59,23 @@ html,body {
     height: auto;
   }
 
-  & .md-icon--half-sized {
-    $size: 12px;
+  @mixin resize-icon ($size) {
     width: $size;
     min-width: $size;
     height: $size;
-    font-size: $size!important;
+    font-size: $size !important;
+  }
+
+  & .md-icon--half-sized {
+    @include resize-icon(12px)
+  }
+
+  & .md-icon-size-065x {
+    @include resize-icon(14px)
+  }
+
+  & .md-icon-size-075x {
+    @include resize-icon(16px)
   }
 
   & .router-link-active {

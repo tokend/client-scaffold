@@ -10,7 +10,7 @@
         @click="showCopySuccess"
         data-clipboard-target="#clipboard-target"
       >
-        <md-icon>content_copy</md-icon>
+        <md-icon class="detail-row__clipboard-icon md-icon-size-065x">content_copy</md-icon>
         <md-tooltip>Copy</md-tooltip>
       </md-button>
     </span>
@@ -75,5 +75,10 @@
     max-width: 12rem;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .detail-row__clipboard-icon {
+    position: relative;
+    bottom: .1rem;
   }
 </style>
