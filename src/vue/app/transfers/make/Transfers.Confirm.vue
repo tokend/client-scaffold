@@ -48,7 +48,7 @@
         <textarea-field class="transfer-confirm__subject-field" :value="opts.subject" disabled/>
       </div>
 
-      <div class="transfer-confirm__btn-outer md-layout md-alignment-center-right">
+      <div class="md-layout md-alignment-center-right">
         <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)" :disabled="isPending">
           {{ i18n.lbl_cancel() }}
         </md-button>
@@ -122,9 +122,5 @@
 
   .transfer-confirm__inner {
     padding: .75rem 1.2rem 0;
-  }
-
-  .transfer-confirm__btn-outer {
-    padding: 2rem 0 0;
   }
 </style>
