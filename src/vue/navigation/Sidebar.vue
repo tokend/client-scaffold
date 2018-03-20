@@ -1,8 +1,5 @@
 <template>
-  <div>
-
-    <md-toolbar class="md-transparent" md-elevation="0">TokenD</md-toolbar>
-
+  <div class="sidebar">
     <md-list>
       <md-list-item to="/dashboard">
         <md-icon>dashboard</md-icon>

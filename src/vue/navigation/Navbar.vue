@@ -1,32 +1,23 @@
 <template>
-  <nav class="container md-layout md-alignment-center-space-between" v-if="!isLoggedIn">
+  <nav class="container md-layout md-alignment-center-space-between"
+      :class="{ 'container--wide': isLoggedIn }"
+  >
     <div class="md-layout-item logo md-title">TokenD</div>
 
-    <div class="navbar__root-links md-layout-item md-layout md-alignment-center-right">
-      <router-link tag="button"
-                   class="md-button"
-                   v-if="!isLoggedIn"
-                   :to="{ name: 'signup' }">
-        {{ i18n.lbl_signup() }}
-      </router-link>
-      <router-link tag="button"
-                   class="md-button md-accent"
-                   v-if="!isLoggedIn"
-                   :to="{ name: 'login' }">
-        {{ i18n.lbl_signin() }}
-      </router-link>
+    <div class="navbar__root-links md-layout-item md-layout md-alignment-center-right" v-if="!isLoggedIn">
+      <router-link class="md-button"
+                   tag="button"
+                 v-if="!isLoggedIn"
+                  :to="{ name: 'signup' }"
+      >{{ i18n.lbl_signup() }}</router-link>
+      <router-link class="md-button md-accent"
+                   tag="button"
+                  v-if="!isLoggedIn"
+                  :to="{ name: 'login' }"
+      >{{ i18n.lbl_signin() }}</router-link>
     </div>
-  </nav>
 
-  <nav class="md-layout navbar" v-else>
-    <md-tabs class="md-layout md-primary md-alignment-top-right" md-sync-route>
-      <md-tab v-for="(route, key) in routes"
-              :md-label="route.label"
-              :to="route.path"
-              :key="key"
-      />
-    </md-tabs>
-    <div class="md-layout md-layout-item md-alignment-center-right">
+    <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__user">
         <md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">
           <md-icon>account_circle</md-icon>
@@ -109,6 +100,11 @@
 
   .navbar {
     width: 100%;
+  }
+
+  .navbar__root-links {
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .navbar__user {

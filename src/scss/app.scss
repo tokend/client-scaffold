@@ -59,6 +59,11 @@ html,body {
     height: auto;
   }
 
+  & .md-app-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   @mixin resize-icon ($size) {
     width: $size;
     min-width: $size;
@@ -78,12 +83,8 @@ html,body {
     @include resize-icon(16px)
   }
 
-  & .router-link-active {
+  & .sidebar .router-link-active {
     color: $col-md-primary;
-  }
-
-  & .md-tabs .router-link-active {
-    color: $col-md-primary-txt;
   }
 }
 
@@ -99,16 +100,15 @@ input:-webkit-autofill {
 }
 
 .container {
-  min-width: 320px;
   margin: 0 auto;
   max-width: 1250px;
   padding-left: 30px;
   padding-right: 30px;
   width: 100%;
 
-  @media (min-width: 1367px) {
-    max-width: 1560px;
-    width: 80%;
+  &--wide {
+    max-width: 1366px;
+    width: 100%;
   }
 }
 
