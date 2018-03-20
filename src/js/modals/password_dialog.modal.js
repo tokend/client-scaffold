@@ -11,7 +11,7 @@ import {ErrorFactory} from '../errors/factory'
 
 const template = `
   <form novalidate>
-   <md-dialog :md-active.sync="isOpened" @md-closed="isOpened = false">
+   <md-dialog :md-active.sync="isOpened" :md-fullscreen="false" @md-closed="isOpened = false">
     <md-dialog-title>{{ i18n.mod_pwd_required() }}</md-dialog-title>
     <div class="app__dialog-inner">
       <input-field

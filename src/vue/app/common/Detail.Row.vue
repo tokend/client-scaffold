@@ -2,7 +2,7 @@
   <p class="detail-row">
     <span class="detail-row__key">{{ prop }}</span>
     <span class="detail-row__value">
-      <span class="detail-row__value-text" id="clipboard-target">{{ value }}</span>
+      <span class="detail-row__value-text" :id="copiable ? 'clipboard-target' : ''">{{ value }}</span>
       <md-button
         v-if="copiable"
         class="detail-row__clipboard-btn md-icon-button"
@@ -10,7 +10,7 @@
         @click="showCopySuccess"
         data-clipboard-target="#clipboard-target"
       >
-        <md-icon>content_copy</md-icon>
+        <md-icon class="detail-row__clipboard-icon md-icon-size-065x">content_copy</md-icon>
         <md-tooltip>Copy</md-tooltip>
       </md-button>
     </span>
@@ -75,5 +75,10 @@
     max-width: 12rem;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .detail-row__clipboard-icon {
+    position: relative;
+    bottom: .1rem;
   }
 </style>

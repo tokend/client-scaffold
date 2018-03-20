@@ -2,10 +2,18 @@
   <md-app id="app" md-waterfall md-mode="fixed">
 
     <md-app-toolbar class="md-primary">
-      <navbar/>
+      <div class="md-toolbar-row">
+        <md-button class="md-icon-button app__sidebar-icon"
+                 v-if="isLoggedIn"
+                  @click="menuVisible = !menuVisible">
+          <md-icon>menu</md-icon>
+        </md-button>
+        <navbar/>
+      </div>
     </md-app-toolbar>
 
-    <md-app-drawer md-permanent="full"
+    <md-app-drawer md-permanent="clipped"
+                  :md-active.sync="menuVisible"
                    v-if="isLoggedIn">
       <sidebar/>
     </md-app-drawer>
@@ -104,6 +112,8 @@
 </script>
 
 <style lang="scss">
+  @import '../../scss/mixins';
+
   .md-app {
     height: 100%;
   }
@@ -111,6 +121,14 @@
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
+  }
+
+  .app__sidebar-icon {
+    display: none;
+
+    @include respond-to(small) {
+      display: initial;
+    }
   }
 
 </style>

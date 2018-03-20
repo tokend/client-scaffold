@@ -1,36 +1,30 @@
 <template>
-  <nav class="container md-layout md-alignment-center-space-between" v-if="!isLoggedIn">
+  <nav class="container md-layout md-alignment-center-space-between"
+      :class="{ 'container--wide': isLoggedIn }"
+  >
     <div class="md-layout-item logo md-title">TokenD</div>
 
-    <div class="navbar__root-links md-layout-item md-layout md-alignment-center-right">
-      <router-link tag="button"
-                   class="md-button"
-                   v-if="!isLoggedIn"
-                   :to="{ name: 'signup' }">
-        {{ i18n.lbl_signup() }}
-      </router-link>
-      <router-link tag="button"
-                   class="md-button md-accent"
-                   v-if="!isLoggedIn"
-                   :to="{ name: 'login' }">
-        {{ i18n.lbl_signin() }}
-      </router-link>
+    <div class="navbar__root-links md-layout-item md-layout md-alignment-center-right" v-if="!isLoggedIn">
+      <router-link class="md-button"
+                   tag="button"
+                 v-if="!isLoggedIn"
+                  :to="{ name: 'signup' }"
+      >{{ i18n.lbl_signup() }}</router-link>
+      <router-link class="md-button md-accent"
+                   tag="button"
+                  v-if="!isLoggedIn"
+                  :to="{ name: 'login' }"
+      >{{ i18n.lbl_signin() }}</router-link>
     </div>
-  </nav>
 
-  <nav class="md-layout navbar" v-else>
-    <md-tabs class="md-layout md-primary md-alignment-top-right" md-sync-route>
-      <md-tab v-for="(route, key) in routes"
-              :md-label="route.label"
-              :to="route.path"
-              :key="key"
-      />
-    </md-tabs>
-    <div class="md-layout md-layout-item md-alignment-center-right">
+    <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__user">
-        <md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">
+        <button class="navbar__user-opener" @click="toggleUserCardVisibility">
+          <span class="navbar__user-email">{{ userEmail }}</span>
+          <!--<md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">-->
           <md-icon>account_circle</md-icon>
-        </md-button>
+          <!--</md-button>-->
+        </button>
         <md-card class="navbar__user-card" v-show="isUserCardOpen">
           <md-card-content>
             <div class="navbar__user-card-content">
@@ -45,7 +39,7 @@
               </div>
             </div>
             <div class="navbar__user-actions md-layout md-alignment-center-space-between">
-              <md-button class="navbar__user-action-btn md-raised">{{ i18n.lbl_settings() }}</md-button>
+              <md-button class="navbar__user-action-btn md-raised" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
               <md-button class="navbar__user-action-btn md-raised" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
             </div>
           </md-card-content>
@@ -61,6 +55,7 @@
   import { mapActions, mapGetters } from 'vuex'
   import { commonEvents } from '../../js/events/common_events'
   import { attachEventHandler } from '../../js/events/helpers'
+  import { vueRoutes } from '../../vue-router/const'
 
   export default {
     name: 'root-navbar',
@@ -95,6 +90,10 @@
       },
       signOut () {
         this.LOG_OUT()
+      },
+      goSettings () {
+        this.isUserCardOpen = false
+        this.$router.push(vueRoutes.settings)
       }
     }
   }
@@ -102,6 +101,7 @@
 
 <style scoped lang="scss">
   @import "../../scss/mixins";
+  @import "../../scss/variables";
 
   nav {
     min-height: 64px;
@@ -111,8 +111,34 @@
     width: 100%;
   }
 
+  .navbar__root-links {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
   .navbar__user {
     position: relative;
+  }
+
+  .navbar__user-opener {
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: $col-md-primary-txt;
+    display: flex;
+    justify-content: flex-end;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .navbar__user-email {
+    margin-right: 1rem;
+    @include respond-to(small) {
+      display: none;
+    }
   }
 
   .navbar__user-card {

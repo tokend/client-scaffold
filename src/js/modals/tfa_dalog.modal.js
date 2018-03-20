@@ -9,7 +9,7 @@ import { i18n } from '../i18n'
 
 const template = `
   <form novalidate>
-   <md-dialog :md-active.sync="isOpened">
+   <md-dialog :md-fullscreen="false" :md-active.sync="isOpened">
     <md-dialog-title>{{ i18n.mod_tfa_required() }}</md-dialog-title>
     
     <div class="app__dialog-inner">
@@ -24,7 +24,8 @@ const template = `
     </div>
       
     <md-dialog-actions>
-     <md-button class="md-primary md-raised" :disabled="isPending" @click="submit">{{ i18n.lbl_submit() }}</md-button>
+     <md-button class="md-primary" @click="close">{{ i18n.lbl_cancel() }}</md-button>
+     <md-button class="md-primary" :disabled="isPending" @click="submit">{{ i18n.lbl_submit() }}</md-button>
     </md-dialog-actions>
     
    </md-dialog>

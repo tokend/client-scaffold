@@ -1,8 +1,5 @@
 <template>
-  <div>
-
-    <md-toolbar class="md-transparent" md-elevation="0">TokenD</md-toolbar>
-
+  <div class="sidebar">
     <md-list>
       <md-list-item to="/dashboard">
         <md-icon>dashboard</md-icon>
@@ -29,10 +26,10 @@
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
       </md-list-item>
 
-      <md-list-item to="/settings">
-        <md-icon>settings</md-icon>
-        <span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>
-      </md-list-item>
+      <!--<md-list-item to="/settings">-->
+        <!--<md-icon>settings</md-icon>-->
+        <!--<span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>-->
+      <!--</md-list-item>-->
 
     </md-list>
   </div>

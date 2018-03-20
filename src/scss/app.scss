@@ -59,20 +59,32 @@ html,body {
     height: auto;
   }
 
-  & .md-icon--half-sized {
-    $size: 12px;
+  & .md-app-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @mixin resize-icon ($size) {
     width: $size;
     min-width: $size;
     height: $size;
-    font-size: $size!important;
+    font-size: $size !important;
   }
 
-  & .router-link-active {
+  & .md-icon--half-sized {
+    @include resize-icon(12px)
+  }
+
+  & .md-icon-size-065x {
+    @include resize-icon(14px)
+  }
+
+  & .md-icon-size-075x {
+    @include resize-icon(16px)
+  }
+
+  & .sidebar .router-link-active {
     color: $col-md-primary;
-  }
-
-  & .md-tabs .router-link-active {
-    color: $col-md-primary-txt;
   }
 }
 
@@ -88,16 +100,15 @@ input:-webkit-autofill {
 }
 
 .container {
-  min-width: 320px;
   margin: 0 auto;
   max-width: 1250px;
   padding-left: 30px;
   padding-right: 30px;
   width: 100%;
 
-  @media (min-width: 1367px) {
-    max-width: 1560px;
-    width: 80%;
+  &--wide {
+    max-width: 1366px;
+    width: 100%;
   }
 }
 

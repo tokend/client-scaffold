@@ -1,4 +1,4 @@
-import Detail from './Detail.Row'
+import Detail from '../../../common/Detail.Row'
 import { i18n } from '../../../../../js/i18n'
 
 export default {

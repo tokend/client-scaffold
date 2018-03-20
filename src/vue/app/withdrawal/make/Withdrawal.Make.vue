@@ -1,20 +1,21 @@
 <template>
   <div class="deposit md-layout md-alignment-center-center">
-    <md-card class="md-layout-item
-                    md-size-35
-                    md-medium-size-45
-                    md-small-size-100
-                    md-xsmall-size-100"
-    >
-      <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+    <form class="md-layout-item
+                 md-size-50
+                 md-medium-size-65
+                 md-small-size-95
+                 md-xsmall-size-100"
+      @submit.prevent="submit">
 
-      <md-card-header>
-        <div class="md-title">{{ i18n.withdraw_withdrawal() }}</div>
-      </md-card-header>
+      <md-card
+      >
+        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-      <md-card-content>
-        <form @submit.prevent="submit">
+        <md-card-header>
+          <div class="md-title">{{ i18n.withdraw_withdrawal() }}</div>
+        </md-card-header>
 
+        <md-card-content>
           <p class="withdraw__explanations" v-if="form.tokenCode !== 'SWM'">
             {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}.
             {{ i18n.withdraw_minimal() }}.
@@ -64,17 +65,17 @@
             name="wallet-address"
             v-validate="'required|wallet_address'"
             :errorMessage="
-              errors.first('wallet-address') ||
-              (isTryingToSendToYourself ? 'Sender can\'t be a recipient! Make sure the address is correct' : '') ||
-              (!isValidWallet ? 'Invalid wallet address' : '')
-            "
+             errors.first('wallet-address') ||
+             (isTryingToSendToYourself ? 'Sender can\'t be a recipient! Make sure the address is correct' : '') ||
+             (!isValidWallet ? 'Invalid wallet address' : '')
+           "
           />
           <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit" :disabled="isPending">withdraw</md-button>
 
-        </form>
-      </md-card-content>
+        </md-card-content>
 
-    </md-card>
+      </md-card>
+    </form>
   </div>
 </template>
 

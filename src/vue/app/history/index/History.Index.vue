@@ -163,6 +163,10 @@
     }
   }
 
+  .tx-history__row {
+    cursor: pointer;
+  }
+
   .tx-history__table-cell {
     overflow: hidden;
     white-space: nowrap;

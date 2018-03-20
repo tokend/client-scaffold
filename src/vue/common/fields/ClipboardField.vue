@@ -1,6 +1,6 @@
 <template>
   <div class="clipboard__outer">
-    <div class="clipboard md-layout md-alignment-center-space-between">
+    <div class="clipboard">
       <div class="clipboard__value-outer">
         <label class="clipboard__label">{{ label }}</label>
         <span class="clipboard__value" id="clipboard-target">{{ value }}</span>
@@ -45,18 +45,30 @@
 
 <style lang="scss" scoped>
   @import '../../../scss/variables';
+  @import '../../../scss/mixins';
 
   .clipboard {
+    align-items: center;
     border-bottom: 1px solid $col-unfocused;
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
   }
 
-  .clipboard__icon {
-    font-size: $fs-root !important;
+  .clipboard__value {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .clipboard__value-outer {
     display: flex;
     flex-direction: column;
+    width: 100%;
+
+    @include respond-to(xsmall) {
+      max-width: 80%;
+    }
   }
 
   .clipboard__label {
