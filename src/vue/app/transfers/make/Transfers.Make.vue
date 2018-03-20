@@ -1,13 +1,13 @@
 <template>
   <div class="transfer md-layout md-alignment-center-center">
-
     <template v-if="view.mode === VIEW_MODES.submit">
       <form novalidate @submit.prevent="processTransfer"
             class="md-layout-item
-                 md-size-50
-                 md-medium-size-45
-                 md-small-size-100
-                 md-xsmall-size-100">
+                   md-size-50
+                   md-medium-size-65
+                   md-small-size-95
+                   md-xsmall-size-100"
+      >
         <md-card>
           <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 

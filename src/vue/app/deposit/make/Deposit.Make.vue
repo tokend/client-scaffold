@@ -1,61 +1,62 @@
 <template>
   <div class="deposit md-layout md-alignment-center-center">
-    <md-card class="md-layout-item
+    <div class="md-layout-item
                     md-size-35
                     md-medium-size-65
-                    md-small-size-100
-                    md-xsmall-size-100"
-    >
-      <md-card-header>
-        <div class="md-title">{{ i18n.dep_deposit() }}</div>
-      </md-card-header>
+                    md-small-size-95
+                    md-xsmall-size-100">
+      <md-card>
+        <md-card-header>
+          <div class="md-title">{{ i18n.dep_deposit() }}</div>
+        </md-card-header>
 
-      <md-card-content>
-        <p class="deposit__explanations">
-          {{ i18n.dep_how_to() }}.
-          {{ i18n.dep_how_long() }}
-        </p>
+        <md-card-content>
+          <p class="deposit__explanations">
+            {{ i18n.dep_how_to() }}.
+            {{ i18n.dep_how_long() }}
+          </p>
 
-        <div class="md-layout">
-          <select-field
-            class="md-layout-item"
-            :label="i18n.lbl_asset()"
-            :values="tokenCodes"
-            v-model="form.tokenCode"
-          />
-        </div>
-
-
-        <div class="deposit__qr-outer">
-          <p class="deposit__qr-tip">{{ i18n.dep_send_only_asset({ asset: this.form.tokenCode }) }}</p>
-
-          <qrcode class="deposit__qr-code"
-                  :text="address"
-                  :size="225"
-                  color="#3f4244"
-          />
-        </div>
-
-        <div class="deposit__clipboard-outer">
-          <p class="deposit__clipboard-tip">{{ i18n.dep_where_to() }}</p>
-          <div class="deposit__clipboard md-layout md-alignment-center-space-between">
-            <span class="deposit__address" id="clipboard-target">{{ address }}</span>
-            <md-button
-              class="md-icon-button"
-              id="clipboard-btn"
-              @click="showSuccess"
-              ref="clipboardBtn"
-              data-clipboard-target="#clipboard-target"
-            >
-              <md-icon class="deposit__clipboard-icon">content_copy</md-icon>
-              <md-tooltip>Copy</md-tooltip>
-            </md-button>
+          <div class="md-layout">
+            <select-field
+              class="md-layout-item"
+              :label="i18n.lbl_asset()"
+              :values="tokenCodes"
+              v-model="form.tokenCode"
+            />
           </div>
-        </div>
 
-      </md-card-content>
 
-    </md-card>
+          <div class="deposit__qr-outer">
+            <p class="deposit__qr-tip">{{ i18n.dep_send_only_asset({ asset: this.form.tokenCode }) }}</p>
+
+            <qrcode class="deposit__qr-code"
+                    :text="address"
+                    :size="225"
+                    color="#3f4244"
+            />
+          </div>
+
+          <div class="deposit__clipboard-outer">
+            <p class="deposit__clipboard-tip">{{ i18n.dep_where_to() }}</p>
+            <div class="deposit__clipboard md-layout md-alignment-center-space-between">
+              <span class="deposit__address" id="clipboard-target">{{ address }}</span>
+              <md-button
+                class="md-icon-button"
+                id="clipboard-btn"
+                @click="showSuccess"
+                ref="clipboardBtn"
+                data-clipboard-target="#clipboard-target"
+              >
+                <md-icon class="deposit__clipboard-icon">content_copy</md-icon>
+                <md-tooltip>Copy</md-tooltip>
+              </md-button>
+            </div>
+          </div>
+
+        </md-card-content>
+
+      </md-card>
+    </div>
   </div>
 </template>
 
