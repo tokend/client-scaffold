@@ -6,7 +6,10 @@
 
     <md-card-content class="info-widget__asset">
       <md-list class="md-double-line info-widget__asset-list md-layout">
-        <md-list-item class="info-widget__asset-item"
+        <md-list-item :class="['info-widget__asset-item',
+                              tx.state === 'rejected' ||
+                              tx.state === 'failed' ? 'info-widget__asset-item--opacity': ''
+                      ]"
                       v-for="(tx, i) in list"
                       v-bind:key="i"
                       v-if="i < transactionsToShow"
@@ -19,7 +22,11 @@
             <div class="info-widget__asset-date"> {{ tx.date }} </div>
           </div>
           <div class="info-widget__asset-item-right  md-layout-item">
-            <div :class="'info-widget__asset-amount info-widget__asset-amount--' + tx.direction">
+            <div :class="
+              ['info-widget__asset-amount',
+              'info-widget__asset-amount--' + tx.direction,
+              tx.state === 'rejected' || tx.state === 'failed' ? 'info-widget__asset-amount--failed' : '']
+            ">
               {{ tx.direction === 'in' ? '+' : '-' }}{{ tx.amount }} {{ tx.asset }}
             </div>
             <div :class="'info-widget__asset-state info-widget__asset-state--' + tx.state">
@@ -30,7 +37,7 @@
       </md-list>
     </md-card-content>
 
-    <md-card-actions>
+    <md-card-actions class="info-widget__actions">
       <md-button to="/history" class="md-primary">View more</md-button>
     </md-card-actions>
     <info-dialog v-on:close-dialog="closeDialog"
@@ -79,9 +86,6 @@
       }
     },
     mounted () {
-      console.log(this.transactions)
-      console.log(this.userWalletTokens)
-      console.log(this.list)
     },
     methods: {
       ...mapActions({
@@ -107,6 +111,14 @@
     max-height: 408px;
     max-width: 560px;
     width: 100%;
+  }
+
+  .info-widget__asset-item--opacity {
+    opacity: .7;
+  }
+
+  .info-widget__actions {
+    margin-top: 30px;
   }
 
   .info-widget__header {
@@ -159,8 +171,9 @@
     font-size: 14px;
   }
 
-  .info-widget__asset-amount--in { color: $blue; }
+  .info-widget__asset-amount--in { color: $green; }
   .info-widget__asset-amount--out { color: $red; }
+  .info-widget__asset-amount--failed { color: rgba($black, .5); }
 
   .info-widget__asset-state {
     text-align: right;
