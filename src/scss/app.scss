@@ -284,3 +284,9 @@ button {
 .md-field.md-theme-default.md-invalid:before {
   background-color: $md-invalid;
 }
+
+.md-list-item-content {
+  .portfolio-widget__asset-item & {
+    padding: 9px 24px;
+  }
+}
