@@ -19,9 +19,12 @@
 
     <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__user">
-        <md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">
+        <button class="navbar__user-opener" @click="toggleUserCardVisibility">
+          <span class="navbar__user-email">{{ userEmail }}</span>
+          <!--<md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">-->
           <md-icon>account_circle</md-icon>
-        </md-button>
+          <!--</md-button>-->
+        </button>
         <md-card class="navbar__user-card" v-show="isUserCardOpen">
           <md-card-content>
             <div class="navbar__user-card-content">
@@ -98,6 +101,7 @@
 
 <style scoped lang="scss">
   @import "../../scss/mixins";
+  @import "../../scss/variables";
 
   nav {
     min-height: 64px;
@@ -114,6 +118,27 @@
 
   .navbar__user {
     position: relative;
+  }
+
+  .navbar__user-opener {
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: $col-md-primary-txt;
+    display: flex;
+    justify-content: flex-end;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .navbar__user-email {
+    margin-right: 1rem;
+    @include respond-to(small) {
+      display: none;
+    }
   }
 
   .navbar__user-card {
