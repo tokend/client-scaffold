@@ -11,6 +11,7 @@ export class OperationBuilder {
   }
 
   operation () {
+    this.operations = []
     return this
   }
 

@@ -4,5 +4,5 @@ export const LOG_IN = ({ commit, dispatch, getters }) => {
 
 export const LOG_OUT = ({ commit }) => {
   commit('SET_LOGGED_OUT_STATE')
-  // location.reload()
+  location.reload()
 }

@@ -185,10 +185,10 @@
 
       async verifyEmail () {
         try {
-          await emailService.sendVerifyEmailRequest(this.emailParams.token, this.emailParams.walletId)
+          await emailService.sendVerifyEmailRequest(this.verifyEmailParams.token, this.verifyEmailParams.walletId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.email_verified())
         } catch (error) {
-          this.handleReject(error)
+          console.error(error)
         }
       }
     }
