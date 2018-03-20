@@ -24,6 +24,7 @@
       </div>
 
       <md-dialog-actions class="md-layout md-alignment-center-right">
+        <md-button @click="isSettingsOpened = false" class="md-primary">Cancel</md-button>
         <md-button @click="updateFactor" class="md-primary">Confirm</md-button>
       </md-dialog-actions>
 
