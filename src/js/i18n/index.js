@@ -14,6 +14,7 @@ import loginView from './views/login_view'
 import labels from './views/labels'
 import inactivitymessage from './views/inactivity_message'
 import settingsView from './views/settings_view'
+import dashboardView from './views/dashboard_view'
 import transfersView from './views/transfers_view'
 import modals from './views/modals'
 
@@ -39,7 +40,8 @@ const dictionary = {
   ...transfersView,
   ...labels,
   ...modals,
-  ...defaults
+  ...defaults,
+  ...dashboardView
 }
 
 polyglot.extend(dictionary)

@@ -13,7 +13,8 @@ import EmailResend from '../vue/auth/ConfirmEmail.vue'
 
 import AppContent from '../vue/root/AppContent.vue'
 
-import Dashboard from '../vue/app/Dashboard'
+import Dashboard from '../vue/app/dashboard/Dashboard.Entry'
+import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
 
 import Wallet from '../vue/app/wallet/Wallet.Entry'
 import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
@@ -81,7 +82,15 @@ const router = new Router({
         {
           name: 'app.dashboard',
           path: '/dashboard',
-          component: Dashboard
+          component: Dashboard,
+          redirect: { path: '/dashboard/index' },
+          children: [
+            {
+              path: '/dashboard/index',
+              name: 'dashboard.index',
+              component: DashboardIndex
+            }
+          ]
         },
         {
           name: 'app.wallet',

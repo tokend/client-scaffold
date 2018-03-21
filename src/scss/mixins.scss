@@ -50,3 +50,9 @@ $xlarge: 1920px;
     @content;
   }
 }
+
+@mixin respond-to-height($media) {
+  @media only screen and (max-height: $media) {
+    @content;
+  }
+}
