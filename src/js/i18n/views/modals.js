@@ -9,5 +9,7 @@ export default {
   mod_confirm_title: 'Are you sure?',
   mod_confirm_message: 'Please confirm this action before continuing',
   mod_confirm_confirm_text: 'Confirm',
-  mod_confirm_cancel_text: 'Cancel'
+  mod_confirm_cancel_text: 'Cancel',
+  mod_email_not_verified_title: 'Email not verified',
+  mod_email_not_verified_message: `It seems your email is not verified yet. Please check your spam folder or request new email by pressing "Confirm"`
 }

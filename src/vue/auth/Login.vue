@@ -162,9 +162,9 @@
       // TODO: wtf, need drop this away
       async handleNotVerifiedError () {
         if (!await confirmAction({
-          title: 'Email not verified',
-          message: `It seems your email is not verified yet. Please check your spam folder or request new email by pressing "Confirm"` }
-        )) return
+          title: i18n.mod_email_not_verified_title(),
+          message: i18n.mod_email_not_verified_message()
+        })) return
         this.disable()
         try {
           const kdf = await walletService.loadKdfParamsForEmail(this.email)
