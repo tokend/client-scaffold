@@ -2,7 +2,9 @@
   <md-dialog :md-active.sync="show" @md-closed="closeDialog" class="info-dialog">
     <md-dialog-title> {{ i18n.lbl_transaction_details() }}</md-dialog-title>
 
-    <tx-details class="info-dialog__history" :tx="dialogValues"/>
+    <div class="app__dialog-inner">
+      <tx-details class="info-dialog__history" :tx="dialogValues"/>
+    </div>
 
     <md-dialog-actions class="info-dialog__actions">
       <md-button class="md-primary" @click="closeDialog">{{ i18n.lbl_close() }}</md-button>
