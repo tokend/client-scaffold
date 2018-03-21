@@ -14,7 +14,7 @@
       </div>
     </md-card-content>
 
-    <md-card-actions>
+    <md-card-actions class="portfolio-widget__actions">
       <md-button to="/transfers" class="md-primary">{{ i18n.lbl_send() }}</md-button>
     </md-card-actions>
   </md-card>
@@ -53,25 +53,41 @@
   @import '../../../../scss/variables.scss';
   @import '../../../../scss/mixins.scss';
 
+  $custom-breakpoint: 860px;
+
   .portfolio-widget {
     max-height: 408px;
     width: 100%;
     max-width: 370px;
     min-width: 248px;
 
+    @include respond-to-custom($custom-breakpoint) {
+      width: 100%;
+      max-width: inherit;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 16px;
+    }
+
     @include respond-to(medium) {
       margin-bottom: 24px;
+    }
+
+    @include respond-to(small) {
+      padding: 8px;
     }
   }
 
   .portfolio-widget__header {
-    @include respond-to(small) {
-      padding: 8px 0;
+    @include respond-to-custom($custom-breakpoint) {
+      display: none;
     }
   }
 
   .portfolio-widget__title {
-    @include respond-to(small) {
+    @include respond-to-custom($custom-breakpoint) {
       display: none;
     }
   }
@@ -80,7 +96,7 @@
     text-align: center;
     margin-bottom: 17px;
 
-    @include respond-to(small) {
+    @include respond-to-custom($custom-breakpoint) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -93,7 +109,7 @@
   .portfolio-widget__asset-picture {
     margin-bottom: 32px;
 
-    @include respond-to(small) {
+    @include respond-to-custom($custom-breakpoint) {
       margin-right: 16px;
       margin-bottom: 0;
     }
@@ -102,7 +118,7 @@
       width: 142px;
       height: 142px;
 
-      @include respond-to(small) {
+      @include respond-to-custom($custom-breakpoint) {
         width: 80px;
         height: 80px;
         padding: 0;
@@ -115,8 +131,9 @@
     font-size: 24px;
     letter-spacing: .2px;
 
-    @include respond-to(small) {
+    @include respond-to-custom($custom-breakpoint) {
       font-size: 20px;
+      margin-bottom: 4px;
     }
 
     @include respond-to(xsmall) {
@@ -131,6 +148,13 @@
 
     @include respond-to(xsmall) {
       font-size: 14px;
+    }
+  }
+
+  .portfolio-widget__actions {
+    @include respond-to-custom($custom-breakpoint) {
+      padding: 0;
+      margin-left: auto;
     }
   }
 
