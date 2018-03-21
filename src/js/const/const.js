@@ -39,3 +39,4 @@ export {
   DEFAULT_DATE_TIME_FORMAT,
   DEFAULT_MAX_AMOUNT
 } from './configs.const'
+export { assetMap } from './asset_map'

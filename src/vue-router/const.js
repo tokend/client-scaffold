@@ -1,4 +1,6 @@
 export const vueRoutes = Object.freeze({
+  transfersConfirm: { name: 'transfers.confirm', path: 'transfers, confirm' },
+
   hredir: { name: 'horizon-redirect' },
   login: { name: 'login' },
   signup: { name: 'signup' },
@@ -10,7 +12,6 @@ export const vueRoutes = Object.freeze({
   sunWalletOverview: { name: 'SUN-wallet.overview' },
   send: { name: 'SUN-wallet.send' },
   deposit: { name: 'SUN-wallet.deposit' },
-  confirmSend: { name: 'send.confirm' },
 
   portfolioTokens: { name: 'portfolio.tokens' },
   portfolioFunds: { name: 'portfolio/funds' },

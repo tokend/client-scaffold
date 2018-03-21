@@ -1,6 +1,7 @@
 import { xdr, Operation } from 'swarm-js-sdk'
 import { ErrorFactory, errorTypes } from '../errors/factory'
 import { Service } from './service'
+import get from 'lodash/get'
 
 /**
  * @module accounts
@@ -62,12 +63,22 @@ export class AccountsService extends Service {
       })
   }
 
+  loadBalanceIdByAccountid (accountId, tokenCode) {
+    return this.loadAccountBalancesById(accountId)
+      .then(allBalances => {
+        const balance = allBalances.find(balance => balance.asset === tokenCode)
+        if (!balance) ErrorFactory.throwError(errorTypes.NotFoundError)
+        return balance.balance_id
+      })
+  }
+
   /**
    * Loads all account balances by account id
    * @param {string} accountId
    * @returns {Promise <balances>} Promise object represents account balances
    */
   loadAccountBalancesById (accountId) {
+    console.log(this._keypair)
     return this._horizonRequestBuilder.accounts()
       .balances(accountId)
       .callWithSignature(this._keypair)
@@ -82,6 +93,7 @@ export class AccountsService extends Service {
     return this._apiRequestBuilder.userId()
       .forEmail(email)
       .get()
+      .then(r => r.data('account_id'))
   }
 
   /**
@@ -89,7 +101,6 @@ export class AccountsService extends Service {
    * @param accountId
    * @returns {string} email
    */
-  // TODO: for now, this does not return email string, but { email: 'qqq@wqe.com }. Need to fix
   loadEmailByAccountId (accountId) {
     const params = { addresses: [accountId] }
     return this._apiRequestBuilder.details()
@@ -97,7 +108,7 @@ export class AccountsService extends Service {
       .sign(this._keypair)
       .json()
       .post()
-      .then(response => Object.values(response.data('users'))[0])
+      .then(response => get(Object.values(response.data('users')), '[0].email'))
   }
 
   /**

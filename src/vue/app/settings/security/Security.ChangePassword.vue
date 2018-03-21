@@ -28,7 +28,7 @@
               id="settings-confirm-password"
               name="confirm-password"
               type="password"
-              :label="i18n.lbl_confirm()"
+              :label="i18n.lbl_pwd_confirm()"
               v-validate="'required'"
               :errorMessage="pwdUnconfirmedMessage"
             />

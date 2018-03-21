@@ -22,6 +22,9 @@ import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
 import Deposit from '../vue/app/deposit/Deposit.Entry'
 import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 
+import Transfers from '../vue/app/transfers/Transfers.Entry'
+import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
+
 import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
 import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
 
@@ -112,6 +115,19 @@ const router = new Router({
               path: '/deposit/make',
               name: 'deposit.make',
               component: DepositMake
+            }
+          ]
+        },
+        {
+          name: 'app.transfers',
+          path: '/transfers',
+          component: Transfers,
+          redirect: { path: '/transfers/make' },
+          children: [
+            {
+              path: '/transfers/make',
+              name: 'transfers.make',
+              component: TransfersMake
             }
           ]
         },
