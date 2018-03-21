@@ -145,7 +145,7 @@
   }
 
   .info-widget__header {
-    padding: 24px 24px 42px;
+    padding-bottom: 48px;
   }
 
   .info-widget__asset {
