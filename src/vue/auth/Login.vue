@@ -15,6 +15,8 @@
                md-medium-size-45
                md-small-size-65
                md-xsmall-size-100">
+        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+
         <md-card-header>
           <div class="md-title">{{ i18n.log_signin() }}</div>
         </md-card-header>
@@ -65,6 +67,7 @@
 
   import { errors } from '../../js/errors/factory'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
+  import { ErrorHandler } from '../../js/errors/error_handler'
   import { dispatchAppEvent } from '../../js/events/helpers'
   import { commonEvents } from '../../js/events/common_events'
   import { mapActions, mapGetters } from 'vuex'
@@ -127,10 +130,6 @@
           await this.fetchUserDetails()
           await this.enterApplication()
         } catch (error) {
-          console.error(error)
-          if (!error.showBanner) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
-          }
           switch (error.constructor) {
             case errors.NotFoundError:
               error.showBanner(i18n.not_found())
@@ -139,7 +138,7 @@
               this.handleNotVerifiedError()
               break
             default:
-              error.showBanner(i18n.unexpected_error())
+              ErrorHandler.processUnexpected(error)
           }
         }
         this.enable()
@@ -177,11 +176,7 @@
           await emailService.sendResendEmailRequest(walletId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent())
         } catch (error) {
-          if (error.showBanner) {
-            error.showBanner(i18n.unexpected_error())
-          } else {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
-          }
+          ErrorHandler.processUnexpected(error)
         }
         this.enable()
       },

@@ -63,7 +63,7 @@ export function showRememberSeedMessage (seed) {
 
       computed: {
         isSeedValid () {
-          return this.seed === this.provideSeed
+          return this.form.seed === this.form.provideSeed
         }
       },
 

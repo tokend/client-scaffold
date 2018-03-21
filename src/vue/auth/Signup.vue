@@ -14,45 +14,44 @@
                md-medium-size-45
                md-small-size-65
                md-xsmall-size-100">
+        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+
         <md-card-header>
           <div class="md-title">{{ i18n.su_sign_up() }}</div>
         </md-card-header>
 
 
         <md-card-content>
-          <input-field
-            v-model.trim="form.email"
-            class="input-field"
-            id="login-email"
-            :label="i18n.su_email()"
-            name="email"
-            :errorMessage="errorMessage('email')"
-            v-validate="'required|email'"
+          <input-field class="input-field"
+                       id="login-email"
+                       name="email"
+                      :label="i18n.su_email()"
+                      :errorMessage="errorMessage('email')"
+                     v-model.trim="form.email"
+                     v-validate="'required|email'"
           />
 
-          <input-field
-            v-model.trim="form.password"
-            class="input-field"
-            id="login-password"
-            type="password"
-            :togglePassword="true"
-            :label="i18n.su_pwd()"
-            name="password"
-            :errorMessage="errorMessage('password')"
-            v-validate="'required|min:6'"
+          <input-field class="input-field"
+                       id="login-password"
+                       type="password"
+                       name="password"
+                      :togglePassword="true"
+                      :label="i18n.su_pwd()"
+                      :errorMessage="errorMessage('password')"
+                     v-model.trim="form.password"
+                     v-validate="'required|min:6'"
           />
 
-          <input-field
-            v-model.trim="form.confirmPassword"
-            id="login-confirm-password"
-            name="confirm-password"
-            :togglePassword="true"
-            class="input-field"
-            type="password"
-            :label="i18n.su_confirm()"
-            :errorMessage="errorMessage('confirm-password')"
-            v-validate="'required|confirmed:password'"
-            data-vv-as="password"
+          <input-field class="input-field"
+                       id="login-confirm-password"
+                       type="password"
+                       name="confirm-password"
+                      :label="i18n.su_confirm()"
+                      :togglePassword="true"
+                      :errorMessage="errorMessage('confirm-password')"
+                     v-model.trim="form.confirmPassword"
+                     v-validate="'required|confirmed:password'"
+               data-vv-as="password"
           />
 
           <div class="auth-page__bottom">
@@ -62,7 +61,9 @@
                 <router-link :to="routes.login">{{ i18n.su_sign_in() }}</router-link>
               </div>
             </div>
-            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.su_sign_up() }}</md-button>
+            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">
+              {{ i18n.su_sign_up() }}
+            </md-button>
           </div>
         </md-card-content>
       </md-card>
@@ -74,10 +75,10 @@
   import formMixin from '../common/mixins/form.mixin'
 
   import { ErrorFactory, errorTypes, errors } from '../../js/errors/factory'
+  import { ErrorHandler } from '../../js/errors/error_handler'
   import { vueRoutes } from '../../vue-router/const'
   import { Keypair } from 'swarm-js-sdk'
   import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
-  import { EventDispatcher } from '../../js/events/event_dispatcher'
   import config from '../../config'
 
   import { emailService } from '../../js/services/email.service'
@@ -107,19 +108,16 @@
           await this.checkEmailValidity()
           const recoveryKeypair = Keypair.random()
           const walletId = await authService.signup(this.form, recoveryKeypair)
+          this.enable()
           await showRememberSeedMessage(recoveryKeypair.secret())
           this.goShowEmail(walletId)
         } catch (error) {
-          console.error(error)
-          if (!error.showBanner) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
-          }
           switch (error.constructor) {
             case errors.ConflictError:
               error.showBanner(i18n.user_exists())
               break
             default:
-              error.showBanner(i18n.unexpected_error())
+              ErrorHandler.processUnexpected(error)
           }
         }
         this.enable()
