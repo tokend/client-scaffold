@@ -25,6 +25,7 @@
             <div :class="
               ['info-widget__asset-amount',
               'info-widget__asset-amount--' + tx.direction,
+              tx.state === 'pending' ? 'info-widget__asset-amount--pending' : '',
               tx.state === 'rejected' || tx.state === 'failed' ? 'info-widget__asset-amount--failed' : '']
             ">
               {{ tx.direction === 'in' ? '+' : '-' }}{{ tx.amount }} {{ tx.asset }}
@@ -187,6 +188,7 @@
 
   .info-widget__asset-amount--in { color: $green; }
   .info-widget__asset-amount--out { color: $red; }
+  .info-widget__asset-amount--pending { color: $orange; }
   .info-widget__asset-amount--failed { color: rgba($black, .5); }
 
   .info-widget__asset-state {

@@ -61,13 +61,14 @@
     max-width: 370px;
     min-width: 248px;
 
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       width: 100%;
       max-width: inherit;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       flex-wrap: wrap;
+      flex: 1 1 auto;
       padding: 16px;
     }
 
@@ -81,13 +82,13 @@
   }
 
   .portfolio-widget__header {
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       display: none;
     }
   }
 
   .portfolio-widget__title {
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       display: none;
     }
   }
@@ -96,7 +97,7 @@
     text-align: center;
     margin-bottom: 17px;
 
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,7 +110,7 @@
   .portfolio-widget__asset-picture {
     margin-bottom: 32px;
 
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       margin-right: 16px;
       margin-bottom: 0;
     }
@@ -118,7 +119,7 @@
       width: 142px;
       height: 142px;
 
-      @include respond-to-custom($custom-breakpoint) {
+      @include respond-to(medium) {
         width: 80px;
         height: 80px;
         padding: 0;
@@ -131,7 +132,7 @@
     font-size: 24px;
     letter-spacing: .2px;
 
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       font-size: 20px;
       margin-bottom: 4px;
     }
@@ -152,7 +153,7 @@
   }
 
   .portfolio-widget__actions {
-    @include respond-to-custom($custom-breakpoint) {
+    @include respond-to(medium) {
       padding: 0;
       margin-left: auto;
     }
