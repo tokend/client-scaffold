@@ -15,7 +15,7 @@
     </md-card-content>
 
     <md-card-actions>
-      <md-button to="/withdrawal" class="md-primary">{{ i18n.lbl_send() }}</md-button>
+      <md-button to="/transfers" class="md-primary">{{ i18n.lbl_send() }}</md-button>
     </md-card-actions>
   </md-card>
 </template>
