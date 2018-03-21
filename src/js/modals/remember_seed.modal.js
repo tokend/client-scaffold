@@ -1,51 +1,50 @@
 import Vue from 'vue'
 import InputField from '../../vue/common/fields/InputField'
-
-// :successMessage="isSeedValid ? 'Your seed is valid. Please don't forget to save it' : ''"
+import { i18n } from '../i18n'
 
 const template = `
-<div>
-  <md-dialog :md-active="opened" class="app__dialog">
-     <md-dialog-title>Save this seed to your offline device</md-dialog-title>
+<form novalidate>
+  <md-dialog class="app__dialog"
+            :md-active="opened" 
+            :md-close-on-esc="false"
+            :md-click-outside-to-close="false">
+
+     <md-dialog-title>{{ i18n.mod_save_seed() }}</md-dialog-title>
      
-     <p>
-       For security reasons, please put this seed in some secret place.
-       You will need it to recover access in case if your account will be lost.
-     </p>
+     <div class="app__dialog-inner">
+       <p>{{ i18n.mod_why_save_seed() }}</p>
      
-     <input-field
-       :value="seed"
-       id="signup-recovery-seed"
-       type="password"
-       :togglePassword="true"
-       label="Seed"
-       name="recovery-seed"
-       :readonly="true"
-     />
-     
-     <p>Please validate this seed in the field below to ensure that you copied it properly</p>
-     
-     <input-field
-       v-model.trim="provideSeed"
-       id="signup-provide-seed"
-       type="password"
-       :togglePassword="true"
-       label="Validate seed"
-       name="recovery-seed"
-       :errorMessage="isSeedValid ? '' : 'Provided seed does not match with generated one'"
-     />
-     
+       <input-field id="signup-recovery-seed"
+                    type="password"
+                    name="recovery-seed"
+                   :label="i18n.lbl_seed()"
+                   :readonly="true"
+                   :togglePassword="true"
+                   :value="form.seed"
+       />
+       
+       <p>{{ i18n.mod_validate_seed_how() }}</p>
+       
+       <input-field id="signup-provide-seed"
+                    type="password"
+                    name="recovery-seed"
+                   :label="i18n.lbl_validate_seed()"
+                   :togglePassword="true"
+                   :errorMessage="isSeedValid ? '' : 'Provided seed does not match with generated one'"
+                  v-model.trim="form.provideSeed" 
+       />
+     </div>
+       
      <md-dialog-actions>
-       <md-button class="md-primary" @click="submit">OK</md-button>
+       <md-button class="md-primary" @click="submit">{{i18n.lbl_ok() }}</md-button>
      </md-dialog-actions>
    </md-dialog>
- </div>
+ </form>
 `
 
 export function showRememberSeedMessage (seed) {
-  const message = document.createElement('div')
-  const app = document.querySelector('#app main')
-  app.appendChild(message)
+  const seedModal = document.createElement('div')
+  document.querySelector('#app').appendChild(seedModal)
 
   return new Promise((resolve) => {
     const messageEl = new Vue({
@@ -53,9 +52,12 @@ export function showRememberSeedMessage (seed) {
       components: { InputField },
       data () {
         return {
-          seed,
-          provideSeed: '',
-          opened: true
+          form: {
+            provideSeed: '',
+            seed
+          },
+          opened: true,
+          i18n
         }
       },
 
@@ -78,6 +80,6 @@ export function showRememberSeedMessage (seed) {
         }
       }
     })
-    messageEl.$mount(message)
+    messageEl.$mount(seedModal)
   })
 }

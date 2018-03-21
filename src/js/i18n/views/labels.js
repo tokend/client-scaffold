@@ -65,5 +65,7 @@ export default {
   lbl_sender_fees: 'Sender fees',
   lbl_recipient_fees: 'Recipient fees',
   lbl_go_back: 'Go back',
-  lbl_make_recovery: 'Recover'
+  lbl_make_recovery: 'Recover',
+  lbl_validate_seed: 'Validate seed',
+  lbl_seed: 'Seed'
 }

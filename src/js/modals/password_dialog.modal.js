@@ -24,7 +24,7 @@ const template = `
         :label="i18n.lbl_pwd()"
         :togglePassword="true"
       />
-    </div> 
+    </div>
       
     <md-dialog-actions>
      <md-button class="md-primary" @click="close">{{ i18n.lbl_cancel() }}</md-button>
