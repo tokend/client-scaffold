@@ -114,6 +114,10 @@
     max-height: 408px;
     max-width: 560px;
     width: 100%;
+
+    @include respond-to(medium) {
+      max-width: inherit;
+    }
   }
 
   .info-widget__asset-item--opacity {
