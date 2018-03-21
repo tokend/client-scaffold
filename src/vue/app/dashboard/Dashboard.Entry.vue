@@ -9,7 +9,12 @@
 
   export default {
     name: 'dashboard',
-    mixins: [RouteEntryMixin]
+    mixins: [RouteEntryMixin],
+    data: _ => ({
+      routes: [
+        { path: '/dashboard/index', label: 'Dashboard' }
+      ]
+    })
   }
 </script>
 

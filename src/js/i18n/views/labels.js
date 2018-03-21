@@ -40,5 +40,8 @@ export default {
   lbl_tfa_code: '2FA code',
   lbl_submit: 'Submit',
   lbl_secret: 'Secret',
-  lbl_recovery_seed: 'Recovery seed'
+  lbl_recovery_seed: 'Recovery seed',
+  lbl_transaction_details: 'Transaction details',
+  lbl_view_more: 'View more',
+  lbl_close: 'Close'
 }

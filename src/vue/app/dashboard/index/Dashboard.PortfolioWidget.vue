@@ -1,7 +1,7 @@
 <template>
   <md-card class="portfolio-widget">
     <md-card-header class="portfolio-widget__header">
-      <div class="md-title portfolio-widget__title">Your {{ currentAsset }} activity</div>
+      <div class="md-title portfolio-widget__title">{{ i18n.dash_activity({ asset: currentAsset }) }}</div>
     </md-card-header>
 
     <md-card-content class="portfolio-widget__asset">
@@ -15,7 +15,7 @@
     </md-card-content>
 
     <md-card-actions>
-      <md-button to="/withdrawal" class="md-primary">Send</md-button>
+      <md-button to="/withdrawal" class="md-primary">{{ i18n.lbl_send() }}</md-button>
     </md-card-actions>
   </md-card>
 </template>
@@ -23,11 +23,13 @@
 <script>
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
+  import { i18n } from '../../../../js/i18n'
 
   export default {
     name: 'portfolio-widget',
     components: {},
     data: _ => ({
+      i18n
     }),
     computed: {
       ...mapGetters([
@@ -55,14 +57,10 @@
     max-height: 408px;
     width: 100%;
     max-width: 370px;
-    min-width: 300px;
+    min-width: 248px;
 
     @include respond-to(medium) {
       margin-bottom: 24px;
-    }
-
-    @include respond-to(xsmall) {
-      min-width: inherit;
     }
   }
 
@@ -120,12 +118,20 @@
     @include respond-to(small) {
       font-size: 20px;
     }
+
+    @include respond-to(xsmall) {
+      font-size: 16px;
+    }
   }
 
   .portfolio-widget__asset-usd {
     font-size: 16px;
     letter-spacing: .2px;
     color: rgba(0, 0, 0, .55);
+
+    @include respond-to(xsmall) {
+      font-size: 14px;
+    }
   }
 
 </style>

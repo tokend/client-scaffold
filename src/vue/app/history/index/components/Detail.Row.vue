@@ -33,7 +33,7 @@
       clipboard: null
     }),
     mounted () {
-      if (!this.copiable) return
+      if (!document.querySelector('#clipboard-btn') || !this.copiable) return
       this.clipboard = new Clipboard(document.querySelector('#clipboard-btn'))
     },
     methods: {

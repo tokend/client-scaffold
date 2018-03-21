@@ -288,5 +288,26 @@ button {
 .md-list-item-content {
   .portfolio-widget__asset-item & {
     padding: 9px 24px;
+
+  }
+  .info-widget__asset-item & {
+    @include respond-to(xsmall) {
+      padding: 4px 8px;
+    }
+  }
+}
+
+.md-dialog-container {
+  .info-dialog & {
+    width: 100%;
+  }
+}
+
+.md-list-item-content {
+  .info-dialog__item & {
+    @include respond-to(small) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
