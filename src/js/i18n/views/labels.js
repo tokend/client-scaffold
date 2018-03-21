@@ -64,5 +64,6 @@ export default {
   lbl_fees: 'Fees',
   lbl_sender_fees: 'Sender fees',
   lbl_recipient_fees: 'Recipient fees',
-  lbl_go_back: 'Go back'
+  lbl_go_back: 'Go back',
+  lbl_make_recovery: 'Recover'
 }

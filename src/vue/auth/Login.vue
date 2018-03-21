@@ -1,8 +1,10 @@
 <template>
   <div class="auth-page md-layout md-alignment-center-center">
+
     <form novalidate
           class="auth-page__form
                  md-layout
+                 md-layout-item
                  md-alignment-center-center"
           @submit.prevent="submit">
 
@@ -10,6 +12,7 @@
         class="auth-page__card
                md-layout-item
                md-size-30
+               md-medium-size-45
                md-small-size-65
                md-xsmall-size-100">
         <md-card-header>

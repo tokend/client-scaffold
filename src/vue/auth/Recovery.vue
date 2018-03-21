@@ -6,7 +6,13 @@
                  md-alignment-center-center"
           @submit.prevent="submit">
 
-      <md-card>
+      <md-card
+        class="auth-page__card
+               md-layout-item
+               md-size-30
+               md-medium-size-45
+               md-small-size-65
+               md-xsmall-size-100">
         <md-card-header>
           <div class="md-title">Account recovery</div>
         </md-card-header>
@@ -59,7 +65,7 @@
                 <router-link :to="routes.login">Sign in now</router-link>
               </div>
             </div>
-            <md-button class="md-raised md-primary" type="submit" :disabled="isPending">Submit recovery</md-button>
+            <md-button class="md-raised md-primary" type="submit" :disabled="isPending">{{ i18n.lbl_make_recovery() }}</md-button>
           </div>
 
         </md-card-content>
@@ -98,6 +104,7 @@
 
     methods: {
       async submit () {
+        if (!await this.isValid()) return
         this.disable()
         try {
           await authService.makeRecovery({

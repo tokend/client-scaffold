@@ -7,55 +7,64 @@
                  md-alignment-center-center"
           @submit.prevent="submit">
 
-      <md-card class="auth-page__card">
+      <md-card
+        class="auth-page__card
+               md-layout-item
+               md-size-30
+               md-medium-size-45
+               md-small-size-65
+               md-xsmall-size-100">
         <md-card-header>
           <div class="md-title">{{ i18n.su_sign_up() }}</div>
         </md-card-header>
 
-        <input-field
-          v-model.trim="form.email"
-          class="input-field"
-          id="login-email"
-          :label="i18n.su_email()"
-          name="email"
-          :errorMessage="errorMessage('email')"
-          v-validate="'required|email'"
-        />
 
-        <input-field
-          v-model.trim="form.password"
-          class="input-field"
-          id="login-password"
-          type="password"
-          :togglePassword="true"
-          :label="i18n.su_pwd()"
-          name="password"
-          :errorMessage="errorMessage('password')"
-          v-validate="'required|min:6'"
-        />
+        <md-card-content>
+          <input-field
+            v-model.trim="form.email"
+            class="input-field"
+            id="login-email"
+            :label="i18n.su_email()"
+            name="email"
+            :errorMessage="errorMessage('email')"
+            v-validate="'required|email'"
+          />
 
-        <input-field
-          v-model.trim="form.confirmPassword"
-          id="login-confirm-password"
-          name="confirm-password"
-          :togglePassword="true"
-          class="input-field"
-          type="password"
-          :label="i18n.su_confirm()"
-          :errorMessage="errorMessage('confirm-password')"
-          v-validate="'required|confirmed:password'"
-          data-vv-as="password"
-        />
+          <input-field
+            v-model.trim="form.password"
+            class="input-field"
+            id="login-password"
+            type="password"
+            :togglePassword="true"
+            :label="i18n.su_pwd()"
+            name="password"
+            :errorMessage="errorMessage('password')"
+            v-validate="'required|min:6'"
+          />
 
-        <div class="auth-page__bottom">
-          <div class="auth-page__tips">
-            <div class="tips__tip">
-              {{ i18n.su_already_have_an_account() }}
-              <router-link :to="routes.login">{{ i18n.su_sign_in() }}</router-link>
+          <input-field
+            v-model.trim="form.confirmPassword"
+            id="login-confirm-password"
+            name="confirm-password"
+            :togglePassword="true"
+            class="input-field"
+            type="password"
+            :label="i18n.su_confirm()"
+            :errorMessage="errorMessage('confirm-password')"
+            v-validate="'required|confirmed:password'"
+            data-vv-as="password"
+          />
+
+          <div class="auth-page__bottom">
+            <div class="auth-page__tips">
+              <div class="tips__tip">
+                {{ i18n.su_already_have_an_account() }}
+                <router-link :to="routes.login">{{ i18n.su_sign_in() }}</router-link>
+              </div>
             </div>
+            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.su_sign_up() }}</md-button>
           </div>
-          <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.su_sign_up() }}</md-button>
-        </div>
+        </md-card-content>
       </md-card>
     </form>
   </div>
