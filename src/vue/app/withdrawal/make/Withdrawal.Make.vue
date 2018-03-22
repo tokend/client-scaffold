@@ -42,8 +42,10 @@
               align="right"
               v-validate="'required|amount'"
               :errorMessage="errors.first('amount') ||
-                            (isLimitExceeded ? 'Insufficient funds' : '') ||
-                            (lessThenMinimumAmount ? `The minimum amount is ${minAmounts[form.tokenCode]} ${form.tokenCode}` : '') "
+                            (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
+                            (lessThenMinimumAmount ?
+                              i18n.withdraw_error_minimum_amount({ value: minAmounts[form.tokenCode], asset: form.tokenCode }) :
+                              '')"
             />
           </div>
 
@@ -72,8 +74,8 @@
             data-vv-validate-on="change"
             :errorMessage="
              errors.first('wallet-address') ||
-             (isTryingToSendToYourself ? 'Sender can\'t be a recipient! Make sure the address is correct' : '') ||
-             (!isValidWallet ? 'Invalid wallet address' : '')
+             (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '') ||
+             (!isValidWallet ? i18n.withdraw_error_invalid_address() : '')
            "
           />
           <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit" :disabled="isPending || !isAllowedToSubmit">withdraw</md-button>
