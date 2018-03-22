@@ -35,12 +35,12 @@
                 <p class="navbar__user-name">{{ userEmail }}</p>
                 <p class="navbar__user-status" v-if="userType === 'not_verified'">{{ i18n.lbl_unverified() }}</p>
                 <p class="navbar__user-status" v-else>{{ i18n.lbl_verified() }}</p>
-                <md-button class="md-raised md-primary navbar__user-account-btn">{{ i18n.lbl_account() }}</md-button>
+                <md-button class="md-primary md-raised navbar__user-account-btn">{{ i18n.lbl_account() }}</md-button>
               </div>
             </div>
             <div class="navbar__user-actions md-layout md-alignment-center-space-between">
-              <md-button class="navbar__user-action-btn md-raised" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
-              <md-button class="navbar__user-action-btn md-raised" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
+              <md-button class="navbar__user-action-btn" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
+              <md-button class="navbar__user-action-btn" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
             </div>
           </md-card-content>
         </md-card>
@@ -146,7 +146,7 @@
     right: 10px;
     top: calc(100% + 14px);
     overflow: visible;
-    padding: 24px 24px 18px 24px;
+    padding: 24px 24px 0 24px;
 
     & > .md-card-content {
       padding: 0;
@@ -188,12 +188,11 @@
 
   .navbar__user-actions {
     position: relative;
-    padding-top: 16px;
 
     &:after {
       content: '';
       position: absolute;
-      height: 2px;
+      height: 1px;
       width: calc(100% + 48px);
       background-color: #e8e8e8;
       left: -24px;
@@ -260,6 +259,6 @@
   }
 
   .navbar__user-action-btn {
-    color: rgba(0, 0, 0, .5);
+    color: rgba(0, 0, 0, .75) !important;
   }
 </style>
