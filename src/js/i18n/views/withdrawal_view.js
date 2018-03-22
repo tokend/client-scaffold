@@ -3,5 +3,6 @@ export default {
   withdraw_how_much: 'Minimal withdrawal amount is %{value} %{asset}',
   withdraw_minimal: 'Also note that network fee will be separately charged from amount of withdrawal transaction',
   withdraw_wallet: '%{asset} withdrawal address',
-  withdraw_success: 'Withdrawal request successfully created'
+  withdraw_success: 'Withdrawal request successfully created',
+  withdraw_balance: 'Your balance is %{balance} %{token}'
 }
