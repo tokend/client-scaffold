@@ -17,6 +17,7 @@ import settingsView from './views/settings_view'
 import dashboardView from './views/dashboard_view'
 import transfersView from './views/transfers_view'
 import modals from './views/modals'
+import verification from './views/verification_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 
@@ -43,7 +44,8 @@ const dictionary = {
   ...labels,
   ...modals,
   ...defaults,
-  ...dashboardView
+  ...dashboardView,
+  ...verification
 }
 
 polyglot.extend(dictionary)
