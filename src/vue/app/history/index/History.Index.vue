@@ -30,7 +30,7 @@
           <md-table-cell class="tx-history__table-cell">{{ tx.name }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell">{{ tx.asset }}</md-table-cell>
-          <md-table-cell class="tx-history__table-cell">{{ tx.amount }}</md-table-cell>
+          <md-table-cell class="tx-history__table-cell">{{ i18n.c(tx.amount) }}</md-table-cell>
           <md-table-cell class="tx-history__table-cell tx-history__table-cell--counterparty">
             {{ tx.counterparty }}
           </md-table-cell>

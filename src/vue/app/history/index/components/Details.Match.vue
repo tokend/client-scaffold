@@ -2,9 +2,9 @@
   <div>
     <detail :prop="i18n.lbl_fund_name()" :value="`${tx.counterparty}`" :copiable="true"/>
     <detail :prop="i18n.lbl_base_asset()" :value="tx.baseAsset"/>
-    <detail :prop="i18n.lbl_amount()" :value="`${tx.amount} ${tx.asset}`"/>
-    <detail :prop="i18n.lbl_fee_paid()" :value="`${tx.feePaid} ${tx.feeAsset}`"/>
-    <detail :prop="i18n.lbl_price()" :value="`${tx.price} ${tx.quoteAsset}`"/>
+    <detail :prop="i18n.lbl_amount()" :value="`${i18n.c(tx.amount)} ${tx.asset}`"/>
+    <detail :prop="i18n.lbl_fee_paid()" :value="`${i18n.c(tx.feePaid)} ${tx.feeAsset}`"/>
+    <detail :prop="i18n.lbl_price()" :value="`${i18n.c(tx.price)} ${tx.quoteAsset}`"/>
     <detail :prop="i18n.lbl_date()" :value="tx.date"/>
   </div>
 </template>

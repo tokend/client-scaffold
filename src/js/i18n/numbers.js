@@ -4,7 +4,7 @@ import { DEFAULT_PRECISION, DEFAULT_CONVERSION_PRESICION } from '../const/config
 const locales = {
   en: {
     currency: {
-      symbol: '',   // default currency symbol is '$'
+      symbol: '$$$',   // default currency symbol is '$'
       format: '%s%v', // controls output: %s = symbol, %v = value/number (can be object: see below)
       decimal: '.',  // decimal point separator
       thousand: ',',  // thousands separator

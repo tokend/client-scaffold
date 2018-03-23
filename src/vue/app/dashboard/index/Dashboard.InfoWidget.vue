@@ -28,7 +28,10 @@
               tx.state === 'pending' ? 'info-widget__asset-amount--pending' : '',
               tx.state === 'rejected' || tx.state === 'failed' ? 'info-widget__asset-amount--failed' : '']
             ">
-              {{ tx.direction === 'in' ? '+' : '-' }}{{ tx.amount }} {{ tx.asset }}
+              {{ tx.direction === 'in' ? '+' : '-' }}{{ i18n.c(tx.amount) }} {{ tx.asset }}
+            </div>
+            <div class="info-widget__asset-converted">
+              {{ i18n.cc(convertAmount(tx.amount)) }} {{ DEFAULT_CONVERSION_ASSET }}
             </div>
             <div :class="'info-widget__asset-state info-widget__asset-state--' + tx.state">
               {{ tx.state === 'confirm' ? 'success' : tx.state }}
@@ -52,6 +55,8 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { RecordTypes } from '../../../../js/records/types'
+  import { PricesHelper } from '../../../../vuex/helpers/prices.helper'
+  import { DEFAULT_CONVERSION_ASSET } from '../../../../js/const/configs.const'
   import { i18n } from '../../../../js/i18n'
 
   import get from 'lodash/get'
@@ -65,7 +70,8 @@
       transactionsToShow: 3,
       showDialog: false,
       dialogValues: {},
-      i18n
+      i18n,
+      DEFAULT_CONVERSION_ASSET
     }),
     props: ['currentAsset'],
     created () {
@@ -94,6 +100,9 @@
       ...mapActions({
         loadList: vuexTypes.GET_TX_LIST
       }),
+      convertAmount (amount) {
+        return PricesHelper.baseToQuote(amount, this.currentAsset, DEFAULT_CONVERSION_ASSET)
+      },
       makeDialogIsShow (list) {
         this.showDialog = true
         this.dialogValues = list
@@ -165,9 +174,21 @@
   }
 
   .info-widget__asset-name {
-    font-size: 14px;
     letter-spacing: 0.1px;
+  }
+
+  .info-widget__asset-name,
+  .info-widget__asset-amount {
+    font-size: 14px;
     margin-bottom: 4px;
+  }
+
+  .info-widget__asset-counterparty,
+  .info-widget__asset-converted {
+    font-size: $fs-tip-smaller;
+    letter-spacing: 0.1px;
+    color: $col-unfocused;
+    margin-bottom: 12px;
   }
 
   .info-widget__asset-counterparty {
@@ -175,19 +196,11 @@
     max-width: 145px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 12px;
-    letter-spacing: 0.1px;
-    color: rgba(0, 0, 0, 0.55);
-    margin-bottom: 12px;
   }
 
   .info-widget__asset-date {
-    font-size: 12px;
+    font-size: $fs-tip-smaller;
     letter-spacing: 0.1px;
-  }
-
-  .info-widget__asset-amount {
-    font-size: 14px;
   }
 
   .info-widget__asset-amount--in { color: $green; }
