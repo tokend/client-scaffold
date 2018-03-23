@@ -34,7 +34,7 @@
     }),
     mounted () {
       if (!this.copiable) return
-      this.clipboard = new Clipboard(document.querySelector('#clipboard-btn'))
+      this.clipboard = new Clipboard(this.$el.querySelector('#clipboard-btn'))
     },
     methods: {
       showCopySuccess () {
