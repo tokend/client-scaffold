@@ -18,6 +18,8 @@ import dashboardView from './views/dashboard_view'
 import transfersView from './views/transfers_view'
 import modals from './views/modals'
 
+import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
+
 import Polyglot from 'node-polyglot'
 
 const polyglot = new Polyglot()
@@ -45,8 +47,14 @@ const dictionary = {
 }
 
 polyglot.extend(dictionary)
-export const i18n = Object.keys(dictionary)
-  .reduce((obj, key) => {
-    obj[key] = (opts) => polyglot.t(key, opts)
-    return obj
-  }, {})
+
+export const i18n = {
+  ...Object.keys(dictionary)
+    .reduce((obj, key) => {
+      obj[key] = (opts) => polyglot.t(key, opts)
+      return obj
+    }, {}),
+  n: formatNumber(),
+  c: formatCurrency(),
+  cc: formatConvertedCurrency()
+}
