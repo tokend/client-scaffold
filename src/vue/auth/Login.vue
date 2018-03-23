@@ -1,8 +1,10 @@
 <template>
   <div class="auth-page md-layout md-alignment-center-center">
+
     <form novalidate
           class="auth-page__form
                  md-layout
+                 md-layout-item
                  md-alignment-center-center"
           @submit.prevent="submit">
 
@@ -10,8 +12,11 @@
         class="auth-page__card
                md-layout-item
                md-size-30
+               md-medium-size-45
                md-small-size-65
                md-xsmall-size-100">
+        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+
         <md-card-header>
           <div class="md-title">{{ i18n.log_signin() }}</div>
         </md-card-header>
@@ -62,6 +67,7 @@
 
   import { errors } from '../../js/errors/factory'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
+  import { ErrorHandler } from '../../js/errors/error_handler'
   import { dispatchAppEvent } from '../../js/events/helpers'
   import { commonEvents } from '../../js/events/common_events'
   import { mapActions, mapGetters } from 'vuex'
@@ -115,6 +121,7 @@
 
       async submit () {
         if (!await this.isValid()) return
+        this.form.emali = this.form.email.toLowerCase()
         this.disable()
         try {
           await this.processUserWallet(this.form)
@@ -124,10 +131,6 @@
           await this.fetchUserDetails()
           await this.enterApplication()
         } catch (error) {
-          console.error(error)
-          if (!error.showBanner) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
-          }
           switch (error.constructor) {
             case errors.NotFoundError:
               error.showBanner(i18n.not_found())
@@ -136,7 +139,7 @@
               this.handleNotVerifiedError()
               break
             default:
-              error.showBanner(i18n.unexpected_error())
+              ErrorHandler.processUnexpected(error)
           }
         }
         this.enable()
@@ -159,9 +162,9 @@
       // TODO: wtf, need drop this away
       async handleNotVerifiedError () {
         if (!await confirmAction({
-          title: 'Email not verified',
-          message: `It seems your email is not verified yet. Please check your spam folder or request new email by pressing "Confirm"` }
-        )) return
+          title: i18n.mod_email_not_verified_title(),
+          message: i18n.mod_email_not_verified_message()
+        })) return
         this.disable()
         try {
           const kdf = await walletService.loadKdfParamsForEmail(this.email)
@@ -174,11 +177,7 @@
           await emailService.sendResendEmailRequest(walletId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent())
         } catch (error) {
-          if (error.showBanner) {
-            error.showBanner(i18n.unexpected_error())
-          } else {
-            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
-          }
+          ErrorHandler.processUnexpected(error)
         }
         this.enable()
       },

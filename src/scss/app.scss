@@ -64,6 +64,13 @@ html,body {
     padding-right: 0;
   }
 
+  & .sidebar .router-link-active {
+    color: $col-md-primary;
+  }
+}
+
+#app,
+.md-dialog {
   @mixin resize-icon ($size) {
     width: $size;
     min-width: $size;
@@ -81,10 +88,6 @@ html,body {
 
   & .md-icon-size-075x {
     @include resize-icon(16px)
-  }
-
-  & .sidebar .router-link-active {
-    color: $col-md-primary;
   }
 }
 

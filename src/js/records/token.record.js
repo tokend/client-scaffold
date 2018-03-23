@@ -39,6 +39,10 @@ export class TokenRecord {
     return !!(this.policy & ASSET_POLICIES.baseAsset)
   }
 
+  get isWithdrawable () {
+    return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.withdrawable().value) !== -1
+  }
+
   _getTerms () {
     get(this._record, 'details.terms')
   }

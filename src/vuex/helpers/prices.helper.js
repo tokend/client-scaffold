@@ -1,8 +1,6 @@
 import store from '../index'
 import { multiply, divide } from '../../js/utils/math.util'
 
-const MEDIUM_ASSET = 'SUN'
-
 export class PricesHelper {
   static baseToQuote (amount, fromBase, toQuote) {
     if (fromBase === toQuote) return amount
@@ -11,14 +9,15 @@ export class PricesHelper {
     if (price) {
       return multiply(amount, price)
     }
-    const mediumAssetprice = this._findPriceForAssetPair(fromBase, MEDIUM_ASSET)
-    const mediumAssetAmount = multiply(amount, mediumAssetprice)
-    const endConversionPrice = this._findPriceForAssetPair(MEDIUM_ASSET, toQuote)
-    const result = multiply(mediumAssetAmount, endConversionPrice)
-    if (!result) {
-      return 0
-    }
-    return result
+    return 0
+    // const mediumAssetprice = this._findPriceForAssetPair(fromBase, MEDIUM_ASSET)
+    // const mediumAssetAmount = multiply(amount, mediumAssetprice)
+    // const endConversionPrice = this._findPriceForAssetPair(MEDIUM_ASSET, toQuote)
+    // const result = multiply(mediumAssetAmount, endConversionPrice)
+    // if (!result) {
+    //   return 0
+    // }
+    // return result
   }
 
   static quoteToBase (amount, fromQuote, toBase) {

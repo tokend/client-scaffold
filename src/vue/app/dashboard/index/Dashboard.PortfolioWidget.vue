@@ -1,7 +1,7 @@
 <template>
   <md-card class="portfolio-widget">
     <md-card-header class="portfolio-widget__header">
-      <div class="md-title portfolio-widget__title">{{ i18n.dash_activity({ asset: currentAsset }) }}</div>
+      <div class="md-title portfolio-widget__title">{{ i18n.dash_wallet() }}</div>
     </md-card-header>
 
     <md-card-content class="portfolio-widget__asset">

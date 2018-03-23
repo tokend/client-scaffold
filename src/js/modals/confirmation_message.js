@@ -1,68 +1,74 @@
 import Vue from 'vue'
-
 import store from '../../vuex'
+import { i18n } from '../i18n'
+import FormBlockingModalMixin from './flow-blocking-modal.mixin'
 
 const template = `
-    <div class="confirmation-message-outer">
-      <div class="cover" @click="cancel"></div>
-  
-      <div class="confirmation-message material">
-  
-        <div class="close-btn" @click="cancel">
-          <i class="mdi mdi-close"></i>
-        </div>
-  
-        <h2 class="confirmation-message__title">
-          {{ title }}
-        </h2>
-  
-        <div class="confirmation-message__text">
-          {{ message }}
-        </div>
-  
-        <div class="confirmation-message__buttons">
-  
-          <button class="cancel-btn btn-secondary btn-secondary--danger" @click="cancel">
-            Cancel
-          </button>
-  
-          <button class="confirm-btn btn" @click="confirm">
-            Confirm
-          </button>
-  
-        </div>
-  
-      </div>
-  
-    </div>
+    <md-dialog-confirm
+     :md-active.sync="isOpened"
+     :md-title="title"
+     :md-content="message"
+     :md-confirm-text="confirmText"
+     :md-cancel-text="cancelText"
+     @md-confirm="confirm"
+     @md-cancel="cancel"
+    />
 `
 
-export function confirmAction ({ title, message } = {}) {
+/**
+ * @param {object} [opts]
+ * @param opts.title
+ * @param opts.message
+ * @param opts.confirmText
+ * @param opts.cancelText
+ * @return {Promise<boolean>}
+ */
+export function confirmAction (opts = {}) {
+  const title = opts.title || i18n.mod_confirm_title()
+  const message = opts.message || i18n.mod_confirm_message()
+  const confirmText = opts.confirmText || i18n.mod_confirm_confirm_text()
+  const cancelText = opts.cancelText || i18n.mod_confirm_cancel_text()
+
   const container = document.createElement('div')
-  const app = document.querySelector('#app')
-  app.appendChild(container)
+  document.querySelector('#app').appendChild(container)
 
   return new Promise((resolve, reject) => {
     const confirmMessage = new Vue({
       template,
       store,
+      mixins: [FormBlockingModalMixin],
       data () {
         return {
-          title: title || 'Are you sure?',
-          message: message || 'Please confirm this action before continuing'
+          confirmText,
+          cancelText,
+          message,
+          title,
+          i18n
         }
       },
+      created () {
+        this.setResolvers(resolve, reject)
+      },
       methods: {
-        removeEl () {
-          this.$el.parentNode.removeChild(this.$el)
-        },
         confirm () {
-          this.removeEl()
-          return resolve(true)
+          this.resetResolvers()
+          this.removeElement()
+          return this.resolvers.resolve(true)
         },
         cancel () {
-          this.removeEl()
-          return resolve(false)
+          this.resetResolvers()
+          this.removeElement()
+          return this.resolvers.resolve(false)
+        }
+      },
+      watch: {
+        isOpened (val) {
+          if (!val) {
+            if (!this.isResolved) {
+              this.resolvers.resolve(false)
+            }
+            this.removeElement()
+          }
         }
       }
     })

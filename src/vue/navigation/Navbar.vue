@@ -19,12 +19,12 @@
 
     <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__user">
-        <button class="navbar__user-opener" @click="toggleUserCardVisibility">
+        <md-button class="navbar__open-info-btn" @click="toggleUserCardVisibility">
           <span class="navbar__user-email">{{ userEmail }}</span>
           <!--<md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">-->
           <md-icon>account_circle</md-icon>
           <!--</md-button>-->
-        </button>
+        </md-button>
         <md-card class="navbar__user-card" v-show="isUserCardOpen">
           <md-card-content>
             <div class="navbar__user-card-content">
@@ -35,12 +35,12 @@
                 <p class="navbar__user-name">{{ userEmail }}</p>
                 <p class="navbar__user-status" v-if="userType === 'not_verified'">{{ i18n.lbl_unverified() }}</p>
                 <p class="navbar__user-status" v-else>{{ i18n.lbl_verified() }}</p>
-                <md-button class="md-raised md-primary navbar__user-account-btn">{{ i18n.lbl_account() }}</md-button>
+                <md-button class="md-primary md-raised navbar__user-account-btn">{{ i18n.lbl_account() }}</md-button>
               </div>
             </div>
             <div class="navbar__user-actions md-layout md-alignment-center-space-between">
-              <md-button class="navbar__user-action-btn md-raised" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
-              <md-button class="navbar__user-action-btn md-raised" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
+              <md-button class="navbar__user-action-btn" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
+              <md-button class="navbar__user-action-btn" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
             </div>
           </md-card-content>
         </md-card>
@@ -120,22 +120,14 @@
     position: relative;
   }
 
-  .navbar__user-opener {
-    align-items: center;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: $col-md-primary-txt;
-    display: flex;
-    justify-content: flex-end;
-
-    &:focus {
-      outline: none;
-    }
+  .navbar__open-info-btn {
+    text-transform: none;
   }
 
   .navbar__user-email {
+    position: relative;
     margin-right: 1rem;
+    top: .1rem;
     @include respond-to(small) {
       display: none;
     }
@@ -146,7 +138,7 @@
     right: 10px;
     top: calc(100% + 14px);
     overflow: visible;
-    padding: 24px 24px 18px 24px;
+    padding: 24px 24px 0 24px;
 
     & > .md-card-content {
       padding: 0;
@@ -188,12 +180,11 @@
 
   .navbar__user-actions {
     position: relative;
-    padding-top: 16px;
 
     &:after {
       content: '';
       position: absolute;
-      height: 2px;
+      height: 1px;
       width: calc(100% + 48px);
       background-color: #e8e8e8;
       left: -24px;
@@ -260,6 +251,6 @@
   }
 
   .navbar__user-action-btn {
-    color: rgba(0, 0, 0, .5);
+    color: rgba(0, 0, 0, .75) !important;
   }
 </style>

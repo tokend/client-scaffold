@@ -33,9 +33,8 @@ const template = `
  `
 
 export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
-  const tfaScreen = document.createElement('div')
-  const app = document.querySelector('#app')
-  app.appendChild(tfaScreen)
+  const tfaModal = document.createElement('div')
+  document.querySelector('#app').appendChild(tfaModal)
 
   return new Promise((resolve, reject) => {
     const TFADialog = new Vue({
@@ -90,6 +89,6 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
         }
       }
     })
-    TFADialog.$mount(tfaScreen)
+    TFADialog.$mount(tfaModal)
   })
 }

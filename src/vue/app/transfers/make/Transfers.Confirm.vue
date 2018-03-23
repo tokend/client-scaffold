@@ -12,7 +12,7 @@
         <detail-row :prop="i18n.lbl_asset()"
                     :value="`${assetMap[opts.tokenCode]} (${opts.tokenCode})`"
         />
-        <detail-row :prop="i18n.lbl_amount()" :value="`${opts.amount} ${opts.tokenCode}`"/>
+        <detail-row :prop="i18n.lbl_amount()" :value="`${i18n.c(opts.amount)} ${opts.tokenCode}`"/>
 
         <h4>{{ i18n.lbl_recipient() }}</h4>
 
@@ -31,14 +31,14 @@
           <div class="md-layout-item md-size-40 md-small-size-100">
             <h4>{{ i18n.lbl_sender_fees() }}</h4>
 
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${senderFee.fixed} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${senderFee.percent} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(senderFee.fixed)} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(senderFee.percent)} ${opts.tokenCode}`" />
           </div>
           <div class="md-layout-item  md-size-40 md-small-size-100 text-align-right">
             <h4>{{ i18n.lbl_recipient_fees() }}</h4>
 
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${recipientFee.fixed} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${recipientFee.percent} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(recipientFee.fixed)} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(recipientFee.percent)} ${opts.tokenCode}`" />
           </div>
         </div>
 
