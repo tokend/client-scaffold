@@ -19,12 +19,12 @@
 
     <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__user">
-        <button class="navbar__user-opener" @click="toggleUserCardVisibility">
+        <md-button class="navbar__open-info-btn" @click="toggleUserCardVisibility">
           <span class="navbar__user-email">{{ userEmail }}</span>
           <!--<md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">-->
           <md-icon>account_circle</md-icon>
           <!--</md-button>-->
-        </button>
+        </md-button>
         <md-card class="navbar__user-card" v-show="isUserCardOpen">
           <md-card-content>
             <div class="navbar__user-card-content">
@@ -120,22 +120,14 @@
     position: relative;
   }
 
-  .navbar__user-opener {
-    align-items: center;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: $col-md-primary-txt;
-    display: flex;
-    justify-content: flex-end;
-
-    &:focus {
-      outline: none;
-    }
+  .navbar__open-info-btn {
+    text-transform: none;
   }
 
   .navbar__user-email {
+    position: relative;
     margin-right: 1rem;
+    top: .1rem;
     @include respond-to(small) {
       display: none;
     }
