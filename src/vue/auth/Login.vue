@@ -121,6 +121,7 @@
 
       async submit () {
         if (!await this.isValid()) return
+        this.form.emali = this.form.email.toLowerCase()
         this.disable()
         try {
           await this.processUserWallet(this.form)

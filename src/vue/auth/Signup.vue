@@ -103,6 +103,7 @@
     methods: {
       async submit () {
         if (!await this.isValid()) return
+        this.form.email = this.form.email.toLowerCase()
         this.disable()
         try {
           await this.checkEmailValidity()
@@ -119,8 +120,8 @@
             default:
               ErrorHandler.processUnexpected(error)
           }
+          this.enable()
         }
-        this.enable()
       },
 
       async checkEmailValidity () {
