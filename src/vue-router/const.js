@@ -1,6 +1,7 @@
 export const vueRoutes = Object.freeze({
   transfersConfirm: { name: 'transfers.confirm', path: 'transfers, confirm' },
   settings: { name: 'app.settings', path: '/settings' },
+  verification: { name: 'app.verification', path: 'verification' },
 
   hredir: { name: 'horizon-redirect' },
   login: { name: 'login' },
@@ -28,6 +29,5 @@ export const vueRoutes = Object.freeze({
   myFunds: { name: 'app.my-funds' },
   security: { name: 'settings.security' },
   limits: { name: 'settings.limits' },
-  verification: { name: 'settings.verification' },
   fundRequestHistory: { name: 'my-funds.history' }
 })
