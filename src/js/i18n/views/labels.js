@@ -75,5 +75,8 @@ export default {
   lbl_city: 'City',
   lbl_country: 'Country',
   lbl_state: 'State',
-  lbl_postal_code: 'Postal code'
+  lbl_postal_code: 'Postal code',
+  lbl_kyc_photo: 'Photo',
+  lbl_kyc_id: 'ID document',
+  lbl_kyc_proof: 'Proof of address'
 }

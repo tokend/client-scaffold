@@ -42,7 +42,7 @@
 
           </div>
 
-          <md-subheader>{{ i18n.kyc_address_details() }}</md-subheader>
+          <h4>{{ i18n.kyc_address_details() }}</h4>
 
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -114,6 +114,15 @@
             </div>
           </div>
 
+          <h4>{{ i18n.kyc_required_documents() }}</h4>
+
+          <div>
+            <file-field id="kyc-file-photo" class="kyc-form__file-field" :label="i18n.lbl_kyc_photo()" v-model="documents[documentTypes.kycPhoto]"/>
+            <file-field id="kyc-file-id" class="kyc-form__file-field" :label="i18n.lbl_kyc_id()" v-model="documents[documentTypes.kycIdDocument]"/>
+            <file-field id="kyc-file-poa" class="kyc-form__file-field" :label="i18n.lbl_kyc_proof()" v-model="documents[documentTypes.kycProofOfAddress]"/>
+          </div>
+
+
           <div class="md-layout md-alignment-center-right">
             <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
               {{ i18n.lbl_submit() }}
@@ -128,6 +137,7 @@
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
   import { i18n } from '../../../../js/i18n'
+  import { documentTypes } from '../../../../js/const/documents.const'
 
   export default {
     name: 'verification-individual',
@@ -143,6 +153,12 @@
         state: '',
         postal_code: ''
       },
+      documents: {
+        [documentTypes.kycIdDocument]: null,
+        [documentTypes.kycProofOfAddress]: null,
+        [documentTypes.kycPhoto]: null
+      },
+      documentTypes,
       i18n
     }),
     methods: {
@@ -154,5 +170,4 @@
 </script>
 
 <style scoped>
-
 </style>

@@ -7,7 +7,7 @@ const fieldClasses = Object.freeze({
 export default {
   props: {
     label: { type: String, default: '' },
-    value: { type: [String, Number, Boolean, Array], default: '' },
+    value: { type: [String, Number, Boolean, Array, Object], default: '' },
     disabled: { type: Boolean, default: false },
     id: { type: String, default: '' },
     placeholder: { type: String, default: '' },
