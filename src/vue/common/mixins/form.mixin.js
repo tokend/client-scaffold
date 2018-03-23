@@ -1,10 +1,10 @@
 import InputField from '../fields/InputField.vue'
 import SelectField from '../fields/SelectField.vue'
 import TextareaField from '../fields/TextareaField'
+import FileField from '../fields/FileField'
 
 import InputDateField from '../DEPRECATED.inputs/InputDateField.vue'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
-import FileInput from '../DEPRECATED.inputs/FileInput'
 import SubmitterMixin from './submitter.mixin'
 
 export default {
@@ -22,7 +22,7 @@ export default {
     InputDateField,
     TextareaField,
     ImageInput,
-    FileInput
+    FileField
   },
 
   methods: {
