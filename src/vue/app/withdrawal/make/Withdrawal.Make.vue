@@ -227,13 +227,6 @@
         }
         this.tryGetFees()
       },
-      'form.wallet' (value) {
-        if (validateAddress(value, this.form.tokenCode) && !this.isTryingToSendToYourself) {
-          this.isValidWallet = true
-          return
-        }
-        this.isValidWallet = false
-      },
       'form.tokenCode' (value) {
         this.tryGetFees()
       }
