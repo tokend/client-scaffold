@@ -44,9 +44,10 @@
               v-validate="'required|amount'"
               :errorMessage="errors.first('amount') ||
                             (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
-                            (lessThenMinimumAmount && amountWasUpdated ?
-                              i18n.withdraw_error_minimum_amount({ value: minAmounts[form.tokenCode], asset: form.tokenCode }) :
-                              '')"
+                            (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
+                                                      value: minAmounts[form.tokenCode],
+                                                      asset: form.tokenCode })
+                                                   : '')"
             />
           </div>
 
@@ -125,8 +126,6 @@
       isFeesLoadFailed: false,
       isValidWallet: true,
       feesDebouncedRequest: null,
-      amountWasUpdated: false,
-      walletWasUpdated: false,
       i18n
     }),
     mounted () {
@@ -155,7 +154,7 @@
         return this.form.wallet === this.accountDepositAddresses[this.form.tokenCode]
       },
       lessThenMinimumAmount () {
-        return Number(this.form.amount) < this.minAmounts[this.form.tokenCode]
+        return this.form.amount !== '' ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode] : false
       },
       isAllowedToSubmit () {
         return !this.isFeesLoadPending &&
@@ -220,7 +219,6 @@
     },
     watch: {
       'form.amount' (value) {
-        this.amountWasUpdated = true
         if (this.isLimitExceeded) return
         if (value === '' || value < this.minAmounts[this.form.tokenCode]) {
           this.fixedFee = '0.0000'
@@ -230,7 +228,6 @@
         this.tryGetFees()
       },
       'form.wallet' (value) {
-        this.walletWasUpdated = true
         if (validateAddress(value, this.form.tokenCode) && !this.isTryingToSendToYourself) {
           this.isValidWallet = true
           return
@@ -238,13 +235,7 @@
         this.isValidWallet = false
       },
       'form.tokenCode' (value) {
-        if (this.walletWasUpdated) {
-          this.$validator.validate('wallet-address', this.form.wallet).then(result => {})
-        }
-        if (this.amountWasUpdated) {
-          this.$validator.validate('amount', this.form.amount).then(result => {})
-          this.tryGetFees()
-        }
+        this.tryGetFees()
       }
     }
   }
