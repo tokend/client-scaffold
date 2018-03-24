@@ -7,7 +7,7 @@
     <md-dialog class="account-id__dialog" :md-active.sync="isDialogOpened">
       <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title>
 
-      <md-card-content class="account-id__content">
+      <div class="app__dialog-inner">
         <div class="account-id__wrapper">
           <qrcode class="qr-code account-id__qr-code"
                 :text="accountId"
@@ -19,7 +19,7 @@
             :value="accountId"
           />
         </div>
-      </md-card-content>
+      </div>
 
       <md-dialog-actions class="md-layout md-alignment-center-right">
         <md-button type="button" class="md-primary" @click="isDialogOpened = !isDialogOpened">{{ i18n.lbl_cancel() }}</md-button>
@@ -64,6 +64,8 @@
   }
 
   .account-id__qr-code {
+    margin-bottom: 24px;
+
     @include respond-to-height(650px) {
       zoom: .5;
     }

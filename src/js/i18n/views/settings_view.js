@@ -1,9 +1,9 @@
 export default {
   set_account: 'Account',
-  set_account_id: 'Account id',
+  set_account_id: 'Account ID',
   set_secret_seed: 'Secret seed',
   set_copy_secret_seed: 'Copy secret seed',
-  set_your_account_id: 'Your Account id',
+  set_your_account_id: 'Your Account ID',
   set_change_password: 'Change password',
   set_provide_pwd: 'Provide a new password',
   set_help_pwd: 'A strong password helps prevent unauthorized access to your account',
