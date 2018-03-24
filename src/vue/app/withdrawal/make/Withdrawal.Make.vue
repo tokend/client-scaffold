@@ -75,8 +75,7 @@
             v-validate="'required|wallet_address'"
             :errorMessage="
              errors.first('wallet-address') ||
-             (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '') ||
-             (!isValidWallet ? i18n.withdraw_error_invalid_address() : '')
+             (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
            "
           />
           <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit">withdraw</md-button>
@@ -104,8 +103,6 @@
   import { withdrawService } from '../../../../js/services/withdraw.service'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
-  import { validateAddress } from '../../../../validator/address_validation'
-
   export default {
     name: 'Withdraw',
     mixins: [formMixin],
@@ -124,7 +121,6 @@
       percentFee: '',
       isFeesLoadPending: false,
       isFeesLoadFailed: false,
-      isValidWallet: true,
       feesDebouncedRequest: null,
       i18n
     }),
