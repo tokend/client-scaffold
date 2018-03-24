@@ -110,7 +110,7 @@
         this.showDialog = true
         this.dialogValues = list
       },
-      closeDialog: function (status) {
+      closeDialog (status) {
         this.showDialog = status
       }
     }

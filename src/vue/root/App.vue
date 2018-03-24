@@ -15,7 +15,7 @@
     <md-app-drawer md-permanent="clipped"
                   :md-active.sync="menuVisible"
                    v-if="isLoggedIn">
-      <sidebar/>
+      <sidebar v-on:hide-sidebar="hideSidebar"/>
     </md-app-drawer>
 
     <md-app-content>
@@ -106,6 +106,9 @@
               break
           }
         })
+      },
+      hideSidebar (status) {
+        this.menuVisible = status
       }
     }
   }
