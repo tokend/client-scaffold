@@ -56,3 +56,9 @@ $xlarge: 1920px;
     @content;
   }
 }
+
+@mixin respond-to-width-height($width, $height) {
+  @media only screen and (max-width: $width) and (max-width: $height) {
+    @content;
+  }
+}
