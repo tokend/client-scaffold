@@ -40,10 +40,11 @@
               type="number"
               title="Amount"
               align="right"
+              vvValidateOn="change"
               v-validate="'required|amount'"
               :errorMessage="errors.first('amount') ||
                             (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
-                            (lessThenMinimumAmount ?
+                            (lessThenMinimumAmount && amountWasUpdated ?
                               i18n.withdraw_error_minimum_amount({ value: minAmounts[form.tokenCode], asset: form.tokenCode }) :
                               '')"
             />
@@ -71,14 +72,13 @@
             :label="i18n.withdraw_wallet({ asset: form.tokenCode })"
             name="wallet-address"
             v-validate="'required|wallet_address'"
-            data-vv-validate-on="change"
             :errorMessage="
              errors.first('wallet-address') ||
              (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '') ||
              (!isValidWallet ? i18n.withdraw_error_invalid_address() : '')
            "
           />
-          <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit" :disabled="isPending || !isAllowedToSubmit">withdraw</md-button>
+          <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit">withdraw</md-button>
 
         </md-card-content>
 
@@ -98,12 +98,12 @@
   import { vuexTypes } from '../../../../vuex/types'
 
   import { i18n } from '../../../../js/i18n'
+  import { DEFAULT_SELECTED_ASSET, DEFAULT_INPUT_STEP } from '../../../../js/const/configs.const'
   import { feeService } from '../../../../js/services/fees.service'
-  import { validateAddress } from '../../../../validator/address_validation'
   import { withdrawService } from '../../../../js/services/withdraw.service'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
-  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
+  import { validateAddress } from '../../../../validator/address_validation'
 
   export default {
     name: 'Withdraw',
@@ -124,9 +124,7 @@
       isFeesLoadPending: false,
       isFeesLoadFailed: false,
       isValidWallet: true,
-      isTryingToSendToYourself: false,
       feesDebouncedRequest: null,
-      lessThenMinimumAmount: false,
       amountWasUpdated: false,
       walletWasUpdated: false,
       i18n
@@ -141,6 +139,9 @@
         vuexTypes.accountBalances,
         vuexTypes.accountRawBalances
       ]),
+      inputStep () {
+        return Number(DEFAULT_INPUT_STEP)
+      },
       tokenCodes () {
         return this.userWalletTokens.map(token => token.code)
       },
@@ -150,18 +151,17 @@
       isLimitExceeded () {
         return Number(this.form.amount) > Number(this.balance.balance)
       },
+      isTryingToSendToYourself () {
+        return this.form.wallet === this.accountDepositAddresses[this.form.tokenCode]
+      },
+      lessThenMinimumAmount () {
+        return Number(this.form.amount) < this.minAmounts[this.form.tokenCode]
+      },
       isAllowedToSubmit () {
-        return this.fixedFee &&
-               this.percentFee &&
-               this.form.amount &&
-               this.form.wallet &&
-               this.errors.count() === 0 &&
-               !this.isFeesLoadPending &&
-               !this.isFeesLoadFailed &&
-               !this.isAmountLoadPending &&
-               !this.isAmountLoadFailed &&
+        return !this.isFeesLoadPending &&
                !this.isLimitExceeded &&
-               !this.isTryingToSendToYourself
+               !this.isTryingToSendToYourself &&
+               !this.lessThenMinimumAmount
       }
     },
     methods: {
@@ -170,9 +170,13 @@
         this.disableLong()
         try {
           const options = this.composeOptions()
+          if (this.isFeesLoadFailed) {
+            EventDispatcher.dispatchShowErrorEvent('Failed to load fees')
+            return false
+          }
           await withdrawService.createWithdrawalRequest(options)
           EventDispatcher.dispatchShowSuccessEvent(i18n.withdraw_success())
-          this.clear()
+          this.clear(['tokenCode'])
         } catch (error) {
           console.error(error)
           error.showBanner(i18n.unexpected_error)
@@ -200,6 +204,7 @@
           this.isFeesLoadFailed = false
         } catch (err) {
           this.isFeesLoadFailed = true
+          EventDispatcher.dispatchShowErrorEvent('Failed to load fees')
         }
         this.isFeesLoadPending = false
       },
@@ -218,17 +223,12 @@
         if (value === '' || value < this.minAmounts[this.form.tokenCode]) {
           this.fixedFee = '0.0000'
           this.percentFee = '0.0000'
-          this.lessThenMinimumAmount = true
           return
         }
-        this.lessThenMinimumAmount = false
         this.tryGetFees()
       },
       'form.wallet' (value) {
-        let address = this.accountDepositAddresses[this.form.tokenCode]
-
         this.walletWasUpdated = true
-        value === address ? this.isTryingToSendToYourself = true : this.isTryingToSendToYourself = false
         if (validateAddress(value, this.form.tokenCode) && !this.isTryingToSendToYourself) {
           this.isValidWallet = true
           return
@@ -240,11 +240,8 @@
           this.$validator.validate('wallet-address', this.form.wallet).then(result => {})
         }
         if (this.amountWasUpdated) {
-          this.$validator.validate('amount', this.form.amount).then(result => {
-            if (this.form.amount < this.minAmounts[this.form.tokenCode]) {
-              this.lessThenMinimumAmount = true
-            }
-          })
+          this.$validator.validate('amount', this.form.amount).then(result => {})
+          this.tryGetFees()
         }
       }
     }

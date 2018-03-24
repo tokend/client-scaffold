@@ -114,6 +114,8 @@
     max-height: 408px;
     max-width: 560px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 
     @include respond-to(medium) {
       max-width: inherit;
@@ -125,7 +127,7 @@
   }
 
   .info-widget__actions {
-    margin-top: 30px;
+    margin-top: auto;
   }
 
   .info-widget__asset-item-left {
@@ -154,6 +156,10 @@
 
   .info-widget__asset-list {
     padding: 0;
+
+    &:not(:empty) {
+      margin-bottom: 30px;
+    }
   }
 
   .info-widget__asset-item {
