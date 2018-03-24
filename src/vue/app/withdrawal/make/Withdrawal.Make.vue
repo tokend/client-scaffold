@@ -167,6 +167,7 @@
     methods: {
       async submit () {
         if (!await this.isValid()) return
+        if (!this.isAllowedToSubmit) return
         this.disableLong()
         try {
           const options = this.composeOptions()
@@ -182,6 +183,7 @@
           error.showBanner(i18n.unexpected_error)
         }
         this.enable()
+        this.errors.clear()
       },
       composeOptions () {
         return {
