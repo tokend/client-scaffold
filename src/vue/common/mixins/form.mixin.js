@@ -29,10 +29,12 @@ export default {
     isValid () {
       return this.$validator.validateAll()
     },
-    clear () {
+    clear (exeptions = []) {
       this.errors.clear()
       for (const key in this.form) {
-        this.form[key] = ''
+        if (!exeptions.includes(key)) {
+          this.form[key] = ''
+        }
       }
     },
     hasError (field) {

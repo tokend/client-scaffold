@@ -1,5 +1,5 @@
 <template>
-  <div class="deposit md-layout md-alignment-center-center">
+  <div class="withdraw md-layout md-alignment-center-center">
     <form class="md-layout-item
                  md-size-50
                  md-medium-size-65
@@ -11,8 +11,11 @@
       >
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-        <md-card-header>
-          <div class="md-title">{{ i18n.withdraw_withdrawal() }}</div>
+        <md-card-header class="withdraw__header">
+          <div class="md-title withdraw__title">{{ i18n.withdraw_withdrawal() }}</div>
+          <div class="withdraw__user-balance">
+            {{ i18n.withdraw_balance({ balance: balance.balance, token: form.tokenCode }) }}
+          </div>
         </md-card-header>
 
         <md-card-content>
@@ -37,8 +40,14 @@
               type="number"
               title="Amount"
               align="right"
+              vvValidateOn="change"
               v-validate="'required|amount'"
-              :errorMessage="errors.first('amount') || (isLimitExceeded ? 'Insufficient funds' : '')"
+              :errorMessage="errors.first('amount') ||
+                            (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
+                            (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
+                                                      value: minAmounts[form.tokenCode],
+                                                      asset: form.tokenCode })
+                                                   : '')"
             />
           </div>
 
@@ -66,11 +75,10 @@
             v-validate="'required|wallet_address'"
             :errorMessage="
              errors.first('wallet-address') ||
-             (isTryingToSendToYourself ? 'Sender can\'t be a recipient! Make sure the address is correct' : '') ||
-             (!isValidWallet ? 'Invalid wallet address' : '')
+             (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
            "
           />
-          <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit" :disabled="isPending">withdraw</md-button>
+          <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit">withdraw</md-button>
 
         </md-card-content>
 
@@ -90,12 +98,10 @@
   import { vuexTypes } from '../../../../vuex/types'
 
   import { i18n } from '../../../../js/i18n'
+  import { DEFAULT_SELECTED_ASSET, DEFAULT_INPUT_STEP } from '../../../../js/const/configs.const'
   import { feeService } from '../../../../js/services/fees.service'
-  import { validateAddress } from '../../../../validator/address_validation'
   import { withdrawService } from '../../../../js/services/withdraw.service'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-
-  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
 
   export default {
     name: 'Withdraw',
@@ -115,11 +121,12 @@
       percentFee: '',
       isFeesLoadPending: false,
       isFeesLoadFailed: false,
-      isValidWallet: true,
-      isTryingToSendToYourself: false,
       feesDebouncedRequest: null,
       i18n
     }),
+    mounted () {
+
+    },
     computed: {
       ...mapGetters([
         vuexTypes.userWalletTokens,
@@ -127,6 +134,9 @@
         vuexTypes.accountBalances,
         vuexTypes.accountRawBalances
       ]),
+      inputStep () {
+        return Number(DEFAULT_INPUT_STEP)
+      },
       tokenCodes () {
         return this.userWalletTokens.map(token => token.code)
       },
@@ -134,24 +144,41 @@
         return this.accountBalances[this.form.tokenCode]
       },
       isLimitExceeded () {
-        return Number(this.form.amount) > Number(this.balance) &&
-               Number(this.form.amount) < Number(this.minAmounts[this.form.tokenCode])
+        return Number(this.form.amount) > Number(this.balance.balance)
+      },
+      isTryingToSendToYourself () {
+        return this.form.wallet === this.accountDepositAddresses[this.form.tokenCode]
+      },
+      lessThenMinimumAmount () {
+        return this.form.amount !== '' ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode] : false
+      },
+      isAllowedToSubmit () {
+        return !this.isFeesLoadPending &&
+               !this.isLimitExceeded &&
+               !this.isTryingToSendToYourself &&
+               !this.lessThenMinimumAmount
       }
     },
     methods: {
       async submit () {
         if (!await this.isValid()) return
+        if (!this.isAllowedToSubmit) return
         this.disableLong()
         try {
           const options = this.composeOptions()
+          if (this.isFeesLoadFailed) {
+            EventDispatcher.dispatchShowErrorEvent('Failed to load fees')
+            return false
+          }
           await withdrawService.createWithdrawalRequest(options)
           EventDispatcher.dispatchShowSuccessEvent(i18n.withdraw_success())
-          this.clear()
+          this.clear(['tokenCode'])
         } catch (error) {
           console.error(error)
           error.showBanner(i18n.unexpected_error)
         }
         this.enable()
+        this.errors.clear()
       },
       composeOptions () {
         return {
@@ -174,6 +201,7 @@
           this.isFeesLoadFailed = false
         } catch (err) {
           this.isFeesLoadFailed = true
+          EventDispatcher.dispatchShowErrorEvent('Failed to load fees')
         }
         this.isFeesLoadPending = false
       },
@@ -195,19 +223,8 @@
         }
         this.tryGetFees()
       },
-      'form.wallet' (value) {
-        let address = this.accountDepositAddresses[this.form.tokenCode]
-        value === address ? this.isTryingToSendToYourself = true : this.isTryingToSendToYourself = false
-        if (validateAddress(value, this.form.tokenCode) && !this.isTryingToSendToYourself) {
-          this.isValidWallet = true
-          return
-        }
-        this.isValidWallet = false
-      },
       'form.tokenCode' (value) {
-        if (this.form.wallet !== '') {
-          this.$validator.validate('wallet-address', this.form.wallet).then(result => {})
-        }
+        this.tryGetFees()
       }
     }
   }
@@ -216,6 +233,23 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
+
+  .withdraw__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .withdraw__title {
+    .withdraw__header &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .withdraw__user-balance {
+    color: $col-text-secondary;
+  }
 
   .withdraw__explanations {
     margin-bottom: 1.5rem;

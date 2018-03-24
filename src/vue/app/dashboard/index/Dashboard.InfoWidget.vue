@@ -3,9 +3,8 @@
     <md-card-header class="info-widget__header">
       <div class="md-title">{{ i18n.dash_activity({ asset: currentAsset }) }}</div>
     </md-card-header>
-
     <md-card-content class="info-widget__asset">
-      <md-list class="md-double-line info-widget__asset-list md-layout">
+      <md-list v-if="list.length > 0" class="md-double-line info-widget__asset-list md-layout">
         <md-list-item :class="['info-widget__asset-item',
                               tx.state === 'rejected' ||
                               tx.state === 'failed' ? 'info-widget__asset-item--opacity': ''
@@ -39,6 +38,10 @@
           </div>
         </md-list-item>
       </md-list>
+      <div class="info-widget__no-transactions" v-else>
+        <md-icon class="md-size-4x">trending_up</md-icon>
+        <p>{{ i18n.th_no_transaction_history() }}</p>
+      </div>
     </md-card-content>
 
     <md-card-actions class="info-widget__actions">
@@ -123,6 +126,8 @@
     max-height: 408px;
     max-width: 560px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 
     @include respond-to(medium) {
       max-width: inherit;
@@ -134,13 +139,22 @@
   }
 
   .info-widget__actions {
-    margin-top: 30px;
+    margin-top: auto;
   }
 
   .info-widget__asset-item-left {
     @include respond-to(xsmall) {
       flex: none;
       width: 130px;
+    }
+  }
+
+  .info-widget__no-transactions {
+    font-size: 24px;
+    text-align: center;
+
+    p {
+      margin-top: 16px;
     }
   }
 
@@ -163,6 +177,10 @@
 
   .info-widget__asset-list {
     padding: 0;
+
+    &:not(:empty) {
+      margin-bottom: 30px;
+    }
   }
 
   .info-widget__asset-item {
