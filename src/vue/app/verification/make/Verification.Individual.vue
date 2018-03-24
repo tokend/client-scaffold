@@ -50,6 +50,7 @@
                            name="line-1"
                          v-model="form.line_1"
                          v-validate="'required'"
+                   data-vv-as="line 1"
                           :required="true"
                           :label="i18n.lbl_line_1()"
                           :errorMessage="errorMessage('line-1')"
@@ -84,6 +85,7 @@
                            name="country"
                          v-model="form.country"
                          v-validate="'required'"
+                          :required="true"
                           :label="i18n.lbl_country()"
                           :errorMessage="errorMessage('country')"
               />
@@ -106,7 +108,7 @@
                            name="postal-code"
                          v-model="form.postal_code"
                          v-validate="'required'"
-                           data-vv-as="Postal code"
+                           data-vv-as="postal code"
                           :required="true"
                           :label="i18n.lbl_postal_code()"
                           :errorMessage="errorMessage('postal-code')"
@@ -116,12 +118,17 @@
 
           <h4>{{ i18n.kyc_required_documents() }}</h4>
 
-          <div>
-            <file-field id="kyc-file-photo" class="kyc-form__file-field" :label="i18n.lbl_kyc_photo()" v-model="documents[documentTypes.kycPhoto]"/>
-            <file-field id="kyc-file-id" class="kyc-form__file-field" :label="i18n.lbl_kyc_id()" v-model="documents[documentTypes.kycIdDocument]"/>
-            <file-field id="kyc-file-poa" class="kyc-form__file-field" :label="i18n.lbl_kyc_proof()" v-model="documents[documentTypes.kycProofOfAddress]"/>
-          </div>
+          <file-field id="kyc-file-id" class="kyc-form__file-field" :label="i18n.lbl_kyc_id()" v-model="documents[documentTypes.kycIdDocument]"/>
+          <file-field id="kyc-file-poa" class="kyc-form__file-field" :label="i18n.lbl_kyc_proof()" v-model="documents[documentTypes.kycProofOfAddress]"/>
 
+          <h4>{{ i18n.kyc_photo_verification() }}</h4>
+          <p>
+            {{ i18n.kyc_photo_explain() }}<br>
+            <md-button @click="isDialogOpened = true">
+              {{ i18n.kyc_show_key() }}
+            </md-button>
+          </p>
+          <file-field id="kyc-file-photo" class="kyc-form__file-field" :label="i18n.lbl_kyc_photo()" v-model="documents[documentTypes.kycPhoto]"/>
 
           <div class="md-layout md-alignment-center-right">
             <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
@@ -131,6 +138,21 @@
         </md-card-content>
       </md-card>
     </form>
+
+    <md-dialog :md-active.sync="isDialogOpened">
+      <md-dialog-title>
+        {{ i18n.kyc_verification_key() }}
+      </md-dialog-title>
+      <div class="app__dialog__inner">
+        <p class="kyc-form__verification-key">
+          {{ verificationKey }}
+        </p>
+      </div>
+      <md-dialog-action class="md-layout md-alignment-center-right">
+        <md-button class="md-primary" @click="isDialogOpened = false">{{ i18n.lbl_done() }}</md-button>
+      </md-dialog-action>
+    </md-dialog>
+
   </div>
 </template>
 
@@ -138,6 +160,8 @@
   import FormMixin from '../../../common/mixins/form.mixin'
   import { i18n } from '../../../../js/i18n'
   import { documentTypes } from '../../../../js/const/documents.const'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../vuex/types'
 
   export default {
     name: 'verification-individual',
@@ -158,16 +182,34 @@
         [documentTypes.kycProofOfAddress]: null,
         [documentTypes.kycPhoto]: null
       },
+      isDialogOpened: false,
       documentTypes,
       i18n
     }),
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountId
+      ]),
+      verificationKey () {
+        return this.accountId.slice(1, 6)
+      }
+    },
     methods: {
-      submit () {
-        // wip
+      async submit () {
+        if (!await this.isValid()) return
+        console.log(this.form)
       }
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss"scoped>
+  @import '../../../../scss/variables';
+
+  .kyc-form__verification-key {
+    font-size: $fs-big;
+    font-weight: bold;
+    margin: 2rem 0;
+    text-align: center;
+  }
 </style>

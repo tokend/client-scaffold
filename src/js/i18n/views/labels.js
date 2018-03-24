@@ -78,5 +78,6 @@ export default {
   lbl_postal_code: 'Postal code',
   lbl_kyc_photo: 'Photo',
   lbl_kyc_id: 'ID document',
-  lbl_kyc_proof: 'Proof of address'
+  lbl_kyc_proof: 'Proof of address',
+  lbl_done: 'Done'
 }
