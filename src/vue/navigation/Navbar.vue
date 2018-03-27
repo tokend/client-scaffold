@@ -2,7 +2,7 @@
   <nav class="container md-layout md-alignment-center-space-between"
       :class="{ 'container--wide': isLoggedIn }"
   >
-    <div class="md-layout-item logo md-title">TokenD</div>
+    <div class="md-layout-item logo md-title"><logotype/></div>
 
     <div class="navbar__root-links md-layout-item md-layout md-alignment-center-right" v-if="!isLoggedIn">
       <router-link class="md-button"
@@ -57,8 +57,12 @@
   import { attachEventHandler } from '../../js/events/helpers'
   import { vueRoutes } from '../../vue-router/const'
 
+  import Logotype from '../app/common/Logotype'
+
   export default {
     name: 'root-navbar',
+
+    components: { Logotype },
 
     data: () => ({
       routes: [],
