@@ -12,6 +12,9 @@ const mutations = {
   SET_USER_STATE: 'SET_USER_STATE',
   SET_USER_REJECT_REASON: 'SET_USER_REJECT_REASON',
   SET_USER_CREATED_AT: 'SET_USER_CREATED_AT',
+  SET_USER_KYC_SEQUENCE: 'SET_USER_KYC_SEQUENCE',
+  SET_USER_KYC_DETAILS: 'SET_USER_KYC_DETAILS',
+  SET_USER_KYC_DOCUMENTS: 'SET_USER_KYC_DOCUMENTS',
 
   // account:
   SET_ACCOUNT_KEYS: 'SET_ACCOUNT_KEYS',
@@ -30,12 +33,14 @@ const actions = {
 
   // wallet:
   PROCESS_USER_WALLET: 'PROCESS_USER_WALLET',
+  STORE_USER_DATA_FROM_WALLET: 'STORE_USER_DATA_FROM_WALLET',
 
   // user:
   GET_USER_DETAILS: 'GET_USER_DETAILS',
   GET_USER_FAVORITES: 'GET_USER_FAVORITES',
-  STORE_LOGIN_DATA: 'STORE_USER_DATA_FROM_WALLET',
-  STORE_USER_DATA_FROM_WALLET: 'STORE_USER_DATA_FROM_WALLET',
+  GET_USER_KYC: 'GET_USER_KYC',
+  UPDATE_USER_KYC_DETAILS: 'UPDATE_USER_KYC_DETAILS',
+  UPDATE_USER_KYC_DOCUMENTS: 'UPDATE_USER_KYC_DOCUMENTS',
 
   // account:
   GET_ACCOUNT_DETAILS: 'GET_ACCOUNT_DETAILS',
@@ -57,6 +62,7 @@ const getters = {
   userType: 'userType',
   userRejectReason: 'userRejectReason',
   userCreatedAt: 'userCreatedAt',
+  userKycSequence: 'userKycSequence',
   userFavorites: 'userFavorites',
 
   // wallet:
@@ -81,6 +87,8 @@ const getters = {
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',
+  userKycDetails: 'userKycDetails',
+  userKycDocuments: 'userKycDocuments',
 
   // transactions:
   transactions: 'transactions'

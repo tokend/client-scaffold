@@ -34,6 +34,9 @@ import HistoryIndex from '../vue/app/history/index/History.Index'
 import Settings from '../vue/app/settings/Settings.Entry'
 import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
 
+import Verification from '../vue/app/verification/Verification.Entry'
+import VerificationMake from '../vue/app/verification/make/Verification.Make'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -167,6 +170,19 @@ const router = new Router({
               path: '/settings/security',
               name: 'settings.security',
               component: SettingsSecurity
+            }
+          ]
+        },
+        {
+          name: 'app.verification',
+          path: '/verification',
+          component: Verification,
+          redirect: { path: '/verification/make' },
+          children: [
+            {
+              path: '/verification/make',
+              name: 'verification.make',
+              component: VerificationMake
             }
           ]
         }

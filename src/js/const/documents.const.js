@@ -66,7 +66,7 @@ export const documentTypes = Object.freeze({
   fundDocument: 'fund_document',
   navReport: 'nav_report',
   syndicate_member_photo: 'alpha',
-  bravo: 'bravo',
+  kycPhoto: 'bravo',
   charlie: 'charlie',
   delta: 'delta',
   tokenTerms: 'token_terms',

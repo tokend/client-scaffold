@@ -4,8 +4,10 @@ import TextareaField from '../fields/TextareaField'
 
 import InputDateField from '../DEPRECATED.inputs/InputDateField.vue'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
-import FileInput from '../DEPRECATED.inputs/FileInput'
 import SubmitterMixin from './submitter.mixin'
+
+import { EventDispatcher } from '../../../js/events/event_dispatcher'
+import { i18n } from '../../../js/i18n'
 
 export default {
   mixins: [SubmitterMixin],
@@ -21,13 +23,16 @@ export default {
     SelectField,
     InputDateField,
     TextareaField,
-    ImageInput,
-    FileInput
+    ImageInput
   },
 
   methods: {
-    isValid () {
-      return this.$validator.validateAll()
+    async isValid () {
+      if (!await this.$validator.validateAll()) {
+        EventDispatcher.dispatchShowErrorEvent(i18n.cm_complete_validation())
+        return false
+      }
+      return true
     },
     clear (exeptions = []) {
       this.errors.clear()

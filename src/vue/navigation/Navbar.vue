@@ -21,9 +21,7 @@
       <div class="navbar__user">
         <md-button class="navbar__open-info-btn" @click="toggleUserCardVisibility">
           <span class="navbar__user-email">{{ userEmail }}</span>
-          <!--<md-button @click='toggleUserCardVisibility' class="md-icon-button md-dense md-primary">-->
           <md-icon>account_circle</md-icon>
-          <!--</md-button>-->
         </md-button>
         <md-card class="navbar__user-card" v-show="isUserCardOpen">
           <md-card-content>
@@ -35,7 +33,9 @@
                 <p class="navbar__user-name">{{ userEmail }}</p>
                 <p class="navbar__user-status" v-if="userType === 'not_verified'">{{ i18n.lbl_unverified() }}</p>
                 <p class="navbar__user-status" v-else>{{ i18n.lbl_verified() }}</p>
-                <md-button class="md-primary md-raised navbar__user-account-btn">{{ i18n.lbl_account() }}</md-button>
+                <md-button class="md-primary md-raised navbar__user-account-btn" @click="goKyc">
+                  {{ i18n.lbl_account() }}
+                </md-button>
               </div>
             </div>
             <div class="navbar__user-actions md-layout md-alignment-center-space-between">
@@ -94,6 +94,10 @@
       goSettings () {
         this.isUserCardOpen = false
         this.$router.push(vueRoutes.settings)
+      },
+      goKyc () {
+        this.isUserCardOpen = false
+        this.$router.push(vueRoutes.verification)
       }
     }
   }
