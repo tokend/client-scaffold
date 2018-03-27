@@ -1,5 +1,8 @@
 import { vuexTypes } from '../types'
 import { usersService } from '../../js/services/users.service'
+import { fileService } from '../../js/services/file.service'
+import { blobFilters, blobTypes } from '../../js/const/documents.const'
+import { userTypes, userStates } from '../../js/const/user.const'
 import get from 'lodash/get'
 
 export const state = {
@@ -8,9 +11,12 @@ export const state = {
   state: '',
   rejectReason: '',
   createdAt: '',
+  kycSequence: '',
   details: {
     favorites: []
-  }
+  },
+  kycDetails: {},
+  kycDocuments: {}
 }
 
 export const mutations = {
@@ -31,6 +37,15 @@ export const mutations = {
   },
   SET_FAVORITES: (state, favorites) => {
     state.details.favorites = favorites
+  },
+  SET_USER_KYC_SEQUENCE: (state, sequence) => {
+    state.kycSequence = sequence
+  },
+  SET_USER_KYC_DETAILS: (state, details) => {
+    state.kycDetails = details
+  },
+  SET_USER_KYC_DOCUMENTS: (state, documents) => {
+    state.kycDocuments = documents
   }
 }
 
@@ -42,6 +57,50 @@ export const actions = {
     commit(vuexTypes.SET_USER_STATE, userDetails.attribute('state'))
     commit(vuexTypes.SET_USER_REJECT_REASON, userDetails.attribute('reject_reason'))
     commit(vuexTypes.SET_USER_CREATED_AT, userDetails.attribute('created_at'))
+    commit(vuexTypes.SET_USER_KYC_SEQUENCE, userDetails.attribute('kyc_sequence'))
+  },
+
+  async GET_USER_KYC ({ commit }, sequence) {
+    const blobs = await usersService.blobsOf()
+      .getAll({
+        [blobFilters.type]: blobTypes.kycForm.num,
+        [blobFilters.kycSequence]: sequence
+      })
+    const kycAll = blobs[0] || {}
+    const kycDetails = kycAll.details || { address: {} }
+    const kycDocuments = kycDetails.documents || {}
+    commit(vuexTypes.SET_USER_KYC_DETAILS, kycDetails)
+    commit(vuexTypes.SET_USER_KYC_DOCUMENTS, kycDocuments)
+  },
+
+  async UPDATE_USER_KYC_DETAILS ({ commit }, opts) {
+    await Promise.all([
+      await usersService.blobsOf().create(
+        blobTypes.kycForm.str, {
+          details: opts.details,
+          documents: opts.documents,
+          kyc_sequence: opts.sequence
+        },
+        { [blobFilters.kycSequence]: opts.sequence }
+      ),
+      usersService.patchUserDetails(
+        userTypes.general,
+        userStates.waitingForApproval,
+        +opts.sequence
+      )
+    ])
+  },
+
+  async UPDATE_USER_KYC_DOCUMENTS ({ commit }, documents) {
+    return Promise.all(Object.entries(documents)
+      .map(([type, details]) => fileService.uploadFile({
+        type: type,
+        file: details.file,
+        mimeType: details.mimeType
+      })
+        .then(key => ({ key, type, name: details.name, mimeType: details.mimeType }))
+      ))
+      .then(responses => responses.reduce((documents, document) => { documents[document.type] = document; return documents }, {}))
   },
 
   async GET_USER_FAVORITES ({ commit }) {
@@ -59,6 +118,9 @@ export const getters = {
   userType: state => state.type,
   userRejectReason: state => state.rejectReason,
   userCreatedAt: state => state.createdAt,
+  userKycSequence: state => state.kycSequence,
+  userKycDetails: state => state.kycDetails,
+  userKycDocuments: state => state.kycDocuments,
   userFavorites: state => state.details.favorites
 }
 
