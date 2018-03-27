@@ -3,6 +3,7 @@ import { usersService } from '../../js/services/users.service'
 import { fileService } from '../../js/services/file.service'
 import { blobFilters, blobTypes } from '../../js/const/documents.const'
 import { userTypes, userStates } from '../../js/const/user.const'
+import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import get from 'lodash/get'
 
 export const state = {
@@ -45,7 +46,11 @@ export const mutations = {
     state.kycDetails = details
   },
   SET_USER_KYC_DOCUMENTS: (state, documents) => {
-    state.kycDocuments = documents
+    state.kycDocuments = Object.entries(documents)
+      .reduce((kycDocuments, [type, document]) => {
+        kycDocuments[type] = new DocumentContainer(document)
+        return kycDocuments
+      }, {})
   }
 }
 
@@ -68,7 +73,7 @@ export const actions = {
       })
     const kycAll = blobs[0] || {}
     const kycDetails = kycAll.details || { address: {} }
-    const kycDocuments = kycDetails.documents || {}
+    const kycDocuments = kycAll.documents || {}
     commit(vuexTypes.SET_USER_KYC_DETAILS, kycDetails)
     commit(vuexTypes.SET_USER_KYC_DOCUMENTS, kycDocuments)
   },
@@ -92,15 +97,26 @@ export const actions = {
   },
 
   async UPDATE_USER_KYC_DOCUMENTS ({ commit }, documents) {
-    return Promise.all(Object.entries(documents)
-      .map(([type, details]) => fileService.uploadFile({
-        type: type,
-        file: details.file,
-        mimeType: details.mimeType
-      })
-        .then(key => ({ key, type, name: details.name, mimeType: details.mimeType }))
-      ))
-      .then(responses => responses.reduce((documents, document) => { documents[document.type] = document; return documents }, {}))
+    return Promise.all(
+      Object.entries(documents)
+        .filter(([type, document]) => document.file)
+        .map(([type, document]) => fileService.uploadFile({
+          type: type,
+          file: document.file,
+          mimeType: document.mimeType
+        })
+          .then(key => ({ key, type, name: document.name, mimeType: document.mimeType }))
+        ))
+        .then(responses => responses
+          .reduce((newDocuments, document) => {
+            newDocuments[document.type] = {
+              type: document.type,
+              mimeType: document.mimeType,
+              name: document.name,
+              key: document.key
+            }
+            return newDocuments
+          }, {}))
   },
 
   async GET_USER_FAVORITES ({ commit }) {
