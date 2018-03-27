@@ -1,7 +1,7 @@
 const workspaces = {
   dev: {
-    horizonServer: 'https://api-dev.swarm.fund',
-    fileStorage: 'https://storage-dev.swarm.fund',
+    horizonServer: 'https://invest-dev.swarm.fund/_/api',
+    fileStorage: 'https://storage-dev.swarm.fund/api',
     networkPassphrase: 'Swarm New Dev; Feb 18'
   },
   prod: {
