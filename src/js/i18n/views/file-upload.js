@@ -4,5 +4,6 @@ export default {
   unsupported_extension: 'Sorry, but %{ext} is not supported',
   max_size: 'max %{size} Mb',
   fi_no_file_chosen: 'No file chosen',
-  fi_upload_file: 'image/pdf (Max %{size}Mb)'
+  fi_upload_file: 'image/pdf (Max %{size}Mb)',
+  fi_view_file: 'View file'
 }
