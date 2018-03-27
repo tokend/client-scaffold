@@ -48,7 +48,7 @@
             <div class="md-layout-item md-small-size-100">
               <input-field id="kyc-form-line-1"
                            name="line-1"
-                         v-model="form.line_1"
+                         v-model="form.address.line_1"
                          v-validate="'required'"
                    data-vv-as="line 1"
                           :required="true"
@@ -59,7 +59,7 @@
             <div class="md-layout-item md-small-size-100">
               <input-field id="kyc-form-line-2"
                            name="line-2"
-                         v-model="form.line_2"
+                         v-model="form.address.line_2"
                           :label="i18n.lbl_line_2()"
                           :errorMessage="errorMessage('line-2')"
               />
@@ -72,7 +72,7 @@
 
               <input-field id="kyc-form-city"
                            name="city"
-                         v-model="form.city"
+                         v-model="form.address.city"
                          v-validate="'required'"
                           :required="true"
                           :label="i18n.lbl_city()"
@@ -83,7 +83,7 @@
             <div class="md-layout-item md-small-size-100">
               <input-field id="kyc-form-country"
                            name="country"
-                         v-model="form.country"
+                         v-model="form.address.country"
                          v-validate="'required'"
                           :required="true"
                           :label="i18n.lbl_country()"
@@ -96,7 +96,7 @@
             <div class="md-layout-item md-small-size-100">
               <input-field id="kyc-form-state"
                            name="state"
-                         v-model="form.state"
+                         v-model="form.address.state"
                          v-validate="'required'"
                           :required="true"
                           :label="i18n.lbl_state()"
@@ -106,7 +106,7 @@
             <div class="md-layout-item md-small-size-100">
               <input-field id="kyc-form-postal-code"
                            name="postal-code"
-                         v-model="form.postal_code"
+                         v-model="form.address.postal_code"
                          v-validate="'required'"
                            data-vv-as="postal code"
                           :required="true"
@@ -118,8 +118,16 @@
 
           <h4>{{ i18n.kyc_required_documents() }}</h4>
 
-          <file-field id="kyc-file-id" class="kyc-form__file-field" :label="i18n.lbl_kyc_id()" v-model="documents[documentTypes.kycIdDocument]"/>
-          <file-field id="kyc-file-poa" class="kyc-form__file-field" :label="i18n.lbl_kyc_proof()" v-model="documents[documentTypes.kycProofOfAddress]"/>
+          <file-field id="kyc-file-id" class="kyc-form__file-field"
+                     :type="documentTypes.kycIdDocument"
+                     :private="true"
+                     :label="i18n.lbl_kyc_id()"
+                    v-model="documents[documentTypes.kycIdDocument]"/>
+          <file-field id="kyc-file-poa" class="kyc-form__file-field"
+                     :type="documentTypes.kycProofOfAddress"
+                     :private="true"
+                     :label="i18n.lbl_kyc_proof()"
+                    v-model="documents[documentTypes.kycProofOfAddress]"/>
 
           <h4>{{ i18n.kyc_photo_verification() }}</h4>
           <p>
@@ -128,7 +136,11 @@
               {{ i18n.kyc_show_key() }}
             </md-button>
           </p>
-          <file-field id="kyc-file-photo" class="kyc-form__file-field" :label="i18n.lbl_kyc_photo()" v-model="documents[documentTypes.kycPhoto]"/>
+          <file-field id="kyc-file-photo" class="kyc-form__file-field"
+                     :type="documentTypes.kycPhoto"
+                     :private="true"
+                     :label="i18n.lbl_kyc_photo()"
+                    v-model="documents[documentTypes.kycPhoto]"/>
 
           <div class="md-layout md-alignment-center-right">
             <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
@@ -148,9 +160,9 @@
           {{ verificationKey }}
         </p>
       </div>
-      <md-dialog-action class="md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="isDialogOpened = false">{{ i18n.lbl_done() }}</md-button>
-      </md-dialog-action>
+      <md-dialog-actions class="md-layout md-alignment-center-right">
+        <md-button class="md-primary" @click="isDialogOpened = false" :disabled="isPending">{{ i18n.lbl_done() }}</md-button>
+      </md-dialog-actions>
     </md-dialog>
 
   </div>
@@ -158,24 +170,32 @@
 
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
-  import { i18n } from '../../../../js/i18n'
+  import FileField from '../../../common/fields/FileField'
+
+  import { mapGetters, mapActions } from 'vuex'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { documentTypes } from '../../../../js/const/documents.const'
-  import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
+  import { i18n } from '../../../../js/i18n'
+  import isEmpty from 'lodash/isEmpty'
 
   export default {
     name: 'verification-individual',
     mixins: [FormMixin],
+    components: { FileField },
     data: _ => ({
       form: {
         first_name: '',
         last_name: '',
-        line_1: '',
-        line_2: '',
-        city: '',
-        country: '',
-        state: '',
-        postal_code: ''
+        address: {
+          line_1: '',
+          line_2: '',
+          city: '',
+          country: '',
+          state: '',
+          postal_code: ''
+        }
       },
       documents: {
         [documentTypes.kycIdDocument]: null,
@@ -186,24 +206,90 @@
       documentTypes,
       i18n
     }),
+    created () {
+      if (!isEmpty(this.userKycDetails)) {
+        this.stubDetails()
+      }
+    },
     computed: {
       ...mapGetters([
-        vuexTypes.accountId
+        vuexTypes.accountId,
+        vuexTypes.userKycDetails,
+        vuexTypes.userKycDocuments,
+        vuexTypes.userKycSequence
       ]),
       verificationKey () {
         return this.accountId.slice(1, 6)
       }
     },
     methods: {
+      ...mapActions({
+        loadUser: vuexTypes.GET_USER_DETAILS,
+        loadUserKyc: vuexTypes.GET_USER_KYC,
+        updateKycDetails: vuexTypes.UPDATE_USER_KYC_DETAILS,
+        updateKycDocuments: vuexTypes.UPDATE_USER_KYC_DOCUMENTS
+      }),
       async submit () {
         if (!await this.isValid()) return
-        console.log(this.form)
+        if (!this.isAllDocsUploaded()) return
+        this.disable()
+        try {
+          const newDocuments = await this.updateKycDocuments(this.documents)
+          console.log('newDocuments')
+          console.log(newDocuments)
+          const oldDocuments =
+            Object.entries(this.documents)
+              .reduce((documents, [ type, document ]) => {
+                if (!newDocuments[type]) {
+                  documents[type] = document.getDetailsForSave()
+                }
+                return documents
+              }, {})
+          console.log('oldDocuments')
+          console.log(oldDocuments)
+          const kycSequence = String(this.userKycSequence + 1)
+          await this.updateKycDetails({
+            sequence: kycSequence,
+            details: this.form,
+            documents: {
+              ...oldDocuments,
+              ...newDocuments
+            }
+          })
+          await this.loadUser()
+          await this.loadUserKyc(this.userKycSequence)
+        } catch (error) {
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
+      },
+      isAllDocsUploaded () {
+        for (const document of Object.values(this.documents)) {
+          if (!document) {
+            EventDispatcher.dispatchShowErrorEvent(i18n.kyc_not_all_docs())
+            return false
+          }
+        }
+        return true
+      },
+      stubDetails () {
+        const details = this.userKycDetails
+        const documents = this.userKycDocuments
+        this.form = details
+        Object.keys(documents)
+          .forEach(documentType => {
+            this.documents[documentType] = documents[documentType]
+          })
       }
+    },
+    watch: {
+      userKycDetails () { this.stubDetails() },
+      userKycDocuments () { this.stubDetails() }
     }
   }
 </script>
 
-<style lang="scss"scoped>
+<style lang="scss" scoped>
   @import '../../../../scss/variables';
 
   .kyc-form__verification-key {
