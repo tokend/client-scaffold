@@ -143,7 +143,7 @@
                     v-model="documents[documentTypes.kycPhoto]"/>
 
           <div class="md-layout md-alignment-center-right">
-            <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
+            <md-button type="submit" class="md-dense md-raised md-primary" :disabled="isPending">
               {{ i18n.lbl_submit() }}
             </md-button>
           </div>
@@ -161,7 +161,7 @@
         </p>
       </div>
       <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="isDialogOpened = false" :disabled="isPending">{{ i18n.lbl_done() }}</md-button>
+        <md-button class="md-primary" @click="isDialogOpened = false">{{ i18n.lbl_done() }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -235,8 +235,6 @@
         this.disable()
         try {
           const newDocuments = await this.updateKycDocuments(this.documents)
-          console.log('newDocuments')
-          console.log(newDocuments)
           const oldDocuments =
             Object.entries(this.documents)
               .reduce((documents, [ type, document ]) => {
@@ -245,8 +243,6 @@
                 }
                 return documents
               }, {})
-          console.log('oldDocuments')
-          console.log(oldDocuments)
           const kycSequence = String(this.userKycSequence + 1)
           await this.updateKycDetails({
             sequence: kycSequence,
@@ -258,6 +254,7 @@
           })
           await this.loadUser()
           await this.loadUserKyc(this.userKycSequence)
+          EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
         }
