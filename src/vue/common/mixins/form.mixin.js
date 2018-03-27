@@ -1,11 +1,13 @@
 import InputField from '../fields/InputField.vue'
 import SelectField from '../fields/SelectField.vue'
 import TextareaField from '../fields/TextareaField'
-import FileField from '../fields/FileField'
 
 import InputDateField from '../DEPRECATED.inputs/InputDateField.vue'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
+
+import { EventDispatcher } from '../../../js/events/event_dispatcher'
+import { i18n } from '../../../js/i18n'
 
 export default {
   mixins: [SubmitterMixin],
@@ -21,13 +23,16 @@ export default {
     SelectField,
     InputDateField,
     TextareaField,
-    ImageInput,
-    FileField
+    ImageInput
   },
 
   methods: {
-    isValid () {
-      return this.$validator.validateAll()
+    async isValid () {
+      if (!await this.$validator.validateAll()) {
+        EventDispatcher.dispatchShowErrorEvent(i18n.cm_complete_validation())
+        return false
+      }
+      return true
     },
     clear () {
       this.errors.clear()
