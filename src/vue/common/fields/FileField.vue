@@ -18,35 +18,62 @@
       />
     </div>
     <p class="file-field__file-name">
-      <a v-if="value && value.key" :href="`${fileStorage}\value.key`">{{ value.name }}</a>
-      <span v-else>{{ fileName || value && value.name || i18n.fi_no_file_chosen() }}</span>
+      <button v-if="value && value.file" class="link-btn" type="button" @click="viewNew">
+        <span>{{ value.name }}</span>
+        <md-icon class="file-field__link-icon md-icon-size-065x">open_in_new</md-icon>
+      </button>
+
+      <a :href="fileUrl" target="_blank" v-else-if="value">
+        <span>{{ value.name }}</span>
+        <md-icon class="file-field__link-icon md-icon-size-065x">open_in_new</md-icon>
+      </a>
+
+      <span v-else>{{ i18n.fi_no_file_chosen() }}</span>
     </p>
   </div>
 </template>
 
 <script>
   import FieldMixin from './field.mixin'
+  import { DocumentContainer } from '../../../js/helpers/DocumentContainer'
   import { MAX_FILE_MEGABYTES } from '../../../js/const/documents.const'
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
-  import { i18n } from '../../../js/i18n'
   import { commonEvents } from '../../../js/events/common_events'
-  import { FileHelper } from '../../../js/helpers/file.helper'
+  import { i18n } from '../../../js/i18n'
   import config from '../../../config'
 
   export default {
     name: 'file-field',
     mixins: [FieldMixin],
     props: {
-      max: { type: Number, default: MAX_FILE_MEGABYTES }
+      max: { type: Number, default: MAX_FILE_MEGABYTES },
+      type: { type: String, default: 'default' },
+      private: { type: Boolean, default: false }
     },
     data: _ => ({
       fileName: '',
+      privateUrl: '',
       i18n,
       fileStorage: config.FILE_STORAGE
     }),
     computed: {
       maxB () {
         return this.max * 1024 * 1024
+      },
+      fileUrl () {
+        if (!this.value) return ''
+        if (this.value.file) {
+          return this.value.dataUrl
+        }
+        if (!this.private) {
+          return this.value.publicUrl
+        }
+        return this.value.privateUrl
+      }
+    },
+    async created () {
+      if (this.private && this.value) {
+        await this.handlePrivate()
       }
     },
     methods: {
@@ -58,16 +85,44 @@
           this.clear()
           return
         }
-        const extracted = await FileHelper.readFileAsArrayBuffer(file)
-        const mimeType = file.type
-        const name = file.name
-        this.fileName = name
-        this.$emit(commonEvents.inputEvent, { file: extracted, mimeType, name })
+        this.$emit(commonEvents.inputEvent, new DocumentContainer({
+          mimeType: file.type,
+          type: this.type,
+          name: file.name,
+          file: file
+        }))
+      },
+      async handlePrivate () {
+        if (this.value.derivePrivateUrl) {
+          await this.value.derivePrivateUrl()
+        }
       },
       clear () {
         this.$el
           .querySelectorAll('input')
           .forEach(input => { input.value = '' })
+      },
+      viewNew () {
+        if (!this.fileUrl) return
+        const frame = document.createElement('iframe')
+        frame.src = this.fileUrl
+        frame.style.width = '100%'
+        frame.style.border = 'none'
+        frame.style.width = '100%'
+        frame.style.height = '95vh'
+        const win = window.open('/view-doc', '_blank')
+        win.document.write(frame.outerHTML)
+      }
+    },
+    watch: {
+      async value (value) {
+        if (!value.key) {
+          await this.value.deriveDataUrl()
+          return
+        }
+        if (this.private) {
+          await this.handlePrivate()
+        }
       }
     }
   }
@@ -130,5 +185,20 @@
   .file-field__file-name {
     position: relative;
     top: .55rem;
+  }
+
+  .link-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $col-md-primary;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 </style>
