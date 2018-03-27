@@ -75,7 +75,7 @@ export class UsersService extends Service {
    *
    * @param {string} type, 'general' - for individual users, 'syndicate' - for corporations
    * @param {string} state, ('waiting_for_approval' is the only one needed in most cases)
-   * @param {string} sequence - sequence of KYC blob, you should increment it every time user changes his KYC
+   * @param {number} sequence - sequence of KYC blob, you should increment it every time user changes his KYC
    *
    */
   patchUserDetails (type, state, sequence) {
