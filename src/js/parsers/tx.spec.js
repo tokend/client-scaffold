@@ -9,6 +9,8 @@ import { WithdrawalRecord } from '../records/withdrawal.record'
 import { TransferRecord } from '../records/transfer.record'
 import { IssuanceRecord } from '../records/issuance.record'
 
+import { ErrorFactory, errorTypes } from '../errors/factory'
+
 import { UnknownTransactionError } from '../errors/unknown_transaction.error'
 
 describe('correctly parses transactions', () => {
@@ -20,13 +22,12 @@ describe('correctly parses transactions', () => {
      expect(parseTransaction(issuanceRecord).constructor).to.equal(IssuanceRecord)
   })
 
-  it ('should throw unknown tx error', (done) => {
-    const unknownTx = { foo: 'foo', bar: 'bar' }
-    try {
-      parseTransaction(unknownTx)
-    } catch (err) {
-      expect(err.constructor).to.equal(UnknownTransactionError)
-      done()
-    }
+  it ('UnknownTransactionError constructor should be a UnknownTransactionError', () => {
+    const newInstance = new UnknownTransactionError()
+    expect(newInstance.constructor).to.equal(UnknownTransactionError)
+  })
+
+  it ('UnknownTransactionError constructor should be a UnknownTransactionError', () => {
+    expect(ErrorFactory.throwError(errorTypes.UnknownTransactionError).constructor).to.throw(UnknownTransactionError)
   })
 })
