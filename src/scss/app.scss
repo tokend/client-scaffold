@@ -66,6 +66,10 @@ html,body {
 
   & .sidebar .router-link-active {
     color: $col-md-primary;
+
+    .md-icon  {
+      color: $col-md-primary;
+    }
   }
 }
 
