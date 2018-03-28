@@ -1,17 +1,32 @@
 <template>
   <div class="security-settings">
 
-    <div class="security-settings__account">
-      <md-subheader class="security-settings__account-header">{{ i18n.set_account() }}</md-subheader>
-      <md-card>
+    <div class="security-settings__inner">
+      <md-subheader class="security-settings__header">{{ i18n.set_account() }}</md-subheader>
+      <md-card class="security-settings__section">
+        <md-list class="security-settings__list md-dense">
+          <md-list-item to="/verification">
+            <span class="md-list-item-text">{{ i18n.set_verify_account() }}</span>
+            <md-icon class="md-icon--half-sized">play_arrow</md-icon>
+          </md-list-item>
+        </md-list>
+      </md-card>
+
+      <md-subheader class="security-settings__header">{{ i18n.set_security() }}</md-subheader>
+      <md-card class="security-settings__section">
         <md-list class="security-settings__list md-dense">
           <change-password class="security-settings__change-password"/>
           <md-divider class="md-dense"/>
           <tfa-settings class="security-settings__tfa-settings"/>
+        </md-list>
+      </md-card>
+
+      <md-subheader class="security-settings__header">{{ i18n.set_keys() }}</md-subheader>
+      <md-card class="security-settings__section">
+        <md-list class="security-settings__list md-dense">
+          <account-id class="security-settings__account-id"/>
           <md-divider class="md-dense"/>
-          <account-id></account-id>
-          <md-divider class="md-dense"/>
-          <seed></seed>
+          <seed class="security-settings__seed"/>
         </md-list>
       </md-card>
     </div>

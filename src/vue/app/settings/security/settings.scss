@@ -2,10 +2,13 @@
   padding: 0;
 }
 
-.security-settings__account {
+.security-settings__inner {
   max-width: 36rem;
 }
 
+.security-settings__section {
+  margin-bottom: .5rem;
+}
 
 .md-list-item {
   cursor: pointer;

@@ -1,5 +1,8 @@
 export default {
   set_account: 'Account',
+  set_keys: 'Keys',
+  set_security: 'Security',
+  set_verify_account: 'Verification',
   set_account_id: 'Account ID',
   set_secret_seed: 'Secret seed',
   set_copy_secret_seed: 'Copy secret seed',
