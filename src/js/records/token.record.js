@@ -31,8 +31,16 @@ export class TokenRecord {
     return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.requiresKyc().value) !== -1
   }
 
+  get isTransferable () {
+    return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.transferable().value) !== -1
+  }
+
   get isWalletToken () {
     return !!(this.policy & ASSET_POLICIES.baseAsset)
+  }
+
+  get isWithdrawable () {
+    return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.withdrawable().value) !== -1
   }
 
   _getTerms () {

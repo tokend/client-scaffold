@@ -46,13 +46,7 @@ export class FileHelper {
       const reader = new FileReader()
       reader.onloadend = (event) => {
         const dataURL = event.target.result
-        const byteString = atob(dataURL.split(',')[1])
-        const arrayBuffer = new ArrayBuffer(byteString.length)
-        const intArray = new Uint8Array(arrayBuffer)
-        for (let i = 0; i < byteString.length; i++) {
-          intArray[i] = byteString.charCodeAt(i)
-        }
-        return resolve({ dataURL, intArray })
+        return resolve(dataURL)
       }
       reader.onerror = (error) => {
         console.error(error)
@@ -63,7 +57,7 @@ export class FileHelper {
   }
 
   static async deriveMimeStringFromFile (file) {
-    const { dataURL } = await this.readFileAsDataURL(file)
+    const dataURL = await this.readFileAsDataURL(file)
     return this.deriveMIMEStringFromDataURL(dataURL)
   }
 

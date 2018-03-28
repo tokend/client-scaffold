@@ -25,8 +25,9 @@ $black: #3f4244;
 $gray:#e2e3e3;
 $green: #3fa595;
 $red: #c2243b;
+$md-invalid: #ff1744;
 $blue: #578ebd;
-$orange: #fb9823;
+$orange: #EF6C00;
 $white: #ffffff;
 
 // Use these ones instead
@@ -50,7 +51,7 @@ $col-info: $blue;
 
 $col-nav-text: $white;
 
-$col-active: $orange;
+$col-active: $blue;
 $col-inactive: lighten($orange, 35%);
 $col-unfocused: lighten($black, 30%);
 
@@ -68,12 +69,16 @@ $col-md-background: #e8e8e8;
 $col-md-accent: #ef5350;
 $col-md-primary-txt: #fff;
 $col-md-unfocused: rgba(0, 0, 0, 0.54);
+$col-md-block: #fff;
+$col-md-pending: $orange;
 
 // fonts:
 $fs-top-heading: 32px;
-$fs-heading: 24px;
 $fs-offer-input: 24px;
+
+$fs-big: 2rem;
+$fs-heading: 1.4rem;
 $fs-root: 1rem;
 $fs-tip: .8rem;
 $fs-tip-smaller: .74rem;
-$fs-label: 12px;
+$fs-label: .8rem;

@@ -4,18 +4,16 @@
       <div class="cover"></div>
 
       <div class="inactivity-message__popup material">
-        <h2>Session timeout</h2>
-        <p>
-          Session is about to expire due to long inactivity.
-        </p>
+        <h2>{{ i18n.inm_session_timeout() }}</h2>
+        <p>{{ i18n.inm_session_timeout_descr() }}</p>
 
         <div class="inactivity-message__buttons btn-outer">
           <button class="btn-secondary btn-secondary--danger" @click="cancel">
-            Cancel
+            {{ i18n.lbl_cancel() }}
           </button>
 
           <button class="btn" @click="logout">
-            Log out ({{ leftToLogout }})
+            {{ i18n.lbl_logout() }} ({{ leftToLogout }})
           </button>
         </div>
       </div>
@@ -28,6 +26,7 @@
   import moment from 'moment'
   import { mapActions } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
+  import { i18n } from '../../../js/i18n'
   import { attachEventHandler } from '../../../js/events/helpers'
   import { commonEvents } from '../../../js/events/common_events'
 
@@ -48,7 +47,8 @@
         leftToLogout: null,
         logoutIntervalID: null,
         timeCheckIntervalID: null,
-        isOpened: false
+        isOpened: false,
+        i18n
       }
     },
 

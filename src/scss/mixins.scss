@@ -1,3 +1,10 @@
+// https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
+$xsmall: 480px;
+$small: 600px;
+$medium: 1024px;
+$large: 1440px;
+$xlarge: 1920px;
+
 @mixin center {
   left: 50%;
   transform: translate(-50%, -50%);
@@ -12,4 +19,46 @@
 @mixin center-vertically () {
   top: 50%;
   transform: translateY(-50%);
+}
+
+@mixin respond-to($media) {
+  @if $media == xsmall {
+    @media only screen and (max-width: $xsmall - 1px) {
+      @content;
+    }
+  } @else if $media == small {
+    @media only screen and (max-width: $small - 1px) {
+      @content;
+    }
+  } @else if $media == medium {
+    @media only screen and (max-width: $medium - 1px) {
+      @content;
+    }
+  } @else if $media == large {
+    @media only screen and (max-width: $large - 1px) {
+      @content;
+    }
+  } @else if $media == xlarge {
+    @media only screen and (max-width: $xlarge - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-to-custom($media) {
+  @media only screen and (max-width: $media) {
+    @content;
+  }
+}
+
+@mixin respond-to-height($media) {
+  @media only screen and (max-height: $media) {
+    @content;
+  }
+}
+
+@mixin respond-to-width-height($width, $height) {
+  @media only screen and (max-width: $width) and (max-width: $height) {
+    @content;
+  }
 }

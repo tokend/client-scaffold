@@ -13,13 +13,29 @@ import EmailResend from '../vue/auth/ConfirmEmail.vue'
 
 import AppContent from '../vue/root/AppContent.vue'
 
-import Dashboard from '../vue/app/Dashboard'
+import Dashboard from '../vue/app/dashboard/Dashboard.Entry'
+import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
 
 import Wallet from '../vue/app/wallet/Wallet.Entry'
 import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
 
 import Deposit from '../vue/app/deposit/Deposit.Entry'
 import DepositMake from '../vue/app/deposit/make/Deposit.Make'
+
+import Transfers from '../vue/app/transfers/Transfers.Entry'
+import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
+
+import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
+import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
+
+import History from '../vue/app/history/History.Entry'
+import HistoryIndex from '../vue/app/history/index/History.Index'
+
+import Settings from '../vue/app/settings/Settings.Entry'
+import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
+
+import Verification from '../vue/app/verification/Verification.Entry'
+import VerificationMake from '../vue/app/verification/make/Verification.Make'
 
 Vue.use(Router)
 
@@ -69,7 +85,15 @@ const router = new Router({
         {
           name: 'app.dashboard',
           path: '/dashboard',
-          component: Dashboard
+          component: Dashboard,
+          redirect: { path: '/dashboard/index' },
+          children: [
+            {
+              path: '/dashboard/index',
+              name: 'dashboard.index',
+              component: DashboardIndex
+            }
+          ]
         },
         {
           name: 'app.wallet',
@@ -94,6 +118,71 @@ const router = new Router({
               path: '/deposit/make',
               name: 'deposit.make',
               component: DepositMake
+            }
+          ]
+        },
+        {
+          name: 'app.transfers',
+          path: '/transfers',
+          component: Transfers,
+          redirect: { path: '/transfers/make' },
+          children: [
+            {
+              path: '/transfers/make',
+              name: 'transfers.make',
+              component: TransfersMake
+            }
+          ]
+        },
+        {
+          name: 'app.withdrawal',
+          path: '/withdrawal',
+          component: Withdrawal,
+          redirect: { path: '/withdrawal/make' },
+          children: [
+            {
+              path: '/withdrawal/make',
+              name: 'withdrawal.make',
+              component: WithdrawalMake
+            }
+          ]
+        },
+        {
+          name: 'app.history',
+          path: '/history',
+          component: History,
+          redirect: { path: '/history/index' },
+          children: [
+            {
+              path: '/history/index',
+              name: 'history.index',
+              component: HistoryIndex
+            }
+          ]
+        },
+        {
+          name: 'app.settings',
+          path: '/settings',
+          component: Settings,
+          redirect: { path: '/settings/security' },
+          children: [
+            {
+              path: '/settings/security',
+              name: 'settings.security',
+              component: SettingsSecurity
+            }
+          ]
+        },
+        {
+          name: 'app.verification',
+          path: '/verification',
+          component: Verification,
+          redirect: { path: '/verification/make' },
+          children: [
+            {
+              path: '/verification/make',
+              name: 'verification.make',
+              component: VerificationMake
             }
           ]
         }

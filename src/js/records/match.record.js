@@ -17,9 +17,9 @@ export class MatchRecord extends TxRecord {
   }
 
   _getParticipant () {
-    const balance = get(store.getters.balances, `[${this.asset}].balance_id`)
+    const balance = get(store.getters.accountBalances, `[${this.asset}].balance_id`)
     return this.participants
-      .filter(participant => participant.account_id === store.getters.userAccountId)
+      .filter(participant => participant.account_id === store.getters.accountId)
       .filter(participant => participant.balance_id === balance)[0]
   }
 
@@ -32,7 +32,8 @@ export class MatchRecord extends TxRecord {
       asset: this.asset,
       date: this.date,
       name: 'Investment',
-      feeAsset: this.feeAsset
+      feeAsset: this.feeAsset,
+      state: this.state
     }))
   }
 }
@@ -44,6 +45,7 @@ export class MatchTransaction {
     this.name = opts.name
     this.date = opts.date
     this.feeAsset = opts.feeAsset
+    this.state = opts.state
 
     this.baseAsset = this._getTxBaseAsset()
     this.quoteAsset = this._getTxQuoteAsset()

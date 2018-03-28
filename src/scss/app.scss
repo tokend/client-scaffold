@@ -9,6 +9,7 @@
   accent: md-get-palette-color(red, A200),
   theme: light
 ));
+
 @import "../../node_modules/vue-material/dist/theme/all";
 
 /* Global styles */
@@ -33,7 +34,12 @@ textarea {
   letter-spacing: 0.005em;
 }
 
-html,body{
+input,
+textarea {
+  width: 100%;
+}
+
+html,body {
   height: 100% !important;
   overflow: auto !important;
   -webkit-overflow-scrolling : touch !important;
@@ -44,36 +50,56 @@ html,body{
 
   &,
   & main,
-  & .md-content {
+  & .md-app-content {
     background-color: $col-md-background;
+  }
+
+  & .md-app-content {
+    padding-bottom: 30px;
+    height: auto;
+  }
+
+  & .md-app-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  & .sidebar .router-link-active {
+    color: $col-md-primary;
+
+    .md-icon  {
+      color: $col-md-primary;
+    }
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
-  margin: 0;
+#app,
+.md-dialog {
+  @mixin resize-icon ($size) {
+    width: $size;
+    min-width: $size;
+    height: $size;
+    font-size: $size !important;
+  }
+
+  & .md-icon--half-sized {
+    @include resize-icon(12px)
+  }
+
+  & .md-icon-size-065x {
+    @include resize-icon(14px)
+  }
+
+  & .md-icon-size-075x {
+    @include resize-icon(16px)
+  }
 }
 
-h1 {
-  font-size: $fs-top-heading;
-  margin-bottom: 35px;
-}
-
-h2 {
-  font-size: $fs-heading;
-  margin-bottom: 25px;
-}
-
-h3, h4 {
-  margin-bottom: 5px;
-}
-
-p {
-  margin-top: 0;
-}
-
-a {
-  color: $col-active;
+h4 {
+  font-size: $fs-tip;
+  font-weight: bold;
+  opacity: .65;
+  padding: .75rem 0 .3rem;
 }
 
 input:-webkit-autofill {
@@ -81,161 +107,67 @@ input:-webkit-autofill {
 }
 
 .container {
-  min-width: 320px;
   margin: 0 auto;
   max-width: 1250px;
   padding-left: 30px;
   padding-right: 30px;
   width: 100%;
 
-  @media (min-width: 1367px) {
-    max-width: 1560px;
-    width: 80%;
+  &--wide {
+    max-width: 1366px;
+    width: 100%;
   }
 }
 
-.app__dialog {
-  padding: 30px 40px;
+.app__dialog,
+.app__dialog-inner {
+  padding: 30px 31px;
 }
 
-.material {
-  background: $col-content-block;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.16), 0 2px 5px rgba(0,0,0,0.23);
-
-  &--flat {
-    box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23);;
-  }
-
-  &--transparent {
-    background: transparent;
-  }
+.text-align-left {
+  text-align: left;
 }
 
-.mdi {
-  font-size: $material-icon-size;
-  color: $col-text;
+.text-align-right {
+  text-align: right;
 }
 
-button {
-
-  &:focus {
-    outline: none;
-  }
-
-  .mdi {
-    font-size: $fs-root;
-  }
+.md-field.md-theme-default.md-invalid.md-focused label,
+.md-field.md-theme-default.md-focused.md-invalid .md-input {
+  color: $md-invalid;
 }
 
-.icon-btn {
-  border: none;
-  background: none;
-  cursor: pointer;
+.md-field.md-theme-default.md-invalid:before {
+  background-color: $md-invalid;
+}
 
-  &:hover {
-    i {
-      opacity: .75;
+.md-list-item-content {
+  .portfolio-widget__asset-item & {
+    padding: 9px 24px;
+
+  }
+  .info-widget__asset-item & {
+    @include respond-to(xsmall) {
+      padding: 4px 8px;
     }
   }
 }
 
-.cover {
-  background-color: $col-hover;
-  height: 100vh;
-  opacity: .5;
-  position: fixed;
-  left: 0;
-  top: 0;
-  transition: .15s;
-  width: 100vw;
-  z-index: $z-cover;
-
-  &--sidebar {
-    z-index: $z-sidebar-cover;
-  }
-
-  &--low {
-    opacity: .1;
+.md-dialog-container {
+  .info-dialog & {
+    width: 100%;
   }
 }
 
-
-.tfa-dialog,
-.password-dialog,
-.confirmation-message,
-.remember-seed-message,
-.app__modal {
-  @include center;
-  max-width: 440px;
-  padding: 25px 35px 40px;
-  position: fixed;
-  width: 100%;
-  z-index: $z-modal-dialog;
-
-  p {
-    margin-bottom: 30px;
-  }
-
-  .input-field {
-    margin-bottom: 20px;
-  }
-
-  .close-btn {
-    cursor: pointer;
-    position: absolute;
-    right: 5px;
-    top: 5px;
+.md-list-item-content {
+  .info-dialog__item & {
+    @include respond-to(small) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
 
-.info {
-  color: $col-info;
-}
-
-.active {
-  color: $col-active;
-}
-
-.load-more-btn {
-  cursor: pointer;
-}
-
-.more-btn {
-  cursor: pointer;
-  padding: 5px 10px;
-
-  &:disabled {
-    box-shadow: none;
-    opacity: .5;
-  }
-}
-
-.note {
-  font-size: $fs-tip;
-  border-left: 1px solid $col-active;
-  padding-left: 10px;
-  margin-bottom: 40px;
-  i {
-    margin-right: 3px;
-  }
-  .unfocused {
-    color: $col-unfocused;
-  }
-}
-
-.error-tip {
-  color: $col-danger;
-  font-size: $fs-tip;
-}
-
-.success-tip {
-  color: $col-success;
-  font-size: $fs-tip;
-}
-
-.app__modal {
-  @include center;
-
-  position: fixed;
-  z-index: $z-modal-dialog;
+.md-dialog-container {
+  max-width: 100%;
 }
