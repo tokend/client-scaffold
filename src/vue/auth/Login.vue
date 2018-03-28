@@ -167,10 +167,10 @@
         })) return
         this.disable()
         try {
-          const kdf = await walletService.loadKdfParamsForEmail(this.email)
+          const kdf = await walletService.loadKdfParamsForEmail(this.form.email)
           const { walletId } = WalletHelper.calculateWalletParams(
-            this.password,
-            this.email,
+            this.form.password,
+            this.form.email,
             kdf.attributes().salt,
             kdf.attributes()
           )
