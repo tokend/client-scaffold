@@ -65,7 +65,8 @@
       <template v-else>
         <div class="tx-history__no-transactions">
           <md-icon class="md-size-4x">trending_up</md-icon>
-          <p>{{ i18n.th_no_transaction_history() }}</p>
+          <h2>{{ i18n.th_no_transaction_history() }}</h2>
+          <p>{{ i18n.th_here_will_be_the_list() }}</p>
         </div>
       </template>
 
@@ -203,10 +204,9 @@
   .tx-history__no-transactions {
     padding: 0 16px 32px;
     text-align: center;
-    font-size: 24px;
 
     p {
-      margin-top: 16px;
+      margin-top: 10px;
     }
   }
 

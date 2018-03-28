@@ -40,7 +40,8 @@
       </md-list>
       <div class="info-widget__no-transactions" v-else>
         <md-icon class="md-size-4x">trending_up</md-icon>
-        <p>{{ i18n.th_no_transaction_history() }}</p>
+        <h2>{{ i18n.th_no_transaction_history() }}</h2>
+        <p>{{ i18n.th_here_will_be_the_list() }}</p>
       </div>
     </md-card-content>
 
@@ -150,11 +151,10 @@
   }
 
   .info-widget__no-transactions {
-    font-size: 24px;
     text-align: center;
 
     p {
-      margin-top: 16px;
+      margin-top: 10px;
     }
   }
 
