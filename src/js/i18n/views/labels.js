@@ -7,6 +7,8 @@ export default {
   lbl_asset: 'Asset',
   lbl_amount: 'Amount',
   lbl_settings: 'Settings',
+  lbl_verification: 'Verification',
+  lbl_help: 'Help',
   lbl_signout: 'Sign Out',
   lbl_signin: 'Sign In',
   lbl_signup: 'Sign Up',

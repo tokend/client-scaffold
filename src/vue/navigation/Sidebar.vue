@@ -26,10 +26,22 @@
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
       </md-list-item>
 
-      <!--<md-list-item to="/settings">-->
-        <!--<md-icon>settings</md-icon>-->
-        <!--<span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>-->
-      <!--</md-list-item>-->
+      <md-divider></md-divider>
+
+      <md-list-item to="/settings">
+        <md-icon>settings</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>
+      </md-list-item>
+
+      <md-list-item to="/verification">
+        <md-icon>verified_user</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_verification() }}</span>
+      </md-list-item>
+
+      <md-list-item to="/help">
+        <md-icon>help</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_help() }}</span>
+      </md-list-item>
 
     </md-list>
   </div>
