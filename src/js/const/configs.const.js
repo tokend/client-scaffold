@@ -8,6 +8,6 @@ export const DEFAULT_INPUT_MIN = `0.${'0'.repeat(DEFAULT_PRECISION - 1)}1`
 export const DEFAULT_DATE_FORMAT = 'DD MMM YYYY'
 export const DEFAULT_DATE_TIME_FORMAT = 'DD MMM YYYY [at] HH:mm:ss'
 export const DEFAULT_MAX_AMOUNT = Operation.MAX_INT64_AMOUNT
-export const DEFAULT_SELECTED_ASSET = 'BTC'
+export const DEFAULT_SELECTED_ASSET = 'assets'
 export const DEFAULT_CONVERSION_ASSET = 'USD'
 export const DEFAULT_CONVERSION_PRESICION = 2

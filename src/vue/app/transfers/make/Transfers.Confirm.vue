@@ -10,7 +10,7 @@
 
       <div class="transfer-confirm__inner">
         <detail-row :prop="i18n.lbl_asset()"
-                    :value="`${assetMap[opts.tokenCode]} (${opts.tokenCode})`"
+                    :value="`${opts.tokenCode}`"
         />
         <detail-row :prop="i18n.lbl_amount()" :value="`${i18n.c(opts.amount)} ${opts.tokenCode}`"/>
 

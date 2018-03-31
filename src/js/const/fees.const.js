@@ -1,3 +1,3 @@
-export const feeAsset = 'SWM'
+export const feeAsset = ''
 
 export const withdrawalFeeETH = '0.00063'

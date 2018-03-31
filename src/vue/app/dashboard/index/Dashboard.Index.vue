@@ -8,6 +8,7 @@
 <script>
   import PortfolioWidget from './Dashboard.PortfolioWidget'
   import InfoWidget from './Dashboard.InfoWidget'
+  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
 
   export default {
     name: 'dashboard',
@@ -16,7 +17,7 @@
       InfoWidget
     },
     data: _ => ({
-      currentAsset: 'BTC'
+      currentAsset: DEFAULT_SELECTED_ASSET
     }),
     created () {
 

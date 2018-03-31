@@ -6,7 +6,7 @@
 
     <md-card-content class="portfolio-widget__asset">
       <div class="portfolio-widget__asset-picture">
-        <img class="portfolio-widget__asset" src="../../../../../static/bitcoin-picture.png">
+        <img class="portfolio-widget__asset" src="../../../../../static/coin-picture.png">
       </div>
       <div class="portfolio-widget__asset-available">
         <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
