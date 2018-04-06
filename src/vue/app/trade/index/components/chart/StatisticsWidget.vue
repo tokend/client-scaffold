@@ -109,7 +109,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/variables";
+  @import "../../../../../../scss/variables";
 
   .statistics-widget {
     display: flex;

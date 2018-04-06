@@ -1,22 +1,33 @@
 <template>
-  <div class="trade md-layout md-alignment-center-center">
-    <chart class="trade__chart"
-      :data="history"
-      :needStats="false"
-      :precision="common.precision"
-      :assets="filters"
-      v-on:assets-base-changed="priceHistoryAssetsChanged($event)"
-      v-on:assets-quote-changed="priceHistoryAssetsChanged($event)"
-    />
+  <div class="trade">
+    <div class="md-layout">
+      <chart class="trade__chart md-size-50 md-layout-item"
+        :data="history"
+        :needStats="false"
+        :precision="common.precision"
+        :assets="filters"
+        v-on:assets-base-changed="priceHistoryAssetsChanged($event)"
+        v-on:assets-quote-changed="priceHistoryAssetsChanged($event)"
+      />
+      <trade-history :assets="filters" class="md-layout-item md-size-48"/>
+    </div>
 
-    <!-- <info-widget :currentAsset="'BTC'" class="md-layout-item"></info-widget> -->
+    <div class="md-layout">
+      <trade-orders :assets="filters" class="md-layout-item"/>
+    </div>
+
+    <div class="md-layout">
+      <orders :assets="filters" class="md-layout-item"/>
+    </div>
 
   </div>
 </template>
 
 <script>
-  import Chart from '../chart/Chart'
-  import InfoWidget from './Trade.InfoWidget'
+  import Chart from './components/chart/Chart'
+  import TradeHistory from './components/tradeHistory/TradeHistory'
+  import TradeOrders from './components/tradeOrders/TradeOrders'
+  import Orders from './components/orders/Orders'
 
   import { chartsService } from '../../../../js/services/charts.service'
   import { errors } from '../../../../js/errors/factory'
@@ -32,7 +43,7 @@
 
   export default {
     name: 'trade-index',
-    components: { Chart, InfoWidget },
+    components: { Chart, TradeHistory, TradeOrders, Orders },
     data: _ => ({
       history: {},
       tokenCode: DEFAULT_SELECTED_ASSET,
@@ -94,6 +105,12 @@
 
   .trade__chart {
     width: 534px;
+  }
+
+  .md-layout {
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
   }
 
   .transfer__success-amount {

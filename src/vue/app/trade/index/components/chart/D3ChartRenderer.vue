@@ -298,7 +298,7 @@
 </script>
 
 <style lang="scss">
-  @import "../../../../scss/variables";
+  @import "../../../../../../scss/variables";
 
   .chart-root,
   .chart-root svg {

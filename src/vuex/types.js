@@ -56,7 +56,10 @@ const actions = {
   UPDATE_TX_COUNTERPARTIES: 'UPDATE_TX_COUNTERPARTIES',
 
   // pairs:
-  GET_ASSET_PAIRS: 'GET_ASSET_PAIRS'
+  GET_ASSET_PAIRS: 'GET_ASSET_PAIRS',
+
+  // trades:
+  GET_TRADES: 'GET_TRADES'
 }
 
 const getters = {
@@ -99,8 +102,11 @@ const getters = {
   // transactions:
   transactions: 'transactions',
 
-  // pairs
-  assetPairs: 'assetPairs'
+  // pairs:
+  assetPairs: 'assetPairs',
+
+  // trades:
+  trades: 'trades'
 }
 
 export const vuexTypes = {

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../../js/events/common_events'
+  import { commonEvents } from '../../../../../../js/events/common_events'
 
   export default {
     name: 'date-tabs',
@@ -62,13 +62,13 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/variables";
-  @import "../../../../scss/mixins";
+  @import "../../../../../../scss/variables";
+  @import "../../../../../../scss/mixins";
 
   .date-tabs {
     border-bottom: 1px solid lighten($col-unfocused, 40%);
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .tab-btn {

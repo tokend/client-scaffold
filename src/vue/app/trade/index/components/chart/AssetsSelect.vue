@@ -23,15 +23,15 @@
 </template>
 
 <script>
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectField from '../../../../../common/fields/SelectField'
 
   import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { dispatchAppEvent } from '../../../../js/events/helpers'
-  import { commonEvents } from '../../../../js/events/common_events'
+  import { vuexTypes } from '../../../../../../vuex/types'
+  import { dispatchAppEvent } from '../../../../../../js/events/helpers'
+  import { commonEvents } from '../../../../../../js/events/common_events'
 
   export default {
-    name: 'date-tabs',
+    name: 'assets-select',
     components: { SelectField },
     props: {
 
@@ -88,8 +88,6 @@
     watch: {
       'assets.base' (value) {
         this.assets.quote = this.quoteAssets[0]
-        console.log(this.assets.base)
-        console.log(this.assets.quote)
         const values = {
           base: value,
           quote: this.assets.quote
