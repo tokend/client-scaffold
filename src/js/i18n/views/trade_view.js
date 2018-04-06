@@ -4,5 +4,7 @@ export default {
   tr_base: 'Base',
   tr_quote: 'Quote',
   tr_price: 'Price',
-  tr_created: 'Created'
+  tr_created: 'Created',
+  tr_ask: 'Ask',
+  tr_bid: 'Bid'
 }
