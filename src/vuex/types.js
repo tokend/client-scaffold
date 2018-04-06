@@ -27,7 +27,11 @@ const mutations = {
   UPDATE_TX_LIST_ITEM: 'UPDATE_TX_LIST_ITEM',
 
   // pairs:
-  SET_ASSET_PAIRS: 'SET_ASSET_PAIRS'
+  SET_ASSET_PAIRS: 'SET_ASSET_PAIRS',
+
+  // trades:
+  SET_SELL_OFFERS: 'SET_SELL_OFFERS',
+  SET_BUY_OFFERS: 'SET_BUY_OFFERS'
 }
 
 const actions = {
@@ -59,7 +63,10 @@ const actions = {
   GET_ASSET_PAIRS: 'GET_ASSET_PAIRS',
 
   // trades:
-  GET_TRADES: 'GET_TRADES'
+  GET_TRADES: 'GET_TRADES',
+  GET_SM_OFFERS: 'GET_SM_OFFERS',
+  GET_BUY_OFFERS: 'GET_BUY_OFFERS',
+  GET_SELL_OFFERS: 'GET_SELL_OFFERS'
 }
 
 const getters = {
@@ -106,7 +113,9 @@ const getters = {
   assetPairs: 'assetPairs',
 
   // trades:
-  trades: 'trades'
+  trades: 'trades',
+  buyOffers: 'buyOffers',
+  sellOffers: 'sellOffers'
 }
 
 export const vuexTypes = {

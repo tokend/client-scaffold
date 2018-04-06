@@ -25,7 +25,7 @@
 <script>
   import SelectField from '../../../../../common/fields/SelectField'
 
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
   import { dispatchAppEvent } from '../../../../../../js/events/helpers'
   import { commonEvents } from '../../../../../../js/events/common_events'
@@ -43,9 +43,6 @@
           quote: ''
         }
       }
-    },
-    created () {
-      this.loadAssetPairs()
     },
     computed: {
       ...mapGetters([
@@ -79,11 +76,6 @@
         this.assets.quote = arr[0]
         return arr
       }
-    },
-    methods: {
-      ...mapActions({
-        loadAssetPairs: vuexTypes.GET_ASSET_PAIRS
-      })
     },
     watch: {
       'assets.base' (value) {

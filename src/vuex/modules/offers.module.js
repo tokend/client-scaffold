@@ -91,9 +91,9 @@ const actions = {
     commit(vuexTypes.SET_SELL_OFFERS, offers)
   },
 
-  GET_SM_OFFERS ({ dispatch }) {
-    dispatch(vuexTypes.GET_BUY_OFFERS)
-    dispatch(vuexTypes.GET_SELL_OFFERS)
+  GET_SM_OFFERS ({ dispatch }, pair) {
+    dispatch(vuexTypes.GET_BUY_OFFERS, pair)
+    dispatch(vuexTypes.GET_SELL_OFFERS, pair)
   },
 
   GET_USER_OFFERS ({ state }) {
