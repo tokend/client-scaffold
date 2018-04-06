@@ -106,10 +106,10 @@ const actions = {
     return state.userOffers.next()
   },
 
-  GET_TRADES ({ state }, filters) {
+  GET_TRADES ({ state }, pair) {
     const offersService = new OffersService({})
     state.trades.attachInitLoader(offersService.loadCompletedTrades.bind(offersService))
-    return state.trades.init(filters)
+    return state.trades.init(pair)
   },
 
   NEXT_TRADES ({ state }) {

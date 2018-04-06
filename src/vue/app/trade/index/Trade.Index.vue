@@ -65,12 +65,14 @@
     methods: {
       ...mapActions({
         loadPairs: vuexTypes.GET_ASSET_PAIRS,
-        loadOrders: vuexTypes.GET_SM_OFFERS
+        loadOrders: vuexTypes.GET_SM_OFFERS,
+        loadTrades: vuexTypes.GET_TRADES
       }),
-      async loadData ({ base, quote }) {
+      async loadData (pair) {
         await Promise.all([
-          this.loadOrders({ base, quote }),
-          this.loadPrices({ base, quote })
+          this.loadOrders(pair),
+          this.loadPrices(pair),
+          this.loadTrades(pair)
         ])
       },
       async loadPrices ({base, quote}) {
