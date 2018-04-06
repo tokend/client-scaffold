@@ -16,7 +16,7 @@ import transactions from './modules/transactions.module'
 import user from './modules/user.module'
 import wallet from './modules/wallet.module'
 // import offers from './modules/offers.module'
-// import prices from './modules/prices.module'
+import pairs from './modules/pairs.module'
 // import sales from './modules/sales.module'
 // import withdrawals from './modules/withdrawals.module'
 
@@ -34,9 +34,9 @@ const store = new Vuex.Store({
     tokens,
     transactions,
     user,
-    wallet
+    wallet,
+    pairs
     // offers,
-    // prices,
     // sales,
     // withdrawals
   }

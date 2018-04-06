@@ -1,4 +1,4 @@
-import { PricesService } from './prices.service'
+import { PairsService } from './pairs.service'
 import { mockAccountId, mockResponses } from './test/default.mocks'
 import { mockConvertAmount } from './test/prices.mocks'
 import { mockBaseTokenCode, mockQuoteTokenCode } from './test/offers.mocks'
@@ -7,11 +7,11 @@ import { Keypair } from 'swarm-js-sdk'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 
-describe('prices.service test', () => {
-  let pricesService
+describe('pairs.service test', () => {
+  let pairsService
 
   beforeEach(() => {
-    pricesService = new PricesService({accountId: mockAccountId, keypair: Keypair.random()})
+    pairsService = new PairsService({accountId: mockAccountId, keypair: Keypair.random()})
 
   })
 
@@ -20,7 +20,7 @@ describe('prices.service test', () => {
   it('loadAssetPairs() should properly build request url', () => {
     const prefix = `asset_pairs`
     return ServiceTestHelper.doAxiosMockedRequest(
-      () => pricesService.loadAssetPairs(),
+      () => pairsService.loadAssetPairs(),
       prefix,
       mockResponses[prefix]
     )
@@ -28,9 +28,9 @@ describe('prices.service test', () => {
 
   it('loadConvertedAmount() should properly build request url', () => {
     const prefix = `asset_pairs/convert?amount=${mockConvertAmount}&source_asset=${mockBaseTokenCode}&dest_asset=${mockQuoteTokenCode}`
-    // pricesService.loadConvertedAmount('1000', 'a', 'b')
+    // pairsService.loadConvertedAmount('1000', 'a', 'b')
     return ServiceTestHelper.doAxiosMockedRequest(
-      () => pricesService.loadConvertedAmount(mockConvertAmount, mockBaseTokenCode, mockQuoteTokenCode),
+      () => pairsService.loadConvertedAmount(mockConvertAmount, mockBaseTokenCode, mockQuoteTokenCode),
       prefix,
       mockResponses[prefix]
     )

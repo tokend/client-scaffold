@@ -24,7 +24,10 @@ const mutations = {
   // transactions:
   SET_TX_LIST_INITIALIZED: 'SET_TX_LIST_INITIALIZED',
   UPDATE_TX_LIST: 'UPDATE_TX_LIST',
-  UPDATE_TX_LIST_ITEM: 'UPDATE_TX_LIST_ITEM'
+  UPDATE_TX_LIST_ITEM: 'UPDATE_TX_LIST_ITEM',
+
+  // pairs:
+  SET_ASSET_PAIRS: 'SET_ASSET_PAIRS'
 }
 
 const actions = {
@@ -50,7 +53,10 @@ const actions = {
   INIT_TX_LIST: 'INIT_TX_LIST',
   GET_TX_LIST: 'GET_TX_LIST',
   NEXT_TX_LIST: 'NEXT_TX_LIST',
-  UPDATE_TX_COUNTERPARTIES: 'UPDATE_TX_COUNTERPARTIES'
+  UPDATE_TX_COUNTERPARTIES: 'UPDATE_TX_COUNTERPARTIES',
+
+  // pairs:
+  GET_ASSET_PAIRS: 'GET_ASSET_PAIRS'
 }
 
 const getters = {
@@ -91,7 +97,10 @@ const getters = {
   userKycDocuments: 'userKycDocuments',
 
   // transactions:
-  transactions: 'transactions'
+  transactions: 'transactions',
+
+  // pairs
+  assetPairs: 'assetPairs'
 }
 
 export const vuexTypes = {
