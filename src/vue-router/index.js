@@ -19,14 +19,14 @@ import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
 import Wallet from '../vue/app/wallet/Wallet.Entry'
 import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
 
-// import Deposit from '../vue/app/deposit/Deposit.Entry'
-// import DepositMake from '../vue/app/deposit/make/Deposit.Make'
+import Deposit from '../vue/app/deposit/Deposit.Entry'
+import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 
 import Transfers from '../vue/app/transfers/Transfers.Entry'
 import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
 
-// import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
-// import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
+import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
+import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
 
 import History from '../vue/app/history/History.Entry'
 import HistoryIndex from '../vue/app/history/index/History.Index'
@@ -108,19 +108,19 @@ const router = new Router({
             }
           ]
         },
-        // {
-        //   name: 'app.deposit',
-        //   path: '/deposit',
-        //   component: Deposit,
-        //   redirect: { path: '/deposit/make' },
-        //   children: [
-        //     {
-        //       path: '/deposit/make',
-        //       name: 'deposit.make',
-        //       component: DepositMake
-        //     }
-        //   ]
-        // },
+        {
+          name: 'app.deposit',
+          path: '/deposit',
+          component: Deposit,
+          redirect: { path: '/deposit/make' },
+          children: [
+            {
+              path: '/deposit/make',
+              name: 'deposit.make',
+              component: DepositMake
+            }
+          ]
+        },
         {
           name: 'app.transfers',
           path: '/transfers',
@@ -134,19 +134,19 @@ const router = new Router({
             }
           ]
         },
-        // {
-        //   name: 'app.withdrawal',
-        //   path: '/withdrawal',
-        //   component: Withdrawal,
-        //   redirect: { path: '/withdrawal/make' },
-        //   children: [
-        //     {
-        //       path: '/withdrawal/make',
-        //       name: 'withdrawal.make',
-        //       component: WithdrawalMake
-        //     }
-        //   ]
-        // },
+        {
+          name: 'app.withdrawal',
+          path: '/withdrawal',
+          component: Withdrawal,
+          redirect: { path: '/withdrawal/make' },
+          children: [
+            {
+              path: '/withdrawal/make',
+              name: 'withdrawal.make',
+              component: WithdrawalMake
+            }
+          ]
+        },
         {
           name: 'app.history',
           path: '/history',

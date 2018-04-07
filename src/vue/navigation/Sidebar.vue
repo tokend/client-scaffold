@@ -6,15 +6,15 @@
         <span class="md-list-item-text">{{ i18n.lbl_dashboard() }}</span>
       </md-list-item>
 
-      <!--<md-list-item @click="closeSidebar" to="/deposit">-->
-        <!--<md-icon>file_download</md-icon>-->
-        <!--<span class="md-list-item-text">{{ i18n.lbl_deposit() }}</span>-->
-      <!--</md-list-item>-->
+      <md-list-item @click="closeSidebar" to="/deposit">
+        <md-icon>file_download</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_deposit() }}</span>
+      </md-list-item>
 
-      <!--<md-list-item @click="closeSidebar" to="/withdrawal">-->
-        <!--<md-icon>file_upload</md-icon>-->
-        <!--<span class="md-list-item-text">{{ i18n.lbl_withdraw() }}</span>-->
-      <!--</md-list-item>-->
+      <md-list-item @click="closeSidebar" to="/withdrawal">
+        <md-icon>file_upload</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_withdraw() }}</span>
+      </md-list-item>
 
       <md-list-item @click="closeSidebar" to="/transfers">
         <md-icon>send</md-icon>
