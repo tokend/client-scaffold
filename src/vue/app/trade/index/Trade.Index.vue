@@ -6,8 +6,8 @@
         :needStats="false"
         :precision="common.precision"
         :assets="filters"
-        v-on:assets-base-changed="priceHistoryAssetsChanged($event)"
-        v-on:assets-quote-changed="priceHistoryAssetsChanged($event)"
+        v-on:assets-base-changed="handleAssetChange"
+        v-on:assets-quote-changed="handleAssetChange"
       />
       <trade-history :assets="filters" class="md-layout-item md-size-48"/>
     </div>
@@ -33,64 +33,61 @@
   import { errors } from '../../../../js/errors/factory'
   import config from '../../../../config'
 
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
-  import { RecordTypes } from '../../../../js/records/types'
-  import { DEFAULT_SELECTED_ASSET, DEFAULT_BASE_ASSET } from '../../../../js/const/configs.const'
   import { attachEventHandler } from '../../../../js/events/helpers'
   import { commonEvents } from '../../../../js/events/common_events'
-  import get from 'lodash/get'
 
   export default {
     name: 'trade-index',
     components: { Chart, TradeHistory, TradeOrders, Orders },
     data: _ => ({
       history: {},
-      tokenCode: DEFAULT_SELECTED_ASSET,
+      tokenCode: '',
       filters: {
-        base: DEFAULT_SELECTED_ASSET,
-        quote: DEFAULT_BASE_ASSET
+        base: '',
+        quote: ''
       },
       common: {
         precision: config.DECIMAL_POINTS
-      },
-      assetPairs: null
+      }
     }),
-    created () {
-      this.getPriceHistory()
-      attachEventHandler(commonEvents.changePairsAsset, this.priceHistoryAssetsChanged)
+    async created () {
+      await this.loadPairs()
+      await this.loadData(this.assetPairs[0])
+      attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
     },
     computed: {
       ...mapGetters([
-        vuexTypes.transactions,
-        vuexTypes.userWalletTokens
-      ]),
-      list () {
-        return (get(this.transactions, `${this.tokenCode}.records`) || [])
-          .reduce((list, item) => {
-            if (item instanceof RecordTypes.MatchRecord) {
-              item.transactions.forEach(tx => { list.push(tx) })
-              return list
-            }
-            list.push(item)
-            return list
-          }, [])
-      }
+        vuexTypes.assetPairs
+      ])
     },
     methods: {
-      async getPriceHistory () {
+      ...mapActions({
+        loadPairs: vuexTypes.GET_ASSET_PAIRS,
+        loadOrders: vuexTypes.GET_SM_OFFERS,
+        loadTrades: vuexTypes.GET_TRADES
+      }),
+      async loadData (pair) {
+        await Promise.all([
+          this.loadOrders(pair),
+          this.loadPrices(pair),
+          this.loadTrades(pair)
+        ])
+      },
+      async loadPrices ({base, quote}) {
         try {
-          this.history = (await chartsService.loadChartsForTokenPair(this.filters.base, this.filters.quote)).data()
+          this.history = (await chartsService.loadChartsForTokenPair(base, quote)).data()
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             console.log('error')
           }
         }
       },
-      priceHistoryAssetsChanged (payload) {
+      handleAssetChange (payload) {
         this.filters.base = payload.base
         this.filters.quote = payload.quote
-        this.getPriceHistory()
+        this.loadData(this.filters)
       }
     }
   }

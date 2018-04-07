@@ -6,9 +6,9 @@
       </md-table-toolbar>
 
       <md-table-row>
-        <md-table-head>Amount ({{ filters.base }})</md-table-head>
-        <md-table-head>Price ({{ filters.quote }})</md-table-head>
-        <md-table-head>Total ({{ filters.quote }})</md-table-head>
+        <md-table-head>Amount ({{ assets.base }})</md-table-head>
+        <md-table-head>Price ({{ assets.quote }})</md-table-head>
+        <md-table-head>Total ({{ assets.quote }})</md-table-head>
         <md-table-head>Time</md-table-head>
       </md-table-row>
 
@@ -33,10 +33,8 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
-  import { attachEventHandler } from '../../../../../../js/events/helpers'
-  import { commonEvents } from '../../../../../../js/events/common_events'
 
   export default {
     name: 'trade-history',
@@ -48,18 +46,8 @@
     },
     data () {
       return {
-        filters: {
-          base: this.assets.base,
-          quote: this.assets.quote
-        },
         maxLengthOfTradeHistory: 10
       }
-    },
-    created () {
-      this.loadTradeHistory(this.filters)
-      attachEventHandler(commonEvents.changePairsAsset, this.priceHistoryAssetsChanged)
-    },
-    mounted () {
     },
     computed: {
       ...mapGetters([
@@ -91,14 +79,6 @@
       }
     },
     methods: {
-      ...mapActions({
-        loadTradeHistory: vuexTypes.GET_TRADES
-      }),
-      priceHistoryAssetsChanged (payload) {
-        this.filters.base = payload.base
-        this.filters.quote = payload.quote
-        this.loadTradeHistory(this.filters)
-      },
       toValidDate (date) {
         return new Date(date).toLocaleString('en-US', {
           hour: 'numeric',
