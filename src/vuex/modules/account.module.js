@@ -1,8 +1,10 @@
-import { vuexTypes } from '../types'
 import { StateHelper } from '../helpers/state.helper'
-import { RecordFactory } from '../../js/records/factory'
-import { accountsService } from '../../js/services/accounts.service'
+import { vuexTypes } from '../types'
 import { Keypair } from 'swarm-js-sdk'
+import { RecordFactory } from '../../js/records/factory'
+
+import { accountsService } from '../../js/services/accounts.service'
+import { reviewableRequestsService } from '../../js/services/reviewable_requests.service'
 
 export const state = {
   account: {
@@ -13,7 +15,9 @@ export const state = {
     accountId: '',
     publicKey: '',
     seed: ''
-  }
+  },
+  // kyc:
+  kycRequests: []
 }
 
 export const mutations = {
@@ -27,6 +31,10 @@ export const mutations = {
 
   SET_ACCOUNT_BALANCES (state, balances) {
     state.balances = balances
+  },
+
+  SET_ACCOUNT_KYC_REQUESTS (state, requests) {
+    state.kycRequests = requests
   }
 }
 
@@ -36,6 +44,11 @@ export const actions = {
   },
   async GET_ACCOUNT_BALANCES ({ commit }) {
     commit(vuexTypes.SET_ACCOUNT_BALANCES, await accountsService.loadDetailsForEachBalance())
+  },
+
+  async GET_ACCOUNT_KYC_REQUESTS ({ commit }) {
+    const requests = await reviewableRequestsService.loadKycReviewableRequests()
+    commit(vuexTypes.SET_ACCOUNT_KYC_REQUESTS, requests.records.map(record => RecordFactory.createKycRequestRecord(record)))
   }
 }
 
@@ -52,7 +65,9 @@ export const getters = {
   accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
-      .reduce((accounts, account) => { accounts[account.asset] = account.address; return accounts }, {})
+      .reduce((accounts, account) => { accounts[account.asset] = account.address; return accounts }, {}),
+  // kyc:
+  accountKycRequests: state => state.kycRequests
 }
 
 export default {

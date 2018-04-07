@@ -16,8 +16,7 @@
     name: 'verification-make',
     components: { IndividualForm, StateBanner },
     async created () {
-      await this.loadUser()
-      await this.loadUserKyc(this.userKycSequence)
+      this.loadKycRequests()
     },
     computed: {
       ...mapGetters([
@@ -27,7 +26,8 @@
     methods: {
       ...mapActions({
         loadUser: vuexTypes.GET_USER_DETAILS,
-        loadUserKyc: vuexTypes.GET_USER_KYC
+        loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
+        loadAccountKyc: vuexTypes.GET_ACCOUNT_KYC
       })
     }
   }

@@ -1,3 +1,4 @@
+import { KycRequestRecord } from './kyc_request.record'
 import { TransferRecord } from './transfer.record'
 import { TokenRecord } from './token.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
@@ -48,5 +49,9 @@ export class RecordFactory {
 
   static createTradeRecord () {
     return new TradeRecord(...arguments)
+  }
+
+  static createKycRequestRecord () {
+    return new KycRequestRecord(...arguments)
   }
 }
