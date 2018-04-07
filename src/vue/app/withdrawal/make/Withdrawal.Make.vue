@@ -19,9 +19,14 @@
           </md-card-header>
 
           <md-card-content>
-            <p class="withdraw__explanations" v-if="form.tokenCode !== 'SWM'">
-              {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}.
-              {{ i18n.withdraw_minimal() }}.
+            <p class="withdraw__explanations" >
+              <template v-if="minAmounts[form.tokenCode]">
+                {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}.
+                {{ i18n.withdraw_minimal() }}.
+              </template>
+              <template v-else>
+                {{  i18n.withdraw_network_fee()  }}
+              </template>
             </p>
 
             <div class="md-layout withdraw__flex-wrapper">
