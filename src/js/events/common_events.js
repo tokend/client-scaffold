@@ -45,7 +45,8 @@ const componentEvents = Object.freeze({
   formChangeEvent: 'form-change',
   formResetEvent: 'form-reset',
   cancelOfferEvent: 'cancel-offer',
-  makeOfferEvent: 'make-offer'
+  makeOfferEvent: 'make-offer',
+  assetChangeEvent: 'asset-change'
 })
 
 export const commonEvents = {

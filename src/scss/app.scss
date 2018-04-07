@@ -124,6 +124,18 @@ input:-webkit-autofill {
   padding: 30px 31px;
 }
 
+.app__no-data-msg {
+  text-align: center;
+
+  .md-icon {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-top: 10px;
+  }
+}
+
 .text-align-left {
   text-align: left;
 }

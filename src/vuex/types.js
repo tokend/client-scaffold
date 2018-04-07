@@ -87,6 +87,7 @@ const getters = {
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',
+  userWithdrawableTokens: 'userWithdrawableTokens',
   userKycDetails: 'userKycDetails',
   userKycDocuments: 'userKycDocuments',
 
