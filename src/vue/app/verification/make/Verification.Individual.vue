@@ -178,7 +178,7 @@
   import { documentTypes } from '../../../../js/const/documents.const'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
-  import isEmpty from 'lodash/isEmpty'
+  import get from 'lodash/get'
 
   export default {
     name: 'verification-individual',
@@ -207,9 +207,7 @@
       i18n
     }),
     created () {
-      if (!isEmpty(this.userKycDetails)) {
-        this.stubDetails()
-      }
+      this.stubDetails()
     },
     computed: {
       ...mapGetters([
@@ -272,7 +270,9 @@
       stubDetails () {
         const details = this.userKycDetails
         const documents = this.userKycDocuments
-        this.form = details
+        if (get(details, 'address.line_1')) {
+          this.form = details
+        }
         Object.keys(documents)
           .forEach(documentType => {
             this.documents[documentType] = documents[documentType]
