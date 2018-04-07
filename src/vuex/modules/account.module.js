@@ -6,6 +6,8 @@ import { RecordFactory } from '../../js/records/factory'
 import { accountsService } from '../../js/services/accounts.service'
 import { reviewableRequestsService } from '../../js/services/reviewable_requests.service'
 
+import { ACCOUNT_STATES } from '../../js/const/account.const'
+
 export const state = {
   account: {
     external_system_accounts: []
@@ -67,7 +69,9 @@ export const getters = {
       .map(account => RecordFactory.createExternalAccountRecord(account))
       .reduce((accounts, account) => { accounts[account.asset] = account.address; return accounts }, {}),
   // kyc:
-  accountKycRequests: state => state.kycRequests
+  accountKycRequests: state => state.kycRequests,
+  accountKycLatestRequest: state => StateHelper.defineLatestKycRequest(state),
+  accountState: (state, getters) => ACCOUNT_STATES[getters.accountKycLatestRequest.state] || ACCOUNT_STATES.nil
 }
 
 export default {
