@@ -11,11 +11,10 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.price"
-              :label="`Price per ${filters.quote}`"
+              :label="`Price per ${assets.quote}`"
               name="order-buy-price"
               v-validate="'required'"
               type="number"
-              placeholder="0"
               vvValidateOn="change"
               :errorMessage="(allowToValidPrice && (Number(form.price) === 0 || Number(form.price) < 0)  ? 'Price must be more than 0' : '')"
             />
@@ -27,11 +26,10 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.amount"
-              :label="`Amount ${filters.base}`"
+              :label="`Amount ${assets.base}`"
               name="order-buy-amount"
               v-validate="'required'"
               type="number"
-              placeholder="0"
               :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? 'Minimal amount is 0.000001' : ''"
             />
           </div>
@@ -42,9 +40,8 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.quoteAmount"
-              :label="`Total ${filters.quote}`"
+              :label="`Total ${assets.quote}`"
               name="order-buy-total"
-              placeholder="0"
               :disabled="true"
             />
           </div>
@@ -59,7 +56,7 @@
 </template>
 
 <script>
-  import { attachEventHandler, dispatchAppEvent } from '../../../../../../js/events/helpers'
+  import { dispatchAppEvent } from '../../../../../../js/events/helpers'
   import { commonEvents } from '../../../../../../js/events/common_events'
   import formMixin from '../../../../../common/mixins/form.mixin'
   import InputField from '../../../../../common/fields/InputField'
@@ -90,17 +87,12 @@
           amount: '',
           quoteAmount: ''
         },
-        filters: {
-          base: this.assets.base,
-          quote: this.assets.quote
-        },
         allowToValidPrice: false,
         allowToValidAmount: false,
         i18n
       }
     },
     created () {
-      attachEventHandler(commonEvents.changePairsAsset, this.priceHistoryAssetsChanged)
     },
     computed: {
       ...mapGetters([
@@ -117,29 +109,24 @@
       getQuoteAmount () {
         this.form.quoteAmount = this.form.price * this.form.amount
       },
-      priceHistoryAssetsChanged (payload) {
-        this.filters.base = payload.base
-        this.filters.quote = payload.quote
-      },
       async submit () {
         this.allowToValidPrice = true
         this.allowToValidAmount = true
         if (!await this.isValid()) return
         if (!await confirmAction()) return
         this.errors.clear()
-        console.log(this.accountBalances)
 
-        if (!this.accountBalances[this.filters.base]) {
-          await accountsService.createBalance(this.filters.base)
+        if (!this.accountBalances[this.assets.base]) {
+          await accountsService.createBalance(this.assets.base)
           await this.loadBalances()
         }
 
-        if (!this.accountBalances[this.filters.quote]) {
-          await accountsService.createBalance(this.filters.quote)
+        if (!this.accountBalances[this.assets.quote]) {
+          await accountsService.createBalance(this.assets.quote)
           await this.loadBalances()
         }
 
-        if (Number(this.accountBalances[this.filters.quote].balance) < Number(this.form.quoteAmount)) {
+        if (Number(this.accountBalances[this.assets.quote].balance) < Number(this.form.quoteAmount)) {
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
           return
         }
@@ -150,8 +137,8 @@
           price: this.form.price,
           orderBookId: SECONDARY_MARKET_ORDER_BOOK_ID,
           isBuy: true,
-          baseBalance: this.accountBalances[this.filters.base].balance_id,
-          quoteBalance: this.accountBalances[this.filters.quote].balance_id,
+          baseBalance: this.accountBalances[this.assets.base].balance_id,
+          quoteBalance: this.accountBalances[this.assets.quote].balance_id,
           fee: fee.percent
         }
         this.disable()
@@ -167,7 +154,7 @@
         this.resetForm()
       },
       loadFee () {
-        return feeService.loadOfferFeeByAmount(this.filters.quote, this.form.quoteAmount)
+        return feeService.loadOfferFeeByAmount(this.assets.quote, this.form.quoteAmount)
       },
       resetForm () {
         this.form.price = ''

@@ -11,5 +11,10 @@ export default {
   trd_offer_created: 'Offer successfully created',
   trd_offer_failed_to_cancel: 'Failed to cancel offer',
   trd_order_not_enough_funds: 'Not enough funds!',
-  trd_some_went_wrong: 'Something went wrong!'
+  trd_some_went_wrong: 'Something went wrong!',
+  trd_no_trade_history: 'No trade history',
+  trd_no_orders_history: 'No orders',
+  trd_here_will_be_the_list: 'Here will be the list of your trades',
+  trd_here_will_be_the_order_list: 'Here will be the list of current orders',
+  trd_here_will_be_the_order_ask_bid_list: 'Here will be the list of current asks/bids'
 }

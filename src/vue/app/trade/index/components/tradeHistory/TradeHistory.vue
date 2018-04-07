@@ -1,40 +1,52 @@
 <template>
   <div class="trade-history">
-    <md-table md-card>
-      <md-table-toolbar>
-        <h2 class="md-title">Trade History</h2>
-      </md-table-toolbar>
+    <template v-if="validatedTrades.length">
+      <md-table md-card>
+        <md-table-toolbar>
+          <h2 class="md-title">Trade History</h2>
+        </md-table-toolbar>
 
-      <md-table-row>
-        <md-table-head>Amount ({{ assets.base }})</md-table-head>
-        <md-table-head>Price ({{ assets.quote }})</md-table-head>
-        <md-table-head>Total ({{ assets.quote }})</md-table-head>
-        <md-table-head>Time</md-table-head>
-      </md-table-row>
+        <md-table-row>
+          <md-table-head>Amount ({{ assets.base }})</md-table-head>
+          <md-table-head>Price ({{ assets.quote }})</md-table-head>
+          <md-table-head>Total ({{ assets.quote }})</md-table-head>
+          <md-table-head>Time</md-table-head>
+        </md-table-row>
 
-      <md-table-row v-for="(item, i) in validatedTrades" v-bind:key="i" :class="`trade-history__item-status--${item.priceStatus}`">
-        <template v-if="i < maxLengthOfTradeHistory">
-          <md-table-cell>{{ item.baseAmount }}</md-table-cell>
-          <md-table-cell class="trade-history__item-price">
-            {{ item.price }}
-            <template v-if="item.priceStatus === 0">
-              <md-icon>call_received</md-icon>
-            </template>
-            <template v-if="item.priceStatus === 1">
-              <md-icon>call_made</md-icon>
-            </template>
-          </md-table-cell>
-          <md-table-cell class="trade-history__item-total">{{ item.baseAmount * item.price }}</md-table-cell>
-          <md-table-cell class="trade-history__item-date">{{ toValidDate(item.createdAt) }}</md-table-cell>
-        </template>
-      </md-table-row>
-    </md-table>
+        <md-table-row v-for="(item, i) in validatedTrades" v-bind:key="i" :class="`trade-history__item-status--${item.priceStatus}`">
+          <template v-if="i < maxLengthOfTradeHistory">
+            <md-table-cell>{{ item.baseAmount }}</md-table-cell>
+            <md-table-cell class="trade-history__item-price">
+              {{ item.price }}
+              <template v-if="item.priceStatus === 0">
+                <md-icon>call_received</md-icon>
+              </template>
+              <template v-if="item.priceStatus === 1">
+                <md-icon>call_made</md-icon>
+              </template>
+            </md-table-cell>
+            <md-table-cell class="trade-history__item-total">{{ item.baseAmount * item.price }}</md-table-cell>
+            <md-table-cell class="trade-history__item-date">{{ toValidDate(item.createdAt) }}</md-table-cell>
+          </template>
+        </md-table-row>
+      </md-table>
+    </template>
+    <template v-else>
+      <md-card class="trade-history trade-history--empty">
+        <div class="trade-history__no-transactions">
+          <md-icon class="md-size-4x">trending_up</md-icon>
+          <h2>{{ i18n.trd_no_trade_history() }}</h2>
+          <p>{{ i18n.trd_here_will_be_the_list() }}</p>
+        </div>
+      </md-card>
+    </template>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
+  import { i18n } from '../../../../../../js/i18n'
 
   export default {
     name: 'trade-history',
@@ -46,7 +58,8 @@
     },
     data () {
       return {
-        maxLengthOfTradeHistory: 10
+        maxLengthOfTradeHistory: 10,
+        i18n
       }
     },
     computed: {
@@ -123,5 +136,18 @@
   }
   .trade-history__item-price .md-icon {
     font-size: 14px !important;
+  }
+  .trade-history__no-transactions {
+    padding: 0 16px 32px;
+    text-align: center;
+
+    p {
+      margin-top: 10px;
+    }
+  }
+  .trade-history--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

@@ -15,21 +15,20 @@
             :isPending="isPending"
           />
           <assets-select class="md-layout-item md-size-35"
-            :baseAssets="baseAssets"
-            :quoteAssets="quoteAssets"
+            :pairs="pairs"
             :assets="assets"
           />
         </div>
 
         <statistics-widget v-if="needStats"
           :data="history.map(item => item.value)"
-          :asset="assets.quote"
+          :asset="assets.split('/')[1]"
           :action="action"
           :currentCap="currentCap"
           :scale="scale" :isPending="isPending"
         />
 
-        <d3-chart :data="history" :currency="assets.quote" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
+        <d3-chart :data="history" :currency="assets.split('/')[1]" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
         <div class="chart-container__loader" v-else>Loading...</div>
 
       </div>
@@ -60,7 +59,7 @@
         required: true
       },
       assets: {
-        type: Object,
+        type: String,
         required: false
       },
       action: {
@@ -87,12 +86,7 @@
         type: Number,
         default: 0
       },
-      baseAssets: {
-        type: Array,
-        require: true,
-        default: []
-      },
-      quoteAssets: {
+      pairs: {
         type: Array,
         require: true,
         default: []

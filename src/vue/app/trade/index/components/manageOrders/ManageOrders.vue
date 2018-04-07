@@ -5,40 +5,49 @@
         <h2 class="md-title">Manage orders</h2>
       </md-card-header>
       <md-card-content>
-        <md-table md-card class="manage-orders__table md-elevation-0">
-          <md-table-row class="manage-orders__row">
-            <md-table-head>Data</md-table-head>
-            <md-table-head>Marken</md-table-head>
-            <md-table-head>Order</md-table-head>
-            <md-table-head>Base asset amount</md-table-head>
-            <md-table-head>Price in quote asset</md-table-head>
-          </md-table-row>
-
-          <template v-for="(order, i) in reversedUserOffers">
-            <md-table-row class="manage-orders__row" @click="toggleDetails(i)" v-bind:key="`${i}-row`">
-              <md-table-cell class="manage-orders__table-cell">{{ i18n.d(order.createdAt) }}</md-table-cell>
-              <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell>
-              <md-table-cell class="manage-orders__table-cell">{{ order.isBuy ? 'Buy' : 'Sell' }}</md-table-cell>
-              <md-table-cell class="manage-orders__table-cell">{{ order.baseAmount }}</md-table-cell>
-              <md-table-cell class="manage-orders__table-cell">{{ order.price }}</md-table-cell>
-              <md-table-cell>
-                <md-button class="manage-orders__open-details-btn md-icon-button">
-                  <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
-                  <md-icon v-else>keyboard_arrow_down</md-icon>
-                </md-button>
-              </md-table-cell>
-
+        <template v-if="reversedUserOffers.length">
+          <md-table md-card class="manage-orders__table md-elevation-0">
+            <md-table-row class="manage-orders__row">
+              <md-table-head>Data</md-table-head>
+              <md-table-head>Marken</md-table-head>
+              <md-table-head>Order</md-table-head>
+              <md-table-head>Base asset amount</md-table-head>
+              <md-table-head>Price in quote asset</md-table-head>
             </md-table-row>
 
-            <md-table-row class="manage-orders__expandable-row" v-if="isSelected(i)" v-bind:key="`${i}-expand`">
-              <md-table-cell colspan="7">
-                <order-details class="manage-orders__details" :tx="order"/>
-              </md-table-cell>
-            </md-table-row>
+            <template v-for="(order, i) in reversedUserOffers">
+              <md-table-row class="manage-orders__row" @click="toggleDetails(i)" v-bind:key="`${i}-row`">
+                <md-table-cell class="manage-orders__table-cell">{{ i18n.d(order.createdAt) }}</md-table-cell>
+                <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell>
+                <md-table-cell class="manage-orders__table-cell">{{ order.isBuy ? 'Buy' : 'Sell' }}</md-table-cell>
+                <md-table-cell class="manage-orders__table-cell">{{ order.baseAmount }}</md-table-cell>
+                <md-table-cell class="manage-orders__table-cell">{{ order.price }}</md-table-cell>
+                <md-table-cell>
+                  <md-button class="manage-orders__open-details-btn md-icon-button">
+                    <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
+                    <md-icon v-else>keyboard_arrow_down</md-icon>
+                  </md-button>
+                </md-table-cell>
 
-          </template>
+              </md-table-row>
 
-        </md-table>
+              <md-table-row class="manage-orders__expandable-row" v-if="isSelected(i)" v-bind:key="`${i}-expand`">
+                <md-table-cell colspan="7">
+                  <order-details class="manage-orders__details" :tx="order"/>
+                </md-table-cell>
+              </md-table-row>
+
+            </template>
+
+          </md-table>
+        </template>
+        <template v-else>
+          <div class="manage-orders__no-transactions">
+            <md-icon class="md-size-4x">trending_up</md-icon>
+            <h2>{{ i18n.trd_no_orders_history() }}</h2>
+            <p>{{ i18n.trd_here_will_be_the_order_list() }}</p>
+          </div>
+        </template>
       </md-card-content>
     </md-card>
   </div>
@@ -87,5 +96,12 @@
 <style lang="scss" scoped>
   .manage-orders__details {
     max-width: 400px;
+  }
+  .manage-orders__row {
+    cursor: pointer;
+  }
+  .manage-orders__no-transactions {
+    padding: 24px;
+    text-align: center;
   }
 </style>

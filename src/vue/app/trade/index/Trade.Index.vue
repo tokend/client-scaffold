@@ -1,13 +1,12 @@
 <template>
   <div class="trade">
-    <div class="md-layout">
+    <div class="md-layout" v-if="!filters.base !== ''">
       <chart class="trade__chart md-size-50 md-layout-item"
         :data="history"
-        :baseAssets="baseAssets"
-        :quoteAssets="quoteAssets"
+        :pairs="fullAssetPairs"
         :needStats="false"
         :precision="common.precision"
-        :assets="filters"
+        :assets="customAssetPair"
         v-on:assets-base-changed="handleAssetChange"
         v-on:assets-quote-changed="handleAssetChange"
       />
@@ -61,6 +60,7 @@
         base: '',
         quote: ''
       },
+      customAssetPair: '',
       common: {
         precision: config.DECIMAL_POINTS
       }
@@ -72,32 +72,21 @@
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-      this.filters.base = this.baseAssets[0]
-      this.filters.quote = this.quoteAssets[0]
+      this.filters.base = this.fullAssetPairs[0].split('/')[0]
+      this.filters.quote = this.fullAssetPairs[0].split('/')[1]
+      this.customAssetPair = this.fullAssetPairs[0]
+      console.log(this.fullAssetPairs[0])
     },
     computed: {
       ...mapGetters([
         vuexTypes.assetPairs,
         vuexTypes.userOffers
       ]),
-      baseAssets () {
+      fullAssetPairs () {
         let arr = []
         if (this.assetPairs !== null) {
           for (let el of this.assetPairs) {
-            if (!arr.some(item => item === el.base)) {
-              arr.push(el.base)
-            }
-          }
-        }
-        return arr
-      },
-      quoteAssets () {
-        let arr = []
-        if (this.assetPairs !== null) {
-          for (let el of this.assetPairs) {
-            if (this.filters.base === el.base) {
-              arr.push(el.quote)
-            }
+            arr.push(`${el.base}/${el.quote}`)
           }
         }
         return arr
@@ -127,8 +116,9 @@
         }
       },
       handleAssetChange (payload) {
-        this.filters.base = payload.base
-        this.filters.quote = payload.quote
+        this.filters.base = payload.split('/')[0]
+        this.filters.quote = payload.split('/')[1]
+        this.customAssetPair = payload
         this.loadData(this.filters)
       },
       handleCancelOrder () {

@@ -2,20 +2,12 @@
   <div class="assets-select">
 
     <div class="md-layout">
-      <template v-if="baseAssets.length && quoteAssets.length">
+      <template v-if="pairs.length">
         <select-field
           class="md-layout-item assets-select__select"
-          label="Base asset"
-          :values="baseAssets"
-          v-model="assets.base"
-        />
-
-        <select-field
-          class="md-layout-item assets-select__select"
-          label="Quote asset"
-          :values="quoteAssets"
-          v-model="assets.quote"
-          ref="select"
+          label="Assets"
+          :values="pairs"
+          v-model="currentAsset"
         />
       </template>
     </div>
@@ -34,15 +26,10 @@
     components: { SelectField },
     props: {
       assets: {
-        type: Object,
+        type: String,
         required: false
       },
-      baseAssets: {
-        type: Array,
-        require: true,
-        default: []
-      },
-      quoteAssets: {
+      pairs: {
         type: Array,
         require: true,
         default: []
@@ -50,19 +37,22 @@
     },
     data () {
       return {
+        currentAsset: ''
       }
     },
     mounted () {
     },
     computed: {
+      computedPropAssets () {
+        return this.assets
+      }
     },
     watch: {
-      'assets.base' (value) {
-        this.assets.quote = this.quoteAssets[0]
-        dispatchAppEvent(commonEvents.changePairsAsset, this.assets)
+      'currentAsset' (value) {
+        dispatchAppEvent(commonEvents.changePairsAsset, value)
       },
-      'assets.quote' (value) {
-        dispatchAppEvent(commonEvents.changePairsAsset, this.assets)
+      computedPropAssets (val) {
+        this.currentAsset = val
       }
     }
   }

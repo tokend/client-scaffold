@@ -15,7 +15,6 @@
               name="order-buy-price"
               v-validate="'required'"
               type="number"
-              placeholder="0"
               vvValidateOn="change"
               :errorMessage="(allowToValidPrice && (Number(form.price) === 0 || Number(form.price) < 0)  ? 'Price must be more than 0' : '')"
             />
@@ -31,7 +30,6 @@
               name="order-buy-amount"
               v-validate="'required'"
               type="number"
-              placeholder="0"
               vvValidateOn="change"
               :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? 'Minimal amount is 0.000001' : ''"
             />
@@ -45,7 +43,6 @@
               v-model.trim="form.quoteAmount"
               :label="`Total ${filters.quote}`"
               name="order-buy-total"
-              placeholder="0"
               :disabled="true"
             />
           </div>
@@ -60,7 +57,7 @@
 </template>
 
 <script>
-  import { attachEventHandler, dispatchAppEvent } from '../../../../../../js/events/helpers'
+  import { dispatchAppEvent } from '../../../../../../js/events/helpers'
   import { commonEvents } from '../../../../../../js/events/common_events'
   import formMixin from '../../../../../common/mixins/form.mixin'
   import InputField from '../../../../../common/fields/InputField'
@@ -101,7 +98,6 @@
       }
     },
     created () {
-      attachEventHandler(commonEvents.changePairsAsset, this.priceHistoryAssetsChanged)
     },
     computed: {
       ...mapGetters([
@@ -118,10 +114,6 @@
       getQuoteAmount () {
         this.form.quoteAmount = this.form.price * this.form.amount
       },
-      priceHistoryAssetsChanged (payload) {
-        this.filters.base = payload.base
-        this.filters.quote = payload.quote
-      },
       async submit () {
         this.allowToValidPrice = true
         this.allowToValidAmount = true
@@ -129,17 +121,17 @@
         if (!await confirmAction()) return
         this.errors.clear()
 
-        if (!this.accountBalances[this.filters.base]) {
-          await accountsService.createBalance(this.filters.base)
+        if (!this.accountBalances[this.assets.base]) {
+          await accountsService.createBalance(this.assets.base)
           await this.loadBalances()
         }
 
-        if (!this.accountBalances[this.filters.quote]) {
-          await accountsService.createBalance(this.filters.quote)
+        if (!this.accountBalances[this.assets.quote]) {
+          await accountsService.createBalance(this.assets.quote)
           await this.loadBalances()
         }
 
-        if (Number(this.accountBalances[this.filters.base].balance) < Number(this.form.quoteAmount)) {
+        if (Number(this.accountBalances[this.assets.base].balance) < Number(this.form.quoteAmount)) {
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
           return
         }
@@ -149,8 +141,8 @@
           price: this.form.price,
           orderBookId: SECONDARY_MARKET_ORDER_BOOK_ID,
           isBuy: false,
-          baseBalance: this.accountBalances[this.filters.base].balance_id,
-          quoteBalance: this.accountBalances[this.filters.quote].balance_id,
+          baseBalance: this.accountBalances[this.assets.base].balance_id,
+          quoteBalance: this.accountBalances[this.assets.quote].balance_id,
           fee: fee.percent
         }
         this.disable()
@@ -166,7 +158,7 @@
         this.resetForm()
       },
       loadFee () {
-        return feeService.loadOfferFeeByAmount(this.filters.quote, this.form.quoteAmount)
+        return feeService.loadOfferFeeByAmount(this.assets.quote, this.form.quoteAmount)
       },
       resetForm () {
         this.form.price = ''
