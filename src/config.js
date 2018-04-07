@@ -10,13 +10,13 @@ const workspaces = {
     networkPassphrase: 'TokenD Demo Network'
   },
   staging: {
-    horizonServer: 'https://invest-stage.swarm.fund/_/api',
-    fileStorage: 'https://storage-stage.swarm.fund/api',
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
     networkPassphrase: 'TokenD Demo Network'
   }
 }
 
-const currentMode = 'staging'
+const currentMode = 'dev'
 
 export default {
   HORIZON_SERVER: (() => process.env.NODE_ENV === 'development' ? workspaces[currentMode].horizonServer : process.env.HORIZON_SERVER)(),
