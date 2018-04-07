@@ -93,7 +93,7 @@
                       md-xsmall-size-100">
         <md-card-content>
           <div class="app__no-data-msg">
-            <md-icon class="md-size-4x">send</md-icon>
+            <md-icon class="md-size-4x">file_upload</md-icon>
             <h2>{{ i18n.withdraw_no_assets() }}</h2>
             <p>{{ i18n.withdraw_no_assets_exp() }}</p>
           </div>
