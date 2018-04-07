@@ -52,7 +52,7 @@
       </md-card-content>
 
       <md-card-actions>
-        <md-button type="submit" class="md-primary">Buy</md-button>
+        <md-button type="submit" class="md-primary" :disabled="isPending">Buy</md-button>
       </md-card-actions>
     </md-card>
   </form>
@@ -64,9 +64,10 @@
   import formMixin from '../../../../../common/mixins/form.mixin'
   import InputField from '../../../../../common/fields/InputField'
   import { offersService } from '../../../../../../js/services/offer.service'
+  import { accountsService } from '../../../../../../js/services/accounts.service'
   import { feeService } from '../../../../../../js/services/fees.service'
   import { EventDispatcher } from '../../../../../../js/events/event_dispatcher'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
   import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../../../../js/const/const'
   import { confirmAction } from '../../../../../../js/modals/confirmation_message'
@@ -110,6 +111,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
+      }),
       getQuoteAmount () {
         this.form.quoteAmount = this.form.price * this.form.amount
       },
@@ -124,11 +128,23 @@
         if (!await confirmAction()) return
         this.errors.clear()
         console.log(this.accountBalances)
+
+        if (!this.accountBalances[this.filters.base]) {
+          await accountsService.createBalance(this.filters.base)
+          await this.loadBalances()
+        }
+
+        if (!this.accountBalances[this.filters.quote]) {
+          await accountsService.createBalance(this.filters.quote)
+          await this.loadBalances()
+        }
+
         if (Number(this.accountBalances[this.filters.quote].balance) < Number(this.form.quoteAmount)) {
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
           return
         }
         const fee = await this.loadFee()
+
         const opts = {
           amount: this.form.amount,
           price: this.form.price,
@@ -138,14 +154,16 @@
           quoteBalance: this.accountBalances[this.filters.quote].balance_id,
           fee: fee.percent
         }
+        this.disable()
         try {
-          offersService.createOffer(opts)
+          await offersService.createOffer(opts)
           dispatchAppEvent(commonEvents.createdOrder)
           EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_created())
         } catch (error) {
           console.error(error)
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_some_went_wrong())
         }
+        this.enable()
         this.resetForm()
       },
       loadFee () {
