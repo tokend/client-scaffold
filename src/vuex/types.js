@@ -66,7 +66,8 @@ const actions = {
   GET_TRADES: 'GET_TRADES',
   GET_SM_OFFERS: 'GET_SM_OFFERS',
   GET_BUY_OFFERS: 'GET_BUY_OFFERS',
-  GET_SELL_OFFERS: 'GET_SELL_OFFERS'
+  GET_SELL_OFFERS: 'GET_SELL_OFFERS',
+  GET_USER_OFFERS: 'GET_USER_OFFERS'
 }
 
 const getters = {
@@ -115,7 +116,8 @@ const getters = {
   // trades:
   trades: 'trades',
   buyOffers: 'buyOffers',
-  sellOffers: 'sellOffers'
+  sellOffers: 'sellOffers',
+  userOffers: 'userOffers'
 }
 
 export const vuexTypes = {

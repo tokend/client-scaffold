@@ -51,7 +51,6 @@ export class OffersService extends Service {
    */
   async cancelOffer (opts) {
     const operation = await this._composeCancelOfferOperation(opts)
-
     return this._operationBuilder
       .operation()
       .add(operation)

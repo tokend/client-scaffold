@@ -17,7 +17,7 @@
               type="number"
               placeholder="0"
               vvValidateOn="change"
-              :errorMessage="(Number(form.price) === 0 || Number(form.price) < 0  ? 'Price must be more than 0' : '')"
+              :errorMessage="(allowToValidPrice && (Number(form.price) === 0 || Number(form.price) < 0)  ? 'Price must be more than 0' : '')"
             />
           </div>
         </div>
@@ -33,7 +33,7 @@
               type="number"
               placeholder="0"
               vvValidateOn="change"
-              :errorMessage="(lessThanMinimumAmount ? 'Minimal amount is 0.000001' : '')"
+              :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? 'Minimal amount is 0.000001' : ''"
             />
           </div>
         </div>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import { attachEventHandler } from '../../../../../../js/events/helpers'
+  import { attachEventHandler, dispatchAppEvent } from '../../../../../../js/events/helpers'
   import { commonEvents } from '../../../../../../js/events/common_events'
   import formMixin from '../../../../../common/mixins/form.mixin'
   import InputField from '../../../../../common/fields/InputField'
@@ -70,9 +70,10 @@
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
   import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../../../../js/const/const'
+  import { confirmAction } from '../../../../../../js/modals/confirmation_message'
 
   export default {
-    name: 'trade-orders-buy',
+    name: 'trade-orders-sell',
     mixins: [formMixin],
     components: { InputField },
     props: {
@@ -91,7 +92,9 @@
         filters: {
           base: this.assets.base,
           quote: this.assets.quote
-        }
+        },
+        allowToValidPrice: false,
+        allowToValidAmount: false
       }
     },
     created () {
@@ -114,7 +117,10 @@
         this.filters.quote = payload.quote
       },
       async submit () {
+        this.allowToValidPrice = true
+        this.allowToValidAmount = true
         if (!await this.isValid()) return
+        if (!await confirmAction()) return
         this.errors.clear()
         if (Number(this.accountBalances[this.filters.base].balance) < Number(this.form.quoteAmount)) {
           EventDispatcher.dispatchShowErrorEvent('Недостаточно средств!')
@@ -131,23 +137,36 @@
           fee: fee.percent
         }
         try {
-          offersService.createOffer(opts)
+          dispatchAppEvent(commonEvents.createdOrder)
           EventDispatcher.dispatchShowSuccessEvent('оффер успешно создан')
         } catch (error) {
+          offersService.createOffer(opts)
           console.error(error)
           EventDispatcher.dispatchShowErrorEvent('что-то пошло не так')
         }
+        this.resetForm()
       },
       loadFee () {
         return feeService.loadOfferFeeByAmount(this.filters.quote, this.form.quoteAmount)
+      },
+      resetForm () {
+        this.form.price = ''
+        this.form.amount = ''
+        setTimeout(() => this.changeAllow(), 0)
+      },
+      changeAllow () {
+        this.allowToValidPrice = false
+        this.allowToValidAmount = false
       }
     },
     watch: {
       'form.price' (value) {
         this.getQuoteAmount()
+        this.allowToValidPrice = true
       },
       'form.amount' (value) {
         this.getQuoteAmount()
+        this.allowToValidAmount = true
       }
     }
   }

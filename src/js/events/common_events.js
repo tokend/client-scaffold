@@ -23,7 +23,9 @@ const busEvents = Object.freeze({
   showAirdropMessage: new AppEvent('show-airdrop-message'),
   selectOfferEvent: new AppEvent('select-offer'),
   touchEvent: new AppEvent('touch-event'),
-  changePairsAsset: new AppEvent('change-pairs-asset')
+  changePairsAsset: new AppEvent('change-pairs-asset'),
+  cancelOrder: new AppEvent('cancel-order'),
+  createdOrder: new AppEvent('created-order')
 })
 
 const componentEvents = Object.freeze({

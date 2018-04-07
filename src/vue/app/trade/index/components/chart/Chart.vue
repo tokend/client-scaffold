@@ -9,8 +9,16 @@
       <div class="chart-container">
 
         <div class="md-layout md-alignment-center-space-between">
-          <scale-tabs class="md-layout-item md-size-50" v-model="scale" :isPending="isPending"/>
-          <assets-select class="md-layout-item md-size-35"/>
+          <scale-tabs class="md-layout-item md-size-50"
+            :asset="assets"
+            v-model="scale"
+            :isPending="isPending"
+          />
+          <assets-select class="md-layout-item md-size-35"
+            :baseAssets="baseAssets"
+            :quoteAssets="quoteAssets"
+            :assets="assets"
+          />
         </div>
 
         <statistics-widget v-if="needStats"
@@ -78,6 +86,16 @@
       precision: {
         type: Number,
         default: 0
+      },
+      baseAssets: {
+        type: Array,
+        require: true,
+        default: []
+      },
+      quoteAssets: {
+        type: Array,
+        require: true,
+        default: []
       }
     },
 

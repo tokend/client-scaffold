@@ -1,13 +1,13 @@
 <template>
     <md-table class="order-list">
       <md-table-toolbar>
-        <h2>{{ type === ORDER_TYPES.buy ? i18n.tr_ask () : i18n.tr_bid() }}</h2>
+        <h2>{{ type === ORDER_TYPES.buy ? i18n.trd_ask () : i18n.trd_bid() }}</h2>
       </md-table-toolbar>
       <template v-if="list.length">
         <md-table-row>
-          <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.tr_want() : i18n.tr_order() }}</md-table-head>
-          <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.tr_order() : i18n.tr_want() }}</md-table-head>
-          <md-table-head class="order-list__cell">{{ i18n.tr_price() }}</md-table-head>
+          <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_want() : i18n.trd_order() }}</md-table-head>
+          <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_order() : i18n.trd_want() }}</md-table-head>
+          <md-table-head class="order-list__cell">{{ i18n.trd_price() }}</md-table-head>
         </md-table-row>
 
         <template v-for="order in list">

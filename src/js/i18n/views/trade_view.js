@@ -1,10 +1,13 @@
 export default {
-  tr_want: 'Want',
-  tr_order: 'Order',
-  tr_base: 'Base',
-  tr_quote: 'Quote',
-  tr_price: 'Price',
-  tr_created: 'Created',
-  tr_ask: 'Ask',
-  tr_bid: 'Bid'
+  trd_want: 'Want',
+  trd_order: 'Order',
+  trd_base: 'Base',
+  trd_quote: 'Quote',
+  trd_price: 'Price',
+  trd_created: 'Created',
+  trd_ask: 'Ask',
+  trd_bid: 'Bid',
+  trd_offer_canceled: 'Offer successfully cancelled',
+  trd_offer_created: 'Offer successfully created',
+  trd_offer_failed_to_cancel: 'Failed to cancel offer'
 }
