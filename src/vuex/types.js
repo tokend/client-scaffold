@@ -9,17 +9,15 @@ const mutations = {
   // user:
   SET_USER_EMAIL: 'SET_USER_EMAIL',
   SET_USER_TYPE: 'SET_USER_TYPE',
-  SET_USER_STATE: 'SET_USER_STATE',
-  SET_USER_REJECT_REASON: 'SET_USER_REJECT_REASON',
   SET_USER_CREATED_AT: 'SET_USER_CREATED_AT',
-  SET_USER_KYC_SEQUENCE: 'SET_USER_KYC_SEQUENCE',
-  SET_USER_KYC_DETAILS: 'SET_USER_KYC_DETAILS',
-  SET_USER_KYC_DOCUMENTS: 'SET_USER_KYC_DOCUMENTS',
 
   // account:
   SET_ACCOUNT_KEYS: 'SET_ACCOUNT_KEYS',
   SET_ACCOUNT_BALANCES: 'SET_ACCOUNT_BALANCES',
   SET_ACCOUNT_DETAILS: 'SET_ACCOUNT_DETAILS',
+  // account.kyc:
+  SET_ACCOUNT_KYC_DETAILS: 'SET_ACCOUNT_KYC_DETAILS',
+  SET_ACCOUNT_KYC_DOCUMENTS: 'SET_ACCOUNT_KYC_DOCUMENTS',
 
   // transactions:
   SET_TX_LIST_INITIALIZED: 'SET_TX_LIST_INITIALIZED',
@@ -38,13 +36,14 @@ const actions = {
   // user:
   GET_USER_DETAILS: 'GET_USER_DETAILS',
   GET_USER_FAVORITES: 'GET_USER_FAVORITES',
-  GET_USER_KYC: 'GET_USER_KYC',
-  UPDATE_USER_KYC_DETAILS: 'UPDATE_USER_KYC_DETAILS',
-  UPDATE_USER_KYC_DOCUMENTS: 'UPDATE_USER_KYC_DOCUMENTS',
 
   // account:
   GET_ACCOUNT_DETAILS: 'GET_ACCOUNT_DETAILS',
   GET_ACCOUNT_BALANCES: 'GET_ACCOUNT_BALANCES',
+  // account.kyc:
+  GET_ACCOUNT_KYC: 'GET_ACCOUNT_KYC',
+  UPDATE_ACCOUNT_KYC_DETAILS: 'UPDATE_ACCOUNT_KYC_DETAILS',
+  UPDATE_ACCOUNT_KYC_DOCUMENTS: 'UPDATE_ACCOUNT_KYC_DOCUMENTS',
 
   // transactions:
   INIT_TX_LIST: 'INIT_TX_LIST',
@@ -58,11 +57,8 @@ const getters = {
 
   // user:
   userEmail: 'userEmail',
-  userState: 'userState',
   userType: 'userType',
-  userRejectReason: 'userRejectReason',
   userCreatedAt: 'userCreatedAt',
-  userKycSequence: 'userKycSequence',
   userFavorites: 'userFavorites',
 
   // wallet:
@@ -82,13 +78,16 @@ const getters = {
   accountBalances: 'accountBalances',
   accountRawBalances: 'accountRawBalances',
   accountDepositAddresses: 'accountDepositAddresses',
+  // account.kyc:
+  accountState: 'accountState',
+  accountKycRejectReason: 'accountKycRejectReason',
+  accountKycDetails: 'accountKycDetails',
+  accountKycDocuments: 'accountKycDocuments',
 
   // tokens:
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',
-  userKycDetails: 'userKycDetails',
-  userKycDocuments: 'userKycDocuments',
 
   // transactions:
   transactions: 'transactions'
