@@ -1,3 +1,4 @@
+import { usersService } from '../../js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
 import { vuexTypes } from '../types'
 import { Keypair } from 'swarm-js-sdk'
@@ -19,7 +20,11 @@ export const state = {
     seed: ''
   },
   // kyc:
-  kycRequests: []
+  kycRequests: [],
+  kycData: {
+    address: {},
+    documents: {}
+  }
 }
 
 export const mutations = {
@@ -37,6 +42,10 @@ export const mutations = {
 
   SET_ACCOUNT_KYC_REQUESTS (state, requests) {
     state.kycRequests = requests
+  },
+
+  SET_ACCOUNT_KYC_DATA (state, data) {
+    state.kycData = data
   }
 }
 
@@ -51,6 +60,13 @@ export const actions = {
   async GET_ACCOUNT_KYC_REQUESTS ({ commit }) {
     const requests = await reviewableRequestsService.loadKycReviewableRequests()
     commit(vuexTypes.SET_ACCOUNT_KYC_REQUESTS, requests.records.map(record => RecordFactory.createKycRequestRecord(record)))
+  },
+
+  async GET_ACCOUNT_KYC_DATA ({ commit }, blobId) {
+    const kycData = await usersService
+      .blobsOf()
+      .get(blobId)
+    commit(vuexTypes.SET_ACCOUNT_KYC_DATA, kycData)
   }
 }
 
@@ -71,7 +87,9 @@ export const getters = {
   // kyc:
   accountKycRequests: state => state.kycRequests,
   accountKycLatestRequest: state => StateHelper.defineLatestKycRequest(state),
-  accountState: (state, getters) => ACCOUNT_STATES[getters.accountKycLatestRequest.state] || ACCOUNT_STATES.nil
+  accountState: (state, getters) => ACCOUNT_STATES[getters.accountKycLatestRequest.state] || ACCOUNT_STATES.nil,
+  accountLatestBlobId: (state, getters) => getters.accountKycLatestRequest.blobId,
+  accountKycData: state => state.kycData
 }
 
 export default {

@@ -16,19 +16,26 @@
     name: 'verification-make',
     components: { IndividualForm, StateBanner },
     async created () {
-      this.loadKycRequests()
+      await this.reset()
     },
     computed: {
       ...mapGetters([
-        vuexTypes.userKycSequence
+        vuexTypes.accountLatestBlobId
       ])
     },
     methods: {
       ...mapActions({
         loadUser: vuexTypes.GET_USER_DETAILS,
         loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
-        loadAccountKyc: vuexTypes.GET_ACCOUNT_KYC
-      })
+        loadKycData: vuexTypes.GET_ACCOUNT_KYC_DATA
+      }),
+      async reset () {
+        await this.loadKycRequests()
+        if (!this.accountLatestBlobId) {
+          return
+        }
+        await this.loadKycData(this.accountLatestBlobId)
+      }
     }
   }
 </script>

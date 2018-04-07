@@ -17,7 +17,7 @@ const mutations = {
   SET_ACCOUNT_DETAILS: 'SET_ACCOUNT_DETAILS',
   // account.kyc:
   SET_ACCOUNT_KYC_REQUESTS: 'SET_ACCOUNT_KYC_REQUESTS',
-  SET_ACCOUNT_KYC_DETAILS: 'SET_ACCOUNT_KYC_DETAILS',
+  SET_ACCOUNT_KYC_DATA: 'SET_ACCOUNT_KYC_DATA',
   SET_ACCOUNT_KYC_DOCUMENTS: 'SET_ACCOUNT_KYC_DOCUMENTS',
 
   // transactions:
@@ -42,7 +42,7 @@ const actions = {
   GET_ACCOUNT_DETAILS: 'GET_ACCOUNT_DETAILS',
   GET_ACCOUNT_BALANCES: 'GET_ACCOUNT_BALANCES',
   // account.kyc:
-  GET_ACCOUNT_KYC: 'GET_ACCOUNT_KYC',
+  GET_ACCOUNT_KYC_DATA: 'GET_ACCOUNT_KYC_DATA',
   GET_ACCOUNT_KYC_REQUESTS: 'GET_ACCOUNT_KYC_REQUESTS',
   UPDATE_ACCOUNT_KYC_DETAILS: 'UPDATE_ACCOUNT_KYC_DETAILS',
   UPDATE_ACCOUNT_KYC_DOCUMENTS: 'UPDATE_ACCOUNT_KYC_DOCUMENTS',
@@ -85,6 +85,7 @@ const getters = {
   accountKycRejectReason: 'accountKycRejectReason',
   accountKycDetails: 'accountKycDetails',
   accountKycDocuments: 'accountKycDocuments',
+  accountLatestBlobId: 'accountLatestBlobId',
 
   // tokens:
   userAcquiredTokens: 'userAcquiredTokens',

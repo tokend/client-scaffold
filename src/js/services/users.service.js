@@ -161,7 +161,9 @@ export class UsersService extends Service {
       get (id) {
         return blank
           .blobID(id)
+          .sign(_this._keypair)
           .get()
+          .then(res => JSON.parse(res.attribute('value')))
       },
 
       /**
