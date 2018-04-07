@@ -2,6 +2,14 @@
   <md-card class="portfolio-widget">
     <md-card-header class="portfolio-widget__header">
       <div class="md-title portfolio-widget__title">{{ i18n.dash_wallet() }}</div>
+
+      <div class="portfolio-widget__select-wrp">
+        <select-field v-if="currentAsset"
+                      :value="currentAsset"
+                      :values="Object.keys(accountBalances)"
+                      @input="$emit(events.assetChange, $event)"
+        />
+      </div>
     </md-card-header>
 
 
@@ -34,16 +42,22 @@
 </template>
 
 <script>
+  import SelectField from '../../../common/fields/SelectField'
+
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
+  import { commonEvents } from '../../../../js/events/common_events'
   import get from 'lodash/get'
 
   export default {
     name: 'portfolio-widget',
-    components: {},
+    components: { SelectField },
     data: _ => ({
-      i18n
+      i18n,
+      events: {
+        assetChange: commonEvents.assetChangeEvent
+      }
     }),
     computed: {
       ...mapGetters([
@@ -96,8 +110,8 @@
   }
 
   .portfolio-widget__header {
-    padding-bottom: 48px;
-
+    display: flex;
+    justify-content: space-between;
     @include respond-to(medium) {
       display: none;
     }
@@ -107,6 +121,12 @@
     @include respond-to(medium) {
       display: none;
     }
+  }
+
+  .portfolio-widget__select-wrp {
+    max-width: 5rem;
+    position: relative;
+    bottom: .95rem;
   }
 
   .portfolio-widget__asset {

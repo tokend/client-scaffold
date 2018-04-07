@@ -1,7 +1,10 @@
 <template>
   <div class="dashboard md-layout">
-    <portfolio-widget :currentAsset="currentAsset" class="md-layout-item"></portfolio-widget>
-    <info-widget :currentAsset="currentAsset" class="md-layout-item"></info-widget>
+    <portfolio-widget class="md-layout-item"
+                      :currentAsset="currentAsset"
+                      @asset-change="setCurrentAsset"
+    />
+    <info-widget :currentAsset="currentAsset" class="md-layout-item"/>
   </div>
 </template>
 
@@ -21,16 +24,21 @@
       currentAsset: null
     }),
     created () {
-      this.currentAsset = Object.keys(this.accountBalances)[0] || null
+      this.setCurrentAsset()
     },
     computed: {
       ...mapGetters([
         vuexTypes.accountBalances
       ])
     },
+    methods: {
+      setCurrentAsset (value) {
+        this.currentAsset = value || Object.keys(this.accountBalances)[0] || null
+      }
+    },
     watch: {
-      accountBalances (val) {
-        this.currentAsset = Object.keys(val)[0] || null
+      accountBalances () {
+        this.setCurrentAsset()
       }
     }
   }

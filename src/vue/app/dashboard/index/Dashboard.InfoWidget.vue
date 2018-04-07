@@ -114,6 +114,11 @@
       closeDialog (status) {
         this.showDialog = status
       }
+    },
+    watch: {
+      currentAsset (value) {
+        this.loadList(value)
+      }
     }
   }
 </script>
