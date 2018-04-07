@@ -1,7 +1,7 @@
 <template>
   <md-card class="info-widget">
     <md-card-header class="info-widget__header">
-      <div class="md-title">{{ i18n.dash_activity({ asset: currentAsset }) }}</div>
+      <div class="md-title">{{ i18n.dash_activity({ asset: currentAsset || 'assets' }) }}</div>
     </md-card-header>
     <md-card-content class="info-widget__asset">
       <md-list v-if="list.length > 0" class="md-double-line info-widget__asset-list md-layout">
@@ -38,7 +38,7 @@
           </div>
         </md-list-item>
       </md-list>
-      <div class="info-widget__no-transactions" v-else>
+      <div class="app__no-data-msg" v-else>
         <md-icon class="md-size-4x">trending_up</md-icon>
         <h2>{{ i18n.th_no_transaction_history() }}</h2>
         <p>{{ i18n.th_here_will_be_the_list() }}</p>
@@ -124,7 +124,7 @@
   @import '../../../../scss/mixins.scss';
 
   .info-widget {
-    max-height: 408px;
+    max-height: 445px;
     max-width: 560px;
     width: 100%;
     display: flex;
@@ -147,14 +147,6 @@
     @include respond-to(xsmall) {
       flex: none;
       width: 130px;
-    }
-  }
-
-  .info-widget__no-transactions {
-    text-align: center;
-
-    p {
-      margin-top: 10px;
     }
   }
 

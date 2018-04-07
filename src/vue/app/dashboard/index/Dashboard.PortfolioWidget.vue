@@ -4,19 +4,32 @@
       <div class="md-title portfolio-widget__title">{{ i18n.dash_wallet() }}</div>
     </md-card-header>
 
-    <md-card-content class="portfolio-widget__asset">
-      <div class="portfolio-widget__asset-picture">
-        <img class="portfolio-widget__asset" src="../../../../../static/coin-picture.png">
-      </div>
-      <div class="portfolio-widget__asset-available">
-        <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
-        <div class="portfolio-widget__asset-usd">{{ convertedBalance }} USD</div>
-      </div>
-    </md-card-content>
 
-    <md-card-actions class="portfolio-widget__actions">
-      <md-button to="/transfers" class="md-primary">{{ i18n.lbl_send() }}</md-button>
-    </md-card-actions>
+    <template v-if="currentAsset">
+      <md-card-content class="portfolio-widget__asset">
+        <div class="portfolio-widget__asset-picture">
+          <img class="portfolio-widget__asset" src="../../../../../static/coin-picture.png">
+        </div>
+        <div class="portfolio-widget__asset-available">
+          <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
+          <div class="portfolio-widget__asset-usd">{{ convertedBalance }} USD</div>
+        </div>
+      </md-card-content>
+      <md-card-actions class="portfolio-widget__actions">
+        <md-button to="/transfers" class="md-primary">{{ i18n.lbl_send() }}</md-button>
+      </md-card-actions>
+    </template>
+
+    <template v-else>
+      <md-card-content>
+        <div class="app__no-data-msg">
+          <md-icon class="md-size-4x">toll</md-icon>
+          <h2>{{ i18n.th_no_assets_in_your_wallet() }}</h2>
+          <p>{{ i18n.th_here_will_be_tokens() }}</p>
+        </div>
+      </md-card-content>
+    </template>
+
   </md-card>
 </template>
 
@@ -24,6 +37,7 @@
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
+  import get from 'lodash/get'
 
   export default {
     name: 'portfolio-widget',
@@ -36,10 +50,10 @@
         vuexTypes.accountBalances
       ]),
       balance () {
-        return this.accountBalances[this.currentAsset].balance
+        return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
       },
       convertedBalance () {
-        return parseFloat(this.accountBalances[this.currentAsset].converted_balance).toFixed(2).toString()
+        return i18n.cc(get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0)
       }
     },
     props: ['currentAsset'],
@@ -56,7 +70,7 @@
   $custom-breakpoint: 860px;
 
   .portfolio-widget {
-    max-height: 408px;
+    max-height: 445px;
     width: 100%;
     max-width: 370px;
     min-width: 248px;
@@ -82,6 +96,8 @@
   }
 
   .portfolio-widget__header {
+    padding-bottom: 48px;
+
     @include respond-to(medium) {
       display: none;
     }
