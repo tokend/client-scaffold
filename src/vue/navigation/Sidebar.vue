@@ -27,7 +27,7 @@
       </md-list-item>
 
       <md-list-item @click="closeSidebar" to="/trade">
-        <md-icon>featured_play_list</md-icon>
+        <md-icon>compare_arrows</md-icon>
         <span class="md-list-item-text">Trade</span>
       </md-list-item>
 

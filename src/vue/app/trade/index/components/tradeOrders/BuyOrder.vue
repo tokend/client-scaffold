@@ -70,6 +70,7 @@
   import { vuexTypes } from '../../../../../../vuex/types'
   import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../../../../js/const/const'
   import { confirmAction } from '../../../../../../js/modals/confirmation_message'
+  import { i18n } from '../../../../../../js/i18n'
 
   export default {
     name: 'trade-orders-buy',
@@ -93,7 +94,8 @@
           quote: this.assets.quote
         },
         allowToValidPrice: false,
-        allowToValidAmount: false
+        allowToValidAmount: false,
+        i18n
       }
     },
     created () {
@@ -121,8 +123,9 @@
         if (!await this.isValid()) return
         if (!await confirmAction()) return
         this.errors.clear()
+        console.log(this.accountBalances)
         if (Number(this.accountBalances[this.filters.quote].balance) < Number(this.form.quoteAmount)) {
-          EventDispatcher.dispatchShowErrorEvent('Недостаточно средств!')
+          EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
           return
         }
         const fee = await this.loadFee()
@@ -138,10 +141,10 @@
         try {
           offersService.createOffer(opts)
           dispatchAppEvent(commonEvents.createdOrder)
-          EventDispatcher.dispatchShowSuccessEvent('оффер успешно создан')
+          EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_created())
         } catch (error) {
           console.error(error)
-          EventDispatcher.dispatchShowErrorEvent('что-то пошло не так')
+          EventDispatcher.dispatchShowErrorEvent(i18n.trd_some_went_wrong())
         }
         this.resetForm()
       },

@@ -9,5 +9,7 @@ export default {
   trd_bid: 'Bid',
   trd_offer_canceled: 'Offer successfully cancelled',
   trd_offer_created: 'Offer successfully created',
-  trd_offer_failed_to_cancel: 'Failed to cancel offer'
+  trd_offer_failed_to_cancel: 'Failed to cancel offer',
+  trd_order_not_enough_funds: 'Not enough funds!',
+  trd_some_went_wrong: 'Something went wrong!'
 }

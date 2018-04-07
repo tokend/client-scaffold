@@ -1,7 +1,7 @@
 const workspaces = {
   dev: {
-    horizonServer: 'https://invest-stage.swarm.fund/_/api',
-    fileStorage: 'https://storage-stage.swarm.fund/api',
+    horizonServer: 'https://invest-dev.swarm.fund/_/api',
+    fileStorage: 'http://storage-dev.swarm.fund/api',
     networkPassphrase: 'SUN Staging Network ; December 2017'
   },
   prod: {
