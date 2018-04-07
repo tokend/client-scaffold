@@ -8,5 +8,7 @@ export default {
   withdraw_error_is_trying_to_send_to_yourself: 'Sender can\'t be a recipient! Make sure the address is correct',
   withdraw_error_invalid_address: 'Invalid wallet address',
   withdraw_error_insufficient_funds: 'Insufficient funds',
-  withdraw_error_minimum_amount: 'The minimum amount is %{value} %{asset}'
+  withdraw_error_minimum_amount: 'The minimum amount is %{value} %{asset}',
+  withdraw_no_assets: 'No withdrawable assets in your wallet',
+  withdraw_no_assets_exp: 'This feature will be available once you have any withdrawable asset'
 }
