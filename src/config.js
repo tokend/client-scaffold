@@ -1,22 +1,22 @@
 const workspaces = {
   dev: {
-    horizonServer: 'https://invest-dev.swarm.fund/_/api',
-    fileStorage: 'https://storage-dev.swarm.fund/api',
-    networkPassphrase: 'Swarm New Dev; Feb 18'
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
+    networkPassphrase: 'TokenD Demo Network'
   },
   prod: {
-    horizonServer: 'https://invest.swarm.fund/_/api/',
-    fileStorage: 'https://storage.swarm.fund/api',
-    networkPassphrase: 'Swarm Production Network!'
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
+    networkPassphrase: 'TokenD Demo Network'
   },
   staging: {
-    horizonServer: 'https://invest-stage.swarm.fund/_/api/',
-    fileStorage: 'https://storage-stage.swarm.fund/api',
-    networkPassphrase: 'SUN Staging Network ; December 2017'
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
+    networkPassphrase: 'TokenD Demo Network'
   }
 }
 
-const currentMode = 'staging'
+const currentMode = 'dev'
 
 export default {
   HORIZON_SERVER: (() => process.env.NODE_ENV === 'development' ? workspaces[currentMode].horizonServer : process.env.HORIZON_SERVER)(),
