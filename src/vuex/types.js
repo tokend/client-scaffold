@@ -82,7 +82,7 @@ const getters = {
   // account.kyc:
   accountState: 'accountState',
   accountKycRejectReason: 'accountKycRejectReason',
-  accountKycDetails: 'accountKycDetails',
+  accountKycData: 'accountKycData',
   accountKycDocuments: 'accountKycDocuments',
   accountLatestBlobId: 'accountLatestBlobId',
 

@@ -74,7 +74,7 @@
             </template>
 
             <file-field class="kyc-form__file-field"
-                          v-model="documents[doc.type]"
+                          v-model="documents[doc.type][doc.side]"
                           :private="doc.private"
                           :label="doc.label"
                           :type="doc.type"
@@ -118,9 +118,9 @@
   import { documentTypes } from '../../../../js/const/documents.const'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
-  import isEmpty from 'lodash/isEmpty'
 
   import { kycIndividualSchema as schema } from '../spec/kyc-individual.schema'
+  import { KycTemplateParser } from '../spec/kyc-template-parser'
   import { usersService } from '../../../../js/services/users.service'
 
   export default {
@@ -141,7 +141,10 @@
         postal_code: ''
       },
       documents: schema.docs.reduce((docs, doc) => {
-        docs[doc.type] = null
+        if (!docs[doc.type]) {
+          docs[doc.type] = {}
+        }
+        docs[doc.type][doc.side] = null
         return docs
       }, {}),
       values: {
@@ -154,16 +157,13 @@
     }),
     async created () {
       this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
-      if (!isEmpty(this.userKycDetails)) {
-        this.stubDetails()
-      }
     },
     computed: {
       ...mapGetters([
+        vuexTypes.accountLatestBlobId,
         vuexTypes.accountId,
-        vuexTypes.userKycDetails,
-        vuexTypes.userKycDocuments,
-        vuexTypes.userKycSequence
+        vuexTypes.accountKycData,
+        vuexTypes.accountKycDocuments
       ]),
       verificationKey () {
         return this.accountId.slice(1, 6)
@@ -171,10 +171,9 @@
     },
     methods: {
       ...mapActions({
-        loadUser: vuexTypes.GET_USER_DETAILS,
-        loadUserKyc: vuexTypes.GET_ACCOUNT_KYC,
-        updateKycDetails: vuexTypes.UPDATEACCOUNTR_KYC_DETAILS,
-        updateKycDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
+        loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS
+        // updateKyc: vuexTypes.UPDATEACCOUNTR_KYC_DETAILS,
+        // updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
       }),
       async submit () {
         if (!await this.isValid()) return
@@ -199,8 +198,7 @@
               ...newDocuments
             }
           })
-          await this.loadUser()
-          await this.loadUserKyc(this.userKycSequence)
+          await this.loadAccountKyc()
           EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
@@ -216,19 +214,16 @@
         }
         return true
       },
-      stubDetails () {
-        const details = this.userKycDetails
-        const documents = this.userKycDocuments
-        this.form = details
-        Object.keys(documents)
-          .forEach(documentType => {
-            this.documents[documentType] = documents[documentType]
-          })
+      stubData () {
+        this.form = KycTemplateParser.fromTemplate(this.accountKycData)
+      },
+      stubDocuments () {
+        this.documents = this.accountKycDocuments
       }
     },
     watch: {
-      userKycDetails () { this.stubDetails() },
-      userKycDocuments () { this.stubDetails() }
+      accountKycDocuments () { this.stubDocuments() },
+      accountKycData () { this.stubData() }
     }
   }
 </script>
