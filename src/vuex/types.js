@@ -8,7 +8,6 @@ const mutations = {
 
   // user:
   SET_USER_EMAIL: 'SET_USER_EMAIL',
-  SET_USER_TYPE: 'SET_USER_TYPE',
   SET_USER_CREATED_AT: 'SET_USER_CREATED_AT',
 
   // account:

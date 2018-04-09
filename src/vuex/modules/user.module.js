@@ -4,7 +4,6 @@ import get from 'lodash/get'
 
 export const state = {
   email: '',
-  type: '',
   createdAt: '',
   details: {
     favorites: []
@@ -14,9 +13,6 @@ export const state = {
 export const mutations = {
   SET_USER_EMAIL (state, email) {
     state.email = email
-  },
-  SET_USER_TYPE (state, type) {
-    state.type = type
   },
   SET_USER_CREATED_AT (state, createdAt) {
     state.createdAt = createdAt
@@ -30,8 +26,7 @@ export const actions = {
   async GET_USER_DETAILS ({ commit }) {
     const userDetails = await usersService.loadUser()
 
-    commit(vuexTypes.SET_USER_TYPE, userDetails.data('type'))
-    commit(vuexTypes.SET_USER_STATE, userDetails.attribute('state'))
+    commit(vuexTypes.SET_USER_EMAIL, userDetails.attribute('email'))
     commit(vuexTypes.SET_USER_CREATED_AT, userDetails.attribute('created_at'))
   },
 
