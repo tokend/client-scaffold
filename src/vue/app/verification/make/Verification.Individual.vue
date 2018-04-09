@@ -35,6 +35,7 @@
                                    :required="item.required"
                                    :label="item.label"
                                    :errorMessage="errorMessage(item.name)"
+                                   :disabled="accountState === ACCOUNT_STATES.pending"
                       />
                       <date-field v-if="item.field === 'date'"
                                   v-model="form[item.model]"
@@ -46,6 +47,7 @@
                                   :disableAfter="item.disableAfter"
                                   :label="item.label"
                                   :errorMessage="errorMessage(item.name)"
+                                  :disabled="accountState === ACCOUNT_STATES.pending"
                       />
                       <select-field v-if="item.field === 'select'"
                                     v-model="form[item.model]"
@@ -56,6 +58,7 @@
                                     :required="item.required"
                                     :label="item.label"
                                     :errorMessage="errorMessage(item.name)"
+                                    :disabled="accountState === ACCOUNT_STATES.pending"
                       />
                     </div>
                   </template>
@@ -83,7 +86,9 @@
           </template>
 
           <div class="md-layout md-alignment-center-right">
-            <md-button type="submit" class="md-dense md-raised md-primary" :disabled="isPending">
+            <md-button type="submit" class="md-dense md-raised md-primary"
+                       :disabled="isPending || accountState === ACCOUNT_STATES.pending"
+            >
               {{ i18n.lbl_submit() }}
             </md-button>
           </div>
@@ -160,7 +165,7 @@
       documentTypes,
       i18n,
       schema,
-      ACCOUNT_TYPES
+      ACCOUNT_STATES
     }),
     async created () {
       this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]

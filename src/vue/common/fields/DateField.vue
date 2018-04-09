@@ -3,6 +3,7 @@
                  :name="name"
                  :value="value"
                  :required="required"
+                 :disabled="disabled"
                  :class="fieldClass"
                  :md-open-on-focus="openOnFocus"
                  :md-disabled-dates="disabledDates"
