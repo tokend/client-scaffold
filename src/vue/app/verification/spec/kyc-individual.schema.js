@@ -121,18 +121,21 @@ export const kycIndividualSchema = {
     {
       "id": "kyc-file-id",
       "type": documentTypes.kycIdDocument,
+      "side": "front",
       "private": true,
       "label": i18n.lbl_kyc_id()
     },
     {
       "id": "kyc-file-poa",
       "type": documentTypes.kycProofOfAddress,
+      "side": "front",
       "private": true,
       "label": i18n.lbl_kyc_proof()
     },
     {
       "id": "kyc-file-photo",
       "type": documentTypes.kycSelfie,
+      "side": "front",
       "private": true,
       "label": i18n.lbl_kyc_selfie()
     }
