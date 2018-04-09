@@ -172,17 +172,20 @@
     methods: {
       ...mapActions({
         loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
-        updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
-        // updateKyc: vuexTypes.UPDATEACCOUNTR_KYC_DETAILS,
+        updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS,
+        updateKycData: vuexTypes.UPDATE_ACCOUNT_KYC_DATA
       }),
       async submit () {
-        // if (!await this.isValid()) return
-        // if (!this.isAllDocsUploaded()) return
+        if (!await this.isValid()) return
+        if (!this.isAllDocsUploaded()) return
         this.disable()
         try {
           await this.updateDocuments(this.documents)
-          console.log(getSaveableDocuments(this.documents))
-
+          const blobId = await this.updateKycData({
+            details: KycTemplateParser.toTemplate(this.form),
+            documents: KycTemplateParser.getSaveableDocuments(this.documents)
+          })
+          console.log(blobId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
@@ -190,8 +193,8 @@
         this.enable()
       },
       isAllDocsUploaded () {
-        for (const document of Object.values(this.documents)) {
-          if (!document) {
+        for (const doc of schema.docs) {
+          if (!this.documents[doc.type][doc.side]) {
             EventDispatcher.dispatchShowErrorEvent(i18n.kyc_not_all_docs())
             return false
           }
@@ -209,21 +212,6 @@
       accountKycDocuments () { this.stubDocuments() },
       accountKycData () { this.stubData() }
     }
-  }
-
-  function getSaveableDocuments (documents) {
-    const result = {}
-    console.log(Object.entries(documents))
-    for (const [type, { front, back }] of Object.entries(documents)) {
-      result[type] = {}
-      if (front) {
-        result[type].front = front.getDetailsForSave()
-      }
-      if (back) {
-        result[type].back = back.getDetailsForSave()
-      }
-    }
-    return result
   }
 </script>
 

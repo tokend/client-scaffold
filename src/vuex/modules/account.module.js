@@ -111,11 +111,12 @@ export const actions = {
    * @constructor
    */
   async UPDATE_ACCOUNT_KYC_DATA ({ commit }, opts) {
-    return (await usersService.blobsOf().create(
-      blobTypes.kycForm.str, {
-        ...opts.details,
-        documents: opts.documents
-      }))
+    const data = {
+      ...opts.details,
+      documents: opts.documents
+    }
+    return (await usersService.blobsOf()
+      .create(blobTypes.kycForm.str, data))
       .data('id')
   }
 }
