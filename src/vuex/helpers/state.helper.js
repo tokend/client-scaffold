@@ -1,7 +1,8 @@
 import store from '../index'
-import { vuexTypes } from '../types'
+import { REQUEST_STATES_STR } from '../../js/const/request_states.const'
 import { accountsService } from '../../js/services/accounts.service'
 import { RecordFactory } from '../../js/records/factory'
+import { vuexTypes } from '../types'
 import get from 'lodash/get'
 
 export class StateHelper {
@@ -54,5 +55,14 @@ export class StateHelper {
         }
       ))
       .filter(filter)
+  }
+
+  static defineLatestKycRequest (state) {
+    const requests = state.kycRequests
+    console.log(requests)
+    return requests.find(request => request.state === REQUEST_STATES_STR.pending) ||
+           requests.find(request => request.state === REQUEST_STATES_STR.rejected) ||
+           requests.find(request => request.state === REQUEST_STATES_STR.approved) ||
+           {}
   }
 }

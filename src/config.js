@@ -1,18 +1,18 @@
 const workspaces = {
   dev: {
-    horizonServer: 'https://invest-dev.swarm.fund/_/api',
-    fileStorage: 'https://storage-dev.swarm.fund/api',
-    networkPassphrase: 'Swarm New Dev; Feb 18'
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
+    networkPassphrase: 'TokenD Demo Network'
   },
   prod: {
-    horizonServer: 'https://invest.swarm.fund/_/api/',
-    fileStorage: 'https://storage.swarm.fund/api',
-    networkPassphrase: 'Swarm Production Network!'
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
+    networkPassphrase: 'TokenD Demo Network'
   },
   staging: {
-    horizonServer: 'https://staging.app.sun.swarm.fund/_/api/',
-    fileStorage: 'https://staging.storage.sun.swarm.fund/api',
-    networkPassphrase: 'SUN Staging Network ; December 2017'
+    horizonServer: 'https://api.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org',
+    networkPassphrase: 'TokenD Demo Network'
   }
 }
 

@@ -30,13 +30,27 @@ export class DocumentContainer {
   }
 
   getDetailsForSave () {
-    console.log(this)
     return {
-      mimeType: this.mimeType,
+      mime_type: this.mimeType,
       name: this.name,
-      type: this.type,
       key: this.key
     }
+  }
+
+  getDetailsForUpload () {
+    return {
+      mimeType: this.mimeType,
+      type: this.type,
+      file: this.file
+    }
+  }
+
+  setKey (key) {
+    this.key = key
+  }
+
+  get isUploaded () {
+    return !!(this.key && !this.file)
   }
 
   /**
