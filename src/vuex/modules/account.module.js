@@ -1,3 +1,4 @@
+import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import { usersService } from '../../js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
 import { vuexTypes } from '../types'
@@ -24,7 +25,8 @@ export const state = {
   kycData: {
     address: {},
     documents: {}
-  }
+  },
+  kycDocuments: {}
 }
 
 export const mutations = {
@@ -46,6 +48,17 @@ export const mutations = {
 
   SET_ACCOUNT_KYC_DATA (state, data) {
     state.kycData = data
+  },
+
+  SET_ACCOUNT_KYC_DOCUMENTS ({ commit }, documents) {
+    state.kycDocuments = Object.entries(documents)
+      .reduce((kycDocuments, [type, document]) => {
+        kycDocuments[type] = {
+          front: new DocumentContainer(document.front),
+          back: new DocumentContainer(document.back)
+        }
+        return kycDocuments
+      }, {})
   }
 }
 
@@ -67,6 +80,7 @@ export const actions = {
       .blobsOf()
       .get(blobId)
     commit(vuexTypes.SET_ACCOUNT_KYC_DATA, kycData)
+    commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
   }
 }
 

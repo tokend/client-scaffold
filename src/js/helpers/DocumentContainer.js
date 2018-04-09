@@ -30,7 +30,6 @@ export class DocumentContainer {
   }
 
   getDetailsForSave () {
-    console.log(this)
     return {
       mimeType: this.mimeType,
       name: this.name,
