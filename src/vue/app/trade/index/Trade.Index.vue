@@ -1,10 +1,9 @@
 <template>
   <div class="trade">
-    <div class="md-layout" v-if="!filters.base !== ''">
+    <div class="md-layout">
       <chart class="trade__chart md-size-50 md-layout-item"
         :data="history"
-        :pairs="fullAssetPairs"
-        :needStats="false"
+        :pairs="formattedPairs"
         :precision="common.precision"
         :assets="customAssetPair"
         v-on:assets-base-changed="handleAssetChange"
@@ -22,18 +21,18 @@
     </div>
 
     <div class="md-layout">
-      <manage-orders :offers="userOffers" class="md-layout-item"/>
+      <manage-orders :assets="filters" :offers="userOffers" class="md-layout-item"/>
     </div>
 
   </div>
 </template>
 
 <script>
-  import Chart from './components/chart/Chart'
-  import TradeHistory from './components/tradeHistory/TradeHistory'
-  import TradeOrders from './components/tradeOrders/TradeOrders'
-  import Orders from './components/orders/Orders'
-  import ManageOrders from './components/manageOrders/ManageOrders'
+  import Chart from './components/chart/Trade.ChartWidget'
+  import TradeHistory from './components/tradeHistory/Trade.TradeHistory'
+  import TradeOrders from './components/tradeOrders/Trade.TradeOrders'
+  import Orders from './components/orders/Trade.Orders'
+  import ManageOrders from './components/manageOrders/Trade.ManageOrders'
 
   import { chartsService } from '../../../../js/services/charts.service'
   import { errors } from '../../../../js/errors/factory'
@@ -43,6 +42,7 @@
   import { vuexTypes } from '../../../../vuex/types'
   import { attachEventHandler } from '../../../../js/events/helpers'
   import { commonEvents } from '../../../../js/events/common_events'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
 
   export default {
     name: 'trade-index',
@@ -68,28 +68,22 @@
     async created () {
       await this.loadPairs()
       await this.loadData(this.assetPairs[0])
-      await this.loadUserOffers()
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-      this.filters.base = this.fullAssetPairs[0].split('/')[0]
-      this.filters.quote = this.fullAssetPairs[0].split('/')[1]
-      this.customAssetPair = this.fullAssetPairs[0]
-      console.log(this.fullAssetPairs[0])
+      this.filters.base = this.formattedPairs[0].split('/')[0]
+      this.filters.quote = this.formattedPairs[0].split('/')[1]
+      this.customAssetPair = this.formattedPairs[0]
     },
     computed: {
       ...mapGetters([
         vuexTypes.assetPairs,
         vuexTypes.userOffers
       ]),
-      fullAssetPairs () {
-        let arr = []
-        if (this.assetPairs !== null) {
-          for (let el of this.assetPairs) {
-            arr.push(`${el.base}/${el.quote}`)
-          }
-        }
-        return arr
+      formattedPairs () {
+        return this.assetPairs.map((el) => {
+          return `${el.base}/${el.quote}`
+        })
       }
     },
     methods: {
@@ -103,7 +97,8 @@
         await Promise.all([
           this.loadOrders(pair),
           this.loadPrices(pair),
-          this.loadTrades(pair)
+          this.loadTrades(pair),
+          this.loadUserOffers(pair)
         ])
       },
       async loadPrices ({base, quote}) {
@@ -112,6 +107,7 @@
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             console.log('error')
+            ErrorHandler.processUnexpected(error)
           }
         }
       },
@@ -122,11 +118,9 @@
         this.loadData(this.filters)
       },
       handleCancelOrder () {
-        this.loadUserOffers()
         this.loadData(this.filters)
       },
       handleCreatedOffer () {
-        this.loadUserOffers()
         this.loadData(this.filters)
       }
     }

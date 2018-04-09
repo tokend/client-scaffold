@@ -2,7 +2,7 @@
   <form class="md-layout" @submit.prevent="submit">
     <md-card class="md-layout-item md-size-100 md-small-size-100 md-elevation-0">
       <md-card-header>
-        <div class="md-title">Limit sell order</div>
+        <div class="md-title">{{ i18n.trd_create_sell_order() }}</div>
       </md-card-header>
 
       <md-card-content>
@@ -11,12 +11,12 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.price"
-              :label="`Price per ${filters.quote}`"
+              :label="i18n.trd_price_per({ asset: assets.quote })"
               name="order-buy-price"
               v-validate="'required'"
               type="number"
-              vvValidateOn="change"
-              :errorMessage="(allowToValidPrice && (Number(form.price) === 0 || Number(form.price) < 0)  ? 'Price must be more than 0' : '')"
+              :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
+                            Number(form.price) < 0) ? i18n.trd_validate_minimal_price() : '')"
             />
           </div>
         </div>
@@ -26,12 +26,11 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.amount"
-              :label="`Amount ${filters.base}`"
+              :label="i18n.trd_amount_for({ asset: assets.base })"
               name="order-buy-amount"
               v-validate="'required'"
               type="number"
-              vvValidateOn="change"
-              :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? 'Minimal amount is 0.000001' : ''"
+              :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount() : ''"
             />
           </div>
         </div>
@@ -41,7 +40,7 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.quoteAmount"
-              :label="`Total ${filters.quote}`"
+              :label="i18n.trd_total_value({ value: assets.quote })"
               name="order-buy-total"
               :disabled="true"
             />
@@ -70,16 +69,15 @@
   import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../../../../js/const/const'
   import { confirmAction } from '../../../../../../js/modals/confirmation_message'
   import { i18n } from '../../../../../../js/i18n'
+  import { ErrorHandler } from '../../../../../../js/errors/error_handler'
+  import { multiply } from '../../../../../../js/utils/math.util'
 
   export default {
     name: 'trade-orders-sell',
     mixins: [formMixin],
     components: { InputField },
     props: {
-      assets: {
-        type: Object,
-        require: true
-      }
+      assets: { type: Object, require: true }
     },
     data () {
       return {
@@ -87,10 +85,6 @@
           price: '',
           amount: '',
           quoteAmount: ''
-        },
-        filters: {
-          base: this.assets.base,
-          quote: this.assets.quote
         },
         allowToValidPrice: false,
         allowToValidAmount: false,
@@ -112,7 +106,7 @@
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       getQuoteAmount () {
-        this.form.quoteAmount = this.form.price * this.form.amount
+        this.form.quoteAmount = i18n.c(multiply(this.form.price, this.form.amount))
       },
       async submit () {
         this.allowToValidPrice = true
@@ -151,7 +145,7 @@
           dispatchAppEvent(commonEvents.createdOrder)
           EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_created())
         } catch (error) {
-          console.error(error)
+          ErrorHandler.processUnexpected(error)
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_some_went_wrong())
         }
         this.enable()

@@ -17,7 +17,7 @@
   const d3 = Object.assign({}, d3Array, d3Selection, d3Axis, d3Shape, d3Scale, d3Transition, d3Ease)
 
   export default {
-    name: 'chart',
+    name: 'chart-renderer',
     props: {
       data: {
         type: Array,

@@ -25,15 +25,8 @@
     name: 'assets-select',
     components: { SelectField },
     props: {
-      assets: {
-        type: String,
-        required: false
-      },
-      pairs: {
-        type: Array,
-        require: true,
-        default: []
-      }
+      assets: { type: String, required: false },
+      pairs: { type: Array, require: true, default: [] }
     },
     data () {
       return {

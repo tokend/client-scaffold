@@ -10,7 +10,7 @@
                               tx.state === 'failed' ? 'info-widget__asset-item--opacity': ''
                       ]"
                       v-for="(tx, i) in list"
-                      v-bind:key="i"
+                      :key="i"
                       v-if="i < transactionsToShow"
                       @click="makeDialogIsShow(list[i])">
           <div class="info-widget__asset-item-left  md-layout-item">

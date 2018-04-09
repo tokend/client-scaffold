@@ -3,17 +3,19 @@
     <template v-if="validatedTrades.length">
       <md-table md-card>
         <md-table-toolbar>
-          <h2 class="md-title">Trade History</h2>
+          <h2 class="md-title">{{ i18n.trd_history() }}</h2>
         </md-table-toolbar>
 
         <md-table-row>
-          <md-table-head>Amount ({{ assets.base }})</md-table-head>
-          <md-table-head>Price ({{ assets.quote }})</md-table-head>
-          <md-table-head>Total ({{ assets.quote }})</md-table-head>
-          <md-table-head>Time</md-table-head>
+          <md-table-head>{{ i18n.trd_history_amount({ asset: assets.base }) }}</md-table-head>
+          <md-table-head>{{ i18n.trd_history_price({ asset: assets.quote }) }}</md-table-head>
+          <md-table-head>{{ i18n.trd_history_total({ asset: assets.quote }) }}</md-table-head>
+          <md-table-head>{{ i18n.trd_history_time() }}}</md-table-head>
         </md-table-row>
 
-        <md-table-row v-for="(item, i) in validatedTrades" v-bind:key="i" :class="`trade-history__item-status--${item.priceStatus}`">
+        <md-table-row v-for="(item, i) in validatedTrades"
+                      :key="`${i}-trade-history-item`"
+                      :class="`trade-history__item-status--${item.priceStatus}`">
           <template v-if="i < maxLengthOfTradeHistory">
             <md-table-cell>{{ item.baseAmount }}</md-table-cell>
             <md-table-cell class="trade-history__item-price">
@@ -25,7 +27,7 @@
                 <md-icon>call_made</md-icon>
               </template>
             </md-table-cell>
-            <md-table-cell class="trade-history__item-total">{{ item.baseAmount * item.price }}</md-table-cell>
+            <md-table-cell class="trade-history__item-total">{{ i18n.c(multiply(item.baseAmount, item.price)) }}</md-table-cell>
             <md-table-cell class="trade-history__item-date">{{ toValidDate(item.createdAt) }}</md-table-cell>
           </template>
         </md-table-row>
@@ -47,19 +49,18 @@
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
   import { i18n } from '../../../../../../js/i18n'
+  import { multiply } from '../../../../../../js/utils/math.util'
 
   export default {
     name: 'trade-history',
     props: {
-      assets: {
-        type: Object,
-        require: true
-      }
+      assets: { type: Object, require: true }
     },
     data () {
       return {
         maxLengthOfTradeHistory: 10,
-        i18n
+        i18n,
+        multiply
       }
     },
     computed: {
@@ -113,6 +114,8 @@
   .md-table-cell {
     font-size: 12px;
     height: 28px;
+    border-top: 0;
+    padding-left: 15px;
   }
   .md-table-cell-container {
     padding: 0 12px;

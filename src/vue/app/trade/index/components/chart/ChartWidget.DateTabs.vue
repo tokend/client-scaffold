@@ -6,7 +6,7 @@
             :class="{ selected: value === tabs.hour }"
             :disabled="isPending"
     >
-      <span class="mobile-hidden">Hour</span>
+      <span class="mobile-hidden">{{ i18n.trd_chart_hour() }}</span>
     </button>
 
     <button class="tab-btn"
@@ -14,7 +14,7 @@
             :class="{ selected: value === tabs.day }"
             :disabled="isPending"
     >
-      <span class="mobile-hidden">Day</span>
+      <span class="mobile-hidden">{{ i18n.trd_chart_day() }}</span>
     </button>
 
     <button class="tab-btn"
@@ -22,7 +22,7 @@
             :class="{ selected: value === tabs.month }"
             :disabled="isPending"
     >
-      <span class="mobile-hidden">Month</span>
+      <span class="mobile-hidden">{{ i18n.trd_chart_month() }}</span>
     </button>
 
     <button class="tab-btn"
@@ -30,7 +30,7 @@
             :class="{ selected: value === tabs.year }"
             :disabled="isPending"
     >
-      <span class="mobile-hidden">Year</span>
+      <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
     </button>
 
   </div>
@@ -38,6 +38,7 @@
 
 <script>
   import { commonEvents } from '../../../../../../js/events/common_events'
+  import { i18n } from '../../../../../../js/i18n'
 
   export default {
     name: 'date-tabs',
@@ -55,7 +56,8 @@
           month: 'month',
           year: 'year',
           all: 'all'
-        }
+        },
+        i18n
       }
     }
   }

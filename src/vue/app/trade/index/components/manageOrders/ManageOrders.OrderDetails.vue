@@ -2,7 +2,7 @@
   <div>
     <detail :prop="'Base amount'" :value="`${tx.baseAmount} ${tx.baseAssetCode}`"/>
     <detail :prop="'Quote amount'" :value="`${tx.quoteAmount} ${tx.quoteAssetCode}`"/>
-    <detail :prop="'Order'" :value="tx.isBuy ? 'Buy' : 'Sell'"/>
+    <detail :prop="'Order'" :value="tx.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell()"/>
     <detail :prop="'Price'" :value="`${tx.price} ${tx.quoteAssetCode}`"/>
     <detail :prop="'Fee'" :value="`${tx.fee} ${tx.baseAssetCode}`"/>
     <detail :prop="'Date'" :value="i18n.d(tx.createdAt)"/>
@@ -15,6 +15,7 @@
   import { i18n } from '../../../../../../js/i18n'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
+  import { ErrorHandler } from '../../../../../../js/errors/error_handler'
   import { offersService } from '../../../../../../js/services/offer.service'
   import { EventDispatcher } from '../../../../../../js/events/event_dispatcher'
   import { dispatchAppEvent } from '../../../../../../js/events/helpers'
@@ -25,10 +26,7 @@
     name: 'manage-orders',
     mixins: [DetailsMixin],
     props: {
-      tx: {
-        type: Object,
-        require: true
-      }
+      tx: { type: Object, require: true }
     },
     data () {
       return {
@@ -58,7 +56,7 @@
           dispatchAppEvent(commonEvents.cancelOrder)
           EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_canceled())
         } catch (error) {
-          console.error(error)
+          ErrorHandler.processUnexpected(error)
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_offer_failed_to_cancel())
         }
       }

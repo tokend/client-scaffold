@@ -11,7 +11,7 @@
         </md-table-row>
 
         <template v-for="(order, i) in list">
-          <md-table-row class="order-list__row" v-bind:key="i">
+          <md-table-row class="order-list__row" :key="`${i}-order-row`">
             <md-table-cell class="order-list__cell">{{ order.baseAmount }} {{ order.baseAssetCode }}</md-table-cell>
             <md-table-cell class="order-list__cell">{{ order.quoteAmount }} {{ order.quoteAssetCode }}</md-table-cell>
             <md-table-cell class="order-list__cell">{{ order.price }} {{ order.quoteAssetCode }}</md-table-cell>
@@ -23,7 +23,11 @@
         <div class="order-list__no-transactions">
           <md-icon class="md-size-4x">trending_up</md-icon>
           <h2>{{ i18n.trd_no_orders_history() }}</h2>
-          <p>{{ i18n.trd_here_will_be_the_order_ask_bid_list() }}</p>
+          <p>{{
+            type === ORDER_TYPES.buy ?
+            i18n.trd_here_will_be_the_order_ask_list() :
+            i18n.trd_here_will_be_the_order_bid_list()
+          }}</p>
         </div>
       </template>
     </md-table>
@@ -47,6 +51,10 @@
 </script>
 
 <style scoped>
+  .order-list {
+    max-height: 400px;
+  }
+
   .order-list__row {
     cursor: pointer;
   }
