@@ -171,34 +171,18 @@
     },
     methods: {
       ...mapActions({
-        loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS
+        loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
+        updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
         // updateKyc: vuexTypes.UPDATEACCOUNTR_KYC_DETAILS,
-        // updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
       }),
       async submit () {
-        if (!await this.isValid()) return
-        if (!this.isAllDocsUploaded()) return
+        // if (!await this.isValid()) return
+        // if (!this.isAllDocsUploaded()) return
         this.disable()
         try {
-          const newDocuments = await this.updateKycDocuments(this.documents)
-          const oldDocuments =
-            Object.entries(this.documents)
-              .reduce((documents, [ type, document ]) => {
-                if (!newDocuments[type]) {
-                  documents[type] = document.getDetailsForSave()
-                }
-                return documents
-              }, {})
-          const kycSequence = String(this.userKycSequence + 1)
-          await this.updateKycDetails({
-            sequence: kycSequence,
-            details: this.form,
-            documents: {
-              ...oldDocuments,
-              ...newDocuments
-            }
-          })
-          await this.loadAccountKyc()
+          await this.updateDocuments(this.documents)
+          console.log(getSaveableDocuments(this.documents))
+
           EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
@@ -225,6 +209,21 @@
       accountKycDocuments () { this.stubDocuments() },
       accountKycData () { this.stubData() }
     }
+  }
+
+  function getSaveableDocuments (documents) {
+    const result = {}
+    console.log(Object.entries(documents))
+    for (const [type, { front, back }] of Object.entries(documents)) {
+      result[type] = {}
+      if (front) {
+        result[type].front = front.getDetailsForSave()
+      }
+      if (back) {
+        result[type].back = back.getDetailsForSave()
+      }
+    }
+    return result
   }
 </script>
 

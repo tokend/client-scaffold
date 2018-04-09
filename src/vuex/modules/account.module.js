@@ -1,5 +1,4 @@
 import { blobTypes } from '../../js/const/documents.const'
-import { userStates } from '../../js/const/user.const'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import { usersService } from '../../js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
@@ -9,6 +8,7 @@ import { RecordFactory } from '../../js/records/factory'
 
 import { accountsService } from '../../js/services/accounts.service'
 import { reviewableRequestsService } from '../../js/services/reviewable_requests.service'
+import { fileService } from '../../js/services/file.service'
 
 import { ACCOUNT_STATES } from '../../js/const/account.const'
 
@@ -88,34 +88,35 @@ export const actions = {
     commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
   },
 
+  async UPDATE_ACCOUNT_KYC_DOCUMENTS ({ commit }, documents) {
+    async function uploadBothDocSides ({ front, back }) {
+      if (front && !front.isUploaded) {
+        front.setKey(await fileService.uploadFile(front.getDetailsForUpload()))
+      }
+      if (back && !back.isUploaded) {
+        back.setKey(await fileService.uploadFile(back.getDetailsForUpload()))
+      }
+    }
+
+    await Promise.all(Object.values(documents).map(document => uploadBothDocSides(document)))
+  },
+
   /**
    * @param commit
    * @param {object} opts
    * @param {object} opts.details - KYC details from form
-   * @param {documents} opts.documents -
-   * Containers instances with uploaded documents (separate for document.front/document.back)
-   * {@link DocumentContainer.getDetailsForSave}
-   * @param {string} opts.requestId
-   * @param {number} opts.accountTypeToSet {@link ACCOUNT_TYPES)
-   * @param {number} opts.kycLevelToSet
-   * @returns {Promise<void>}
+   * @param {documents} opts.documents - Containers instances with uploaded documents
+   * (separate for document.front/document.back) {@link DocumentContainer.getDetailsForSave}
+   * @returns {Promise<string>} - blobId
    * @constructor
    */
   async UPDATE_ACCOUNT_KYC_DATA ({ commit }, opts) {
-    const blobId = (await usersService.blobsOf().create(
+    return (await usersService.blobsOf().create(
       blobTypes.kycForm.str, {
         ...opts.details,
         documents: opts.documents
       }))
       .data('id')
-
-    await usersService.createKycRequest({
-      requestID: this.userState === userStates.approved ? '0' : this.requestId,
-      accountToUpdateKYC: this.userAccountId,
-      accountTypeToSet: 2, // TODO: fix me later
-      kycLevelToSet: 0,
-      kycData: { blob_id: blobId }
-    })
   }
 }
 
