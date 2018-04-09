@@ -122,6 +122,12 @@
   import { kycIndividualSchema as schema } from '../spec/kyc-individual.schema'
   import { KycTemplateParser } from '../spec/kyc-template-parser'
   import { usersService } from '../../../../js/services/users.service'
+  import { accountsService } from '../../../../js/services/accounts.service'
+
+  import { ACCOUNT_STATES } from '../../../../js/const/account.const'
+  import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+
+  const KYC_LEVEL_TO_SET = 0
 
   export default {
     name: 'verification-individual',
@@ -153,7 +159,8 @@
       isDialogOpened: false,
       documentTypes,
       i18n,
-      schema
+      schema,
+      ACCOUNT_TYPES
     }),
     async created () {
       this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
@@ -163,7 +170,9 @@
         vuexTypes.accountLatestBlobId,
         vuexTypes.accountId,
         vuexTypes.accountKycData,
-        vuexTypes.accountKycDocuments
+        vuexTypes.accountKycDocuments,
+        vuexTypes.accountState,
+        vuexTypes.accountKycLatestRequest
       ]),
       verificationKey () {
         return this.accountId.slice(1, 6)
@@ -185,12 +194,22 @@
             details: KycTemplateParser.toTemplate(this.form),
             documents: KycTemplateParser.getSaveableDocuments(this.documents)
           })
-          console.log(blobId)
+          await this.submitRequest(blobId)
+          await this.loadKycRequests()
           EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
         }
         this.enable()
+      },
+      async submitRequest (blobId) {
+        await accountsService.createKycRequest({
+          requestID: ACCOUNT_STATES.approved ? '0' : this.accountKycLatestRequest.id,
+          accountToUpdateKYC: this.accountId,
+          accountTypeToSet: ACCOUNT_TYPES.general,
+          kycLevelToSet: KYC_LEVEL_TO_SET,
+          kycData: { blob_id: blobId }
+        })
       },
       isAllDocsUploaded () {
         for (const doc of schema.docs) {

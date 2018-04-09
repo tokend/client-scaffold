@@ -85,6 +85,7 @@ const getters = {
   accountKycData: 'accountKycData',
   accountKycDocuments: 'accountKycDocuments',
   accountLatestBlobId: 'accountLatestBlobId',
+  accountKycLatestRequest: 'accountKycLatestRequest',
 
   // tokens:
   userAcquiredTokens: 'userAcquiredTokens',

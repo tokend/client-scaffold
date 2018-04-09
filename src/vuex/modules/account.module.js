@@ -54,13 +54,13 @@ export const mutations = {
     state.kycData = data
   },
 
-  SET_ACCOUNT_KYC_DOCUMENTS ({ commit }, documents) {
-    state.kycDocuments = Object.entries(kycIndividualSchema.docs)
-      .reduce((kycDocuments, [type, doc]) => {
-        if (!kycDocuments[type]) {
-          kycDocuments[type] = {}
+  SET_ACCOUNT_KYC_DOCUMENTS (state, documents) {
+    state.kycDocuments = kycIndividualSchema.docs
+      .reduce((kycDocuments, doc) => {
+        if (!kycDocuments[doc.type]) {
+          kycDocuments[doc.type] = {}
         }
-        kycDocuments[type][doc.side] = new DocumentContainer(documents[doc.type][doc.side])
+        kycDocuments[doc.type][doc.side] = new DocumentContainer(documents[doc.type][doc.side])
         return kycDocuments
       }, {})
   }
