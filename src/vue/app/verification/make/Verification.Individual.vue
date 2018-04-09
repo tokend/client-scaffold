@@ -140,11 +140,10 @@
         state: '',
         postal_code: ''
       },
-      documents: {
-        [documentTypes.kycIdDocument]: null,
-        [documentTypes.kycProofOfAddress]: null,
-        [documentTypes.kycPhoto]: null
-      },
+      documents: schema.docs.reduce((docs, doc) => {
+        docs[doc.type] = null
+        return docs
+      }, {}),
       values: {
         countries: []
       },
