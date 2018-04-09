@@ -47,7 +47,16 @@
                                   :label="item.label"
                                   :errorMessage="errorMessage(item.name)"
                       />
-                      <!--<select-field v-if="item.field === 'select'"/>-->
+                      <select-field v-if="item.field === 'select'"
+                                    v-model="form[item.model]"
+                                    v-validate="item.validate"
+                                    :values="values[item.values]"
+                                    :name="item.name"
+                                    :id="item.id"
+                                    :required="item.required"
+                                    :label="item.label"
+                                    :errorMessage="errorMessage(item.name)"
+                      />
                     </div>
                   </template>
               </div>
@@ -112,6 +121,7 @@
   import isEmpty from 'lodash/isEmpty'
 
   import { kycIndividualSchema as schema } from '../spec/kyc-individual.schema'
+  import { usersService } from '../../../../js/services/users.service'
 
   export default {
     name: 'verification-individual',
@@ -135,12 +145,16 @@
         [documentTypes.kycProofOfAddress]: null,
         [documentTypes.kycPhoto]: null
       },
+      values: {
+        countries: []
+      },
       isDialogOpened: false,
       documentTypes,
       i18n,
       schema
     }),
-    created () {
+    async created () {
+      this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
       if (!isEmpty(this.userKycDetails)) {
         this.stubDetails()
       }

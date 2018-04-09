@@ -1,5 +1,7 @@
 <template>
-  <md-field>
+  <md-field
+    :class="fieldClass"
+  >
     <label :for="id">{{ label }}</label>
     <md-select
       :placeholder="placeholder"

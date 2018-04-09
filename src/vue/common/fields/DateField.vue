@@ -3,12 +3,14 @@
                  :name="name"
                  :value="value"
                  :required="required"
+                 :class="fieldClass"
                  :md-open-on-focus="openOnFocus"
                  :md-disabled-dates="disabledDates"
                  :md-override-native="overrideNative"
                  @input="onInput"
   >
     <label>{{ label }}</label>
+    <span class="md-error" v-if="errorMessage">{{ errorMessage }}</span>
   </md-datepicker>
 </template>
 
@@ -36,7 +38,7 @@
     },
     methods: {
       onInput (value) {
-        this.$emit(commonEvents.inputEvent, moment(value).format())
+        this.$emit(commonEvents.inputEvent, value ? moment(value).format() : '')
       }
     }
   }

@@ -169,7 +169,7 @@ export class UsersService extends Service {
       /**
        * Creates a blob on API
        * @param {string} type Type of the blob
-       * @param {any} value Value of the blob. Will be stringified
+       * @param {object} value Value of the blob. Will be stringified
        * @param {object} [relationships] Will be used as filters on getting
        * @returns {Promise}
        */
@@ -234,6 +234,14 @@ export class UsersService extends Service {
       .sign(this._keypair)
       .json()
       .put()
+  }
+
+  loadEnums () {
+    return this._apiRequestBuilder
+      .commonData()
+      .enums()
+      .sign(this._keypair)
+      .get()
   }
 }
 

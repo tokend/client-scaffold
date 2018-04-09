@@ -107,7 +107,7 @@ export const kycIndividualSchema = {
       {
         "model": "id_expiration_date",
         "name": "id-exp-date",
-        "id":  "kyc-exp-date",
+        "id":  "kyc-id-exp-date",
         "label": i18n.lbl_id_document_exp_date(),
         "field": "date",
         "required": true,
