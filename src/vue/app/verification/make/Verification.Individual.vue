@@ -27,7 +27,7 @@
               <div class="md-layout md-gutter">
                   <template v-for="item in row">
                     <div class="md-layout-item md-small-size-100">
-                      <input-field
+                      <input-field v-if="item.field === 'text'"
                                    v-model="form[item.model]"
                                    v-validate="item.validate"
                                    :name="item.name"
@@ -35,6 +35,17 @@
                                    :required="item.required"
                                    :label="item.label"
                                    :errorMessage="errorMessage(item.name)"
+                      />
+                      <date-field v-if="item.field === 'date'"
+                                  v-model="form[item.model]"
+                                  v-validate="item.validate"
+                                  :name="item.name"
+                                  :id="item.id"
+                                  :required="item.required"
+                                  :disableBefore="item.disableBefore"
+                                  :disableAfter="item.disableAfter"
+                                  :label="item.label"
+                                  :errorMessage="errorMessage(item.name)"
                       />
                       <!--<select-field v-if="item.field === 'select'"/>-->
                     </div>
@@ -110,14 +121,14 @@
       form: {
         first_name: '',
         last_name: '',
-        address: {
-          line_1: '',
-          line_2: '',
-          city: '',
-          country: '',
-          state: '',
-          postal_code: ''
-        }
+        date_of_birth: null,
+        id_expiration_date: null,
+        line_1: '',
+        line_2: '',
+        city: '',
+        country: '',
+        state: '',
+        postal_code: ''
       },
       documents: {
         [documentTypes.kycIdDocument]: null,
