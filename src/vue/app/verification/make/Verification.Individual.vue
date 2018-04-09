@@ -16,131 +16,51 @@
 
         <md-card-content>
 
-          <div class="md-layout md-gutter">
 
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-first-name"
-                           name="first-name"
-                         v-model="form.first_name"
-                         v-validate="'required'"
-                          :required="true"
-                          :label="i18n.lbl_first_name()"
-                          :errorMessage="errorMessage('first-name')"
-              />
-            </div>
+          <template v-for="row in schema.rows">
 
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-last-name"
-                           name="last-name"
-                         v-model="form.last_name"
-                         v-validate="'required'"
-                          :required="true"
-                          :label="i18n.lbl_last_name()"
-                          :errorMessage="errorMessage('last-name')"
-              />
-            </div>
+            <template v-if="row.heading">
+              <h4>{{ row.heading }}</h4>
+            </template>
 
-          </div>
+            <template v-if="row instanceof Array">
+              <div class="md-layout md-gutter">
+                  <template v-for="item in row">
+                    <div class="md-layout-item md-small-size-100">
+                      <input-field
+                                   v-model="form[item.model]"
+                                   v-validate="item.validate"
+                                   :name="item.name"
+                                   :id="item.id"
+                                   :required="item.required"
+                                   :label="item.label"
+                                   :errorMessage="errorMessage(item.name)"
+                      />
+                      <!--<select-field v-if="item.field === 'select'"/>-->
+                    </div>
+                  </template>
+              </div>
+            </template>
 
-          <h4>{{ i18n.kyc_address_details() }}</h4>
-
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-line-1"
-                           name="line-1"
-                         v-model="form.address.line_1"
-                         v-validate="'required'"
-                   data-vv-as="line 1"
-                          :required="true"
-                          :label="i18n.lbl_line_1()"
-                          :errorMessage="errorMessage('line-1')"
-              />
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-line-2"
-                           name="line-2"
-                         v-model="form.address.line_2"
-                          :label="i18n.lbl_line_2()"
-                          :errorMessage="errorMessage('line-2')"
-              />
-            </div>
-          </div>
-
-
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-
-              <input-field id="kyc-form-city"
-                           name="city"
-                         v-model="form.address.city"
-                         v-validate="'required'"
-                          :required="true"
-                          :label="i18n.lbl_city()"
-                          :errorMessage="errorMessage('city')"
-              />
-            </div>
-
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-country"
-                           name="country"
-                         v-model="form.address.country"
-                         v-validate="'required'"
-                          :required="true"
-                          :label="i18n.lbl_country()"
-                          :errorMessage="errorMessage('country')"
-              />
-            </div>
-          </div>
-
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-state"
-                           name="state"
-                         v-model="form.address.state"
-                         v-validate="'required'"
-                          :required="true"
-                          :label="i18n.lbl_state()"
-                          :errorMessage="errorMessage('state')"
-              />
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="kyc-form-postal-code"
-                           name="postal-code"
-                         v-model="form.address.postal_code"
-                         v-validate="'required'"
-                           data-vv-as="postal code"
-                          :required="true"
-                          :label="i18n.lbl_postal_code()"
-                          :errorMessage="errorMessage('postal-code')"
-              />
-            </div>
-          </div>
+          </template>
 
           <h4>{{ i18n.kyc_required_documents() }}</h4>
 
-          <file-field id="kyc-file-id" class="kyc-form__file-field"
-                     :type="documentTypes.kycIdDocument"
-                     :private="true"
-                     :label="i18n.lbl_kyc_id()"
-                    v-model="documents[documentTypes.kycIdDocument]"/>
-          <file-field id="kyc-file-poa" class="kyc-form__file-field"
-                     :type="documentTypes.kycProofOfAddress"
-                     :private="true"
-                     :label="i18n.lbl_kyc_proof()"
-                    v-model="documents[documentTypes.kycProofOfAddress]"/>
+          <template v-for="doc in schema.docs">
+            <template v-if="doc.type === documentTypes.kycSelfie">
+              <h4>{{ i18n.kyc_photo_verification() }}</h4>
+              <p>{{ i18n.kyc_photo_explain() }}</p>
+              <md-button @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</md-button>
+            </template>
 
-          <h4>{{ i18n.kyc_photo_verification() }}</h4>
-          <p>
-            {{ i18n.kyc_photo_explain() }}<br>
-            <md-button @click="isDialogOpened = true">
-              {{ i18n.kyc_show_key() }}
-            </md-button>
-          </p>
-          <file-field id="kyc-file-photo" class="kyc-form__file-field"
-                     :type="documentTypes.kycPhoto"
-                     :private="true"
-                     :label="i18n.lbl_kyc_photo()"
-                    v-model="documents[documentTypes.kycPhoto]"/>
+            <file-field class="kyc-form__file-field"
+                          v-model="documents[doc.type]"
+                          :private="doc.private"
+                          :label="doc.label"
+                          :type="doc.type"
+                          :id="doc.id"
+              />
+          </template>
 
           <div class="md-layout md-alignment-center-right">
             <md-button type="submit" class="md-dense md-raised md-primary" :disabled="isPending">
@@ -180,6 +100,8 @@
   import { i18n } from '../../../../js/i18n'
   import isEmpty from 'lodash/isEmpty'
 
+  import { kycIndividualSchema as schema } from '../spec/kyc-individual.schema'
+
   export default {
     name: 'verification-individual',
     mixins: [FormMixin],
@@ -204,7 +126,8 @@
       },
       isDialogOpened: false,
       documentTypes,
-      i18n
+      i18n,
+      schema
     }),
     created () {
       if (!isEmpty(this.userKycDetails)) {
@@ -225,9 +148,9 @@
     methods: {
       ...mapActions({
         loadUser: vuexTypes.GET_USER_DETAILS,
-        loadUserKyc: vuexTypes.GET_USER_KYC,
-        updateKycDetails: vuexTypes.UPDATE_USER_KYC_DETAILS,
-        updateKycDocuments: vuexTypes.UPDATE_USER_KYC_DOCUMENTS
+        loadUserKyc: vuexTypes.GET_ACCOUNT_KYC,
+        updateKycDetails: vuexTypes.UPDATEACCOUNTR_KYC_DETAILS,
+        updateKycDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
       }),
       async submit () {
         if (!await this.isValid()) return
