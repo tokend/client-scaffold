@@ -131,6 +131,13 @@ export const kycIndividualSchema = {
       "side": "front",
       "private": true,
       "label": i18n.lbl_kyc_proof()
+    },
+    {
+      "id": "kyc-file-photo",
+      "type": documentTypes.kycSelfie,
+      "side": "front",
+      "private": true,
+      "label": i18n.lbl_kyc_selfie()
     }
   ]
 }
