@@ -56,25 +56,17 @@
 </template>
 
 <script>
-  import { dispatchAppEvent } from '../../../../../../js/events/helpers'
-  import { commonEvents } from '../../../../../../js/events/common_events'
-  import formMixin from '../../../../../common/mixins/form.mixin'
   import InputField from '../../../../../common/fields/InputField'
-  import { offersService } from '../../../../../../js/services/offer.service'
-  import { accountsService } from '../../../../../../js/services/accounts.service'
-  import { feeService } from '../../../../../../js/services/fees.service'
-  import { EventDispatcher } from '../../../../../../js/events/event_dispatcher'
-  import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../../../vuex/types'
-  import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../../../../js/const/const'
+  import FormMixin from '../../../../../common/mixins/form.mixin'
+  import OrderMakerMixin from '../order-maker.mixin'
+
   import { confirmAction } from '../../../../../../js/modals/confirmation_message'
-  import { i18n } from '../../../../../../js/i18n'
-  import { ErrorHandler } from '../../../../../../js/errors/error_handler'
   import { multiply } from '../../../../../../js/utils/math.util'
+  import { i18n } from '../../../../../../js/i18n'
 
   export default {
     name: 'trade-orders-sell',
-    mixins: [formMixin],
+    mixins: [FormMixin, OrderMakerMixin],
     components: { InputField },
     props: {
       assets: { type: Object, require: true }
@@ -94,17 +86,11 @@
     created () {
     },
     computed: {
-      ...mapGetters([
-        vuexTypes.accountBalances
-      ]),
       lessThanMinimumAmount () {
         return Number(this.form.amount) < 0.000001
       }
     },
     methods: {
-      ...mapActions({
-        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
-      }),
       getQuoteAmount () {
         this.form.quoteAmount = multiply(this.form.price, this.form.amount)
       },
@@ -114,45 +100,19 @@
         if (!await this.isValid()) return
         if (!await confirmAction()) return
         this.errors.clear()
-
         this.disable()
-        try {
-          if (!this.accountBalances[this.assets.base]) {
-            await accountsService.createBalance(this.assets.base)
-            await this.loadBalances()
-          }
-
-          if (!this.accountBalances[this.assets.quote]) {
-            await accountsService.createBalance(this.assets.quote)
-            await this.loadBalances()
-          }
-
-          if (Number(this.accountBalances[this.assets.base].balance) < Number(this.form.quoteAmount)) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
-            this.enable()
-            return
-          }
-          const fee = await this.loadFee()
-          const opts = {
-            amount: this.form.amount,
-            price: this.form.price,
-            orderBookId: SECONDARY_MARKET_ORDER_BOOK_ID,
-            isBuy: false,
-            baseBalance: this.accountBalances[this.assets.base].balance_id,
-            quoteBalance: this.accountBalances[this.assets.quote].balance_id,
-            fee: fee.percent
-          }
-          await offersService.createOffer(opts)
-          dispatchAppEvent(commonEvents.createdOrder)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_created())
-        } catch (error) {
-          ErrorHandler.processUnexpected(error)
-        }
+        await this.makeOrder({
+          pair: {
+            base: this.assets.base,
+            quote: this.assets.quote
+          },
+          baseAmount: this.form.amount,
+          quoteAmount: this.form.quoteAmount,
+          price: this.form.price,
+          isBuy: false
+        })
         this.enable()
         this.resetForm()
-      },
-      loadFee () {
-        return feeService.loadOfferFeeByAmount(this.assets.quote, this.form.quoteAmount)
       },
       resetForm () {
         this.form.price = ''
