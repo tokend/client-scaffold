@@ -2,8 +2,8 @@
   <div>
     <md-card>
       <md-card-content class="md-layout">
-        <sell-order :assets="assets" class="md-layout-item"/>
         <buy-order :assets="assets" class="md-layout-item"/>
+        <sell-order :assets="assets" class="md-layout-item"/>
       </md-card-content>
     </md-card>
   </div>
