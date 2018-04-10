@@ -72,7 +72,7 @@
         // 0 === price decreased
         // 1 === price increased
         // 2 === price hasn't changed
-        let trades = this.trades
+        let trades = this.trades.reverse()
         for (let item of trades) {
           let index = trades.indexOf(item)
           if (trades.length) {

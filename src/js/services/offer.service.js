@@ -119,6 +119,7 @@ export class OffersService extends Service {
       .assetPair(opts.base, opts.quote)
       .orderBookID(SECONDARY_MARKET_ORDER_BOOK_ID)
       .limit(config.TRANSACTIONS_PER_PAGE)
+      .order('desc')
       .callWithSignature(this._keypair)
   }
 
