@@ -1,6 +1,6 @@
 import { Service } from './service'
 
-export class PricesService extends Service {
+export class PairsService extends Service {
   /**
    * Loads all asset pairs existing in the system
    *
@@ -28,4 +28,4 @@ export class PricesService extends Service {
   }
 }
 
-export const pricesService = new PricesService()
+export const pairsService = new PairsService()

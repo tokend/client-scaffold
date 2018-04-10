@@ -19,7 +19,7 @@
 
 <script>
   import { commonEvents } from '../../../js/events/common_events'
-  import { attachEventHandler } from '../../../js/events/helpers'
+  import { attachEventHandler, dispatchAppEvent } from '../../../js/events/helpers'
 
   const defaults = {
     msg: 'Something happened',
@@ -49,10 +49,13 @@
 
     created () {
       attachEventHandler(commonEvents.showSnackbarEvent, this.open)
+      attachEventHandler(commonEvents.hideSnackbarEvent, this.close)
     },
 
     methods: {
       open (configs) {
+        this.close()
+        dispatchAppEvent(commonEvents.hideLoaderEvent)
         this.isActive = true
         this.config.msg = configs.msg || defaults.msg
         this.config.type = configs.type || defaults.type
@@ -63,6 +66,7 @@
         this.config.showButton = configs.showButton || defaults.showButton
       },
       close () {
+        if (!this.isActive) return
         this.isActive = false
         this.config.msg = null
         this.config.type = null

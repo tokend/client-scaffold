@@ -19,9 +19,11 @@ import transfersView from './views/transfers_view'
 import modals from './views/modals'
 import verification from './views/verification_view'
 import fileUpload from './views/file-upload'
+import trade from './views/trade_view'
 import common from './views/common'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
+import { humanizePastDate } from '../utils/dates.util'
 
 import Polyglot from 'node-polyglot'
 
@@ -49,6 +51,7 @@ const dictionary = {
   ...dashboardView,
   ...verification,
   ...fileUpload,
+  ...trade,
   ...common
 }
 
@@ -62,5 +65,6 @@ export const i18n = {
     }, {}),
   n: formatNumber(),
   c: formatCurrency(),
-  cc: formatConvertedCurrency()
+  cc: formatConvertedCurrency(),
+  d: humanizePastDate
 }

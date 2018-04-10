@@ -40,3 +40,4 @@ export {
   DEFAULT_MAX_AMOUNT
 } from './configs.const'
 export { assetMap } from './asset_map'
+export { ORDER_TYPES } from './order-types'

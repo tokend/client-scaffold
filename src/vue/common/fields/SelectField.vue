@@ -3,6 +3,7 @@
     :class="fieldClass"
   >
     <label :for="id">{{ label }}</label>
+    <!-- <div class="abs">{{ values }}</div> -->
     <md-select
       :placeholder="placeholder"
       :disabled="disabled"
@@ -35,5 +36,4 @@
 </script>
 
 <style scoped>
-
 </style>

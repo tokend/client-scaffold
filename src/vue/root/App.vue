@@ -22,6 +22,7 @@
       <router-view/>
       <snackbar/>
       <file-viewer/>
+      <loader-bar/>
     </md-app-content>
 
   </md-app>
@@ -32,6 +33,7 @@
   import Sidebar from '../navigation/Sidebar.vue'
   import Snackbar from '../common/messages/Snackbar'
   import FileViewer from '../common/modals/FileViewer'
+  import LoaderBar from '../common/messages/LoaderBar'
 
   import { vueRoutes } from '../../vue-router/const'
 
@@ -50,7 +52,8 @@
       Navbar,
       Sidebar,
       Snackbar,
-      FileViewer
+      FileViewer,
+      LoaderBar
     },
 
     data: () => ({

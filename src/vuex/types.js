@@ -22,7 +22,14 @@ const mutations = {
   // transactions:
   SET_TX_LIST_INITIALIZED: 'SET_TX_LIST_INITIALIZED',
   UPDATE_TX_LIST: 'UPDATE_TX_LIST',
-  UPDATE_TX_LIST_ITEM: 'UPDATE_TX_LIST_ITEM'
+  UPDATE_TX_LIST_ITEM: 'UPDATE_TX_LIST_ITEM',
+
+  // pairs:
+  SET_ASSET_PAIRS: 'SET_ASSET_PAIRS',
+
+  // trades:
+  SET_SELL_OFFERS: 'SET_SELL_OFFERS',
+  SET_BUY_OFFERS: 'SET_BUY_OFFERS'
 }
 
 const actions = {
@@ -50,7 +57,17 @@ const actions = {
   INIT_TX_LIST: 'INIT_TX_LIST',
   GET_TX_LIST: 'GET_TX_LIST',
   NEXT_TX_LIST: 'NEXT_TX_LIST',
-  UPDATE_TX_COUNTERPARTIES: 'UPDATE_TX_COUNTERPARTIES'
+  UPDATE_TX_COUNTERPARTIES: 'UPDATE_TX_COUNTERPARTIES',
+
+  // pairs:
+  GET_ASSET_PAIRS: 'GET_ASSET_PAIRS',
+
+  // trades:
+  GET_TRADES: 'GET_TRADES',
+  GET_SM_OFFERS: 'GET_SM_OFFERS',
+  GET_BUY_OFFERS: 'GET_BUY_OFFERS',
+  GET_SELL_OFFERS: 'GET_SELL_OFFERS',
+  GET_USER_OFFERS: 'GET_USER_OFFERS'
 }
 
 const getters = {
@@ -93,7 +110,16 @@ const getters = {
   userTransferableTokens: 'userTransferableTokens',
 
   // transactions:
-  transactions: 'transactions'
+  transactions: 'transactions',
+
+  // pairs:
+  assetPairs: 'assetPairs',
+
+  // trades:
+  trades: 'trades',
+  buyOffers: 'buyOffers',
+  sellOffers: 'sellOffers',
+  userOffers: 'userOffers'
 }
 
 export const vuexTypes = {
