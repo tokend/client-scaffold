@@ -2,7 +2,7 @@
   <div class="deposit md-layout md-alignment-center-center">
     <template v-if="form.tokenCode">
       <div class="md-layout-item
-                    md-size-35
+                    md-size-40
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
