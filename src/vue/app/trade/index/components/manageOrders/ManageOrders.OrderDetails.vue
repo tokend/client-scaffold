@@ -6,12 +6,14 @@
     <detail :prop="'Price'" :value="`${tx.price} ${tx.quoteAssetCode}`"/>
     <detail :prop="'Fee'" :value="`${tx.fee} ${tx.baseAssetCode}`"/>
     <detail :prop="'Date'" :value="i18n.d(tx.createdAt)"/>
-    <md-button class="md-accent cancel-button" @click="cancelOffer">Cancel order</md-button>
+    <md-button class="md-accent cancel-button" @click="cancelOffer" :disabled="isPending">Cancel order</md-button>
   </div>
 </template>
 
 <script>
   import DetailsMixin from './details.mixin'
+  import SubmitterMixin from '../../../../../common/mixins/submitter.mixin'
+
   import { i18n } from '../../../../../../js/i18n'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
@@ -24,7 +26,7 @@
 
   export default {
     name: 'manage-orders',
-    mixins: [DetailsMixin],
+    mixins: [DetailsMixin, SubmitterMixin],
     props: {
       tx: { type: Object, require: true }
     },
@@ -43,22 +45,23 @@
     },
     methods: {
       async cancelOffer () {
-        const opts = {
-          baseBalance: this.accountBalances[this.tx.baseAssetCode].balance_id,
-          quoteBalance: this.accountBalances[this.tx.quoteAssetCode].balance_id,
-          offerId: this.tx.id.toString(),
-          price: this.tx.price,
-          orderBookId: this.tx.orderBookId.toString()
-        }
+        if (!await confirmAction()) return
+        this.disable()
         try {
-          if (!await confirmAction()) return
-          await offersService.cancelOffer(opts)
+          await offersService.cancelOffer({
+            baseBalance: this.accountBalances[this.tx.baseAssetCode].balance_id,
+            quoteBalance: this.accountBalances[this.tx.quoteAssetCode].balance_id,
+            offerId: this.tx.id.toString(),
+            price: this.tx.price,
+            orderBookId: this.tx.orderBookId.toString()
+          })
           dispatchAppEvent(commonEvents.cancelOrder)
           EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_canceled())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
           EventDispatcher.dispatchShowErrorEvent(i18n.trd_offer_failed_to_cancel())
         }
+        this.enable()
       }
     },
     watch: {
