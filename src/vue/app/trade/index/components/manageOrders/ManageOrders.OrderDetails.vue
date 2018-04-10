@@ -59,7 +59,6 @@
           EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_canceled())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
-          EventDispatcher.dispatchShowErrorEvent(i18n.trd_offer_failed_to_cancel())
         }
         this.enable()
       }

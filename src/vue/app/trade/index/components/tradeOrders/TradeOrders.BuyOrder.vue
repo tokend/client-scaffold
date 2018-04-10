@@ -39,7 +39,7 @@
           <div class="md-layout-item md-small-size-100">
             <input-field
               class="md-layout-item"
-              v-model.trim="form.quoteAmount"
+              :value="i18n.c(form.quoteAmount)"
               :label="i18n.trd_total_value({ value: assets.quote })"
               name="order-buy-total"
               :disabled="true"
@@ -106,7 +106,7 @@
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       getQuoteAmount () {
-        this.form.quoteAmount = i18n.c(multiply(this.form.price, this.form.amount))
+        this.form.quoteAmount = multiply(this.form.price, this.form.amount)
       },
       async submit () {
         this.allowToValidPrice = true
@@ -115,39 +115,39 @@
         if (!await confirmAction()) return
         this.errors.clear()
 
-        if (!this.accountBalances[this.assets.base]) {
-          await accountsService.createBalance(this.assets.base)
-          await this.loadBalances()
-        }
-
-        if (!this.accountBalances[this.assets.quote]) {
-          await accountsService.createBalance(this.assets.quote)
-          await this.loadBalances()
-        }
-
-        if (Number(this.accountBalances[this.assets.quote].balance) < Number(this.form.quoteAmount)) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
-          return
-        }
-        const fee = await this.loadFee()
-
-        const opts = {
-          amount: this.form.amount,
-          price: this.form.price,
-          orderBookId: SECONDARY_MARKET_ORDER_BOOK_ID,
-          isBuy: true,
-          baseBalance: this.accountBalances[this.assets.base].balance_id,
-          quoteBalance: this.accountBalances[this.assets.quote].balance_id,
-          fee: fee.percent
-        }
         this.disable()
+
         try {
-          await offersService.createOffer(opts)
+          if (!this.accountBalances[this.assets.base]) {
+            await accountsService.createBalance(this.assets.base)
+            await this.loadBalances()
+          }
+
+          if (!this.accountBalances[this.assets.quote]) {
+            await accountsService.createBalance(this.assets.quote)
+            await this.loadBalances()
+          }
+
+          if (Number(this.accountBalances[this.assets.quote].balance) < Number(this.form.quoteAmount)) {
+            EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
+            this.enable()
+            return
+          }
+
+          const fee = await this.loadFee()
+          await offersService.createOffer({
+            amount: this.form.amount,
+            price: this.form.price,
+            orderBookId: SECONDARY_MARKET_ORDER_BOOK_ID,
+            isBuy: true,
+            baseBalance: this.accountBalances[this.assets.base].balance_id,
+            quoteBalance: this.accountBalances[this.assets.quote].balance_id,
+            fee: fee.percent
+          })
           dispatchAppEvent(commonEvents.createdOrder)
           EventDispatcher.dispatchShowSuccessEvent(i18n.trd_offer_created())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
-          EventDispatcher.dispatchShowErrorEvent(i18n.trd_some_went_wrong())
         }
         this.enable()
         this.resetForm()

@@ -8,6 +8,14 @@ export class EventDispatcher {
     dispatchAppEvent(commonEvents.showSnackbarEvent, config)
   }
 
+  static dispatchShowLoaderEvent () {
+    dispatchAppEvent(commonEvents.showLoaderEvent)
+  }
+
+  static dispatchHideLoaderEvent () {
+    dispatchAppEvent(commonEvents.hideLoaderEvent)
+  }
+
   static dispatchShowErrorEvent (msg) {
     const config = {
       position: 'center',

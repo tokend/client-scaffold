@@ -21,6 +21,7 @@
     <md-app-content>
       <router-view/>
       <snackbar/>
+      <loader-bar/>
     </md-app-content>
 
   </md-app>
@@ -30,6 +31,7 @@
   import Navbar from '../navigation/Navbar.vue'
   import Sidebar from '../navigation/Sidebar.vue'
   import Snackbar from '../common/messages/Snackbar'
+  import LoaderBar from '../common/messages/LoaderBar'
 
   import { vueRoutes } from '../../vue-router/const'
 
@@ -47,7 +49,8 @@
     components: {
       Navbar,
       Sidebar,
-      Snackbar
+      Snackbar,
+      LoaderBar
     },
 
     data: () => ({
