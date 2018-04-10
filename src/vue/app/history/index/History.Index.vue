@@ -14,7 +14,7 @@
       </md-table-toolbar>
 
 
-      <template v-if="list.length > 0">
+      <template v-if="tokenCode && list.length">
         <md-table-row class="tx-history__row">
           <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_tx_type() }}</md-table-head>
@@ -62,6 +62,7 @@
           </md-table-cell>
         </md-table-row>
       </template>
+
       <template v-else>
         <div class="tx-history__no-transactions">
           <md-icon class="md-size-4x">trending_up</md-icon>
@@ -86,24 +87,25 @@
   import { i18n } from '../../../../js/i18n'
   import get from 'lodash/get'
 
-  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
-
   export default {
     name: 'history-index',
     components: { TxDetails, SelectField },
     data: _ => ({
       isLoading: false,
-      tokenCode: DEFAULT_SELECTED_ASSET,
+      tokenCode: null,
       index: -1,
       i18n
     }),
-    created () {
-      this.loadList(this.tokenCode)
+    async created () {
+      this.tokenCode = this.tokens[0] || null
+      if (this.tokenCode) {
+        this.loadList(this.tokenCode)
+      }
     },
     computed: {
       ...mapGetters([
         vuexTypes.transactions,
-        vuexTypes.userWalletTokens
+        vuexTypes.userAcquiredTokens
       ]),
       list () {
         return (get(this.transactions, `${this.tokenCode}.records`) || [])
@@ -120,7 +122,7 @@
         return get(this.transactions, `${this.tokenCode}.isLoaded`)
       },
       tokens () {
-        return this.userWalletTokens.map(token => token.code)
+        return this.userAcquiredTokens.map(token => token.code)
       }
     },
     methods: {
