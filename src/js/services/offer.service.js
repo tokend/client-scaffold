@@ -70,6 +70,7 @@ export class OffersService extends Service {
       .isBuy('')
       .orderBookID(SECONDARY_MARKET_ORDER_BOOK_ID)
       .assetPair(opts.base, opts.quote)
+      .order('desc')
       .limit(config.TRANSACTIONS_PER_PAGE)
       .callWithSignature(this._keypair)
   }

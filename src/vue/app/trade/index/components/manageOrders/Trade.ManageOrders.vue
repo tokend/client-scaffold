@@ -5,7 +5,7 @@
         <h2 class="md-title">{{ i18n.trd_manage({ pair: `${assets.base}/${assets.quote}` }) }}</h2>
       </md-card-header>
       <md-card-content>
-        <template v-if="reversedUserOffers.length">
+        <template v-if="offers.length">
           <md-table md-card class="manage-orders__table md-elevation-0">
             <md-table-row class="manage-orders__row">
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
@@ -15,7 +15,7 @@
               <md-table-head>{{ i18n.trd_manage_quote_asset_price() }}</md-table-head>
             </md-table-row>
 
-            <template v-for="(order, i) in reversedUserOffers">
+            <template v-for="(order, i) in offers">
               <md-table-row class="manage-orders__row" @click="toggleDetails(i)" :key="`${i}-row`">
                 <md-table-cell class="manage-orders__table-cell">{{ i18n.d(order.createdAt) }}</md-table-cell>
                 <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell>
@@ -70,13 +70,6 @@
       return {
         index: -1,
         i18n
-      }
-    },
-    created () {
-    },
-    computed: {
-      reversedUserOffers () {
-        return this.offers.reverse()
       }
     },
     methods: {
