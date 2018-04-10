@@ -96,9 +96,9 @@ const actions = {
     dispatch(vuexTypes.GET_SELL_OFFERS, pair)
   },
 
-  GET_USER_OFFERS ({ state }) {
+  GET_USER_OFFERS ({ state }, pair) {
     const offersService = new OffersService({})
-    state.userOffers.attachInitLoader(offersService.loadUserOffers.bind(offersService))
+    state.userOffers.attachInitLoader(() => offersService.loadUserOffers(pair))
     return state.userOffers.init()
   },
 

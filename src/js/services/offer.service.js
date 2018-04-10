@@ -59,13 +59,17 @@ export class OffersService extends Service {
 
   /**
    * Loads users offers in secondary market
+   * @param {object} opts
+   * @param {string} opts.base - Base asset
+   * @param {string} opts.quote - Quote asset
    * @returns {*|{value}}
    */
-  loadUserOffers () {
+  loadUserOffers (opts) {
     return this._horizonRequestBuilder.offers()
       .forAccount(this._accountId)
       .isBuy('')
       .orderBookID(SECONDARY_MARKET_ORDER_BOOK_ID)
+      .assetPair(opts.base, opts.quote)
       .limit(config.TRANSACTIONS_PER_PAGE)
       .callWithSignature(this._keypair)
   }
