@@ -4,6 +4,8 @@
 </template>
 
 <script>
+  import { i18n } from '../../../../../../js/i18n'
+
   import * as d3Array from 'd3-array'
   import * as d3Selection from 'd3-selection'
   import * as d3Scale from 'd3-scale'
@@ -66,9 +68,6 @@
     },
 
     methods: {
-      localize (value) {
-        return `${value} ${this.precision}`
-      },
       clear () {
         d3.select('svg.chart').remove()
       },
@@ -198,7 +197,7 @@
         const tick3 = min // (max - min) > 7 ? Math.floor(min + ((max - min) * 0.15)) : (min + ((max - min) * 0.15))
         const yAxisLine = d3.axisLeft(y)
           .tickValues([ tick1, tick3 ].concat(this.requiredTicks))
-          .tickFormat((d) => `${this.localize(d)} ${this.currency}`) // unbreakable space this.formatMoney(d)
+          .tickFormat((d) => `${i18n.c(d)} ${this.currency}`) // unbreakable space this.formatMoney(d)
           .tickSizeInner(-(width + margin.right))
           .tickSizeOuter(0)
           .tickPadding(25)
@@ -272,7 +271,7 @@
             const d1 = data[bisectIndex]
             const nearestPoint = x0 - d0.time > d1.time - x0 ? d1 : d0
             // Change text of the tooltip
-            tipPriceText.text(`${this.localize(nearestPoint.value)} ${this.currency}`)
+            tipPriceText.text(`${i18n.c(nearestPoint.value)} ${this.currency}`)
             tipTimeText.text(moment(nearestPoint.time).format('MM/DD/YYYY hh:mm a'))
 
             // Change X position of the tip
