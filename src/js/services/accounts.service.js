@@ -1,4 +1,4 @@
-import { xdr, Operation } from 'swarm-js-sdk'
+import { xdr, Operation, CreateUpdateKYCRequestBuilder } from 'swarm-js-sdk'
 import { ErrorFactory, errorTypes } from '../errors/factory'
 import { Service } from './service'
 import get from 'lodash/get'
@@ -16,6 +16,25 @@ export class AccountsService extends Service {
     return this._horizonRequestBuilder.accounts()
       .accountId(this._accountId)
       .callWithSignature(this._keypair)
+  }
+
+  /**
+   * Creates operation to create KYC request
+   * @param {object} opts
+   * @param {number|string} opts.requestID - set to zero to create new request
+   * @param {string} opts.accountToUpdateKYC
+   * @param {string} opts.accountTypeToSet
+   * @param {number} opts.kycLevelToSet
+   * @param {object} opts.kycData
+   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @returns {TransactionBuilder}
+   */
+  createKycRequest (opts) {
+    const operation = CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
+    return this._operationBuilder
+      .operation()
+      .add(operation)
+      .submit(this._accountId, this._keypair)
   }
 
   /**

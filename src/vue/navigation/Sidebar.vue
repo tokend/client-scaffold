@@ -26,6 +26,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/trade">
+        <md-icon>compare_arrows</md-icon>
+        <span class="md-list-item-text">Trade</span>
+      </md-list-item>
+
       <md-divider></md-divider>
 
       <md-list-item to="/verification">

@@ -5,3 +5,11 @@ export const REQUEST_STATES = Object.freeze({
   rejected: 4,
   permanentlyRejected: 5
 })
+
+export const REQUEST_STATES_STR = Object.freeze({
+  pending: 'pending',
+  cancelled: 'cancelled',
+  approved: 'approved',
+  rejected: 'rejected',
+  permanentlyRejected: 'permanentlyRejected'
+})

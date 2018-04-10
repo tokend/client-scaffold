@@ -32,6 +32,21 @@ export class ReviewableRequestsService extends Service {
       .callWithSignature(this._keypair)
   }
 
+ /**
+   * Loads all update kyc reviewable requests for current user
+   *
+   * @return {Promise<object>} - Promise object representing rr
+   */
+  loadKycReviewableRequests () {
+    return this._horizonRequestBuilder
+      .reviewableRequestsHelper()
+      .update_kyc()
+      .forRequestor(this._accountId)
+      .order('desc')
+      .limit(config.TRANSACTIONS_PER_PAGE)
+      .callWithSignature(this._keypair)
+  }
+
   /**
    * Load token creation reviewable request by id
    *

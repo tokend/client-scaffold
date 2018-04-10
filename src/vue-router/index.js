@@ -31,6 +31,9 @@ import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
 import History from '../vue/app/history/History.Entry'
 import HistoryIndex from '../vue/app/history/index/History.Index'
 
+import Trade from '../vue/app/trade/Trade.Entry'
+import TradeIndex from '../vue/app/trade/index/Trade.Index'
+
 import Settings from '../vue/app/settings/Settings.Entry'
 import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
 
@@ -157,6 +160,19 @@ const router = new Router({
               path: '/history/index',
               name: 'history.index',
               component: HistoryIndex
+            }
+          ]
+        },
+        {
+          name: 'app.trade',
+          path: '/trade',
+          component: Trade,
+          redirect: { path: '/trade/index' },
+          children: [
+            {
+              path: '/trade/index',
+              name: 'trade.index',
+              component: TradeIndex
             }
           ]
         },

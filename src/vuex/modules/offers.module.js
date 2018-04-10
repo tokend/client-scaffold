@@ -91,14 +91,14 @@ const actions = {
     commit(vuexTypes.SET_SELL_OFFERS, offers)
   },
 
-  GET_SM_OFFERS ({ dispatch }) {
-    dispatch(vuexTypes.GET_BUY_OFFERS)
-    dispatch(vuexTypes.GET_SELL_OFFERS)
+  GET_SM_OFFERS ({ dispatch }, pair) {
+    dispatch(vuexTypes.GET_BUY_OFFERS, pair)
+    dispatch(vuexTypes.GET_SELL_OFFERS, pair)
   },
 
-  GET_USER_OFFERS ({ state }) {
+  GET_USER_OFFERS ({ state }, pair) {
     const offersService = new OffersService({})
-    state.userOffers.attachInitLoader(offersService.loadUserOffers.bind(offersService))
+    state.userOffers.attachInitLoader(() => offersService.loadUserOffers(pair))
     return state.userOffers.init()
   },
 
@@ -106,10 +106,10 @@ const actions = {
     return state.userOffers.next()
   },
 
-  GET_TRADES ({ state }, filters) {
+  GET_TRADES ({ state }, pair) {
     const offersService = new OffersService({})
     state.trades.attachInitLoader(offersService.loadCompletedTrades.bind(offersService))
-    return state.trades.init(filters)
+    return state.trades.init(pair)
   },
 
   NEXT_TRADES ({ state }) {

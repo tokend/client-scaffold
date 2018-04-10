@@ -14,6 +14,7 @@
              :required="required"
              :disabled="disabled"
              :placeholder="placeholder"
+             accept="image/*"
              @change="onChange"
       />
     </div>
@@ -38,6 +39,7 @@
   import { DocumentContainer } from '../../../js/helpers/DocumentContainer'
   import { MAX_FILE_MEGABYTES } from '../../../js/const/documents.const'
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
+  import { dispatchAppEvent } from '../../../js/events/helpers'
   import { commonEvents } from '../../../js/events/common_events'
   import { i18n } from '../../../js/i18n'
   import config from '../../../config'
@@ -104,14 +106,7 @@
       },
       viewNew () {
         if (!this.fileUrl) return
-        const frame = document.createElement('iframe')
-        frame.src = this.fileUrl
-        frame.style.width = '100%'
-        frame.style.border = 'none'
-        frame.style.width = '100%'
-        frame.style.height = '95vh'
-        const win = window.open('/view-doc', '_blank')
-        win.document.write(frame.outerHTML)
+        dispatchAppEvent(commonEvents.openFileViewEvent, this.fileUrl)
       }
     },
     watch: {

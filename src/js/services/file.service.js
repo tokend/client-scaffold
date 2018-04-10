@@ -21,6 +21,10 @@ export class FileService extends Service {
     return configResponse.attribute('key')
   }
 
+  async uploadFiles (...files) {
+    return Promise.all(files.map(file => this.uploadFile(file)))
+  }
+
   /**
    * Loads document details by it's id
    *

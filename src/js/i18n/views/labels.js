@@ -79,7 +79,10 @@ export default {
   lbl_state: 'State',
   lbl_postal_code: 'Postal code',
   lbl_kyc_photo: 'Photo',
+  lbl_kyc_selfie: 'Selfie with verification code',
   lbl_kyc_id: 'ID document',
   lbl_kyc_proof: 'Proof of address',
-  lbl_done: 'Done'
+  lbl_done: 'Done',
+  lbl_date_of_birth: 'Date of birth',
+  lbl_id_document_exp_date: 'ID document expiration date'
 }

@@ -1,14 +1,12 @@
 <template>
-  <div class="file-viewer" v-if="file">
+  <div class="file-viewer" v-if="url">
 
-    <object class="file-viewer__embed"
-           :id="`${file.name}-embed`"
-           :type="file.type"
-           :data="url"
-           :class="{ 'file-viewer__embed--pdf': file.type === 'application/pdf' }"
-           title>
-    </object>
-    <div class="cover" @click="close"></div>
+    <md-dialog :md-active.sync="isOpened" @md-closed="close">
+      <embed class="file-viewer__embed"
+             :src="url"
+             title
+      />
+    </md-dialog>
 
   </div>
 </template>
@@ -16,14 +14,14 @@
 <script>
   import { commonEvents } from '../../../js/events/common_events'
   import { attachEventHandler } from '../../../js/events/helpers'
-  import config from '../../../config'
 
   export default {
     name: 'file-viewer',
 
     data () {
       return {
-        file: null
+        url: null,
+        isOpened: false
       }
     },
 
@@ -32,19 +30,14 @@
       attachEventHandler(commonEvents.closeFileViewEvent, this.close)
     },
 
-    computed: {
-      url () {
-        if (this.file.key) return `${config.FILE_STORAGE}/${this.file.key}`
-        return this.file.url
-      }
-    },
-
     methods: {
-      open (file) {
-        this.file = file
+      open (url) {
+        this.url = url
+        this.isOpened = true
       },
       close () {
-        this.file = null
+        this.isOpened = false
+        this.url = null
       }
     }
   }
@@ -66,13 +59,9 @@
     .file-viewer__embed {
       @include center;
 
+      max-width: 60%;
       position: absolute;
-      height: 90%;
       z-index: $z-embed-page;
-
-      &--pdf {
-        width: 90%;
-      }
     }
   }
 </style>

@@ -51,7 +51,6 @@ export class OffersService extends Service {
    */
   async cancelOffer (opts) {
     const operation = await this._composeCancelOfferOperation(opts)
-
     return this._operationBuilder
       .operation()
       .add(operation)
@@ -60,13 +59,18 @@ export class OffersService extends Service {
 
   /**
    * Loads users offers in secondary market
+   * @param {object} opts
+   * @param {string} opts.base - Base asset
+   * @param {string} opts.quote - Quote asset
    * @returns {*|{value}}
    */
-  loadUserOffers () {
+  loadUserOffers (opts) {
     return this._horizonRequestBuilder.offers()
       .forAccount(this._accountId)
       .isBuy('')
       .orderBookID(SECONDARY_MARKET_ORDER_BOOK_ID)
+      .assetPair(opts.base, opts.quote)
+      .order('desc')
       .limit(config.TRANSACTIONS_PER_PAGE)
       .callWithSignature(this._keypair)
   }
@@ -115,6 +119,7 @@ export class OffersService extends Service {
       .assetPair(opts.base, opts.quote)
       .orderBookID(SECONDARY_MARKET_ORDER_BOOK_ID)
       .limit(config.TRANSACTIONS_PER_PAGE)
+      .order('desc')
       .callWithSignature(this._keypair)
   }
 
