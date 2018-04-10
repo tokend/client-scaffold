@@ -10,7 +10,7 @@
           <md-table-head>{{ i18n.trd_history_amount({ asset: assets.base }) }}</md-table-head>
           <md-table-head>{{ i18n.trd_history_price({ asset: assets.quote }) }}</md-table-head>
           <md-table-head>{{ i18n.trd_history_total({ asset: assets.quote }) }}</md-table-head>
-          <md-table-head>{{ i18n.trd_history_time() }}}</md-table-head>
+          <md-table-head>{{ i18n.trd_history_time() }}</md-table-head>
         </md-table-row>
 
         <md-table-row v-for="(item, i) in validatedTrades"
