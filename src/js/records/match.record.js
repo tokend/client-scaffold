@@ -9,7 +9,8 @@ export class MatchRecord extends TxRecord {
   constructor (record, asset) {
     super(record, record.type_i === 16 ? RECORDS_VERBOSE.match : RECORDS_VERBOSE.investment)
     this.asset = asset
-
+    console.log(record)
+    console.log(record.type_i)
     this.participants = record.participants
     this.participant = this._getParticipant()
     this.effects = this._getEffects()
@@ -31,7 +32,7 @@ export class MatchRecord extends TxRecord {
     return this.effects.map(effect => new MatchTransaction(effect, {
       asset: this.asset,
       date: this.date,
-      name: 'Investment',
+      name: this.name,
       feeAsset: this.feeAsset,
       state: this.state
     }))
