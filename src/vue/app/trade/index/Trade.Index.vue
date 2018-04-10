@@ -13,11 +13,11 @@
     </div>
 
     <div class="md-layout">
-      <trade-orders :assets="filters" class="md-layout-item"/>
+      <orders :assets="filters" class="md-layout-item"/>
     </div>
 
     <div class="md-layout">
-      <orders :assets="filters" class="md-layout-item"/>
+      <trade-orders :assets="filters" class="md-layout-item"/>
     </div>
 
     <div class="md-layout">
