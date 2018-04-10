@@ -44,5 +44,6 @@ export default {
   trd_chart_day: 'Day',
   trd_chart_month: 'Month',
   trd_chart_year: 'Year',
-  trd_orders: 'Open orders'
+  trd_orders: 'Open orders',
+  trd_confirm_match: 'By pressing confirm, you will сreate the opposite to selected order'
 }

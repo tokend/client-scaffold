@@ -101,7 +101,7 @@
         if (!await confirmAction()) return
         this.errors.clear()
         this.disable()
-        await this.makeOrder({
+        await this.createOrder({
           pair: {
             base: this.assets.base,
             quote: this.assets.quote

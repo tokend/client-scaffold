@@ -11,7 +11,7 @@
         </md-table-row>
 
         <template v-for="(order, i) in list">
-          <md-table-row class="order-list__row" :key="`${i}-order-row`">
+          <md-table-row class="order-list__row" :key="`${i}-order-row`" @click="matchOrder(order)">
             <md-table-cell class="order-list__cell">{{ order.baseAmount }} {{ order.baseAssetCode }}</md-table-cell>
             <md-table-cell class="order-list__cell">{{ order.quoteAmount }} {{ order.quoteAssetCode }}</md-table-cell>
             <md-table-cell class="order-list__cell">{{ order.price }} {{ order.quoteAssetCode }}</md-table-cell>
@@ -36,9 +36,14 @@
 <script>
   import { i18n } from '../../../../../../js/i18n'
   import { ORDER_TYPES } from '../../../../../../js/const/order-types'
+  import OrderMakerMixin from '../order-maker.mixin'
+  import SubmitterMixin from '../../../../../common/mixins/submitter.mixin'
+
+  import { confirmAction } from '../../../../../../js/modals/confirmation_message'
 
   export default {
     name: 'order-list',
+    mixins: [OrderMakerMixin, SubmitterMixin],
     data: _ => ({
       ORDER_TYPES,
       i18n
@@ -46,6 +51,23 @@
     props: {
       type: { type: String, required: true },
       list: { type: Array, required: true }
+    },
+    methods: {
+      async matchOrder (order) {
+        if (!await confirmAction({ message: i18n.trd_confirm_match() })) return
+        this.disable()
+        await this.createOrder({
+          pair: {
+            base: order.baseAssetCode,
+            quote: order.quoteAssetCode
+          },
+          baseAmount: order.baseAmount,
+          quoteAmount: order.quoteAmount,
+          price: order.price,
+          isBuy: !order.isBuy
+        })
+        this.enable()
+      }
     }
   }
 </script>

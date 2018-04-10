@@ -34,7 +34,7 @@ export default {
      * @param {object} opts.isBuy
      * @returns {Promise<void>}
      */
-    async makeOrder (opts) {
+    async createOrder (opts) {
       try {
         if (!this.accountBalances[opts.pair.base]) {
           await accountsService.createBalance(opts.pair.base)
