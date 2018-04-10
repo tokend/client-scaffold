@@ -1,9 +1,9 @@
 <template>
   <div class="security-settings">
 
-    <div class="security-settings__inner">
-      <md-subheader class="security-settings__header">{{ i18n.set_account() }}</md-subheader>
-      <md-card class="security-settings__section">
+    <div class="security-settings__inner" >
+      <md-subheader class="security-settings__header" v-if="config.FEATURE_FLAGS.verification">{{ i18n.set_account() }}</md-subheader>
+      <md-card class="security-settings__section" v-if="config.FEATURE_FLAGS.verification">
         <md-list class="security-settings__list md-dense">
           <md-list-item to="/verification">
             <span class="md-list-item-text">{{ i18n.set_verify_account() }}</span>
@@ -17,7 +17,7 @@
         <md-list class="security-settings__list md-dense">
           <change-password class="security-settings__change-password"/>
           <md-divider class="md-dense"/>
-          <tfa-settings class="security-settings__tfa-settings"/>
+          <tfa-settings class="security-settings__tfa-settings" v-if="config.FEATURE_FLAGS.tfa"/>
         </md-list>
       </md-card>
 
@@ -39,8 +39,9 @@
   import TfaSettings from './Security.TfaSettings'
   import AccountId from './Security.AccountId'
   import Seed from './Security.Seed'
-
   import { i18n } from '../../../../js/i18n'
+
+  import config from '../../../../config'
 
   export default {
     name: 'settings-security',
@@ -51,7 +52,8 @@
       Seed
     },
     data: _ => ({
-      i18n
+      i18n,
+      config
     })
   }
 </script>
