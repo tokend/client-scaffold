@@ -1,7 +1,7 @@
 <template>
   <div>
     <md-card>
-      <md-card-content class="md-layout some">
+      <md-card-content class="md-layout trade-orders__list">
         <buy-order :assets="assets" class="md-layout-item"/>
         <sell-order :assets="assets" class="md-layout-item"/>
       </md-card-content>
@@ -43,7 +43,7 @@
 
   @import "../../../../../../scss/mixins";
 
-  .some {
+  .trade-orders__list {
     flex-direction: column;
   }
 
