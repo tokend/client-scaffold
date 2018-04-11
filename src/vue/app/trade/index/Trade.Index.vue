@@ -135,14 +135,6 @@
     text-align: center;
   }
 
-  .trade__chart {
-    width: 534px;
-
-    @include respond-to-custom(1000px) {
-      width: auto;
-    }
-  }
-
   .md-layout {
     &:not(:last-child) {
       margin-bottom: 24px;
