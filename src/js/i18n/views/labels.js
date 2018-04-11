@@ -20,6 +20,8 @@ export default {
   lbl_deposit: 'Deposit',
   lbl_withdraw: 'Withdraw',
   lbl_send: 'Send',
+  lbl_tokens: 'Tokens',
+  lbl_explore_tokens: 'Explore tokens',
   lbl_history: 'History',
   lbl_cancel: 'Cancel',
   lbl_wallet: 'wallet',

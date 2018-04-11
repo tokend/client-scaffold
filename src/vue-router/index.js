@@ -26,6 +26,9 @@ import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
 import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
 import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
 
+import Tokens from '../vue/app/tokens/Tokens.Entry'
+import TokensExplore from '../vue/app/tokens/Tokens.Explore'
+
 import History from '../vue/app/history/History.Entry'
 import HistoryIndex from '../vue/app/history/index/History.Index'
 
@@ -136,6 +139,20 @@ const router = new Router({
               path: '/withdrawal/make',
               name: 'withdrawal.make',
               component: WithdrawalMake
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.tokens,
+          name: 'app.tokens',
+          path: '/tokens',
+          component: Tokens,
+          redirect: { path: '/tokens/explore' },
+          children: [
+            {
+              path: '/tokens/explore',
+              name: 'tokens.explore',
+              component: TokensExplore
             }
           ]
         },

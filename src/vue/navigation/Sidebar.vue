@@ -21,6 +21,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_send() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/tokens" v-if="config.FEATURE_FLAGS.tokens">
+        <md-icon>toll</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_explore_tokens() }}</span>
+      </md-list-item>
+
       <md-list-item @click="closeSidebar" to="/history" v-if="config.FEATURE_FLAGS.history">
         <md-icon>featured_play_list</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
