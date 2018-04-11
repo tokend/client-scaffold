@@ -185,12 +185,13 @@ input:-webkit-autofill {
 }
 
 .trade-history .md-table-cell-container {
-  padding: 0 14px;
+  padding: 0 0 0 24px;
+  white-space: nowrap;
 }
 
 .trade-history .md-table-head-label {
   @include respond-to-custom(1340px) {
-    padding-left: 14px
+    padding-left: 24px;
   }
 }
 

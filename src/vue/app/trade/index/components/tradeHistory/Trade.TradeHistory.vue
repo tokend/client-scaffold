@@ -1,7 +1,7 @@
 <template>
   <div class="trade-history">
     <template v-if="validatedTrades.length">
-      <md-table md-card>
+      <md-table md-card class="trade-history__table">
         <md-table-toolbar>
           <h2 class="md-title">{{ i18n.trd_history() }}</h2>
         </md-table-toolbar>
@@ -121,6 +121,9 @@
     @include respond-to-custom(1340px) {
       padding-left: 0;
     }
+  }
+  .trade-history__table {
+    padding-bottom: 16px;
   }
   .md-table-cell-container {
     padding: 0 12px;
