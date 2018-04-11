@@ -1,31 +1,34 @@
 <template>
+  <div>
+    <md-card>
+      <md-card-header>
+        <div class="md-title">{{ i18n.trd_market_price() }}</div>
+      </md-card-header>
 
-  <md-card>
-    <md-card-header>
-      <div class="md-title">{{ i18n.trd_market_price() }}</div>
-    </md-card-header>
+      <md-card-content>
+        <div class="chart-container">
 
-    <md-card-content>
-      <div class="chart-container">
+          <div class="md-layout md-alignment-center-space-between chart-container__labels">
+            <scale-tabs class="md-layout-item md-size-70 md-small-size-100"
+              :asset="assets"
+              v-model="scale"
+              :isPending="isPending"
+            />
+            <div class="md-layout-item md-size-25 md-medium-size-30 chart-container__assets-select">
+              <assets-select
+                :pairs="pairs"
+                :assets="assets"
+              />
+            </div>
+          </div>
 
-        <div class="md-layout md-alignment-center-space-between">
-          <scale-tabs class="md-layout-item md-size-50"
-            :asset="assets"
-            v-model="scale"
-            :isPending="isPending"
-          />
-          <assets-select class="md-layout-item md-size-35"
-            :pairs="pairs"
-            :assets="assets"
-          />
+          <d3-chart :data="history" :currency="assets.split('/')[1]" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
+          <div class="chart-container__loader" v-else>Loading...</div>
+
         </div>
-
-        <d3-chart :data="history" :currency="assets.split('/')[1]" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
-        <div class="chart-container__loader" v-else>Loading...</div>
-
-      </div>
-    </md-card-content>
-  </md-card>
+      </md-card-content>
+    </md-card>
+  </div>
 
 </template>
 
@@ -78,7 +81,24 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../../../../../scss/mixins";
+
   .chart-container__loader {
     text-align: center;
+  }
+
+  .chart-container__labels {
+    @include respond-to-custom(1000px) {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+  }
+
+  .chart-container__assets-select {
+    @include respond-to-custom(1220px) {
+      position: absolute;
+      top: 0;
+      right: 30px;
+    }
   }
 </style>

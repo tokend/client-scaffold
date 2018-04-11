@@ -187,3 +187,16 @@ input:-webkit-autofill {
 .trade-history .md-table-cell-container {
   padding: 0 12px;
 }
+
+.trade-history .md-table-head-label {
+  @include respond-to-custom(1340px) {
+    padding-left: 12px
+  }
+}
+
+.manage-orders .md-card-header + .md-card-content {
+  @include respond-to-custom(520px) {
+    padding: 0;
+    padding-bottom: 8px;
+  }
+}

@@ -71,6 +71,11 @@
     border-bottom: 1px solid lighten($col-unfocused, 40%);
     display: flex;
     justify-content: flex-start;
+    width: 100%;
+
+    @include respond-to-custom(1220px) {
+      margin-bottom: 16px;
+    }
   }
 
   .tab-btn {
