@@ -1,7 +1,7 @@
 <template>
   <div class="trade">
     <div class="md-layout">
-      <chart class="trade__chart md-size-50 md-layout-item"
+      <chart class="trade__chart md-size-50 md-medium-size-45 md-small-size-100 md-layout-item"
         :data="history"
         :pairs="formattedPairs"
         :precision="common.precision"
@@ -9,19 +9,19 @@
         v-on:assets-base-changed="handleAssetChange"
         v-on:assets-quote-changed="handleAssetChange"
       />
-      <trade-history :assets="filters" class="md-layout-item md-size-48"/>
+      <trade-history :assets="filters" class="md-layout-item md-size-48 md-medium-size-55 md-small-size-100"/>
     </div>
 
     <div class="md-layout">
-      <orders :assets="filters" class="md-layout-item"/>
+      <orders :assets="filters" class="md-layout-item md-size-100"/>
     </div>
 
     <div class="md-layout">
-      <trade-orders :assets="filters" class="md-layout-item"/>
+      <trade-orders :assets="filters" class="md-layout-item md-size-100"/>
     </div>
 
     <div class="md-layout">
-      <manage-orders :assets="filters" :offers="userOffers" class="md-layout-item"/>
+      <manage-orders :assets="filters" :offers="userOffers" class="md-layout-item md-size-100"/>
     </div>
 
   </div>
@@ -129,13 +129,10 @@
 
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
+  @import '../../../../scss/mixins';
 
   .transfer__success-msg {
     text-align: center;
-  }
-
-  .trade__chart {
-    width: 534px;
   }
 
   .md-layout {
