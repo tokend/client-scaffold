@@ -97,7 +97,7 @@
   .chart-container__assets-select {
     @include respond-to-custom(1220px) {
       position: absolute;
-      top: 0;
+      top: 8px;
       right: 30px;
     }
   }

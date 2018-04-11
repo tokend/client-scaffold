@@ -70,10 +70,17 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../../../../../scss/mixins";
+
   .cancel-button {
     margin-left: auto;
     margin-right: 0;
     margin-top: 24px;
     display: block;
+
+    @include respond-to-custom(760px) {
+      margin-left: 0;
+      margin-right: auto;
+    }
   }
 </style>

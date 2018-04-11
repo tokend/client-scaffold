@@ -34,7 +34,7 @@
       </md-table>
     </template>
     <template v-else>
-      <md-card class="trade-history trade-history--empty">
+      <md-card class="trade-history--empty">
         <div class="trade-history__no-transactions">
           <md-icon class="md-size-4x">trending_up</md-icon>
           <h2>{{ i18n.trd_no_trade_history() }}</h2>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <md-card class="orders">
-      <md-card-header>
+      <md-card-header class="orders__title">
         <div class="md-title">{{ i18n.trd_orders() }}</div>
       </md-card-header>
 
@@ -60,8 +60,16 @@
   .orders__list {
     width: 100%;
 
+    @include respond-to-custom(985px) {
+      margin-bottom: 32px;
+    }
+
     &:first-child {
       margin-right: 1rem;
+
+      @include respond-to-custom(985px) {
+        margin-right: 0;
+      }
     }
   }
 
