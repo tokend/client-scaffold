@@ -66,8 +66,8 @@
               <detail :prop="i18n.lbl_terms()" :value="selected.terms"/>
             </div>
             <div class="explore-tokens__token-actions">
-              <md-button class="md-primary" v-if="!hasBalance">{{ i18n.lbl_add_to_balances() }}</md-button>
-              <md-button class="md-primary" v-else>{{ i18n.lbl_view_history() }}</md-button>
+              <md-button class="md-primary" @click="createBalance" v-if="!hasBalance">{{ i18n.lbl_add_to_balances() }}</md-button>
+              <md-button class="md-primary" @click="goHistory" v-else>{{ i18n.lbl_view_history() }}</md-button>
             </div>
           </div>
         </template>
@@ -113,6 +113,12 @@
       },
       avatar (code) {
         return code.length <= 2 ? code : code.charAt(0)
+      },
+      async createBalance () {
+        // wip
+      },
+      goHistory () {
+        this.$router.push({ name: 'history.index', params: { tokenCode: this.selected.code } })
       }
     }
   }
