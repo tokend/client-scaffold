@@ -97,5 +97,8 @@ export default {
   lbl_policy: 'Policy',
   lbl_policies: 'Policies',
   lbl_terms: 'Terms',
-  lbl_token_details: 'Token details'
+  lbl_token_details: 'Token details',
+  lbl_add_to_balances: 'Add to my balances',
+  lbl_balance_exists: 'Balance exists',
+  lbl_view_history: 'View history'
 }

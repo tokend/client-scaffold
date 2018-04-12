@@ -3,7 +3,7 @@
     <md-card class="explore-tokens__card">
 
       <md-card-header>
-        <div class="md-title">Explore tokens</div>
+        <div class="md-title">{{ i18n.lbl_explore_tokens() }}</div>
       </md-card-header>
 
       <div class="explore-tokens__inner">
@@ -30,17 +30,20 @@
 
         <template v-if="selected">
           <div class="explore-tokens__token-details">
-            <md-list class="md-double-line">
+            <md-list class="md-triple-line">
               <md-list-item>
                 <md-avatar class="md-avatar-icon md-accent">{{ selected.code.charAt(0) }}</md-avatar>
                 <div class="md-list-item-text">
                   <span>{{ selected.code }}</span>
                   <span>{{ selected.name }}</span>
+                  <span class="explore-tokens__balance-exists-msg" v-if="hasBalance">{{ i18n.lbl_balance_exists()  }}
+                    <md-icon class="md-icon--half-sized">check_circle</md-icon>
+                  </span>
                 </div>
               </md-list-item>
             </md-list>
             <h4>{{ i18n.lbl_token_details() }}</h4>
-            <div class="explore-token__token-details-inner">
+            <div class="explore-tokens__token-details-inner">
               <detail :prop="i18n.lbl_code()" :value="selected.code"/>
               <detail :prop="i18n.lbl_avalilable_for_iss()" :value="selected.available"/>
               <detail :prop="i18n.lbl_name()" :value="selected.name"/>
@@ -49,6 +52,10 @@
               <!--<detail :prop="i18n.lbl_policy()" :value="selected.policy"/>-->
               <!--<detail :prop="i18n.lbl_policies()" :value="selected.policies"/>-->
               <detail :prop="i18n.lbl_terms()" :value="selected.terms"/>
+            </div>
+            <div class="explore-tokens__token-actions">
+              <md-button class="md-primary" v-if="!hasBalance">{{ i18n.lbl_add_to_balances() }}</md-button>
+              <md-button class="md-primary" v-else>{{ i18n.lbl_view_history() }}</md-button>
             </div>
           </div>
         </template>
@@ -77,8 +84,13 @@
     },
     computed: {
       ...mapGetters([
+        vuexTypes.accountBalances,
         vuexTypes.tokens
-      ])
+      ]),
+      hasBalance () {
+        if (!this.accountBalances) return false
+        return Object.keys(this.accountBalances).includes(this.selected.code)
+      }
     },
     methods: {
       ...mapActions({
@@ -121,6 +133,10 @@
     }
   }
 
+  .explore-tokens__token-details-inner {
+    margin-bottom: 1rem;
+  }
+
   .explore-tokens__token-details {
     width: 100%;
     padding: 1rem 2rem 1rem 0;
@@ -131,5 +147,20 @@
     }
   }
 
+  .explore-tokens__token-actions {
+    margin-right: -1rem;
+    text-align: right;
+  }
+
+  .explore-tokens__balance-exists-msg {
+    color: $col-success;
+
+    .md-icon {
+      color: $col-success;
+      margin-left: .15rem;
+      position: relative;
+      bottom: .02rem;
+    }
+  }
 
 </style>
