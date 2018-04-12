@@ -20,13 +20,15 @@
                                  :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
                       >{{ avatar(token.code) }}</md-avatar>
 
-                      <div class="md-list-item-text explore-tokens__token-name">
-                      <span>
-                        {{ token.code }}
-                        <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized"
+                      <div class="md-list-item-text explore-tokens__token-name"
+                           :class="{ 'selected': selected.code === token.code }"
+                      >
+                        <span>
+                          {{ token.code }}
+                          <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized"
                                  v-if="hasBalance(token)"
-                        >check_circle</md-icon>
-                      </span>
+                          >check_circle</md-icon>
+                        </span>
                         <span>{{ token.name }}</span>
                       </div>
                     </md-list-item>
@@ -87,6 +89,7 @@
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
   import { ErrorHandler } from '../../../js/errors/error_handler'
   import { vuexTypes } from '../../../vuex/types'
+  import { confirmAction } from '../../../js/modals/confirmation_message'
   import { i18n } from '../../../js/i18n'
 
   import Detail from '../common/Detail.Row'
@@ -101,11 +104,11 @@
       i18n
     }),
     async created () {
+      this.selectToken(this.tokens[0])
       await Promise.all([
         this.loadTokens(),
         this.loadBalances()
       ])
-      this.selectToken(this.tokens[0])
     },
     computed: {
       ...mapGetters([
@@ -129,6 +132,7 @@
         return code.length <= 2 ? code : code.charAt(0)
       },
       async createBalance () {
+        if (!await confirmAction()) return
         const code = this.selected.code
         this.disable()
         try {
@@ -142,6 +146,11 @@
       },
       goHistory () {
         this.$router.push({ name: 'history.index', params: { tokenCode: this.selected.code } })
+      }
+    },
+    watch: {
+      tokens () {
+        this.selectToken(this.tokens[0])
       }
     }
   }
@@ -214,6 +223,12 @@
     margin-left: .15rem;
     position: relative;
     bottom: .1rem;
+  }
+
+  .selected {
+    span {
+      color: $col-md-primary;
+    }
   }
 
 </style>
