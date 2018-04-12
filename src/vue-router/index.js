@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import store from '../vuex'
+import config from '../config'
 
 import { resolveRedirect } from './redirect'
 
@@ -16,9 +17,6 @@ import AppContent from '../vue/root/AppContent.vue'
 import Dashboard from '../vue/app/dashboard/Dashboard.Entry'
 import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
 
-import Wallet from '../vue/app/wallet/Wallet.Entry'
-import WalletOverview from '../vue/app/wallet/overview/Wallet.Overview'
-
 import Deposit from '../vue/app/deposit/Deposit.Entry'
 import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 
@@ -27,6 +25,9 @@ import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
 
 import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
 import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
+
+import Tokens from '../vue/app/tokens/Tokens.Entry'
+import TokensExplore from '../vue/app/tokens/Tokens.Explore'
 
 import History from '../vue/app/history/History.Entry'
 import HistoryIndex from '../vue/app/history/index/History.Index'
@@ -86,6 +87,7 @@ const router = new Router({
       redirect: { name: 'app.dashboard' },
       children: [
         {
+          feature_flag: config.FEATURE_FLAGS.dashboard,
           name: 'app.dashboard',
           path: '/dashboard',
           component: Dashboard,
@@ -99,19 +101,7 @@ const router = new Router({
           ]
         },
         {
-          name: 'app.wallet',
-          path: '/wallet',
-          component: Wallet,
-          redirect: { path: '/wallet/overview' },
-          children: [
-            {
-              path: '/wallet/overview',
-              name: 'wallet.overview',
-              component: WalletOverview
-            }
-          ]
-        },
-        {
+          feature_flag: config.FEATURE_FLAGS.deposit,
           name: 'app.deposit',
           path: '/deposit',
           component: Deposit,
@@ -125,6 +115,7 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.transfers,
           name: 'app.transfers',
           path: '/transfers',
           component: Transfers,
@@ -138,6 +129,7 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.withdrawal,
           name: 'app.withdrawal',
           path: '/withdrawal',
           component: Withdrawal,
@@ -151,6 +143,21 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.tokens,
+          name: 'app.tokens',
+          path: '/tokens',
+          component: Tokens,
+          redirect: { path: '/tokens/explore' },
+          children: [
+            {
+              path: '/tokens/explore',
+              name: 'tokens.explore',
+              component: TokensExplore
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.history,
           name: 'app.history',
           path: '/history',
           component: History,
@@ -164,6 +171,7 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.trade,
           name: 'app.trade',
           path: '/trade',
           component: Trade,
@@ -177,6 +185,7 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.settings,
           name: 'app.settings',
           path: '/settings',
           component: Settings,
@@ -190,6 +199,7 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.verification,
           name: 'app.verification',
           path: '/verification',
           component: Verification,
@@ -202,7 +212,7 @@ const router = new Router({
             }
           ]
         }
-      ]
+      ].filter(route => route.feature_flag !== false)
     }
   ]
 })

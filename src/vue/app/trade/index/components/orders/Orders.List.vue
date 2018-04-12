@@ -1,6 +1,7 @@
 <template>
+  <div>
     <md-table class="order-list">
-      <md-table-toolbar>
+      <md-table-toolbar class="order-list__title">
         <h2>{{ type === ORDER_TYPES.buy ? i18n.trd_ask () : i18n.trd_bid() }}</h2>
       </md-table-toolbar>
       <template v-if="list.length">
@@ -31,6 +32,7 @@
         </div>
       </template>
     </md-table>
+  </div>
 </template>
 
 <script>
@@ -72,7 +74,9 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import "../../../../../../scss/mixins";
+
   .order-list {
     max-height: 400px;
   }
@@ -82,5 +86,14 @@
   }
   .order-list__no-transactions {
     text-align: center;
+  }
+  .orders__list {
+    width: 100%;
+  }
+
+  .order-list__title {
+    @include respond-to-custom(985px) {
+      min-height: 24px;
+    }
   }
 </style>

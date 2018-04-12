@@ -1,44 +1,49 @@
 <template>
   <div class="sidebar">
     <md-list>
-      <md-list-item @click="closeSidebar" to="/dashboard">
+      <md-list-item @click="closeSidebar" to="/dashboard" v-if="config.FEATURE_FLAGS.dashboard">
         <md-icon>dashboard</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_dashboard() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/deposit">
+      <md-list-item @click="closeSidebar" to="/deposit" v-if="config.FEATURE_FLAGS.deposit">
         <md-icon>file_download</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_deposit() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/withdrawal">
+      <md-list-item @click="closeSidebar" to="/withdrawal" v-if="config.FEATURE_FLAGS.withdrawal">
         <md-icon>file_upload</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_withdraw() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/transfers">
+      <md-list-item @click="closeSidebar" to="/transfers" v-if="config.FEATURE_FLAGS.transfers">
         <md-icon>send</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_send() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/history">
+      <md-list-item @click="closeSidebar" to="/tokens" v-if="config.FEATURE_FLAGS.tokens">
+        <md-icon>toll</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_explore_tokens() }}</span>
+      </md-list-item>
+
+      <md-list-item @click="closeSidebar" to="/history" v-if="config.FEATURE_FLAGS.history">
         <md-icon>featured_play_list</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/trade">
+      <md-list-item @click="closeSidebar" to="/trade" v-if="config.FEATURE_FLAGS.trade">
         <md-icon>compare_arrows</md-icon>
         <span class="md-list-item-text">Trade</span>
       </md-list-item>
 
       <md-divider></md-divider>
 
-      <md-list-item to="/verification">
+      <md-list-item to="/verification" v-if="config.FEATURE_FLAGS.verification">
         <md-icon>verified_user</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_verification() }}</span>
       </md-list-item>
 
-      <md-list-item to="/settings">
+      <md-list-item to="/settings" v-if="config.FEATURE_FLAGS.settings">
         <md-icon>settings</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_settings() }}</span>
       </md-list-item>
@@ -65,7 +70,8 @@
     data () {
       return {
         isSidebarOpened: false,
-        i18n
+        i18n,
+        config
       }
     },
 

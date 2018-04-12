@@ -1,16 +1,18 @@
 <template>
-  <md-card class="orders">
-    <md-card-header>
-      <div class="md-title">{{ i18n.trd_orders() }}</div>
-    </md-card-header>
+  <div>
+    <md-card class="orders">
+      <md-card-header class="orders__title">
+        <div class="md-title">{{ i18n.trd_orders() }}</div>
+      </md-card-header>
 
-    <md-card-content>
-      <div class="orders__list-wrp">
-        <order-list class="orders__list" :type="ORDER_TYPES.buy" :list="formattedBuyOffers"/>
-        <order-list class="orders__list" :type="ORDER_TYPES.sell" :list="formattedSellOffers"/>
-      </div>
-    </md-card-content>
-  </md-card>
+      <md-card-content class="orders__list-container">
+        <div class="orders__list-wrp">
+          <order-list class="orders__list" :type="ORDER_TYPES.buy" :list="formattedBuyOffers"/>
+          <order-list class="orders__list" :type="ORDER_TYPES.sell" :list="formattedSellOffers"/>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
 </template>
 
 <script>
@@ -44,16 +46,36 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../../../../../scss/mixins";
+
   .orders__list-wrp {
     display: flex;
     justify-content: space-between;
+
+    @include respond-to-custom(985px) {
+      flex-direction: column;
+    }
   }
 
   .orders__list {
     width: 100%;
 
+    @include respond-to-custom(985px) {
+      margin-bottom: 32px;
+    }
+
     &:first-child {
       margin-right: 1rem;
+
+      @include respond-to-custom(985px) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .orders__list-container {
+    @include respond-to-custom(520px) {
+      padding: 0 8px 8px;
     }
   }
 </style>

@@ -1,50 +1,67 @@
 <template>
   <div class="deposit md-layout md-alignment-center-center">
-    <div class="md-layout-item
-                    md-size-35
+    <template v-if="form.tokenCode">
+      <div class="md-layout-item
+                    md-size-40
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
-      <md-card>
-        <md-card-header>
-          <div class="md-title">{{ i18n.dep_deposit() }}</div>
-        </md-card-header>
+        <md-card>
+          <md-card-header>
+            <div class="md-title">{{ i18n.dep_deposit() }}</div>
+          </md-card-header>
 
+          <md-card-content>
+            <p class="deposit__explanations">
+              {{ i18n.dep_how_to() }}.
+              {{ i18n.dep_how_long() }}
+            </p>
+
+            <div class="md-layout">
+              <select-field
+                class="md-layout-item"
+                :label="i18n.lbl_asset()"
+                :values="tokenCodes"
+                v-model="form.tokenCode"
+              />
+            </div>
+
+
+            <div class="deposit__qr-outer">
+              <p class="deposit__qr-tip">{{ i18n.dep_send_only_asset({ asset: this.form.tokenCode }) }}</p>
+
+              <qrcode class="deposit__qr-code"
+                      :text="address"
+                      :size="225"
+                      color="#3f4244"
+              />
+            </div>
+
+            <clipboard-field
+              :value="address"
+              :label="i18n.dep_where_to()"
+            />
+
+          </md-card-content>
+
+        </md-card>
+      </div>
+    </template>
+    <template v-else>
+      <md-card class="md-layout-item
+                      md-size-50
+                      md-medium-size-65
+                      md-small-size-95
+                      md-xsmall-size-100">
         <md-card-content>
-          <p class="deposit__explanations">
-            {{ i18n.dep_how_to() }}.
-            {{ i18n.dep_how_long() }}
-          </p>
-
-          <div class="md-layout">
-            <select-field
-              class="md-layout-item"
-              :label="i18n.lbl_asset()"
-              :values="tokenCodes"
-              v-model="form.tokenCode"
-            />
+          <div class="app__no-data-msg">
+            <md-icon class="md-size-4x">file_download</md-icon>
+            <h2>{{ i18n.dep_no_assets() }}</h2>
+            <p>{{ i18n.dep_no_assets_exp() }}</p>
           </div>
-
-
-          <div class="deposit__qr-outer">
-            <p class="deposit__qr-tip">{{ i18n.dep_send_only_asset({ asset: this.form.tokenCode }) }}</p>
-
-            <qrcode class="deposit__qr-code"
-                    :text="address"
-                    :size="225"
-                    color="#3f4244"
-            />
-          </div>
-
-          <clipboard-field
-            :value="address"
-            :label="i18n.dep_where_to()"
-          />
-
         </md-card-content>
-
       </md-card>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -57,41 +74,41 @@
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
-  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
-
-  import Clipboard from 'clipboard'
 
   export default {
     name: 'deposit-make',
     components: { SelectField, InputField, Qrcode, ClipboardField },
     data: _ => ({
       form: {
-        tokenCode: DEFAULT_SELECTED_ASSET
+        tokenCode: null
       },
-      clipboard: null,
       i18n
     }),
-    mounted () {
-      const btn = document.querySelector('#clipboard-btn')
-      if (!btn) return
-      this.clipboard = new Clipboard(btn)
+    created () {
+      this.setTokenCode()
     },
     computed: {
       ...mapGetters([
-        vuexTypes.userWalletTokens,
+        vuexTypes.userAcquiredTokens,
         vuexTypes.accountDepositAddresses
       ]),
       tokenCodes () {
-        return this.userWalletTokens.map(token => token.code)
+        return this.userAcquiredTokens
+          .map(token => token.code)
+          .filter(code => Object.keys(this.accountDepositAddresses).includes(code))
       },
       address () {
         return this.accountDepositAddresses[this.form.tokenCode]
       }
     },
     methods: {
-      showSuccess () {
-        EventDispatcher.dispatchShowSuccessEvent(i18n.dep_copied())
+      setTokenCode () {
+        this.form.tokenCode = this.tokenCodes[0] || null
+      }
+    },
+    watch: {
+      tokenCodes () {
+        this.setTokenCode()
       }
     }
   }

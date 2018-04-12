@@ -1,6 +1,19 @@
 <template>
-  <div class="transfer md-layout md-alignment-center-center">
-    <template v-if="view.mode === VIEW_MODES.submit">
+  <div class="transfer md-layout md-alignment-center-center" >
+    <template v-if="!tokenCodes.length">
+      <div class="app__no-data-msg">
+        <md-card class="md-layout-item
+                      md-size-100">
+          <md-card-content>
+            <md-icon class="md-size-4x">send</md-icon>
+            <h2>{{ i18n.tr_no_assets() }}</h2>
+            <p>{{ i18n.tr_no_assets_exp() }}</p>
+          </md-card-content>
+        </md-card>
+      </div>
+    </template>
+
+    <template v-else-if="view.mode === VIEW_MODES.submit">
       <form novalidate @submit.prevent="processTransfer"
             class="md-layout-item
                    md-size-50
@@ -67,7 +80,7 @@
       </form>
     </template>
 
-    <template v-if="view.mode === VIEW_MODES.confirm">
+    <template v-else-if="view.mode === VIEW_MODES.confirm">
       <confirm-transfer :opts="view.opts"
                          class="md-layout-item
                               md-size-50
@@ -102,6 +115,7 @@
     </template>
 
   </div>
+
 </template>
 
 <script>

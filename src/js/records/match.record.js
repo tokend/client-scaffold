@@ -32,8 +32,8 @@ export class MatchRecord extends TxRecord {
     return this.effects.map(effect => new MatchTransaction(effect, {
       asset: this.asset,
       date: this.date,
+      feeAsset: '',
       name: this.name,
-      feeAsset: this.feeAsset,
       state: this.state
     }))
   }
@@ -45,7 +45,7 @@ export class MatchTransaction {
     this.asset = opts.asset
     this.name = opts.name
     this.date = opts.date
-    this.feeAsset = opts.feeAsset
+    this.feeAsset = ''
     this.state = opts.state
 
     this.baseAsset = this._getTxBaseAsset()

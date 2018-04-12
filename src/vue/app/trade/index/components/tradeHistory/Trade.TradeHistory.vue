@@ -1,7 +1,7 @@
 <template>
   <div class="trade-history">
     <template v-if="validatedTrades.length">
-      <md-table md-card>
+      <md-table md-card class="trade-history__table">
         <md-table-toolbar>
           <h2 class="md-title">{{ i18n.trd_history() }}</h2>
         </md-table-toolbar>
@@ -34,7 +34,7 @@
       </md-table>
     </template>
     <template v-else>
-      <md-card class="trade-history trade-history--empty">
+      <md-card class="trade-history--empty">
         <div class="trade-history__no-transactions">
           <md-icon class="md-size-4x">trending_up</md-icon>
           <h2>{{ i18n.trd_no_trade_history() }}</h2>
@@ -110,12 +110,20 @@
 
 <style lang="scss" scoped>
   @import "../../../../../../scss/variables";
+  @import "../../../../../../scss/mixins";
 
   .md-table-cell {
     font-size: 12px;
     height: 28px;
     border-top: 0;
     padding-left: 15px;
+
+    @include respond-to-custom(1340px) {
+      padding-left: 0;
+    }
+  }
+  .trade-history__table {
+    padding-bottom: 16px;
   }
   .md-table-cell-container {
     padding: 0 12px;
@@ -123,6 +131,13 @@
   .md-card {
     height: 100%;
   }
+
+  .trade-history {
+    @include respond-to-custom(944px) {
+      margin-top: 24px;
+    }
+  }
+
   .trade-history__item-price,
   .trade-history__item-total,
   .trade-history__item-price .md-icon,
@@ -137,8 +152,15 @@
   .trade-history__item-date {
     min-width: 100px;
   }
+
   .trade-history__item-price .md-icon {
     font-size: 14px !important;
+
+    @include respond-to-custom(620px) {
+      position: absolute;
+      right: -8px;
+      top: 1px;
+    }
   }
   .trade-history__no-transactions {
     padding: 0 16px 32px;
@@ -153,4 +175,5 @@
     align-items: center;
     justify-content: center;
   }
+
 </style>

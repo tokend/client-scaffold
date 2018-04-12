@@ -1,3 +1,16 @@
+const featureFlags = {
+  dashboard: true,
+  deposit: true,
+  withdrawal: true,
+  transfers: true,
+  history: true,
+  trade: true,
+  verification: true,
+  settings: true,
+  tfa: true,
+  tokens: true
+}
+
 const workspaces = {
   dev: {
     horizonServer: 'https://api.mobitile.tokend.org',
@@ -27,5 +40,6 @@ export default {
   TRANSACTIONS_PER_PAGE: 12,
   DECIMAL_POINTS: 6,
   VALIDATE_EMAILS: process.env.NODE_ENV === 'production',
-  AIRDROP_REGISTRATION_END: new Date('2018-02-25T12:00:00')
+  AIRDROP_REGISTRATION_END: new Date('2018-02-25T12:00:00'),
+  FEATURE_FLAGS: featureFlags
 }
