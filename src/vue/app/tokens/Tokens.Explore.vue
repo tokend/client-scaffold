@@ -12,13 +12,20 @@
           <div class="explore-tokens__list">
             <template v-if="tokens.length">
               <md-list class="md-double-line">
-                <template v-for="token in tokens">
+                <template v-for="(token, i) in tokens">
                   <md-list-item @click="selectToken(token)">
 
-                    <md-avatar class="md-avatar-icon md-accent">{{ token.code.charAt(0) }}</md-avatar>
+                    <md-avatar class="md-avatar-icon"
+                              :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
+                    >{{ avatar(token.code) }}</md-avatar>
 
                     <div class="md-list-item-text explore-tokens__token-name">
-                      <span>{{ token.code }}</span>
+                      <span>
+                        {{ token.code }}
+                        <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized"
+                                 v-if="hasBalance(token)"
+                        >check_circle</md-icon>
+                      </span>
                       <span>{{ token.name }}</span>
                     </div>
                   </md-list-item>
@@ -32,12 +39,15 @@
           <div class="explore-tokens__token-details">
             <md-list class="md-triple-line">
               <md-list-item>
-                <md-avatar class="md-avatar-icon md-accent">{{ selected.code.charAt(0) }}</md-avatar>
+                <md-avatar class="md-avatar-icon"
+                          :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
+                >{{ avatar(selected.code) }}</md-avatar>
                 <div class="md-list-item-text">
                   <span>{{ selected.code }}</span>
                   <span>{{ selected.name }}</span>
-                  <span class="explore-tokens__balance-exists-msg" v-if="hasBalance">{{ i18n.lbl_balance_exists()  }}
-                    <md-icon class="md-icon--half-sized">check_circle</md-icon>
+                  <span class="explore-tokens__balance-exists-msg" v-if="hasBalance(selected)">
+                    {{ i18n.lbl_balance_exists()  }}
+                    <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized">check_circle</md-icon>
                   </span>
                 </div>
               </md-list-item>
@@ -86,11 +96,7 @@
       ...mapGetters([
         vuexTypes.accountBalances,
         vuexTypes.tokens
-      ]),
-      hasBalance () {
-        if (!this.accountBalances) return false
-        return Object.keys(this.accountBalances).includes(this.selected.code)
-      }
+      ])
     },
     methods: {
       ...mapActions({
@@ -98,6 +104,13 @@
       }),
       selectToken (token) {
         this.selected = token || null
+      },
+      hasBalance (token) {
+        if (!token) return false
+        return Object.keys(this.accountBalances).includes(token.code)
+      },
+      avatar (code) {
+        return code.length <= 2 ? code : code.charAt(0)
       }
     }
   }
@@ -118,7 +131,7 @@
   }
 
   .explore-tokens__list-wrp {
-    border-right: 1px solid lighten($col-unfocused, 20%);
+    border-right: 1px solid lighten($col-unfocused, 40%);
     margin-right: 2rem;
     max-width: 15rem;
 
@@ -154,13 +167,14 @@
 
   .explore-tokens__balance-exists-msg {
     color: $col-success;
+  }
 
-    .md-icon {
-      color: $col-success;
-      margin-left: .15rem;
-      position: relative;
-      bottom: .02rem;
-    }
+
+  .explore-tokens__balance-exists-icon {
+    color: $col-success !important;
+    margin-left: .15rem;
+    position: relative;
+    bottom: .1rem;
   }
 
 </style>
