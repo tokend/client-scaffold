@@ -66,7 +66,11 @@
               <detail :prop="i18n.lbl_terms()" :value="selected.terms"/>
             </div>
             <div class="explore-tokens__token-actions">
-              <md-button class="md-primary" @click="createBalance" v-if="!hasBalance">{{ i18n.lbl_add_to_balances() }}</md-button>
+              <md-button class="md-primary" @click="createBalance"
+                         v-if="!hasBalance(selected)"
+                         :disabled="isPending">
+                {{ i18n.lbl_add_to_balances() }}
+              </md-button>
               <md-button class="md-primary" @click="goHistory" v-else>{{ i18n.lbl_view_history() }}</md-button>
             </div>
           </div>
@@ -79,19 +83,28 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
+  import { accountsService } from '../../../js/services/accounts.service'
+  import { EventDispatcher } from '../../../js/events/event_dispatcher'
+  import { ErrorHandler } from '../../../js/errors/error_handler'
   import { vuexTypes } from '../../../vuex/types'
   import { i18n } from '../../../js/i18n'
+
   import Detail from '../common/Detail.Row'
+  import SubmitterMixin from '../../common/mixins/submitter.mixin'
 
   export default {
     name: 'TokensExplore',
+    mixins: [SubmitterMixin],
     components: { Detail },
     data: _ => ({
       selected: null,
       i18n
     }),
     async created () {
-      await this.loadTokens()
+      await Promise.all([
+        this.loadTokens(),
+        this.loadBalances()
+      ])
       this.selectToken(this.tokens[0])
     },
     computed: {
@@ -102,7 +115,8 @@
     },
     methods: {
       ...mapActions({
-        loadTokens: vuexTypes.GET_ALL_TOKENS
+        loadTokens: vuexTypes.GET_ALL_TOKENS,
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       selectToken (token) {
         this.selected = token || null
@@ -115,7 +129,16 @@
         return code.length <= 2 ? code : code.charAt(0)
       },
       async createBalance () {
-        // wip
+        const code = this.selected.code
+        this.disable()
+        try {
+          await accountsService.createBalance(code)
+          await this.loadBalances()
+          EventDispatcher.dispatchShowSuccessEvent(i18n.cm_balance_created({ code }))
+        } catch (e) {
+          ErrorHandler.processUnexpected(e)
+        }
+        this.enable()
       },
       goHistory () {
         this.$router.push({ name: 'history.index', params: { tokenCode: this.selected.code } })
