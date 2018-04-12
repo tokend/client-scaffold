@@ -86,5 +86,16 @@ export default {
   lbl_kyc_proof: 'Proof of address',
   lbl_done: 'Done',
   lbl_date_of_birth: 'Date of birth',
-  lbl_id_document_exp_date: 'ID document expiration date'
+  lbl_id_document_exp_date: 'ID document expiration date',
+  lbl_code: 'Code',
+  lbl_owner: 'Owner',
+  lbl_avalilable_for_iss: 'Available',
+  lbl_name: 'Name',
+  lbl_signer: 'Signer',
+  lbl_max_issuance: 'Maximum',
+  lbl_issued: 'Issued',
+  lbl_policy: 'Policy',
+  lbl_policies: 'Policies',
+  lbl_terms: 'Terms',
+  lbl_token_details: 'Token details'
 }
