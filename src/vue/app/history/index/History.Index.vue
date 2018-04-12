@@ -97,7 +97,7 @@
       i18n
     }),
     async created () {
-      this.tokenCode = this.tokens[0] || null
+      this.tokenCode = this.$route.params.tokenCode || this.tokens[0] || null
       if (this.tokenCode) {
         this.loadList(this.tokenCode)
       }

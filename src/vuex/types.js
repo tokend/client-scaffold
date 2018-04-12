@@ -29,7 +29,10 @@ const mutations = {
 
   // trades:
   SET_SELL_OFFERS: 'SET_SELL_OFFERS',
-  SET_BUY_OFFERS: 'SET_BUY_OFFERS'
+  SET_BUY_OFFERS: 'SET_BUY_OFFERS',
+
+  // tokens:
+  SET_ALL_TOKENS: 'SET_ALL_TOKENS'
 }
 
 const actions = {
@@ -67,7 +70,10 @@ const actions = {
   GET_SM_OFFERS: 'GET_SM_OFFERS',
   GET_BUY_OFFERS: 'GET_BUY_OFFERS',
   GET_SELL_OFFERS: 'GET_SELL_OFFERS',
-  GET_USER_OFFERS: 'GET_USER_OFFERS'
+  GET_USER_OFFERS: 'GET_USER_OFFERS',
+
+  // tokens:
+  GET_ALL_TOKENS: 'GET_ALL_TOKENS'
 }
 
 const getters = {
@@ -105,6 +111,7 @@ const getters = {
   accountKycLatestRequest: 'accountKycLatestRequest',
 
   // tokens:
+  tokens: 'tokens',
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',

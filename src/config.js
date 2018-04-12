@@ -7,7 +7,8 @@ const featureFlags = {
   trade: true,
   verification: true,
   settings: true,
-  tfa: true
+  tfa: true,
+  tokens: true
 }
 
 const workspaces = {
