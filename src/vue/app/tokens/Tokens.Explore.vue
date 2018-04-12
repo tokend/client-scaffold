@@ -12,24 +12,26 @@
           <div class="explore-tokens__list">
             <template v-if="tokens.length">
               <md-list class="md-double-line">
-                <template v-for="(token, i) in tokens">
-                  <md-list-item @click="selectToken(token)">
+                <md-content class="md-scrollbar">
+                  <template v-for="(token, i) in tokens">
+                    <md-list-item @click="selectToken(token)">
 
-                    <md-avatar class="md-avatar-icon"
-                              :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
-                    >{{ avatar(token.code) }}</md-avatar>
+                      <md-avatar class="md-avatar-icon"
+                                 :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
+                      >{{ avatar(token.code) }}</md-avatar>
 
-                    <div class="md-list-item-text explore-tokens__token-name">
+                      <div class="md-list-item-text explore-tokens__token-name">
                       <span>
                         {{ token.code }}
                         <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized"
                                  v-if="hasBalance(token)"
                         >check_circle</md-icon>
                       </span>
-                      <span>{{ token.name }}</span>
-                    </div>
-                  </md-list-item>
-                </template>
+                        <span>{{ token.name }}</span>
+                      </div>
+                    </md-list-item>
+                  </template>
+                </md-content>
               </md-list>
             </template>
           </div>
@@ -40,7 +42,7 @@
             <md-list class="md-triple-line">
               <md-list-item>
                 <md-avatar class="md-avatar-icon"
-                          :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
+                          :class="`${hasBalance(selected) ? 'md-primary' : 'md-accent'}`"
                 >{{ avatar(selected.code) }}</md-avatar>
                 <div class="md-list-item-text">
                   <span>{{ selected.code }}</span>
@@ -137,6 +139,14 @@
 
     @include respond-to(small) {
       margin-right: .5rem;
+    }
+  }
+
+  .explore-tokens__list {
+
+    .md-content {
+      max-height: 70vh;
+      overflow: auto;
     }
   }
 
