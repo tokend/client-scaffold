@@ -2,7 +2,7 @@
   <p class="detail-row">
     <span class="detail-row__key">{{ prop }}</span>
     <span class="detail-row__value">
-      <span class="detail-row__value-text" :id="copiable ? 'clipboard-target' : ''">{{ value || '—'}}</span>
+      <span class="detail-row__value-text" :id="copiable ? 'clipboard-target' : ''" v-html="value || '—'"></span>
       <md-button
         v-if="copiable"
         class="detail-row__clipboard-btn md-icon-button"

@@ -79,7 +79,11 @@
               <detail :prop="i18n.lbl_issued()" :value="i18n.c(selected.issued)"/>
               <!--<detail :prop="i18n.lbl_policy()" :value="selected.policy"/>-->
               <!--<detail :prop="i18n.lbl_policies()" :value="selected.policies"/>-->
-              <detail :prop="i18n.lbl_terms()" :value="selected.terms"/>
+              <detail :prop="i18n.lbl_terms()"
+                      :value="selected.termsUrl
+                      ? `<a target='_blank' rel='noopener' href='${selected.termsUrl}'>${selected.terms.name}</a>`
+                      : ''"
+              />
             </div>
             <div class="explore-tokens__token-actions">
               <md-button class="md-primary" @click="createBalance"
