@@ -17,6 +17,9 @@ export class TokenRecord {
     this.policy = record.policy
     this.policies = this._getPolicies()
     this.terms = this._getTerms()
+    this.termsUrl = this._getTermsUrl()
+    this.logo = this._getLogo()
+    this.logoUrl = this._getLogoUrl()
 
     this.attachedDetails = attachedDetails
   }
@@ -44,7 +47,23 @@ export class TokenRecord {
   }
 
   _getTerms () {
-    get(this._record, 'details.terms')
+    return get(this._record, 'details.terms')
+  }
+
+  _getTermsUrl () {
+    const key = get(this._record, 'details.terms.key')
+    if (!key) return ''
+    return `${config.FILE_STORAGE}/${key}`
+  }
+
+  _getLogo () {
+    return get(this._record, 'details.logo')
+  }
+
+  _getLogoUrl () {
+    const key = get(this._record, 'details.logo.key')
+    if (!key) return ''
+    return `${config.FILE_STORAGE}/${key}`
   }
 
   _getPolicies () {
