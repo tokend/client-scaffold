@@ -11,7 +11,7 @@
 <script>
   import PortfolioWidget from './Dashboard.PortfolioWidget'
   import InfoWidget from './Dashboard.InfoWidget'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
 
   export default {
@@ -23,7 +23,8 @@
     data: _ => ({
       currentAsset: null
     }),
-    created () {
+    async created () {
+      await this.loadBalances()
       this.setCurrentAsset()
     },
     computed: {
@@ -32,6 +33,9 @@
       ])
     },
     methods: {
+      ...mapActions({
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
+      }),
       setCurrentAsset (value) {
         this.currentAsset = value || Object.keys(this.accountBalances)[0] || null
       }
