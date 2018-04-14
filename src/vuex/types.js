@@ -124,6 +124,7 @@ const getters = {
 
   // pairs:
   assetPairs: 'assetPairs',
+  tradablePairs: 'tradablePairs',
 
   // trades:
   trades: 'trades',
