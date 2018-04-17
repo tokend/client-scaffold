@@ -14,7 +14,7 @@ const featureFlags = {
 const workspaces = {
   dev: {
     horizonServer: 'https://api.mobitile.tokend.org',
-    fileStorage: 'https://storage.mobitile.tokend.org',
+    fileStorage: 'https://storage.mobitile.tokend.org/api',
     networkPassphrase: 'TokenD Demo Network'
   },
   prod: {

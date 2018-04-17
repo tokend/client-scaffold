@@ -1,10 +1,11 @@
 import {RecordFactory} from '../records/factory'
 import {ErrorFactory, errorTypes} from '../errors/factory'
+import store from '../../vuex'
 
 export function parseTransaction (transaction, asset) {
   switch (transaction.type_i) {
     case 1:
-      return RecordFactory.createTransferRecord(transaction)
+      return RecordFactory.createTransferRecord(transaction, store.getters.accountId)
     case 3:
       return RecordFactory.createIssuanceRecord(transaction)
     case 7:

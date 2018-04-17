@@ -67,7 +67,7 @@
     }),
     async created () {
       await this.loadPairs()
-      await this.loadData(this.assetPairs[0])
+      await this.loadData(this.tradablePairs[0])
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
@@ -77,11 +77,11 @@
     },
     computed: {
       ...mapGetters([
-        vuexTypes.assetPairs,
+        vuexTypes.tradablePairs,
         vuexTypes.userOffers
       ]),
       formattedPairs () {
-        return this.assetPairs.map((el) => {
+        return this.tradablePairs.map((el) => {
           return `${el.base}/${el.quote}`
         })
       }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail :prop="i18n.counterpartyRole()" :value="tx.counterparty" :copiable="true"/>
+    <detail :prop="counterpartyRole" :value="tx.counterparty" :copiable="true"/>
     <detail :prop="i18n.lbl_amount()" :value="`${i18n.c(tx.amount)} ${tx.asset}`"/>
     <detail :prop="i18n.lbl_transfer_fee()" :value="`${transferFee} ${tx.asset}`"/>
     <detail :prop="i18n.lbl_date()" :value="tx.date"/>
@@ -16,21 +16,21 @@
     mixins: [DetailsMixin],
     computed: {
       counterpartyRole () {
-        return this.transfer.direction === 'out' ? this.i18n.lbl_receiver() : this.i18n.lbl_sender()
+        return this.tx.direction === 'out' ? this.i18n.lbl_receiver() : this.i18n.lbl_sender()
       },
       senderPaid () {
-        return this.transfer.fee === 'Sender paid'
+        return this.tx.fee === 'Sender paid'
       },
       transferFee () {
-        if (this.senderPaid) return this.transfer.fee
-        return this.localize(this.transfer.fee)
+        if (this.senderPaid) return this.tx.fee
+        return this.i18n.c(this.tx.fee)
       },
       totalPaid () {
-        return add(this.transfer.amount, this.transferFee)
+        return add(this.tx.amount, this.transferFee)
       },
       totalReceived () {
-        if (this.senderPaid) return this.transfer.amount
-        return subtract(this.transfer.amount, this.transferFee)
+        if (this.senderPaid) return this.tx.amount
+        return subtract(this.tx.amount, this.transferFee)
       }
     }
   }

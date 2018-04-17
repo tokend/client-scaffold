@@ -16,7 +16,7 @@
     <template v-if="currentAsset">
       <md-card-content class="portfolio-widget__asset">
         <div class="portfolio-widget__asset-picture">
-          <img class="portfolio-widget__asset" src="../../../../../static/coin-picture.png">
+          <img class="portfolio-widget__asset" :src="imgUrl">
         </div>
         <div class="portfolio-widget__asset-available">
           <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+  import config from '../../../../config'
   import SelectField from '../../../common/fields/SelectField'
 
   import { mapGetters } from 'vuex'
@@ -68,6 +69,14 @@
       },
       convertedBalance () {
         return i18n.cc(get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0)
+      },
+      imgUrl () {
+        const logoKey = get(this.accountBalances, `${this.currentAsset}.asset_details.details.logo.key`)
+        if (logoKey) {
+          return `${config.FILE_STORAGE}/${logoKey}`
+        }
+        const defaultUrl = '../../../../../static/coin-picture.png'
+        return defaultUrl
       }
     },
     props: ['currentAsset'],

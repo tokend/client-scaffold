@@ -21,7 +21,8 @@ export const actions = {
 }
 
 export const getters = {
-  assetPairs: state => state.asset_pairs
+  assetPairs: state => state.asset_pairs,
+  tradablePairs: state => state.asset_pairs.filter(pair => pair.isTradable)
 }
 
 export default {

@@ -18,7 +18,14 @@
 
                       <md-avatar class="md-avatar-icon"
                                  :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
-                      >{{ avatar(token.code) }}</md-avatar>
+                      >
+                        <template v-if="token.logoUrl">
+                          <img :src="token.logoUrl" :alt="avatar(token.code)">
+                        </template>
+
+                        <template v-else>{{ avatar(token.code) }}</template>
+
+                      </md-avatar>
 
                       <div class="md-list-item-text explore-tokens__token-name"
                            :class="{ 'selected': selected.code === token.code }"
@@ -45,7 +52,14 @@
               <md-list-item>
                 <md-avatar class="md-avatar-icon"
                           :class="`${hasBalance(selected) ? 'md-primary' : 'md-accent'}`"
-                >{{ avatar(selected.code) }}</md-avatar>
+                >
+                  <template v-if="selected.logoUrl">
+                    <img :src="selected.logoUrl" :alt="avatar(selected.code)">
+                  </template>
+
+                  <template v-else>{{ avatar(selected.code) }}</template>
+
+                </md-avatar>
                 <div class="md-list-item-text">
                   <span>{{ selected.code }}</span>
                   <span>{{ selected.name }}</span>
@@ -65,7 +79,11 @@
               <detail :prop="i18n.lbl_issued()" :value="i18n.c(selected.issued)"/>
               <!--<detail :prop="i18n.lbl_policy()" :value="selected.policy"/>-->
               <!--<detail :prop="i18n.lbl_policies()" :value="selected.policies"/>-->
-              <detail :prop="i18n.lbl_terms()" :value="selected.terms"/>
+              <detail :prop="i18n.lbl_terms()"
+                      :value="selected.termsUrl
+                      ? `<a target='_blank' rel='noopener' href='${selected.termsUrl}'>${selected.terms.name}</a>`
+                      : ''"
+              />
             </div>
             <div class="explore-tokens__token-actions">
               <md-button class="md-primary" @click="createBalance"
