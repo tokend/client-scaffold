@@ -159,12 +159,13 @@ const router = new Router({
         {
           feature_flag: config.FEATURE_FLAGS.history,
           name: 'app.history',
-          path: '/history',
+          path: '/history/:tokenCode',
+          props: true,
           component: History,
-          redirect: { path: '/history/index' },
+          redirect: { path: '/history/' },
           children: [
             {
-              path: '/history/index',
+              path: '/history/:tokenCode',
               name: 'history.index',
               component: HistoryIndex
             }
