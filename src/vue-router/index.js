@@ -125,6 +125,11 @@ const router = new Router({
               path: '/transfers/make',
               name: 'transfers.make',
               component: TransfersMake
+            },
+            {
+              path: ':tokenCode',
+              name: 'transfers.make.:tokenCode',
+              component: TransfersMake
             }
           ]
         },
@@ -159,14 +164,18 @@ const router = new Router({
         {
           feature_flag: config.FEATURE_FLAGS.history,
           name: 'app.history',
-          path: '/history/:tokenCode',
-          props: true,
+          path: '/history/',
           component: History,
           redirect: { path: '/history/' },
           children: [
             {
-              path: '/history/:tokenCode',
+              path: '',
               name: 'history.index',
+              component: HistoryIndex
+            },
+            {
+              path: ':tokenCode',
+              name: 'history.index.:tokenCode',
               component: HistoryIndex
             }
           ]

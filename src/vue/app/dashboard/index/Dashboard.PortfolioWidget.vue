@@ -24,7 +24,7 @@
         </div>
       </md-card-content>
       <md-card-actions class="portfolio-widget__actions">
-        <md-button to="/transfers" 
+        <md-button :to="href" 
                    class="md-primary"
                    :disabled="checkTransferable"
                    >{{ i18n.lbl_send() }}</md-button>
@@ -64,7 +64,8 @@
     }),
     computed: {
       ...mapGetters([
-        vuexTypes.accountBalances
+        vuexTypes.accountBalances,
+        vuexTypes.userTransferableTokens
       ]),
       balance () {
         return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
@@ -73,8 +74,11 @@
         return i18n.cc(get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0)
       },
       checkTransferable () {
-        const transferableTokens = this.$store.getters.userTransferableTokens.map(token => token.code)
+        const transferableTokens = this.userTransferableTokens.map(token => token.code)
         return !transferableTokens.includes(this.currentAsset)
+      },
+      href () {
+        return '/transfers/' + this.currentAsset
       }
     },
     props: ['currentAsset'],
