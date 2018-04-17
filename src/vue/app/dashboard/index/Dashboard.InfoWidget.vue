@@ -29,9 +29,9 @@
             ">
               {{ tx.direction === 'in' ? '+' : '-' }}{{ i18n.c(tx.amount) }} {{ tx.asset }}
             </div>
-            <div class="info-widget__asset-converted">
-              {{ i18n.cc(convertAmount(tx.amount)) }} {{ DEFAULT_CONVERSION_ASSET }}
-            </div>
+            <!--<div class="info-widget__asset-converted">-->
+              <!--{{ i18n.cc(convertAmount(tx.amount)) }} {{ DEFAULT_CONVERSION_ASSET }}-->
+            <!--</div>-->
             <div :class="'info-widget__asset-state info-widget__asset-state--' + tx.state">
               {{ tx.state === 'confirm' ? 'success' : tx.state }}
             </div>
