@@ -132,8 +132,6 @@
   import { feeService } from '../../../../js/services/fees.service'
   import { transferService } from '../../../../js/services/transfers.service'
 
-  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
-
   const VIEW_MODES = {
     submit: 'submit',
     confirm: 'confirm',
@@ -258,7 +256,7 @@
         }
       },
       setTokenCode () {
-        this.form.tokenCode = this.$route.params.tokenCode || DEFAULT_SELECTED_ASSET
+        this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
       }
     },
     watch: {

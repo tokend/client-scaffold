@@ -24,7 +24,7 @@
         </div>
       </md-card-content>
       <md-card-actions class="portfolio-widget__actions">
-        <md-button :to="href" 
+        <md-button :to="'/transfers/make/' + this.currentAsset" 
                    class="md-primary"
                    :disabled="checkTransferable"
                    >{{ i18n.lbl_send() }}</md-button>
@@ -76,9 +76,6 @@
       checkTransferable () {
         const transferableTokens = this.userTransferableTokens.map(token => token.code)
         return !transferableTokens.includes(this.currentAsset)
-      },
-      href () {
-        return '/transfers/' + this.currentAsset
       }
     },
     props: ['currentAsset'],
