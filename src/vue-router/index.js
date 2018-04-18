@@ -125,6 +125,11 @@ const router = new Router({
               path: '/transfers/make',
               name: 'transfers.make',
               component: TransfersMake
+            },
+            {
+              path: '/transfers/make/:tokenCode',
+              name: 'transfers.make:tokenCode',
+              component: TransfersMake
             }
           ]
         },
@@ -166,6 +171,11 @@ const router = new Router({
             {
               path: '/history/index',
               name: 'history.index',
+              component: HistoryIndex
+            },
+            {
+              path: '/history/index/:tokenCode',
+              name: 'history.index:tokenCode',
               component: HistoryIndex
             }
           ]

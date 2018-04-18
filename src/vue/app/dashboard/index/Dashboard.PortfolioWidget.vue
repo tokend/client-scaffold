@@ -24,7 +24,10 @@
         </div>
       </md-card-content>
       <md-card-actions class="portfolio-widget__actions">
-        <md-button to="/transfers" class="md-primary">{{ i18n.lbl_send() }}</md-button>
+        <md-button :to="'/transfers/make/' + currentAsset"
+                   class="md-primary"
+                   :disabled="checkTransferable"
+                   >{{ i18n.lbl_send() }}</md-button>
       </md-card-actions>
     </template>
 
@@ -62,7 +65,8 @@
     }),
     computed: {
       ...mapGetters([
-        vuexTypes.accountBalances
+        vuexTypes.accountBalances,
+        vuexTypes.userTransferableTokens
       ]),
       balance () {
         return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
@@ -77,6 +81,9 @@
         }
         const defaultUrl = '../../../../../static/coin-picture.png'
         return defaultUrl
+      },
+      checkTransferable () {
+        return !(this.userTransferableTokens.map(token => token.code)).includes(this.currentAsset)
       }
     },
     props: ['currentAsset'],

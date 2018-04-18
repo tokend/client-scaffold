@@ -36,7 +36,6 @@
                               :label="i18n.lbl_asset()"
                               :values="tokenCodes"
                               v-model="form.tokenCode"
-
                 />
               </div>
 
@@ -133,8 +132,6 @@
   import { feeService } from '../../../../js/services/fees.service'
   import { transferService } from '../../../../js/services/transfers.service'
 
-  import { DEFAULT_SELECTED_ASSET } from '../../../../js/const/configs.const'
-
   const VIEW_MODES = {
     submit: 'submit',
     confirm: 'confirm',
@@ -147,7 +144,7 @@
     components: { ConfirmTransfer },
     data: _ => ({
       form: {
-        tokenCode: DEFAULT_SELECTED_ASSET,
+        tokenCode: null,
         amount: '',
         recipient: '',
         subject: ''
@@ -159,6 +156,9 @@
       i18n,
       VIEW_MODES
     }),
+    created () {
+      this.setTokenCode()
+    },
     computed: {
       ...mapGetters([
         vuexTypes.accountBalances,
@@ -254,6 +254,14 @@
         if (clear) {
           this.clear()
         }
+      },
+      setTokenCode () {
+        this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
+      }
+    },
+    watch: {
+      tokenCodes () {
+        this.setTokenCode()
       }
     }
   }

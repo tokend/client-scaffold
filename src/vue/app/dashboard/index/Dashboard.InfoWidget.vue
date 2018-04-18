@@ -46,7 +46,7 @@
     </md-card-content>
 
     <md-card-actions class="info-widget__actions">
-      <md-button to="/history" class="md-primary">{{ i18n.lbl_view_more() }}</md-button>
+      <md-button :to="'/history/index/' + currentAsset" class="md-primary">{{ i18n.lbl_view_more() }}</md-button>
     </md-card-actions>
     <info-dialog v-on:close-dialog="closeDialog"
                   v-if="showDialog"
