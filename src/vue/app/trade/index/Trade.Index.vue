@@ -94,6 +94,7 @@
         loadUserOffers: vuexTypes.GET_USER_OFFERS
       }),
       async loadData (pair) {
+        if (!pair) return
         await Promise.all([
           this.loadOrders(pair),
           this.loadPrices(pair),

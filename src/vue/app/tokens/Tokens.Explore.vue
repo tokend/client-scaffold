@@ -1,6 +1,19 @@
 <template>
   <div class="explore-tokens md-layout md-alignment-center-center">
-    <md-card class="explore-tokens__card">
+    <template v-if="!tokens.length">
+      <div class="app__no-data-msg">
+        <md-card class="md-layout-item
+                      md-size-100">
+          <md-card-content>
+            <md-icon class="md-size-4x">toll</md-icon>
+            <h2>{{ i18n.tr_no_assets() }}</h2>
+            <p>{{ i18n.tr_no_assets_exp() }}</p>
+          </md-card-content>
+        </md-card>
+      </div>
+    </template>
+
+    <md-card class="explore-tokens__card" v-else>
 
       <md-card-header>
         <div class="md-title">{{ i18n.lbl_explore_tokens() }}</div>

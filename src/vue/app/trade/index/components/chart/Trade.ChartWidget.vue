@@ -1,6 +1,19 @@
 <template>
   <div>
-    <md-card>
+    <template v-if="!assets">
+      <div class="app__no-data-msg">
+        <md-card class="md-layout-item
+                      md-size-100">
+          <md-card-content>
+            <md-icon class="md-size-4x">send</md-icon>
+            <h2>{{ i18n.trd_no_pairs() }}</h2>
+            <p>{{ i18n.trd_no_pairs_exp() }}</p>
+          </md-card-content>
+        </md-card>
+      </div>
+    </template>
+
+    <md-card v-else>
       <md-card-header>
         <div class="md-title">{{ i18n.trd_market_price() }}</div>
       </md-card-header>

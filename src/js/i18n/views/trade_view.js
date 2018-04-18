@@ -45,5 +45,7 @@ export default {
   trd_chart_month: 'Month',
   trd_chart_year: 'Year',
   trd_orders: 'Open orders',
-  trd_confirm_match: 'By pressing confirm, you will сreate the opposite to selected order'
+  trd_confirm_match: 'By pressing confirm, you will сreate the opposite to selected order',
+  trd_no_pairs: 'No tradable pairs',
+  trd_no_pairs_exp: 'This feature will be available once any tradable pair appears'
 }
