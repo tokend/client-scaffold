@@ -31,10 +31,9 @@
               </div>
               <div class="navbar__user-info">
                 <p class="navbar__user-name">{{ userEmail }}</p>
-                <p class="navbar__user-status" v-if="userType === 'not_verified'">{{ i18n.lbl_unverified() }}</p>
-                <p class="navbar__user-status" v-else>{{ i18n.lbl_verified() }}</p>
+                <p class="navbar__user-status">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
                 <md-button class="md-primary md-raised navbar__user-account-btn" @click="goKyc">
-                  {{ i18n.lbl_account() }}
+                  {{ i18n.lbl_my_account() }}
                 </md-button>
               </div>
             </div>
@@ -56,7 +55,6 @@
   import { commonEvents } from '../../js/events/common_events'
   import { attachEventHandler } from '../../js/events/helpers'
   import { vueRoutes } from '../../vue-router/const'
-
   import Logotype from '../app/common/Logotype'
 
   export default {
@@ -74,7 +72,8 @@
       ...mapGetters([
         vuexTypes.isLoggedIn,
         vuexTypes.userEmail,
-        vuexTypes.userType
+        vuexTypes.userType,
+        vuexTypes.accountState
       ])
     },
 

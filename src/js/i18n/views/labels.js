@@ -13,7 +13,8 @@ export default {
   lbl_signin: 'Sign In',
   lbl_signup: 'Sign Up',
   lbl_logout: 'Log out',
-  lbl_account: 'My Account',
+  lbl_my_account: 'My account',
+  lbl_account: 'Account',
   lbl_verified: 'Verified user',
   lbl_unverified: 'Unverified user',
   lbl_dashboard: 'Dashboard',
@@ -100,5 +101,6 @@ export default {
   lbl_token_details: 'Token details',
   lbl_add_to_balances: 'Add to my balances',
   lbl_balance_exists: 'Balance exists',
-  lbl_view_history: 'View history'
+  lbl_view_history: 'View history',
+  lbl_user: 'user'
 }
