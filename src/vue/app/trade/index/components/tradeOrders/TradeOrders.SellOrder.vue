@@ -11,7 +11,7 @@
             <input-field
               class="md-layout-item"
               v-model.trim="form.price"
-              :label="i18n.trd_price_per({ asset: assets.quote })"
+              :label="i18n.trd_price_per({ asset: assets.base })"
               name="order-buy-price"
               v-validate="'required'"
               type="number"
