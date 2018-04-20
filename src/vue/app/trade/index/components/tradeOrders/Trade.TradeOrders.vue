@@ -44,7 +44,10 @@
   @import "../../../../../../scss/mixins";
 
   .trade-orders__list {
-    flex-direction: column;
+
+    @include respond-to (small) {
+      flex-direction: column;
+    }
   }
 
 </style>
