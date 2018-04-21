@@ -1,8 +1,11 @@
 <template>
   <div>
     <md-card>
-      <md-card-header>
-        <div class="md-title">{{ i18n.trd_market_price() }}</div>
+      <md-card-header class="chart-container__header">
+        <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
+        <div class="chart-container__user-balance">
+          {{ i18n.withdraw_balance({ balance: balance.balance, token: tokenCode }) }}
+        </div>
       </md-card-header>
 
       <md-card-content>
@@ -37,6 +40,8 @@
   import ScaleTabs from './ChartWidget.DateTabs'
   import AssetsSelect from './ChartWidget.AssetsSelect'
   import { i18n } from '../../../../../../js/i18n'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../../../vuex/types'
 
   export default {
     name: 'chart',
@@ -62,17 +67,32 @@
       return {
         scale: 'month',
         isPending: false,
-        i18n
+        i18n,
+        tokenCode: null
       }
     },
 
+    created () {
+      this.tokenCode = this.tokenCodes[0] || null
+    },
+
     computed: {
+      ...mapGetters([
+        vuexTypes.userWithdrawableTokens,
+        vuexTypes.accountBalances
+      ]),
+      tokenCodes () {
+        return this.userWithdrawableTokens.map(token => token.code)
+      },
       history () {
         if (!this.data[this.scale]) return []
         return this.data[this.scale]
       },
       requiredTicks () {
         return [this.softCap, this.hardCap].filter(value => value)
+      },
+      balance () {
+        return this.accountBalances[this.tokenCode]
       }
     },
     methods: {
@@ -82,6 +102,7 @@
 
 <style lang="scss" scoped>
   @import "../../../../../../scss/mixins";
+  @import "../../../../../../scss/variables";
 
   .chart-container__loader {
     text-align: center;
@@ -100,5 +121,22 @@
       top: 8px;
       right: 30px;
     }
+  }
+
+  .chart-container__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .chart-container__title {
+    .chart-container__header &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .chart-container__user-balance {
+    color: $col-text-secondary;
   }
 </style>
