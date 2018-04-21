@@ -9,7 +9,7 @@
         v-on:assets-base-changed="handleAssetChange"
         v-on:assets-quote-changed="handleAssetChange"
       />
-      <trade-history :assets="filters" class="md-layout-item md-size-48 md-medium-size-55 md-small-size-100"/>
+      <trade-history :assets="filters" class="md-layout-item md-size-48 md-medium-size-48 md-small-size-100"/>
     </div>
 
     <div class="md-layout">

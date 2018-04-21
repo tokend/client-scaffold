@@ -13,9 +13,9 @@ const featureFlags = {
 
 const workspaces = {
   dev: {
-    horizonServer: 'https://api.mobitile.tokend.org',
-    fileStorage: 'https://storage.mobitile.tokend.org/api',
-    networkPassphrase: 'TokenD Demo Network'
+    horizonServer: 'https://invest-dev.swarm.fund/_/api',
+    fileStorage: 'https://storage-dev.swarm.fund/api',
+    networkPassphrase: 'Swarm New Dev; Feb 18'
   },
   prod: {
     horizonServer: 'https://api.mobitile.tokend.org',

@@ -78,13 +78,14 @@ export class Paginator {
   }
 
   _parseRecords (records) {
+    if (!records) return []
     return this._recordWrp
       ? records.map(record => this._recordWrp(record))
       : records
   }
 
   _checkLoadState (records) {
-    if (records.length < this._txPerPage) {
+    if (!records || records.length < this._txPerPage) {
       this._endLoad()
     }
   }
