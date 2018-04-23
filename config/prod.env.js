@@ -1,6 +1,6 @@
-module.exports = {
-  NODE_ENV: '"production"',
-  HORIZON_SERVER: '"api.mobitile.tokend.org"',
-  FILE_STORAGE: '"https://storage.mobitile.tokend.org/api"',
-  NETWORK_PASSPHRASE: '"TokenD Demo Network"'
-}
+const merge = require('webpack-merge')
+const env = require('./default.env')
+
+module.exports = merge(env, {
+  NODE_ENV: "'prod'"
+})
