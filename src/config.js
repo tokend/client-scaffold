@@ -1,3 +1,5 @@
+import env from '../config/default.env'
+
 const featureFlags = {
   dashboard: true,
   deposit: true,
@@ -13,19 +15,19 @@ const featureFlags = {
 
 const workspaces = {
   dev: {
-    horizonServer: 'https://invest-dev.swarm.fund/_/api',
-    fileStorage: 'https://storage-dev.swarm.fund/api',
-    networkPassphrase: 'Swarm New Dev; Feb 18'
+    horizonServer: env.HORIZON_SERVER,
+    fileStorage: env.FILE_STORAGE,
+    networkPassphrase: env.NETWORK_PASSPHRASE
   },
   prod: {
-    horizonServer: 'https://api.mobitile.tokend.org',
-    fileStorage: 'https://storage.mobitile.tokend.org',
-    networkPassphrase: 'TokenD Demo Network'
+    horizonServer: env.HORIZON_SERVER,
+    fileStorage: env.FILE_STORAGE,
+    networkPassphrase: env.NETWORK_PASSPHRASE
   },
   staging: {
-    horizonServer: 'https://api.mobitile.tokend.org',
-    fileStorage: 'https://storage.mobitile.tokend.org',
-    networkPassphrase: 'TokenD Demo Network'
+    horizonServer: env.HORIZON_SERVER,
+    fileStorage: env.FILE_STORAGE,
+    networkPassphrase: env.NETWORK_PASSPHRASE
   }
 }
 
