@@ -24,8 +24,11 @@
         <md-card>
           <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-          <md-card-header>
-            <div class="md-title">{{ i18n.tr_send() }}</div>
+          <md-card-header class="transfer__header">
+            <div class="md-title transfer__title">{{ i18n.tr_send() }}</div>
+            <div class="transfer__user-balance">
+              {{ i18n.withdraw_balance({ balance: balance.balance, token: form.tokenCode }) }}
+            </div>
           </md-card-header>
 
           <md-card-content>
@@ -166,6 +169,9 @@
       ]),
       tokenCodes () {
         return this.userTransferableTokens.map(token => token.code)
+      },
+      balance () {
+        return this.accountBalances[this.form.tokenCode]
       }
     },
     methods: {
@@ -278,5 +284,22 @@
     color: $col-md-primary;
     font-size: $fs-heading;
     margin: 1rem 0 .5rem;
+  }
+
+  .transfer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .transfer__title {
+    .transfer__header &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .transfer__user-balance {
+    color: $col-text-secondary;
   }
 </style>
