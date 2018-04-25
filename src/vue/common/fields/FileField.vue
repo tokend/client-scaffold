@@ -14,7 +14,7 @@
              :required="required"
              :disabled="disabled"
              :placeholder="placeholder"
-             accept="image/png, image/jpeg, application/pdf"
+             :accept="accept"
              @change="onChange"
       />
     </div>
@@ -54,7 +54,8 @@
       minFileSize: { type: Number, default: null },
       maxFileSize: { type: Number, default: null },
       minWidth: { type: Number, default: null },
-      minHeight: { type: Number, default: null }
+      minHeight: { type: Number, default: null },
+      accept: {type: String, default: 'image/png, image/jpeg, application/pdf'}
     },
     data: _ => ({
       fileName: '',
