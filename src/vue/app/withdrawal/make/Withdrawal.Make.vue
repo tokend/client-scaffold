@@ -83,7 +83,8 @@
              (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
            "
             />
-            <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit">withdraw</md-button>
+            <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit"
+                                     :disabled="isAllowedToSubmit">withdraw</md-button>
 
           </md-card-content>
 
@@ -170,10 +171,7 @@
         return this.form.amount !== '' ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode] : false
       },
       isAllowedToSubmit () {
-        return !this.isFeesLoadPending &&
-               !this.isLimitExceeded &&
-               !this.isTryingToSendToYourself &&
-               !this.lessThenMinimumAmount
+        return !this.isFeesLoadPending && !this.isLimitExceeded && !this.isTryingToSendToYourself && !this.lessThenMinimumAmount
       }
     },
     methods: {

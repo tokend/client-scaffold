@@ -72,7 +72,7 @@
             />
 
             <div class="md-layout md-alignment-center-right">
-              <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
+              <md-button type="submit" class="md-dense md-raised md-primary" :disabled="isPending">
                 {{ i18n.lbl_send() }}
               </md-button>
             </div>
@@ -110,7 +110,8 @@
             <div class="transfer__success-amount">
               {{ form.amount }} {{ form.tokenCode }}
             </div>
-            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
+            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {} , true)">{{ i18n.lbl_go_back() }}</md-button>
+            <md-button :to="'/history/index/' + form.tokenCode" class="md-primary">{{ i18n.lbl_view_history() }}</md-button>
           </div>
         </md-card-content>
       </md-card>
@@ -192,7 +193,6 @@
       },
       async processTransfer () {
         if (!await this.isValid()) return
-
         this.disable()
         try {
           const counterparty = await this.loadCounterparty()
@@ -259,6 +259,7 @@
         this.view.opts = opts
         if (clear) {
           this.clear()
+          this.setTokenCode()
         }
       },
       setTokenCode () {
