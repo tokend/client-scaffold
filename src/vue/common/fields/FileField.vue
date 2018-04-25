@@ -14,7 +14,7 @@
              :required="required"
              :disabled="disabled"
              :placeholder="placeholder"
-             accept="image/*"
+             accept="image/png, image/jpeg, application/pdf"
              @change="onChange"
       />
     </div>
@@ -50,7 +50,11 @@
     props: {
       max: { type: Number, default: MAX_FILE_MEGABYTES },
       type: { type: String, default: 'default' },
-      private: { type: Boolean, default: false }
+      private: { type: Boolean, default: false },
+      minFileSize: { type: Number, default: null },
+      maxFileSize: { type: Number, default: null },
+      minWidth: { type: Number, default: null },
+      minHeight: { type: Number, default: null }
     },
     data: _ => ({
       fileName: '',
