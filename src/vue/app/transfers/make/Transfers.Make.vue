@@ -89,7 +89,7 @@
                               md-medium-size-45
                               md-small-size-100
                               md-xsmall-size-100"
-                         :disabled="isPending"
+                         :isPending="isPending"
                          @cancel-click="updateView(VIEW_MODES.submit)"
                          @confirm-click="submit"
       />
@@ -126,7 +126,7 @@
   import ConfirmTransfer from './Transfers.Confirm'
 
   import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { Keypair } from 'swarm-js-sdk'
   import { errors } from '../../../../js/errors/factory'
@@ -162,6 +162,7 @@
     }),
     created () {
       this.setTokenCode()
+      this.loadCurrentBalances()
     },
     computed: {
       ...mapGetters([
@@ -176,6 +177,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        loadCurrentBalances: vuexTypes.GET_ACCOUNT_BALANCES
+      }),
       async submit (feeFromSource) {
         this.disable()
         try {
@@ -185,6 +189,7 @@
             asset: this.form.tokenCode
           })
           this.view.mode = VIEW_MODES.success
+          await this.loadCurrentBalances()
         } catch (error) {
           console.error(error)
           ErrorHandler.processUnexpected(error)
@@ -264,11 +269,6 @@
       },
       setTokenCode () {
         this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
-      }
-    },
-    watch: {
-      tokenCodes () {
-        this.setTokenCode()
       }
     }
   }
