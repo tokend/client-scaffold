@@ -57,11 +57,13 @@ html,body {
   & .md-app-content {
     padding-bottom: 30px;
     height: auto;
-  }
-
-  & .md-app-content {
     padding-left: 0;
     padding-right: 0;
+
+    & .md-card {
+      margin-left: 12px;
+      margin-right: 12px;
+    }
   }
 
   & .sidebar .router-link-active {
@@ -69,6 +71,19 @@ html,body {
 
     .md-icon  {
       color: $col-md-primary;
+    }
+  }
+  & .md-card-header {
+    padding: 24px;
+  }
+
+  & .md-card .md-title {
+    line-height: 26px;
+  }
+
+  & .md-card-header:first-child {
+    > .md-title:first-child {
+      margin-top: 0;
     }
   }
 }

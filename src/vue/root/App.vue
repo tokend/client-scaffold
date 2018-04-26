@@ -1,7 +1,7 @@
 <template>
   <md-app id="app" md-waterfall md-mode="fixed">
 
-    <md-app-toolbar class="md-primary">
+    <md-app-toolbar class="md-primary toolbar__ctn">
       <div class="md-toolbar-row">
         <md-button class="md-icon-button app__sidebar-icon"
                  v-if="isLoggedIn"
@@ -123,8 +123,16 @@
 <style lang="scss">
   @import '../../scss/mixins';
 
+  .toolbar__ctn {
+    box-shadow: 0 2px 4px 0px rgba(0,0,0,0.75) !important
+  }
+
   .md-app {
     height: 100%;
+  }
+
+  .md-app-content {
+    padding-top: 40px;
   }
 
   .md-drawer {

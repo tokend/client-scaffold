@@ -109,9 +109,11 @@
 <style scoped lang="scss">
   @import "../../scss/mixins";
   @import "../../scss/variables";
-
+  
   nav {
     min-height: 64px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .navbar {

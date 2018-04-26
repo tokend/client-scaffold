@@ -147,7 +147,6 @@
 
   .portfolio-widget__asset {
     text-align: center;
-    margin-bottom: 17px;
 
     @include respond-to(medium) {
       display: flex;

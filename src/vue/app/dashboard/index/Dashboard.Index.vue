@@ -51,4 +51,7 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
 
+  .dashboard {
+    justify-content: center;
+  }
 </style>
