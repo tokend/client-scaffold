@@ -61,11 +61,13 @@
                 <router-link :to="routes.login">{{ i18n.su_sign_in() }}</router-link>
               </div>
             </div>
-            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">
-              {{ i18n.su_sign_up() }}
-            </md-button>
           </div>
         </md-card-content>
+        <md-dialog-actions class="auth-page__actions">
+          <md-button type="submit" class="md-primary" :disabled="isPending">
+              {{ i18n.su_sign_up() }}
+          </md-button>
+        </md-dialog-actions>
       </md-card>
     </form>
   </div>
