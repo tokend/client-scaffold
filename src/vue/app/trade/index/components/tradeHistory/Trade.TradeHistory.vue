@@ -163,8 +163,11 @@
     }
   }
   .trade-history__no-transactions {
-    padding: 0 16px 32px;
     text-align: center;
+
+    .md-icon {
+      margin-bottom: 1rem;
+    }
 
     p {
       margin-top: 10px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="explore-tokens md-layout md-alignment-center-center">
+  <div class="explore-tokens md-layout md-alignment-center-center md-layout-item md-size-80">
     <template v-if="!tokens.length">
       <div class="app__no-data-msg">
         <md-card class="md-layout-item
@@ -20,7 +20,6 @@
       </md-card-header>
 
       <div class="explore-tokens__inner">
-
         <div class="explore-tokens__list-wrp">
           <div class="explore-tokens__list">
             <template v-if="tokens.length">
@@ -60,53 +59,55 @@
         </div>
 
         <template v-if="selected">
-          <div class="explore-tokens__token-details">
-            <md-list class="md-triple-line">
-              <md-list-item>
-                <md-avatar class="md-avatar-icon"
-                          :class="`${hasBalance(selected) ? 'md-primary' : 'md-accent'}`"
-                >
-                  <template v-if="selected.logoUrl">
-                    <img :src="selected.logoUrl" :alt="avatar(selected.code)">
-                  </template>
+          <md-card class="explore-tokens__token-ctn">
+            <md-card-content class="explore-tokens__token-details">
+              <md-list class="md-triple-line">
+                <md-list-item>
+                  <md-avatar class="md-avatar-icon"
+                            :class="`${hasBalance(selected) ? 'md-primary' : 'md-accent'}`"
+                  >
+                    <template v-if="selected.logoUrl">
+                      <img :src="selected.logoUrl" :alt="avatar(selected.code)">
+                    </template>
 
-                  <template v-else>{{ avatar(selected.code) }}</template>
+                    <template v-else>{{ avatar(selected.code) }}</template>
 
-                </md-avatar>
-                <div class="md-list-item-text">
-                  <span>{{ selected.code }}</span>
-                  <span>{{ selected.name }}</span>
-                  <span class="explore-tokens__balance-exists-msg" v-if="hasBalance(selected)">
-                    {{ i18n.lbl_balance_exists()  }}
-                    <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized">check_circle</md-icon>
-                  </span>
-                </div>
-              </md-list-item>
-            </md-list>
-            <h4>{{ i18n.lbl_token_details() }}</h4>
-            <div class="explore-tokens__token-details-inner">
-              <detail :prop="i18n.lbl_code()" :value="selected.code"/>
-              <detail :prop="i18n.lbl_avalilable_for_iss()" :value="selected.available"/>
-              <detail :prop="i18n.lbl_name()" :value="selected.name"/>
-              <detail :prop="i18n.lbl_max_issuance()" :value="i18n.c(selected.max)"/>
-              <detail :prop="i18n.lbl_issued()" :value="i18n.c(selected.issued)"/>
-              <!--<detail :prop="i18n.lbl_policy()" :value="selected.policy"/>-->
-              <!--<detail :prop="i18n.lbl_policies()" :value="selected.policies"/>-->
-              <detail :prop="i18n.lbl_terms()"
-                      :value="selected.termsUrl
-                      ? `<a target='_blank' rel='noopener' href='${selected.termsUrl}'>${selected.terms.name}</a>`
-                      : ''"
-              />
-            </div>
-            <div class="explore-tokens__token-actions">
-              <md-button class="md-primary" @click="createBalance"
-                         v-if="!hasBalance(selected)"
-                         :disabled="isPending">
-                {{ i18n.lbl_add_to_balances() }}
-              </md-button>
-              <md-button class="md-primary" @click="goHistory" v-else>{{ i18n.lbl_view_history() }}</md-button>
-            </div>
-          </div>
+                  </md-avatar>
+                  <div class="md-list-item-text">
+                    <span>{{ selected.code }}</span>
+                    <span>{{ selected.name }}</span>
+                    <span class="explore-tokens__balance-exists-msg" v-if="hasBalance(selected)">
+                      {{ i18n.lbl_balance_exists()  }}
+                      <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized">check_circle</md-icon>
+                    </span>
+                  </div>
+                </md-list-item>
+              </md-list>
+              <h4>{{ i18n.lbl_token_details() }}</h4>
+              <div class="explore-tokens__token-details-inner">
+                <detail :prop="i18n.lbl_code()" :value="selected.code"/>
+                <detail :prop="i18n.lbl_avalilable_for_iss()" :value="selected.available"/>
+                <detail :prop="i18n.lbl_name()" :value="selected.name"/>
+                <detail :prop="i18n.lbl_max_issuance()" :value="i18n.c(selected.max)"/>
+                <detail :prop="i18n.lbl_issued()" :value="i18n.c(selected.issued)"/>
+                <!--<detail :prop="i18n.lbl_policy()" :value="selected.policy"/>-->
+                <!--<detail :prop="i18n.lbl_policies()" :value="selected.policies"/>-->
+                <detail :prop="i18n.lbl_terms()"
+                        :value="selected.termsUrl
+                        ? `<a target='_blank' rel='noopener' href='${selected.termsUrl}'>${selected.terms.name}</a>`
+                        : ''"
+                />
+              </div>
+            </md-card-content>
+            <md-card-actions class="explore-tokens__token-actions">
+                <md-button class="md-primary" @click="createBalance"
+                          v-if="!hasBalance(selected)"
+                          :disabled="isPending">
+                  {{ i18n.lbl_add_to_balances() }}
+                </md-button>
+                <md-button class="md-primary" @click="goHistory" v-else>{{ i18n.lbl_view_history() }}</md-button>
+            </md-card-actions>
+          </md-card>
         </template>
       </div>
 
@@ -191,8 +192,19 @@
   @import '../../../scss/variables';
   @import '../../../scss/mixins';
 
+  .explore-tokens {
+    margin: auto;
+  }
+
+  .explore-tokens__token-ctn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
   .explore-tokens__card {
-    max-width: 50rem;
     width: 100%;
   }
 
@@ -203,7 +215,6 @@
 
   .explore-tokens__list-wrp {
     border-right: 1px solid lighten($col-unfocused, 40%);
-    margin-right: 2rem;
     max-width: 15rem;
 
     @include respond-to(small) {
@@ -237,11 +248,6 @@
     @include respond-to(small) {
       padding-right: 1rem;
     }
-  }
-
-  .explore-tokens__token-actions {
-    margin-right: -1rem;
-    text-align: right;
   }
 
   .explore-tokens__balance-exists-msg {

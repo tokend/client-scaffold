@@ -129,7 +129,6 @@
   @import '../../../../scss/mixins.scss';
 
   .info-widget {
-    max-height: 445px;
     max-width: 560px;
     width: 100%;
     display: flex;

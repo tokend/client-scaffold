@@ -1,7 +1,7 @@
 <template>
-  <div class="security-settings">
+  <div class="security-settings md-layout">
 
-    <div class="security-settings__inner" >
+    <div class="security-settings__inner md-size-80 md-layout-item" >
       <md-subheader class="security-settings__header" v-if="config.FEATURE_FLAGS.verification">{{ i18n.set_account() }}</md-subheader>
       <md-card class="security-settings__section" v-if="config.FEATURE_FLAGS.verification">
         <md-list class="security-settings__list md-dense">
