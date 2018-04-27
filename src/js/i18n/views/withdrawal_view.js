@@ -1,5 +1,6 @@
 export default {
   withdraw_withdrawal: 'Withdrawal',
+  withdraw_confirm: 'Withdrawal confirmation',
   withdraw_how_much: 'Minimal withdrawal amount is %{value} %{asset}',
   withdraw_minimal: 'Also note that network fee will be separately charged from amount of withdrawal transaction',
   withdraw_network_fee: 'Please note that network fee will be separately charged from amount of withdrawal transaction',
