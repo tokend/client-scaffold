@@ -18,13 +18,27 @@
     </div>
 
     <div class="md-layout md-layout-item md-alignment-center-right" v-else>
+      <div class="navbar__notif">
+        <md-button class="navbar__open-notif-btn" @click="toggleNotificationCardVisibility">
+          <span v-show="!hasSeenNotif" class="navbar__notif-counter">1</span>
+          <md-icon>notifications</md-icon>
+        </md-button>
+        <md-card class="navbar__notif-card" v-show="isNotificationCardOpen && accountState !== 'verifed'">
+          <md-card-content>
+            <div class="navbar__notif-card-content">
+              <p class="navbar__notif-status">Your account functionality is restricted. To get advanced functionality
+go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
       <div class="navbar__user">
         <md-button class="navbar__open-info-btn" @click="toggleUserCardVisibility">
           <span class="navbar__user-email">{{ userEmail }}</span>
           <md-icon>account_circle</md-icon>
         </md-button>
         <md-card class="navbar__user-card" v-show="isUserCardOpen">
-          <md-card-content>
+          <md-card-content class="navbar__user-card-ctn">
             <div class="navbar__user-card-content">
               <div class="navbar__user-avatar">
                 {{ userEmail.substr(0, 1).toUpperCase() }}
@@ -65,6 +79,8 @@
     data: () => ({
       routes: [],
       isUserCardOpen: false,
+      isNotificationCardOpen: false,
+      hasSeenNotif: null,
       i18n
     }),
 
@@ -79,6 +95,7 @@
 
     created () {
       attachEventHandler(commonEvents.routesUpdateEvent, this.updateRoutes)
+      this.hasSeenNotif = localStorage.hasOwnProperty('seen')
     },
 
     methods: {
@@ -90,6 +107,16 @@
       },
       toggleUserCardVisibility () {
         this.isUserCardOpen = !this.isUserCardOpen
+        this.isNotificationCardOpen = false
+      },
+
+      toggleNotificationCardVisibility () {
+        this.isNotificationCardOpen = !this.isNotificationCardOpen
+        this.isUserCardOpen = false
+        if (!this.hasSeenNotif) {
+          localStorage.setItem('seen', 'User saw it')
+          this.hasSeenNotif = true
+        }
       },
       signOut () {
         this.LOG_OUT()
@@ -100,6 +127,7 @@
       },
       goKyc () {
         this.isUserCardOpen = false
+        this.isNotificationCardOpen = false
         this.$router.push(vueRoutes.verification)
       }
     }
@@ -109,7 +137,7 @@
 <style scoped lang="scss">
   @import "../../scss/mixins";
   @import "../../scss/variables";
-  
+
   nav {
     min-height: 64px;
     padding-left: 0;
@@ -125,12 +153,14 @@
     flex-wrap: nowrap;
   }
 
+  .navbar__notif,
   .navbar__user {
     position: relative;
   }
 
   .navbar__open-info-btn {
     text-transform: none;
+    margin-left: 0;
   }
 
   .navbar__user-email {
@@ -142,6 +172,7 @@
     }
   }
 
+  .navbar__notif-card,
   .navbar__user-card {
     position: absolute;
     right: 10px;
@@ -173,6 +204,39 @@
       padding: 16px;
       width: calc(100vw - 24px);
       max-width: 404px;
+    }
+  }
+
+  .navbar__open-notif-btn {
+    position: relative;
+    & .navbar__notif-counter {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 15px;
+      height: 15px;
+      background-color: #ffa000;
+      border-radius: 50%;
+      color: #ffffff;
+    }
+  }
+
+  .navbar__notif-card {
+    padding: 0;
+    background-color: #fcf6ed;
+    width: 404px;
+    & .navbar__notif-card-content {
+      font-size: 12px;
+    }
+    &:before {
+      border-color: transparent transparent #fcf6ed transparent;
+    }
+    @include respond-to-custom(800px) {
+      width: calc(100vw - 230px - 24px); // 230px - sidebar width
+    }
+
+    @include respond-to(small) {
+      width: calc(100vw - 24px);
     }
   }
 
@@ -261,5 +325,15 @@
 
   .navbar__user-action-btn {
     color: rgba(0, 0, 0, .75) !important;
+  }
+
+  .notif-link {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #03a9f4;
+  }
+
+  .navbar__user-card-ctn {
+    padding: 0 !important;
   }
 </style>

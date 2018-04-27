@@ -85,7 +85,7 @@
             />
           </md-card-content>
           <md-dialog-actions class="withdrawal-dialog__actions">
-              <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit">withdraw</md-button>
+              <md-button type="submit" class="md-primary withdraw__submit">withdraw</md-button>
           </md-dialog-actions>
         </md-card>
       </form>

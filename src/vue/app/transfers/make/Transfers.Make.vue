@@ -72,7 +72,7 @@
             />
           </md-card-content>
           <md-dialog-actions class="transfer-dialog__actions">
-              <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
+              <md-button type="submit" class="md-primary" :isPending="isPending">
                 {{ i18n.lbl_send() }}
               </md-button>
           </md-dialog-actions>
