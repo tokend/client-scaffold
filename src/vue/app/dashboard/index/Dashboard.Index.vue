@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard md-layout">
+  <div class="dashboard md-layout md-layout-item md-size-80">
     <portfolio-widget class="md-layout-item"
                       :currentAsset="currentAsset"
                       @asset-change="setCurrentAsset"
@@ -52,6 +52,6 @@
   @import '../../../../scss/variables';
 
   .dashboard {
-    justify-content: center;
+    margin: auto
   }
 </style>

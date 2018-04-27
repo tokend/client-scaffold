@@ -73,7 +73,9 @@ html,body {
       color: $col-md-primary;
     }
   }
-  & .md-card-header {
+
+  & .md-card-header,
+  & .md-card-content {
     padding: 24px;
   }
 
@@ -85,6 +87,10 @@ html,body {
     > .md-title:first-child {
       margin-top: 0;
     }
+  }
+
+  & .md-button {
+    min-width: 64px;
   }
 }
 

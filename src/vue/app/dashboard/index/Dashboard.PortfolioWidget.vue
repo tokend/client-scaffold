@@ -100,7 +100,6 @@
   $custom-breakpoint: 860px;
 
   .portfolio-widget {
-    max-height: 445px;
     width: 100%;
     max-width: 370px;
     min-width: 248px;
@@ -142,7 +141,7 @@
   .portfolio-widget__select-wrp {
     max-width: 5rem;
     position: relative;
-    bottom: .95rem;
+    bottom: 1.55rem;
   }
 
   .portfolio-widget__asset {

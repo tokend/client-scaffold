@@ -70,14 +70,12 @@
                             :maxlength="250"
                             :errorMessage="errorMessage('recipient')"
             />
-
-            <div class="md-layout md-alignment-center-right">
+          </md-card-content>
+          <md-dialog-actions class="transfer-dialog__actions">
               <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
                 {{ i18n.lbl_send() }}
               </md-button>
-            </div>
-
-          </md-card-content>
+          </md-dialog-actions>
         </md-card>
       </form>
     </template>
@@ -110,9 +108,11 @@
             <div class="transfer__success-amount">
               {{ form.amount }} {{ form.tokenCode }}
             </div>
-            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
           </div>
         </md-card-content>
+        <md-dialog-actions class="transfer-dialog__actions">
+            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
+        </md-dialog-actions>
       </md-card>
     </template>
 

@@ -124,7 +124,7 @@
   @import '../../scss/mixins';
 
   .toolbar__ctn {
-    box-shadow: 0 2px 4px 0px rgba(0,0,0,0.75) !important
+    box-shadow: 0 2px 4px 0px rgba(0,0,0,0.08) !important
   }
 
   .md-app {

@@ -1,5 +1,5 @@
 <template>
-  <div class="explore-tokens md-layout md-alignment-center-center">
+  <div class="explore-tokens md-layout md-alignment-center-center md-layout-item md-size-80">
     <template v-if="!tokens.length">
       <div class="app__no-data-msg">
         <md-card class="md-layout-item
@@ -20,7 +20,6 @@
       </md-card-header>
 
       <div class="explore-tokens__inner">
-
         <div class="explore-tokens__list-wrp">
           <div class="explore-tokens__list">
             <template v-if="tokens.length">
@@ -60,7 +59,8 @@
         </div>
 
         <template v-if="selected">
-          <div class="explore-tokens__token-details">
+          <md-card class="explore-tokens__token-ctn">
+          <md-card-content class="explore-tokens__token-details">
             <md-list class="md-triple-line">
               <md-list-item>
                 <md-avatar class="md-avatar-icon"
@@ -98,15 +98,16 @@
                       : ''"
               />
             </div>
-            <div class="explore-tokens__token-actions">
+          </md-card-content>
+          <md-card-actions class="explore-tokens__token-actions">
               <md-button class="md-primary" @click="createBalance"
                          v-if="!hasBalance(selected)"
                          :disabled="isPending">
                 {{ i18n.lbl_add_to_balances() }}
               </md-button>
               <md-button class="md-primary" @click="goHistory" v-else>{{ i18n.lbl_view_history() }}</md-button>
-            </div>
-          </div>
+          </md-card-actions>
+          </md-card>
         </template>
       </div>
 
@@ -191,8 +192,18 @@
   @import '../../../scss/variables';
   @import '../../../scss/mixins';
 
+  .explore-tokens {
+    margin: auto;
+  }
+
+  .explore-tokens__token-ctn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 16px;
+  }
+
   .explore-tokens__card {
-    max-width: 50rem;
     width: 100%;
   }
 
@@ -203,7 +214,6 @@
 
   .explore-tokens__list-wrp {
     border-right: 1px solid lighten($col-unfocused, 40%);
-    margin-right: 2rem;
     max-width: 15rem;
 
     @include respond-to(small) {

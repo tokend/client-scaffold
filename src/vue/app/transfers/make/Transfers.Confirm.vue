@@ -49,16 +49,18 @@
       </div>
 
       <div class="md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)" :disabled="isPending">
-          {{ i18n.lbl_cancel() }}
-        </md-button>
-        <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)" :disabled="isPending">
-          {{ i18n.lbl_confirm() }}
-        </md-button>
+
       </div>
 
     </md-card-content>
-
+    <md-dialog-actions class="transfer-dialog__actions">
+      <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)" :disabled="isPending">
+        {{ i18n.lbl_cancel() }}
+      </md-button>
+      <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)" :disabled="isPending">
+        {{ i18n.lbl_confirm() }}
+      </md-button>
+    </md-dialog-actions>
   </md-card>
 </template>
 
