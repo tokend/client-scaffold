@@ -20,7 +20,7 @@
       <trade-orders :assets="filters" class="md-layout-item md-size-100"/>
     </div>
 
-    <div class="md-layout">
+    <div class="md-layouts">
       <manage-orders :assets="filters" :offers="userOffers" class="md-layout-item md-size-100"/>
     </div>
 

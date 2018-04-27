@@ -83,11 +83,10 @@
              (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
            "
             />
-            <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit"
-                                     :disabled="isPending">withdraw</md-button>
-
           </md-card-content>
-
+          <md-dialog-actions class="withdrawal-dialog__actions">
+              <md-button type="submit" class="md-primary withdraw__submit">withdraw</md-button>
+          </md-dialog-actions>
         </md-card>
       </form>
     </template>

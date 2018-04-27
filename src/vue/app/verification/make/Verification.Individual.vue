@@ -84,15 +84,12 @@
                           :id="doc.id"
               />
           </template>
-
-          <div class="md-layout md-alignment-center-right">
-            <md-button type="submit" class="md-dense md-raised md-primary"
-                       :disabled="isPending || accountState === ACCOUNT_STATES.pending"
-            >
-              {{ i18n.lbl_submit() }}
-            </md-button>
-          </div>
         </md-card-content>
+        <md-card-actions>
+          <md-button type="submit" class="md-primary"
+            :disabled="isPending || accountState === ACCOUNT_STATES.pending"
+          >{{ i18n.lbl_submit() }}</md-button>
+        </md-card-actions>
       </md-card>
     </form>
 

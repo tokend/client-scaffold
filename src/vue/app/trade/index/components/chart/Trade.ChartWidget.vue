@@ -3,7 +3,7 @@
     <template v-if="!assets">
       <div class="app__no-data-msg">
         <md-card class="md-layout-item
-                      md-size-100">
+                      ">
           <md-card-content>
             <md-icon class="md-size-4x">send</md-icon>
             <h2>{{ i18n.trd_no_pairs() }}</h2>

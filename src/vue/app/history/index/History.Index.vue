@@ -164,6 +164,11 @@
 
   .tx-history {
     width: 100%;
+    padding: 0 12px;
+  }
+
+  .tx-history__table {
+    margin: 0 !important;
   }
 
   .tx-history__table-toolbar {
