@@ -220,6 +220,7 @@
 
   .tx-history__table-title {
     padding: 24px;
+    font-size: 24px;
   }
 
 </style>
