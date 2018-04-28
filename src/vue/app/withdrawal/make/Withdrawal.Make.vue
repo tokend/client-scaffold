@@ -1,12 +1,12 @@
 <template>
   <div class="withdraw md-layout md-alignment-center-center">
-    <template v-if="form.tokenCode">
+    <template v-if="view.mode === VIEW_MODES.submit">
       <form class="md-layout-item
                  md-size-50
                  md-medium-size-65
                  md-small-size-95
                  md-xsmall-size-100"
-            @submit.prevent="submit">
+            @submit.prevent="processTransfer">
 
         <md-card>
           <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
@@ -83,14 +83,47 @@
              (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
            "
             />
-            <md-button type="submit" class="md-dense md-raised md-primary withdraw__submit">withdraw</md-button>
-
           </md-card-content>
-
+          <md-dialog-actions class="withdrawal-dialog__actions">
+              <md-button type="submit" class="md-primary withdraw__submit">withdraw</md-button>
+          </md-dialog-actions>
         </md-card>
       </form>
     </template>
-    <template v-else>
+    <template v-else-if="view.mode === VIEW_MODES.confirm">
+      <confirm-withdraw :opts="view.opts"
+                         class="md-layout-item
+                              md-size-50
+                              md-medium-size-45
+                              md-small-size-100
+                              md-xsmall-size-100"
+                         :isPending="isPending"
+                         @cancel-click="updateView(VIEW_MODES.submit)"
+                         @confirm-click="submit"
+      />
+    </template>
+    <template v-if="view.mode === VIEW_MODES.success">
+      <md-card class="withdraw__success-msg
+                      md-layout-item
+                      md-size-50
+                      md-medium-size-45
+                      md-small-size-100
+                      md-xsmall-size-100">
+        <md-card-header>
+          <div class="md-title">{{ i18n.withdraw_success() }}</div>
+        </md-card-header>
+        <md-card-content>
+          <div>
+            <div class="withdraw__success-amount">
+              {{ form.amount }} {{ form.tokenCode }}
+            </div>
+            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {} , true)">{{ i18n.lbl_go_back() }}</md-button>
+            <md-button :to="'/history/index/' + form.tokenCode" class="md-primary">{{ i18n.lbl_view_history() }}</md-button>
+          </div>
+        </md-card-content>
+      </md-card>
+    </template>
+    <template v-if="!tokenCodes.length">
       <md-card class="md-layout-item
                       md-size-50
                       md-medium-size-65
@@ -115,24 +148,37 @@
 
   import SelectField from '../../../common/fields/SelectField'
   import InputField from '../../../common/fields/InputField'
+  import ConfirmWithdraw from './Withdrawal.Confirm'
 
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
 
   import { i18n } from '../../../../js/i18n'
   import { feeService } from '../../../../js/services/fees.service'
   import { withdrawService } from '../../../../js/services/withdraw.service'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { errors } from '../../../../js/errors/factory'
+
+  const VIEW_MODES = {
+    submit: 'submit',
+    confirm: 'confirm',
+    success: 'success'
+  }
 
   export default {
     name: 'Withdraw',
     mixins: [formMixin],
-    components: { SelectField, InputField },
+    components: { SelectField, InputField, ConfirmWithdraw },
     data: _ => ({
       form: {
         tokenCode: null,
         amount: '',
         wallet: ''
+      },
+      view: {
+        mode: VIEW_MODES.submit,
+        opts: {}
       },
       minAmounts: {
         BTC: '0.00001',
@@ -143,10 +189,12 @@
       isFeesLoadPending: false,
       isFeesLoadFailed: false,
       feesDebouncedRequest: null,
-      i18n
+      i18n,
+      VIEW_MODES
     }),
     created () {
       this.form.tokenCode = this.tokenCodes[0] || null
+      this.loadBalances()
     },
     computed: {
       ...mapGetters([
@@ -170,15 +218,14 @@
         return this.form.amount !== '' ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode] : false
       },
       isAllowedToSubmit () {
-        return !this.isFeesLoadPending &&
-               !this.isLimitExceeded &&
-               !this.isTryingToSendToYourself &&
-               !this.lessThenMinimumAmount
+        return !this.isFeesLoadPending && !this.isLimitExceeded && !this.isTryingToSendToYourself && !this.lessThenMinimumAmount
       }
     },
     methods: {
+      ...mapActions({
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
+      }),
       async submit () {
-        if (!await this.isValid()) return
         if (!this.isAllowedToSubmit) return
         this.disableLong()
         try {
@@ -188,14 +235,33 @@
             return false
           }
           await withdrawService.createWithdrawalRequest(options)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.withdraw_success())
-          this.clear(['tokenCode'])
+          this.view.mode = VIEW_MODES.success
+          await this.loadBalances()
+          // EventDispatcher.dispatchShowSuccessEvent(i18n.withdraw_success())
+          // this.clear(['tokenCode'])
         } catch (error) {
           console.error(error)
           error.showBanner(i18n.unexpected_error)
         }
         this.enable()
         this.errors.clear()
+      },
+      async processTransfer () {
+        if (!await this.isValid()) return
+        this.disable()
+        try {
+          const opts = await this.composeOptions()
+          this.updateView(VIEW_MODES.confirm, opts)
+        } catch (error) {
+          console.log(error)
+          if (error instanceof errors.NotFoundError) {
+            error.showBanner(i18n.withdraw_error_invalid_address())
+            this.enable()
+            return
+          }
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
       },
       composeOptions () {
         return {
@@ -228,6 +294,18 @@
           this.feesDebouncedRequest = debounce(() => this.getFees(), 300)
         }
         return this.feesDebouncedRequest()
+      },
+
+      updateView (mode, opts = {}, clear = false) {
+        this.view.mode = mode
+        this.view.opts = opts
+        if (clear) {
+          this.clear()
+          this.setTokenCode()
+        }
+      },
+      setTokenCode () {
+        this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
       }
     },
     watch: {
@@ -309,5 +387,15 @@
   .withdraw__submit {
     display: block;
     margin-left: auto;
+  }
+
+  .withdraw__success-msg {
+    text-align: center;
+  }
+
+  .withdraw__success-amount {
+    color: $col-md-primary;
+    font-size: $fs-heading;
+    margin: 1rem 0 .5rem;
   }
 </style>

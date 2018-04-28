@@ -3,57 +3,35 @@
     <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
     <md-card-header>
-      <div class="md-title">{{ i18n.tr_confirm() }}</div>
+      <div class="md-title">{{ i18n.withdraw_confirm() }}</div>
     </md-card-header>
 
     <md-card-content>
 
       <div class="transfer-confirm__inner">
         <detail-row :prop="i18n.lbl_asset()"
-                    :value="`${opts.tokenCode}`"
+                    :value="`${opts.destAsset}`"
         />
-        <detail-row :prop="i18n.lbl_amount()" :value="`${i18n.c(opts.amount)} ${opts.tokenCode}`"/>
+        <detail-row :prop="i18n.lbl_amount()" :value="`${i18n.c(opts.amount)} ${opts.destAsset}`"/>
 
-        <h4>{{ i18n.lbl_recipient() }}</h4>
+        <h4>{{ i18n.withdraw_wallet({ asset: opts.destAsset }) }}</h4>
 
         <md-list class="md-double-line">
           <md-list-item>
-            <md-avatar class="md-avatar-icon md-accent">{{ opts.destinationEmail.charAt(0).toUpperCase() }}</md-avatar>
-
             <div class="md-list-item-text">
-              <span>{{ opts.destinationEmail }}</span>
-              <span>{{ opts.destinationAccountId }}</span>
+              <span>{{ opts.externalDetails.address }}</span>
             </div>
           </md-list-item>
         </md-list>
 
-        <div class="md-layout md-gutter md-alignment-center-space-between">
-          <div class="md-layout-item md-size-40 md-small-size-100">
+          <div class="md-size-100">
             <h4>{{ i18n.lbl_sender_fees() }}</h4>
-
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(senderFee.fixed)} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(senderFee.percent)} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(opts.fee.fixed)} ${opts.destAsset}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(opts.fee.percent)} ${opts.destAsset}`" />
           </div>
-          <div class="md-layout-item  md-size-40 md-small-size-100 text-align-right">
-            <h4>{{ i18n.lbl_recipient_fees() }}</h4>
-
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(recipientFee.fixed)} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(recipientFee.percent)} ${opts.tokenCode}`" />
-          </div>
-        </div>
-
-        <md-checkbox v-model="form.sourcePaysForDest">{{ i18n.tr_pay_fee_for_rec() }}</md-checkbox>
-
-        <h4>{{ i18n.lbl_subject() }}</h4>
-        <textarea-field class="transfer-confirm__subject-field" :value="opts.subject" disabled/>
       </div>
-
-      <div class="md-layout md-alignment-center-right">
-
-      </div>
-
     </md-card-content>
-    <md-dialog-actions class="transfer-dialog__actions">
+    <md-dialog-actions class="withdrawal-dialog__actions">
       <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)" :disabled="isPending">
         {{ i18n.lbl_cancel() }}
       </md-button>
@@ -75,7 +53,7 @@
   import { add } from '../../../../js/utils/math.util'
 
   export default {
-    name: 'transfers-confirm',
+    name: 'withdraw-confirm',
     components: { DetailRow, TextareaField },
     props: { opts: { type: Object, required: true }, isPending: { type: Boolean, default: false } },
     data: _ => ({

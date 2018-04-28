@@ -70,14 +70,12 @@
                             :maxlength="250"
                             :errorMessage="errorMessage('recipient')"
             />
-
-            <div class="md-layout md-alignment-center-right">
-              <md-button type="submit" class="md-dense md-raised md-primary" :isPending="isPending">
+          </md-card-content>
+          <md-dialog-actions class="transfer-dialog__actions">
+              <md-button type="submit" class="md-primary" :isPending="isPending">
                 {{ i18n.lbl_send() }}
               </md-button>
-            </div>
-
-          </md-card-content>
+          </md-dialog-actions>
         </md-card>
       </form>
     </template>
@@ -89,7 +87,7 @@
                               md-medium-size-45
                               md-small-size-100
                               md-xsmall-size-100"
-                         :disabled="isPending"
+                         :isPending="isPending"
                          @cancel-click="updateView(VIEW_MODES.submit)"
                          @confirm-click="submit"
       />
@@ -110,9 +108,11 @@
             <div class="transfer__success-amount">
               {{ form.amount }} {{ form.tokenCode }}
             </div>
-            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
           </div>
         </md-card-content>
+        <md-dialog-actions class="transfer-dialog__actions">
+            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
+        </md-dialog-actions>
       </md-card>
     </template>
 
@@ -125,7 +125,7 @@
   import ConfirmTransfer from './Transfers.Confirm'
 
   import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { Keypair } from 'swarm-js-sdk'
   import { errors } from '../../../../js/errors/factory'
@@ -161,6 +161,7 @@
     }),
     created () {
       this.setTokenCode()
+      this.loadCurrentBalances()
     },
     computed: {
       ...mapGetters([
@@ -175,6 +176,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        loadCurrentBalances: vuexTypes.GET_ACCOUNT_BALANCES
+      }),
       async submit (feeFromSource) {
         this.disable()
         try {
@@ -184,6 +188,7 @@
             asset: this.form.tokenCode
           })
           this.view.mode = VIEW_MODES.success
+          await this.loadCurrentBalances()
         } catch (error) {
           console.error(error)
           ErrorHandler.processUnexpected(error)
@@ -192,7 +197,6 @@
       },
       async processTransfer () {
         if (!await this.isValid()) return
-
         this.disable()
         try {
           const counterparty = await this.loadCounterparty()
@@ -259,15 +263,11 @@
         this.view.opts = opts
         if (clear) {
           this.clear()
+          this.setTokenCode()
         }
       },
       setTokenCode () {
         this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
-      }
-    },
-    watch: {
-      tokenCodes () {
-        this.setTokenCode()
       }
     }
   }
