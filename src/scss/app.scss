@@ -136,6 +136,11 @@ input:-webkit-autofill {
   }
 }
 
+.info-dialog.md-dialog {
+  max-height: 100%;
+  padding: 0;
+}
+
 .text-align-left {
   text-align: left;
 }
