@@ -76,6 +76,20 @@ export class FileHelper {
     })
   }
 
+  static async readImage (file) {
+    return new Promise((resolve, reject) => {
+      const image = new Image()
+      image.src = file
+      image.onload = () => {
+        return resolve(image)
+      }
+      image.onerror = (error) => {
+        console.log(error)
+        return reject(error)
+      }
+    })
+  }
+
   static deriveMIMEStringFromDataURL (dataURL) {
     return dataURL.split(',')[0].split(':')[1].split(';')[0]
   }

@@ -42,6 +42,7 @@
   import { dispatchAppEvent } from '../../../js/events/helpers'
   import { commonEvents } from '../../../js/events/common_events'
   import { i18n } from '../../../js/i18n'
+  import { FileHelper } from '../../../js/helpers/file.helper'
   import config from '../../../config'
 
   export default {
@@ -52,8 +53,8 @@
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },
       maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
-      minWidth: { type: Number, default: 500 },
-      minHeight: { type: Number, default: 1000 },
+      minWidth: { type: Number, default: null },
+      minHeight: { type: Number, default: null },
       accept: {type: String, default: 'image/png, image/jpeg, application/pdf'}
     },
     data: _ => ({
@@ -89,13 +90,10 @@
     },
     methods: {
       async onChange (event) {
-        const fileList = event.target.files || event.dataTransfer.files
-        if (!fileList.length) return
-        const file = fileList[0]
-
-        if (!this.checkFileSize(file)) return
-        if (file.type.split('/', 1)[0].toString() === 'image' && this.needValidate()) {
-          if (!this.checkImageDimensions(file)) return
+        const file = await FileHelper.deriveFileFromChangeEvent(event)
+        if (!this.isValidFileSize(file)) return
+        if (file.type.indexOf('image') !== -1) {
+          if (!(await this.checkImageDimensions(file))) return
         }
 
         this.$emit(commonEvents.inputEvent, new DocumentContainer({
@@ -106,7 +104,7 @@
         }))
       },
 
-      checkFileSize (file) {
+      isValidFileSize (file) {
         if (this.maxSize && file.size > this.maxB) {
           EventDispatcher.dispatchShowErrorEvent(i18n.max_file_size_exceeded({ size: this.maxSize }))
           this.clear()
@@ -120,42 +118,23 @@
         }
       },
 
-      needValidate () {
-        return this.minWidth !== null && this.minHeight !== null
-      },
-
-      checkImageDimensions (file) {
-        const reader = new FileReader()
-        const image = new Image()
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-          image.src = reader.result
-          image.onload = () => {
-            if (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight) {
-              EventDispatcher.dispatchShowErrorEvent(`Image size must be more than ${this.minWidth}x${this.minHeight}`)
-              this.discardUpload()
-              return false
-            } else if (image.naturalWidth < this.minWidth) {
-              EventDispatcher.dispatchShowErrorEvent(`Image width must be more than ${this.minWidth}`)
-              this.discardUpload()
-              return false
-            } else if (image.naturalHeight < this.minHeight) {
-              EventDispatcher.dispatchShowErrorEvent(`Image height must be more than ${this.minHeight}`)
-              this.discardUpload()
-              return false
-            } else {
-              return true
-            }
-          }
+      async checkImageDimensions (file) {
+        const reader = await FileHelper.readFileAsDataURL(file)
+        const image = await FileHelper.readImage(reader)
+        if (this.minWidth && this.minHeight && (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight)) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ dimension: 'width and height', size: `${this.minWidth} x ${this.minHeight}` }))
+          return false
         }
+        if (this.minWidth && image.naturalWidth < this.minWidth) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ dimension: 'width', size: this.minWidth }))
+          return false
+        }
+        if (this.minHeight && image.naturalHeight < this.minHeight) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ dimension: 'height', size: this.minHeight }))
+          return false
+        }
+        return true
       },
-
-      discardUpload () {
-        event.target.value = ''
-        this.name = ''
-        this.$emit(commonEvents.inputEvent, { file: null, mimeType: null, name: null })
-      },
-
       async handlePrivate () {
         if (this.value.derivePrivateUrl) {
           await this.value.derivePrivateUrl()
