@@ -53,8 +53,8 @@
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },
       maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
-      minWidth: { type: Number, default: null },
-      minHeight: { type: Number, default: null },
+      minWidth: { type: Number, default: 1000 },
+      minHeight: { type: Number, default: 1000 },
       accept: {type: String, default: 'image/png, image/jpeg, application/pdf'}
     },
     data: _ => ({
@@ -90,7 +90,7 @@
     },
     methods: {
       async onChange (event) {
-        const file = await FileHelper.deriveFileFromChangeEvent(event)
+        const file = FileHelper.deriveFileFromChangeEvent(event)
         if (!this.isValidFileSize(file)) return
         if (file.type.indexOf('image') !== -1) {
           if (!(await this.checkImageDimensions(file))) return
@@ -122,15 +122,15 @@
         const reader = await FileHelper.readFileAsDataURL(file)
         const image = await FileHelper.readImage(reader)
         if (this.minWidth && this.minHeight && (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight)) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ dimension: 'width and height', size: `${this.minWidth} x ${this.minHeight}` }))
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ width: this.minWidth, height: this.minHeight }))
           return false
         }
         if (this.minWidth && image.naturalWidth < this.minWidth) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ dimension: 'width', size: this.minWidth }))
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_width_fail({ width: this.minWidth }))
           return false
         }
         if (this.minHeight && image.naturalHeight < this.minHeight) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ dimension: 'height', size: this.minHeight }))
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_height_fail({ height: this.minHeight }))
           return false
         }
         return true
@@ -152,6 +152,7 @@
     },
     watch: {
       async value (value) {
+        if (!value) return
         if (!value.key) {
           await this.value.deriveDataUrl()
           return
