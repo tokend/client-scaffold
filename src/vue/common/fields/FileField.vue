@@ -52,8 +52,8 @@
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },
       maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
-      minWidth: { type: Number, default: null },
-      minHeight: { type: Number, default: null },
+      minWidth: { type: Number, default: 500 },
+      minHeight: { type: Number, default: 1000 },
       accept: {type: String, default: 'image/png, image/jpeg, application/pdf'}
     },
     data: _ => ({
@@ -94,7 +94,9 @@
         const file = fileList[0]
 
         if (!this.checkFileSize(file)) return
-        if (!this.checkImageDimensions(file)) return
+        if (file.type.split('/', 1)[0].toString() === 'image' && this.needValidate()) {
+          if (!this.checkImageDimensions(file)) return
+        }
 
         this.$emit(commonEvents.inputEvent, new DocumentContainer({
           mimeType: file.type,
@@ -118,27 +120,40 @@
         }
       },
 
+      needValidate () {
+        return this.minWidth !== null && this.minHeight !== null
+      },
+
       checkImageDimensions (file) {
-        if (file.type.split('/', 1)[0].toString() === 'image') {
-          const reader = new FileReader()
-          const image = new Image()
-          reader.readAsDataURL(file)
-          reader.onload = () => {
-            image.src = reader.result
-            image.onload = () => {
-              if (this.minHeight && this.minWidth) {
-                if (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight) {
-                  EventDispatcher.dispatchShowErrorEvent(`Image size must be more than ${this.minWidth}x${this.minHeight}`)
-                  event.target.value = ''
-                  this.name = ''
-                  this.$emit(commonEvents.inputEvent, { file: null, mimeType: null, name: null })
-                  return false
-                }
-              }
+        const reader = new FileReader()
+        const image = new Image()
+        reader.readAsDataURL(file)
+        reader.onload = () => {
+          image.src = reader.result
+          image.onload = () => {
+            if (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight) {
+              EventDispatcher.dispatchShowErrorEvent(`Image size must be more than ${this.minWidth}x${this.minHeight}`)
+              this.discardUpload()
+              return false
+            } else if (image.naturalWidth < this.minWidth) {
+              EventDispatcher.dispatchShowErrorEvent(`Image width must be more than ${this.minWidth}`)
+              this.discardUpload()
+              return false
+            } else if (image.naturalHeight < this.minHeight) {
+              EventDispatcher.dispatchShowErrorEvent(`Image height must be more than ${this.minHeight}`)
+              this.discardUpload()
+              return false
+            } else {
+              return true
             }
           }
         }
-        return true
+      },
+
+      discardUpload () {
+        event.target.value = ''
+        this.name = ''
+        this.$emit(commonEvents.inputEvent, { file: null, mimeType: null, name: null })
       },
 
       async handlePrivate () {
