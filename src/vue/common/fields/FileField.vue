@@ -66,6 +66,11 @@
       maxB () {
         return this.maxSize * 1024 * 1024
       },
+
+      minB () {
+        return this.minSize * 1024 * 1024
+      },
+
       fileUrl () {
         if (!this.value) return ''
         if (this.value.file) {
@@ -88,8 +93,8 @@
         if (!fileList.length) return
         const file = fileList[0]
 
-        this.checkFileSize(file)
-        await this.checkImageDimensions(file)
+        if (!this.checkFileSize(file)) return
+        if (!this.checkImageDimensions(file)) return
 
         this.$emit(commonEvents.inputEvent, new DocumentContainer({
           mimeType: file.type,
@@ -100,10 +105,16 @@
       },
 
       checkFileSize (file) {
-        if (file.size > this.maxB) {
+        if (this.maxSize && file.size > this.maxB) {
           EventDispatcher.dispatchShowErrorEvent(i18n.max_file_size_exceeded({ size: this.maxSize }))
           this.clear()
           return false
+        } else if (this.minSize && file.size < this.minB) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_file_size_fail({ size: this.minSize }))
+          this.clear()
+          return false
+        } else {
+          return true
         }
       },
 
@@ -115,7 +126,7 @@
           reader.onload = () => {
             image.src = reader.result
             image.onload = () => {
-              if (this.minWidth && this.minHeight) {
+              if (this.minHeight && this.minWidth) {
                 if (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight) {
                   EventDispatcher.dispatchShowErrorEvent(`Image size must be more than ${this.minWidth}x${this.minHeight}`)
                   event.target.value = ''
@@ -127,6 +138,7 @@
             }
           }
         }
+        return true
       },
 
       async handlePrivate () {
