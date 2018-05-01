@@ -23,7 +23,7 @@
           <span v-show="!hasSeenNotif" class="navbar__notif-counter">1</span>
           <md-icon>notifications</md-icon>
         </md-button>
-        <md-card class="navbar__notif-card" v-show="isNotificationCardOpen && accountState !== 'verifed'">
+        <md-card class="navbar__notif-card" v-show="isNotificationCardOpen && accountType === ACCOUNT_TYPES.notVerified">
           <md-card-content>
             <div class="navbar__notif-card-content">
               <p class="navbar__notif-status">Your account functionality is restricted. To get advanced functionality
@@ -45,7 +45,8 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
               </div>
               <div class="navbar__user-info">
                 <p class="navbar__user-name">{{ userEmail }}</p>
-                <p class="navbar__user-status">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
+                <p class="navbar__user-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
+                <p class="navbar__user-status navbar__user-status-blocked" v-else>{{ i18n.lbl_userBlocked() }}</p>
                 <md-button class="md-primary md-raised navbar__user-account-btn" @click="goKyc">
                   {{ i18n.lbl_my_account() }}
                 </md-button>
@@ -69,6 +70,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
   import { commonEvents } from '../../js/events/common_events'
   import { attachEventHandler } from '../../js/events/helpers'
   import { vueRoutes } from '../../vue-router/const'
+  import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
   import Logotype from '../app/common/Logotype'
 
   export default {
@@ -81,7 +83,8 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
       isUserCardOpen: false,
       isNotificationCardOpen: false,
       hasSeenNotif: null,
-      i18n
+      i18n,
+      ACCOUNT_TYPES
     }),
 
     computed: {
@@ -89,7 +92,9 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
         vuexTypes.isLoggedIn,
         vuexTypes.userEmail,
         vuexTypes.userType,
-        vuexTypes.accountState
+        vuexTypes.accountState,
+        vuexTypes.accountType,
+        vuexTypes.accountBlocked
       ])
     },
 
@@ -335,5 +340,9 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
 
   .navbar__user-card-ctn {
     padding: 0 !important;
+  }
+
+  .navbar__user-status-blocked {
+    color: red;
   }
 </style>

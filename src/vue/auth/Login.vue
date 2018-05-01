@@ -75,6 +75,7 @@
   import { vueRoutes } from '../../vue-router/const'
 
   import { confirmAction } from '../../js/modals/confirmation_message'
+  import { showAlert } from '../../js/modals/alert_message'
   import { WalletHelper } from '../../js/helpers/wallet.helper'
   import { walletService } from '../../js/services/wallet.service'
   import { emailService } from '../../js/services/email.service'
@@ -99,7 +100,9 @@
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountId
+        vuexTypes.accountId,
+        vuexTypes.accountType,
+        vuexTypes.accountBlocked
       ]),
       verifyEmailParams () {
         const token = this.$route.params.token
@@ -157,6 +160,12 @@
         this.setUserLoggedIn()
         dispatchAppEvent(commonEvents.enterAppEvent)
         this.$router.push(vueRoutes.app)
+        if (this.accountBlocked) {
+          showAlert({
+            title: i18n.mod_accountBlocked_title(),
+            message: i18n.mod_accountBlocked_message()
+          })
+        }
       },
 
       // TODO: wtf, need drop this away
