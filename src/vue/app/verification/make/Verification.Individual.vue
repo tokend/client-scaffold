@@ -206,7 +206,7 @@
       },
       async submitRequest (blobId) {
         await accountsService.createKycRequest({
-          requestID: this.accountState === ACCOUNT_STATES.approved ? '0' : this.accountKycLatestRequest.id,
+          requestID: this.accountState === ACCOUNT_STATES.rejected ? this.accountKycLatestRequest.id : ACCOUNT_STATES.approved ? '0' : this.accountKycLatestRequest.id,
           accountToUpdateKYC: this.accountId,
           accountTypeToSet: ACCOUNT_TYPES.general,
           kycLevelToSet: KYC_LEVEL_TO_SET,
