@@ -6,37 +6,37 @@ variables:
   BUILD_DOCKERFILE: build.dockerfile
   IMAGE_NAME: registry.gitlab.com/tokend/client-scaffold
   IMAGE_BUILD_NAME: $IMAGE_NAME:$CI_COMMIT_SHA
-  DEPLOYMENT_DIR: /root/deployment
-  DEPLOYMENT_INV: $DEPLOYMENT_DIR/$CI_COMMIT_REF_NAME.ini
-  DEPLOYMENT_SECRETS: $DEPLOYMENT_DIR/secrets/$CI_COMMIT_REF_NAME.yml
+  DEPLOYMENT_DIR: /root/deployment/terraform/v2
+  DEPLOYMENT_INV: $DEPLOYMENT_DIR/env/hosts
+  DEPLOYMENT_SECRETS: $DEPLOYMENT_DIR/secrets/ops.yml
 
 
 stages:
-  - build
-#  - deploy
+#   - build
+  - deploy
 
-build:
-  image: docker:latest
-  stage: build
-  tags:
-    - tokend.testnet
-#   only:
-#     - dev
-#     - staging
-#     - prod
-  script:
-    # TODO check env files exists first
-    # login to docker registry
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker build --build-arg RSA_KEY="$SSH_PRIVATE_KEY" --build-arg BUILD_ENV=config/dev.env.js --pull -t $IMAGE_BUILD_NAME .
-    - docker push $IMAGE_BUILD_NAME
-
-# deploy:
-#   image: williamyeh/ansible:ubuntu16.04
-#   stage: deploy
-#   only:
-#     - staging
-#     - dev
+# build:
+#   image: docker:latest
+#   stage: build
+#   tags:
+#     - tokend.testnet
+# #   only:
+# #     - dev
+# #     - staging
+# #     - prod
 #   script:
-#     # TODO add host fingerprint
-#     - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV -e @$DEPLOYMENT_SECRETS -e admin_client_revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR/admin_client.yml
+#     # TODO check env files exists first
+#     # login to docker registry
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+#     - docker build --build-arg RSA_KEY="$SSH_PRIVATE_KEY" --build-arg BUILD_ENV=config/dev.env.js --pull -t $IMAGE_BUILD_NAME .
+#     - docker push $IMAGE_BUILD_NAME
+
+deploy:
+  image: williamyeh/ansible:ubuntu16.04
+  stage: deploy
+  only:
+    - holla
+    # - dev
+  script:
+    # TODO add host fingerprint
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV -l testnet_frontend -e @$DEPLOYMENT_SECRETS -e admin_client_revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR/web.yml
