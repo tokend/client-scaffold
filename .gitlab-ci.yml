@@ -6,7 +6,7 @@ variables:
   BUILD_DOCKERFILE: build.dockerfile
   IMAGE_NAME: registry.gitlab.com/tokend/client-scaffold
   IMAGE_BUILD_NAME: $IMAGE_NAME:$CI_COMMIT_SHA
-  DEPLOYMENT_DIR: /root/v2
+  DEPLOYMENT_DIR: /root
   DEPLOYMENT_INV: $DEPLOYMENT_DIR/env/hosts
   DEPLOYMENT_SECRETS: $DEPLOYMENT_DIR/secrets/ops.yml
 
