@@ -19,11 +19,11 @@ build:
   image: docker:latest
   stage: build
   tags:
-    - default
-  only:
-    - dev
-    - staging
-    - prod
+    - tokend.testnet
+#   only:
+#     - dev
+#     - staging
+#     - prod
   script:
     # TODO check env files exists first
     # login to docker registry
