@@ -35,7 +35,7 @@ deploy:
   image: williamyeh/ansible:ubuntu16.04
   stage: deploy
   tags:
-    - holla
+    - front
 #   only:
     # - dev
   script:
