@@ -75,6 +75,7 @@
   import { vueRoutes } from '../../vue-router/const'
 
   import { confirmAction } from '../../js/modals/confirmation_message'
+  import { showAlert } from '../../js/modals/alert_message'
   import { WalletHelper } from '../../js/helpers/wallet.helper'
   import { walletService } from '../../js/services/wallet.service'
   import { emailService } from '../../js/services/email.service'
@@ -90,16 +91,20 @@
         password: '',
         email: ''
       },
-      i18n
+      i18n,
+      hasSeenWarning: null
     }),
 
     created () {
       if (this.verifyEmailParams) return this.verifyEmail()
+      this.hasSeenWarning = localStorage.hasOwnProperty('seenBlockWarning')
     },
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountId
+        vuexTypes.accountId,
+        vuexTypes.accountType,
+        vuexTypes.accountBlocked
       ]),
       verifyEmailParams () {
         const token = this.$route.params.token
@@ -121,7 +126,7 @@
 
       async submit () {
         if (!await this.isValid()) return
-        this.form.emali = this.form.email.toLowerCase()
+        this.form.email = this.form.email.toLowerCase()
         this.disable()
         try {
           await this.processUserWallet(this.form)
@@ -157,6 +162,16 @@
         this.setUserLoggedIn()
         dispatchAppEvent(commonEvents.enterAppEvent)
         this.$router.push(vueRoutes.app)
+        if (this.accountBlocked) {
+          if (!this.hasSeenWarning) {
+            localStorage.setItem('seenBlockWarning', 'User acknowledged about block')
+            this.hasSeenWarning = true
+            showAlert({
+              title: i18n.mod_accountBlocked_title(),
+              message: i18n.mod_accountBlocked_message()
+            })
+          }
+        }
       },
 
       // TODO: wtf, need drop this away
