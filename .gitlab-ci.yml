@@ -6,7 +6,7 @@ variables:
   BUILD_DOCKERFILE: build.dockerfile
   IMAGE_NAME: registry.gitlab.com/tokend/client-scaffold
   IMAGE_BUILD_NAME: $IMAGE_NAME:$CI_COMMIT_SHA
-  DEPLOYMENT_DIR: /root/deployment/terraform/v2
+#   DEPLOYMENT_DIR: /root/deployment/terraform/v2
   DEPLOYMENT_INV: $DEPLOYMENT_DIR/env/hosts
   DEPLOYMENT_SECRETS: $DEPLOYMENT_DIR/secrets/ops.yml
 
@@ -40,4 +40,4 @@ deploy:
     # - dev
   script:
     # TODO add host fingerprint
-    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV -l testnet_frontend -e @$DEPLOYMENT_SECRETS -e admin_client_revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR/web.yml
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV -l testnet_frontend -e @$DEPLOYMENT_SECRETS -e admin_client_revision=$CI_COMMIT_SHA /root/deployment/terraform/v2/web.yml
