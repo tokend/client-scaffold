@@ -94,6 +94,8 @@ const getters = {
   keypair: 'accountKeypair',
   account: 'account',
   accountId: 'accountId',
+  accountType: 'accountType',
+  accountBlocked: 'accountBlocked',
   accountSeed: 'accountSeed',
   accountPublicKey: 'accountPublicKey',
   accountKeypair: 'accountKeypair',

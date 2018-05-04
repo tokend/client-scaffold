@@ -11,5 +11,7 @@ export default {
   mod_confirm_confirm_text: 'Confirm',
   mod_confirm_cancel_text: 'Cancel',
   mod_email_not_verified_title: 'Email not verified',
-  mod_email_not_verified_message: `It seems your email is not verified yet. Please check your spam folder or request new email by pressing "Confirm"`
+  mod_email_not_verified_message: `It seems your email is not verified yet. Please check your spam folder or request new email by pressing "Confirm"`,
+  mod_accountBlocked_title: 'Account blocked',
+  mod_accountBlocked_message: `You can't make transactions anymore`
 }
