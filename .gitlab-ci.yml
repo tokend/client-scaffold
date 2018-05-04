@@ -34,8 +34,9 @@ stages:
 deploy:
   image: williamyeh/ansible:ubuntu16.04
   stage: deploy
-  only:
+  tags:
     - holla
+#   only:
     # - dev
   script:
     # TODO add host fingerprint
