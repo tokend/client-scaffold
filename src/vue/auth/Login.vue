@@ -91,11 +91,13 @@
         password: '',
         email: ''
       },
-      i18n
+      i18n,
+      hasSeenWarning: null
     }),
 
     created () {
       if (this.verifyEmailParams) return this.verifyEmail()
+      this.hasSeenWarning = localStorage.hasOwnProperty('seenBlockWarning')
     },
 
     computed: {
@@ -161,10 +163,14 @@
         dispatchAppEvent(commonEvents.enterAppEvent)
         this.$router.push(vueRoutes.app)
         if (this.accountBlocked) {
-          showAlert({
-            title: i18n.mod_accountBlocked_title(),
-            message: i18n.mod_accountBlocked_message()
-          })
+          if (!this.hasSeenWarning) {
+            localStorage.setItem('seenBlockWarning', 'User acknowledged about block')
+            this.hasSeenWarning = true
+            showAlert({
+              title: i18n.mod_accountBlocked_title(),
+              message: i18n.mod_accountBlocked_message()
+            })
+          }
         }
       },
 

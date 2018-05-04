@@ -20,14 +20,15 @@
     <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__notif">
         <md-button class="navbar__open-notif-btn" @click="toggleNotificationCardVisibility">
-          <span v-show="!hasSeenNotif" class="navbar__notif-counter">1</span>
+          <span v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-counter">1</span>
           <md-icon>notifications</md-icon>
         </md-button>
-        <md-card class="navbar__notif-card" v-show="isNotificationCardOpen && accountType === ACCOUNT_TYPES.notVerified">
+        <md-card class="navbar__notif-card" v-show="isNotificationCardOpen">
           <md-card-content>
             <div class="navbar__notif-card-content">
-              <p class="navbar__notif-status">Your account functionality is restricted. To get advanced functionality
+              <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">Your account functionality is restricted. To get advanced functionality
 go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
+              <p v-else class="navbar__notif-status">No new notifications!</p>
             </div>
           </md-card-content>
         </md-card>
