@@ -40,5 +40,5 @@ deploy:
     # - dev
   script:
     # TODO add host fingerprint
-    - eval $(ssh-agent -s); ssh-add /root/.ssh/deploy
+    - eval $(ssh-agent -s); ssh-add /root/.ssh/id_rsa
     - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV -l testnet_frontend -e @$DEPLOYMENT_SECRETS -e admin_client_revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR/web.yml
