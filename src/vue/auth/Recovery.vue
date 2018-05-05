@@ -67,10 +67,12 @@
                 <router-link :to="routes.login">Sign in now</router-link>
               </div>
             </div>
-            <md-button class="md-raised md-primary" type="submit" :disabled="isPending">{{ i18n.lbl_make_recovery() }}</md-button>
           </div>
 
         </md-card-content>
+        <md-dialog-actions class="auth-page__actions">
+          <md-button class="md-primary" type="submit" :disabled="isPending">{{ i18n.lbl_make_recovery() }}</md-button>
+        </md-dialog-actions>
       </md-card>
 
     </form>

@@ -53,10 +53,12 @@
                 <router-link :to="{ name: 'recovery' }">{{ i18n.log_recover_it() }}</router-link>
               </div>
             </div>
-            <md-button type="submit" class="md-raised md-primary" :disabled="isPending">{{ i18n.log_signin() }}</md-button>
+            
           </div>
-
         </md-card-content>
+        <md-dialog-actions class="auth-page__actions">
+          <md-button type="submit" class="md-primary" :disabled="isPending">{{ i18n.log_signin() }}</md-button>
+        </md-dialog-actions>
       </md-card>
     </form>
   </div>
