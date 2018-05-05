@@ -5,7 +5,7 @@
         {{ label }}
       </div>
       <label :for="id" class="file-field__uploader">
-        <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(max) })}}
+        <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(maxSize) })}}
       </label>
       <input type="file"
              class="file-field__input"
@@ -14,7 +14,7 @@
              :required="required"
              :disabled="disabled"
              :placeholder="placeholder"
-             accept="image/*"
+             :accept="accept"
              @change="onChange"
       />
     </div>
@@ -24,12 +24,12 @@
         <md-icon class="file-field__link-icon md-icon-size-065x">open_in_new</md-icon>
       </button>
 
-      <a :href="fileUrl" target="_blank" v-else-if="value">
+      <a :href="fileUrl" target="_blank" v-else-if="value && fileUrl">
         <span>{{ value.name }}</span>
         <md-icon class="file-field__link-icon md-icon-size-065x">open_in_new</md-icon>
       </a>
-
       <span v-else>{{ i18n.fi_no_file_chosen() }}</span>
+
     </p>
   </div>
 </template>
@@ -42,15 +42,20 @@
   import { dispatchAppEvent } from '../../../js/events/helpers'
   import { commonEvents } from '../../../js/events/common_events'
   import { i18n } from '../../../js/i18n'
+  import { FileHelper } from '../../../js/helpers/file.helper'
   import config from '../../../config'
 
   export default {
     name: 'file-field',
     mixins: [FieldMixin],
     props: {
-      max: { type: Number, default: MAX_FILE_MEGABYTES },
       type: { type: String, default: 'default' },
-      private: { type: Boolean, default: false }
+      private: { type: Boolean, default: false },
+      minSize: { type: Number, default: null },
+      maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
+      minWidth: { type: Number, default: 1000 },
+      minHeight: { type: Number, default: 1000 },
+      accept: {type: String, default: 'image/png, image/jpeg, application/pdf'}
     },
     data: _ => ({
       fileName: '',
@@ -60,8 +65,13 @@
     }),
     computed: {
       maxB () {
-        return this.max * 1024 * 1024
+        return this.maxSize * 1024 * 1024
       },
+
+      minB () {
+        return this.minSize * 1024 * 1024
+      },
+
       fileUrl () {
         if (!this.value) return ''
         if (this.value.file) {
@@ -80,19 +90,50 @@
     },
     methods: {
       async onChange (event) {
-        const fileList = event.target.files || event.dataTransfer.files
-        const file = fileList[0]
-        if (file.size > this.maxB) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.max_file_size_exceeded({ size: this.max }))
-          this.clear()
-          return
+        const file = FileHelper.deriveFileFromChangeEvent(event)
+        if (!this.isValidFileSize(file)) return
+        if (file.type.indexOf('image') !== -1) {
+          if (!(await this.checkImageDimensions(file))) return
         }
+
         this.$emit(commonEvents.inputEvent, new DocumentContainer({
           mimeType: file.type,
           type: this.type,
           name: file.name,
           file: file
         }))
+      },
+
+      isValidFileSize (file) {
+        if (this.maxSize && file.size > this.maxB) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.max_file_size_exceeded({ size: this.maxSize }))
+          this.clear()
+          return false
+        } else if (this.minSize && file.size < this.minB) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_file_size_fail({ size: this.minSize }))
+          this.clear()
+          return false
+        } else {
+          return true
+        }
+      },
+
+      async checkImageDimensions (file) {
+        const reader = await FileHelper.readFileAsDataURL(file)
+        const image = await FileHelper.readImage(reader)
+        if (this.minWidth && this.minHeight && (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight)) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ width: this.minWidth, height: this.minHeight }))
+          return false
+        }
+        if (this.minWidth && image.naturalWidth < this.minWidth) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_width_fail({ width: this.minWidth }))
+          return false
+        }
+        if (this.minHeight && image.naturalHeight < this.minHeight) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.min_image_height_fail({ height: this.minHeight }))
+          return false
+        }
+        return true
       },
       async handlePrivate () {
         if (this.value.derivePrivateUrl) {
@@ -111,6 +152,7 @@
     },
     watch: {
       async value (value) {
+        if (!value) return
         if (!value.key) {
           await this.value.deriveDataUrl()
           return
