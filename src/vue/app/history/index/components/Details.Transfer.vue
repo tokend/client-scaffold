@@ -4,6 +4,7 @@
     <detail :prop="i18n.lbl_amount()" :value="`${i18n.c(tx.amount)} ${tx.asset}`"/>
     <detail :prop="i18n.lbl_transfer_fee()" :value="`${transferFee} ${tx.asset}`"/>
     <detail :prop="i18n.lbl_date()" :value="tx.date"/>
+    <detail :prop="i18n.lbl_subject()" :value="`${tx.subject}`" class="subject-detail"/>
   </div>
 </template>
 
@@ -37,4 +38,8 @@
 </script>
 
 <style lang="scss" scoped>
+  .subject-detail {
+    text-align: right;
+    margin-top: 8px
+  }
 </style>
