@@ -41,6 +41,9 @@ import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
 import Verification from '../vue/app/verification/Verification.Entry'
 import VerificationMake from '../vue/app/verification/make/Verification.Make'
 
+import Creation from '../vue/app/creation/Creation.Entry'
+import CreationIndex from '../vue/app/creation/index/Creation.Index'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -219,6 +222,20 @@ const router = new Router({
               path: '/verification/make',
               name: 'verification.make',
               component: VerificationMake
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.creation,
+          name: 'app.creation',
+          path: '/creation',
+          component: Creation,
+          redirect: { path: '/creation/index' },
+          children: [
+            {
+              path: '/creation/index',
+              name: 'creation.index',
+              component: CreationIndex
             }
           ]
         }

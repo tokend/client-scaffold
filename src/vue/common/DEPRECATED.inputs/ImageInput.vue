@@ -57,7 +57,7 @@
     methods: {
       async handleImageUpload (event) {
         const image = FileHelper.deriveFileFromChangeEvent(event)
-        const { dataURL } = await FileHelper.readFileAsDataURL(image)
+        const dataURL = await FileHelper.readFileAsDataURL(image)
         this.imageDataUrl = dataURL
       },
       attachHandlers () {

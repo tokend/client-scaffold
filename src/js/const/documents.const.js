@@ -70,6 +70,7 @@ export const documentTypes = Object.freeze({
   charlie: 'charlie',
   delta: 'delta',
   tokenTerms: 'token_terms',
+  tokenIcon: 'token_icon',
   tokenMetrics: 'token_metrics',
   kycIdDocument: 'kyc_id_document',
   kycProofOfAddress: 'kyc_poa',

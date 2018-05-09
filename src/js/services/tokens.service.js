@@ -16,12 +16,8 @@ export class TokensService extends Service {
    * @param {object} opts.details - Additional details about token
    * @param {string} opts.details.name - Name of the token
    * @param {array}  opts.details.documents - Documents attached to token
-   * @param {string} opts.details.logo - Token picture
-   * @param {string} opts.details.logo.key - Key to compose token picture url
-   * @param {string} opts.details.logo.type - Content type of token logo
+   * @param {string} opts.details.logo - Token picture {@link DocumentContainer.getDetailsForSave}
    * @param {string} opts.details.terms - Token terms
-   * @param {string} opts.details.terms.type - Content type of terms document
-   * @param {string} opts.details.terms.name - Name of terms document
    *
    * @return {Promise<TransactionResponseBuilder>}
    */
