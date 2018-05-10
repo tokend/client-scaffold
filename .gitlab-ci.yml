@@ -19,7 +19,7 @@ build:
   image: docker:latest
   stage: build
   tags:
-    - tokend.testnet
+    - tokend
   only:
     - dev
 #     - staging
@@ -35,7 +35,7 @@ deploy:
   image: williamyeh/ansible:ubuntu16.04
   stage: deploy
   tags:
-    - front
+    - tokend.testnet
   only:
     - dev
   script:
