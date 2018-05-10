@@ -1,5 +1,7 @@
 <template>
    <div class="kyc-form md-layout md-alignment-center-center">
+     <p>ASSET_PAIR_POLICIES {{ASSET_PAIR_POLICIES}}</p>
+     <p>ASSET_POLICIES {{ASSET_POLICIES}}</p>
     <form novalidate @submit.prevent="submit"
           class="md-layout-item
                   md-size-50
@@ -10,7 +12,7 @@
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
         <md-card-header>
-          <div class="md-title">{{ i18n.lbl_create_tokens() }}</div>
+          <div class="md-title">{{ i18n.lbl_create_token() }}</div>
         </md-card-header>
         <md-card-content>
           <div class="md-layout md-gutter">
@@ -20,7 +22,7 @@
                           v-model="form.tokenName"
                           v-validate="'required'"
                           :label="i18n.lbl_token_name()"
-                          :errorMessage="errorMessage('recipient')"
+                          :errorMessage="errorMessage('token-name')"
               />
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -29,88 +31,82 @@
                           v-model="form.tokenCode"
                           v-validate="'required'"
                           :label="i18n.lbl_token_code()"
-                          :errorMessage="errorMessage('recipient')"
+                          :errorMessage="errorMessage('token-code')"
               />
             </div>
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <input-field id="token-preissued-asset-signer"
-                          name="token-preissued-asset-signer"
+                          name="token preissued asset signer"
                           v-model="form.preissuedAssetSigner"
-                          v-validate="'required'"
+                          v-validate="'required|secret_key'"
                           :label="i18n.lbl_token_preissued_asset_signer()"
-                          :errorMessage="errorMessage('recipient')"
-              />
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <input-field id="token-max-issuance-amount"
-                          name="token-max-issuance-amount"
-                          v-model="form.maxIssuanceAmount"
-                          v-validate="'required'"
-                          :label="i18n.lbl_token_max_issuance_amount()"
-                          :errorMessage="errorMessage('recipient')"
+                          :errorMessage="errorMessage('token preissued asset signer')"
               />
             </div>
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <input-field id="token-policies"
-                          name="token-policies"
-                          v-model="form.policies"
-                          v-validate="'required|numeric'"
-                          :label="i18n.lbl_token_policies()"
-                          :errorMessage="errorMessage('recipient')"
+              <input-field id="token-initial-preissued-amount"
+                          name="token initial preissued amount"
+                          v-model="form.initialPreissuedAmount"
+                          v-validate="{required:true, less_than: form.maxIssuanceAmount}"
+                          :label="i18n.lbl_token_initial_preissued_amount()"
+                          :errorMessage="errorMessage('token initial preissued amount')"
               />
             </div>
             <div class="md-layout-item md-small-size-100">
-              <input-field id="token-initial-preissued-amount"
-                          name="token-initial-preissued-amount"
-                          v-model="form.initialPreissuedAmount"
+              <input-field id="token-max-issuance-amount"
+                          name="token max issuance amount"
+                          v-model="form.maxIssuanceAmount"
                           v-validate="'required'"
-                          :label="i18n.lbl_token_initial_preissued_amount()"
-                          :errorMessage="errorMessage('recipient')"
+                          :label="i18n.lbl_token_max_issuance_amount()"
+                          :errorMessage="errorMessage('token max issuance amount')"
               />
             </div>
           </div>
           <div class="md-layout-item">
-            <md-checkbox v-model="form.isTransferable"
-                          name="copy-address"
-                          id="copy-address"
+            <file-field v-validate="'required'"
+                        type="image" 
+                        v-model="form.iconUrl"
+                        :label="i18n.lbl_token_icon()"/>
+          </div>
+
+          <div class="md-layout-item">
+            <md-checkbox v-model="form.policies"
+                          name="is-tranferable-token"
+                          id="is-tranferable-token"
                           class="md-primary">
                         {{ i18n.lbl_is_transferable() }}
             </md-checkbox>
           </div>
 
           <div class="md-layout-item">
-            <md-checkbox v-model="form.isAdditionalIssuanceAllowed"
-                          name="copy-address"
-                          id="copy-address"
+            <md-checkbox v-model="form.policies"
+                          name="is-additional-issuance-allowed"
+                          id="is-additional-issuance-allowed"
                           class="md-primary">
                         {{ i18n.lbl_is_additional_issuance_allowed() }}
             </md-checkbox>
           </div>
 
           <div class="md-layout-item">
-            <md-checkbox v-model="form.isTradeable"
-                          name="copy-address"
-                          id="copy-address"
-                          class="md-primary">
+            <md-checkbox  v-model="form.policies"
+                          name="is-tradable-token"
+                          id="is-tradable-token"
+                          class="md-primary"
+                          value="">
                         {{ i18n.lbl_is_tradable() }}
             </md-checkbox>
           </div>
 
           <div class="md-layout-item">
-            <span class="image-input--label">{{ i18n.lbl_token_icon() }}</span>
-            <image-input v-validate="'required'" />
-          </div>
-
-          <div class="md-layout-item">
             <file-field class="kyc-form__file-field"
                         v-validate="'required'"
-                        v-model="document[document.type]"
-                        :label="document.label"
-                        :id="document.id"
+                        v-model="document.url"
+                        :label="i18n.lbl_token_terms()"
+                        id="document.id"
                         :type="document.type"
             />
           </div>
@@ -132,9 +128,11 @@ import ImageInput from '../../../common/DEPRECATED.inputs/ImageInput.vue'
 
 import { i18n } from '../../../../js/i18n'
 import { documentTypes } from '../../../../js/const/documents.const'
-import { kycIndividualSchema as schema } from '../spec/creation.schema'
 
-// import { KycTemplateParser } from '../spec/creation-parser'
+import { tokensService } from '../../../../js/services/tokens.service'
+import { Keypair } from 'swarm-js-sdk'
+import { ASSET_POLICIES, ASSET_PAIR_POLICIES } from '../../../../js/const/xdr.const'
+
 export default {
   mixins: [FormMixin],
   components: { ImageInput, FileField },
@@ -142,35 +140,51 @@ export default {
     form: {
       tokenName: '',
       tokenCode: '',
-      isTransferable: false,
-      isAdditionalIssuanceAllowed: false,
-      isTradeable: false,
       preissuedAssetSigner: '',
       maxIssuanceAmount: '',
-      policies: '',
+      iconUrl: '',
+      policies: [],
       initialPreissuedAmount: ''
     },
     document: {
-      label: i18n.lbl_token_terms(),
-      id: 'token-terms',
-      type: documentTypes.tokenTerms
+      type: documentTypes.tokenTerms,
+      url: ''
     },
     i18n,
-    schema,
-    documentTypes
+    documentTypes,
+    ASSET_POLICIES,
+    ASSET_PAIR_POLICIES
   }),
   methods: {
     async submit () {
       if (!await this.isValid()) return
-      console.log(Object.values(this.form))
+      try {
+        await this.submitRequest()
+        await tokensService.loadTokenCreationRequestsForState()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async submitRequest () {
+      await tokensService.createTokenCreationRequest({
+        requestID: '0',
+        code: this.form.tokenCode,
+        preissuedAssetSigner: Keypair.fromSecret(this.form.preissuedAssetSigner).accountId(),
+        maxIssuanceAmount: this.form.maxIssuanceAmount,
+        policies: 0,
+        initialPreissuedAmount: this.form.initialPreissuedAmount,
+        details: {
+          name: this.form.tokenName,
+          logo: this.form.iconUrl.getDetailsForSave(),
+          terms: this.document.url.getDetailsForSave()
+        }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .image-input--label {
-    font-size: 0.8rem;
-    color: #8a8f92;
-  }
+
 </style>

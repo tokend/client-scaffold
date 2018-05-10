@@ -41,8 +41,8 @@ import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
 import Verification from '../vue/app/verification/Verification.Entry'
 import VerificationMake from '../vue/app/verification/make/Verification.Make'
 
-import Creation from '../vue/app/creation/Creation.Entry'
-import CreationIndex from '../vue/app/creation/index/Creation.Index'
+import CreationToken from '../vue/app/creationToken/CreationToken.Entry'
+import CreationTokenIndex from '../vue/app/creationToken/index/CreationToken.Index'
 
 Vue.use(Router)
 
@@ -226,16 +226,16 @@ const router = new Router({
           ]
         },
         {
-          feature_flag: config.FEATURE_FLAGS.creation,
-          name: 'app.creation',
-          path: '/creation',
-          component: Creation,
-          redirect: { path: '/creation/index' },
+          feature_flag: config.FEATURE_FLAGS.creationToken,
+          name: 'app.creationToken',
+          path: '/creation-token',
+          component: CreationToken,
+          redirect: { path: '/creation-token/index' },
           children: [
             {
-              path: '/creation/index',
-              name: 'creation.index',
-              component: CreationIndex
+              path: '/creation-token/index',
+              name: 'creation-token.index',
+              component: CreationTokenIndex
             }
           ]
         }

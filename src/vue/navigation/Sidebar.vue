@@ -26,9 +26,9 @@
         <span class="md-list-item-text">{{ i18n.lbl_explore_tokens() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/creation" v-if="config.FEATURE_FLAGS.creation">
+      <md-list-item @click="closeSidebar" to="/creation-token" v-if="config.FEATURE_FLAGS.creationToken">
         <md-icon>add_circle</md-icon>
-        <span class="md-list-item-text">{{ i18n.lbl_create_tokens() }}</span>
+        <span class="md-list-item-text">{{ i18n.lbl_create_token() }}</span>
       </md-list-item>
 
       <md-list-item @click="closeSidebar" to="/history" v-if="config.FEATURE_FLAGS.history">

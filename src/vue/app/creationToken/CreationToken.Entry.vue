@@ -6,11 +6,11 @@
   import RouteEntryMixin from '../../common/mixins/route-entry'
 
   export default {
-    name: 'tokens',
+    name: 'creation-token',
     mixins: [RouteEntryMixin],
     data: _ => ({
       routes: [
-        { path: '/creation/index', label: 'Creating tokens' }
+        { path: '/creation-token/index', label: 'Creating token' }
       ]
     })
   }

@@ -15,9 +15,8 @@ export class TokensService extends Service {
    *
    * @param {object} opts.details - Additional details about token
    * @param {string} opts.details.name - Name of the token
-   * @param {array}  opts.details.documents - Documents attached to token
    * @param {string} opts.details.logo - Token picture {@link DocumentContainer.getDetailsForSave}
-   * @param {string} opts.details.terms - Token terms
+   * @param {string} opts.details.terms - Token terms {@link DocumentContainer.getDetailsForSave}
    *
    * @return {Promise<TransactionResponseBuilder>}
    */
@@ -141,7 +140,7 @@ export class TokensService extends Service {
   // TODO: test, may not work:
   loadTokenCreationRequestsForState (state) {
     return this._horizonRequestBuilder
-      .reviewableRequests()
+      .reviewableRequestsHelper()
       .forRequestor(this._accountId)
       .forState(state)
       .order('desc')

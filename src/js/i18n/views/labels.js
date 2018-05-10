@@ -23,7 +23,7 @@ export default {
   lbl_send: 'Send',
   lbl_tokens: 'Tokens',
   lbl_trade: 'Trade',
-  lbl_create_tokens: 'Create tokens',
+  lbl_create_token: 'Create token',
   lbl_explore_tokens: 'Explore tokens',
   lbl_history: 'History',
   lbl_cancel: 'Cancel',

@@ -43,6 +43,20 @@ const rules = [
     name: 'wallet_address',
     message: 'Invalid wallet address',
     validate: value => validateAddress(value)
+  },
+  {
+    name: 'less_than',
+    message: 'Value should be less than',
+    validate: (value, [limit, include]) => {
+      if (typeof limit === 'object') {
+        include = limit['include']
+        limit = limit['limit']
+      }
+      if (typeof include === 'undefined') {
+        include = true
+      }
+      return !!((!include && value < limit) || (include && value <= limit))
+    }
   }
 ]
 
