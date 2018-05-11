@@ -1,5 +1,5 @@
 <template>
-  <div v-if="type==='image'">
+  <div v-if="fileType==='image'">
     <div class="file-field__label">
       {{ label }}
     </div>
@@ -78,10 +78,11 @@
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },
       maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
-      minWidth: { type: Number, default: 1000 },
-      minHeight: { type: Number, default: 1000 },
-      accept: {type: String, default: 'image/png, image/jpeg, application/pdf'},
-      notes: {type: Array, default: () => ['JPEG, PNG or BMP', 'no more than 5mb', 'not less than 1024x576, 16:9']}
+      minWidth: { type: Number, default: null },
+      minHeight: { type: Number, default: null },
+      accept: { type: String, default: 'image/png, image/jpeg, application/pdf' },
+      notes: { type: Array, default: () => ['JPEG, PNG or BMP', 'no more than 5mb', 'not less than 120x120, 1:1'] },
+      fileType: { type: String, default: 'default' }
     },
     data: _ => ({
       fileName: '',
@@ -333,7 +334,7 @@
     img {
       border-radius: 15px 15px 0 0;
       object-fit: cover;
-      width: $ratio_16;
+      width: 100%;
       height: $ratio_9;
       pointer-events: none;
     }

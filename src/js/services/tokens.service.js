@@ -141,6 +141,7 @@ export class TokensService extends Service {
   loadTokenCreationRequestsForState (state) {
     return this._horizonRequestBuilder
       .reviewableRequestsHelper()
+      .assets()
       .forRequestor(this._accountId)
       .forState(state)
       .order('desc')

@@ -71,11 +71,9 @@
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-      if (this.formattedPairs.length > 0) {
-        this.filters.base = this.formattedPairs[0].split('/')[0]
-        this.filters.quote = this.formattedPairs[0].split('/')[1]
-        this.customAssetPair = this.formattedPairs[0]
-      }
+      this.filters.base = this.formattedPairs[0].split('/')[0]
+      this.filters.quote = this.formattedPairs[0].split('/')[1]
+      this.customAssetPair = this.formattedPairs[0]
     },
     computed: {
       ...mapGetters([

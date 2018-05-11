@@ -26,7 +26,7 @@
         <span class="md-list-item-text">{{ i18n.lbl_explore_tokens() }}</span>
       </md-list-item>
 
-      <md-list-item @click="closeSidebar" to="/creation-token" v-if="config.FEATURE_FLAGS.creationToken">
+      <md-list-item @click="closeSidebar" to="/token-creation" v-if="config.FEATURE_FLAGS.tokenCreation">
         <md-icon>add_circle</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_create_token() }}</span>
       </md-list-item>

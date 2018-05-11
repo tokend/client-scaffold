@@ -6,7 +6,7 @@ const featureFlags = {
   history: true,
   trade: true,
   verification: true,
-  creationToken: true,
+  tokenCreation: true,
   settings: true,
   tfa: true,
   tokens: true
