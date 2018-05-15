@@ -9,7 +9,8 @@ const featureFlags = {
   tokenCreation: true,
   settings: true,
   tfa: true,
-  tokens: true
+  tokens: true,
+  requests: true
 }
 
 export default {

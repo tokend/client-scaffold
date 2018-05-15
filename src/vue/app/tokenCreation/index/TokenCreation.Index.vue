@@ -20,7 +20,8 @@
                           :slabel="i18n.lbl_token_icon()"
                           :minWidth='120'
                           :minHeight='120'
-                          :accept="'image/*'"/>
+                          :accept="'image/*'"
+                          :type="documentTypes.tokenIcon"/>
             </div>
           </div>
           <div class="md-card-content-item">
@@ -152,6 +153,7 @@
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import FileField from '../../../common/fields/FileField'
+import Detail from '../../common/Detail.Row'
 
 import { i18n } from '../../../../js/i18n'
 import { documentTypes } from '../../../../js/const/documents.const'
@@ -162,9 +164,11 @@ import { ASSET_POLICIES } from '../../../../js/const/xdr.const'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 
+import { fileService } from '../../../../js/services/file.service'
+
 export default {
   mixins: [FormMixin],
-  components: { FileField },
+  components: { FileField, Detail },
   data: _ => ({
     form: {
       tokenName: '',
@@ -192,7 +196,6 @@ export default {
       try {
         const opts = await this.getDataFromForm()
         await this.submitRequest(opts)
-        await tokensService.loadTokenCreationRequestsForState()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
       } catch (error) {
         console.log(error)
@@ -217,11 +220,15 @@ export default {
       }
 
       if (this.documents[documentTypes.tokenIcon]) {
-        logo = this.documents[documentTypes.tokenIcon].getDetailsForSave()
+        logo = this.documents[documentTypes.tokenIcon].getDetailsForUpload()
+        const key = await fileService.uploadFile(logo)
+        logo.key = key
       }
 
       if (this.documents[documentTypes.tokenTerms]) {
-        terms = this.documents[documentTypes.tokenTerms].getDetailsForSave()
+        terms = this.documents[documentTypes.tokenTerms].getDetailsForUpload()
+        const key = await fileService.uploadFile(terms)
+        terms.key = key
       }
 
       return {
@@ -241,15 +248,15 @@ export default {
     async submitRequest (opts) {
       await tokensService.createTokenCreationRequest({
         requestID: '0',
-        code: opts.code,
+        code: this.form.tokenCode,
         preissuedAssetSigner: opts.preissuedAssetSigner,
         maxIssuanceAmount: opts.maxIssuanceAmount,
         policies: opts.policies,
         initialPreissuedAmount: opts.initialPreissuedAmount,
         details: {
           name: opts.details.name,
-          logo: opts.details.logo,
-          terms: opts.details.terms
+          logo: opts.details.logo || {},
+          terms: opts.details.terms || {}
         }
       })
     }
@@ -259,6 +266,6 @@ export default {
 
 <style lang="scss" scoped>
   .md-card-content-item:not(:last-child) {
-    margin-bottom: 48px;
+    margin-bottom: 24px;
   }
 </style>

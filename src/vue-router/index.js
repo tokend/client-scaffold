@@ -44,6 +44,9 @@ import VerificationMake from '../vue/app/verification/make/Verification.Make'
 import TokenCreation from '../vue/app/tokenCreation/TokenCreation.Entry'
 import TokenCreationIndex from '../vue/app/tokenCreation/index/TokenCreation.Index'
 
+import Requests from '../vue/app/requests/Requests.Entry'
+import RequestsIndex from '../vue/app/requests/index/Requests.Index'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -236,6 +239,20 @@ const router = new Router({
               path: '/token-creation/index',
               name: 'token-creation.index',
               component: TokenCreationIndex
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.requests,
+          name: 'app.requests',
+          path: '/requests',
+          component: Requests,
+          redirect: { path: '/requests/index' },
+          children: [
+            {
+              path: '/requests/index',
+              name: 'requests.index',
+              component: RequestsIndex
             }
           ]
         }

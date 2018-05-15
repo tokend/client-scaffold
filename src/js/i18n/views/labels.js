@@ -115,5 +115,6 @@ export default {
   lbl_balance_exists: 'Balance exists',
   lbl_view_history: 'View history',
   lbl_user: 'user',
-  lbl_userBlocked: 'User is blocked'
+  lbl_userBlocked: 'User is blocked',
+  lbl_requests: 'Requests'
 }

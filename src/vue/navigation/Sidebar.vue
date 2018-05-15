@@ -31,6 +31,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_create_token() }}</span>
       </md-list-item>
 
+      <md-list-item to="/requests" v-if="config.FEATURE_FLAGS.requests">
+        <md-icon>import_contacts</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
+      </md-list-item>
+
       <md-list-item @click="closeSidebar" to="/history" v-if="config.FEATURE_FLAGS.history">
         <md-icon>featured_play_list</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
