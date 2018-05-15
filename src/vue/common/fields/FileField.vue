@@ -80,7 +80,7 @@
       maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
       minWidth: { type: Number, default: null },
       minHeight: { type: Number, default: null },
-      accept: { type: String, default: 'image/png, image/jpeg, application/pdf' },
+      accept: { type: String, default: 'image/png, image/jpeg' },
       notes: { type: Array, default: () => ['JPEG, PNG or BMP', 'no more than 5mb', 'not less than 120x120, 1:1'] },
       fileType: { type: String, default: 'default' }
     },
@@ -165,6 +165,7 @@
         }
         return true
       },
+
       async handlePrivate () {
         if (this.value.derivePrivateUrl) {
           await this.value.derivePrivateUrl()

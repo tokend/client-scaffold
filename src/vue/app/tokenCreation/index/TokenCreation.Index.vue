@@ -17,7 +17,7 @@
             <div class="md-layout-item">
               <file-field fileType="image"
                           v-model="documents[documentTypes.tokenIcon]"
-                          :slabel="i18n.lbl_token_icon()"
+                          :label="i18n.lbl_token_icon()"
                           :minWidth='120'
                           :minHeight='120'
                           :accept="'image/*'"
@@ -42,6 +42,7 @@
                             v-validate="'required'"
                             :label="i18n.lbl_token_code()"
                             :errorMessage="errorMessage('token code')"
+                            :disabled="hasValueToUpdate"
                 />
               </div>
             </div>
@@ -50,7 +51,7 @@
                 <input-field id="token-max-issuance-amount"
                             name="max issuance amount"
                             v-model="form.maxIssuanceAmount"
-                            v-validate="'required|numeric'"
+                            v-validate="'required|amount'"
                             :label="i18n.lbl_token_max_issuance_amount()"
                             :errorMessage="errorMessage('max issuance amount')"
                 />
@@ -113,7 +114,7 @@
                 <input-field id="token-preissued-asset-signer"
                             name="preissued asset signer"
                             v-model="form.preissuedAssetSigner"
-                            v-validate="'required|secret_key'"
+                            v-validate="'required|account_id'"
                             :label="i18n.lbl_token_preissued_asset_signer()"
                             :errorMessage="errorMessage('preissued asset signer')"
                 />
@@ -122,7 +123,7 @@
                 <input-field id="token-initial-preissued-amount"
                             name="initial preissued amount"
                             v-model="form.initialPreissuedAmount"
-                            v-validate="{required:true, numeric: true, max_value: form.maxIssuanceAmount}"
+                            v-validate="{required:true, amount: true, max_value: form.maxIssuanceAmount}"
                             :label="i18n.lbl_token_initial_preissued_amount()"
                             :errorMessage="errorMessage('initial preissued amount')"
                 />
@@ -159,18 +160,20 @@ import { i18n } from '../../../../js/i18n'
 import { documentTypes } from '../../../../js/const/documents.const'
 
 import { tokensService } from '../../../../js/services/tokens.service'
-import { Keypair } from 'swarm-js-sdk'
 import { ASSET_POLICIES } from '../../../../js/const/xdr.const'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 
 import { fileService } from '../../../../js/services/file.service'
+import { DocumentContainer } from '../../../../js/helpers/DocumentContainer'
 
 export default {
   mixins: [FormMixin],
   components: { FileField, Detail },
+  props: ['requestValues'],
   data: _ => ({
     form: {
+      requestID: '0',
       tokenName: '',
       tokenCode: '',
       preissuedAssetSigner: '',
@@ -189,13 +192,37 @@ export default {
     ASSET_POLICIES
   }),
 
+  created () {
+    if (this.requestValues) {
+      const tokenIcon = this.requestValues.details.asset_create.details.logo
+      const tokenTerms = this.requestValues.details.asset_create.details.terms
+
+      this.form.requestID = this.requestValues.id
+      this.form.tokenName = this.requestValues.details.asset_create.details.name
+      this.form.tokenCode = this.requestValues.reference
+      this.form.preissuedAssetSigner = this.requestValues.details.asset_create.pre_issued_asset_signer
+      this.form.initialPreissuedAmount = this.requestValues.details.asset_create.initial_preissued_amount
+      this.form.maxIssuanceAmount = this.requestValues.details.asset_create.max_issuance_amount
+      this.form.policies = (this.requestValues.details.asset_create.policies).map(policy => policy.value)
+      this.documents[documentTypes.tokenTerms] = tokenTerms.key ? new DocumentContainer(tokenTerms) : null
+      console.log(this.documents[documentTypes.tokenTerms])
+      this.documents[documentTypes.tokenIcon] = tokenIcon.key ? new DocumentContainer(tokenIcon) : null
+      console.log(this.documents[documentTypes.tokenIcon])
+    }
+  },
+
+  computed: {
+    hasValueToUpdate () {
+      return typeof this.requestValues !== 'undefined'
+    }
+  },
+
   methods: {
     async submit () {
       if (!await this.isValid()) return
       this.disable()
       try {
-        const opts = await this.getDataFromForm()
-        await this.submitRequest(opts)
+        await this.createRequest()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
       } catch (error) {
         console.log(error)
@@ -204,59 +231,38 @@ export default {
       this.enable()
     },
 
-    async getDataFromForm () {
-      const code = this.form.tokenCode
+    async createRequest () {
       let preissuedAssetSigner = 'GAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHV4'
-      const maxIssuanceAmount = this.form.maxIssuanceAmount
-      const policies = (this.form.policies).reduce((a, b) => (a | b), 0)
       let initialPreissuedAmount = this.form.maxIssuanceAmount
-      const name = this.form.tokenName
-      let logo = {}
-      let terms = {}
 
-      if (this.makeAdditional) {
-        preissuedAssetSigner = Keypair.fromSecret(this.form.preissuedAssetSigner).accountId()
+      if (this.makeAdditional || this.requestValues) {
+        preissuedAssetSigner = this.form.preissuedAssetSigner
         initialPreissuedAmount = this.form.initialPreissuedAmount
       }
 
-      if (this.documents[documentTypes.tokenIcon]) {
-        logo = this.documents[documentTypes.tokenIcon].getDetailsForUpload()
-        const key = await fileService.uploadFile(logo)
-        logo.key = key
+      const logoContainer = this.documents[documentTypes.tokenIcon]
+      const termsContainer = this.documents[documentTypes.tokenTerms]
+      if (logoContainer) {
+        const logoKey = await fileService.uploadFile(logoContainer.getDetailsForUpload())
+        logoContainer.setKey(logoKey)
       }
 
-      if (this.documents[documentTypes.tokenTerms]) {
-        terms = this.documents[documentTypes.tokenTerms].getDetailsForUpload()
-        const key = await fileService.uploadFile(terms)
-        terms.key = key
-      }
-
-      return {
-        code: code,
+      // if (termsContainer) {
+      //   const termsKey = await fileService.uploadFile(termsContainer.getDetailsForUpload())
+      //   termsContainer.setKey(termsKey)
+      // }
+      console.log(termsContainer)
+      await tokensService.createTokenCreationRequest({
+        requestID: this.form.requestID,
+        code: this.form.tokenCode,
         preissuedAssetSigner: preissuedAssetSigner,
-        maxIssuanceAmount: maxIssuanceAmount,
-        policies: policies,
+        maxIssuanceAmount: this.form.maxIssuanceAmount,
+        policies: (this.form.policies).reduce((a, b) => (a | b), 0),
         initialPreissuedAmount: initialPreissuedAmount,
         details: {
-          name: name,
-          logo: logo,
-          terms: terms
-        }
-      }
-    },
-
-    async submitRequest (opts) {
-      await tokensService.createTokenCreationRequest({
-        requestID: '0',
-        code: this.form.tokenCode,
-        preissuedAssetSigner: opts.preissuedAssetSigner,
-        maxIssuanceAmount: opts.maxIssuanceAmount,
-        policies: opts.policies,
-        initialPreissuedAmount: opts.initialPreissuedAmount,
-        details: {
-          name: opts.details.name,
-          logo: opts.details.logo || {},
-          terms: opts.details.terms || {}
+          name: this.form.tokenName,
+          logo: logoContainer ? logoContainer.getDetailsForSave() : {},
+          terms: termsContainer ? termsContainer.getDetailsForSave() : {}
         }
       })
     }

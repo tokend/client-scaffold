@@ -36,21 +36,32 @@
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" :src='getTokenIconUrl(item)' :alt="documentTypes.tokenIcon">
+                  <img class="token-icon" v-if="item.details.asset_create.details.logo.key" :src='getUrl(item.details.asset_create.details.logo.key)' :alt="documentTypes.tokenIcon">
+                  <div class="token-icon" v-else>{{ item.reference.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
                   <detail prop="Request type:" :value="`${item.details.request_type}`"/>
                   <detail prop="Max issuance amount:" :value="`${item.details.asset_create.max_issuance_amount}`"/>
                   <detail prop="Initial preissued amount:" :value="`${item.details.asset_create.initial_preissued_amount}`"/>
                   <detail prop="Token name:" :value="`${item.details.asset_create.details.name}`"/>
+                  <detail prop="Terms:" :value="`<a href='${getUrl(item.details.asset_create.details.terms.key)}' target='_blank'>Open file</a>`"/>
+                  <detail prop="Reject reason:" v-if="u=item.request_state === 'rejected'" :value="`${item.reject_reason}`"/>
                 </div>
               </md-card-content>
               <md-card-actions>
                 <md-button class="md-dense md-accent" v-if="item.request_state !== 'canceled'" @click="cancelRequest(item.id)">Cancel</md-button>
+                <md-button class="md-dense md-primary" v-if="item.request_state !== 'canceled'" @click="updateRequest(item)">Update</md-button>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
         </template>
+         <md-table-row>
+            <md-table-cell colspan="7">
+                <div class="tx-history__btn-outer">
+                <md-button @click="more" :disabled="isLoading">More</md-button>
+                </div>
+            </md-table-cell>
+         </md-table-row>
       </template>
     </md-table>
   </div>
@@ -61,8 +72,10 @@ import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
 import config from '../../../../config'
 
+import { mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
 import { documentTypes } from '../../../../js/const/documents.const'
+import { vuexTypes } from '../../../../vuex/types'
 
 import { tokensService } from '../../../../js/services/tokens.service'
 import { ASSET_POLICIES } from '../../../../js/const/xdr.const'
@@ -86,9 +99,17 @@ export default {
 
   async created () {
     this.requests = await tokensService.loadTokenCreationRequestsForState()
+    // if (this.requests) {
+    //   await this.loadList()
+    // }
   },
 
   methods: {
+    ...mapActions({
+      loadList: vuexTypes.GET_USER_TOKENS_CREATION_REQUESTS,
+      loadNext: vuexTypes.NEXT_USER_TOKENS_CREATION_REQUESTS
+    }),
+
     toggleDetails (index) {
       this.index = this.index === index ? -1 : index
     },
@@ -112,17 +133,34 @@ export default {
       this.enable()
     },
 
-    getTokenIconUrl (item) {
-      const logoKey = item.details.asset_create.details.logo.key
-      if (logoKey) {
-        return `${config.FILE_STORAGE}/${logoKey}`
+    async more () {
+      this.isLoading = true
+      try {
+        await this.loadNext()
+      } catch (e) {
+        console.error(e)
+        EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
       }
+      this.isLoading = false
+    },
+
+    getUrl (item) {
+      if (item) {
+        return `${config.FILE_STORAGE}/${item}`
+      }
+    },
+
+    async updateRequest (opts) {
+      this.$router.push({ name: 'token-creation.index', params: { requestValues: opts } })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  @import "../../../../scss/mixins";
+  @import "../../../../scss/variables";
+
   $padding-vertical: 20px;
   $padding-horizontal: 25px;
   $padding: $padding-vertical $padding-horizontal;
@@ -190,5 +228,19 @@ export default {
   .token-icon {
     width: 142px;
     height: 142px;
+    border-radius: 50%;
+    font-size: 48px;
+    color: #fff;
+    background-color: #ccc;
+    margin-right: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+
+    @include respond-to(small) {
+      margin-right: 0;
+      margin-bottom: 12px;
+    }
   }
 </style>

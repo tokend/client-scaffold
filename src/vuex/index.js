@@ -17,6 +17,7 @@ import user from './modules/user.module'
 import wallet from './modules/wallet.module'
 import offers from './modules/offers.module'
 import pairs from './modules/pairs.module'
+import requests from './modules/requests.module'
 // import sales from './modules/sales.module'
 // import withdrawals from './modules/withdrawals.module'
 
@@ -36,7 +37,8 @@ const store = new Vuex.Store({
     user,
     wallet,
     pairs,
-    offers
+    offers,
+    requests
     // sales,
     // withdrawals
   }
