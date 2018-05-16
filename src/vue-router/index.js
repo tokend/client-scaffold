@@ -44,6 +44,9 @@ import VerificationMake from '../vue/app/verification/make/Verification.Make'
 import TokenCreation from '../vue/app/tokenCreation/TokenCreation.Entry'
 import TokenCreationIndex from '../vue/app/tokenCreation/index/TokenCreation.Index'
 
+import SaleCreation from '../vue/app/saleCreation/SaleCreation.Entry'
+import SaleCreationIndex from '../vue/app/saleCreation/index/SaleCreation.Index'
+
 import Requests from '../vue/app/requests/Requests.Entry'
 import RequestsIndex from '../vue/app/requests/index/Requests.Index'
 
@@ -239,6 +242,21 @@ const router = new Router({
               path: '/token-creation/index',
               name: 'token-creation.index',
               component: TokenCreationIndex,
+              props: true
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.saleCreation,
+          name: 'app.saleCreation',
+          path: '/sale-creation',
+          component: SaleCreation,
+          redirect: { path: '/sale-creation/index' },
+          children: [
+            {
+              path: '/sale-creation/index',
+              name: 'sale-creation.index',
+              component: SaleCreationIndex,
               props: true
             }
           ]

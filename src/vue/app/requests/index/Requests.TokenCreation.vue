@@ -7,7 +7,7 @@
         </div>
       </md-table-toolbar>
 
-      <template v-if="requests && (requests.records).length">
+      <template v-if="list.length">
         <md-table-row class="tx-token-creation__row">
           <md-table-head>Token code</md-table-head>
           <md-table-head>request state</md-table-head>
@@ -15,7 +15,7 @@
           <md-table-head>updated at</md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
-        <template v-for="(item, i) in requests.records">
+        <template v-for="(item, i) in list">
 
           <md-table-row class="tx-token-creation__row" @click="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
@@ -40,28 +40,38 @@
                   <div class="token-icon" v-else>{{ item.reference.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type:" :value="`${item.details.request_type}`"/>
-                  <detail prop="Max issuance amount:" :value="`${item.details.asset_create.max_issuance_amount}`"/>
-                  <detail prop="Initial preissued amount:" :value="`${item.details.asset_create.initial_preissued_amount}`"/>
-                  <detail prop="Token name:" :value="`${item.details.asset_create.details.name}`"/>
-                  <detail prop="Terms:" :value="`<a href='${getUrl(item.details.asset_create.details.terms.key)}' target='_blank'>Open file</a>`"/>
-                  <detail prop="Reject reason:" v-if="u=item.request_state === 'rejected'" :value="`${item.reject_reason}`"/>
+                  <detail prop="Request type" :value="`${getFancyName(item.details.request_type)}`"/>
+                  <detail prop="Max issuance amount" :value="`${item.details.asset_create.max_issuance_amount}`"/>
+                  <detail prop="Initial preissued amount" :value="`${item.details.asset_create.initial_preissued_amount}`"/>
+                  <detail prop="Token name" :value="`${item.details.asset_create.details.name}`"/>
+                  <detail prop="Terms" v-if="item.details.asset_create.details.terms.key !== ''" :value="`<a href='${getUrl(item.details.asset_create.details.terms.key)}' target='_blank'>Open file</a>`"/>
+                  <detail prop="Terms" v-else />
+                  <detail prop="Policies" :value="`${getPolicies(item.details.asset_create.policies)}`"/>
+                  <detail prop="Reject reason" v-if="item.request_state === 'rejected'" :value="`${item.reject_reason}`"/>
+
                 </div>
               </md-card-content>
               <md-card-actions>
-                <md-button class="md-dense md-accent" v-if="item.request_state !== 'canceled'" @click="cancelRequest(item.id)">Cancel</md-button>
-                <md-button class="md-dense md-primary" v-if="item.request_state !== 'canceled'" @click="updateRequest(item)">Update</md-button>
+                <md-button class="md-dense md-accent" :disabled="item.request_state === 'canceled'" @click="cancelRequest(item.id)">Cancel</md-button>
+                <md-button class="md-dense md-primary" :disabled="item.request_state === 'canceled'" @click="updateRequest(item)">Update</md-button>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
         </template>
-         <md-table-row>
+         <md-table-row v-if="!isLoaded">
             <md-table-cell colspan="7">
                 <div class="tx-history__btn-outer">
                 <md-button @click="more" :disabled="isLoading">More</md-button>
                 </div>
             </md-table-cell>
          </md-table-row>
+      </template>
+      <template v-else>
+        <div class="tx-token-creation__no-requests">
+          <md-icon class="md-size-4x">trending_up</md-icon>
+          <h2>No token creation requests</h2>
+          <p>Here will be the list of your token creation requests</p>
+        </div>
       </template>
     </md-table>
   </div>
@@ -71,8 +81,9 @@
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
 import config from '../../../../config'
+import get from 'lodash/get'
 
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
 import { documentTypes } from '../../../../js/const/documents.const'
 import { vuexTypes } from '../../../../vuex/types'
@@ -91,17 +102,30 @@ export default {
     i18n,
     documentTypes,
     ASSET_POLICIES,
-    requests: null,
     isLoading: false,
     index: -1,
     humanizeDate
   }),
 
   async created () {
-    this.requests = await tokensService.loadTokenCreationRequestsForState()
-    // if (this.requests) {
-    //   await this.loadList()
-    // }
+    await this.loadList()
+  },
+
+  computed: {
+    ...mapGetters([
+      vuexTypes.tokenCreationRequests
+    ]),
+    list () {
+      return (get(this.tokenCreationRequests, 'records') || [])
+        .map(item => item._record)
+        .reduce((list, item) => {
+          list.push(item)
+          return list
+        }, [])
+    },
+    isLoaded () {
+      return get(this.tokenCreationRequests, 'isLoaded')
+    }
   },
 
   methods: {
@@ -145,9 +169,15 @@ export default {
     },
 
     getUrl (item) {
-      if (item) {
-        return `${config.FILE_STORAGE}/${item}`
-      }
+      return `${config.FILE_STORAGE}/${item}`
+    },
+
+    getPolicies (item) {
+      return item.map(policy => policy.name.replace('AssetPolicy', '')).join(', ')
+    },
+
+    getFancyName (item) {
+      return item.replace('_', ' ')
     },
 
     async updateRequest (opts) {
@@ -223,6 +253,15 @@ export default {
   .tx-token-creation__table-title {
     padding: 24px;
     font-size: 24px;
+  }
+
+  .tx-token-creation__no-requests {
+    padding: 0 16px 32px;
+    text-align: center;
+
+    p {
+      margin-top: 10px;
+    }
   }
 
   .token-icon {

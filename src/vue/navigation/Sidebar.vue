@@ -31,6 +31,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_create_token() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/sale-creation" v-if="config.FEATURE_FLAGS.saleCreation">
+        <md-icon>bar_chart</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_create_sale() }}</span>
+      </md-list-item>
+
       <md-list-item to="/requests" v-if="config.FEATURE_FLAGS.requests">
         <md-icon>import_contacts</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>

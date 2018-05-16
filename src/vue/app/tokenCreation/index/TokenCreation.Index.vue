@@ -154,7 +154,7 @@
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import FileField from '../../../common/fields/FileField'
-import Detail from '../../common/Detail.Row'
+import get from 'lodash/get'
 
 import { i18n } from '../../../../js/i18n'
 import { documentTypes } from '../../../../js/const/documents.const'
@@ -169,7 +169,7 @@ import { DocumentContainer } from '../../../../js/helpers/DocumentContainer'
 
 export default {
   mixins: [FormMixin],
-  components: { FileField, Detail },
+  components: { FileField },
   props: ['requestValues'],
   data: _ => ({
     form: {
@@ -194,20 +194,20 @@ export default {
 
   created () {
     if (this.requestValues) {
-      const tokenIcon = this.requestValues.details.asset_create.details.logo
-      const tokenTerms = this.requestValues.details.asset_create.details.terms
-
-      this.form.requestID = this.requestValues.id
-      this.form.tokenName = this.requestValues.details.asset_create.details.name
-      this.form.tokenCode = this.requestValues.reference
-      this.form.preissuedAssetSigner = this.requestValues.details.asset_create.pre_issued_asset_signer
-      this.form.initialPreissuedAmount = this.requestValues.details.asset_create.initial_preissued_amount
-      this.form.maxIssuanceAmount = this.requestValues.details.asset_create.max_issuance_amount
-      this.form.policies = (this.requestValues.details.asset_create.policies).map(policy => policy.value)
+      const tokenIcon = get(this.requestValues, 'details.asset_create.details.logo')
+      const tokenTerms = get(this.requestValues, 'details.asset_create.details.terms')
+      this.form.requestID = get(this.requestValues, 'id')
+      this.form.tokenName = get(this.requestValues, 'details.asset_create.details.name')
+      this.form.tokenCode = get(this.requestValues, 'reference')
+      this.form.preissuedAssetSigner = get(this.requestValues, 'details.asset_create.pre_issued_asset_signer')
+      this.form.initialPreissuedAmount = get(this.requestValues, 'details.asset_create.initial_preissued_amount')
+      this.form.maxIssuanceAmount = get(this.requestValues, 'details.asset_create.max_issuance_amount')
+      this.form.policies = get(this.requestValues, 'details.asset_create.policies').map(policy => policy.value)
       this.documents[documentTypes.tokenTerms] = tokenTerms.key ? new DocumentContainer(tokenTerms) : null
-      console.log(this.documents[documentTypes.tokenTerms])
       this.documents[documentTypes.tokenIcon] = tokenIcon.key ? new DocumentContainer(tokenIcon) : null
-      console.log(this.documents[documentTypes.tokenIcon])
+      if (this.form.initialPreissuedAmount !== this.form.maxIssuanceAmount) {
+        this.makeAdditional = true
+      }
     }
   },
 
@@ -242,16 +242,16 @@ export default {
 
       const logoContainer = this.documents[documentTypes.tokenIcon]
       const termsContainer = this.documents[documentTypes.tokenTerms]
-      if (logoContainer) {
+
+      if (logoContainer && !logoContainer.isUploaded) {
         const logoKey = await fileService.uploadFile(logoContainer.getDetailsForUpload())
         logoContainer.setKey(logoKey)
       }
 
-      // if (termsContainer) {
-      //   const termsKey = await fileService.uploadFile(termsContainer.getDetailsForUpload())
-      //   termsContainer.setKey(termsKey)
-      // }
-      console.log(termsContainer)
+      if (termsContainer && !termsContainer.isUploaded) {
+        const termsKey = await fileService.uploadFile(termsContainer.getDetailsForUpload())
+        termsContainer.setKey(termsKey)
+      }
       await tokensService.createTokenCreationRequest({
         requestID: this.form.requestID,
         code: this.form.tokenCode,

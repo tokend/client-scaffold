@@ -5,6 +5,7 @@ import { Paginator } from '../../js/helpers/paginator'
 
 const state = {
   tokenCreationRequests: new Paginator({
+    txPerPage: 10,
     recordWrp: RecordFactory.createOfferRecord.bind(RecordFactory)
   })
 }
@@ -26,7 +27,7 @@ const actions = {
 }
 
 const getters = {
-  tokenCreationRequests: state => state.tokenCreationRequests.records
+  tokenCreationRequests: state => state.tokenCreationRequests
 }
 
 export default {
