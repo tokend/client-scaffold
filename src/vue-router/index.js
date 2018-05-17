@@ -243,6 +243,12 @@ const router = new Router({
               name: 'token-creation.index',
               component: TokenCreationIndex,
               props: true
+            },
+            {
+              path: '/token-creation/index/:id',
+              name: 'token-creation.index:id',
+              component: TokenCreationIndex,
+              props: true
             }
           ]
         },

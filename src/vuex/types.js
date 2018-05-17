@@ -119,6 +119,7 @@ const getters = {
 
   // tokens:
   tokens: 'tokens',
+  walletTokens: 'walletTokens',
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',

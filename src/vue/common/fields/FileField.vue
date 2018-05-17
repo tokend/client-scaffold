@@ -3,7 +3,7 @@
     <div class="file-field__label">
       {{ label }}
     </div>
-    <div class="image-input" :class="{ 'image-input--ready-to-drop': flags.isReadyToDrop }">
+    <div class="image-input">
       <div class="image-input__image-preview" v-if="fileUrl">
         <img :src="fileUrl">
       </div>
@@ -11,7 +11,7 @@
       <div class="image-input__input-inner">
 
         <div class="image-input__text">
-          <div class="title">Choose an image from your PC</div>
+          <div class="title">{{ i18n.lbl_choose_image() }}</div>
 
           <div class="notes">
             <p class="image-input__note" v-for="(note, key) in notes" :key="key">{{ note }}</p>
@@ -179,13 +179,6 @@
       viewNew () {
         if (!this.fileUrl) return
         dispatchAppEvent(commonEvents.openFileViewEvent, this.fileUrl)
-      },
-
-      attachHandlers () {
-        const holder = this.$el
-        holder.ondragenter = () => { this.flags.isReadyToDrop = true }
-        holder.ondrop = () => { this.flags.isReadyToDrop = false }
-        holder.ondragleave = () => { this.flags.isReadyToDrop = false }
       }
     },
     watch: {
@@ -341,9 +334,4 @@
     }
   }
 
-  .image-input--ready-to-drop {
-    cursor: copy;
-    border-color: $col-active;
-    transform: scale(1.1);
-  }
 </style>

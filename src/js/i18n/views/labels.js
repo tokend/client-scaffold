@@ -120,5 +120,14 @@ export default {
   lbl_view_history: 'View history',
   lbl_user: 'user',
   lbl_userBlocked: 'User is blocked',
-  lbl_requests: 'Requests'
+  lbl_requests: 'Requests',
+  lbl_request_state: 'Request state',
+  lbl_token_creation: 'Token creation',
+  lbl_token_creation_requests: 'Token creation requests',
+  lbl_choose_image: 'Choose an image from your PC',
+  lbl_no_token_creation_requests: 'No token creation requests',
+  lbl_no_token_creation_requests_desc: 'Here will be the list of your token creation requests',
+  lbl_created_at: 'Created at',
+  lbl_updated_at: 'Updated at',
+  lbl_update: 'Update'
 }

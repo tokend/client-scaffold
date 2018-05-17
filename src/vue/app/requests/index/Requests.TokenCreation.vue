@@ -2,17 +2,17 @@
   <div class="tx-token-creation">
     <md-table md-card class="tx-token-creation__table">
       <md-table-toolbar class="tx-token-creation__table-toolbar">
-        <h1 class="tx-token-creation__table-title md-title">Token creation requests</h1>
+        <h1 class="tx-token-creation__table-title md-title">{{ i18n.lbl_token_creation_requests() }}</h1>
         <div class="tx-token-creation__select-outer">
         </div>
       </md-table-toolbar>
 
       <template v-if="list.length">
         <md-table-row class="tx-token-creation__row">
-          <md-table-head>Token code</md-table-head>
-          <md-table-head>request state</md-table-head>
-          <md-table-head>created at</md-table-head>
-          <md-table-head>updated at</md-table-head>
+          <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_updated_at() }}</md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
@@ -52,8 +52,12 @@
                 </div>
               </md-card-content>
               <md-card-actions>
-                <md-button class="md-dense md-accent" :disabled="item.request_state === 'canceled'" @click="cancelRequest(item.id)">Cancel</md-button>
-                <md-button class="md-dense md-primary" :disabled="item.request_state === 'canceled'" @click="updateRequest(item)">Update</md-button>
+                <md-button class="md-dense md-accent" 
+                          :disabled="item.request_state === 'canceled' || item.request_state === 'approved'" 
+                          @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
+                <md-button class="md-dense md-primary" 
+                          :disabled="item.request_state === 'canceled' || item.request_state === 'approved'" 
+                          @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -61,7 +65,7 @@
          <md-table-row v-if="!isLoaded">
             <md-table-cell colspan="7">
                 <div class="tx-history__btn-outer">
-                <md-button @click="more" :disabled="isLoading">More</md-button>
+                <md-button @click="more" :disabled="isLoading">{{ i18n.lbl_view_more() }}</md-button>
                 </div>
             </md-table-cell>
          </md-table-row>
@@ -69,8 +73,8 @@
       <template v-else>
         <div class="tx-token-creation__no-requests">
           <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>No token creation requests</h2>
-          <p>Here will be the list of your token creation requests</p>
+          <h2>{{ i18n.lbl_no_token_creation_requests() }}</h2>
+          <p>{{ i18n.lbl_no_token_creation_requests_desc() }}</p>
         </div>
       </template>
     </md-table>
@@ -180,8 +184,8 @@ export default {
       return item.replace('_', ' ')
     },
 
-    async updateRequest (opts) {
-      this.$router.push({ name: 'token-creation.index', params: { requestValues: opts } })
+    async updateRequest (id) {
+      this.$router.push({name: 'token-creation.index', params: { id: id }})
     }
   }
 }
