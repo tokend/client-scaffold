@@ -1,6 +1,7 @@
 import { KycRequestRecord } from './kyc_request.record'
 import { TransferRecord } from './transfer.record'
 import { TokenRecord } from './token.record'
+import { TokenCreationRecord } from './token_creation.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
 import { IssuanceRecord } from './issuance.record'
 import { WithdrawalRecord } from './withdrawal.record'
@@ -17,6 +18,10 @@ export class RecordFactory {
 
   static createTokenRecord () {
     return new TokenRecord(...arguments)
+  }
+
+  static createTokenСreationRecord () {
+    return new TokenCreationRecord(...arguments)
   }
 
   static createExternalAccountRecord () {

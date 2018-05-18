@@ -1,5 +1,6 @@
 import { TransferRecord } from './transfer.record'
 import { TokenRecord } from './token.record'
+import { TokenCreationRecord } from './token_creation.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
 import { IssuanceRecord } from './issuance.record'
 import { WithdrawalRecord } from './withdrawal.record'
@@ -14,6 +15,7 @@ export const RecordTypes = {
   AssetPairRecord,
   TransferRecord,
   TokenRecord,
+  TokenCreationRecord,
   ExternalAccountEntity,
   IssuanceRecord,
   WithdrawalRecord,

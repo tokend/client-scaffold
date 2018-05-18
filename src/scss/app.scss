@@ -90,10 +90,24 @@ html,body {
   }
 
   & .md-button {
-    min-width: 64px;
     & .md-ripple {
       padding: 0 16px;
     }
+  }
+
+  & .md-toolbar {
+    padding: 0;
+    & .md-title {
+      margin-left: 0;
+    }
+  }
+
+  & .md-table-toolbar {
+    padding-left: 0;
+  }
+
+  & .md-tabs-content {
+    height: 100% !important;
   }
 }
 

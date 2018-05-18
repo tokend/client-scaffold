@@ -54,8 +54,7 @@ export class Paginator {
 
   async next () {
     this._startLoad()
-
-    const response = await this._nextPageLoader(store.getters.keypair)
+    const response = await this._nextPageLoader(store.getters.accountKeypair)
     const records = this._parseRecords(response.records)
     this.records = this.records.concat(records)
     this._nextPageLoader = response.next

@@ -247,6 +247,7 @@
         this.errors.clear()
       },
       async processTransfer () {
+        if (!this.isAllowedToSubmit) return
         if (!await this.isValid()) return
         this.disable()
         try {
