@@ -1,6 +1,6 @@
 module.exports = {
   NODE_ENV: '"default"',
-  HORIZON_SERVER: '"https://api.dev.suntri.io"',
-  FILE_STORAGE: '"https://storage.dev.suntri.io/api"',
-  NETWORK_PASSPHRASE: '"Suntri Dev Network"'
+  HORIZON_SERVER: '"https://testnet.tokend.org/_/api"',
+  FILE_STORAGE: '"https://storage.testnet.tokend.org/api"',
+  NETWORK_PASSPHRASE: '"TokenD Testnet Network"'
 }
