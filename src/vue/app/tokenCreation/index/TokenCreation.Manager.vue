@@ -191,6 +191,7 @@ export default {
       this.request = new TokenCreationRecord(await reviewableRequestsService.loadReviewableRequestById(this.id))
       this.documents[documentTypes.tokenTerms] = this.request.terms.key ? new DocumentContainer(this.request.terms) : null
       this.documents[documentTypes.tokenIcon] = this.request.logo.key ? new DocumentContainer(this.request.logo) : null
+      console.log(this.request.policies)
     }
       // if (this.form.initialPreissuedAmount !== this.form.maxIssuanceAmount) {
       //   this.makeAdditional = true
@@ -221,7 +222,7 @@ export default {
       let preissuedAssetSigner = config.PREISSUED_ASSET_SIGNER
       let initialPreissuedAmount = this.request.maxIssuanceAmount
 
-      if (this.makeAdditional || this.requestValues) {
+      if (this.makeAdditional || this.id) {
         preissuedAssetSigner = this.request.preissuedAssetSigner
         initialPreissuedAmount = this.request.initialPreissuedAmount
       }
@@ -241,7 +242,7 @@ export default {
       await tokensService.createTokenCreationRequest({
         requestID: this.request.requestID ? this.request.requestID : '0',
         code: this.request.tokenCode,
-        preissuedAssetSigner: this.request.preissuedAssetSigner ? this.request.preissuedAssetSigner : preissuedAssetSigner,
+        preissuedAssetSigner: preissuedAssetSigner,
         maxIssuanceAmount: this.request.maxIssuanceAmount,
         policies: (this.request.policies).reduce((a, b) => (a | b), 0),
         initialPreissuedAmount: initialPreissuedAmount,
