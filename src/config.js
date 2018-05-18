@@ -7,7 +7,7 @@ const featureFlags = {
   trade: true,
   verification: true,
   tokenCreation: true,
-  saleCreation: false,
+  saleCreation: true,
   settings: true,
   tfa: true,
   tokens: true,

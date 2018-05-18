@@ -107,6 +107,7 @@ const getters = {
   accountCreatedAt: 'accountCreatedAt',
   accountTokens: 'accountTokens',
   accountBalances: 'accountBalances',
+  accountOwnedTokens: 'accountOwnedTokens',
   accountRawBalances: 'accountRawBalances',
   accountDepositAddresses: 'accountDepositAddresses',
   // account.kyc:
@@ -120,6 +121,7 @@ const getters = {
   // tokens:
   tokens: 'tokens',
   walletTokens: 'walletTokens',
+  userOwnedTokens: 'userOwnedTokens',
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',
