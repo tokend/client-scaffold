@@ -188,14 +188,11 @@ export default {
 
   async created () {
     if (this.id) {
+      this.makeAdditional = true
       this.request = new TokenCreationRecord(await reviewableRequestsService.loadReviewableRequestById(this.id))
       this.documents[documentTypes.tokenTerms] = this.request.terms.key ? new DocumentContainer(this.request.terms) : null
       this.documents[documentTypes.tokenIcon] = this.request.logo.key ? new DocumentContainer(this.request.logo) : null
-      console.log(this.request.policies)
     }
-      // if (this.form.initialPreissuedAmount !== this.form.maxIssuanceAmount) {
-      //   this.makeAdditional = true
-      // }
   },
 
   computed: {
