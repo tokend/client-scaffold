@@ -6,9 +6,12 @@ const featureFlags = {
   history: true,
   trade: true,
   verification: true,
+  tokenCreation: true,
+  saleCreation: false,
   settings: true,
   tfa: true,
-  tokens: true
+  tokens: true,
+  requests: true
 }
 
 export default {
@@ -18,8 +21,10 @@ export default {
   DISCOURSE_CLIENT: 'https://discuss.swarm.fund',
   SWARM_ORIGIN: 'https://swarm.fund',
   TRANSACTIONS_PER_PAGE: 12,
+  REQUESTS_PER_PAGE: 10,
   DECIMAL_POINTS: 6,
   VALIDATE_EMAILS: process.env.NODE_ENV === 'production',
   AIRDROP_REGISTRATION_END: new Date('2018-02-25T12:00:00'),
-  FEATURE_FLAGS: featureFlags
+  FEATURE_FLAGS: featureFlags,
+  PREISSUED_ASSET_SIGNER: 'GAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHV4'
 }

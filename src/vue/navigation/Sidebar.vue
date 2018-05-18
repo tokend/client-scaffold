@@ -26,6 +26,21 @@
         <span class="md-list-item-text">{{ i18n.lbl_explore_tokens() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/token-creation" v-if="config.FEATURE_FLAGS.tokenCreation">
+        <md-icon>add_circle</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_create_token() }}</span>
+      </md-list-item>
+
+      <md-list-item @click="closeSidebar" to="/sale-creation" v-if="config.FEATURE_FLAGS.saleCreation">
+        <md-icon>bar_chart</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_create_sale() }}</span>
+      </md-list-item>
+
+      <md-list-item to="/requests" v-if="config.FEATURE_FLAGS.requests">
+        <md-icon>import_contacts</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
+      </md-list-item>
+
       <md-list-item @click="closeSidebar" to="/history" v-if="config.FEATURE_FLAGS.history">
         <md-icon>featured_play_list</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
@@ -33,7 +48,7 @@
 
       <md-list-item @click="closeSidebar" to="/trade" v-if="config.FEATURE_FLAGS.trade">
         <md-icon>compare_arrows</md-icon>
-        <span class="md-list-item-text">Trade</span>
+        <span class="md-list-item-text">{{ i18n.lbl_trade() }}</span>
       </md-list-item>
 
       <md-divider></md-divider>

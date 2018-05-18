@@ -39,8 +39,8 @@ export class DocumentContainer {
 
   getDetailsForUpload () {
     return {
-      mimeType: this.mimeType,
       type: this.type,
+      mimeType: this.mimeType,
       file: this.file
     }
   }

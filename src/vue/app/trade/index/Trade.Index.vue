@@ -68,6 +68,7 @@
     async created () {
       await this.loadPairs()
       await this.loadData(this.tradablePairs[0])
+      console.log(this.tradablePairs[0])
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)

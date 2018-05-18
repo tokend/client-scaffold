@@ -99,7 +99,7 @@
     async created () {
       this.tokenCode = this.$route.params.tokenCode || this.tokens[0] || null
       if (this.tokenCode) {
-        this.loadList(this.tokenCode)
+        await this.loadList(this.tokenCode)
       }
     },
     computed: {

@@ -73,7 +73,12 @@ const actions = {
   GET_USER_OFFERS: 'GET_USER_OFFERS',
 
   // tokens:
-  GET_ALL_TOKENS: 'GET_ALL_TOKENS'
+  GET_ALL_TOKENS: 'GET_ALL_TOKENS',
+
+  // requests:
+  GET_USER_TOKENS_CREATION_REQUESTS: 'GET_USER_TOKENS_CREATION_REQUESTS',
+  NEXT_USER_TOKENS_CREATION_REQUESTS: 'NEXT_USER_TOKENS_CREATION_REQUESTS'
+
 }
 
 const getters = {
@@ -114,6 +119,7 @@ const getters = {
 
   // tokens:
   tokens: 'tokens',
+  walletTokens: 'walletTokens',
   userAcquiredTokens: 'userAcquiredTokens',
   userWalletTokens: 'userWalletTokens',
   userTransferableTokens: 'userTransferableTokens',
@@ -132,7 +138,10 @@ const getters = {
   trades: 'trades',
   buyOffers: 'buyOffers',
   sellOffers: 'sellOffers',
-  userOffers: 'userOffers'
+  userOffers: 'userOffers',
+
+  // requests:
+  tokenCreationRequests: 'tokenCreationRequests'
 }
 
 export const vuexTypes = {

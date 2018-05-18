@@ -1,5 +1,30 @@
 <template>
-  <div class="file-field__outer">
+  <div v-if="fileType==='image'">
+    <div class="file-field__label">
+      {{ label }}
+    </div>
+    <div class="image-input">
+      <div class="image-input__image-preview" v-if="fileUrl">
+        <img :src="fileUrl">
+      </div>
+
+      <div class="image-input__input-inner">
+
+        <div class="image-input__text">
+          <div class="title">{{ i18n.lbl_choose_image() }}</div>
+
+          <div class="notes">
+            <p class="image-input__note" v-for="(note, key) in notes" :key="key">{{ note }}</p>
+          </div>
+        </div>
+
+        <input type="file" 
+               accept="image/*"
+               @change="onChange">
+      </div>
+    </div>
+  </div>
+  <div v-else class="file-field__outer">
     <div class="file-field">
       <div class="file-field__label">
         {{ label }}
@@ -8,14 +33,14 @@
         <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(maxSize) })}}
       </label>
       <input type="file"
-             class="file-field__input"
-             :id="id"
-             :name="name"
-             :required="required"
-             :disabled="disabled"
-             :placeholder="placeholder"
-             :accept="accept"
-             @change="onChange"
+            class="file-field__input"
+            :id="id"
+            :name="name"
+            :required="required"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :accept="accept"
+            @change="onChange"
       />
     </div>
     <p class="file-field__file-name">
@@ -53,15 +78,20 @@
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },
       maxSize: { type: Number, default: MAX_FILE_MEGABYTES },
-      minWidth: { type: Number, default: 1000 },
-      minHeight: { type: Number, default: 1000 },
-      accept: {type: String, default: 'image/png, image/jpeg, application/pdf'}
+      minWidth: { type: Number, default: null },
+      minHeight: { type: Number, default: null },
+      accept: { type: String, default: 'image/png, image/jpeg' },
+      notes: { type: Array, default: () => ['JPEG, PNG or BMP', 'no more than 5mb', 'not less than 120x120, 1:1'] },
+      fileType: { type: String, default: 'default' }
     },
     data: _ => ({
       fileName: '',
       privateUrl: '',
       i18n,
-      fileStorage: config.FILE_STORAGE
+      fileStorage: config.FILE_STORAGE,
+      flags: {
+        isReadyToDrop: false
+      }
     }),
     computed: {
       maxB () {
@@ -135,6 +165,7 @@
         }
         return true
       },
+
       async handlePrivate () {
         if (this.value.derivePrivateUrl) {
           await this.value.derivePrivateUrl()
@@ -238,4 +269,69 @@
       outline: none;
     }
   }
+
+  .image-input {
+    border: 1px dashed $col-unfocused;
+    border-radius: 15px;
+    transition: .2s;
+    width: 100%;
+
+    &:hover {
+      border-color: $col-active;
+    }
+  }
+
+  .image-input__input-inner {
+    height: 110px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    input[type="file"] {
+      cursor: pointer;
+      opacity: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .image-input__text {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 5px;
+    width: 100%;
+
+    .title {
+      color: $col-active;
+      margin-bottom: 10px;
+    }
+  }
+
+  .image-input__note {
+    color: $col-unfocused;
+    font-size: $fs-tip;
+    line-height: 160%;
+  }
+
+  $ratio_16: 448px;
+  $ratio_9: 153px;
+
+  .image-input__image-preview {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+
+    img {
+      border-radius: 15px 15px 0 0;
+      object-fit: cover;
+      width: 100%;
+      height: $ratio_9;
+      pointer-events: none;
+    }
+  }
+
 </style>
