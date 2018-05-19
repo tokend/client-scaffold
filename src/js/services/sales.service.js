@@ -18,6 +18,7 @@ export class SalesService extends Service {
    * @param {object} opts.details.short_description - short description of the sale
    * @param {object} opts.details.desciption - sale specific details
    * @param {object} opts.details.logo - details of the logo
+   * @param {string} opts.baseAssetForHardCap - specifies the amount of base asset required for hard cap
    * @param {array} opts.quoteAssets - accepted assets
    * @param {object} opts.quoteAssets.price - price for 1 baseAsset in terms of quote asset
    * @param {object} opts.quoteAssets.asset - asset code of the quote asset

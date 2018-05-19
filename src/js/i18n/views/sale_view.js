@@ -4,4 +4,3 @@ export default {
   log_forgot_password: 'Forgot your password?',
   log_recover_it: 'Recover it'
 }
-  
