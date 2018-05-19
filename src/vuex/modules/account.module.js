@@ -125,6 +125,7 @@ export const getters = {
   account: state => state.account,
   accountId: state => state.keys.accountId,
   accountType: state => state.account.account_type,
+  accountTypeI: state => state.account.account_type_i,
   accountBlocked: state => state.account.is_blocked,
   accountSeed: state => state.keys.seed,
   accountPublicKey: state => state.keys.publicKey,

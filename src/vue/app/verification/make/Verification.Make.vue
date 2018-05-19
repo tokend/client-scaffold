@@ -1,26 +1,42 @@
 <template>
   <div class="verification">
-    <state-banner/>
-    <individual-form/>
+    <template v-if="accountTypeI === ACCOUNT_TYPES.syndicate">
+      <syndicate-banner/>
+    </template>
+    <template v-else>
+      <state-banner/>
+      <individual-form/>
+    </template>
   </div>
 </template>
 
 <script>
   import IndividualForm from './Verification.Individual'
   import StateBanner from './Verification.StateBanner'
+  import SyndicateBanner from './Verification.SyndicateBanner'
 
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
 
+  import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+
   export default {
     name: 'verification-make',
-    components: { IndividualForm, StateBanner },
+    components: {
+      IndividualForm,
+      SyndicateBanner,
+      StateBanner
+    },
+    data: _ => ({
+      ACCOUNT_TYPES
+    }),
     async created () {
       await this.reset()
     },
     computed: {
       ...mapGetters([
-        vuexTypes.accountLatestBlobId
+        vuexTypes.accountLatestBlobId,
+        vuexTypes.accountTypeI
       ])
     },
     methods: {

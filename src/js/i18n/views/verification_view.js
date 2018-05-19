@@ -12,5 +12,6 @@ export default {
   kyc_approved_msg: 'Your account is approved. All actions that requires verification are now available',
   kyc_waiting_msg: `Your verification request is submitted. Please wait until we review the information.
                     You will be able to update details once the request is reviewed`,
-  kyc_rejected_msg: 'Unfortunately, your account was rejected with reason: %{reason}'
+  kyc_rejected_msg: 'Unfortunately, your account was rejected with reason: %{reason}',
+  kyc_approved_title: 'Account approved'
 }
