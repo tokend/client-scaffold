@@ -71,15 +71,6 @@
               </div>
               <div class="md-layout-item md-size-50">
                 <md-checkbox v-model="request.policies"
-                              :value="ASSET_POLICIES.withdrawable"
-                              name="policy-withdrawable"
-                              id="policy-withdrawable"
-                              class="md-primary">
-                            Withdrawable
-                </md-checkbox>
-              </div>
-              <div class="md-layout-item md-size-50">
-                <md-checkbox v-model="request.policies"
                               :value="ASSET_POLICIES.requiresKyc"
                               name="policy-requiresKyc"
                               id="policy-requiresKyc"
@@ -106,7 +97,9 @@
                       :value="false">I don't want to make additional issuance later</md-radio>
             <md-radio class="md-primary"
                       v-model="makeAdditional"
-                      :value="true">I want to make additional issuance later (<a @click.stop.prevent="showDialog = true">tell me more</a>)</md-radio>
+                      :value="true">I want to make additional issuance later
+              <!--(<a @click.stop.prevent="showDialog = true">tell me more</a>)-->
+            </md-radio>
           </div>
           <div class="md-card-content-item" v-if="makeAdditional">
             <div class="md-layout md-gutter">
@@ -174,7 +167,9 @@ export default {
   components: { FileField },
   props: ['id'],
   data: _ => ({
-    request: {},
+    request: {
+      policies: []
+    },
     documents: {
       [documentTypes.tokenTerms]: null,
       [documentTypes.tokenIcon]: null
@@ -208,6 +203,7 @@ export default {
       try {
         await this.createRequest()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
+        this.$router.push({ path: '/requests' })
       } catch (error) {
         console.log(error)
         ErrorHandler.processUnexpected(error)
