@@ -71,15 +71,6 @@
               </div>
               <div class="md-layout-item md-size-50">
                 <md-checkbox v-model="request.policies"
-                              :value="ASSET_POLICIES.withdrawable"
-                              name="policy-withdrawable"
-                              id="policy-withdrawable"
-                              class="md-primary">
-                            Withdrawable
-                </md-checkbox>
-              </div>
-              <div class="md-layout-item md-size-50">
-                <md-checkbox v-model="request.policies"
                               :value="ASSET_POLICIES.requiresKyc"
                               name="policy-requiresKyc"
                               id="policy-requiresKyc"
@@ -174,7 +165,9 @@ export default {
   components: { FileField },
   props: ['id'],
   data: _ => ({
-    request: {},
+    request: {
+      policies: []
+    },
     documents: {
       [documentTypes.tokenTerms]: null,
       [documentTypes.tokenIcon]: null
