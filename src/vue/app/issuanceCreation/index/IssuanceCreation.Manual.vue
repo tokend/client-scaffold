@@ -97,7 +97,6 @@ export default {
       if (!await this.isValid()) return
       this.disable()
       try {
-        console.log(this.request)
         const receiver = await accountsService.loadBalanceIdByEmail(this.request.receiver, this.request.code)
         await issuanceService.createIssuanceRequest({
           token: this.request.code,
