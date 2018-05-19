@@ -52,11 +52,15 @@
                 </div>
               </md-card-content>
               <md-card-actions>
-                <md-button class="md-dense md-accent" 
-                          :disabled="item.request_state === 'canceled' || item.request_state === 'approved'" 
+                <md-button class="md-dense md-accent"
+                          :disabled="item.request_state === 'canceled'
+                                  || item.request_state === 'approved'
+                                  || isPending"
                           @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button class="md-dense md-primary" 
-                          :disabled="item.request_state === 'canceled' || item.request_state === 'approved'" 
+                <md-button class="md-dense md-primary"
+                          :disabled="item.request_state === 'canceled'
+                                  || item.request_state === 'approved'
+                                  || isPending"
                           @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
             </md-table-cell>
