@@ -203,6 +203,7 @@ export default {
       try {
         await this.createRequest()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
+        this.$router.push({ path: '/requests' })
       } catch (error) {
         console.log(error)
         ErrorHandler.processUnexpected(error)
