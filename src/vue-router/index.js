@@ -285,6 +285,17 @@ const router = new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  try {
+    console.log('window.Appcues.start()')
+    window.Appcues.start()
+  } catch (e) {
+    console.error(e)
+  }
+  next()
+})
+
 export default router
 
 // doesn't allow to visit auth page if user is already logged in

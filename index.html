@@ -5,6 +5,18 @@
 
   <title>TokenD</title>
 
+  <script>
+    window.onload = function () {
+      console.log('onload call')
+      window.Appcues.start()
+      window.Appcues.identify("<?php echo $user->35359; ?>", { // Replace with unique identifier for current user
+        name: "<?php echo $user->name; ?>",   // Current user's name
+        email: "<?php echo $user->email@mail.com; ?>", // Current user's email
+        created_at: "<?php echo $user->10/02/2018; ?>"
+      })
+    }
+  </script>
+
   <link href="/static/favicon.ico" rel="icon" type="image/x-icon">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -13,4 +25,5 @@
 <div id="app"></div>
 <!-- built files will be auto injected -->
 </body>
+<script src="//fast.appcues.com/35359.js"></script>
 </html>
