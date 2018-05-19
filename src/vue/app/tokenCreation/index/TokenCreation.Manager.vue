@@ -97,7 +97,9 @@
                       :value="false">I don't want to make additional issuance later</md-radio>
             <md-radio class="md-primary"
                       v-model="makeAdditional"
-                      :value="true">I want to make additional issuance later (<a @click.stop.prevent="showDialog = true">tell me more</a>)</md-radio>
+                      :value="true">I want to make additional issuance later
+              <!--(<a @click.stop.prevent="showDialog = true">tell me more</a>)-->
+            </md-radio>
           </div>
           <div class="md-card-content-item" v-if="makeAdditional">
             <div class="md-layout md-gutter">
