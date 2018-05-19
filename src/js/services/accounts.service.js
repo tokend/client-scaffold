@@ -71,14 +71,12 @@ export class AccountsService extends Service {
    * @param {string} assetCode
    * @returns {string} balance_id
    */
-  loadBalanceIdByEmail (email, assetCode) {
-    return this.loadAccountIdByEmail(email)
-      .then(this.loadAccountBalancesById)
-      .then(allBalances => {
-        const balance = allBalances.find(balance => balance.asset === assetCode)
-        if (!balance) ErrorFactory.throwError(errorTypes.NotFoundError)
-        return balance.balance_id
-      })
+  async loadBalanceIdByEmail (email, assetCode) {
+    const accountId = await this.loadAccountIdByEmail(email)
+    const accountBalances = await this.loadAccountBalancesById(accountId)
+    const balance = accountBalances.find(balance => balance.asset === assetCode)
+    if (!balance) ErrorFactory.throwError(errorTypes.NotFoundError)
+    return balance.balance_id
   }
 
   loadBalanceIdByAccountid (accountId, tokenCode) {
@@ -96,7 +94,6 @@ export class AccountsService extends Service {
    * @returns {Promise <balances>} Promise object represents account balances
    */
   loadAccountBalancesById (accountId) {
-    console.log(this._keypair)
     return this._horizonRequestBuilder.accounts()
       .balances(accountId)
       .callWithSignature(this._keypair)

@@ -68,7 +68,7 @@ import SelectField from '../../../common/fields/SelectField'
 import { i18n } from '../../../../js/i18n'
 import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../../../vuex/types'
-// import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 import { issuanceService } from '../../../../js/services/issuances.service'
 import { accountsService } from '../../../../js/services/accounts.service'
@@ -102,8 +102,10 @@ export default {
           token: this.request.code,
           amount: this.request.amount,
           receiver: receiver,
-          reference: this.request.reference
+          reference: this.request.reference,
+          externalDetails: {}
         })
+        EventDispatcher.dispatchShowSuccessEvent(i18n.iss_submit_success())
       } catch (error) {
         console.log(error)
         ErrorHandler.processUnexpected(error)
