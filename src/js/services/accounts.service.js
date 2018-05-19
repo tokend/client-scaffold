@@ -73,7 +73,6 @@ export class AccountsService extends Service {
    */
   loadBalanceIdByEmail (email, assetCode) {
     return this.loadAccountIdByEmail(email)
-      .then(record => Promise.resolve(record.data('account_id')))
       .then(this.loadAccountBalancesById)
       .then(allBalances => {
         const balance = allBalances.find(balance => balance.asset === assetCode)
