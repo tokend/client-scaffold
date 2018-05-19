@@ -100,6 +100,7 @@ const getters = {
   account: 'account',
   accountId: 'accountId',
   accountType: 'accountType',
+  accountTypeI: 'accountTypeI',
   accountBlocked: 'accountBlocked',
   accountSeed: 'accountSeed',
   accountPublicKey: 'accountPublicKey',
