@@ -14,6 +14,8 @@ export function parseTransaction (transaction, asset) {
       return RecordFactory.createMatchRecord(transaction, asset)
     case 16:
       return RecordFactory.createMatchRecord(transaction, asset)
+    case 23:
+      return RecordFactory.createTransferV2Record(transaction, store.getters.accountId)
     default:
       ErrorFactory.throwError(errorTypes.UnknownTransactionError)
   }

@@ -15,7 +15,7 @@ export class FeeService extends Service {
     return this._horizonRequestBuilder.fees()
       .fee(feeType, asset, accountId, amount)
       .call()
-      .then(result => ({ fixed: result.fixed, percent: result.percent }))
+      .then(result => ({ fixed: result.fixed, percent: result.percent, feeAsset: result.fee_asset }))
   }
 
   loadWithdrawalFeeByAmount (asset, amount, accountId = this._accountId) {

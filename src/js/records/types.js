@@ -1,4 +1,5 @@
 import { TransferRecord } from './transfer.record'
+import { TransferV2Record } from './transferV2.record'
 import { TokenRecord } from './token.record'
 import { TokenCreationRecord } from './token_creation.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
@@ -14,6 +15,7 @@ import { TradeRecord } from './trade.record'
 export const RecordTypes = {
   AssetPairRecord,
   TransferRecord,
+  TransferV2Record,
   TokenRecord,
   TokenCreationRecord,
   ExternalAccountEntity,
