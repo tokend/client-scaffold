@@ -44,6 +44,9 @@ import VerificationMake from '../vue/app/verification/make/Verification.Make'
 import TokenCreation from '../vue/app/tokenCreation/TokenCreation.Entry'
 import TokenCreationIndex from '../vue/app/tokenCreation/index/TokenCreation.Index'
 
+import IssuanceCreation from '../vue/app/issuanceCreation/IssuanceCreation.Entry'
+import IssuanceCreationIndex from '../vue/app/issuanceCreation/index/IssuanceCreation.Index'
+
 import SaleCreation from '../vue/app/saleCreation/SaleCreation.Entry'
 import SaleCreationIndex from '../vue/app/saleCreation/index/SaleCreation.Index'
 
@@ -263,6 +266,21 @@ const router = new Router({
               path: '/sale-creation/index',
               name: 'sale-creation.index',
               component: SaleCreationIndex,
+              props: true
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.issuanceCreation,
+          name: 'app.issuanceCreation',
+          path: '/issuance-creation',
+          component: IssuanceCreation,
+          redirect: { path: '/issuance-creation/index' },
+          children: [
+            {
+              path: '/issuance-creation/index',
+              name: 'issuance-creation.index',
+              component: IssuanceCreationIndex,
               props: true
             }
           ]
