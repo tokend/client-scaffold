@@ -134,6 +134,10 @@ export const getters = {
   accountTokens: state => state.balances.map(balance => balance.asset),
   accountBalances: state => StateHelper.groupBalances(state.balances),
   accountRawBalances: state => state.balances,
+  accountOwnedTokens: state =>
+    state.balances
+    .filter((balance) => { return balance.account_id === balance.asset_details.owner })
+    .map(balance => balance.asset_details.code),
   accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
