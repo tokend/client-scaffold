@@ -72,6 +72,7 @@ import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 import { issuanceService } from '../../../../js/services/issuances.service'
 import { accountsService } from '../../../../js/services/accounts.service'
+import { errors } from '../../../../js/errors/factory'
 
 export default {
   mixins: [FormMixin],
@@ -108,6 +109,13 @@ export default {
         EventDispatcher.dispatchShowSuccessEvent(i18n.iss_submit_success())
       } catch (error) {
         console.log(error)
+        console.log(error.constructor)
+        console.log(error.constructor === errors.NotFoundError)
+        if (error.constructor === errors.NotFoundError) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.iss_no_balance({ asset: this.request.code }))
+          this.enable()
+          return
+        }
         ErrorHandler.processUnexpected(error)
       }
       this.enable()
