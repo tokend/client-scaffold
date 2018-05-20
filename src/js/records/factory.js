@@ -10,10 +10,15 @@ import { OfferRecord } from './offer.record'
 import { MatchRecord } from './match.record'
 import { AssetPairRecord } from './asset_pair.record'
 import { TradeRecord } from './trade.record'
+import { TransferV2Record } from './transferV2.record'
 
 export class RecordFactory {
   static createTransferRecord () {
     return new TransferRecord(...arguments)
+  }
+
+  static createTransferV2Record () {
+    return new TransferV2Record(...arguments)
   }
 
   static createTokenRecord () {
