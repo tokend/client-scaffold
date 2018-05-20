@@ -186,7 +186,7 @@
             ...this.view.opts,
             feeFromSource,
             asset: this.form.tokenCode
-          }).V2()
+          })
           this.view.mode = VIEW_MODES.success
           await this.loadCurrentBalances()
         } catch (error) {
@@ -200,18 +200,16 @@
         this.disable()
         try {
           const counterparty = await this.loadCounterparty()
-          const balances = await this.loadBalances(counterparty.accountId)
           const fees = await this.loadFees(counterparty.accountId)
 
           const opts = {
             amount: this.form.amount,
             destinationAccountId: counterparty.accountId,
-            destinationBalanceId: balances.recipientBalanceId,
             destinationEmail: counterparty.email,
             destinationFixedFee: fees.destination.fixed,
             destinationPercentFee: fees.destination.percent,
             destinationFeeAsset: fees.destination.feeAsset,
-            sourceBalanceId: balances.senderBalanceId,
+            sourceBalanceId: this.balance.balance_id,
             sourceFixedFee: fees.source.fixed,
             sourcePercentFee: fees.source.percent,
             sourceFeeAsset: fees.source.feeAsset,
@@ -241,12 +239,6 @@
         counterparty.email = providedRecipient
         counterparty.accountId = await accountsService.loadAccountIdByEmail(providedRecipient)
         return counterparty
-      },
-      async loadBalances (recipientAccountId) {
-        const balances = {}
-        balances.senderBalanceId = this.accountBalances[this.form.tokenCode].balance_id
-        balances.recipientBalanceId = await accountsService.loadBalanceIdByAccountid(recipientAccountId, this.form.tokenCode)
-        return balances
       },
       async loadFees (recipientAccountId) {
         const fees = { source: {}, destination: {} }
