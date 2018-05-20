@@ -123,11 +123,14 @@ export default {
   lbl_requests: 'Requests',
   lbl_request_state: 'Request state',
   lbl_token_creation: 'Token creation',
+  lbl_manual_emission: 'Manual emission',
   lbl_token_creation_requests: 'Token creation requests',
   lbl_choose_image: 'Choose an image from your PC',
   lbl_no_token_creation_requests: 'No token creation requests',
   lbl_no_token_creation_requests_desc: 'Here will be the list of your token creation requests',
   lbl_created_at: 'Created at',
   lbl_updated_at: 'Updated at',
-  lbl_update: 'Update'
+  lbl_update: 'Update',
+  lbl_reference: 'Reference',
+  lbl_create_issuance: 'Create issuance'
 }

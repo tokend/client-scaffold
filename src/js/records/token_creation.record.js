@@ -63,7 +63,8 @@ export class TokenCreationRecord {
   }
 
   _getPolicies () {
-    return this._record.policies ? [] : get(this._record, 'details.asset_create.policies').map(policy => policy.value)
+    const policies = get(this._record, 'details.asset_create.policies')
+    return (policies || []).map(policy => policy.value)
   }
 
   attachDetails (details) {
