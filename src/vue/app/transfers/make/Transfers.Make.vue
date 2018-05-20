@@ -186,7 +186,7 @@
             ...this.view.opts,
             feeFromSource,
             asset: this.form.tokenCode
-          })
+          }).V2()
           this.view.mode = VIEW_MODES.success
           await this.loadCurrentBalances()
         } catch (error) {
@@ -210,9 +210,11 @@
             destinationEmail: counterparty.email,
             destinationFixedFee: fees.destination.fixed,
             destinationPercentFee: fees.destination.percent,
+            destinationFeeAsset: fees.destination.feeAsset,
             sourceBalanceId: balances.senderBalanceId,
             sourceFixedFee: fees.source.fixed,
             sourcePercentFee: fees.source.percent,
+            sourceFeeAsset: fees.source.feeAsset,
             subject: this.form.subject,
             tokenCode: this.form.tokenCode
           }
@@ -254,8 +256,10 @@
         ])
         fees.source.fixed = senderFees.fixed
         fees.source.percent = senderFees.percent
+        fees.source.feeAsset = senderFees.feeAsset
         fees.destination.fixed = recipientFees.fixed
         fees.destination.percent = recipientFees.percent
+        fees.destination.feeAsset = recipientFees.feeAsset
         return fees
       },
       updateView (mode, opts = {}, clear = false) {
