@@ -1,4 +1,4 @@
-import { Operation } from 'swarm-js-sdk'
+import { Operation, PaymentV2Builder } from 'swarm-js-sdk'
 import { Service } from './service'
 
 export class TransferService extends Service {
@@ -9,59 +9,80 @@ export class TransferService extends Service {
    * @param {string} opts.destinationAccountId
    * @param {string} opts.sourceFixedFee
    * @param {string} opts.sourcePercentFee
+   * @param {string} opts.sourceFeeAsset
    * @param {string} opts.destinationFixedFee
    * @param {string} opts.destinationPercentFee
+   * @param {string} opts.destinationFeeAsset
    * @param {string} opts.sourceBalanceId
    * @param {string} opts.destinationBalanceId
    * @param {string} opts.subject
    * @param {boolean} opts.feeFromSource
-   * @return {TransactionResponseBuilder}
+   * @return {Object} transferBuilders
+   * @return {Function} transferBuilders.V1
+   * @return {Function} transferBuilders.V2
    */
-  async createTransfer (opts) {
-    const operation = Operation.payment(await _opts())
+  createTransfer (opts) {
+    const _this = this
+    return {
+      V1 () {
+        const operation = Operation.payment(_opts())
+        return _this._operationBuilder
+          .operation()
+          .add(operation)
+          .submit(_this._accountId, _this._keypair)
 
-    return this._operationBuilder
-      .operation()
-      .add(operation)
-      .submit(this._accountId, this._keypair)
-
-    function _opts () {
-      return {
-        destinationBalanceId: opts.destinationBalanceId,
-        sourceBalanceId: opts.sourceBalanceId,
-        feeData: {
-          sourcePaysForDest: opts.feeFromSource,
-          sourceFee: {
-            fixedFee: +opts.sourceFixedFee,
-            paymentFee: +opts.sourcePercentFee
-          },
-          destinationFee: {
-            fixedFee: +opts.destinationFixedFee,
-            paymentFee: +opts.destinationPercentFee
+        function _opts () {
+          return {
+            destinationBalanceId: opts.destinationBalanceId,
+            sourceBalanceId: opts.sourceBalanceId,
+            feeData: {
+              sourcePaysForDest: opts.feeFromSource,
+              sourceFee: {
+                fixedFee: +opts.sourceFixedFee,
+                paymentFee: +opts.sourcePercentFee
+              },
+              destinationFee: {
+                fixedFee: +opts.destinationFixedFee,
+                paymentFee: +opts.destinationPercentFee
+              }
+            },
+            subject: opts.subject,
+            amount: opts.amount,
+            asset: opts.asset
           }
-        },
-        subject: opts.subject,
-        amount: opts.amount,
-        asset: opts.asset
+        }
+      },
+      V2 () {
+        const operation = PaymentV2Builder.paymentV2(_opts())
+        return _this._operationBuilder
+          .operation()
+          .add(operation)
+          .submit(_this._accountId, _this._keypair)
+
+        function _opts () {
+          return {
+            sourceBalanceId: opts.sourceBalanceId,
+            destination: opts.destinationAccountId,
+            amount: opts.amount,
+            feeData: {
+              sourceFee: {
+                maxPaymentFee: +opts.sourcePercentFee,
+                fixedFee: +opts.sourceFixedFee,
+                feeAsset: opts.sourceFeeAsset
+              },
+              destinationFee: {
+                maxPaymentFee: +opts.destinationPercentFee,
+                fixedFee: +opts.destinationFixedFee,
+                feeAsset: opts.destinationFeeAsset
+              },
+              sourcePaysForDest: opts.feeFromSource
+            },
+            subject: opts.subject
+          }
+        }
       }
     }
   }
 }
 
 export const transferService = new TransferService()
-//
-// // TODO: move to store helpers
-// function getBalanceIdByAccountId (accountId, asset) {
-//   const server = initHorizonServer()
-//   const keypair = store.getters.keypair
-//   return server.accounts()
-//     .balances(accountId)
-//     .callWithSignature(keypair)
-//     .then(balances => filterBalanceByAsset(balances, asset))
-// }
-//
-// function filterBalanceByAsset (balances, asset) {
-//   const neededBalance = balances.filter(balance => balance.asset === asset)[0]
-//   if (neededBalance) return Promise.resolve(neededBalance.balance_id)
-//   else ErrorFactory.throwError(errorTypes.NotFoundError)
-// }

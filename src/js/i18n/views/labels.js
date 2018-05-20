@@ -132,5 +132,10 @@ export default {
   lbl_updated_at: 'Updated at',
   lbl_update: 'Update',
   lbl_reference: 'Reference',
-  lbl_create_issuance: 'Create issuance'
+  lbl_create_issuance: 'Create issuance',
+  lbl_sender_fee: 'Sender fee',
+  lbl_recipient_fee: 'Recipient fee',
+  lbl_fee_from_source: 'Sender paid fees',
+  lbl_sender_fee_asset: 'Sender fee asset',
+  lbl_recipient_fee_asset: 'Recipient fee asset'
 }

@@ -31,14 +31,14 @@
           <div class="md-layout-item md-size-40 md-small-size-100">
             <h4>{{ i18n.lbl_sender_fees() }}</h4>
 
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(senderFee.fixed)} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(senderFee.percent)} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(senderFee.fixed)} ${opts.sourceFeeAsset}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(senderFee.percent)} ${opts.sourceFeeAsset}`" />
           </div>
           <div class="md-layout-item  md-size-40 md-small-size-100 text-align-right">
             <h4>{{ i18n.lbl_recipient_fees() }}</h4>
 
-            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(recipientFee.fixed)} ${opts.tokenCode}`" />
-            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(recipientFee.percent)} ${opts.tokenCode}`" />
+            <detail-row :prop="i18n.lbl_fixed()" :value="`${i18n.c(recipientFee.fixed)} ${opts.destinationFeeAsset}`" />
+            <detail-row :prop="i18n.lbl_percent()" :value="`${i18n.c(recipientFee.percent)} ${opts.destinationFeeAsset}`" />
           </div>
         </div>
 
