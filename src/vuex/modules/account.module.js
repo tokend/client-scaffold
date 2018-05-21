@@ -125,6 +125,7 @@ export const getters = {
   account: state => state.account,
   accountId: state => state.keys.accountId,
   accountType: state => state.account.account_type,
+  accountTypeI: state => state.account.account_type_i,
   accountBlocked: state => state.account.is_blocked,
   accountSeed: state => state.keys.seed,
   accountPublicKey: state => state.keys.publicKey,
@@ -137,6 +138,10 @@ export const getters = {
     .map(balance => balance.asset),
   accountBalances: state => StateHelper.groupBalances(state.balances),
   accountRawBalances: state => state.balances,
+  accountOwnedTokens: state =>
+    state.balances
+    .filter((balance) => { return balance.account_id === balance.asset_details.owner })
+    .map(balance => balance.asset_details.code),
   accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
