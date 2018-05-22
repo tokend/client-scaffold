@@ -75,7 +75,7 @@
                               name="policy-requiresKyc"
                               id="policy-requiresKyc"
                               class="md-primary">
-                            Requires Kyc
+                            Requires KYC
                 </md-checkbox>
               </div>
             </div>
