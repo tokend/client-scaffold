@@ -123,7 +123,7 @@ export default {
   lbl_requests: 'Requests',
   lbl_request_state: 'Request state',
   lbl_token_creation: 'Token creation',
-  lbl_manual_emission: 'Manual emission',
+  lbl_manual_issuance: 'Manual issuance',
   lbl_token_creation_requests: 'Token creation requests',
   lbl_choose_image: 'Choose an image from your PC',
   lbl_no_token_creation_requests: 'No token creation requests',

@@ -10,7 +10,7 @@
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
         <md-card-header>
-          <div class="md-title">{{ i18n.lbl_manual_emission() }}</div>
+          <div class="md-title">{{ i18n.lbl_manual_issuance() }}</div>
         </md-card-header>
         <md-card-content>
           <div class="md-card-content-item">
@@ -25,7 +25,7 @@
                 />
               </div>
               <div class="md-layout-item md-small-size-100">
-                <select-field :label="i18n.lbl_default_quote_asset()"
+                <select-field :label="i18n.lbl_asset()"
                               v-model="request.code"
                               :values="accountOwnedTokens" />
               </div>
