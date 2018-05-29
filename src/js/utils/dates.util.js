@@ -28,3 +28,22 @@ export function humanizePastDate (date) {
     sameElse: 'DD MMMM YYYY [at] HH:mm'
   })
 }
+
+export function fromInputToISO (date) {
+  if (!date) return ''
+  return (new Date(date)).toISOString()
+}
+
+export const inputDateFormat = 'DD/MM/YYYY'
+
+export function getSeconds (date) {
+  try {
+    if (date.indexOf('/') !== -1) {
+      return '' + moment(date, inputDateFormat).utc().format('X')
+    }
+    return '' + moment(date).utc().format('X')
+  } catch (e) {
+    console.error(e)
+    return '' + moment(date).utc().format('X')
+  }
+}

@@ -132,10 +132,6 @@ export const getters = {
   accountKeypair: state => state.keys.seed ? Keypair.fromSecret(state.keys.seed) : {},
   accountCreatedAt: state => state.account.createdAt,
   accountTokens: state => state.balances.map(balance => balance.asset),
-  accountOwnedTokens: state =>
-    state.balances
-    .filter((balance) => { return balance.account_id === balance.asset_details.owner })
-    .map(balance => balance.asset),
   accountBalances: state => StateHelper.groupBalances(state.balances),
   accountRawBalances: state => state.balances,
   accountOwnedTokens: state =>

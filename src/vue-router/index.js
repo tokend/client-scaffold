@@ -48,7 +48,7 @@ import IssuanceCreation from '../vue/app/issuanceCreation/IssuanceCreation.Entry
 import IssuanceCreationIndex from '../vue/app/issuanceCreation/index/IssuanceCreation.Index'
 
 import SaleCreation from '../vue/app/saleCreation/SaleCreation.Entry'
-import SaleCreationIndex from '../vue/app/saleCreation/index/SaleCreation.Index'
+import SaleCreationIndex from '../vue/app/saleCreation/SaleCreation.Index'
 
 import Requests from '../vue/app/requests/Requests.Entry'
 import RequestsIndex from '../vue/app/requests/index/Requests.Index'

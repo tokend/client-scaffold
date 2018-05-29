@@ -8,7 +8,7 @@ const featureFlags = {
   verification: true,
   tokenCreation: true,
   issuanceCreation: true,
-  saleCreation: false,
+  saleCreation: true,
   settings: true,
   tfa: true,
   tokens: true,
@@ -27,5 +27,7 @@ export default {
   VALIDATE_EMAILS: process.env.NODE_ENV === 'production',
   AIRDROP_REGISTRATION_END: new Date('2018-02-25T12:00:00'),
   FEATURE_FLAGS: featureFlags,
-  PREISSUED_ASSET_SIGNER: 'GAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHV4'
+  PREISSUED_ASSET_SIGNER: 'GAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHV4',
+  LOCAL_STORAGE_KEY: 'tokend-client',
+  DEFAULT_QUOTE_ASSET: 'USD'
 }

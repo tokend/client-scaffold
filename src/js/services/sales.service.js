@@ -16,18 +16,19 @@ export class SalesService extends Service {
    * @param {object} opts.details - sale specific details
    * @param {object} opts.details.name - name of the sale
    * @param {object} opts.details.short_description - short description of the sale
-   * @param {object} opts.details.desciption - sale specific details
+   * @param {object} opts.details.description - sale specific details
    * @param {object} opts.details.logo - details of the logo
+   * @param {object} opts.details.youtube_video_id - details of the logo
    * @param {string} opts.baseAssetForHardCap - specifies the amount of base asset required for hard cap
    * @param {array} opts.quoteAssets - accepted assets
    * @param {object} opts.quoteAssets.price - price for 1 baseAsset in terms of quote asset
    * @param {object} opts.quoteAssets.asset - asset code of the quote asset
+   * @param {object} opts.isCrowdfunding - true
    * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
    * @returns {TransactionResponseBuilder}
    */
   createSaleCreationRequest (opts) {
     const saleOperation = SaleRequestBuilder.createSaleCreationRequest(opts)
-
     return this._operationBuilder
       .operation()
       .add(saleOperation)

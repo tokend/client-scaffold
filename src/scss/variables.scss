@@ -29,6 +29,7 @@ $md-invalid: #ff1744;
 $blue: #578ebd;
 $orange: #EF6C00;
 $white: #ffffff;
+$lightRed: #ff5b5b;
 
 // Use these ones instead
 
@@ -46,7 +47,7 @@ $col-btn-text: $white;
 $col-msg-text: $white;
 
 $col-success: $green;
-$col-danger: $red;
+$col-danger: $lightRed;
 $col-info: $blue;
 
 $col-nav-text: $white;
@@ -54,6 +55,10 @@ $col-nav-text: $white;
 $col-active: $blue;
 $col-inactive: lighten($blue, 35%);
 $col-unfocused: lighten($black, 30%);
+
+$col-pending: $orange;
+$col-approve: $green;
+$col-reject: $red;
 
 $col-chart-line: $blue;
 $col-chart-fill: $col-inactive;
