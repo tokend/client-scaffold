@@ -9,7 +9,7 @@
 
       <md-card>
         <md-card-content>
-          <md-steppers md-vertical :md-active-step.sync="activeStep">
+          <md-steppers md-vertical md-linear :md-active-step.sync="activeStep">
             <md-step v-for="(step, i) in steps"
                      :key="i"
                      :id="step.name"
@@ -69,6 +69,7 @@
   import { vuexTypes } from '../../../vuex/types'
   import { salesService } from '../../../js/services/sales.service'
   import { getSeconds } from '../../../js/utils/dates.util'
+  import { ErrorHandler } from '../../../js/errors/error_handler'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
@@ -106,7 +107,13 @@
     computed: {
       ...mapGetters([
         vuexTypes.accountId
-      ])
+      ]),
+      isAllowedToSubmit () {
+        return !!(
+          this.sale.name &&
+          this.sale.code &&
+          this.sale.image)
+      }
     },
 
     methods: {
@@ -143,25 +150,35 @@
       },
       async confirmSaleCreation () {
         const opts = get(this.sale.getDetailsForSave(), 'details.sale')
-        await salesService.createSaleCreationRequest({
-          requestID: opts.id,
-          baseAsset: opts.base_asset,
-          defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET,
-          startTime: getSeconds(opts.start_time),
-          endTime: getSeconds(opts.end_time),
-          softCap: opts.soft_cap,
-          hardCap: opts.hard_cap,
-          details: {
-            name: opts.details.name,
-            short_description: opts.details.short_description,
-            description: opts.details.description,
-            logo: opts.details.logo,
-            youtube_video_id: opts.details.youtube_video_id
-          },
-          baseAssetForHardCap: opts.baseAssetForHardCap,
-          quoteAssets: opts.quote_assets,
-          isCrowdfunding: true
-        })
+        this.disable()
+        try {
+          await salesService.createSaleCreationRequest({
+            requestID: opts.request_id,
+            baseAsset: opts.base_asset,
+            defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET,
+            startTime: getSeconds(opts.start_time),
+            endTime: getSeconds(opts.end_time),
+            softCap: opts.soft_cap,
+            hardCap: opts.hard_cap,
+            details: {
+              name: opts.details.name,
+              short_description: opts.details.short_description,
+              description: opts.details.description,
+              logo: opts.details.logo,
+              youtube_video_id: opts.details.youtube_video_id
+            },
+            baseAssetForHardCap: opts.baseAssetForHardCap,
+            quoteAssets: opts.quote_assets,
+            isCrowdfunding: true
+          })
+          this.listManager.drop(this.sale)
+          await this.listManager.fetch()
+          this.view.mode = VIEW_MODES.list
+        } catch (error) {
+          console.error(error)
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
       }
     }
   }

@@ -19,7 +19,7 @@
     </div>
     <div class="step-row">
       <description-editor class="description-step__editor" v-model="form.description"/>
-    </div>  
+    </div>
     <div class="step__action">
       <md-button type="submit" class="md-primary md-flat">
         {{ i18n.sale_create_sale() }}
@@ -31,12 +31,14 @@
 <script>
   import StepMixin from './step.mixin'
   import DescriptionEditor from '../components/DescriptionEditor'
-  import { ASSET_POLICIES, documentTypes } from '../../../../js/const/const'
+  import { ASSET_POLICIES, documentTypes, blobTypes } from '../../../../js/const/const'
   import { i18n } from '../../../../js/i18n'
 
   import { commonEvents } from '../../../../js/events/common_events'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
-  // import { fileService } from '../../../../js/services/file.service'
+  import { usersService } from '../../../../js/services/users.service'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../vuex/types'
 
   import _cloneDeep from 'lodash/cloneDeep'
   export default {
@@ -61,21 +63,33 @@
       this.form.sale = _cloneDeep(this.sale)
     },
 
+    computed: {
+      ...mapGetters([
+        vuexTypes.userAccountId
+      ])
+    },
+
     methods: {
       async submit () {
         if (!await this.isValid()) return
         this.disable()
         try {
-          this.enable()
+          const descriptionId = (await usersService
+            .blobsOf(this.userAccountId)
+            .create(blobTypes.fundOverview.str,
+                    this.form.description, {}, false))
+            .data('id')
+          const form = this.form
+          form.descriptionID = descriptionId
           this.$emit(commonEvents.saleUpdateEvent, {
-            form: this.form,
+            form: form,
             documents: this.documents
           })
           this.$emit(commonEvents.saleEditEndEvent)
         } catch (error) {
-          this.enable()
           ErrorHandler.processUnexpected(error)
         }
+        this.enable()
       }
     }
   }

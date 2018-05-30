@@ -15,7 +15,7 @@ export default {
   sale_project_information: 'Enter Information about the project',
   sale_create_sale: 'Create sale',
   sale_in_process_of_creation: 'In process of creation',
-  sale_open_requests: 'TCO open requests',
+  sale_open_requests: 'Sale open requests',
   sale_start_new_sale: 'Start new sale',
   sale_quote_assets: 'Accept investments in:',
   sale_confirm: 'Please confirm a sale creation'

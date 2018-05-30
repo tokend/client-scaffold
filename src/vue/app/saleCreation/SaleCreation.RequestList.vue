@@ -2,7 +2,7 @@
   <div class="request-list">
     <md-list class="md-triple-line">
       <template v-for="request in list">
-        <md-list-item :key="request.name">
+        <md-list-item :key="request.name" @click="$emit(commonEvents.saleSelectEvent, request)">
           <md-avatar class="md-avatar-icon">
             <img v-if="request.logoUrl" :src="request.logoUrl" alt="">
             <span v-else>{{ cookUpHeading(request).charAt(0) }}</span>
@@ -16,12 +16,7 @@
               {{ request.state || i18n.sale_in_process_of_creation() }}
             </span>
           </div>
-
-          <md-button class="md-icon-button md-list-action"
-                     @click="$emit(commonEvents.saleSelectEvent, request)"
-          >
-            <md-icon class="md-primary">mode_edit</md-icon>
-          </md-button>
+          <md-icon class="md-primary">mode_edit</md-icon>
         </md-list-item>
       </template>
     </md-list>
@@ -54,5 +49,10 @@
     &--pending  { color: $col-pending !important; }
     &--approved { color: $col-approve !important; }
     &--rejected { color: $col-reject  !important; }
+  }
+  .request-list {
+    .request-list-button {
+      align-self: auto !important;
+    }
   }
 </style>

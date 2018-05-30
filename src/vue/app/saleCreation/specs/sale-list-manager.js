@@ -37,6 +37,12 @@ export class SaleListManager {
     this._fromStorage.push(item)
   }
 
+  drop (saleToDrop) {
+    const i = this._fromStorage.findIndex(sale => sale.saleIndex === saleToDrop.saleIndex)
+    this._fromStorage.splice(i, 1)
+    this.pushToStorage()
+  }
+
   get list () {
     return [
       ...this._fromHorizon,

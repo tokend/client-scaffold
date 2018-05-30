@@ -3,7 +3,9 @@ import { documentTypes } from '../const/const'
 import config from '../../config'
 import _get from 'lodash/get'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
-
+import { usersService } from '../../js/services/users.service'
+import { Keypair } from 'swarm-js-sdk'
+import store from '../../vuex'
 export class SaleRequestRecord extends RequestRecord {
   constructor (record = {details: {sale: {}}}) {
     super(record)
@@ -18,10 +20,19 @@ export class SaleRequestRecord extends RequestRecord {
     this.quoteAssets = (this._details.quote_assets || []).map(a => a.asset)
     this.name = _get(this._details, 'details.name') || ''
     this.description = _get(this._details, 'details.description') || ''
+    this.descriptionID = _get(this._details, 'details.descriptionID') || ''
     this.shortDescription = _get(this._details, 'details.short_description') || ''
     this.youtubeId = _get(this._details, 'details.youtube_video_id') || ''
     this.logo = _get(this._details, 'details.logo') ? new DocumentContainer(_get(this._details, 'details.logo')) : null
     this.logoUrl = this._getLogoUrl() || ''
+
+    this.saleIndex = this._getIndex()
+
+    this._loadDescriptionIfExists()
+  }
+
+  _getIndex () {
+    return Keypair.random().accountId()
   }
 
   _getLogoUrl () {
@@ -52,6 +63,7 @@ export class SaleRequestRecord extends RequestRecord {
     return {
       details: {
         sale: {
+          request_id: this.id,
           base_asset: this.baseAsset,
           base_asset_for_hard_cap: this.baseAssetForHardCap,
           default_quote_asset: this.defaultQuoteAsset,
@@ -65,14 +77,20 @@ export class SaleRequestRecord extends RequestRecord {
           })),
           details: {
             name: this.name,
-            description: this.description,
+            description: this.descriptionID,
+            descriptionID: this.descriptionID,
             short_description: this.shortDescription,
             youtube_video_id: this.youtubeId,
-            logo: this.logo ? (this.logo).getDetailsForSave() : {}
+            logo: this.logo ? (this.logo).getDetailsForSave() : null
           },
-          logoUrl: this.logoUrl
+          logoUrl: this.logoUrl,
+          saleIndex: this.saleIndex
         }
       }
     }
+  }
+  async _loadDescriptionIfExists () {
+    if (!this.descriptionID) return
+    this.description = await usersService.blobsOf(store.getters.accountId).get(this.descriptionID)
   }
 }

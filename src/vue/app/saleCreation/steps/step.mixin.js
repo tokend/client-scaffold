@@ -6,7 +6,7 @@ import { ErrorHandler } from '../../../../js/errors/error_handler'
 import { commonEvents } from '../../../../js/events/common_events'
 import { fileService } from '../../../../js/services/file.service'
 import { i18n } from '../../../../js/i18n'
-
+import { documentTypes } from '../../../../js/const/documents.const'
 export default {
   mixins: [FormMixin],
   components: { FileField },
@@ -21,7 +21,10 @@ export default {
     if (this.schema) {
       this.form = _pick(this.sale, Object.keys(this.schema.form))
       delete this.form.docs
-      this.documents = _pick(this.sale.logo, Object.keys(this.schema.form.docs || {}))
+      // this.documents = _pick(this.sale, Object.keys(this.schema.form.docs || {}))
+      this.documents = {
+        [documentTypes.fundLogo]: this.sale.logo
+      }
     }
     this.form = this.sale
   },
