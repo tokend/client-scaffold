@@ -1,11 +1,8 @@
 import { RequestRecord } from './request.record'
-import { documentTypes } from '../const/const'
 import config from '../../config'
 import _get from 'lodash/get'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
-import { usersService } from '../../js/services/users.service'
 import { Keypair } from 'swarm-js-sdk'
-import store from '../../vuex'
 export class SaleRequestRecord extends RequestRecord {
   constructor (record = {details: {sale: {}}}) {
     super(record)
@@ -27,8 +24,6 @@ export class SaleRequestRecord extends RequestRecord {
     this.logoUrl = this._getLogoUrl() || ''
 
     this.saleIndex = this._getIndex()
-
-    this._loadDescriptionIfExists()
   }
 
   _getIndex () {
@@ -39,24 +34,6 @@ export class SaleRequestRecord extends RequestRecord {
     const key = _get(this._details, 'details.logo.key')
     if (!key) return ''
     return `${config.FILE_STORAGE}/${key}`
-  }
-
-  getPhaseItemFields () {
-    console.log(this)
-    console.log(this.breakdown)
-    return {
-      request_id: this.id,
-      description: this.description,
-      start_date: this.startTime,
-      end_date: this.endTime,
-      cap: this.softCap,
-      quote_assets: this.quoteAssets,
-      base_asset_for_hard_cap: this.baseAssetForHardCap,
-      documents: {
-        [documentTypes.saleLogo]: this.logo,
-        [documentTypes.saleFundsBreakdown]: this.breakdown
-      }
-    }
   }
 
   getDetailsForSave () {
@@ -88,9 +65,5 @@ export class SaleRequestRecord extends RequestRecord {
         }
       }
     }
-  }
-  async _loadDescriptionIfExists () {
-    if (!this.descriptionID) return
-    this.description = await usersService.blobsOf(store.getters.accountId).get(this.descriptionID)
   }
 }

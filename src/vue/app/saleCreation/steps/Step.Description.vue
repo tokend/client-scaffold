@@ -49,7 +49,6 @@
     },
     data: _ => ({
       form: {
-        sale: '',
         description: '',
         youtubeId: ''
       },
@@ -60,7 +59,8 @@
     }),
 
     created () {
-      this.form.sale = _cloneDeep(this.sale)
+      this.form = _cloneDeep(this.sale)
+      this._loadDescriptionIfExists()
     },
 
     computed: {
@@ -90,6 +90,11 @@
           ErrorHandler.processUnexpected(error)
         }
         this.enable()
+      },
+
+      async _loadDescriptionIfExists () {
+        if (!this.form.descriptionID) return
+        this.form.description = await usersService.blobsOf().get(this.form.descriptionID)
       }
     }
   }

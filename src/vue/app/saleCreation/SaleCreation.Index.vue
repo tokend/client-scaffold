@@ -1,59 +1,67 @@
 <template>
-  <div class="create-sale">
-    <template v-if="view.mode === VIEW_MODES.edit">
-      <md-card class="create-sale__heading">
-        <md-card-header>
-          <div class="md-title">{{ i18n.lbl_create_sale() }}</div>
-        </md-card-header>
-      </md-card>
+  <div class="create-sale md-layout md-alignment-center-center">
+    <div class="md-layout-item
+                    md-size-50
+                    md-medium-size-65
+                    md-small-size-95
+                    md-xsmall-size-100">
+      <template v-if="view.mode === VIEW_MODES.edit">
+        
+          <md-card class="create-sale__heading">
+            <md-card-header>
+              <div class="md-title">{{ i18n.lbl_create_sale() }}</div>
+            </md-card-header>
+          </md-card>
 
-      <md-card>
-        <md-card-content>
-          <md-steppers md-vertical md-linear :md-active-step.sync="activeStep">
-            <md-step v-for="(step, i) in steps"
-                     :key="i"
-                     :id="step.name"
-                     :md-label="step.label"
-                     :md-done.sync="step.done"
-            >
-              <component :is="step.component"
-                         :schema="step.schema"
-                         :sale="sale"
-                         @sale-update="handleSaleUpdate($event, { step, i })"
-                         @sale-edit-end="handleSaleEditEnd"
-              />
-            </md-step>
-          </md-steppers>
-        </md-card-content>
-      </md-card>
+          <md-card>
+            <md-card-content>
+              <md-steppers md-vertical md-linear :md-active-step.sync="activeStep">
+                <md-step v-for="(step, i) in steps"
+                        :key="i"
+                        :id="step.name"
+                        :md-label="step.label"
+                        :md-done.sync="step.done"
+                >
+                  <component :is="step.component"
+                            :schema="step.schema"
+                            :sale="sale"
+                            @sale-update="handleSaleUpdate($event, { step, i })"
+                            @sale-edit-end="handleSaleEditEnd"
+                  />
+                </md-step>
+              </md-steppers>
+            </md-card-content>
+          </md-card>
+        
 
-    </template>
+      </template>
 
-    <template v-else-if="view.mode === VIEW_MODES.list">
-      <md-card class="create-sale__request-list">
-        <md-card-header>
-          <div class="md-title">{{ i18n.sale_open_requests() }}</div>
-        </md-card-header>
-        <md-card-content>
-          <md-button @click="startNewSale">{{ i18n.sale_start_new_sale() }}</md-button>
-          <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
-        </md-card-content>
-      </md-card>
-    </template>
-    
-    <template v-if="view.mode === VIEW_MODES.confirm">
-      <md-card class="create-sale__confirmation">
-        <md-card-content>
-          <p>{{ i18n.sale_confirm() }}</p>
-          <div class="create-sale__actions">
-            <md-button @click="confirmSaleCreation" class="md-primary"
-                       :disabled="isPending">{{ i18n.lbl_confirm() }}</md-button>
-            <md-button @click="view.mode = VIEW_MODES.edit" class="md-primary"
-                       :disabled="isPending">{{ i18n.lbl_cancel() }}</md-button>
-          </div>
-        </md-card-content>
-      </md-card>
-    </template>
+      <template v-else-if="view.mode === VIEW_MODES.list">
+        <md-card class="create-sale__request-list">
+          <md-card-header>
+            <div class="md-title">{{ i18n.sale_open_requests() }}</div>
+          </md-card-header>
+          <md-card-content>
+            <md-button @click="startNewSale">{{ i18n.sale_start_new_sale() }}</md-button>
+            <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
+          </md-card-content>
+        </md-card>
+      </template>
+      
+      <template v-if="view.mode === VIEW_MODES.confirm">
+        <md-card class="create-sale__confirmation">
+          <md-card-content>
+            <p>{{ i18n.sale_confirm() }}</p>
+            <div class="create-sale__actions">
+              <md-button @click="confirmSaleCreation" class="md-primary"
+                        :disabled="isPending">{{ i18n.lbl_confirm() }}</md-button>
+              <md-button @click="view.mode = VIEW_MODES.edit" class="md-primary"
+                        :disabled="isPending">{{ i18n.lbl_cancel() }}</md-button>
+            </div>
+          </md-card-content>
+        </md-card>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -68,7 +76,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
   import { salesService } from '../../../js/services/sales.service'
-  import { getSeconds } from '../../../js/utils/dates.util'
+  import { DateHelper } from '../../../js/helpers/date.helper'
   import { ErrorHandler } from '../../../js/errors/error_handler'
   import get from 'lodash/get'
   const VIEW_MODES = {
@@ -107,13 +115,7 @@
     computed: {
       ...mapGetters([
         vuexTypes.accountId
-      ]),
-      isAllowedToSubmit () {
-        return !!(
-          this.sale.name &&
-          this.sale.code &&
-          this.sale.image)
-      }
+      ])
     },
 
     methods: {
@@ -156,8 +158,8 @@
             requestID: opts.request_id,
             baseAsset: opts.base_asset,
             defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET,
-            startTime: getSeconds(opts.start_time),
-            endTime: getSeconds(opts.end_time),
+            startTime: DateHelper.toTimestamp(opts.start_time),
+            endTime: DateHelper.toTimestamp(opts.end_time),
             softCap: opts.soft_cap,
             hardCap: opts.hard_cap,
             details: {

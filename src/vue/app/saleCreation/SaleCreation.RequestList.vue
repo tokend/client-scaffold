@@ -2,7 +2,7 @@
   <div class="request-list">
     <md-list class="md-triple-line">
       <template v-for="request in list">
-        <md-list-item :key="request.name" @click="$emit(commonEvents.saleSelectEvent, request)">
+        <md-list-item :key="request.saleIndex" @click="$emit(commonEvents.saleSelectEvent, request)">
           <md-avatar class="md-avatar-icon">
             <img v-if="request.logoUrl" :src="request.logoUrl" alt="">
             <span v-else>{{ cookUpHeading(request).charAt(0) }}</span>
