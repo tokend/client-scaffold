@@ -29,7 +29,9 @@ $md-invalid: #ff1744;
 $blue: #578ebd;
 $orange: #EF6C00;
 $white: #ffffff;
-
+$lightRed: #ff5b5b;
+$lightGray: #c6c6c6;
+$vividBlue: #03a9f4;
 // Use these ones instead
 
 $col-hover: $black;
@@ -46,7 +48,7 @@ $col-btn-text: $white;
 $col-msg-text: $white;
 
 $col-success: $green;
-$col-danger: $red;
+$col-danger: $lightRed;
 $col-info: $blue;
 
 $col-nav-text: $white;
@@ -54,6 +56,10 @@ $col-nav-text: $white;
 $col-active: $blue;
 $col-inactive: lighten($blue, 35%);
 $col-unfocused: lighten($black, 30%);
+
+$col-pending: $orange;
+$col-approve: $green;
+$col-reject: $red;
 
 $col-chart-line: $blue;
 $col-chart-fill: $col-inactive;
@@ -63,6 +69,9 @@ $col-chart-tip-text: $white;
 
 $col-btc: #FF9900;
 
+// progress bar
+$col-pb-line: $lightGray;
+$col-pb-fill: $vividBlue;
 
 $col-md-primary: #0066cc;
 $col-md-background: #e8e8e8;

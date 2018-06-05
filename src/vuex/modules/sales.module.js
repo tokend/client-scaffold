@@ -4,7 +4,7 @@ import { RecordFactory } from '../../js/records/factory'
 import { vuexTypes } from '../types'
 import { accountsService } from '../../js/services/accounts.service'
 import { salesService } from '../../js/services/sales.service'
-import { StateHelper } from '../helpers/state.helper'
+// import { StateHelper } from '../helpers/state.helper'
 
 const state = {
   sales: new Paginator({
@@ -19,15 +19,29 @@ const mutations = {
   },
   ADD_STARRED_SALE: (state, sale) => {
     state.starred.push(sale)
+  },
+  SET_SALES: (state, sales) => {
+    state.sales = sales
+  },
+  UPDATE_SALES: (state, sales) => {
+    state.sales = state.sales.concat(sales)
+  },
+  SET_SALES_NEXT_PAGE: (state, next) => {
+    state.next = next
+  },
+  SET_SALES_LOADED: (state) => {
+    state.is_sales_loaded = true
+  },
+  SET_SALES_NOT_LOADED: (state) => {
+    state.is_sales_loaded = false
   }
 }
 
 const actions = {
-  async GET_SALES ({ dispatch, state }, filters) {
+  async GET_SALES ({ state }, filters) {
     const sales = state.sales
     sales.attachInitLoader(salesService.loadSales.bind(salesService))
     await sales.init(filters)
-    await dispatch(vuexTypes.GET_OWNERS, sales.records)
   },
 
   async NEXT_SALES ({ commit, dispatch, state }) {
@@ -64,7 +78,7 @@ const actions = {
 const getters = {
   sales: state => state.sales.records,
   isSalesLoaded: state => state.sales.isLoaded,
-  saleIds: _ => StateHelper.getSaleIdWhereUSerParticipated(),
+  // saleIds: _ => StateHelper.getSaleIdWhereUSerParticipated(),
   starredSales: state => state.starred
 }
 

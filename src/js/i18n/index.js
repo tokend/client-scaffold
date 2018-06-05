@@ -11,6 +11,7 @@ import depositView from './views/deposit_view'
 import withdrawView from './views/withdrawal_view'
 import signupView from './views/signup_view'
 import loginView from './views/login_view'
+import saleView from './views/sale_view'
 import labels from './views/labels'
 import inactivitymessage from './views/inactivity_message'
 import issuancesView from './views/issuances_view'
@@ -38,6 +39,7 @@ const dictionary = {
   ...transactions,
   ...transfers,
   ...loginView,
+  ...saleView,
   ...signupView,
   ...depositView,
   ...withdrawView,

@@ -52,7 +52,10 @@ const componentEvents = Object.freeze({
   formResetEvent: 'form-reset',
   cancelOfferEvent: 'cancel-offer',
   makeOfferEvent: 'make-offer',
-  assetChangeEvent: 'asset-change'
+  assetChangeEvent: 'asset-change',
+  saleUpdateEvent: 'sale-update',
+  saleSelectEvent: 'sale-select',
+  saleEditEndEvent: 'sale-edit-end'
 })
 
 export const commonEvents = {

@@ -212,7 +212,7 @@ export default {
     },
 
     async createRequest () {
-      let preissuedAssetSigner = config.PREISSUED_ASSET_SIGNER
+      let preissuedAssetSigner = config.NULL_ASSET_SIGNER
       let initialPreissuedAmount = this.request.maxIssuanceAmount
 
       if (this.makeAdditional || this.id) {
