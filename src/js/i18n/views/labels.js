@@ -26,6 +26,7 @@ export default {
   lbl_create_token: 'Create token',
   lbl_create_sale: 'Create sale',
   lbl_explore_tokens: 'Explore tokens',
+  lbl_explore_sales: 'Explore sales',
   lbl_history: 'History',
   lbl_cancel: 'Cancel',
   lbl_wallet: 'wallet',
@@ -132,5 +133,6 @@ export default {
   lbl_updated_at: 'Updated at',
   lbl_update: 'Update',
   lbl_reference: 'Reference',
-  lbl_create_issuance: 'Create issuance'
+  lbl_create_issuance: 'Create issuance',
+  lbl_sort_by: 'Sort by'
 }

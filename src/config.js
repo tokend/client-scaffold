@@ -12,6 +12,7 @@ const featureFlags = {
   settings: true,
   tfa: true,
   tokens: true,
+  sales: true,
   requests: true
 }
 

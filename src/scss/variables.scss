@@ -30,7 +30,8 @@ $blue: #578ebd;
 $orange: #EF6C00;
 $white: #ffffff;
 $lightRed: #ff5b5b;
-
+$lightGray: #c6c6c6;
+$vividBlue: #03a9f4;
 // Use these ones instead
 
 $col-hover: $black;
@@ -68,6 +69,9 @@ $col-chart-tip-text: $white;
 
 $col-btc: #FF9900;
 
+// progress bar
+$col-pb-line: $lightGray;
+$col-pb-fill: $vividBlue;
 
 $col-md-primary: #0066cc;
 $col-md-background: #e8e8e8;

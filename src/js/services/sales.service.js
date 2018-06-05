@@ -68,7 +68,7 @@ export class SalesService extends Service {
    *
    * @returns {Promise<object>} - Promise object representing sales
    */
-  loadSales (filters = { openOnly: true }) {
+  loadSales (filters = { openOnly: true, upcoming: false }) {
     return this._horizonRequestBuilder
       .sales()
       .forName(filters.name)

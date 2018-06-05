@@ -36,6 +36,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_create_issuance() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/sales" v-if="config.FEATURE_FLAGS.sales">
+        <md-icon>trending_up</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_explore_sales() }}</span>
+      </md-list-item>
+
       <md-list-item @click="closeSidebar" to="/sale-creation" v-if="config.FEATURE_FLAGS.saleCreation">
         <md-icon>bar_chart</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_create_sale() }}</span>
