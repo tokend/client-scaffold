@@ -5,7 +5,7 @@
           @search-input="loadFilteredSales"
     /> 
     <template v-if="sales.length > 0">
-      <div class="md-layout md-gutter md-layout-item md-size-95 md-alignment-center-space-between sales-overview__sale-overview-inner">
+      <div class="md-layout md-gutter md-layout-item md-size-90 md-alignment-center-space-around sales-overview__sale-overview-inner">
         <div class="sales-overview__card-wrapper"
                 v-for="sale in sales"
                 :key="sale.id"
@@ -18,7 +18,7 @@
 
       </div>
     </template>
-    <template v-if="sales.lengthisPending">
+    <template v-if="sales.length && !isSalesLoaded">
       <div class="btn-outer btn-outer--center btn-outer--no-margin"
     >
         <button class="more-btn material material--flat"
@@ -57,7 +57,6 @@
     mixins: [FormMixin],
     components: { FundCard, Searcher },
     data: _ => ({
-      response: '',
       isLoaded: false,
       filters: {
         openOnly: initialState.openOnly,
@@ -75,16 +74,14 @@
     },
     computed: {
       ...mapGetters([
-        vuexTypes.isLoggedIn,
-        vuexTypes.accountBalances,
+        vuexTypes.isSalesLoaded,
         vuexTypes.sales
       ])
     },
     methods: {
       ...mapActions({
         loadSales: vuexTypes.GET_SALES,
-        loadNext: vuexTypes.NEXT_SALES,
-        loadStarred: vuexTypes.GET_STARRED_SALES
+        loadNext: vuexTypes.NEXT_SALES
       }),
       goSaleDetails (id, name) {
         this.$router.push({ name: 'sales.sale-details', params: { id } })
@@ -98,6 +95,11 @@
           this.filters.baseAsset = filters.token
         }
         return this.loadSales(this.filters)
+      },
+      loadMore () {
+        this.disable()
+        this.next()
+        this.enable()
       }
     },
     watch: {
