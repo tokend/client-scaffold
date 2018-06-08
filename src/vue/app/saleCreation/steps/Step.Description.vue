@@ -59,7 +59,13 @@
     }),
 
     created () {
+      console.log('BEFORE')
+      console.log(this.form)
+      console.log(JSON.stringify(this.sale))
       this.form = _cloneDeep(this.sale)
+      console.log('AFTER')
+      console.log(this.form)
+      console.log(JSON.stringify(this.sale))
       this._loadDescriptionIfExists()
     },
 

@@ -135,13 +135,13 @@
       handleSaleUpdate ({ form, documents }, { step, i }) {
         form = form || {}
         documents = documents || {}
-
         Object.entries(form).forEach(([key, value]) => {
           this.sale[key] = value
         })
         Object.entries(documents).forEach(([key, value]) => {
           this.sale.logo = value
         })
+        console.log(JSON.stringify(this.sale))
         this.listManager.pushToStorage()
         step.done = true
         this.activeStep = (steps[i + 1] || steps[0]).name
@@ -152,6 +152,7 @@
       },
       async confirmSaleCreation () {
         const opts = get(this.sale.getDetailsForSave(), 'details.sale')
+        console.log(opts)
         this.disable()
         try {
           await salesService.createSaleCreationRequest({
@@ -169,7 +170,7 @@
               logo: opts.details.logo,
               youtube_video_id: opts.details.youtube_video_id
             },
-            baseAssetForHardCap: opts.baseAssetForHardCap,
+            baseAssetForHardCap: opts.base_asset_for_hard_cap,
             quoteAssets: opts.quote_assets,
             isCrowdfunding: true
           })

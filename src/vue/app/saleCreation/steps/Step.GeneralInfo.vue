@@ -88,8 +88,9 @@
         />
         <input-field v-model="form.baseAssetForHardCap"
             v-validate="{
-                required:true, 
-                amount: true
+                required: true, 
+                amount: true, 
+                max_value: avalaibleForIssuance
             }"
             class="step__input-field
                   md-layout-item
@@ -129,6 +130,7 @@
   import { i18n } from '../../../../js/i18n'
   import { vuexTypes } from '../../../../vuex/types'
   import { mapGetters } from 'vuex'
+  // import _get from 'lodash/get'
   export default {
     name: 'StepGeneralInfo',
     mixins: [StepMixin],
@@ -150,8 +152,14 @@
     computed: {
       ...mapGetters([
         vuexTypes.accountOwnedTokens,
-        vuexTypes.walletTokens
-      ])
+        vuexTypes.walletTokens,
+        vuexTypes.userAcquiredTokens
+      ]),
+      avalaibleForIssuance () {
+        const token = this.userAcquiredTokens
+          .find(token => token.code === this.form.baseAsset)
+        return token.available
+      }
     },
 
     methods: {

@@ -18,5 +18,7 @@ export default {
   sale_open_requests: 'Sale open requests',
   sale_start_new_sale: 'Start new sale',
   sale_quote_assets: 'Accept investments in:',
-  sale_confirm: 'Please confirm a sale creation'
+  sale_confirm: 'Please confirm a sale creation',
+  sale_get_asset: 'Get %{asset}',
+  sale_invest_asset: 'Invest %{asset}'
 }

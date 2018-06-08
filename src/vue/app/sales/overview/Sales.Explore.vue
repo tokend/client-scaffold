@@ -44,7 +44,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
-  import FundCard from '../Sales.Fundcard'
+  import FundCard from '../sale_card/Sales.Fundcard'
   import Searcher from './Sales.Searcher'
   import FormMixin from '../../../common/mixins/form.mixin'
   import { saleSortTypes, saleStates } from '../../../../js/const/const'

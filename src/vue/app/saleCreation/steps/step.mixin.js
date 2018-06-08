@@ -36,6 +36,7 @@ export default {
       this.disable()
       try {
         await this.uploadDocuments()
+        console.log(this.form)
         this.$emit(commonEvents.saleUpdateEvent, {
           form: this.form,
           documents: this.documents

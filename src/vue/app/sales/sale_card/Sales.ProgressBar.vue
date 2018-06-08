@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import { i18n } from '../../../js/i18n'
+  import { i18n } from '../../../../js/i18n'
   export default {
     name: 'InvestProgressBar',
     props: ['sale', 'barHeight'],
@@ -49,8 +49,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '../../../../scss/variables';
+  @import '../../../../scss/mixins';
   
   .invest-progress-bar__container {
     background: $col-pb-line;
