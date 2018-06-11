@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="sale-details__content">
+    <div class="sale-details__content sale-details__main-info">
       <sale-tabs class="sale-details__tabs" :sale="sale"/>
       <div class="sale-details__information">
         <sale-token class="sale-details__information-item" :sale="sale" :token="token" />
@@ -104,15 +104,47 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 24px;
-
+    flex-wrap: wrap;
+    @include respond-to(large) {
+      flex-direction: column;
+    }
     .sale-details__banner,
     .sale-details__tabs {
       width: 60%;
+      @include respond-to(large) {
+        width: 100%;
+      }
     }
 
     .sale-details__information {
       width: 38%;
       border-top: 2px solid $col-active;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .sale-details__information-item {
+        width: 100%;
+      }
+      @include respond-to(large) {
+        width: 100%;
+        flex-direction: row;
+        .sale-details__information-item {
+          width: 45%;
+        }
+      }
+      @include respond-to(small) {
+        .sale-details__information-item {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .sale-details__main-info {
+    @include respond-to(large) {
+      flex-direction: column-reverse;
     }
   }
 
@@ -136,10 +168,6 @@
     i {
      font-size: $material-icon-medium;
     }
-  }
-
-  .right-col {
-    padding: 0 12px;
   }
 
   .information-item__title {

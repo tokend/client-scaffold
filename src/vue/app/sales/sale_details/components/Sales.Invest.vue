@@ -25,7 +25,7 @@
           <span class="invest__available-asset">{{ form.quote }}</span>
         </div>
       </div>
-      <i class="material-icons">arrow_right_alt</i>
+      <i class="material-icons invest__icon">arrow_right_alt</i>
       <div class="get__input-quote-wrp">
         <input-field title="Get quote"
                       v-model="form.convertedAmount" 
@@ -119,10 +119,6 @@
   @import '../../../../../scss/variables';
   @import '../../../../../scss/mixins';
 
-  .invest {
-    padding-top: 1.5rem;
-  }
-
   .invest__header {
     font-weight: bold;
     margin-bottom: 1.5rem;
@@ -158,8 +154,15 @@
   .invest__row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 40px;
+    @include respond-to(large) {
+      margin-bottom: 0;
+    }
+  }
+
+  .invest__icon {
+    align-self: center;
   }
 
   .invest__select-quoteAssets {

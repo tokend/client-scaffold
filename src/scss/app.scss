@@ -106,6 +106,10 @@ html,body {
     padding-left: 0;
   }
 
+  & .md-tabs-navigation {
+    overflow: auto;
+  }
+
   & .md-tabs-content {
     height: 100% !important;
   }

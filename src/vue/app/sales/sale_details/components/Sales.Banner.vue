@@ -38,9 +38,9 @@
     position: relative;
     height: 100%;
     width: 100%;
+    padding-top: 56.25%;
     @include respond-to-custom(991px) {
       margin: 0 auto 2rem;
-      padding-top: 56.25%;
     }
   }
 
