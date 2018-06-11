@@ -11,6 +11,7 @@ import { MatchRecord } from './match.record'
 import { AssetPairRecord } from './asset_pair.record'
 import { TradeRecord } from './trade.record'
 import { TransferV2Record } from './transferV2.record'
+import { SaleCreationRecord } from './sale_creation.record'
 
 export class RecordFactory {
   static createTransferRecord () {
@@ -43,6 +44,10 @@ export class RecordFactory {
 
   static createSaleRecord () {
     return new SaleRecord(...arguments)
+  }
+
+  static createSaleСreationRecord () {
+    return new SaleCreationRecord(...arguments)
   }
 
   static createOfferRecord () {

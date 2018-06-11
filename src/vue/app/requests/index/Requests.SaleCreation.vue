@@ -1,0 +1,301 @@
+<template>
+  <div class="tx-manual-issuance">
+    <md-table md-card class="tx-manual-issuance__table">
+      <md-table-toolbar class="tx-manual-issuance__table-toolbar">
+        <h1 class="tx-manual-issuance__table-title md-title">{{ i18n.sale_creation_requests() }}</h1>
+        <div class="tx-manual-issuance__select-outer" v-if="accountOwnedTokens.length">
+          <select-field
+            :label="i18n.lbl_asset()"
+            v-model="tokenCode"
+            :values="accountOwnedTokens"
+          />
+        </div>
+      </md-table-toolbar>
+      <template v-if="tokenCode && list.length">
+        <md-table-row class="tx-manual-issuance__row">
+          <md-table-head>{{ i18n.lbl_sale_name() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_updated_at() }}</md-table-head>
+          <md-table-head><!--Button--></md-table-head>
+        </md-table-row>
+        <template v-for="(item, i) in list">
+
+          <md-table-row class="tx-manual-issuance__row" @click="toggleDetails(i)" :key="i">
+            <md-table-cell class="tx-manual-issuance__table-cell">{{ item.saleName }}</md-table-cell>
+            <md-table-cell class="tx-manual-issuance__table-cell">{{ item.tokenCode }}</md-table-cell>
+            <md-table-cell class="tx-manual-issuance__table-cell">{{ item.requestState }}</md-table-cell>
+            <md-table-cell class="tx-manual-issuance__table-cell">{{ humanizeDate(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-manual-issuance__table-cell">{{ humanizeDate(item.updatedAt) }}</md-table-cell>
+
+            <md-table-cell>
+              <md-button class="tx-manual-issuance__open-details-btn md-icon-button">
+                <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
+                <md-icon v-else>keyboard_arrow_down</md-icon>
+              </md-button>
+            </md-table-cell>
+
+          </md-table-row>
+
+          <md-table-row class="th-manual-issuance__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
+            <md-table-cell colspan="7">
+              <md-card-content class="md-layout md-gutter">
+                <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
+                  <img class="token-icon" v-if="item.saleLogoUrl" :src='item.saleLogoUrl' :alt="documentTypes.fundLogo">
+                  <div class="token-icon" v-else>{{ item.saleName.substr(0, 1).toUpperCase() }}</div>
+                </div>
+                <div class="details-column md-layout-item">
+                  <detail prop="Request type" :value="`${ item.requestType }`"/>
+                  <detail prop="Token name" :value="`${item.tokenCode}`"/>
+                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${humanizeDate(item.startTime)}`"/>
+                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${humanizeDate(item.endTime)}`"/>
+                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${item.softCap} ${item.defaultQuoteAsset}`"/>
+                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${item.hardCap} ${item.defaultQuoteAsset}`"/>
+                  <detail :prop="`${i18n.sale_baseAsset_hardCap()}`" :value="`${item.baseAssetForHardCap} ${item.tokenCode}`"/>
+                  <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
+                  <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
+                  <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
+                </div>
+              </md-card-content>
+              <md-card-actions>
+                <md-button class="md-dense md-accent"
+                          :disabled="item.requestState === 'canceled'
+                                  || item.requestState === 'approved'
+                                  || item.requestState === 'disabled'
+                                  || isPending"
+                          @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
+                <md-button class="md-dense md-primary"
+                          :disabled="item.requestState === 'canceled'
+                                  || item.requestState === 'approved'
+                                  || isPending"
+                          @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+              </md-card-actions>
+            </md-table-cell>
+          </md-table-row>
+        </template>
+         <md-table-row v-if="!isLoaded">
+            <md-table-cell colspan="7">
+                <div class="tx-history__btn-outer">
+                <md-button @click="more" :disabled="isLoading">{{ i18n.lbl_view_more() }}</md-button>
+                </div>
+            </md-table-cell>
+         </md-table-row>
+      </template>
+      <template v-else>
+        <div class="tx-manual-issuance__no-requests">
+          <md-icon class="md-size-4x">trending_up</md-icon>
+          <h2>{{ i18n.sale_no_creation_requests() }}</h2>
+          <p>{{ i18n.sale_no_creation_requests_desc() }}</p>
+        </div>
+      </template>
+    </md-table>
+  </div>
+</template>
+
+<script>
+import FormMixin from '../../../common/mixins/form.mixin'
+import Detail from '../../common/Detail.Row'
+import get from 'lodash/get'
+
+import { mapGetters, mapActions } from 'vuex'
+import { i18n } from '../../../../js/i18n'
+import { vuexTypes } from '../../../../vuex/types'
+import { RecordTypes } from '../../../../js/records/types'
+import { documentTypes } from '../../../../js/const/documents.const'
+// import { salesService } from '../../../../js/services/sales.service'
+import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+// import { ErrorHandler } from '../../../../js/errors/error_handler'
+
+import { humanizeDate } from '../../../../js/utils/dates.util'
+
+export default {
+  mixins: [FormMixin],
+  components: { Detail },
+  data: _ => ({
+    i18n,
+    tokenCode: null,
+    isLoading: false,
+    response: null,
+    index: -1,
+    humanizeDate,
+    documentTypes
+  }),
+
+  async created () {
+    this.tokenCode = this.accountOwnedTokens[0] || null
+    if (this.tokenCode) {
+      await this.loadList(this.tokenCode)
+      this.response = this.saleCreationRequests
+    }
+  },
+
+  computed: {
+    ...mapGetters([
+      vuexTypes.saleCreationRequests,
+      vuexTypes.accountOwnedTokens
+    ]),
+    list () {
+      return (get(this.saleCreationRequests, `${this.tokenCode}.records`) || [])
+        .reduce((list, item) => {
+          if (item instanceof RecordTypes.MatchRecord) {
+            item.transactions.forEach(tx => { list.push(tx) })
+            return list
+          }
+          list.push(item)
+          return list
+        }, [])
+    },
+    isLoaded () {
+      return get(this.saleCreationRequests, `${this.tokenCode}.isLoaded`)
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      loadList: vuexTypes.GET_USER_SALE_CREATION_REQUESTS,
+      loadNext: vuexTypes.NEXT_USER_SALE_CREATION_REQUESTS
+    }),
+
+    toggleDetails (index) {
+      this.index = this.index === index ? -1 : index
+    },
+
+    isSelected (i) {
+      return this.index === i
+    },
+
+    async cancelRequest (requestID) {
+      // this.disable()
+      // try {
+      //   await tokensService.cancelTokenCreationRequest({
+      //     requestID: requestID
+      //   })
+      //   this.requests = await tokensService.loadTokenCreationRequestsForState()
+      //   EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
+      // } catch (error) {
+      //   console.log(error)
+      //   ErrorHandler.processUnexpected(error)
+      // }
+      // this.enable()
+    },
+
+    async more () {
+      this.isLoading = true
+      try {
+        await this.loadNext()
+      } catch (e) {
+        console.error(e)
+        EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
+      }
+      this.isLoading = false
+    },
+
+    async updateRequest (id) {
+      this.$router.push({name: 'manual-issuance.index', params: { id: id }})
+    }
+  },
+  watch: {
+    tokenCode (code) {
+      this.loadList(code)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  @import "../../../../scss/mixins";
+  @import "../../../../scss/variables";
+
+  $padding-vertical: 20px;
+  $padding-horizontal: 25px;
+  $padding: $padding-vertical $padding-horizontal;
+
+  .tx-manual-issuance {
+    width: 100%;
+  }
+
+  .tx-manual-issuance__table {
+    margin: 0 !important;
+  }
+
+  .tx-manual-issuance__table-toolbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    @media (max-width: 840px) {
+      flex-direction: column;
+      padding-top: $padding-vertical;
+    }
+  }
+
+  .tx-manual-issuance__row {
+    cursor: pointer;
+  }
+
+  .tx-manual-issuance__table-cell {
+    overflow: hidden;
+    white-space: nowrap;
+
+    &--counterparty {
+      max-width: 10rem;
+    }
+  }
+
+  .tx-manual-issuance__select-outer {
+    padding: 5px $padding-horizontal;
+  }
+
+  .tx-manual-issuance__details {
+    padding: $padding;
+    max-width: 25rem;
+    width: 100%;
+  }
+
+  .tx-manual-issuance__btn-outer {
+    text-align: center;
+  }
+
+  .tx-manual-issuance__no-requests {
+    padding: 0 16px 32px;
+    text-align: center;
+
+    p {
+      margin-top: 10px;
+    }
+  }
+
+  .tx-manual-issuance__table-title {
+    padding: 24px;
+    font-size: 24px;
+  }
+
+  .tx-manual-issuance__no-requests {
+    padding: 0 16px 32px;
+    text-align: center;
+
+    p {
+      margin-top: 10px;
+    }
+  }
+
+  .token-icon {
+    width: 142px;
+    height: 142px;
+    border-radius: 50%;
+    font-size: 48px;
+    color: #fff;
+    background-color: #ccc;
+    margin-right: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+
+    @include respond-to(small) {
+      margin-right: 0;
+      margin-bottom: 12px;
+    }
+  }
+</style>

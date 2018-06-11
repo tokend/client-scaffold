@@ -18,5 +18,10 @@ export default {
   sale_open_requests: 'Sale open requests',
   sale_start_new_sale: 'Start new sale',
   sale_quote_assets: 'Accept investments in:',
-  sale_confirm: 'Please confirm a sale creation'
+  sale_confirm: 'Please confirm a sale creation',
+  sale_creation_requests: 'Sale creation requests',
+  sale_no_creation_requests: 'No sale creation requests',
+  sale_no_creation_requests_desc: 'Here will be the list of your sale creation requests',
+  sale_short_description: 'Short description',
+  sale_fund_video: 'Video about fund'
 }

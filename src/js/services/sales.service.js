@@ -109,6 +109,16 @@ export class SalesService extends Service {
       .sale(id)
       .callWithSignature(this._keypair)
   }
+
+  loadSalesRequests (tokenCode) {
+    return this._horizonRequestBuilder
+      .reviewableRequestsHelper()
+      .sales()
+      .forBaseAsset(tokenCode)
+      .order('desc')
+      .limit(config.TRANSACTIONS_PER_PAGE)
+      .callWithSignature(this._keypair)
+  }
 }
 
 export const salesService = new SalesService()
