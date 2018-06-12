@@ -35,7 +35,7 @@
     }),
     computed: {
       progress () {
-        const progress = Math.floor((this.sale.currentCap / this.sale.softCap) * 100)
+        const progress = Math.floor((this.sale.currentCap / this.sale.hardCap) * 100)
         return progress > 100 ? 100 : progress
       },
       daysLeft () {
