@@ -21,7 +21,8 @@
           <invest-progress-bar :sale="sale" :barHeight="'1.2rem'"/>
         </div>
         <div class="sale-details__information-item">
-          <sale-invest :sale="sale" />
+          <sale-invest :sale="sale"
+                       @invest-in-sale="loadDetails" />
         </div>
       </div>
     </div>
@@ -66,8 +67,7 @@
 
     async created () {
       if (this.id) {
-        this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
-        this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset))
+        await this.loadDetails()
         // await Promise.all([
         //   this.sale.loadSyndicateDetails(),
         //   this.sale.loadDescriptionIfExists()
@@ -81,6 +81,10 @@
     methods: {
       goBack () {
         this.$router.push({ name: 'sales.explore' })
+      },
+      async loadDetails () {
+        this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
+        this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset))
       }
     },
 

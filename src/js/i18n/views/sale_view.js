@@ -21,5 +21,5 @@ export default {
   sale_confirm: 'Please confirm a sale creation',
   sale_get_asset: 'Get %{asset}',
   sale_invest_asset: 'Invest %{asset}',
-  sale_offer_created: 'Order created. Your account will be funded with %{asset} once the fund succeed'
+  sale_offer_created: 'Invested successfully. Your account will be funded with %{asset} once the fund succeed'
 }

@@ -62,6 +62,7 @@
   import { EventDispatcher } from '../../../../../js/events/event_dispatcher'
   import { add, subtract, multiply } from '../../../../../js/utils/math.util'
   import { RecordFactory } from '../../../../../js/records/factory'
+  import { commonEvents } from '../../../../../js/events/common_events'
   export default {
     name: 'sale-invest',
     mixins: [FormMixin],
@@ -154,7 +155,7 @@
           } : null
 
           await offersService.createSaleOffer(createOpts, cancelOpts)
-          this.loadOffers()
+          this.$emit(commonEvents.investInSale)
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
         } catch (error) { ErrorHandler.processUnexpected(error) }
         this.enable()
