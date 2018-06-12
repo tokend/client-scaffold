@@ -3,8 +3,12 @@ import config from '../../config'
 import { Service } from './service'
 import { ManageOfferBuilder } from 'swarm-js-sdk'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../const/const'
-import { feeService } from './fees.service'
-import { multiply } from '../utils/math.util'
+// import { feeService } from './fees.service'
+// import { multiply } from '../utils/math.util'
+
+// import accounts from './accounts.service'
+// import store from '../../vuex'
+// import users from './users.service'
 
 export class OffersService extends Service {
   /**
@@ -20,6 +24,10 @@ export class OffersService extends Service {
       .submit(this._accountId, this._keypair)
   }
 
+  async createSaleOffer (createOpts, cancelOpts) {
+    if (cancelOpts) { await this.cancelOffer(cancelOpts) }
+    if (createOpts) { await this.createOffer(createOpts) }
+  }
   /**
    * @param {object} opts
    * @param {string} opts.amount
@@ -149,33 +157,34 @@ export class OffersService extends Service {
   }
 
   // TODO: need refactor + doc
-  async createSaleOffer (opts, oldOffer, orderBookID) {
-    const offerFees = await feeService.loadOfferFeeByAmount(opts.quoteAsset, multiply(opts.amount, opts.price))
+  // async createSaleOffer (opts, oldOffer, orderBookID) {
+  //   const offerFees = await feeService.loadOfferFeeByAmount(opts.quoteAsset, multiply(opts.amount, opts.price))
+  //   const baseBalance = await getBaseBalanceID(opts.code)
+  //   const quoteBalance = store.getters.accountBalances[opts.quoteAsset].balance_id
 
-    const createOfferOperation = Number(opts.amount) > 0 ? ManageOfferBuilder.manageOffer({
-      amount: opts.amount,
-      baseBalance: opts.baseBalance,
-      quoteBalance: opts.quoteBalance,
-      isBuy: true,
-      price: opts.price,
-      orderBookID: opts.saleID,
-      fee: offerFees.percent
-    }) : null
+  //   const createOfferOperation = Number(opts.amount) > 0 ? ManageOfferBuilder.manageOffer({
+  //     amount: opts.amount,
+  //     baseBalance: baseBalance,
+  //     quoteBalance: quoteBalance,
+  //     isBuy: true,
+  //     price: opts.price,
+  //     orderBookID: opts.saleID,
+  //     fee: offerFees.percent
+  //   }) : null
 
-    const removeOfferOperation = oldOffer ? ManageOfferBuilder.cancelOffer({
-      baseBalance: opts.baseBalance,
-      quoteBalance: opts.quoteBalance,
-      offerID: oldOffer.id.toString(),
-      price: opts.price,
-      orderBookID
-    }) : null
+  //   const removeOfferOperation = oldOffer ? ManageOfferBuilder.cancelOffer({
+  //     baseBalance: baseBalance,
+  //     quoteBalance: quoteBalance,
+  //     offerID: oldOffer.id.toString(),
+  //     price: opts.price,
+  //     orderBookID
+  //   }) : null
 
-    return this._operationBuilder
-      .operation()
-      .add(removeOfferOperation)
-      .add(createOfferOperation)
-      .submit(this._accountId, this._keypair)
-  }
+  //   return this._operationBuilder
+  //     .operation()
+  //     .add(removeOfferOperation)
+  //     .add(createOfferOperation)
+  //     .submit(this._accountId, this._keypair)
+  // }
 }
-
 export const offersService = new OffersService()

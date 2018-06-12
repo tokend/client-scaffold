@@ -2,7 +2,7 @@
   <div class="invest">
     <div class="invest__row">
       <h2 class="invest__header">Investing</h2>
-      <select-field v-model="form.quote"
+      <select-field v-model="form.quoteAsset"
                     :values="sale.quoteAssetCodes"
                     class="invest__select-quoteAssets"
       />
@@ -14,26 +14,25 @@
                       id="investment"
                       name="investment"
                       type="number"
-                      v-validate="'required|amount'"
-                      :label="i18n.sale_invest_asset({ asset: form.quote })"
+                      v-validate="'required|amount|min_value:0'"
+                      :label="i18n.sale_invest_asset({ asset: form.quoteAsset })"
         />
         <div class="invest__available"
             :class="{ 'invest__available--error': limitExceeded }"
             >
           Available:
           <span class="invest__available-amount">{{ available }}</span>
-          <span class="invest__available-asset">{{ form.quote }}</span>
+          <span class="invest__available-asset">{{ form.quoteAsset }}</span>
         </div>
       </div>
-      <i class="material-icons invest__icon">arrow_right_alt</i>
       <div class="get__input-quote-wrp">
         <input-field title="Get quote"
-                      v-model="form.convertedAmount" 
+                      v-model="form.convertedAmount"
                       name="investment_converted"
                       id="investment_converted"
                       type="number"
-                      v-validate="'required|amount'"
-                      :label="i18n.sale_get_asset({ asset: sale.baseAsset })"
+                      :disabled="true"
+                      :label="`In ${sale.defaultQuoteAsset }`"
         />
       </div>
     </div>
@@ -42,7 +41,9 @@
       {{ humanizeDate(sale.endTime) }}
     </div> -->
     <div class="invest__actions">
-      <md-button class="md-primary invest__btn">Invest</md-button>
+      <md-button class="md-primary invest__btn"
+                 @click="invest"
+                 :disabled="isPending || !offer">Invest</md-button>
     </div>
   </div>
 </template>
@@ -51,14 +52,16 @@
   import FormMixin from '../../../../common/mixins/form.mixin'
   import { i18n } from '../../../../../js/i18n'
   import { localizeBase } from '../../../../../js/utils/format-num.util'
-  import { PricesHelper } from '../../../../../vuex/helpers/prices.helper'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../vuex/types'
   import _get from 'lodash/get'
-
-  // import { commonEvents } from '../../../../factories/events/common_events'
-  // import { ErrorHandler } from '../../../../factories/errors/error_handler'
-  import { add, subtract } from '../../../../../js/utils/math.util'
+  import { offersService } from '../../../../../js/services/offer.service'
+  import { pairsService } from '../../../../../js/services/pairs.service'
+  import { feeService } from '../../../../../js/services/fees.service'
+  import { ErrorHandler } from '../../../../../js/errors/error_handler'
+  import { EventDispatcher } from '../../../../../js/events/event_dispatcher'
+  import { add, subtract, multiply } from '../../../../../js/utils/math.util'
+  import { RecordFactory } from '../../../../../js/records/factory'
   export default {
     name: 'sale-invest',
     mixins: [FormMixin],
@@ -66,14 +69,16 @@
     components: {},
     data: _ => ({
       form: {
-        quote: '',
+        quoteAsset: '',
         amount: 0,
         convertedAmount: 0
       },
+      offers: [],
       i18n
     }),
     created () {
       this.setTokenCode()
+      this.loadOffers()
     },
     computed: {
       ...mapGetters([
@@ -81,14 +86,23 @@
         vuexTypes.accountBalances
       ]),
       offer () {
+        return this.offers.find(
+          offer => offer.quoteAssetCode === this.form.quoteAsset &&
+                   offer.baseAssetCode === this.sale.baseAsset) || null
+      },
+      price () {
+        return this.sale.quoteAssetPrices[this.form.quoteAsset] || '1'
+      },
+
+      saleOffer () {
         return this.saleOffers.find(
           offer => offer.quoteAssetCode === this.form.quote &&
                    offer.baseAssetCode === this.sale.baseAsset) || {}
       },
       available () {
         const balance = add(
-          _get(this.accountBalances, `${this.form.quote}.balance`) || 0,
-          this.offer.baseAmount || 0)
+          _get(this.accountBalances, `${this.form.quoteAsset}.balance`) || 0,
+          this.saleOffer.baseAmount || 0)
         const left = balance ? subtract(balance, this.form.amount) : 0
         return left < 0 ? 0 : left
       },
@@ -99,17 +113,53 @@
     },
     methods: {
       setTokenCode () {
-        this.form.quote = this.sale.quoteAssetCodes[0] || null
+        this.form.quoteAsset = this.sale.quoteAssetCodes[0] || null
       },
-      // humanizeDate,
-      localizeBase
+      localizeBase,
+
+      async loadOffers () {
+        const response = await offersService.loadUserSaleOffers(this.sale.id)
+        const records = response.records
+        this.offers = records.map(record => RecordFactory.createOfferRecord(record))
+      },
+      async invest () {
+        if (!await this.isValid()) {
+          return
+        }
+        this.disableLong()
+        try {
+          const offerFees = await feeService.loadOfferFeeByAmount(this.form.quoteAsset, multiply(this.form.amount, this.price))
+
+          const cancelOpts = this.offer ? {
+            baseBalance: _get(this.accountBalances, `${this.sale.baseAsset}.balance_id`),
+            quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
+            offerId: this.offer.id,
+            price: this.price,
+            orderBookId: this.sale.id
+          } : null
+
+          const createOpts = this.form.amount > 0 ? {
+            amount: this.form.amount,
+            price: this.price,
+            orderBookId: this.sale.id,
+            isBuy: true,
+            baseBalance: _get(this.accountBalances, `${this.sale.baseAsset}.balance_id`),
+            quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
+            fee: offerFees.percent
+          } : null
+
+          await offersService.createSaleOffer(createOpts, cancelOpts)
+          this.loadOffers()
+          EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
+        } catch (error) { ErrorHandler.processUnexpected(error) }
+        this.enable()
+      }
     },
     watch: {
-      'form.amount': function () {
-        this.form.convertedAmount = PricesHelper.baseToQuote(this.form.amount, this.form.quote, this.sale.baseAsset)
-      },
-      'form.convertedAmount': function () {
-        this.form.amount = PricesHelper.baseToQuote(this.form.convertedAmount, this.sale.baseAsset, this.form.quote)
+      'form.amount': function (value) {
+        if (value !== '') {
+          this.form.convertedAmount = pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
+        }
       }
     }
   }
@@ -159,10 +209,6 @@
     @include respond-to(large) {
       margin-bottom: 0;
     }
-  }
-
-  .invest__icon {
-    align-self: center;
   }
 
   .invest__select-quoteAssets {
