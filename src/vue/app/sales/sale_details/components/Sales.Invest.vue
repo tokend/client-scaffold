@@ -156,9 +156,9 @@
       }
     },
     watch: {
-      'form.amount': function (value) {
+      'form.amount': async function (value) {
         if (value !== '') {
-          this.form.convertedAmount = pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
+          this.form.convertedAmount = await pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
         }
       }
     }
