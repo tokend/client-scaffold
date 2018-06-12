@@ -22,6 +22,7 @@ export class SaleCreationRecord {
     this.youtubeVideoId = this._getYoutubeVideoId()
     this.youtubeVideoUrl = this._getYoutubeVideoUrl()
     this.quoteAssets = this._getQuoteAssets()
+    this.rejectReason = record.reject_reason
   }
 
   _getSaleName () {

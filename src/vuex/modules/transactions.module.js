@@ -60,6 +60,7 @@ export const actions = {
 
   async NEXT_TX_LIST ({ state, commit, dispatch }, tokenCode) {
     const paginator = state.lists[tokenCode]
+    console.dir(paginator)
     await paginator.next()
     commit(vuexTypes.UPDATE_TX_LIST_ITEM, paginator)
   },

@@ -56,6 +56,7 @@
                   <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
                   <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
                   <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
+                  <detail :prop="`${i18n.lbl_reject_message()}`" v-if="item.requestState === 'rejected'" :value="`${item.rejectReason}`"/>
                 </div>
               </md-card-content>
               <md-card-actions>
@@ -106,7 +107,6 @@ import { documentTypes } from '../../../../js/const/documents.const'
 // import { salesService } from '../../../../js/services/sales.service'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 // import { ErrorHandler } from '../../../../js/errors/error_handler'
-
 import { humanizeDate } from '../../../../js/utils/dates.util'
 
 export default {
@@ -116,7 +116,6 @@ export default {
     i18n,
     tokenCode: null,
     isLoading: false,
-    response: null,
     index: -1,
     humanizeDate,
     documentTypes
@@ -126,7 +125,6 @@ export default {
     this.tokenCode = this.accountOwnedTokens[0] || null
     if (this.tokenCode) {
       await this.loadList(this.tokenCode)
-      this.response = this.saleCreationRequests
     }
   },
 
@@ -192,7 +190,7 @@ export default {
     },
 
     async updateRequest (id) {
-      this.$router.push({name: 'manual-issuance.index', params: { id: id }})
+      // this.$router.push({name: 'manual-issuance.index', params: { id: id }})
     }
   },
   watch: {
