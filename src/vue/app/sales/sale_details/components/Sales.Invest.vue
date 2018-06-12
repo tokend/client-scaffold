@@ -43,7 +43,7 @@
     <div class="invest__actions">
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || !offer">Invest</md-button>
+                 :disabled="isPending || !offer || form.convertedAmount > sale.hardCap">Invest</md-button>
     </div>
   </div>
 </template>
