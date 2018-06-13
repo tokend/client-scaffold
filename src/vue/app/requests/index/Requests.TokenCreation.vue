@@ -53,13 +53,16 @@
               </md-card-content>
               <md-card-actions>
                 <md-button class="md-dense md-accent"
-                          :disabled="item.request_state === 'canceled'
-                                  || item.request_state === 'approved'
+                          :disabled="item.request_state !== 'pending'
                                   || isPending"
                           @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button class="md-dense md-primary"
-                          :disabled="item.request_state === 'canceled'
-                                  || item.request_state === 'approved'
+                <md-button v-if="item.request_state === 'rejected'"
+                          class="md-dense md-primary"
+                          :disabled="isPending"
+                          @click="updateRejectedRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+                <md-button v-else
+                          class="md-dense md-primary"
+                          :disabled="item.request_state !== 'pending'
                                   || isPending"
                           @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
@@ -188,8 +191,12 @@ export default {
       return item.replace('_', ' ')
     },
 
-    async updateRequest (id) {
+    updateRequest (id) {
       this.$router.push({name: 'token-creation.index', params: { id: id }})
+    },
+
+    updateRejectedRequest (id) {
+      this.$router.push({name: 'token-creation.index', params: { rejectedId: id }})
     }
   }
 }
