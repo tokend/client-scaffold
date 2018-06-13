@@ -56,6 +56,13 @@ export class SalesService extends Service {
       .submit(this._accountId, this._keypair)
   }
 
+  // createSaleUpdateDetailsRequest (opts) {
+  //   const operation = ManageSaleBuilder.createUpdateSaleDetailsRequest(opts)
+  //   return this._operationBuilder
+  //     .operation()
+  //     .add(operation)
+  //     .submit(this._accountId, this._keypair)
+  // }
   /**
    * Loads created sales with specified filters
    * @param filters
@@ -106,6 +113,15 @@ export class SalesService extends Service {
    */
   loadSaleById (id) {
     return this._horizonRequestBuilder.sales()
+      .sale(id)
+      .callWithSignature(this._keypair)
+  }
+
+  // TODO: not working, need to load unapproved/pending sale request
+  loadSaleRequestById (id) {
+    return this._horizonRequestBuilder
+      .reviewableRequestsHelper()
+      .sales()
       .sale(id)
       .callWithSignature(this._keypair)
   }

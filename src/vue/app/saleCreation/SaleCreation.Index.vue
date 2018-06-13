@@ -89,6 +89,7 @@
     name: 'CreateSale-index',
     components: { RequestList },
     mixins: [FormMixin],
+    props: ['id'],
     data: _ => ({
       activeStep: steps[0].name,
       sale: null,
@@ -101,6 +102,10 @@
       VIEW_MODES
     }),
     async created () {
+      if (this.id) {
+        const sale = new SaleRequestRecord(await salesService.loadSaleRequestById(this.id))
+        console.log(sale)
+      }
       await Promise.all([
         this.loadTokens(),
         this.listManager.fetch()

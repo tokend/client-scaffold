@@ -271,6 +271,12 @@ const router = new Router({
               name: 'sale-creation.index',
               component: SaleCreationIndex,
               props: true
+            },
+            {
+              path: '/sale-creation/index/:id',
+              name: 'sale-creation.index:id',
+              component: SaleCreationIndex,
+              props: true
             }
           ]
         },

@@ -61,16 +61,18 @@
               </md-card-content>
               <md-card-actions>
                 <md-button class="md-dense md-accent"
-                          :disabled="item.requestState === 'canceled'
-                                  || item.requestState === 'approved'
-                                  || item.requestState === 'disabled'
+                          :disabled="item.requestState !== 'pending'
                                   || isPending"
-                          @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button class="md-dense md-primary"
-                          :disabled="item.requestState === 'canceled'
-                                  || item.requestState === 'approved'
+                          @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button>
+                <md-button v-if="item.request_state === 'rejected'" 
+                          class="md-dense md-primary" 
+                          :disabled="isPending" 
+                          @click="updateRejectedRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button> 
+                <md-button v-else 
+                          class="md-dense md-primary" 
+                          :disabled="item.requestState !== 'pending' 
                                   || isPending"
-                          @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+                          @click="updateRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -190,7 +192,7 @@ export default {
     },
 
     async updateRequest (id) {
-      // this.$router.push({name: 'manual-issuance.index', params: { id: id }})
+      this.$router.push({name: 'sale-creation.index', params: { id: id }})
     }
   },
   watch: {
