@@ -205,7 +205,8 @@ export default {
       if (!await this.isValid()) return
       this.disable()
       try {
-        await this.createRequest()
+        if (this.id) await this.createRequest()
+        if (this.rejectedId) await this.updateRequest()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         this.$router.push({ path: '/requests' })
       } catch (error) {
@@ -219,7 +220,7 @@ export default {
       let preissuedAssetSigner = config.NULL_ASSET_SIGNER
       let initialPreissuedAmount = this.request.maxIssuanceAmount
 
-      if (this.makeAdditional || this.id || this.rejectedId) {
+      if (this.makeAdditional || this.id) {
         preissuedAssetSigner = this.request.preissuedAssetSigner
         initialPreissuedAmount = this.request.initialPreissuedAmount
       }
@@ -243,6 +244,32 @@ export default {
         maxIssuanceAmount: this.request.maxIssuanceAmount,
         policies: (this.request.policies).reduce((a, b) => (a | b), 0),
         initialPreissuedAmount: initialPreissuedAmount,
+        details: {
+          name: this.request.tokenName,
+          logo: logoContainer ? logoContainer.getDetailsForSave() : {},
+          terms: termsContainer ? termsContainer.getDetailsForSave() : {}
+        }
+      })
+    },
+
+    async updateRequest () {
+      const logoContainer = this.documents[documentTypes.tokenIcon]
+      const termsContainer = this.documents[documentTypes.tokenTerms]
+
+      if (logoContainer && !logoContainer.isUploaded) {
+        const logoKey = await fileService.uploadFile(logoContainer.getDetailsForUpload())
+        logoContainer.setKey(logoKey)
+      }
+
+      if (termsContainer && !termsContainer.isUploaded) {
+        const termsKey = await fileService.uploadFile(termsContainer.getDetailsForUpload())
+        termsContainer.setKey(termsKey)
+      }
+
+      await tokensService.createTokenUpdateRequest({
+        requestID: this.request.requestID ? this.request.requestID : '0',
+        code: this.request.tokenCode,
+        policies: (this.request.policies).reduce((a, b) => (a | b), 0),
         details: {
           name: this.request.tokenName,
           logo: logoContainer ? logoContainer.getDetailsForSave() : {},
