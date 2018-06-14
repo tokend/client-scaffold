@@ -4,7 +4,7 @@
       <div class="sale-details__name-wrapper">
         <a class="back-btn"
                    @click="goBack">
-          <i class="mdi mdi-arrow-left"></i>
+          <i class="material-icons">arrow_back</i>
         </a>
         <div class="sale-details__header-item">
           <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
@@ -108,6 +108,9 @@
   .sale-details__header-item {
     display: flex;
     flex-wrap: wrap;
+    @include respond-to(medium) {
+      flex-direction: column;
+    }
   }
 
   .sale-details__content {
@@ -176,7 +179,7 @@
     .sale-details__owner {
       font-size: 75%;
       margin-left: 1rem;
-      @include respond-to(small) {
+      @include respond-to(medium) {
         margin-left: 0;
         margin-top: 1rem;
     }
