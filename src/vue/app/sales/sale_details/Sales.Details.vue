@@ -6,18 +6,22 @@
                    @click="goBack">
           <i class="mdi mdi-arrow-left"></i>
         </a>
-        <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
+        <div class="sale-details__header-item">
+          <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
+          <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: sale.syndicateEmail }) }}</span>
+        </div>
       </div>
-      <!-- <span class="sale-details__owner">by {{sale.owner}}</span> -->
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
     </div>
     <div class="sale-details__content">
       <div class="sale-details__banner">
-        <sale-banner :sale="sale" />
+        <img class="sale-details__banner-image" 
+             :src="sale.image" 
+             alt="">
       </div>
       <div class="sale-details__information">
         <div class="sale-details__information-item">
-          <h2 class="information-item__title">Information</h2>
+          <h2 class="information-item__title">{{ i18n.lbl_information() }}</h2>
           <invest-progress-bar :sale="sale" :barHeight="'1.2rem'"/>
         </div>
         <div class="sale-details__information-item">
@@ -29,7 +33,7 @@
     <div class="sale-details__content sale-details__main-info">
       <sale-tabs class="sale-details__tabs" :sale="sale"/>
       <div class="sale-details__information">
-        <sale-token class="sale-details__information-item" :sale="sale" :token="token" />
+          <sale-token class="sale-details__information-item" :sale="sale" :token="token" />
       </div>
     </div>
   </div>
@@ -44,7 +48,6 @@
   import { i18n } from '../../../../js/i18n'
 
   import SaleToken from './components/Sales.Token'
-  import SaleBanner from './components/Sales.Banner'
   import SaleInvest from './components/Sales.Invest'
   import SaleTabs from './Sales.Tabs'
   import InvestProgressBar from '../sale_card/Sales.ProgressBar'
@@ -53,7 +56,6 @@
     name: 'sale-details',
     props: ['id'],
     components: {
-      SaleBanner,
       SaleInvest,
       InvestProgressBar,
       SaleTabs,
@@ -68,14 +70,7 @@
     async created () {
       if (this.id) {
         await this.loadDetails()
-        // await Promise.all([
-        //   this.sale.loadSyndicateDetails(),
-        //   this.sale.loadDescriptionIfExists()
-        // ])
       }
-    },
-
-    computed: {
     },
 
     methods: {
@@ -85,6 +80,10 @@
       async loadDetails () {
         this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
         this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset))
+        await Promise.all([
+          this.sale.loadDescriptionIfExists(),
+          this.sale.loadSyndicateDetails()
+        ])
       }
     },
 
@@ -96,12 +95,19 @@
 <style lang="scss">
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
-
+  $ratio_16: 370px;
+  $ratio_9: $ratio_16 * (9/16);
+  
   .sale-details {
     padding: 24px;
     background: $col-content-block;
     border-radius: 2px;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .sale-details__header-item {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .sale-details__content {
@@ -120,6 +126,14 @@
       }
     }
 
+    .sale-details__banner-image {
+      width: $ratio_16;
+      height: $ratio_9;
+      min-width: 100%;
+      min-height: 100%;
+      vertical-align: middle;
+    }
+    
     .sale-details__information {
       width: 38%;
       border-top: 2px solid $col-active;
@@ -156,6 +170,17 @@
     display: flex;
     font-size: 24px;
     margin-bottom: 24px;
+    .sale-details__name {
+      font-weight: bold;
+    }
+    .sale-details__owner {
+      font-size: 75%;
+      margin-left: 1rem;
+      @include respond-to(small) {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    }
   }
 
  .sale-details__description {

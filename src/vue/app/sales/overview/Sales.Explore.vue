@@ -9,11 +9,9 @@
         <div class="sales-overview__card-wrapper"
                 v-for="sale in sales"
                 :key="sale.id"
+                @click="goSaleDetails(sale.id, sale.baseAsset)"
         >
           <fund-card class="sales-overview__card" :sale="sale"/>
-          <md-card-actions>
-              <md-button class="sales-overview__btn" @click="goSaleDetails(sale.id, sale.baseAsset)">Learn more</md-button>
-          </md-card-actions>
         </div>
 
       </div>
@@ -130,7 +128,7 @@
     display: block;
     background: $col-content-block;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
-
+    cursor: pointer;
     margin-bottom: 1.5rem;
     font-size: initial;
     text-align: initial;

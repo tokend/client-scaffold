@@ -17,7 +17,7 @@
         <span class="token-info__value">{{ i18n.cc(sale.hardCap) }}</span>
       </p>
     </div>
-    <a :href="token.termsUrl" target="_blank">View Token Sale Agreement</a>
+    <a :href="token.termsUrl" target="_blank">{{ i18n.sale_token_sale_agreement() }}</a>
   </div>
 </template>
 
@@ -27,23 +27,9 @@
   export default {
     name: 'sale-details-tokenInfo',
     props: ['sale', 'token'],
-    components: { },
-
     data: _ => ({
       i18n
-    }),
-
-    created () {
-    },
-
-    computed: {
-    },
-
-    methods: {
-    },
-
-    watch: {
-    }
+    })
   }
 </script>
 

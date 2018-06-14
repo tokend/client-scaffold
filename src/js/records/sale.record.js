@@ -124,18 +124,16 @@ export class SaleRecord {
 
   async loadDescriptionIfExists () {
     if (!this.descriptionID) return
-    const blobDetails = await usersService.blobsOf().get(this.descriptionID)
-    this.descriptionBlob = blobDetails.attribute('value')
+    this.description = await usersService.blobsOf(this.owner).get(this.descriptionID)
   }
 
   async loadSyndicateDetails () {
-    const details = await accountsService.loadEmailByAccountId(this.owner)
+    this.syndicateEmail = await accountsService.loadEmailByAccountId(this.owner)
     const filters = {
       [blobFilters.fundOwner]: this.owner,
       [blobFilters.type]: blobTypes.syndicate_kyc.num
     }
     const syndicateDetails = (await usersService.blobsOf(this.owner).getAll(filters))[0]
-    this.syndicateEmail = details.email
     this.syndicateDetails = syndicateDetails
   }
 }

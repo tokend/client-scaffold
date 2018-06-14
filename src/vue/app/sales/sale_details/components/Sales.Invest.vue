@@ -1,7 +1,7 @@
 <template>
   <div class="invest">
     <div class="invest__row">
-      <h2 class="invest__header">Investing</h2>
+      <h2 class="invest__header">{{i18n.sale_investing()}}</h2>
       <select-field v-model="form.quoteAsset"
                     :values="sale.quoteAssetCodes"
                     class="invest__select-quoteAssets"
@@ -21,7 +21,7 @@
             :class="{ 'invest__available--error': limitExceeded }"
             >
           Available:
-          <span class="invest__available-amount">{{ available }}</span>
+          <span class="invest__available-amount">{{ i18n.c(available) }}</span>
           <span class="invest__available-asset">{{ form.quoteAsset }}</span>
         </div>
       </div>
@@ -32,18 +32,17 @@
                       id="investment_converted"
                       type="number"
                       :disabled="true"
-                      :label="`In ${sale.defaultQuoteAsset }`"
+                      :label="i18n.sale_get_asset({ asset: sale.defaultQuoteAsset })"
         />
       </div>
     </div>
-        <!-- <div class="invest__tip">
-      Tokens will only be issued if the funding target is reached by
-      {{ humanizeDate(sale.endTime) }}
-    </div> -->
+    <div class="invest__tip">
+      {{ i18n.sale_tip({ endTime: i18n.d(sale.endTime) })}}
+    </div>
     <div class="invest__actions">
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || ownerOfThisSale || form.convertedAmount > sale.hardCap">Invest</md-button>
+                 :disabled="isPending || ownerOfThisSale || form.convertedAmount > sale.hardCap">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -51,7 +50,6 @@
 <script>
   import FormMixin from '../../../../common/mixins/form.mixin'
   import { i18n } from '../../../../../js/i18n'
-  import { localizeBase } from '../../../../../js/utils/format-num.util'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../vuex/types'
   import _get from 'lodash/get'
@@ -121,7 +119,6 @@
       setTokenCode () {
         this.form.quoteAsset = this.sale.quoteAssetCodes[0] || null
       },
-      localizeBase,
 
       async loadOffers () {
         const response = await offersService.loadUserSaleOffers(this.sale.id)

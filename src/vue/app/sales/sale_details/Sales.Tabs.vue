@@ -5,34 +5,14 @@
         <description-tab :sale="sale" />
       </div>
     </md-tab>
-    <md-tab name="token"  md-label="Token" md-disabled>
+    <md-tab name="crowdfund"  md-label="Crowdfund">
       <div class="tabs__tab-inner">
-        sad
+        <crowdfund-tab :sale="sale" />
       </div>
     </md-tab>
-    <md-tab name="updates"  md-label="Updates" md-disabled>
+    <md-tab name="documents"  md-label="Video">
       <div class="tabs__tab-inner">
-        sad
-      </div>
-    </md-tab>
-    <md-tab name="crowdfund"  md-label="Crowdfund" md-disabled>
-      <div class="tabs__tab-inner">
-        sad
-      </div>
-    </md-tab>
-    <md-tab name="documents"  md-label="Documents " md-disabled>
-      <div class="tabs__tab-inner">
-        sad
-      </div>
-    </md-tab>
-    <md-tab name="nav"  md-label="Nav" md-disabled>
-      <div class="tabs__tab-inner">
-        sad
-      </div>
-    </md-tab>
-    <md-tab name="governance"  md-label="Governance" md-disabled>
-      <div class="tabs__tab-inner">
-        sad
+        <sale-banner :sale="sale" />
       </div>
     </md-tab>
   </md-tabs>
@@ -41,11 +21,15 @@
 
 <script>
   import DescriptionTab from './tabs/Sales.DescriptionTab'
+  import CrowdfundTab from './tabs/Sales.CrowdfundTab'
+  import SaleBanner from './components/Sales.Banner'
   export default {
     name: 'sale-details-tabs',
     props: ['sale'],
     components: {
-      DescriptionTab
+      DescriptionTab,
+      CrowdfundTab,
+      SaleBanner
     }
   }
 </script>

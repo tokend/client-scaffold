@@ -139,5 +139,6 @@ export default {
   lbl_fee_from_source: 'Sender paid fees',
   lbl_sender_fee_asset: 'Sender fee asset',
   lbl_recipient_fee_asset: 'Recipient fee asset',
-  lbl_sort_by: 'Sort by'
+  lbl_sort_by: 'Sort by',
+  lbl_information: 'Information'
 }

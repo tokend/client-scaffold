@@ -106,12 +106,88 @@ html,body {
     padding-left: 0;
   }
 
-  & .md-tabs-navigation {
-    overflow: auto;
-  }
-
   & .md-tabs-content {
     height: 100% !important;
+  }
+
+  & .markdown-formatter,
+  & .editor-preview {
+    font-size: $fs-root;
+
+    p, ul, ol, li {
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    ul {
+      display: block;
+      margin: 0 0 1em;
+      padding: 0 0 0 4em;
+
+      & > li {
+        list-style-type: disc;
+      }
+    }
+
+    ol {
+      display: block;
+      margin: 0 0 1em;
+      padding: 0 0 0 4em;
+
+      & > li {
+        list-style-type: decimal;
+      }
+    }
+
+    h1 {
+      display: block;
+      font-size: 2em;
+      margin: 0.67em 0;
+      font-weight: 300;
+    }
+
+    h2 {
+      display: block;
+      font-size: 1.5em;
+      margin: 0.83em 0;
+      font-weight: 300;
+    }
+
+    h3 {
+      display: block;
+      font-size: 1.17em;
+      margin: 1em 0;
+      font-weight: bold;
+    }
+
+    h4 {
+      display: block;
+      font-size: 1em;
+      margin: 1.33em 0;
+      font-weight: bold;
+    }
+
+    h5 {
+      display: block;
+      font-size: .83em;
+      margin: 1.67em 0;
+      font-weight: bold;
+    }
+
+    h6 {
+      display: block;
+      font-size: .67em;
+      margin: 2.33em 0;
+      font-weight: bold;
+    }
+
+    img {
+      max-width: 100%;
+    }
   }
 }
 

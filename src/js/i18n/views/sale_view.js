@@ -19,7 +19,13 @@ export default {
   sale_start_new_sale: 'Start new sale',
   sale_quote_assets: 'Accept investments in:',
   sale_confirm: 'Please confirm a sale creation',
-  sale_get_asset: 'Get %{asset}',
+  sale_get_asset: 'In %{asset}',
   sale_invest_asset: 'Invest %{asset}',
-  sale_offer_created: 'Invested successfully. Your account will be funded with %{asset} once the fund succeed'
+  sale_offer_created: 'Invested successfully. Your account will be funded with %{asset} once the fund succeed',
+  sale_token_sale_agreement: 'View Token Sale Agreement',
+  sale_by_owner: 'by %{owner}',
+  sale_invest: 'Invest',
+  sale_investing: 'Investing',
+  sale_tip: 'Tokens will only be issued if the funding target is reached by %{endTime}',
+  sale_corporate_details: 'Corporate details'
 }
