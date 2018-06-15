@@ -1,7 +1,6 @@
 <template>
   <div class="invest">
     <div class="invest__row">
-      <h2 class="invest__header">{{i18n.sale_investing()}}</h2>
       <select-field v-model="form.quoteAsset"
                     :values="sale.quoteAssetCodes"
                     class="invest__select-quoteAssets"
@@ -36,9 +35,9 @@
         />
       </div>
     </div>
-    <div class="invest__tip">
+    <!-- <div class="invest__tip">
       {{ i18n.sale_tip({ endTime: i18n.d(sale.endTime) })}}
-    </div>
+    </div> -->
     <div class="invest__actions">
       <md-button class="md-primary invest__btn"
                  @click="invest"
@@ -78,7 +77,6 @@
     created () {
       this.setTokenCode()
       this.loadOffers()
-      console.log(this.price)
     },
     computed: {
       ...mapGetters([
@@ -130,9 +128,7 @@
         this.offers = records.map(record => RecordFactory.createOfferRecord(record))
       },
       async invest () {
-        if (!await this.isValid()) {
-          return
-        }
+        if (!await this.isValid()) return
         this.disableLong()
         try {
           const offerFees = await feeService.loadOfferFeeByAmount(this.form.quoteAsset, multiply(this.form.amount, this.price))
@@ -174,6 +170,10 @@
   @import '../../../../../scss/variables';
   @import '../../../../../scss/mixins';
 
+  .invest {
+    margin-top: 2rem;
+  }
+  
   .invest__header {
     font-weight: bold;
     margin-bottom: 1.5rem;

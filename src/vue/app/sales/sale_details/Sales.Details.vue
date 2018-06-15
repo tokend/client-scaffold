@@ -8,7 +8,7 @@
         </a>
         <div class="sale-details__header-item">
           <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
-          <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: sale.syndicateEmail }) }}</span>
+          <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: sale.syndicateEmail }) }}</span> -->
         </div>
       </div>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
@@ -21,7 +21,6 @@
       </div>
       <div class="sale-details__information">
         <div class="sale-details__information-item">
-          <h2 class="information-item__title">{{ i18n.lbl_information() }}</h2>
           <invest-progress-bar :sale="sale" :barHeight="'1.2rem'"/>
         </div>
         <div class="sale-details__information-item">
