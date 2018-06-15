@@ -27,5 +27,7 @@ export default {
   sale_invest: 'Invest',
   sale_investing: 'Investing',
   sale_tip: 'Tokens will only be issued if the funding target is reached by %{endTime}',
-  sale_corporate_details: 'Corporate details'
+  sale_corporate_details: 'Corporate details',
+  sale_crowdfund_team: 'Crowdfund team',
+  sale_crowdfund_leader: 'Crowdfund leader'
 }

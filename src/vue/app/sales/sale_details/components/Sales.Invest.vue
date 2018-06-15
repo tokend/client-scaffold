@@ -42,7 +42,7 @@
     <div class="invest__actions">
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || ownerOfThisSale || form.convertedAmount > sale.hardCap">{{i18n.sale_invest()}}</md-button>
+                 :disabled="isPending || ownerOfThisSale || hardCapExceeded">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -78,6 +78,7 @@
     created () {
       this.setTokenCode()
       this.loadOffers()
+      console.log(this.price)
     },
     computed: {
       ...mapGetters([
@@ -113,6 +114,9 @@
       limitExceeded () {
         if (!this.form.amount) return false
         return this.available <= 0
+      },
+      hardCapExceeded () {
+        return parseFloat(this.form.convertedAmount) > parseFloat(this.sale.hardCap)
       }
     },
     methods: {
@@ -140,7 +144,6 @@
             price: this.price,
             orderBookId: this.sale.id
           } : null
-
           const createOpts = this.form.amount > 0 ? {
             amount: this.form.amount,
             price: this.price,
@@ -150,7 +153,6 @@
             quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
             fee: offerFees.percent
           } : null
-
           await offersService.createSaleOffer(createOpts, cancelOpts)
           this.$emit(commonEvents.investInSale)
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))

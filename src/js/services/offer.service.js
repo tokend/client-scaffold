@@ -25,8 +25,13 @@ export class OffersService extends Service {
   }
 
   async createSaleOffer (createOpts, cancelOpts) {
-    if (cancelOpts) { await this.cancelOffer(cancelOpts) }
-    if (createOpts) { await this.createOffer(createOpts) }
+    const removeOfferOperation = cancelOpts ? await this._composeCancelOfferOperation(cancelOpts) : null
+    const createOfferOperation = cancelOpts ? await this._composeCreateOfferOperation(createOpts) : null
+    return this._operationBuilder
+      .operation()
+      .add(removeOfferOperation)
+      .add(createOfferOperation)
+      .submit(this._accountId, this._keypair)
   }
   /**
    * @param {object} opts
