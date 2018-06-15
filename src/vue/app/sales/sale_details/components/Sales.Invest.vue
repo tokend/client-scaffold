@@ -24,15 +24,10 @@
           <span class="invest__available-asset">{{ form.quoteAsset }}</span>
         </div>
       </div>
+      <i class="invest__convert-icon material-icons">compare_arrows</i>
       <div class="get__input-quote-wrp">
-        <input-field title="Get quote"
-                      v-model="form.convertedAmount"
-                      name="investment_converted"
-                      id="investment_converted"
-                      type="number"
-                      :disabled="true"
-                      :label="i18n.sale_get_asset({ asset: sale.defaultQuoteAsset })"
-        />
+        <span class="investment_converted-label">{{i18n.sale_get_asset({ asset: sale.defaultQuoteAsset })}}</span>
+        <span class="investment_converted">{{ form.convertedAmount }}</span>
       </div>
     </div>
     <!-- <div class="invest__tip">
@@ -151,6 +146,7 @@
           } : null
           await offersService.createSaleOffer(createOpts, cancelOpts)
           this.$emit(commonEvents.investInSale)
+          this.loadOffers()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
         } catch (error) { ErrorHandler.processUnexpected(error) }
         this.enable()
@@ -170,10 +166,6 @@
   @import '../../../../../scss/variables';
   @import '../../../../../scss/mixins';
 
-  .invest {
-    margin-top: 2rem;
-  }
-  
   .invest__header {
     font-weight: bold;
     margin-bottom: 1.5rem;
@@ -194,6 +186,20 @@
   .invest__input-quote-wrp,
   .get__input-quote-wrp {
     width: 40%;
+  }
+
+  .get__input-quote-wrp {
+    display: flex;
+    flex-direction: column;
+    & .investment_converted-label {
+      font-size: 0.75rem;
+    }
+    
+    & .investment_converted {
+      font-size: 1rem;
+      line-height: 2rem;
+      border-bottom: 1px solid $col-primary;
+    }
   }
 
   .invest__available {
@@ -246,4 +252,7 @@
     }
   }
 
+  .invest__convert-icon {
+    align-self: center;
+  }
 </style>

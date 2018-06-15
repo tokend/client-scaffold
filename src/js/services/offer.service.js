@@ -160,36 +160,5 @@ export class OffersService extends Service {
       }
     }
   }
-
-  // TODO: need refactor + doc
-  // async createSaleOffer (opts, oldOffer, orderBookID) {
-  //   const offerFees = await feeService.loadOfferFeeByAmount(opts.quoteAsset, multiply(opts.amount, opts.price))
-  //   const baseBalance = await getBaseBalanceID(opts.code)
-  //   const quoteBalance = store.getters.accountBalances[opts.quoteAsset].balance_id
-
-  //   const createOfferOperation = Number(opts.amount) > 0 ? ManageOfferBuilder.manageOffer({
-  //     amount: opts.amount,
-  //     baseBalance: baseBalance,
-  //     quoteBalance: quoteBalance,
-  //     isBuy: true,
-  //     price: opts.price,
-  //     orderBookID: opts.saleID,
-  //     fee: offerFees.percent
-  //   }) : null
-
-  //   const removeOfferOperation = oldOffer ? ManageOfferBuilder.cancelOffer({
-  //     baseBalance: baseBalance,
-  //     quoteBalance: quoteBalance,
-  //     offerID: oldOffer.id.toString(),
-  //     price: opts.price,
-  //     orderBookID
-  //   }) : null
-
-  //   return this._operationBuilder
-  //     .operation()
-  //     .add(removeOfferOperation)
-  //     .add(createOfferOperation)
-  //     .submit(this._accountId, this._keypair)
-  // }
 }
 export const offersService = new OffersService()

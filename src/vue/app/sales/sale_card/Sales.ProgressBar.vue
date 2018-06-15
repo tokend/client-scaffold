@@ -4,7 +4,7 @@
       <span class="invest-progress-bar__detail">Buy
         <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.baseHardCap) }}</span> 
         {{sale.baseAsset}} for
-        <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.hardCap) }}</span>
+        <span class="invest-progress-bar__detail-value">{{ i18n.fc(sale.hardCap) }}</span>
         {{sale.defaultQuoteAsset}}
         </span>
     </div>
@@ -14,7 +14,7 @@
     </div>
     <div class="invest-progress-bar__details">
       <span class="invest-progress-bar__detail">
-        <span class="invest-progress-bar__detail-value">{{ sale.currentCap }} {{sale.defaultQuoteAsset}}</span>
+        <span class="invest-progress-bar__detail-value">{{ i18n.fc(sale.currentCap) }} {{sale.defaultQuoteAsset}}</span>
          invested
       </span>
       <span class="invest-progress-bar__detail">

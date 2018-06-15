@@ -25,7 +25,7 @@ import trade from './views/trade_view'
 import companyView from './views/company_view'
 import common from './views/common'
 
-import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
+import { formatConvertedCurrency, formatCurrency, formatNumber, formatFixedCurrency } from './numbers'
 import { humanizePastDate } from '../utils/dates.util'
 
 import Polyglot from 'node-polyglot'
@@ -72,5 +72,6 @@ export const i18n = {
   n: formatNumber(),
   c: formatCurrency(),
   cc: formatConvertedCurrency(),
+  fc: formatFixedCurrency(),
   d: humanizePastDate
 }

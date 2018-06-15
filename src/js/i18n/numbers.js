@@ -24,6 +24,10 @@ export function formatCurrency (locale = 'en') {
   return numberFormatter.formatMoney
 }
 
+export function formatFixedCurrency (locale = 'en') {
+  return (n) => `${numberFormatter.formatMoney(n, '', 0, ',', '.', '%s%v')}`
+}
+
 export function formatConvertedCurrency (locale = 'en') {
   numberFormatter.settings = locales[locale]
   return (n) => `${locales[locale].symbol}${numberFormatter.toFixed(numberFormatter.formatMoney(n), DEFAULT_CONVERSION_PRESICION)}`

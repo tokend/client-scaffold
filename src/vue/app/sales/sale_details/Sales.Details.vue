@@ -17,11 +17,13 @@
       <div class="sale-details__banner">
         <img class="sale-details__banner-image" 
              :src="sale.image" 
-             alt="">
+             alt="crowdfund banner">
       </div>
       <div class="sale-details__information">
         <div class="sale-details__information-item">
-          <invest-progress-bar :sale="sale" :barHeight="'1.2rem'"/>
+          <invest-progress-bar class="invest-progress-bar"
+                               :sale="sale" 
+                               :barHeight="'1.2rem'"/>
         </div>
         <div class="sale-details__information-item">
           <sale-invest :sale="sale"
@@ -39,7 +41,6 @@
 </template>
 
 <script>
-  // import { mapGetters, mapActions } from 'vuex'
   import { salesService } from '../../../../js/services/sales.service'
   import { tokensService } from '../../../../js/services/tokens.service'
   import { SaleRecord } from '../../../../js/records/sale.record'
@@ -84,9 +85,6 @@
           this.sale.loadSyndicateDetails()
         ])
       }
-    },
-
-    watch: {
     }
   }
 </script>
@@ -116,14 +114,13 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 24px;
-    flex-wrap: wrap;
-    @include respond-to(large) {
+    @include respond-to(medium) {
       flex-direction: column;
     }
     .sale-details__banner,
     .sale-details__tabs {
       width: 60%;
-      @include respond-to(large) {
+      @include respond-to(medium) {
         width: 100%;
       }
     }
@@ -133,6 +130,7 @@
       height: $ratio_9;
       min-width: 100%;
       min-height: 100%;
+      object-fit: cover;
       vertical-align: middle;
     }
     
@@ -147,23 +145,14 @@
       .sale-details__information-item {
         width: 100%;
       }
-      @include respond-to(large) {
+      @include respond-to(medium) {
         width: 100%;
-        flex-direction: row;
-        .sale-details__information-item {
-          width: 45%;
-        }
-      }
-      @include respond-to(small) {
-        .sale-details__information-item {
-          width: 100%;
-        }
       }
     }
   }
 
   .sale-details__main-info {
-    @include respond-to(large) {
+    @include respond-to(medium) {
       flex-direction: column-reverse;
     }
   }
@@ -204,5 +193,9 @@
   .information-item__title {
     margin-top: 24px;
     margin-bottom: 48px;
+  }
+
+  .invest-progress-bar {
+    margin-top: 1rem;
   }
 </style>
