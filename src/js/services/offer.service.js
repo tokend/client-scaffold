@@ -3,12 +3,6 @@ import config from '../../config'
 import { Service } from './service'
 import { ManageOfferBuilder } from 'swarm-js-sdk'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../const/const'
-// import { feeService } from './fees.service'
-// import { multiply } from '../utils/math.util'
-
-// import accounts from './accounts.service'
-// import store from '../../vuex'
-// import users from './users.service'
 
 export class OffersService extends Service {
   /**
@@ -24,6 +18,13 @@ export class OffersService extends Service {
       .submit(this._accountId, this._keypair)
   }
 
+  /**
+   * Creates sale offer
+   *
+   * @param {object} createOpts {@borrows _composeCreateOfferOperation}
+   * @param {object} cancelOpts {@borrows _composeCancelOfferOperation}
+   * @returns {Promise<object>} - Promise object representing creation of sale offer
+   */
   async createSaleOffer (createOpts, cancelOpts) {
     const removeOfferOperation = cancelOpts ? await this._composeCancelOfferOperation(cancelOpts) : null
     const createOfferOperation = cancelOpts ? await this._composeCreateOfferOperation(createOpts) : null

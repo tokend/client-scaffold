@@ -21,11 +21,9 @@ const locales = {
 
 export function formatCurrency (locale = 'en') {
   numberFormatter.settings = locales[locale]
-  return numberFormatter.formatMoney
-}
-
-export function formatFixedCurrency (locale = 'en') {
-  return (n) => `${numberFormatter.formatMoney(n, '', 0, ',', '.', '%s%v')}`
+  return (n) => {
+    return removeZeros(numberFormatter.formatMoney(n))
+  }
 }
 
 export function formatConvertedCurrency (locale = 'en') {
@@ -36,4 +34,15 @@ export function formatConvertedCurrency (locale = 'en') {
 export function formatNumber (locale = 'en') {
   numberFormatter.settings = locales[locale]
   return numberFormatter.formatNumber
+}
+
+function removeZeros (numString) {
+  const splittedString = numString.split('.')
+  const floatValue = numString.substring(numString.indexOf('.') - 1)
+  const noZeros = parseFloat(floatValue)
+  if (noZeros === '0') {
+    return splittedString[0]
+  } else {
+    return splittedString[0] + noZeros.toString().substring(1)
+  }
 }

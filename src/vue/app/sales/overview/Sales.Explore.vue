@@ -6,14 +6,13 @@
     /> 
     <template v-if="sales.length > 0">
       <div class="md-layout md-gutter md-layout-item md-size-90 md-alignment-center-space-around sales-overview__sale-overview-inner">
-        <div class="sales-overview__card-wrapper"
-                v-for="sale in sales"
-                :key="sale.id"
-                @click="goSaleDetails(sale.id, sale.baseAsset)"
-        >
+        <router-link v-for="sale in sales"
+                    :key="sale.id"
+                    :to="{name: 'sales.sale-details', params: { id: sale.id }}"
+                    tag="div"
+                    class="sales-overview__card-wrapper">
           <fund-card class="sales-overview__card" :sale="sale"/>
-        </div>
-
+        </router-link>
       </div>
     </template>
     <template v-if="sales.length && !isSalesLoaded">
@@ -81,9 +80,6 @@
         loadSales: vuexTypes.GET_SALES,
         loadNext: vuexTypes.NEXT_SALES
       }),
-      goSaleDetails (id, name) {
-        this.$router.push({ name: 'sales.sale-details', params: { id } })
-      },
       loadFilteredSales (filters) {
         if (filters) {
           this.filters.openOnly = filters.state.openOnly

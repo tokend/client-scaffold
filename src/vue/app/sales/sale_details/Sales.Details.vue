@@ -2,10 +2,9 @@
   <div class="sale-details" v-if="this.sale && this.token">
     <div class="sale-details__header">
       <div class="sale-details__name-wrapper">
-        <a class="back-btn"
-                   @click="goBack">
+        <router-link to='/sales/explore' class="back-btn">
           <i class="material-icons">arrow_back</i>
-        </a>
+        </router-link>
         <div class="sale-details__header-item">
           <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
           <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: sale.syndicateEmail }) }}</span> -->
@@ -74,12 +73,11 @@
     },
 
     methods: {
-      goBack () {
-        this.$router.push({ name: 'sales.explore' })
-      },
       async loadDetails () {
         this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
         this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset))
+        // this.description = await salesService.loadDescriptionIfExists(this.sale.owner, this.sale.descriptionID)
+        // this.syndicate = await salesService.loadSyndicateDetails(this.owner)
         await Promise.all([
           this.sale.loadDescriptionIfExists(),
           this.sale.loadSyndicateDetails()

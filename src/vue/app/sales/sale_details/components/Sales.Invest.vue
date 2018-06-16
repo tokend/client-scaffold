@@ -27,7 +27,7 @@
       <i class="invest__convert-icon material-icons">compare_arrows</i>
       <div class="get__input-quote-wrp">
         <span class="investment_converted-label">{{i18n.sale_get_asset({ asset: sale.defaultQuoteAsset })}}</span>
-        <span class="investment_converted">{{ form.convertedAmount }}</span>
+        <span class="investment_converted">{{ i18n.c(form.convertedAmount) }}</span>
       </div>
     </div>
     <!-- <div class="invest__tip">

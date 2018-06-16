@@ -1,6 +1,8 @@
 import { SaleRequestBuilder, ManageAssetBuilder } from 'swarm-js-sdk'
 import { Service } from './service'
+import { usersService } from './users.service'
 import config from '../../config'
+import { blobFilters, blobTypes } from '../const/const'
 
 export class SalesService extends Service {
   /**
@@ -108,6 +110,22 @@ export class SalesService extends Service {
     return this._horizonRequestBuilder.sales()
       .sale(id)
       .callWithSignature(this._keypair)
+  }
+
+  async loadDescriptionIfExists (owner, descriptionID) {
+    if (!descriptionID) return
+    const description = await usersService.blobsOf(owner).get(descriptionID)
+    return description
+  }
+
+  async loadSyndicateDetails (owner) {
+    // this.syndicateEmail = await accountsService.loadEmailByAccountId(this.owner)
+    const filters = {
+      [blobFilters.fundOwner]: owner,
+      [blobFilters.type]: blobTypes.syndicate_kyc.num
+    }
+    const syndicateDetails = await usersService.blobsOf(owner).getAll(filters)[0]
+    return syndicateDetails
   }
 }
 
