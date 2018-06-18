@@ -32,7 +32,27 @@
               </md-steppers>
             </md-card-content>
           </md-card>
-        
+          <md-dialog-confirm
+            :md-active.sync="showConfirmCreation"
+            :md-title="i18n.sale_confirm()"
+            :md-confirm-text="i18n.lbl_confirm()"
+            :md-cancel-text="i18n.lbl_cancel()"
+            :disabled="isPending"
+            @md-cancel="showConfirmCreation=false"
+            @md-confirm="confirmSaleCreation" />
+          <!-- <md-dialog :md-active.sync="showConfirmCreation">
+            <md-card class="create-sale__confirmation">
+              <md-card-content>
+                <p></p>
+                <div class="create-sale__actions">
+                  <md-button @click="confirmSaleCreation" class="md-primary"
+                            :disabled="isPending">{{ i18n.lbl_confirm() }}</md-button>
+                  <md-button @click="showConfirmCreation=false" class="md-primary"
+                            :disabled="isPending">{{ i18n.lbl_cancel() }}</md-button>
+                </div>
+              </md-card-content>
+            </md-card>
+        </md-dialog> -->
 
       </template>
 
@@ -44,20 +64,6 @@
           <md-card-content>
             <md-button @click="startNewSale">{{ i18n.sale_start_new_sale() }}</md-button>
             <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
-          </md-card-content>
-        </md-card>
-      </template>
-      
-      <template v-if="view.mode === VIEW_MODES.confirm">
-        <md-card class="create-sale__confirmation">
-          <md-card-content>
-            <p>{{ i18n.sale_confirm() }}</p>
-            <div class="create-sale__actions">
-              <md-button @click="confirmSaleCreation" class="md-primary"
-                        :disabled="isPending">{{ i18n.lbl_confirm() }}</md-button>
-              <md-button @click="view.mode = VIEW_MODES.edit" class="md-primary"
-                        :disabled="isPending">{{ i18n.lbl_cancel() }}</md-button>
-            </div>
           </md-card-content>
         </md-card>
       </template>
@@ -98,6 +104,7 @@
       view: {
         mode: null
       },
+      showConfirmCreation: false,
       VIEW_MODES
     }),
     async created () {
@@ -147,12 +154,11 @@
         this.activeStep = (steps[i + 1] || steps[0]).name
       },
       async handleSaleEditEnd () {
-        this.view.mode = VIEW_MODES.confirm
+        this.showConfirmCreation = true
         await this.listManager.fetch()
       },
       async confirmSaleCreation () {
         const opts = get(this.sale.getDetailsForSave(), 'details.sale')
-        console.log(opts)
         this.disable()
         try {
           await salesService.createSaleCreationRequest({

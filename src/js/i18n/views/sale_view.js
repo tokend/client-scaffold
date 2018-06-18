@@ -29,5 +29,9 @@ export default {
   sale_tip: 'Tokens will only be issued if the funding target is reached by %{endTime}',
   sale_corporate_details: 'Corporate details',
   sale_crowdfund_team: 'Crowdfund team',
-  sale_crowdfund_leader: 'Crowdfund leader'
+  sale_crowdfund_leader: 'Crowdfund leader',
+  sale_accept_investments: 'Please select asset(s) in which you will accept investments',
+  sale_disable_invest_owners: 'Owners of the sale cant invest themselves',
+  sale_disable_invest_hardcap_exceed: 'Investing amount has exceeded hard cap',
+  sale_disable_invest_upcoming_sale: 'Upcoming sales are not investable'
 }

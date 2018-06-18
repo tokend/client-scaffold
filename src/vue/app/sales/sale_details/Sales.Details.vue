@@ -7,7 +7,7 @@
         </router-link>
         <div class="sale-details__header-item">
           <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
-          <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: sale.syndicateEmail }) }}</span> -->
+          <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: syndicateEmail }) }}</span> -->
         </div>
       </div>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
@@ -31,7 +31,11 @@
       </div>
     </div>
     <div class="sale-details__content sale-details__main-info">
-      <sale-tabs class="sale-details__tabs" :sale="sale"/>
+      <sale-tabs class="sale-details__tabs" 
+                 :sale="sale"
+                 :description="description"
+                 :syndicate="syndicate"
+                 />
       <div class="sale-details__information">
           <sale-token class="sale-details__information-item" :sale="sale" :token="token" />
       </div>
@@ -63,6 +67,9 @@
     data: _ => ({
       sale: '',
       token: '',
+      description: '',
+      syndicate: {},
+      syndicateEmail: '',
       i18n
     }),
 
@@ -76,12 +83,10 @@
       async loadDetails () {
         this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
         this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset))
-        // this.description = await salesService.loadDescriptionIfExists(this.sale.owner, this.sale.descriptionID)
-        // this.syndicate = await salesService.loadSyndicateDetails(this.owner)
-        await Promise.all([
-          this.sale.loadDescriptionIfExists(),
-          this.sale.loadSyndicateDetails()
-        ])
+        this.description = await salesService.loadDescriptionIfExists(this.sale.owner, this.sale.descriptionID)
+        // const syndicateDetails = await salesService.loadSyndicateDetails(this.sale.owner)
+        // this.syndicateEmail = syndicateDetails.syndicateEmail
+        // this.syndicate = syndicateDetails.syndicateDetails
       }
     }
   }
@@ -94,7 +99,7 @@
   $ratio_9: $ratio_16 * (9/16);
   
   .sale-details {
-    padding: 24px;
+    padding: 1.5rem;
     background: $col-content-block;
     border-radius: 2px;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
@@ -111,13 +116,13 @@
   .sale-details__content {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
     @include respond-to(medium) {
       flex-direction: column;
     }
     .sale-details__banner,
     .sale-details__tabs {
-      width: 60%;
+      width: 50%;
       @include respond-to(medium) {
         width: 100%;
       }
@@ -133,8 +138,7 @@
     }
     
     .sale-details__information {
-      width: 38%;
-      border-top: 2px solid $col-active;
+      width: 45%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -142,6 +146,7 @@
       justify-content: space-between;
       .sale-details__information-item {
         width: 100%;
+        margin-bottom: 2rem;
       }
       @include respond-to(medium) {
         width: 100%;
@@ -157,8 +162,8 @@
 
   .sale-details__name-wrapper {
     display: flex;
-    font-size: 24px;
-    margin-bottom: 24px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     .sale-details__name {
       font-weight: bold;
     }
@@ -173,13 +178,13 @@
   }
 
  .sale-details__description {
-    font-size: 16px;
-    margin-bottom: 48px;
+    font-size: 1rem;
+    margin-bottom: 3rem;
   }
 
  .back-btn {
     margin: 0;
-    margin-right: 24px;
+    margin-right: 1.5rem;
     min-width: 0;
     border-radius: 50%;
     cursor: pointer;
@@ -189,8 +194,8 @@
   }
 
   .information-item__title {
-    margin-top: 24px;
-    margin-bottom: 48px;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
   }
 
   .invest-progress-bar {

@@ -3,24 +3,24 @@
     <div class="crowdfund-details">
      <h3>{{ i18n.sale_corporate_details() }}</h3>
      <detail-row :prop="i18n.com_name()"
-                 :value="`${sale.syndicateDetails.name}`" />
+                 :value="`${syndicate.name}`" />
      <detail-row :prop="i18n.com_date_of_foundation()"
-                 :value="`${sale.syndicateDetails.founded}`" />
+                 :value="`${syndicate.founded}`" />
      <detail-row :prop="i18n.com_homepage()"
-                 :value="`<a href='${sale.syndicateDetails.homepage}' target='_blank'>${sale.syndicateDetails.homepage}</a>`" />
+                 :value="`<a href='${syndicate.homepage}' target='_blank'>${syndicate.homepage}</a>`" />
      <detail-row :prop="i18n.com_industry_tags()"
-                 :value="`${sale.syndicateDetails.industry}`" />
+                 :value="`${syndicate.industry}`" />
      <detail-row :prop="i18n.com_team_size()"
-                 :value="`${sale.syndicateDetails.teamSize}`" />
+                 :value="`${syndicate.teamSize}`" />
      <detail-row :prop="i18n.com_type()"
-                 :value="`${sale.syndicateDetails.company}`" />
+                 :value="`${syndicate.company}`" />
      <detail-row :prop="i18n.com_headquarters()"
-                 :value="`${sale.syndicateDetails.headquarters}`" />
+                 :value="`${syndicate.headquarters}`" />
     </div>
     <div class="crowdfund-team">
       <h3>{{ i18n.sale_crowdfund_team() }}</h3>
       <div class="crowdfund-team-list">
-        <template v-for="(item, i) in sale.syndicateDetails.members">
+        <template v-for="(item, i) in syndicate.members">
           <div  class="crowdfund-team-member"
                 :key="i">
             <img :src="getUrl(item)"
@@ -46,7 +46,7 @@
     components: {
       DetailRow
     },
-    props: ['sale'],
+    props: ['syndicate'],
     data: _ => ({
       i18n
     }),

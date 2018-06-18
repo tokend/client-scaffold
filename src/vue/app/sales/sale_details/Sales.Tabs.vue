@@ -1,16 +1,21 @@
 <template>
   <md-tabs class="tabs">
+    <md-tab name="Chart"  md-label="chart">
+      <div class="tabs__tab-inner">
+        <chart-tab :sale="sale" />
+      </div>
+    </md-tab>
     <md-tab name="Overview"  md-label="Overview">
       <div class="tabs__tab-inner">
-        <description-tab :sale="sale" />
+        <description-tab :description="description" />
       </div>
     </md-tab>
-    <md-tab name="crowdfund"  md-label="Crowdfund">
+    <!-- <md-tab name="crowdfund"  md-label="Crowdfund">
       <div class="tabs__tab-inner">
-        <crowdfund-tab :sale="sale" />
+        <crowdfund-tab :syndicate="syndicate" />
       </div>
-    </md-tab>
-    <md-tab name="documents"  md-label="Video">
+    </md-tab> -->
+    <md-tab name="Banner"  md-label="Video">
       <div class="tabs__tab-inner">
         <sale-banner :sale="sale" />
       </div>
@@ -23,13 +28,15 @@
   import DescriptionTab from './tabs/Sales.DescriptionTab'
   import CrowdfundTab from './tabs/Sales.CrowdfundTab'
   import SaleBanner from './components/Sales.Banner'
+  import ChartTab from './tabs/Sales.ChartTab'
   export default {
     name: 'sale-details-tabs',
-    props: ['sale'],
+    props: ['sale', 'description', 'syndicate'],
     components: {
       DescriptionTab,
       CrowdfundTab,
-      SaleBanner
+      SaleBanner,
+      ChartTab
     }
   }
 </script>

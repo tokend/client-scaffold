@@ -22,7 +22,7 @@ const locales = {
 export function formatCurrency (locale = 'en') {
   numberFormatter.settings = locales[locale]
   return (n) => {
-    return removeZeros(numberFormatter.formatMoney(n))
+    return numberFormatter.formatMoney(n).replace(/^0+(\d)|(\d)0+$/gm, '$1$2')
   }
 }
 
@@ -33,16 +33,7 @@ export function formatConvertedCurrency (locale = 'en') {
 
 export function formatNumber (locale = 'en') {
   numberFormatter.settings = locales[locale]
-  return numberFormatter.formatNumber
-}
-
-function removeZeros (numString) {
-  const splittedString = numString.split('.')
-  const floatValue = numString.substring(numString.indexOf('.') - 1)
-  const noZeros = parseFloat(floatValue)
-  if (noZeros === '0') {
-    return splittedString[0]
-  } else {
-    return splittedString[0] + noZeros.toString().substring(1)
+  return (n) => {
+    return numberFormatter.formatNumber(n)
   }
 }

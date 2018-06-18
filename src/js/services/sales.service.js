@@ -1,8 +1,9 @@
 import { SaleRequestBuilder, ManageAssetBuilder } from 'swarm-js-sdk'
 import { Service } from './service'
-import { usersService } from './users.service'
-import config from '../../config'
 import { blobFilters, blobTypes } from '../const/const'
+import { usersService } from './users.service'
+import { accountsService } from './accounts.service'
+import config from '../../config'
 
 export class SalesService extends Service {
   /**
@@ -112,20 +113,40 @@ export class SalesService extends Service {
       .callWithSignature(this._keypair)
   }
 
+  /**
+   * Loads description by it's id if its exist
+   *
+   * @param {string|number} owner - owner id
+   *
+   * @param {string|number} id - description id
+   *
+   * @returns {Promise<object>} - Promise object representing description
+   */
   async loadDescriptionIfExists (owner, descriptionID) {
     if (!descriptionID) return
     const description = await usersService.blobsOf(owner).get(descriptionID)
     return description
   }
 
+  /**
+   * Loads description by it's id if its exist
+   *
+   * @param {string|number} owner - owner id
+   *
+   * @returns {Promise<object>} - Promise object representing syndicate details
+   */
   async loadSyndicateDetails (owner) {
-    // this.syndicateEmail = await accountsService.loadEmailByAccountId(this.owner)
+    const syndicateEmail = await accountsService.loadEmailByAccountId(this.owner)
     const filters = {
       [blobFilters.fundOwner]: owner,
       [blobFilters.type]: blobTypes.syndicate_kyc.num
     }
-    const syndicateDetails = await usersService.blobsOf(owner).getAll(filters)[0]
-    return syndicateDetails
+    const syndicateDetails = (await usersService.blobsOf(owner).getAll(filters))[0]
+    const syndicate = {
+      syndicateEmail: syndicateEmail,
+      syndicateDetails: syndicateDetails
+    }
+    return syndicate
   }
 }
 

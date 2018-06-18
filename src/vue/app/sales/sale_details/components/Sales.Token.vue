@@ -38,7 +38,7 @@
   @import '../../../../../scss/mixins';
 
   .token-info{ 
-    padding: 24px;
+    padding: 1.5rem;
   }
 
   .token-info__header {

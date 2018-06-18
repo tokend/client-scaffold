@@ -31,7 +31,8 @@
                     v-validate="'required'"
                     name="sale-open-time"
                     id="sale-open-time"
-                    class="md-layout-item
+                    class="step__input-field
+                           md-layout-item
                            md-size-45
                            md-small-size-95
                            md-xsmall-size-100"
@@ -62,7 +63,7 @@
             }"
             class="step__input-field
                   md-layout-item
-                  md-size-31
+                  md-size-45
                   md-small-size-95
                   md-xsmall-size-100"
             name="sale-soft-cap"
@@ -78,7 +79,7 @@
             }"
             class="step__input-field
                   md-layout-item
-                  md-size-31
+                  md-size-45
                   md-small-size-95
                   md-xsmall-size-100"
             name="sale-hard-cap"
@@ -86,36 +87,37 @@
             :label="i18n.sale_hard_cap()"
             :errorMessage="errorMessage('sale-hard-cap')"
         />
-        <input-field v-model="form.baseAssetForHardCap"
-            v-validate="{
-                required: true, 
-                amount: true, 
-                max_value: avalaibleForIssuance
-            }"
-            class="step__input-field
-                  md-layout-item
-                  md-size-31
-                  md-small-size-95
-                  md-xsmall-size-100"
-            name="sale-base-asset-for-hard-cap"
-            id="sale-base-asset-for-hard-cap"
-            :label="i18n.sale_baseAsset_hardCap()"
-            :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
-        />
     </div>
-      <div class="step__switchers">
-        <h3>{{ i18n.sale_quote_assets() }}</h3>
-        <md-switch class="md-primary"
+    <div class="step-row md-layout baseAsset-input__row">
+      <input-field v-model="form.baseAssetForHardCap"
+                  v-validate="{
+                      required: true, 
+                      amount: true, 
+                      max_value: i18n.c(avalaibleForIssuance)
+                  }"
+                  class="step__input-field
+                        md-layout-item
+                        md-size-31
+                        md-small-size-95
+                        md-xsmall-size-100"
+                  name="sale-base-asset-for-hard-cap"
+                  id="sale-base-asset-for-hard-cap"
+                  :label="i18n.sale_baseAsset_hardCap()"
+                  :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
+      />
+    </div>
+    <div class="step__switchers">
+      <h3>{{ i18n.sale_quote_assets() }}</h3>
+      <md-switch class="md-primary"
                    v-for="(token,i) in walletTokens"
                    v-model="form.quoteAssets"
                    :value="token.code"
                    :key="i"
         >
           {{ token.code }}</md-switch>
-      </div>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat" 
+      <md-button type="submit" class="md-primary md-flat submit__btn" 
       :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>
@@ -177,5 +179,9 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+  }
+
+  .baseAsset-input__row {
+    margin-bottom: 1rem;
   }
 </style>

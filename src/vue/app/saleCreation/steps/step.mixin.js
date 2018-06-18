@@ -3,6 +3,7 @@ import FormMixin from '../../../common/mixins/form.mixin'
 
 import _pick from 'lodash/pick'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { commonEvents } from '../../../../js/events/common_events'
 import { fileService } from '../../../../js/services/file.service'
 import { i18n } from '../../../../js/i18n'
@@ -18,6 +19,7 @@ export default {
   }),
 
   created () {
+    console.log(this.schema)
     if (this.schema) {
       this.form = _pick(this.sale, Object.keys(this.schema.form))
       delete this.form.docs
@@ -32,7 +34,10 @@ export default {
   methods: {
     async submit () {
       if (!await this.isValid()) return
-      // if (!this.isValidDocs(this.schema.requiredDocs)) return
+      if (!this.form.quoteAssets.length) {
+        EventDispatcher.dispatchShowErrorEvent(i18n.sale_accept_investments())
+        return
+      }
       this.disable()
       try {
         await this.uploadDocuments()

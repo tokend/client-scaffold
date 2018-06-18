@@ -1,8 +1,8 @@
 <template>
   <div class="overview">
-    <template v-if="sale.description">
+    <template v-if="description">
       <markdown-formatter class="description__markdown-formatter"
-                          :source="sale.description"/>
+                          :source="description"/>
     </template>
 
     <template v-else>
@@ -22,7 +22,7 @@
     components: {
       MarkdownFormatter
     },
-    props: ['sale'],
+    props: ['description'],
     data: _ => ({
       i18n
     })

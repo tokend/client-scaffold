@@ -1,42 +1,56 @@
 <template>
   <div class="invest">
-    <div class="invest__row">
-      <select-field v-model="form.quoteAsset"
-                    :values="sale.quoteAssetCodes"
-                    class="invest__select-quoteAssets"
-      />
-    </div>
-    <div class="invest__row">
-      <div class="invest__input-quote-wrp">
-        <input-field title="Your investment"
-                      v-model="form.amount"
-                      id="investment"
-                      name="investment"
-                      type="number"
-                      v-validate="'required|amount|min_value:0'"
-                      :label="i18n.sale_invest_asset({ asset: form.quoteAsset })"
-        />
-        <div class="invest__available"
+    <div class="invest__available"
             :class="{ 'invest__available--error': limitExceeded }"
             >
-          Available:
-          <span class="invest__available-amount">{{ i18n.c(available) }}</span>
-          <span class="invest__available-asset">{{ form.quoteAsset }}</span>
-        </div>
+      Available:
+      <span class="invest__available-amount">{{ i18n.c(available) }}</span>
+      <span class="invest__available-asset">{{ form.quoteAsset }}</span>
+    </div>  
+    <div class="invest__row">  
+      <div class="asset-wrp">
+        <select-field v-model="form.quoteAsset"
+                      :values="sale.quoteAssetCodes"
+                      class="invest__select-quoteAssets"
+                      :label="i18n.lbl_asset()"
+        />
+      </div>    
+      <div class="invest-wrp">
+        <div class="invest__input-quote-wrp">
+          <input-field title="Your investment"
+                        v-model="form.amount"
+                        id="investment"
+                        name="investment"
+                        type="number"
+                        :errorMessage="errorMessage('investment')"
+                        v-validate="'required|amount'"
+                        :label="i18n.sale_invest_asset({ asset: form.quoteAsset })"
+          />
       </div>
       <i class="invest__convert-icon material-icons">compare_arrows</i>
       <div class="get__input-quote-wrp">
         <span class="investment_converted-label">{{i18n.sale_get_asset({ asset: sale.defaultQuoteAsset })}}</span>
         <span class="investment_converted">{{ i18n.c(form.convertedAmount) }}</span>
       </div>
+      </div>
     </div>
     <!-- <div class="invest__tip">
       {{ i18n.sale_tip({ endTime: i18n.d(sale.endTime) })}}
     </div> -->
     <div class="invest__actions">
+      <div class="invest__tooltip"
+           v-if="ownerOfThisSale || hardCapExceeded || sale.isUpcoming">
+        <i class="material-icons invest__tooltip-icon">help_outline</i>
+        <md-tooltip v-if="ownerOfThisSale"
+                    md-direction="top">{{ i18n.sale_disable_invest_owners() }}</md-tooltip>
+        <md-tooltip v-else-if="hardCapExceeded"
+                    md-direction="top">{{ i18n.sale_disable_invest_hardcap_exceed() }}</md-tooltip>
+        <md-tooltip v-else-if="sale.isUpcoming"
+                    md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
+      </div>
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || ownerOfThisSale || hardCapExceeded">{{i18n.sale_invest()}}</md-button>
+                 :disabled="isPending || ownerOfThisSale || hardCapExceeded || sale.isUpcoming">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -154,7 +168,7 @@
     },
     watch: {
       'form.amount': async function (value) {
-        if (value !== '') {
+        if (value !== '' && value > 0) {
           this.form.convertedAmount = await pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
         }
       }
@@ -169,8 +183,8 @@
   .invest__header {
     font-weight: bold;
     margin-bottom: 1.5rem;
-    margin-top: 4px;
-    padding-top: 16px;
+    margin-top: .25rem;
+    padding-top: 1rem;
     white-space: nowrap;
   }
 
@@ -183,9 +197,26 @@
     margin-bottom: .75rem;
   }
 
+  .asset-wrp,
   .invest__input-quote-wrp,
   .get__input-quote-wrp {
     width: 40%;
+  }
+
+  .invest-wrp {
+    display: flex;
+    width: 65%;
+    justify-content: space-between;
+    @include respond-to(medium) {
+      width: 100%;
+    }
+  }
+
+  .invest__select-quoteAssets {
+    width: 85%;
+    @include respond-to(medium) {
+      width: 100%;
+    }
   }
 
   .get__input-quote-wrp {
@@ -203,9 +234,8 @@
   }
 
   .invest__available {
-    margin-top: -.9rem;
     font-size: $fs-tip;
-
+    margin-bottom: 1rem;
     &--error {
       color: $col-danger;
       .io-invest__available-amount { color: $col-danger }
@@ -216,14 +246,14 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 40px;
+    margin-bottom: 1rem;
     @include respond-to(large) {
       margin-bottom: 0;
     }
-  }
 
-  .invest__select-quoteAssets {
-    width: 40%;
+    @include respond-to(medium) {
+      flex-wrap: wrap;
+    }
   }
 
   .invest__available-amount {
@@ -245,8 +275,10 @@
   }
 
   .invest__actions {
+    margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     .invest__btn {
       margin: 0;
     }
@@ -254,5 +286,10 @@
 
   .invest__convert-icon {
     align-self: center;
+  }
+
+  .invest__tooltip-icon {
+    vertical-align: middle;
+    font-size: 1.25rem;
   }
 </style>
