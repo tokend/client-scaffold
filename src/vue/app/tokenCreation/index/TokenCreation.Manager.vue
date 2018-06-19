@@ -46,6 +46,18 @@
                 />
               </div>
             </div>
+            <div class="md-layout md-gutter"> 
+              <div class="md-layout-item md-small-size-100"> 
+                <input-field id="token-max-issuance-amount" 
+                            name="max issuance amount" 
+                            type="number"
+                            v-model="request.maxIssuanceAmount" 
+                            v-validate="'required|amount'" 
+                            :label="i18n.lbl_token_max_issuance_amount()" 
+                            :errorMessage="errorMessage('max issuance amount')" 
+                /> 
+              </div> 
+            </div> 
           </div>
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">
@@ -105,7 +117,6 @@
                 <input-field id="token-initial-preissued-amount"
                             name="initial preissued amount"
                             v-model="request.initialPreissuedAmount"
-                            type="number"
                             v-validate="{required:true, amount: true, max_value: request.maxIssuanceAmount}"
                             :label="i18n.lbl_token_initial_preissued_amount()"
                             :errorMessage="errorMessage('initial preissued amount')"
