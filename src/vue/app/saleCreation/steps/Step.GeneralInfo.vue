@@ -75,7 +75,7 @@
             v-validate="{
                 required:true, 
                 amount: true, 
-                min_value: form.softCap
+                soft_cap: [form.softCap]
             }"
             class="step__input-field
                   md-layout-item
@@ -93,7 +93,7 @@
                   v-validate="{
                       required: true, 
                       amount: true, 
-                      max_value: i18n.c(avalaibleForIssuance)
+                      max_issuance: [avalaibleForIssuance, form.baseAsset]
                   }"
                   class="step__input-field
                         md-layout-item
@@ -102,7 +102,7 @@
                         md-xsmall-size-100"
                   name="sale-base-asset-for-hard-cap"
                   id="sale-base-asset-for-hard-cap"
-                  :label="i18n.sale_baseAsset_hardCap()"
+                  :label="i18n.sale_baseAsset_hardCap({asset: form.baseAsset})"
                   :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
       />
     </div>

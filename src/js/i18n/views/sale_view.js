@@ -3,7 +3,7 @@ export default {
   sale_close_time: 'Close time',
   sale_soft_cap: 'Soft cap',
   sale_hard_cap: 'Hard cap',
-  sale_baseAsset_hardCap: 'Base asset for hard cap',
+  sale_baseAsset_hardCap: '%{asset} to sell',
   sale_provide_information: 'Provide fund information',
   sale_short_blurb_step: 'Add a short blurb',
   sale_next_step: 'Next step',
