@@ -141,7 +141,7 @@ export default {
   lbl_recipient_fee_asset: 'Recipient fee asset',
   lbl_sort_by: 'Sort by',
   lbl_information: 'Information',
-  lbl_not_available: 'Feature not available',
+  lbl_not_available: 'Feature is not available',
   lbl_token_not_available_exp: 'Token creation is available only for corporate users, complete verification to become one.',
   lbl_token_not_available_yet: 'Please create token before creating sale'
 }

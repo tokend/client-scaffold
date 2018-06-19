@@ -4,12 +4,13 @@
                     md-size-50
                     md-medium-size-65
                     md-small-size-95
-                    md-xsmall-size-100">
-    <not-available-card v-if="accountTypeI === ACCOUNT_TYPES.notVerified || accountTypeI !== ACCOUNT_TYPES.syndicate"
-                        icon='work'
+                    md-xsmall-size-100"
+         v-if="accountTypeI === ACCOUNT_TYPES.notVerified || accountTypeI !== ACCOUNT_TYPES.syndicate">
+      <not-available-card icon='work'
                         :title="i18n.lbl_not_available()"
                         :descr="i18n.lbl_token_not_available_exp()"
                         />
+    </div>
     <token-creation-manager v-else :id = "id"/>
     </div>
   </div>
