@@ -31,7 +31,10 @@ export default {
   sale_crowdfund_team: 'Crowdfund team',
   sale_crowdfund_leader: 'Crowdfund leader',
   sale_accept_investments: 'Please select asset(s) in which you will accept investments',
-  sale_disable_invest_owners: 'Owners of the sale cant invest themselves',
+  sale_disable_invest_owners: 'Owners of the sale can\'t invest themselves',
   sale_disable_invest_hardcap_exceed: 'Investing amount has exceeded hard cap',
-  sale_disable_invest_upcoming_sale: 'Upcoming sales are not investable'
+  sale_disable_invest_upcoming_sale: 'Upcoming sales are not investable',
+  sale_disable_invest_closed_sale: 'Closed sales are not investable',
+  sale_disable_invest_canceled_sale: 'Canceled sales are not investable',
+  sale_state: 'Sale state'
 }

@@ -6,15 +6,15 @@
       Available:
       <span class="invest__available-amount">{{ i18n.c(available) }}</span>
       <span class="invest__available-asset">{{ form.quoteAsset }}</span>
-    </div>  
-    <div class="invest__row">  
+    </div>
+    <div class="invest__row">
       <div class="asset-wrp">
         <select-field v-model="form.quoteAsset"
                       :values="sale.quoteAssetCodes"
                       class="invest__select-quoteAssets"
                       :label="i18n.lbl_asset()"
         />
-      </div>    
+      </div>
       <div class="invest-wrp">
         <div class="invest__input-quote-wrp">
           <input-field title="Your investment"
@@ -28,10 +28,7 @@
           />
       </div>
       <i class="invest__convert-icon material-icons">compare_arrows</i>
-      <div class="get__input-quote-wrp">
-        <span class="investment_converted-label">{{i18n.sale_get_asset({ asset: sale.defaultQuoteAsset })}}</span>
-        <span class="investment_converted">{{ i18n.c(form.convertedAmount) }}</span>
-      </div>
+      <span class="get__input-quote-wrp">{{ i18n.cc(form.convertedAmount) }}</span>
       </div>
     </div>
     <!-- <div class="invest__tip">
@@ -39,18 +36,22 @@
     </div> -->
     <div class="invest__actions">
       <div class="invest__tooltip"
-           v-if="ownerOfThisSale || hardCapExceeded || sale.isUpcoming">
+           v-if="ownerOfThisSale || hardCapExceeded || !sale.isOpened || sale.isUpcoming">
         <i class="material-icons invest__tooltip-icon">help_outline</i>
-        <md-tooltip v-if="ownerOfThisSale"
+        <md-tooltip v-if="sale.isUpcoming"
+                    md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
+        <md-tooltip v-else-if="ownerOfThisSale"
                     md-direction="top">{{ i18n.sale_disable_invest_owners() }}</md-tooltip>
         <md-tooltip v-else-if="hardCapExceeded"
                     md-direction="top">{{ i18n.sale_disable_invest_hardcap_exceed() }}</md-tooltip>
-        <md-tooltip v-else-if="sale.isUpcoming"
-                    md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
+        <md-tooltip v-else-if="sale.isClosed"
+                    md-direction="top">{{ i18n.sale_disable_invest_closed_sale() }}</md-tooltip>
+        <md-tooltip v-else-if="sale.isCanceled"
+                    md-direction="top">{{ i18n.sale_disable_invest_canceled_sale() }}</md-tooltip>
       </div>
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || ownerOfThisSale || hardCapExceeded || sale.isUpcoming">{{i18n.sale_invest()}}</md-button>
+                 :disabled="isPending || ownerOfThisSale || hardCapExceeded || !sale.isOpened || sale.isUpcoming">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -207,6 +208,7 @@
     display: flex;
     width: 65%;
     justify-content: space-between;
+    align-items: center;
     @include respond-to(medium) {
       width: 100%;
     }
@@ -220,17 +222,8 @@
   }
 
   .get__input-quote-wrp {
-    display: flex;
-    flex-direction: column;
-    & .investment_converted-label {
-      font-size: 0.75rem;
-    }
-    
-    & .investment_converted {
-      font-size: 1rem;
-      line-height: 2rem;
-      border-bottom: 1px solid $col-primary;
-    }
+    font-size: 1rem;
+    line-height: 2rem;
   }
 
   .invest__available {
@@ -290,6 +283,6 @@
 
   .invest__tooltip-icon {
     vertical-align: middle;
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
 </style>

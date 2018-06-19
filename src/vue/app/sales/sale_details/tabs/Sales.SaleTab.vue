@@ -1,0 +1,37 @@
+<template>
+  <div class="crowdfund-sale">
+    <div class="crowdfund-sale-main">
+      <div class="details-column md-layout-item">
+        <detail-row :prop="i18n.sale_start_time()" :value="`${i18n.d(sale.startTime)}`"/>
+        <detail-row :prop="i18n.sale_close_time()" :value="`${i18n.d(sale.endTime)}`"/>
+        <detail-row :prop="i18n.sale_baseAsset_hardCap()" :value="`${sale.defaultQuoteAsset}`"/>
+        <detail-row :prop="i18n.sale_soft_cap()" :value="`${i18n.cc(sale.softCap)}`"/>
+        <detail-row :prop="i18n.sale_hard_cap()" :value="`${i18n.cc(sale.hardCap)}`"/>
+        <detail-row :prop="i18n.sale_baseAsset_hardCap()" :value="`${i18n.cc(sale.baseHardCap)}`"/>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import DetailRow from '../../../common/Detail.Row'
+  import { i18n } from '../../../../../js/i18n'
+  export default {
+    name: 'token-tab',
+
+    components: {
+      DetailRow
+    },
+    props: ['sale'],
+    data: _ => ({
+      i18n
+    }),
+    methods: {
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import '../../../../../scss/variables';
+  @import '../../../../../scss/mixins';
+</style>

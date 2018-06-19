@@ -27,8 +27,10 @@ export function formatCurrency (locale = 'en') {
 }
 
 export function formatConvertedCurrency (locale = 'en') {
-  numberFormatter.settings = locales[locale]
-  return (n) => `${locales[locale].symbol}${numberFormatter.toFixed(numberFormatter.formatMoney(n), DEFAULT_CONVERSION_PRESICION)}`
+  const settings = locales[locale].currency
+  return (n) => {
+    return numberFormatter.formatMoney(n, {symbol: locales[locale].symbol, format: settings.format, decimal: settings.decimal, thousand: settings.thousand, precision: DEFAULT_CONVERSION_PRESICION})
+  }
 }
 
 export function formatNumber (locale = 'en') {

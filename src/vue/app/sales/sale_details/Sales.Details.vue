@@ -35,9 +35,10 @@
                  :sale="sale"
                  :description="description"
                  :syndicate="syndicate"
+                 :token="token"
                  />
       <div class="sale-details__information">
-          <sale-token class="sale-details__information-item" :sale="sale" :token="token" />
+        <sale-chart class="sale-details__information-item" :sale="sale" />
       </div>
     </div>
   </div>
@@ -50,7 +51,7 @@
   import { TokenRecord } from '../../../../js/records/token.record'
   import { i18n } from '../../../../js/i18n'
 
-  import SaleToken from './components/Sales.Token'
+  import SaleChart from './components/Sales.Chart'
   import SaleInvest from './components/Sales.Invest'
   import SaleTabs from './Sales.Tabs'
   import InvestProgressBar from '../sale_card/Sales.ProgressBar'
@@ -62,7 +63,7 @@
       SaleInvest,
       InvestProgressBar,
       SaleTabs,
-      SaleToken },
+      SaleChart },
 
     data: _ => ({
       sale: '',
@@ -166,6 +167,7 @@
     margin-bottom: 1.5rem;
     .sale-details__name {
       font-weight: bold;
+      line-height: 2rem;
     }
     .sale-details__owner {
       font-size: 75%;
