@@ -1,7 +1,8 @@
 <template>
-  <div class="fund-chart">
+  <div class="sale-chart-container">
     <template v-if="chartData">
-      <chart class="trade__chart"
+      <chart
+        class="sale-chart"
         :data="chartData"
         :precision="common.precision"
         :asset="sale.baseAsset"
@@ -59,7 +60,7 @@
   @import '../../../../../scss/variables';
   @import '../../../../../scss/mixins';
 
-  .fund-chart {
+  .sale-chart {
     margin-top: 1.65rem;
     border: 1px solid rgba(0, 0, 0, .26);
     @include respond-to(medium) {

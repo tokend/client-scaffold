@@ -14,7 +14,7 @@
     </div>
     <div class="invest-progress-bar__details">
       <span class="invest-progress-bar__detail">
-        <span class="invest-progress-bar__detail-value">{{ Math.floor(sale.currentCap) }} {{sale.defaultQuoteAsset}}</span>
+        <span class="invest-progress-bar__detail-value">{{ i18n.n(sale.currentCap) }} {{sale.defaultQuoteAsset}}</span>
          invested
       </span>
       <span class="invest-progress-bar__detail">

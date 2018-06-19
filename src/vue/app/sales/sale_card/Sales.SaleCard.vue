@@ -29,7 +29,7 @@
   import InvestProgressBar from './Sales.ProgressBar'
 
   export default {
-    name: 'fund-card',
+    name: 'sale-card',
     components: { InvestProgressBar },
     props: ['sale', 'hasEditRedirect', 'imgUrl'],
     data: _ => ({

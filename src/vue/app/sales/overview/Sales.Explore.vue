@@ -1,7 +1,7 @@
 <template>
   <div class="explore-sales md-layout md-alignment-center-center">
     <searcher
-          class="funds-overview__searcher"
+          class="sales-overview__searcher"
           @search-input="loadFilteredSales"
     /> 
     <template v-if="sales.length > 0">
@@ -11,7 +11,7 @@
                     :to="{name: 'sales.sale-details', params: { id: sale.id }}"
                     tag="div"
                     class="sales-overview__card-wrapper">
-          <fund-card class="sales-overview__card" :sale="sale"/>
+          <sale-card class="sales-overview__card" :sale="sale"/>
         </router-link>
       </div>
     </template>
@@ -29,9 +29,9 @@
           <i class="mdi mdi-inbox"></i>
         </div>
 
-        <h2>No funds found</h2>
+        <h2>No sales found</h2>
 
-        <p>Unfortunately, there are no funds matching your criteria.</p>
+        <p>Unfortunately, there are no sales matching your criteria.</p>
       </div>
     </template>
   </div>
@@ -41,7 +41,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
-  import FundCard from '../sale_card/Sales.Fundcard'
+  import SaleCard from '../sale_card/Sales.SaleCard'
   import Searcher from './Sales.Searcher'
   import FormMixin from '../../../common/mixins/form.mixin'
   import { saleSortTypes, saleStates } from '../../../../js/const/const'
@@ -52,7 +52,7 @@
   export default {
     name: 'TokensExplore',
     mixins: [FormMixin],
-    components: { FundCard, Searcher },
+    components: { SaleCard, Searcher },
     data: _ => ({
       isLoaded: false,
       filters: {

@@ -114,28 +114,25 @@ export class SalesService extends Service {
   }
 
   /**
-   * Loads description by it's id if its exist
+   * Loads sale description by it's id if its exist
    *
    * @param {string|number} owner - owner id
-   *
    * @param {string|number} id - description id
-   *
    * @returns {Promise<object>} - Promise object representing description
    */
-  async loadDescriptionIfExists (owner, descriptionID) {
+  async loadSaleDescription (owner, descriptionID) {
     if (!descriptionID) return
     const description = await usersService.blobsOf(owner).get(descriptionID)
     return description
   }
 
   /**
-   * Loads description by it's id if its exist
+   * Loads sale owner details by owner id
    *
    * @param {string|number} owner - owner id
-   *
    * @returns {Promise<object>} - Promise object representing syndicate details
    */
-  async loadSyndicateDetails (owner) {
+  async loadSaleOwner (owner) {
     const syndicateEmail = await accountsService.loadEmailByAccountId(this.owner)
     const filters = {
       [blobFilters.fundOwner]: owner,

@@ -7,7 +7,7 @@
         </router-link>
         <div class="sale-details__header-item">
           <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
-          <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: syndicateEmail }) }}</span> -->
+          <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: syndicate.email }) }}</span> -->
         </div>
       </div>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
@@ -69,8 +69,9 @@
       sale: '',
       token: '',
       description: '',
-      syndicate: {},
-      syndicateEmail: '',
+      syndicate: {
+        email: ''
+      },
       i18n
     }),
 
@@ -83,11 +84,13 @@
     methods: {
       async loadDetails () {
         this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
-        this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset))
-        this.description = await salesService.loadDescriptionIfExists(this.sale.owner, this.sale.descriptionID)
-        // const syndicateDetails = await salesService.loadSyndicateDetails(this.sale.owner)
-        // this.syndicateEmail = syndicateDetails.syndicateEmail
+        await Promise.all([
+          this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset)),
+          this.description = await salesService.loadSaleDescription(this.sale.owner, this.sale.descriptionID)
+        ])
+        // const syndicateDetails = await salesService.loadSaleOwner(this.sale.owner)
         // this.syndicate = syndicateDetails.syndicateDetails
+        // this.syndicate.email = syndicateDetails.syndicateEmail
       }
     }
   }

@@ -36,11 +36,11 @@
     </div> -->
     <div class="invest__actions">
       <div class="invest__tooltip"
-           v-if="ownerOfThisSale || hardCapExceeded || !sale.isOpened || sale.isUpcoming">
+           v-if="isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming">
         <i class="material-icons invest__tooltip-icon">help_outline</i>
         <md-tooltip v-if="sale.isUpcoming"
                     md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
-        <md-tooltip v-else-if="ownerOfThisSale"
+        <md-tooltip v-else-if="isOwner"
                     md-direction="top">{{ i18n.sale_disable_invest_owners() }}</md-tooltip>
         <md-tooltip v-else-if="hardCapExceeded"
                     md-direction="top">{{ i18n.sale_disable_invest_hardcap_exceed() }}</md-tooltip>
@@ -51,7 +51,7 @@
       </div>
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || ownerOfThisSale || hardCapExceeded || !sale.isOpened || sale.isUpcoming">{{i18n.sale_invest()}}</md-button>
+                 :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -90,7 +90,6 @@
     },
     computed: {
       ...mapGetters([
-        vuexTypes.saleOffers,
         vuexTypes.accountBalances,
         vuexTypes.accountId
       ]),
@@ -103,19 +102,14 @@
         return this.sale.quoteAssetPrices[this.form.quoteAsset] || '1'
       },
 
-      ownerOfThisSale () {
+      isOwner () {
         return this.sale.owner === this.accountId
       },
 
-      saleOffer () {
-        return this.saleOffers.find(
-          offer => offer.quoteAssetCode === this.form.quote &&
-                   offer.baseAssetCode === this.sale.baseAsset) || {}
-      },
       available () {
         const balance = add(
-          _get(this.accountBalances, `${this.form.quoteAsset}.balance`) || 0,
-          this.saleOffer.baseAmount || 0)
+          _get(this.accountBalances, `${this.form.quoteAsset}.balance`, 0),
+          _get(this.offer, 'baseAmount', 0))
         const left = balance ? subtract(balance, this.form.amount) : 0
         return left < 0 ? 0 : left
       },
@@ -139,7 +133,7 @@
       },
       async invest () {
         if (!await this.isValid()) return
-        this.disableLong()
+        this.disable()
         try {
           const offerFees = await feeService.loadOfferFeeByAmount(this.form.quoteAsset, multiply(this.form.amount, this.price))
 

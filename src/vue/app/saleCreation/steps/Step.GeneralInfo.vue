@@ -88,7 +88,7 @@
             :errorMessage="errorMessage('sale-hard-cap')"
         />
     </div>
-    <div class="step-row md-layout baseAsset-input__row">
+    <div class="step-row md-layout step-row__base-asset-input">
       <input-field v-model="form.baseAssetForHardCap"
                   v-validate="{
                       required: true, 
@@ -117,7 +117,7 @@
           {{ token.code }}</md-switch>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat submit__btn" 
+      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
       :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>
@@ -132,7 +132,6 @@
   import { i18n } from '../../../../js/i18n'
   import { vuexTypes } from '../../../../vuex/types'
   import { mapGetters } from 'vuex'
-  // import _get from 'lodash/get'
   export default {
     name: 'StepGeneralInfo',
     mixins: [StepMixin],
@@ -181,7 +180,7 @@
     align-items: flex-start;
   }
 
-  .baseAsset-input__row {
+  .step-row__base-asset-input {
     margin-bottom: 1rem;
   }
 </style>

@@ -21,7 +21,7 @@
       <description-editor class="description-step__editor" v-model="form.description"/>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat submit__btn">
+      <md-button type="submit" class="md-primary md-flat step__submit-btn">
         {{ i18n.sale_create_sale() }}
       </md-button>
     </div>
@@ -59,13 +59,7 @@
     }),
 
     created () {
-      console.log('BEFORE')
-      console.log(this.form)
-      console.log(JSON.stringify(this.sale))
       this.form = _cloneDeep(this.sale)
-      console.log('AFTER')
-      console.log(this.form)
-      console.log(JSON.stringify(this.sale))
       this._loadDescriptionIfExists()
     },
 

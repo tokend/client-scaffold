@@ -19,7 +19,6 @@ export default {
   }),
 
   created () {
-    console.log(this.schema)
     if (this.schema) {
       this.form = _pick(this.sale, Object.keys(this.schema.form))
       delete this.form.docs

@@ -68,7 +68,7 @@
     </template>
 
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat submit__btn" :disabled="isPending">
+      <md-button type="submit" class="md-primary md-flat step__submit-btn" :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>
     </div>
