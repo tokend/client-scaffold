@@ -5,8 +5,17 @@
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
-      <template v-if="view.mode === VIEW_MODES.edit">
-        
+    <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
+      <not-available-card icon='work'
+                          :title="i18n.lbl_not_available()"
+                          :descr="i18n.sale_not_available_exp()"/>
+    </template>
+    <template v-else-if="!accountOwnedTokens.length">
+      <not-available-card icon='work'
+                          :title="i18n.lbl_not_available()"
+                          :descr="i18n.lbl_token_not_available_yet()"/>
+    </template>
+    <template v-else-if="view.mode === VIEW_MODES.edit">  
           <md-card class="create-sale__heading">
             <md-card-header>
               <div class="md-title">{{ i18n.lbl_create_sale() }}</div>
@@ -60,6 +69,7 @@
 <script>
   import FormMixin from '../../common/mixins/form.mixin'
   import RequestList from './SaleCreation.RequestList'
+  import NotAvailableCard from '../common/NotAvailableCard'
   import steps from './specs/steps.schema'
   import config from '../../../config'
   import { i18n } from '../../../js/i18n'
@@ -70,6 +80,7 @@
   import { salesService } from '../../../js/services/sales.service'
   import { DateHelper } from '../../../js/helpers/date.helper'
   import { ErrorHandler } from '../../../js/errors/error_handler'
+  import { ACCOUNT_TYPES } from '../../../js/const/const'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
@@ -79,7 +90,7 @@
 
   export default {
     name: 'CreateSale-index',
-    components: { RequestList },
+    components: { RequestList, NotAvailableCard },
     mixins: [FormMixin],
     data: _ => ({
       activeStep: steps[0].name,
@@ -91,7 +102,8 @@
         mode: null
       },
       isConfirmDialogOpened: false,
-      VIEW_MODES
+      VIEW_MODES,
+      ACCOUNT_TYPES
     }),
     async created () {
       await Promise.all([
@@ -107,7 +119,9 @@
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountId
+        vuexTypes.accountId,
+        vuexTypes.accountTypeI,
+        vuexTypes.accountOwnedTokens
       ])
     },
 

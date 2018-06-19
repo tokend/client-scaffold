@@ -36,5 +36,6 @@ export default {
   sale_disable_invest_upcoming_sale: 'Upcoming sales are not investable',
   sale_disable_invest_closed_sale: 'Closed sales are not investable',
   sale_disable_invest_canceled_sale: 'Canceled sales are not investable',
-  sale_state: 'Sale state'
+  sale_state: 'Sale state',
+  sale_not_available_exp: 'Sale creation is available only for corporate users, complete verification to become one.'
 }
