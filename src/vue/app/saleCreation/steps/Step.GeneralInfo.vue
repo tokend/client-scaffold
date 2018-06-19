@@ -127,17 +127,30 @@
 
 <script>
   import StepMixin from './step.mixin'
-
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+  import { commonEvents } from '../../../../js/events/common_events'
   import { ASSET_POLICIES, documentTypes } from '../../../../js/const/const'
   import { i18n } from '../../../../js/i18n'
   import { vuexTypes } from '../../../../vuex/types'
   import { mapGetters } from 'vuex'
+  import _pick from 'lodash/pick'
   export default {
     name: 'StepGeneralInfo',
     mixins: [StepMixin],
     data: _ => ({
       values: {
         tokens: []
+      },
+      form: {
+        name: '',
+        baseAsset: '',
+        startTime: '',
+        endTime: '',
+        softCap: '',
+        hardCap: '',
+        baseAssetForHardCap: '',
+        quoteAssets: []
       },
       i18n,
       documentTypes,
@@ -147,7 +160,10 @@
 
     created () {
       this.values.tokens = this.accountOwnedTokens
-      this.setTokenCode()
+      this.form = _pick(this.sale, Object.keys(this.form))
+      if (!this.form.baseAsset) {
+        this.setTokenCode()
+      }
     },
 
     computed: {
@@ -166,6 +182,22 @@
     methods: {
       setTokenCode () {
         this.form.baseAsset = this.values.tokens[0] || null
+      },
+      async submit () {
+        if (!await this.isValid()) return
+        if (!this.form.quoteAssets.length) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.sale_accept_investments())
+          return
+        }
+        this.disable()
+        try {
+          this.$emit(commonEvents.saleUpdateEvent, {
+            form: this.form
+          })
+        } catch (error) {
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
       }
     }
   }

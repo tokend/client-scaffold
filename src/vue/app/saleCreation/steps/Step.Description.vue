@@ -40,7 +40,7 @@
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
 
-  import _cloneDeep from 'lodash/cloneDeep'
+  import _pick from 'lodash/pick'
   export default {
     name: 'StepCreateSale',
     mixins: [StepMixin],
@@ -50,6 +50,7 @@
     data: _ => ({
       form: {
         description: '',
+        descriptionID: '',
         youtubeId: ''
       },
       i18n,
@@ -59,7 +60,7 @@
     }),
 
     created () {
-      this.form = _cloneDeep(this.sale)
+      this.form = _pick(this.sale, Object.keys(this.form))
       this._loadDescriptionIfExists()
     },
 
@@ -79,10 +80,9 @@
             .create(blobTypes.fundOverview.str,
                     this.form.description, {}, false))
             .data('id')
-          const form = this.form
-          form.descriptionID = descriptionId
+          this.form.descriptionID = descriptionId
           this.$emit(commonEvents.saleUpdateEvent, {
-            form: form,
+            form: this.form,
             documents: this.documents
           })
           this.$emit(commonEvents.saleEditEndEvent)

@@ -5,7 +5,7 @@
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
-    <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
+    <template v-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
       <not-available-card icon='work'
                           :title="i18n.lbl_not_available()"
                           :descr="i18n.sale_not_available_exp()"/>
@@ -41,14 +41,6 @@
               </md-steppers>
             </md-card-content>
           </md-card>
-          <md-dialog-confirm
-            :md-active.sync="isConfirmDialogOpened"
-            :md-title="i18n.sale_confirm()"
-            :md-confirm-text="i18n.lbl_confirm()"
-            :md-cancel-text="i18n.lbl_cancel()"
-            :disabled="isPending"
-            @md-cancel="isConfirmDialogOpened=false"
-            @md-confirm="confirmSaleCreation" />
       </template>
 
       <template v-else-if="view.mode === VIEW_MODES.list">
@@ -81,6 +73,7 @@
   import { DateHelper } from '../../../js/helpers/date.helper'
   import { ErrorHandler } from '../../../js/errors/error_handler'
   import { ACCOUNT_TYPES } from '../../../js/const/const'
+  import { confirmAction } from '../../../js/modals/confirmation_message'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
@@ -101,7 +94,6 @@
       view: {
         mode: null
       },
-      isConfirmDialogOpened: false,
       VIEW_MODES,
       ACCOUNT_TYPES
     }),
@@ -149,14 +141,15 @@
           this.sale.logo = value
         })
         this.listManager.pushToStorage()
+        if (this.activeStep === steps[steps.length - 1].name) {
+          return
+        }
         step.done = true
         this.activeStep = (steps[i + 1] || steps[0]).name
       },
       async handleSaleEditEnd () {
-        this.isConfirmDialogOpened = true
+        if (!await confirmAction()) return
         await this.listManager.fetch()
-      },
-      async confirmSaleCreation () {
         const opts = get(this.sale.getDetailsForSave(), 'details.sale')
         this.disable()
         try {
@@ -179,6 +172,7 @@
             quoteAssets: opts.quote_assets,
             isCrowdfunding: true
           })
+          console.log('came to here')
           this.listManager.drop(this.sale)
           await this.listManager.fetch()
           this.view.mode = VIEW_MODES.list
