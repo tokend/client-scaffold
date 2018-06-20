@@ -11,19 +11,25 @@
       <div class="asset-wrp">
         <select-field v-model="form.quoteAsset"
                       :values="sale.quoteAssetCodes"
-                      class="invest__select-quoteAssets"
+                      class="invest__select-quote-assets"
                       :label="i18n.lbl_asset()"
         />
       </div>
       <div class="invest-wrp">
         <div class="invest__input-quote-wrp">
-          <input-field title="Your investment"
+          <div class="invest__amount-tooltip" v-if="offer">
+          <i class="material-icons invest__tooltip-icon">help_outline</i>
+          <md-tooltip md-direction="top">{{ i18n.sale_offer_overlap() }}</md-tooltip>
+          </div>
+          <input-field  class="invest__input-field"
+                        title="Your investment"
                         v-model="form.amount"
                         id="investment"
                         name="investment"
                         type="number"
                         :errorMessage="errorMessage('investment')"
-                        v-validate="'required|amount'"
+                        v-validate="'amount'"
+                        data-vv-validate-on="input"
                         :label="i18n.sale_invest_asset({ asset: form.quoteAsset })"
           />
       </div>
@@ -51,7 +57,7 @@
       </div>
       <md-button class="md-primary invest__btn"
                  @click="invest"
-                 :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming">{{i18n.sale_invest()}}</md-button>
+                 :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -129,7 +135,6 @@
       setTokenCode () {
         this.form.quoteAsset = this.sale.quoteAssetCodes[0] || null
       },
-
       async loadOffers () {
         const response = await offersService.loadUserSaleOffers(this.sale.id)
         const records = response.records
@@ -179,6 +184,14 @@
         if (value !== '' && value > 0) {
           this.form.convertedAmount = await pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
         }
+      },
+      offer: function (value) {
+        if (value) {
+          this.form.amount = value.quoteAmount
+        } else {
+          this.form.amount = ''
+          this.form.convertedAmount = 0
+        }
       }
     }
   }
@@ -211,17 +224,37 @@
     width: 40%;
   }
 
+  .invest__input-quote-wrp {
+    display: flex;
+    align-items: center;
+  }
+
+  .invest__amount-tooltip {
+    margin-right: .5rem;
+    margin-top: -.35rem;
+  }
+
   .invest-wrp {
     display: flex;
-    width: 65%;
+    width: 60%;
     justify-content: space-between;
     align-items: center;
-    @include respond-to(medium) {
+    @include respond-to-custom('1180px') {
       width: 100%;
     }
   }
 
-  .invest__select-quoteAssets {
+  .invest__input-field {
+    @include respond-to-custom('1180px') {
+      width: 69%;
+    }
+    @include respond-to(medium) {
+      width: 100%;
+    }
+
+  }
+
+  .invest__select-quote-assets {
     width: 85%;
     @include respond-to(medium) {
       width: 100%;
@@ -247,12 +280,9 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
     @include respond-to(large) {
       margin-bottom: 0;
-    }
-
-    @include respond-to(medium) {
-      flex-wrap: wrap;
     }
   }
 

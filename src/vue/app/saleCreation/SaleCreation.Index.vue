@@ -178,7 +178,7 @@
           this.listManager.drop(this.sale)
           await this.listManager.fetch()
           this.view.mode = VIEW_MODES.list
-          EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
           console.error(error)
           ErrorHandler.processUnexpected(error)
