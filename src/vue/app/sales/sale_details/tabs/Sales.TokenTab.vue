@@ -1,7 +1,7 @@
 <template>
   <div class="crowdfund-token">
     <div class="crowdfund-token-header">
-      <div class="crowdfund-token__icon-wrapper md-layout-item md-size-35 md-layout md-alignment-center-center">
+      <div class="crowdfund-token__icon-wrapper">
         <img class="crowdfund-token__icon" v-if="token.logoUrl" :src='token.logoUrl' :alt="documentTypes.tokenIcon">
         <div class="crowdfund-token__icon" v-else>{{ token.name.substr(0, 1).toUpperCase() }}</div>
       </div>
@@ -60,8 +60,7 @@
   .crowdfund-token-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-bottom: 1rem;
+    margin-bottom: 2.3rem;
   }
 
   .crowdfund-token__icon {
