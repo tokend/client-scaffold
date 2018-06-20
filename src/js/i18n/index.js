@@ -11,6 +11,7 @@ import depositView from './views/deposit_view'
 import withdrawView from './views/withdrawal_view'
 import signupView from './views/signup_view'
 import loginView from './views/login_view'
+import saleView from './views/sale_view'
 import labels from './views/labels'
 import inactivitymessage from './views/inactivity_message'
 import issuancesView from './views/issuances_view'
@@ -21,6 +22,7 @@ import modals from './views/modals'
 import verification from './views/verification_view'
 import fileUpload from './views/file-upload'
 import trade from './views/trade_view'
+import companyView from './views/company_view'
 import common from './views/common'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
@@ -38,6 +40,7 @@ const dictionary = {
   ...transactions,
   ...transfers,
   ...loginView,
+  ...saleView,
   ...signupView,
   ...depositView,
   ...withdrawView,
@@ -54,6 +57,7 @@ const dictionary = {
   ...verification,
   ...fileUpload,
   ...trade,
+  ...companyView,
   ...common
 }
 

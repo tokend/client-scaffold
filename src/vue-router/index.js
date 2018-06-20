@@ -48,10 +48,14 @@ import IssuanceCreation from '../vue/app/issuanceCreation/IssuanceCreation.Entry
 import IssuanceCreationIndex from '../vue/app/issuanceCreation/index/IssuanceCreation.Index'
 
 import SaleCreation from '../vue/app/saleCreation/SaleCreation.Entry'
-import SaleCreationIndex from '../vue/app/saleCreation/index/SaleCreation.Index'
+import SaleCreationIndex from '../vue/app/saleCreation/SaleCreation.Index'
 
 import Requests from '../vue/app/requests/Requests.Entry'
 import RequestsIndex from '../vue/app/requests/index/Requests.Index'
+
+import Sales from '../vue/app/sales/Sales.Entry'
+import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
+import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
 
 Vue.use(Router)
 
@@ -296,6 +300,26 @@ const router = new Router({
               path: '/requests/index',
               name: 'requests.index',
               component: RequestsIndex
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.sales,
+          name: 'app.sales',
+          path: '/sales',
+          component: Sales,
+          redirect: { path: '/sales/explore' },
+          children: [
+            {
+              path: '/sales/explore',
+              name: 'sales.explore',
+              component: SalesExplore
+            },
+            {
+              path: '/sales/details/:id',
+              name: 'sales.sale-details',
+              component: SalesDetails,
+              props: true
             }
           ]
         }
