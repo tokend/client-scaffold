@@ -1,7 +1,7 @@
 import * as libphonenumber from 'libphonenumber-js'
 import { Keypair } from 'swarm-js-sdk'
 import { validateAddress } from './address_validation'
-
+import { i18n } from '../js/i18n'
 const rules = [
   {
     name: 'phone_number',
@@ -43,6 +43,16 @@ const rules = [
     name: 'wallet_address',
     message: 'Invalid wallet address',
     validate: value => validateAddress(value)
+  },
+  {
+    name: 'soft_cap',
+    getMessage: (field, [cap]) => `Value should be bigger than soft cap: ${i18n.cc(cap)}`,
+    validate: (value, [cap]) => +value >= +cap
+  },
+  {
+    name: 'max_issuance',
+    getMessage: (field, [max, code]) => `You cant sell more tokens than you have. Available: ${i18n.c(max)} ${code}`,
+    validate: (value, [max]) => +value <= +max
   }
 ]
 
@@ -62,7 +72,7 @@ export function extendValidator (validator) {
 function addCustomRulesToValidator (validator) {
   rules.forEach(rule => {
     validator.extend(rule.name, {
-      getMessage: _ => rule.message,
+      getMessage: rule.getMessage || (_ => rule.message),
       validate: rule.validate
     })
   })

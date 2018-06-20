@@ -1,12 +1,22 @@
 <template>
-   <div class="md-layout md-alignment-center-center">
-    <form novalidate @submit.prevent="submit"
-          class="md-layout-item
-                  md-size-50
-                  md-medium-size-65
-                  md-small-size-95
-                  md-xsmall-size-100"
-    >
+   <div class="create-issuance md-layout md-alignment-center-center">
+      <div class="md-layout-item
+                    md-size-50
+                    md-medium-size-65
+                    md-small-size-95
+                    md-xsmall-size-100">
+      <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
+        <not-available-card icon='work'
+                          :title="i18n.lbl_not_available()"
+                          :descr="i18n.lbl_issuance_not_available_exp()"/>
+      </template>
+      <template v-else-if="!accountOwnedTokens.length">
+        <not-available-card icon='work'
+                          :title="i18n.lbl_not_available()"
+                          :descr="i18n.lbl_issuance_not_available_yet()"/>
+      </template>
+      <template v-else>
+      <form novalidate @submit.prevent="submit">
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
         <md-card-header>
@@ -59,12 +69,15 @@
         </md-card-actions>
       </md-card>
     </form>
+    </template>
+    </div>
   </div>
 </template>
 
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import SelectField from '../../../common/fields/SelectField'
+import NotAvailableCard from '../../common/NotAvailableCard'
 import { i18n } from '../../../../js/i18n'
 import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../../../vuex/types'
@@ -72,15 +85,17 @@ import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 import { issuanceService } from '../../../../js/services/issuances.service'
 import { accountsService } from '../../../../js/services/accounts.service'
+import { ACCOUNT_TYPES } from '../../../../js/const/const'
 import { errors } from '../../../../js/errors/factory'
 
 export default {
   mixins: [FormMixin],
-  components: { SelectField },
+  components: { SelectField, NotAvailableCard },
   data: _ => ({
     request: {},
     i18n,
-    mapGetters
+    mapGetters,
+    ACCOUNT_TYPES
   }),
 
   created () {
@@ -89,7 +104,8 @@ export default {
 
   computed: {
     ...mapGetters([
-      vuexTypes.accountOwnedTokens
+      vuexTypes.accountOwnedTokens,
+      vuexTypes.accountTypeI
     ])
   },
 

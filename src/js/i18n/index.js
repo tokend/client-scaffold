@@ -22,6 +22,7 @@ import modals from './views/modals'
 import verification from './views/verification_view'
 import fileUpload from './views/file-upload'
 import trade from './views/trade_view'
+import companyView from './views/company_view'
 import common from './views/common'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
@@ -56,6 +57,7 @@ const dictionary = {
   ...verification,
   ...fileUpload,
   ...trade,
+  ...companyView,
   ...common
 }
 

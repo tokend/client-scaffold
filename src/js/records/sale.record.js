@@ -3,10 +3,6 @@ import get from 'lodash/get'
 
 import config from '../../config'
 
-import { accountsService } from '../services/accounts.service'
-import { usersService } from '../services/users.service'
-import { blobFilters, blobTypes } from '../const/const'
-
 const STATES = {
   Open: 1,
   Closed: 2,
@@ -36,8 +32,6 @@ export class SaleRecord {
     this.statistics = record.statistics
     this.investors = get(record, 'statistics.investors')
     this.averageInvestment = get(record, 'statistics.average_amount')
-    this.syndicateEmail = ''
-    this.syndicateDetails = {}
     this.description = ''
   }
 
@@ -118,24 +112,5 @@ export class SaleRecord {
 
   get isMy () {
     return this.owner === this.userAccountId
-  }
-
-  // api:
-
-  async loadDescriptionIfExists () {
-    if (!this.descriptionID) return
-    const blobDetails = await usersService.blobsOf().get(this.descriptionID)
-    this.descriptionBlob = blobDetails.attribute('value')
-  }
-
-  async loadSyndicateDetails () {
-    const details = await accountsService.loadEmailByAccountId(this.owner)
-    const filters = {
-      [blobFilters.fundOwner]: this.owner,
-      [blobFilters.type]: blobTypes.syndicate_kyc.num
-    }
-    const syndicateDetails = (await usersService.blobsOf(this.owner).getAll(filters))[0]
-    this.syndicateEmail = details.email
-    this.syndicateDetails = syndicateDetails
   }
 }

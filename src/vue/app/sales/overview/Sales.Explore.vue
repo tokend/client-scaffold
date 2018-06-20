@@ -1,21 +1,18 @@
 <template>
   <div class="explore-sales md-layout md-alignment-center-center">
     <searcher
-          class="funds-overview__searcher"
+          class="sales-overview__searcher"
           @search-input="loadFilteredSales"
     /> 
     <template v-if="sales.length > 0">
       <div class="md-layout md-gutter md-layout-item md-size-90 md-alignment-center-space-around sales-overview__sale-overview-inner">
-        <div class="sales-overview__card-wrapper"
-                v-for="sale in sales"
-                :key="sale.id"
-        >
-          <fund-card class="sales-overview__card" :sale="sale"/>
-          <md-card-actions>
-              <md-button class="sales-overview__btn" @click="goSaleDetails(sale.id, sale.baseAsset)">Learn more</md-button>
-          </md-card-actions>
-        </div>
-
+        <router-link v-for="sale in sales"
+                    :key="sale.id"
+                    :to="{name: 'sales.sale-details', params: { id: sale.id }}"
+                    tag="div"
+                    class="sales-overview__card-wrapper">
+          <sale-card class="sales-overview__card" :sale="sale"/>
+        </router-link>
       </div>
     </template>
     <template v-if="sales.length && !isSalesLoaded">
@@ -32,9 +29,9 @@
           <i class="mdi mdi-inbox"></i>
         </div>
 
-        <h2>No funds found</h2>
+        <h2>No sales found</h2>
 
-        <p>Unfortunately, there are no funds matching your criteria.</p>
+        <p>Unfortunately, there are no sales matching your criteria.</p>
       </div>
     </template>
   </div>
@@ -44,7 +41,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
-  import FundCard from '../Sales.Fundcard'
+  import SaleCard from '../sale_card/Sales.SaleCard'
   import Searcher from './Sales.Searcher'
   import FormMixin from '../../../common/mixins/form.mixin'
   import { saleSortTypes, saleStates } from '../../../../js/const/const'
@@ -55,7 +52,7 @@
   export default {
     name: 'TokensExplore',
     mixins: [FormMixin],
-    components: { FundCard, Searcher },
+    components: { SaleCard, Searcher },
     data: _ => ({
       isLoaded: false,
       filters: {
@@ -69,7 +66,6 @@
     }),
     async created () {
       this.isLoaded = true
-      this.loadSales()
       await this.loadFilteredSales()
     },
     computed: {
@@ -83,9 +79,6 @@
         loadSales: vuexTypes.GET_SALES,
         loadNext: vuexTypes.NEXT_SALES
       }),
-      goSaleDetails (id, name) {
-        this.$router.push({ name: 'sales.sale-details', params: { id } })
-      },
       loadFilteredSales (filters) {
         if (filters) {
           this.filters.openOnly = filters.state.openOnly
@@ -130,7 +123,7 @@
     display: block;
     background: $col-content-block;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
-
+    cursor: pointer;
     margin-bottom: 1.5rem;
     font-size: initial;
     text-align: initial;
