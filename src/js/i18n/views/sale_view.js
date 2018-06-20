@@ -3,7 +3,8 @@ export default {
   sale_close_time: 'Close time',
   sale_soft_cap: 'Soft cap',
   sale_hard_cap: 'Hard cap',
-  sale_baseAsset_hardCap: '%{asset} to sell',
+  sale_base_asset_for_hard_cap: 'Hard cap',
+  sale_base_asset_hard_cap_to_sell: '%{asset} to sell',
   sale_provide_information: 'Provide fund information',
   sale_short_blurb_step: 'Add a short blurb',
   sale_next_step: 'Next step',
@@ -32,10 +33,11 @@ export default {
   sale_crowdfund_leader: 'Crowdfund leader',
   sale_accept_investments: 'Please select asset(s) in which you will accept investments',
   sale_disable_invest_owners: 'Owners of the sale can\'t invest themselves',
-  sale_disable_invest_hardcap_exceed: 'Investing amount has exceeded hard cap',
+  sale_disable_invest_hardcap_exceed: 'Investing amount has exceeded hard cap: %{amount}',
   sale_disable_invest_upcoming_sale: 'Upcoming sales are not investable',
   sale_disable_invest_closed_sale: 'Closed sales are not investable',
   sale_disable_invest_canceled_sale: 'Canceled sales are not investable',
   sale_state: 'Sale state',
-  sale_not_available_exp: 'Sale creation is available only for corporate users, complete verification to become one.'
+  sale_not_available_exp: 'Sale creation is available only for corporate users, complete verification to become one.',
+  sale_create_request_success: 'Information uploaded. Now please wait for approval'
 }

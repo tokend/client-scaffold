@@ -184,6 +184,7 @@
 
  .sale-details__description {
     font-size: 1rem;
+    margin-left: 3rem;
     margin-bottom: 3rem;
   }
 

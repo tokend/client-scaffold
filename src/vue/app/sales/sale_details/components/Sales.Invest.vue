@@ -43,7 +43,7 @@
         <md-tooltip v-else-if="isOwner"
                     md-direction="top">{{ i18n.sale_disable_invest_owners() }}</md-tooltip>
         <md-tooltip v-else-if="hardCapExceeded"
-                    md-direction="top">{{ i18n.sale_disable_invest_hardcap_exceed() }}</md-tooltip>
+                    md-direction="top">{{ i18n.sale_disable_invest_hardcap_exceed({amount: i18n.cc(sale.hardCap)}) }}</md-tooltip>
         <md-tooltip v-else-if="sale.isClosed"
                     md-direction="top">{{ i18n.sale_disable_invest_closed_sale() }}</md-tooltip>
         <md-tooltip v-else-if="sale.isCanceled"
@@ -59,10 +59,11 @@
 <script>
   import FormMixin from '../../../../common/mixins/form.mixin'
   import { i18n } from '../../../../../js/i18n'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../../vuex/types'
   import _get from 'lodash/get'
   import { offersService } from '../../../../../js/services/offer.service'
+  import { accountsService } from '../../../../../js/services/accounts.service'
   import { pairsService } from '../../../../../js/services/pairs.service'
   import { feeService } from '../../../../../js/services/fees.service'
   import { ErrorHandler } from '../../../../../js/errors/error_handler'
@@ -122,6 +123,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
+      }),
       setTokenCode () {
         this.form.quoteAsset = this.sale.quoteAssetCodes[0] || null
       },
@@ -135,6 +139,15 @@
         if (!await this.isValid()) return
         this.disable()
         try {
+          if (!this.accountBalances[this.form.quoteAsset]) {
+            await accountsService.createBalance(this.form.quoteAsset)
+            await this.loadBalances()
+          }
+
+          if (!this.accountBalances[this.sale.baseAsset]) {
+            await accountsService.createBalance(this.sale.baseAsset)
+            await this.loadBalances()
+          }
           const offerFees = await feeService.loadOfferFeeByAmount(this.form.quoteAsset, multiply(this.form.amount, this.price))
 
           const cancelOpts = this.offer ? {

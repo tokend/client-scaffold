@@ -102,7 +102,7 @@
                         md-xsmall-size-100"
                   name="sale-base-asset-for-hard-cap"
                   id="sale-base-asset-for-hard-cap"
-                  :label="i18n.sale_baseAsset_hardCap({asset: form.baseAsset})"
+                  :label="i18n.sale_base_asset_hard_cap_to_sell({asset: form.baseAsset})"
                   :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
       />
     </div>

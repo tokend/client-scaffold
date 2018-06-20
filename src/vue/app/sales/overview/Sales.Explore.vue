@@ -66,7 +66,6 @@
     }),
     async created () {
       this.isLoaded = true
-      this.loadSales()
       await this.loadFilteredSales()
     },
     computed: {

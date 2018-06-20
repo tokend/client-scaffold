@@ -143,5 +143,7 @@ export default {
   lbl_information: 'Information',
   lbl_not_available: 'Feature is not available',
   lbl_token_not_available_exp: 'Token creation is available only for corporate users, complete verification to become one.',
-  lbl_token_not_available_yet: 'Please create token before creating sale'
+  lbl_token_not_available_yet: 'Please create token before creating sale',
+  lbl_issuance_not_available_exp: 'Issuance creation is available only for corporate users, complete verification to become one.',
+  lbl_issuance_not_available_yet: 'Please create token before creating issuance'
 }

@@ -31,7 +31,7 @@
 <script>
   import StepMixin from './step.mixin'
   import DescriptionEditor from '../components/DescriptionEditor'
-  import { ASSET_POLICIES, documentTypes, blobTypes } from '../../../../js/const/const'
+  import { documentTypes, blobTypes } from '../../../../js/const/const'
   import { i18n } from '../../../../js/i18n'
 
   import { commonEvents } from '../../../../js/events/common_events'
@@ -55,7 +55,6 @@
       },
       i18n,
       documentTypes,
-      ASSET_POLICIES,
       uploadVideo: false
     }),
 

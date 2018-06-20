@@ -74,6 +74,7 @@
   import { ErrorHandler } from '../../../js/errors/error_handler'
   import { ACCOUNT_TYPES } from '../../../js/const/const'
   import { confirmAction } from '../../../js/modals/confirmation_message'
+  import { EventDispatcher } from '../../../js/events/event_dispatcher'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
@@ -100,6 +101,7 @@
     async created () {
       await Promise.all([
         this.loadTokens(),
+        this.loadBalances(),
         this.listManager.fetch()
       ])
       if (this.listManager.list.length) {
@@ -119,7 +121,8 @@
 
     methods: {
       ...mapActions({
-        loadTokens: vuexTypes.GET_ALL_TOKENS
+        loadTokens: vuexTypes.GET_ALL_TOKENS,
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       startNewSale () {
         const sale = new SaleRequestRecord()
@@ -172,10 +175,10 @@
             quoteAssets: opts.quote_assets,
             isCrowdfunding: true
           })
-          console.log('came to here')
           this.listManager.drop(this.sale)
           await this.listManager.fetch()
           this.view.mode = VIEW_MODES.list
+          EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           console.error(error)
           ErrorHandler.processUnexpected(error)

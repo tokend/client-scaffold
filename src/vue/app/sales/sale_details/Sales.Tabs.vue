@@ -20,7 +20,7 @@
         <crowdfund-tab :syndicate="syndicate" />
       </div>
     </md-tab> -->
-    <md-tab name="Banner"  md-label="Video">
+    <md-tab name="Banner"  md-label="Video" :md-disabled="!sale.youTubeVideoId">
       <div class="tabs__tab-inner">
         <sale-banner :sale="sale" />
       </div>

@@ -4,10 +4,10 @@
       <div class="details-column md-layout-item">
         <detail-row :prop="i18n.sale_start_time()" :value="`${i18n.d(sale.startTime)}`"/>
         <detail-row :prop="i18n.sale_close_time()" :value="`${i18n.d(sale.endTime)}`"/>
-        <detail-row :prop="i18n.sale_baseAsset_hardCap()" :value="`${sale.defaultQuoteAsset}`"/>
+        <detail-row :prop="i18n.sale_base_asset_for_hard_cap()" :value="`${sale.defaultQuoteAsset}`"/>
         <detail-row :prop="i18n.sale_soft_cap()" :value="`${i18n.cc(sale.softCap)}`"/>
         <detail-row :prop="i18n.sale_hard_cap()" :value="`${i18n.cc(sale.hardCap)}`"/>
-        <detail-row :prop="i18n.sale_baseAsset_hardCap()" :value="`${i18n.cc(sale.baseHardCap)}`"/>
+        <detail-row :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset:sale.baseAsset})}`" :value="`${i18n.cc(sale.baseHardCap)}`"/>
       </div>
     </div>
   </div>

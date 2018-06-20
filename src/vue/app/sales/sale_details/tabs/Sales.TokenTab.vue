@@ -12,9 +12,9 @@
     </div>
     <div class="crowdfund-token-main">
       <div class="details-column md-layout-item">
-        <detail-row :prop="i18n.lbl_token_max_issuance_amount()" :value="`${i18n.c(token.max)}`"/>
-        <detail-row :prop="i18n.lbl_token_initial_preissued_amount()" :value="`${i18n.c(token.issued)}`"/>
-        <detail-row :prop="i18n.lbl_avalilable_for_iss()" :value="`${i18n.c(token.available)}`"/>
+        <detail-row :prop="i18n.lbl_token_max_issuance_amount()" :value="`${i18n.cc(token.max)}`"/>
+        <detail-row :prop="i18n.lbl_token_initial_preissued_amount()" :value="`${i18n.cc(token.issued)}`"/>
+        <detail-row :prop="i18n.lbl_avalilable_for_iss()" :value="`${i18n.cc(token.available)}`"/>
         <detail-row :prop="i18n.lbl_terms()" v-if="token.termsUrl" :value="`<a href='${token.termsUrl}' target='_blank'>Open file</a>`"/>
         <detail-row :prop="i18n.lbl_terms()" v-else />
         <detail-row :prop="i18n.lbl_policies()" :value="`${getPolicies(token.policies)}`"/>
@@ -26,6 +26,7 @@
 <script>
   import DetailRow from '../../../common/Detail.Row'
   import { i18n } from '../../../../../js/i18n'
+  import { ASSET_POLICIES } from '../../../../../js/const/xdr.const'
   import { documentTypes } from '../../../../../js/const/documents.const'
   export default {
     name: 'token-tab',
@@ -36,11 +37,17 @@
     props: ['token'],
     data: _ => ({
       i18n,
-      documentTypes
+      documentTypes,
+      ASSET_POLICIES
     }),
     methods: {
       getPolicies (item) {
-        return item.map(policy => policy.name.replace('AssetPolicy', '')).join(', ')
+        const policies = []
+        item.forEach(element => {
+          policies.push(Object.keys(ASSET_POLICIES)
+            .filter(policy => ASSET_POLICIES[policy] === element))
+        })
+        return policies.join(', ').replace(/([a-z])([A-Z])/g, '$1 $2')
       }
     }
   }
