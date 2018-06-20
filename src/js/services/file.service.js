@@ -52,6 +52,17 @@ export class FileService extends Service {
   }
 
   /**
+   * @param {DocumentContainer} document - instance of {@link DocumentContainer} to be uploaded
+   * @returns {Promise<object>}
+   */
+  async uploadSingleDocument (document) {
+    const details = document.getDetailsForUpload()
+    const key = await this.uploadFile(details)
+    document.setKey(key)
+    return document
+  }
+
+  /**
    * Loads config from
    * @param type - document type {@link documentTypes}
    * @param mimeType - MIME-type of the file

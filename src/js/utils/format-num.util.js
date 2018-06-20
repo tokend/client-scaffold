@@ -10,7 +10,7 @@ export function localizeNum (value, digits = 6, collapse = true) {
   }
 }
 
-function formatBigNumber (number, digits = 0) {
+export function formatBigNumber (number, digits = 0) {
   const num = parseFloat(number)
   const si = [
     { value: 1E18, symbol: 'E' },

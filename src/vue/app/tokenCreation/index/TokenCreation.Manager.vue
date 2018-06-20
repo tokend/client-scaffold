@@ -46,17 +46,18 @@
                 />
               </div>
             </div>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="token-max-issuance-amount"
-                            name="max issuance amount"
-                            v-model="request.maxIssuanceAmount"
-                            v-validate="'required|amount'"
-                            :label="i18n.lbl_token_max_issuance_amount()"
-                            :errorMessage="errorMessage('max issuance amount')"
-                />
-              </div>
-            </div>
+            <div class="md-layout md-gutter"> 
+              <div class="md-layout-item md-small-size-100"> 
+                <input-field id="token-max-issuance-amount" 
+                            name="max issuance amount" 
+                            type="number"
+                            v-model="request.maxIssuanceAmount" 
+                            v-validate="'required|amount'" 
+                            :label="i18n.lbl_token_max_issuance_amount()" 
+                            :errorMessage="errorMessage('max issuance amount')" 
+                /> 
+              </div> 
+            </div> 
           </div>
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">
@@ -212,7 +213,7 @@ export default {
     },
 
     async createRequest () {
-      let preissuedAssetSigner = config.PREISSUED_ASSET_SIGNER
+      let preissuedAssetSigner = config.NULL_ASSET_SIGNER
       let initialPreissuedAmount = this.request.maxIssuanceAmount
 
       if (this.makeAdditional || this.id) {

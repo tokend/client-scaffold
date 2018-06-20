@@ -26,6 +26,7 @@ export default {
   lbl_create_token: 'Create token',
   lbl_create_sale: 'Create sale',
   lbl_explore_tokens: 'Explore tokens',
+  lbl_explore_sales: 'Explore sales',
   lbl_history: 'History',
   lbl_cancel: 'Cancel',
   lbl_wallet: 'wallet',
@@ -137,5 +138,12 @@ export default {
   lbl_recipient_fee: 'Recipient fee',
   lbl_fee_from_source: 'Sender paid fees',
   lbl_sender_fee_asset: 'Sender fee asset',
-  lbl_recipient_fee_asset: 'Recipient fee asset'
+  lbl_recipient_fee_asset: 'Recipient fee asset',
+  lbl_sort_by: 'Sort by',
+  lbl_information: 'Information',
+  lbl_not_available: 'Feature is not available',
+  lbl_token_not_available_exp: 'Token creation is available only for corporate users, complete verification to become one.',
+  lbl_token_not_available_yet: 'Please create token before creating sale',
+  lbl_issuance_not_available_exp: 'Issuance creation is available only for corporate users, complete verification to become one.',
+  lbl_issuance_not_available_yet: 'Please create token before creating issuance'
 }

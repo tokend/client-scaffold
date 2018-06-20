@@ -196,6 +196,17 @@ export class UsersService extends Service {
     }
   }
 
+  uploadBlob (type, value) {
+    return this._apiRequestBuilder.users()
+      .accountId(this._accountId)
+      .blobs()
+      .data({ type })
+      .attributes({ value })
+      .sign()
+      .json()
+      .post()
+  }
+
   /**
    * WORK IN PROGRESS. Loads user KYC entities
    */
