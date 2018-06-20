@@ -1,27 +1,26 @@
 <template>
   <div class="sale-details" v-if="this.sale && this.token">
     <div class="sale-details__header">
-      <div class="sale-details__name-wrapper">
+      <div class="sale-details__back-btn-wrapper">
         <router-link to='/sales/explore' class="back-btn">
           <i class="material-icons">arrow_back</i>
         </router-link>
-        <div class="sale-details__header-item">
-          <span class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</span>
-          <!-- <span class="sale-details__owner"> {{ i18n.sale_by_owner({ owner: syndicate.email }) }}</span> -->
-        </div>
       </div>
-      <p class="sale-details__description">{{ sale.shortDescription }}</p>
+      <div class="sale-details__name-wrapper">
+        <p class="sale-details__name">{{ sale.name }} ({{ sale.baseAsset }})</p>
+        <p class="sale-details__description">{{ sale.shortDescription }}</p>
+      </div>
     </div>
     <div class="sale-details__content">
       <div class="sale-details__banner">
-        <img class="sale-details__banner-image" 
-             :src="sale.image" 
+        <img class="sale-details__banner-image"
+             :src="sale.image"
              alt="crowdfund banner">
       </div>
       <div class="sale-details__information">
         <div class="sale-details__information-item">
           <invest-progress-bar class="invest-progress-bar"
-                               :sale="sale" 
+                               :sale="sale"
                                :barHeight="'1.2rem'"/>
         </div>
         <div class="sale-details__information-item">
@@ -31,7 +30,7 @@
       </div>
     </div>
     <div class="sale-details__content sale-details__main-info">
-      <sale-tabs class="sale-details__tabs" 
+      <sale-tabs class="sale-details__tabs"
                  :sale="sale"
                  :description="description"
                  :syndicate="syndicate"
@@ -101,20 +100,12 @@
   @import '../../../../scss/mixins';
   $ratio_16: 370px;
   $ratio_9: $ratio_16 * (9/16);
-  
+
   .sale-details {
     padding: 1.5rem;
     background: $col-content-block;
     border-radius: 2px;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
-  }
-
-  .sale-details__header-item {
-    display: flex;
-    flex-wrap: wrap;
-    @include respond-to(medium) {
-      flex-direction: column;
-    }
   }
 
   .sale-details__content {
@@ -140,7 +131,7 @@
       object-fit: cover;
       vertical-align: middle;
     }
-    
+
     .sale-details__information {
       width: 45%;
       display: flex;
@@ -164,10 +155,17 @@
     }
   }
 
-  .sale-details__name-wrapper {
+  .sale-details__header {
+    margin-bottom: 3rem;
     display: flex;
+  }
+
+  .sale-details__back-btn-wrapper {
+    padding-top: .2rem;
+  }
+
+  .sale-details__name-wrapper {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
     .sale-details__name {
       font-weight: bold;
       line-height: 2rem;
@@ -184,8 +182,7 @@
 
  .sale-details__description {
     font-size: 1rem;
-    margin-left: 3rem;
-    margin-bottom: 3rem;
+    color: $col-unfocused;
   }
 
  .back-btn {
