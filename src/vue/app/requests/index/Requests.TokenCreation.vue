@@ -23,7 +23,7 @@
             <md-table-cell class="tx-token-creation__table-cell">{{ humanizeDate(item.created_at) }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ humanizeDate(item.updated_at) }}</md-table-cell>
 
-            <md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">
               <md-button class="tx-token-creation__open-details-btn md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
@@ -64,7 +64,7 @@
                           class="md-dense md-primary"
                           :disabled="item.request_state !== 'pending'
                                   || isPending"
-                          @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+                          @click="updatePendingRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -191,7 +191,7 @@ export default {
       return item.replace('_', ' ')
     },
 
-    updateRequest (id) {
+    updatePendingRequest (id) {
       this.$router.push({name: 'token-creation.index', params: { id: id }})
     },
 
@@ -240,7 +240,14 @@ export default {
     &--counterparty {
       max-width: 10rem;
     }
+    &:last-child {
+      text-align: right;
+    }
   }
+
+  .tx-token-creation__open-details-btn { 
+    margin-right: .65rem; 
+  } 
 
   .tx-token-creation__select-outer {
     padding: 5px $padding-horizontal;
@@ -296,5 +303,9 @@ export default {
       margin-right: 0;
       margin-bottom: 12px;
     }
+  }
+
+  .details-column {
+    margin-right: .2rem;
   }
 </style>
