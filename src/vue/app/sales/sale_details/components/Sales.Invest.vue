@@ -27,6 +27,7 @@
                         id="investment"
                         name="investment"
                         type="number"
+                        :disabled="isOwner"
                         :errorMessage="errorMessage('investment')"
                         v-validate="'amount'"
                         data-vv-validate-on="input"
@@ -41,8 +42,19 @@
       {{ i18n.sale_tip({ endTime: i18n.d(sale.endTime) })}}
     </div> -->
     <div class="invest__actions">
-      <div class="invest__btn-ctn">
-        <md-button class="md-primary invest__btn"
+      <div class="invest__cancel-btn-ctn">
+        <md-tooltip md-direction="top">
+          {{ i18n.sale_offer_cancel_tip({amount: i18n.c(investedAmount), asset: form.quoteAsset}) }}
+        </md-tooltip>
+        <md-button class="md-primary invest__cancel-btn"
+                 @click="cancelOffer"
+                 v-if="sale.isOpened && offer"
+                 :disabled="isPending">
+                 {{i18n.sale_offer_cancel()}}
+        </md-button>
+      </div>
+      <div class="invest__submit-btn-ctn">
+        <md-button class="md-primary invest__submit-btn"
                  @click="invest"
                  :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
                  {{i18n.sale_invest()}}
@@ -88,6 +100,7 @@
         amount: 0,
         convertedAmount: 0
       },
+      investedAmount: 0,
       offers: [],
       i18n
     }),
@@ -177,6 +190,25 @@
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
         } catch (error) { ErrorHandler.processUnexpected(error) }
         this.enable()
+      },
+      async cancelOffer () {
+        this.disable()
+        try {
+          const cancelOpts = this.offer ? {
+            baseBalance: _get(this.accountBalances, `${this.sale.baseAsset}.balance_id`),
+            quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
+            offerId: this.offer.id,
+            price: this.price,
+            orderBookId: this.sale.id
+          } : null
+          await offersService.cancelOffer(cancelOpts)
+          this.$emit(commonEvents.investInSale)
+          this.loadOffers()
+          EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_cancelled({ asset: this.sale.baseAsset }))
+        } catch (err) {
+          ErrorHandler.processUnexpected(err)
+        }
+        this.enable()
       }
     },
     watch: {
@@ -191,6 +223,7 @@
       offer: function (value) {
         if (value) {
           this.form.amount = value.quoteAmount
+          this.investedAmount = value.quoteAmount
         } else {
           this.form.amount = ''
           this.form.convertedAmount = 0
@@ -313,7 +346,8 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    .invest__btn {
+    .invest__cancel-btn,
+    .invest__submit-btn {
       margin: 0;
     }
   }
