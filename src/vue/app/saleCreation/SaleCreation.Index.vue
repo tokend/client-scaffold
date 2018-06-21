@@ -78,6 +78,7 @@
   import { salesService } from '../../../js/services/sales.service'
   import { DateHelper } from '../../../js/helpers/date.helper'
   import { ErrorHandler } from '../../../js/errors/error_handler'
+  import { reviewableRequestsService } from '../../../js/services/reviewable_requests.service'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
@@ -103,7 +104,7 @@
     }),
     async created () {
       if (this.id) {
-        const sale = new SaleRequestRecord(await salesService.loadSaleRequestById(this.id))
+        const sale = new SaleRequestRecord(await reviewableRequestsService.loadReviewableRequestById(this.id))
         console.log(sale)
       }
       await Promise.all([

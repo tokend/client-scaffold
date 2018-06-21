@@ -117,15 +117,6 @@ export class SalesService extends Service {
       .callWithSignature(this._keypair)
   }
 
-  // TODO: not working, need to load unapproved/pending sale request
-  loadSaleRequestById (id) {
-    return this._horizonRequestBuilder
-      .reviewableRequestsHelper()
-      .sales()
-      .sale(id)
-      .callWithSignature(this._keypair)
-  }
-
   loadSalesRequests (tokenCode) {
     return this._horizonRequestBuilder
       .reviewableRequestsHelper()

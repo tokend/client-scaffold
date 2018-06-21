@@ -1,9 +1,9 @@
 <template>
-  <div class="tx-manual-issuance">
-    <md-table md-card class="tx-manual-issuance__table">
-      <md-table-toolbar class="tx-manual-issuance__table-toolbar">
-        <h1 class="tx-manual-issuance__table-title md-title">{{ i18n.sale_creation_requests() }}</h1>
-        <div class="tx-manual-issuance__select-outer" v-if="accountOwnedTokens.length">
+  <div class="tx-sale-creation">
+    <md-table md-card class="tx-sale-creation__table">
+      <md-table-toolbar class="tx-sale-creation__table-toolbar">
+        <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1>
+        <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
           <select-field
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
@@ -12,7 +12,7 @@
         </div>
       </md-table-toolbar>
       <template v-if="tokenCode && list.length">
-        <md-table-row class="tx-manual-issuance__row">
+        <md-table-row class="tx-sale-creation__row">
           <md-table-head>{{ i18n.lbl_sale_name() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
@@ -22,15 +22,15 @@
         </md-table-row>
         <template v-for="(item, i) in list">
 
-          <md-table-row class="tx-manual-issuance__row" @click="toggleDetails(i)" :key="i">
-            <md-table-cell class="tx-manual-issuance__table-cell">{{ item.saleName }}</md-table-cell>
-            <md-table-cell class="tx-manual-issuance__table-cell">{{ item.tokenCode }}</md-table-cell>
-            <md-table-cell class="tx-manual-issuance__table-cell">{{ item.requestState }}</md-table-cell>
-            <md-table-cell class="tx-manual-issuance__table-cell">{{ humanizeDate(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-manual-issuance__table-cell">{{ humanizeDate(item.updatedAt) }}</md-table-cell>
+          <md-table-row class="tx-sale-creation__row" @click="toggleDetails(i)" :key="i">
+            <md-table-cell class="tx-sale-creation__table-cell">{{ item.saleName }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">{{ humanizeDate(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">{{ humanizeDate(item.updatedAt) }}</md-table-cell>
 
-            <md-table-cell>
-              <md-button class="tx-manual-issuance__open-details-btn md-icon-button">
+            <md-table-cell class="tx-sale-creation__table-cell">
+              <md-button class="tx-sale-creation__open-details-btn md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
@@ -38,7 +38,7 @@
 
           </md-table-row>
 
-          <md-table-row class="th-manual-issuance__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
+          <md-table-row class="tx-sale-creation__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
@@ -64,13 +64,13 @@
                           :disabled="item.requestState !== 'pending'
                                   || isPending"
                           @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button v-if="item.request_state === 'rejected'" 
-                          class="md-dense md-primary" 
-                          :disabled="isPending" 
-                          @click="updateRejectedRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button> 
-                <md-button v-else 
-                          class="md-dense md-primary" 
-                          :disabled="item.requestState !== 'pending' 
+                <md-button v-if="item.request_state === 'rejected'"
+                          class="md-dense md-primary"
+                          :disabled="isPending"
+                          @click="updateRejectedRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button>
+                <md-button v-else
+                          class="md-dense md-primary"
+                          :disabled="item.requestState !== 'pending'
                                   || isPending"
                           @click="updateRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
@@ -86,7 +86,7 @@
          </md-table-row>
       </template>
       <template v-else>
-        <div class="tx-manual-issuance__no-requests">
+        <div class="tx-sale-creation__no-requests">
           <md-icon class="md-size-4x">trending_up</md-icon>
           <h2>{{ i18n.sale_no_creation_requests() }}</h2>
           <p>{{ i18n.sale_no_creation_requests_desc() }}</p>
@@ -211,15 +211,15 @@ export default {
   $padding-horizontal: 25px;
   $padding: $padding-vertical $padding-horizontal;
 
-  .tx-manual-issuance {
+  .tx-sale-creation {
     width: 100%;
   }
 
-  .tx-manual-issuance__table {
+  .tx-sale-creation__table {
     margin: 0 !important;
   }
 
-  .tx-manual-issuance__table-toolbar {
+  .tx-sale-creation__table-toolbar {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -230,34 +230,41 @@ export default {
     }
   }
 
-  .tx-manual-issuance__row {
+  .tx-sale-creation__row {
     cursor: pointer;
   }
 
-  .tx-manual-issuance__table-cell {
+  .tx-sale-creation__table-cell {
     overflow: hidden;
     white-space: nowrap;
 
     &--counterparty {
       max-width: 10rem;
     }
+    &:last-child {
+      text-align: right;
+    }
   }
 
-  .tx-manual-issuance__select-outer {
+  .tx-sale-creation__open-details-btn {
+    margin-right: .65rem
+  }
+
+  .tx-sale-creation__select-outer {
     padding: 5px $padding-horizontal;
   }
 
-  .tx-manual-issuance__details {
+  .tx-sale-creation__details {
     padding: $padding;
     max-width: 25rem;
     width: 100%;
   }
 
-  .tx-manual-issuance__btn-outer {
+  .tx-sale-creation__btn-outer {
     text-align: center;
   }
 
-  .tx-manual-issuance__no-requests {
+  .tx-sale-creation__no-requests {
     padding: 0 16px 32px;
     text-align: center;
 
@@ -266,12 +273,12 @@ export default {
     }
   }
 
-  .tx-manual-issuance__table-title {
+  .tx-sale-creation__table-title {
     padding: 24px;
     font-size: 24px;
   }
 
-  .tx-manual-issuance__no-requests {
+  .tx-sale-creation__no-requests {
     padding: 0 16px 32px;
     text-align: center;
 
@@ -297,5 +304,9 @@ export default {
       margin-right: 0;
       margin-bottom: 12px;
     }
+  }
+
+  .details-column {
+    margin-right: .2rem;
   }
 </style>
