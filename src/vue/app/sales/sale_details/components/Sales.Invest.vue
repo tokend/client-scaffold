@@ -41,9 +41,12 @@
       {{ i18n.sale_tip({ endTime: i18n.d(sale.endTime) })}}
     </div> -->
     <div class="invest__actions">
-      <div class="invest__tooltip"
-           v-if="isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming">
-        <i class="material-icons invest__tooltip-icon">help_outline</i>
+      <div class="invest__btn-ctn">
+        <md-button class="md-primary invest__btn"
+                 @click="invest"
+                 :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
+                 {{i18n.sale_invest()}}
+        </md-button>
         <md-tooltip v-if="sale.isUpcoming"
                     md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
         <md-tooltip v-else-if="isOwner"
@@ -55,9 +58,6 @@
         <md-tooltip v-else-if="sale.isCanceled"
                     md-direction="top">{{ i18n.sale_disable_invest_canceled_sale() }}</md-tooltip>
       </div>
-      <md-button class="md-primary invest__btn"
-                 @click="invest"
-                 :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">{{i18n.sale_invest()}}</md-button>
     </div>
   </div>
 </template>
@@ -184,6 +184,9 @@
         if (value !== '' && value > 0) {
           this.form.convertedAmount = await pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
         }
+        if (value === '') {
+          this.form.convertedAmount = 0
+        }
       },
       offer: function (value) {
         if (value) {
@@ -271,7 +274,8 @@
     margin-bottom: 1rem;
     &--error {
       color: $col-danger;
-      .io-invest__available-amount { color: $col-danger }
+      .io-invest__available-amount,
+      .invest__available-amount { color: $col-danger }
     }
   }
 
