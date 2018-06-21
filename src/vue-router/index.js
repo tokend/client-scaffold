@@ -54,7 +54,7 @@ import Requests from '../vue/app/requests/Requests.Entry'
 import RequestsIndex from '../vue/app/requests/index/Requests.Index'
 
 import Sales from '../vue/app/sales/Sales.Entry'
-import SalesDetails from '../vue/app/sales/Sales.Details'
+import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
 
 Vue.use(Router)

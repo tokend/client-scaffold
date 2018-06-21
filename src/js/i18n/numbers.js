@@ -21,15 +21,21 @@ const locales = {
 
 export function formatCurrency (locale = 'en') {
   numberFormatter.settings = locales[locale]
-  return numberFormatter.formatMoney
+  return (n) => {
+    return numberFormatter.formatMoney(n).replace(/^0+(\d)|(\d)0+$/gm, '$1$2')
+  }
 }
 
 export function formatConvertedCurrency (locale = 'en') {
-  numberFormatter.settings = locales[locale]
-  return (n) => `${locales[locale].symbol}${numberFormatter.toFixed(numberFormatter.formatMoney(n), DEFAULT_CONVERSION_PRESICION)}`
+  const settings = locales[locale].currency
+  return (n) => {
+    return numberFormatter.formatMoney(n, {...settings, symbol: locales[locale].symbol, precision: DEFAULT_CONVERSION_PRESICION})
+  }
 }
 
 export function formatNumber (locale = 'en') {
   numberFormatter.settings = locales[locale]
-  return numberFormatter.formatNumber
+  return (n) => {
+    return numberFormatter.formatNumber(n)
+  }
 }

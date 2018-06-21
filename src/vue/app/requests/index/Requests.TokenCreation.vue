@@ -31,7 +31,6 @@
             </md-table-cell>
 
           </md-table-row>
-
           <md-table-row class="th-token-creation__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
@@ -100,7 +99,6 @@ import { documentTypes } from '../../../../js/const/documents.const'
 import { vuexTypes } from '../../../../vuex/types'
 
 import { tokensService } from '../../../../js/services/tokens.service'
-import { ASSET_POLICIES } from '../../../../js/const/xdr.const'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 
@@ -112,7 +110,6 @@ export default {
   data: _ => ({
     i18n,
     documentTypes,
-    ASSET_POLICIES,
     isLoading: false,
     index: -1,
     humanizeDate

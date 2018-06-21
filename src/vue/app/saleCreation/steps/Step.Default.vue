@@ -68,7 +68,7 @@
     </template>
 
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat" :disabled="isPending">
+      <md-button type="submit" class="md-primary md-flat step__submit-btn" :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>
     </div>
@@ -77,10 +77,40 @@
 
 <script>
   import StepMixin from './step.mixin'
-
+  import _pick from 'lodash/pick'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { commonEvents } from '../../../../js/events/common_events'
+  import { documentTypes } from '../../../../js/const/documents.const'
   export default {
     name: 'Step-default',
-    mixins: [ StepMixin ]
+    mixins: [ StepMixin ],
+    props: ['schema'],
+    created () {
+      if (this.schema) {
+        this.form = _pick(this.sale, Object.keys(this.schema.form))
+        delete this.form.docs
+        // this.documents = _pick(this.sale, Object.keys(this.schema.form.docs || {}))
+        this.documents = {
+          [documentTypes.fundLogo]: this.sale.logo
+        }
+      }
+    },
+    methods: {
+      async submit () {
+        if (!await this.isValid()) return
+        this.disable()
+        try {
+          await this.uploadDocuments()
+          this.$emit(commonEvents.saleUpdateEvent, {
+            form: this.form,
+            documents: this.documents
+          })
+        } catch (error) {
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
+      }
+    }
   }
 </script>
 

@@ -3,8 +3,6 @@ import config from '../../config'
 import { Service } from './service'
 import { ManageOfferBuilder } from 'swarm-js-sdk'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../const/const'
-import { feeService } from './fees.service'
-import { multiply } from '../utils/math.util'
 
 export class OffersService extends Service {
   /**
@@ -20,6 +18,22 @@ export class OffersService extends Service {
       .submit(this._accountId, this._keypair)
   }
 
+  /**
+   * Creates sale offer
+   *
+   * @param {object} createOpts {@borrows _composeCreateOfferOperation}
+   * @param {object} cancelOpts {@borrows _composeCancelOfferOperation}
+   * @returns {Promise<object>} - Promise object representing creation of sale offer
+   */
+  async createSaleOffer (createOpts, cancelOpts) {
+    const removeOfferOperation = cancelOpts ? await this._composeCancelOfferOperation(cancelOpts) : null
+    const createOfferOperation = createOpts ? await this._composeCreateOfferOperation(createOpts) : null
+    return this._operationBuilder
+      .operation()
+      .add(removeOfferOperation)
+      .add(createOfferOperation)
+      .submit(this._accountId, this._keypair)
+  }
   /**
    * @param {object} opts
    * @param {string} opts.amount
@@ -147,35 +161,5 @@ export class OffersService extends Service {
       }
     }
   }
-
-  // TODO: need refactor + doc
-  async createSaleOffer (opts, oldOffer, orderBookID) {
-    const offerFees = await feeService.loadOfferFeeByAmount(opts.quoteAsset, multiply(opts.amount, opts.price))
-
-    const createOfferOperation = Number(opts.amount) > 0 ? ManageOfferBuilder.manageOffer({
-      amount: opts.amount,
-      baseBalance: opts.baseBalance,
-      quoteBalance: opts.quoteBalance,
-      isBuy: true,
-      price: opts.price,
-      orderBookID: opts.saleID,
-      fee: offerFees.percent
-    }) : null
-
-    const removeOfferOperation = oldOffer ? ManageOfferBuilder.cancelOffer({
-      baseBalance: opts.baseBalance,
-      quoteBalance: opts.quoteBalance,
-      offerID: oldOffer.id.toString(),
-      price: opts.price,
-      orderBookID
-    }) : null
-
-    return this._operationBuilder
-      .operation()
-      .add(removeOfferOperation)
-      .add(createOfferOperation)
-      .submit(this._accountId, this._keypair)
-  }
 }
-
 export const offersService = new OffersService()
