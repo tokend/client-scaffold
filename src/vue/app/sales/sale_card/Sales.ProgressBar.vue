@@ -14,7 +14,7 @@
     </div>
     <div class="invest-progress-bar__details">
       <span class="invest-progress-bar__detail">
-        <span class="invest-progress-bar__detail-value">{{ sale.currentCap }} {{sale.defaultQuoteAsset}}</span>
+        <span class="invest-progress-bar__detail-value">{{ i18n.n(sale.currentCap) }} {{sale.defaultQuoteAsset}}</span>
          invested
       </span>
       <span class="invest-progress-bar__detail">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import { i18n } from '../../../js/i18n'
+  import { i18n } from '../../../../js/i18n'
   export default {
     name: 'InvestProgressBar',
     props: ['sale', 'barHeight'],
@@ -35,7 +35,7 @@
     }),
     computed: {
       progress () {
-        const progress = Math.floor((this.sale.currentCap / this.sale.softCap) * 100)
+        const progress = Math.floor((this.sale.currentCap / this.sale.hardCap) * 100)
         return progress > 100 ? 100 : progress
       },
       daysLeft () {
@@ -49,8 +49,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '../../../../scss/variables';
+  @import '../../../../scss/mixins';
   
   .invest-progress-bar__container {
     background: $col-pb-line;

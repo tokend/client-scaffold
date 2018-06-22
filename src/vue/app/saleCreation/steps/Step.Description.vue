@@ -21,7 +21,7 @@
       <description-editor class="description-step__editor" v-model="form.description"/>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat">
+      <md-button type="submit" class="md-primary md-flat step__submit-btn">
         {{ i18n.sale_create_sale() }}
       </md-button>
     </div>
@@ -31,7 +31,7 @@
 <script>
   import StepMixin from './step.mixin'
   import DescriptionEditor from '../components/DescriptionEditor'
-  import { ASSET_POLICIES, documentTypes, blobTypes } from '../../../../js/const/const'
+  import { documentTypes, blobTypes } from '../../../../js/const/const'
   import { i18n } from '../../../../js/i18n'
 
   import { commonEvents } from '../../../../js/events/common_events'
@@ -40,7 +40,7 @@
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
 
-  import _cloneDeep from 'lodash/cloneDeep'
+  import _pick from 'lodash/pick'
   export default {
     name: 'StepCreateSale',
     mixins: [StepMixin],
@@ -50,16 +50,16 @@
     data: _ => ({
       form: {
         description: '',
+        descriptionID: '',
         youtubeId: ''
       },
       i18n,
       documentTypes,
-      ASSET_POLICIES,
       uploadVideo: false
     }),
 
     created () {
-      this.form = _cloneDeep(this.sale)
+      this.form = _pick(this.sale, Object.keys(this.form))
       this._loadDescriptionIfExists()
     },
 
@@ -79,10 +79,9 @@
             .create(blobTypes.fundOverview.str,
                     this.form.description, {}, false))
             .data('id')
-          const form = this.form
-          form.descriptionID = descriptionId
+          this.form.descriptionID = descriptionId
           this.$emit(commonEvents.saleUpdateEvent, {
-            form: form,
+            form: this.form,
             documents: this.documents
           })
           this.$emit(commonEvents.saleEditEndEvent)
@@ -113,4 +112,9 @@
     display: flex;
     flex-direction: column;
   }
+  
+  .step__action {
+    margin-top: 1rem;
+  }
+  
 </style>

@@ -5,8 +5,17 @@
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
-      <template v-if="view.mode === VIEW_MODES.edit">
-        
+    <template v-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
+      <not-available-card icon='work'
+                          :title="i18n.lbl_not_available()"
+                          :descr="i18n.sale_not_available_exp()"/>
+    </template>
+    <template v-else-if="!accountOwnedTokens.length">
+      <not-available-card icon='work'
+                          :title="i18n.lbl_not_available()"
+                          :descr="i18n.lbl_token_not_available_yet()"/>
+    </template>
+    <template v-else-if="view.mode === VIEW_MODES.edit">  
           <md-card class="create-sale__heading">
             <md-card-header>
               <div class="md-title">{{ i18n.lbl_create_sale() }}</div>
@@ -32,8 +41,6 @@
               </md-steppers>
             </md-card-content>
           </md-card>
-        
-
       </template>
 
       <template v-else-if="view.mode === VIEW_MODES.list">
@@ -47,20 +54,6 @@
           </md-card-content>
         </md-card>
       </template>
-      
-      <template v-if="view.mode === VIEW_MODES.confirm">
-        <md-card class="create-sale__confirmation">
-          <md-card-content>
-            <p>{{ i18n.sale_confirm() }}</p>
-            <div class="create-sale__actions">
-              <md-button @click="confirmSaleCreation" class="md-primary"
-                        :disabled="isPending">{{ i18n.lbl_confirm() }}</md-button>
-              <md-button @click="view.mode = VIEW_MODES.edit" class="md-primary"
-                        :disabled="isPending">{{ i18n.lbl_cancel() }}</md-button>
-            </div>
-          </md-card-content>
-        </md-card>
-      </template>
     </div>
   </div>
 </template>
@@ -68,6 +61,7 @@
 <script>
   import FormMixin from '../../common/mixins/form.mixin'
   import RequestList from './SaleCreation.RequestList'
+  import NotAvailableCard from '../common/NotAvailableCard'
   import steps from './specs/steps.schema'
   import config from '../../../config'
   import { i18n } from '../../../js/i18n'
@@ -78,7 +72,9 @@
   import { salesService } from '../../../js/services/sales.service'
   import { DateHelper } from '../../../js/helpers/date.helper'
   import { ErrorHandler } from '../../../js/errors/error_handler'
-  import { reviewableRequestsService } from '../../../js/services/reviewable_requests.service'
+  import { ACCOUNT_TYPES } from '../../../js/const/const'
+  import { confirmAction } from '../../../js/modals/confirmation_message'
+  import { EventDispatcher } from '../../../js/events/event_dispatcher'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
@@ -88,7 +84,7 @@
 
   export default {
     name: 'CreateSale-index',
-    components: { RequestList },
+    components: { RequestList, NotAvailableCard },
     mixins: [FormMixin],
     props: ['id'],
     data: _ => ({
@@ -100,7 +96,8 @@
       view: {
         mode: null
       },
-      VIEW_MODES
+      VIEW_MODES,
+      ACCOUNT_TYPES
     }),
     async created () {
       if (this.id) {
@@ -109,6 +106,7 @@
       }
       await Promise.all([
         this.loadTokens(),
+        this.loadBalances(),
         this.listManager.fetch()
       ])
       if (this.listManager.list.length) {
@@ -120,13 +118,16 @@
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountId
+        vuexTypes.accountId,
+        vuexTypes.accountTypeI,
+        vuexTypes.accountOwnedTokens
       ])
     },
 
     methods: {
       ...mapActions({
-        loadTokens: vuexTypes.GET_ALL_TOKENS
+        loadTokens: vuexTypes.GET_ALL_TOKENS,
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       startNewSale () {
         const sale = new SaleRequestRecord()
@@ -141,7 +142,6 @@
       handleSaleUpdate ({ form, documents }, { step, i }) {
         form = form || {}
         documents = documents || {}
-
         Object.entries(form).forEach(([key, value]) => {
           this.sale[key] = value
         })
@@ -149,14 +149,15 @@
           this.sale.logo = value
         })
         this.listManager.pushToStorage()
+        if (this.activeStep === steps[steps.length - 1].name) {
+          return
+        }
         step.done = true
         this.activeStep = (steps[i + 1] || steps[0]).name
       },
       async handleSaleEditEnd () {
-        this.view.mode = VIEW_MODES.confirm
+        if (!await confirmAction()) return
         await this.listManager.fetch()
-      },
-      async confirmSaleCreation () {
         const opts = get(this.sale.getDetailsForSave(), 'details.sale')
         this.disable()
         try {
@@ -175,13 +176,14 @@
               logo: opts.details.logo,
               youtube_video_id: opts.details.youtube_video_id
             },
-            baseAssetForHardCap: opts.baseAssetForHardCap,
+            baseAssetForHardCap: opts.base_asset_for_hard_cap,
             quoteAssets: opts.quote_assets,
             isCrowdfunding: true
           })
           this.listManager.drop(this.sale)
           await this.listManager.fetch()
           this.view.mode = VIEW_MODES.list
+          EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
           console.error(error)
           ErrorHandler.processUnexpected(error)

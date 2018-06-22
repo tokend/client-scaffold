@@ -23,13 +23,13 @@
 </template>
 
 <script>
-  import { humanizeFutureDate } from '../../../js/utils/dates.util'
-  import config from '../../../config'
+  import { humanizeFutureDate } from '../../../../js/utils/dates.util'
+  import config from '../../../../config'
   import _get from 'lodash/get'
   import InvestProgressBar from './Sales.ProgressBar'
 
   export default {
-    name: 'fund-card',
+    name: 'sale-card',
     components: { InvestProgressBar },
     props: ['sale', 'hasEditRedirect', 'imgUrl'],
     data: _ => ({
@@ -54,8 +54,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '../../../../scss/variables';
+  @import '../../../../scss/mixins';
 
   $padding-side: 20px;
 

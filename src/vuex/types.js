@@ -161,7 +161,10 @@ const getters = {
   sales: 'sales',
   isSalesLoaded: 'isSalesLoaded',
   saleIds: 'saleIds',
-  starredSales: 'starredSales'
+  starredSales: 'starredSales',
+
+  // offers:
+  saleOffers: 'saleOffers'
 }
 
 export const vuexTypes = {

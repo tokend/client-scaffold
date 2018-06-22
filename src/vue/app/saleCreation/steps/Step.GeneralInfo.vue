@@ -31,7 +31,8 @@
                     v-validate="'required'"
                     name="sale-open-time"
                     id="sale-open-time"
-                    class="md-layout-item
+                    class="step__input-field
+                           md-layout-item
                            md-size-45
                            md-small-size-95
                            md-xsmall-size-100"
@@ -62,7 +63,7 @@
             }"
             class="step__input-field
                   md-layout-item
-                  md-size-31
+                  md-size-45
                   md-small-size-95
                   md-xsmall-size-100"
             name="sale-soft-cap"
@@ -74,11 +75,11 @@
             v-validate="{
                 required:true, 
                 amount: true, 
-                min_value: form.softCap
+                soft_cap: [form.softCap]
             }"
             class="step__input-field
                   md-layout-item
-                  md-size-31
+                  md-size-45
                   md-small-size-95
                   md-xsmall-size-100"
             name="sale-hard-cap"
@@ -86,35 +87,37 @@
             :label="i18n.sale_hard_cap()"
             :errorMessage="errorMessage('sale-hard-cap')"
         />
-        <input-field v-model="form.baseAssetForHardCap"
-            v-validate="{
-                required:true, 
-                amount: true
-            }"
-            class="step__input-field
-                  md-layout-item
-                  md-size-31
-                  md-small-size-95
-                  md-xsmall-size-100"
-            name="sale-base-asset-for-hard-cap"
-            id="sale-base-asset-for-hard-cap"
-            :label="i18n.sale_baseAsset_hardCap()"
-            :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
-        />
     </div>
-      <div class="step__switchers">
-        <h3>{{ i18n.sale_quote_assets() }}</h3>
-        <md-switch class="md-primary"
+    <div class="step-row md-layout step-row__base-asset-input">
+      <input-field v-model="form.baseAssetForHardCap"
+                  v-validate="{
+                      required: true, 
+                      amount: true, 
+                      max_issuance: [avalaibleForIssuance, form.baseAsset]
+                  }"
+                  class="step__input-field
+                        md-layout-item
+                        md-size-31
+                        md-small-size-95
+                        md-xsmall-size-100"
+                  name="sale-base-asset-for-hard-cap"
+                  id="sale-base-asset-for-hard-cap"
+                  :label="i18n.sale_base_asset_hard_cap_to_sell({asset: form.baseAsset})"
+                  :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
+      />
+    </div>
+    <div class="step__switchers">
+      <h3>{{ i18n.sale_quote_assets() }}</h3>
+      <md-switch class="md-primary"
                    v-for="(token,i) in walletTokens"
                    v-model="form.quoteAssets"
                    :value="token.code"
                    :key="i"
         >
           {{ token.code }}</md-switch>
-      </div>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat" 
+      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
       :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>
@@ -124,17 +127,30 @@
 
 <script>
   import StepMixin from './step.mixin'
-
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+  import { commonEvents } from '../../../../js/events/common_events'
   import { ASSET_POLICIES, documentTypes } from '../../../../js/const/const'
   import { i18n } from '../../../../js/i18n'
   import { vuexTypes } from '../../../../vuex/types'
   import { mapGetters } from 'vuex'
+  import _pick from 'lodash/pick'
   export default {
     name: 'StepGeneralInfo',
     mixins: [StepMixin],
     data: _ => ({
       values: {
         tokens: []
+      },
+      form: {
+        name: '',
+        baseAsset: '',
+        startTime: '',
+        endTime: '',
+        softCap: '',
+        hardCap: '',
+        baseAssetForHardCap: '',
+        quoteAssets: []
       },
       i18n,
       documentTypes,
@@ -144,19 +160,44 @@
 
     created () {
       this.values.tokens = this.accountOwnedTokens
-      this.setTokenCode()
+      this.form = _pick(this.sale, Object.keys(this.form))
+      if (!this.form.baseAsset) {
+        this.setTokenCode()
+      }
     },
 
     computed: {
       ...mapGetters([
         vuexTypes.accountOwnedTokens,
-        vuexTypes.walletTokens
-      ])
+        vuexTypes.walletTokens,
+        vuexTypes.userAcquiredTokens
+      ]),
+      avalaibleForIssuance () {
+        const token = this.userAcquiredTokens
+          .find(token => token.code === this.form.baseAsset)
+        return token.available
+      }
     },
 
     methods: {
       setTokenCode () {
         this.form.baseAsset = this.values.tokens[0] || null
+      },
+      async submit () {
+        if (!await this.isValid()) return
+        if (!this.form.quoteAssets.length) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.sale_accept_investments())
+          return
+        }
+        this.disable()
+        try {
+          this.$emit(commonEvents.saleUpdateEvent, {
+            form: this.form
+          })
+        } catch (error) {
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
       }
     }
   }
@@ -169,5 +210,9 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+  }
+
+  .step-row__base-asset-input {
+    margin-bottom: 1rem;
   }
 </style>

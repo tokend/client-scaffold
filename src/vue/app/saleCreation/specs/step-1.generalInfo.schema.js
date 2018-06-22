@@ -73,7 +73,7 @@ export default {
         "id":  "sale-base-asset-for-hard-cap",
         "validate": "required",
         "required": true,
-        "label": i18n.sale_baseAsset_hardCap()
+        "label": i18n.sale_base_asset_hard_cap_to_sell()
       },
       {
         "field": "text",
