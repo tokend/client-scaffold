@@ -91,6 +91,7 @@
     data: _ => ({
       activeStep: steps[0].name,
       sale: null,
+      saleRequest: null,
       listManager: new SaleListManager(),
       i18n,
       steps,
@@ -101,16 +102,15 @@
       ACCOUNT_TYPES
     }),
     async created () {
-      if (this.id) {
-        const sale = new SaleRequestRecord(await reviewableRequestsService.loadReviewableRequestById(this.id))
-        console.log(sale)
-      }
       await Promise.all([
         this.loadTokens(),
         this.loadBalances(),
         this.listManager.fetch()
       ])
-      if (this.listManager.list.length) {
+      if (this.id) {
+        this.saleRequest = await reviewableRequestsService.loadReviewableRequestById(this.id)
+      }
+      if (!this.id && this.listManager.list.length) {
         this.view.mode = VIEW_MODES.list
         return
       }
@@ -131,7 +131,7 @@
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       startNewSale () {
-        const sale = new SaleRequestRecord()
+        const sale = new SaleRequestRecord(this.saleRequest || undefined)
         this.sale = sale
         this.listManager.add(sale)
         this.view.mode = VIEW_MODES.edit
@@ -184,6 +184,7 @@
           this.listManager.drop(this.sale)
           await this.listManager.fetch()
           this.view.mode = VIEW_MODES.list
+          this.$router.push({ path: '/requests/sale-creation' })
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
           console.error(error)
