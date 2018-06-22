@@ -256,12 +256,6 @@ const router = new Router({
               name: 'token-creation.index:id',
               component: TokenCreationIndex,
               props: true
-            },
-            {
-              path: '/token-creation/index/:rejectedId',
-              name: 'token-creation.index:rejectedId',
-              component: TokenCreationIndex,
-              props: true
             }
           ]
         },

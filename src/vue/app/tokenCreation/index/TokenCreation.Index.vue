@@ -11,7 +11,7 @@
                         :descr="i18n.lbl_token_not_available_exp()"
                         />
     </div>
-    <token-creation-manager v-else :id = "id" :rejectedId = "rejectedId"/>
+    <token-creation-manager v-else :id = "id" />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ import { i18n } from '../../../../js/i18n'
 import { mapGetters } from 'vuex'
 export default {
   components: { TokenCreationManager, NotAvailableCard },
-  props: ['id', 'rejectedId'],
+  props: ['id'],
   data: _ => ({
     i18n,
     ACCOUNT_TYPES

@@ -42,7 +42,6 @@
                             v-validate="'required'"
                             :label="i18n.lbl_token_code()"
                             :errorMessage="errorMessage('token code')"
-                            :disabled="notUpdatableValue"
                 />
               </div>
             </div>
@@ -111,7 +110,6 @@
                             v-validate="'required|account_id'"
                             :label="i18n.lbl_token_preissued_asset_signer()"
                             :errorMessage="errorMessage('preissued asset signer')"
-                            :disabled="notUpdatableValue"
                 />
               </div>
               <div class="md-layout-item md-small-size-100">
@@ -121,7 +119,6 @@
                             v-validate="{required:true, amount: true, max_value: request.maxIssuanceAmount}"
                             :label="i18n.lbl_token_initial_preissued_amount()"
                             :errorMessage="errorMessage('initial preissued amount')"
-                            :disabled="notUpdatableValue"
                 />
               </div>
             </div>
@@ -168,7 +165,7 @@ import config from '../../../../config'
 export default {
   mixins: [FormMixin],
   components: { FileField },
-  props: ['id', 'rejectedId'],
+  props: ['id'],
   data: _ => ({
     request: {
       policies: []
@@ -185,19 +182,15 @@ export default {
   }),
 
   async created () {
-    const tokenId = this.id || this.rejectedId
-    if (tokenId) {
+    if (this.id) {
       this.makeAdditional = true
-      this.request = new TokenCreationRecord(await reviewableRequestsService.loadReviewableRequestById(tokenId))
+      this.request = new TokenCreationRecord(await reviewableRequestsService.loadReviewableRequestById(this.id))
       this.documents[documentTypes.tokenTerms] = this.request.terms.key ? new DocumentContainer(this.request.terms) : null
       this.documents[documentTypes.tokenIcon] = this.request.logo.key ? new DocumentContainer(this.request.logo) : null
     }
   },
 
   computed: {
-    notUpdatableValue () {
-      return !!this.rejectedId
-    }
   },
 
   methods: {
@@ -219,7 +212,7 @@ export default {
       let preissuedAssetSigner = config.NULL_ASSET_SIGNER
       let initialPreissuedAmount = this.request.maxIssuanceAmount
 
-      if (this.makeAdditional || this.id || this.rejectedId) {
+      if (this.makeAdditional || this.id) {
         preissuedAssetSigner = this.request.preissuedAssetSigner
         initialPreissuedAmount = this.request.initialPreissuedAmount
       }
