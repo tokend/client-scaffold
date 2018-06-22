@@ -75,6 +75,7 @@
   import { ACCOUNT_TYPES } from '../../../js/const/const'
   import { confirmAction } from '../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
+  import { reviewableRequestsService } from '../../../js/services/reviewable_requests.service'
   import get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',

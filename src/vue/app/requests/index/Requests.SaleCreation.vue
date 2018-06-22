@@ -50,9 +50,9 @@
                   <detail prop="Token name" :value="`${item.tokenCode}`"/>
                   <detail :prop="`${i18n.sale_start_time()}`" :value="`${humanizeDate(item.startTime)}`"/>
                   <detail :prop="`${i18n.sale_close_time()}`" :value="`${humanizeDate(item.endTime)}`"/>
-                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${item.softCap} ${item.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${item.hardCap} ${item.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_baseAsset_hardCap()}`" :value="`${item.baseAssetForHardCap} ${item.tokenCode}`"/>
+                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${i18n.c(item.softCap)} ${item.defaultQuoteAsset}`"/>
+                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${i18n.c(item.hardCap)} ${item.defaultQuoteAsset}`"/>
+                  <detail :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: item.tokenCode})}`" :value="`${i18n.c(item.baseAssetForHardCap)} ${item.tokenCode}`"/>
                   <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
                   <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
                   <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
