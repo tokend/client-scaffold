@@ -46,7 +46,9 @@
                   <detail prop="Terms" v-if="item.details.asset_create.details.terms.key !== ''" :value="`<a href='${getUrl(item.details.asset_create.details.terms.key)}' target='_blank'>Open file</a>`"/>
                   <detail prop="Terms" v-else />
                   <detail prop="Policies" :value="`${getPolicies(item.details.asset_create.policies)}`"/>
-                  <detail prop="Reject reason" v-if="item.request_state === 'rejected'" :value="`${item.reject_reason}`"/>
+                  <detail prop="Reject reason" v-if="item.requestState === REQUEST_STATES_STR.rejected || 
+                                                    item.requestState === REQUEST_STATES_STR.permanentlyRejected"  
+                                               :value="`${item.reject_reason}`"/>
 
                 </div>
               </md-card-content>
