@@ -1,9 +1,9 @@
 <template>
-  <md-tabs>
-    <md-tab :md-label="`${ i18n.lbl_token_creation()}`">
+  <md-tabs md-sync-route>
+    <md-tab :md-label="`${ i18n.lbl_token_creation()}`" to="/requests/token-creation">
       <token-creation />
     </md-tab>
-    <md-tab :md-label="`${ i18n.lbl_sale_creation()}`">
+    <md-tab :md-label="`${ i18n.lbl_sale_creation()}`" to="/requests/sale-creation">
       <sale-creation />
     </md-tab>
   </md-tabs>

@@ -306,6 +306,16 @@ const router = new Router({
               path: '/requests/index',
               name: 'requests.index',
               component: RequestsIndex
+            },
+            {
+              path: '/requests/token-creation',
+              name: 'requests.token-creation',
+              component: RequestsIndex
+            },
+            {
+              path: '/requests/sale-creation',
+              name: 'requests.sale-creation',
+              component: RequestsIndex
             }
           ]
         },

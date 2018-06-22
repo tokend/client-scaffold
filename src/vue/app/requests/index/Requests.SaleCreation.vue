@@ -56,23 +56,21 @@
                   <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
                   <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
                   <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
-                  <detail :prop="`${i18n.lbl_reject_message()}`" v-if="item.requestState === 'rejected'" :value="`${item.rejectReason}`"/>
+                  <detail :prop="`${i18n.lbl_reject_message()}`" v-if="item.requestState === REQUEST_STATES_STR.rejected ||
+                                                                       item.requestState === REQUEST_STATES_STR.permanentlyRejected"
+                                                                :value="`${item.rejectReason}`"/>
                 </div>
               </md-card-content>
               <md-card-actions>
-                <md-button class="md-dense md-accent"
-                          :disabled="item.requestState !== 'pending'
+                <!-- <md-button class="md-dense md-accent"
+                          :disabled="item.requestState !== REQUEST_STATES_STR.pending
                                   || isPending"
-                          @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button v-if="item.request_state === 'rejected'"
-                          class="md-dense md-primary"
-                          :disabled="isPending"
-                          @click="updateRejectedRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button>
-                <md-button v-else
-                          class="md-dense md-primary"
-                          :disabled="item.requestState !== 'pending'
+                          @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
+                <md-button class="md-dense md-primary" 
+                          :disabled="(item.requestState !== REQUEST_STATES_STR.pending 
+                                  && item.requestState !== REQUEST_STATES_STR.rejected) 
                                   || isPending"
-                          @click="updateRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button>
+                          @click="updateRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button> 
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -103,9 +101,9 @@ import get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
+import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
 import { RecordTypes } from '../../../../js/records/types'
-import { documentTypes } from '../../../../js/const/documents.const'
 // import { salesService } from '../../../../js/services/sales.service'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 // import { ErrorHandler } from '../../../../js/errors/error_handler'
@@ -120,7 +118,8 @@ export default {
     isLoading: false,
     index: -1,
     humanizeDate,
-    documentTypes
+    documentTypes,
+    REQUEST_STATES_STR
   }),
 
   async created () {
@@ -143,6 +142,9 @@ export default {
             return list
           }
           list.push(item)
+          list.sort((a, b) => {
+            return new Date(b.updated_at) - new Date(a.updated_at)
+          })
           return list
         }, [])
     },
@@ -163,21 +165,6 @@ export default {
 
     isSelected (i) {
       return this.index === i
-    },
-
-    async cancelRequest (requestID) {
-      // this.disable()
-      // try {
-      //   await tokensService.cancelTokenCreationRequest({
-      //     requestID: requestID
-      //   })
-      //   this.requests = await tokensService.loadTokenCreationRequestsForState()
-      //   EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
-      // } catch (error) {
-      //   console.log(error)
-      //   ErrorHandler.processUnexpected(error)
-      // }
-      // this.enable()
     },
 
     async more () {
