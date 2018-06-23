@@ -16,7 +16,6 @@
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
-          
           <md-table-row class="tx-token-creation__row" @click="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
@@ -55,9 +54,10 @@
                 <md-button class="md-dense md-accent"
                           :disabled="!item.isPending || isPending"
                           @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button class="md-dense md-primary"
-                          :disabled="(!item.isPending && !item.isRejected) || isPending"
-                          @click="redirectToUpdateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+                <router-link :to="{name: 'token-creation.index', params: { id: item.id }}" 
+                             tag="md-button" 
+                             class="md-dense md-primary"
+                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -84,7 +84,7 @@
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
-import get from 'lodash/get'
+import _get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
@@ -115,10 +115,10 @@ export default {
       vuexTypes.tokenCreationRequests
     ]),
     list () {
-      return get(this.tokenCreationRequests, 'records', [])
+      return _get(this.tokenCreationRequests, 'records', [])
     },
     isLoaded () {
-      return get(this.tokenCreationRequests, 'isLoaded')
+      return _get(this.tokenCreationRequests, 'isLoaded')
     }
   },
 
@@ -168,10 +168,6 @@ export default {
 
     getFancyName (item) {
       return item.replace('_', ' ')
-    },
-
-    redirectToUpdateRequest (id) {
-      this.$router.push({name: 'token-creation.index', params: { id: id }})
     }
   }
 }
