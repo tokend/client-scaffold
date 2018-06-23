@@ -1,4 +1,5 @@
 import { xdrEnumToConstant } from '../utils/xdr_enum_to_constant.util'
+import { xdr } from 'swarm-js-sdk'
 
 export const REQUEST_TYPES = Object.freeze(
   xdrEnumToConstant('ReviewableRequestType')
@@ -19,3 +20,13 @@ export const ASSET_PAIR_POLICIES = Object.freeze(
 export const ACCOUNT_TYPES = Object.freeze(
   xdrEnumToConstant('AccountType')
 )
+
+export const ASSET_POLICIES_VERBOSE = Object.freeze({
+  [xdr.AssetPolicy.transferable().value]: 'Transferable',
+  [xdr.AssetPolicy.baseAsset().value]: 'Base asset',
+  [xdr.AssetPolicy.statsQuoteAsset().value]: 'Stats quote asset',
+  [xdr.AssetPolicy.withdrawable().value]: 'Withdrawable',
+  [xdr.AssetPolicy.twoStepWithdrawal().value]: 'Two step withdrawal',
+  [xdr.AssetPolicy.requiresKyc().value]: 'Requires Kyc',
+  [xdr.AssetPolicy.issuanceManualReviewRequired().value]: 'Issuance manual review required'
+})
