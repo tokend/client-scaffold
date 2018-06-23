@@ -123,15 +123,8 @@ export default {
       vuexTypes.tokenCreationRequests
     ]),
     list () {
-      return (get(this.tokenCreationRequests, 'records') || [])
+      return get(this.tokenCreationRequests, 'records', [])
         .map(item => item._record)
-        .reduce((list, item) => {
-          list.push(item)
-          list.sort((a, b) => {
-            return new Date(b.updated_at) - new Date(a.updated_at)
-          })
-          return list
-        }, [])
     },
     isLoaded () {
       return get(this.tokenCreationRequests, 'isLoaded')
