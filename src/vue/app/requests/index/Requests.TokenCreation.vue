@@ -16,12 +16,12 @@
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
-
+          
           <md-table-row class="tx-token-creation__row" @click="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ item.request_state }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.created_at) }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.updated_at) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.updatedAt) }}</md-table-cell>
 
             <md-table-cell class="tx-token-creation__table-cell">
               <md-button class="tx-token-creation__open-details-btn md-icon-button">
@@ -35,33 +35,29 @@
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="item.details.asset_create.details.logo.key" :src='getUrl(item.details.asset_create.details.logo.key)' :alt="documentTypes.tokenIcon">
+                  <img class="token-icon" v-if="item.logoUrl" :src='item.logoUrl' :alt="documentTypes.tokenIcon">
                   <div class="token-icon" v-else>{{ item.reference.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
                   <detail prop="Request type" :value="`${getFancyName(item.details.request_type)}`"/>
-                  <detail prop="Max issuance amount" :value="`${item.details.asset_create.max_issuance_amount}`"/>
-                  <detail prop="Initial preissued amount" :value="`${item.details.asset_create.initial_preissued_amount}`"/>
-                  <detail prop="Token name" :value="`${item.details.asset_create.details.name}`"/>
-                  <detail prop="Terms" v-if="item.details.asset_create.details.terms.key !== ''" :value="`<a href='${getUrl(item.details.asset_create.details.terms.key)}' target='_blank'>Open file</a>`"/>
+                  <detail prop="Max issuance amount" :value="`${i18n.c(item.maxIssuanceAmount)}`"/>
+                  <detail prop="Initial preissued amount" :value="`${i18n.c(item.initialPreissuedAmount)}`"/>
+                  <detail prop="Token name" :value="`${item.tokenName}`"/>
+                  <detail prop="Terms" v-if="item.termsUrl" :value="`<a href='${item.termsUrl}' target='_blank'>Open file</a>`"/>
                   <detail prop="Terms" v-else />
-                  <detail prop="Policies" :value="`${getPolicies(item.details.asset_create.policies)}`"/>
-                  <detail prop="Reject reason" v-if="item.requestState === REQUEST_STATES_STR.rejected || 
-                                                    item.requestState === REQUEST_STATES_STR.permanentlyRejected"  
-                                               :value="`${item.reject_reason}`"/>
+                  <detail prop="Policies" :value="`${getPolicies(item.policies)}`"/>
+                  <detail prop="Reject reason" v-if="item.isRejected || item.isPermanentlyRejected"  
+                                               :value="`${item.rejectReason}`"/>
 
                 </div>
               </md-card-content>
               <md-card-actions>
                 <md-button class="md-dense md-accent"
-                          :disabled="item.request_state !== REQUEST_STATES_STR.pending
-                                  || isPending"
+                          :disabled="!item.isPending || isPending"
                           @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
                 <md-button class="md-dense md-primary"
-                          :disabled="(item.request_state !== REQUEST_STATES_STR.pending
-                                  && item.request_state !== REQUEST_STATES_STR.rejected)
-                                  || isPending"
-                          @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+                          :disabled="(!item.isPending && !item.isRejected) || isPending"
+                          @click="redirectToUpdateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -88,12 +84,11 @@
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
-import config from '../../../../config'
 import get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
-import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
+import { documentTypes, ASSET_POLICIES_VERBOSE } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
 
 import { tokensService } from '../../../../js/services/tokens.service'
@@ -108,7 +103,7 @@ export default {
     documentTypes,
     isLoading: false,
     index: -1,
-    REQUEST_STATES_STR
+    ASSET_POLICIES_VERBOSE
   }),
 
   async created () {
@@ -121,7 +116,6 @@ export default {
     ]),
     list () {
       return get(this.tokenCreationRequests, 'records', [])
-        .map(item => item._record)
     },
     isLoaded () {
       return get(this.tokenCreationRequests, 'isLoaded')
@@ -148,7 +142,7 @@ export default {
         await tokensService.cancelTokenCreationRequest({
           requestID: requestID
         })
-        this.requests = await tokensService.loadTokenCreationRequestsForState()
+        this.loadList()
         EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
       } catch (error) {
         console.log(error)
@@ -168,19 +162,15 @@ export default {
       this.isLoading = false
     },
 
-    getUrl (item) {
-      return `${config.FILE_STORAGE}/${item}`
-    },
-
     getPolicies (item) {
-      return item.map(policy => policy.name.replace('AssetPolicy', '')).join(', ')
+      return item.map(policy => ASSET_POLICIES_VERBOSE[policy]).join(', ')
     },
 
     getFancyName (item) {
       return item.replace('_', ' ')
     },
 
-    updateRequest (id) {
+    redirectToUpdateRequest (id) {
       this.$router.push({name: 'token-creation.index', params: { id: id }})
     }
   }
