@@ -1,3 +1,5 @@
+import { REQUEST_STATES } from '../const/const'
+
 export class RequestRecord {
   constructor (record = {}) {
     this._record = record
@@ -12,5 +14,21 @@ export class RequestRecord {
     this.updatedAt = record.updated_at
     this.state = record.request_state
     this.stateI = record.request_state_i
+  }
+
+  get isPending () {
+    return this.stateI === REQUEST_STATES.pending
+  }
+  get isApproved () {
+    return this.stateI === REQUEST_STATES.approved
+  }
+  get isCancelled () {
+    return this.stateI === REQUEST_STATES.cancelled
+  }
+  get isRejected () {
+    return this.stateI === REQUEST_STATES.rejected
+  }
+  get isPermanentlyRejected () {
+    return this.stateI === REQUEST_STATES.permanentlyRejected
   }
 }
