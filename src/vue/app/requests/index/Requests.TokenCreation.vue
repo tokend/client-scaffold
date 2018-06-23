@@ -20,8 +20,8 @@
           <md-table-row class="tx-token-creation__row" @click="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ item.request_state }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ humanizeDate(item.created_at) }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ humanizeDate(item.updated_at) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.created_at) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.updated_at) }}</md-table-cell>
 
             <md-table-cell class="tx-token-creation__table-cell">
               <md-button class="tx-token-creation__open-details-btn md-icon-button">
@@ -100,8 +100,6 @@ import { tokensService } from '../../../../js/services/tokens.service'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 
-import { humanizeDate } from '../../../../js/utils/dates.util'
-
 export default {
   mixins: [FormMixin],
   components: { Detail },
@@ -110,7 +108,6 @@ export default {
     documentTypes,
     isLoading: false,
     index: -1,
-    humanizeDate,
     REQUEST_STATES_STR
   }),
 
