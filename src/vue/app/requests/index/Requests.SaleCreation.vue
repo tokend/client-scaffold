@@ -26,8 +26,8 @@
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.saleName }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ humanizeDate(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ humanizeDate(item.updatedAt) }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">{{ i18n.d(item.updatedAt) }}</md-table-cell>
 
             <md-table-cell class="tx-sale-creation__table-cell">
               <md-button class="tx-sale-creation__open-details-btn md-icon-button">
@@ -48,8 +48,8 @@
                 <div class="details-column md-layout-item">
                   <detail prop="Request type" :value="`${ item.requestType }`"/>
                   <detail prop="Token name" :value="`${item.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${humanizeDate(item.startTime)}`"/>
-                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${humanizeDate(item.endTime)}`"/>
+                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${i18n.d(item.startTime)}`"/>
+                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${i18n.d(item.endTime)}`"/>
                   <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${i18n.c(item.softCap)} ${item.defaultQuoteAsset}`"/>
                   <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${i18n.c(item.hardCap)} ${item.defaultQuoteAsset}`"/>
                   <detail :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: item.tokenCode})}`" :value="`${i18n.c(item.baseAssetForHardCap)} ${item.tokenCode}`"/>
@@ -66,11 +66,11 @@
                           :disabled="item.requestState !== REQUEST_STATES_STR.pending
                                   || isPending"
                           @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
-                <md-button class="md-dense md-primary" 
-                          :disabled="(item.requestState !== REQUEST_STATES_STR.pending 
-                                  && item.requestState !== REQUEST_STATES_STR.rejected) 
-                                  || isPending"
-                          @click="updateRequest(item.requestID)">{{ i18n.lbl_update() }}</md-button> 
+              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"  
+                             tag="md-button"  
+                             class="md-dense md-primary"
+                             :disabled="isPending">{{ i18n.lbl_update() }}</router-link>  
+                             <!-- (!item.isPending && !item.isRejected) || -->
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -97,17 +97,15 @@
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
-import get from 'lodash/get'
+import _get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
 import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
-import { RecordTypes } from '../../../../js/records/types'
 // import { salesService } from '../../../../js/services/sales.service'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 // import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { humanizeDate } from '../../../../js/utils/dates.util'
+import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
 export default {
   mixins: [FormMixin],
@@ -117,7 +115,6 @@ export default {
     tokenCode: null,
     isLoading: false,
     index: -1,
-    humanizeDate,
     documentTypes,
     REQUEST_STATES_STR
   }),
@@ -135,21 +132,10 @@ export default {
       vuexTypes.accountOwnedTokens
     ]),
     list () {
-      return (get(this.saleCreationRequests, `${this.tokenCode}.records`) || [])
-        .reduce((list, item) => {
-          if (item instanceof RecordTypes.MatchRecord) {
-            item.transactions.forEach(tx => { list.push(tx) })
-            return list
-          }
-          list.push(item)
-          list.sort((a, b) => {
-            return new Date(b.updated_at) - new Date(a.updated_at)
-          })
-          return list
-        }, [])
+      return _get(this.saleCreationRequests, `${this.tokenCode}.records`, [])
     },
     isLoaded () {
-      return get(this.saleCreationRequests, `${this.tokenCode}.isLoaded`)
+      return _get(this.saleCreationRequests, `${this.tokenCode}.isLoaded`)
     }
   },
 
@@ -170,16 +156,12 @@ export default {
     async more () {
       this.isLoading = true
       try {
-        await this.loadNext()
+        await this.loadNext(this.tokenCode)
       } catch (e) {
         console.error(e)
         EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
       }
       this.isLoading = false
-    },
-
-    async updateRequest (id) {
-      this.$router.push({name: 'sale-creation.index', params: { id: id }})
     }
   },
   watch: {
