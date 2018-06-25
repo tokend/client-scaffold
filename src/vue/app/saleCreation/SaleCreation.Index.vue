@@ -65,7 +65,7 @@
   import steps from './specs/steps.schema'
   import config from '../../../config'
   import { i18n } from '../../../js/i18n'
-  import { SaleRequestRecord } from '../../../js/records/sale-request.record'
+  import { SaleRequestRecord } from '../../../js/records/sale_request.record'
   import { SaleListManager } from './specs/sale-list-manager'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
@@ -76,7 +76,7 @@
   import { confirmAction } from '../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
   import { reviewableRequestsService } from '../../../js/services/reviewable_requests.service'
-  import get from 'lodash/get'
+  import _get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
     edit: 'edit',
@@ -159,7 +159,7 @@
       async handleSaleEditEnd () {
         if (!await confirmAction()) return
         await this.listManager.fetch()
-        const opts = get(this.sale.getDetailsForSave(), 'details.sale')
+        const opts = _get(this.sale.getDetailsForSave(), 'details.sale')
         this.disable()
         try {
           await salesService.createSaleCreationRequest({

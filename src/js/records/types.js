@@ -2,6 +2,7 @@ import { TransferRecord } from './transfer.record'
 import { TransferV2Record } from './transferV2.record'
 import { TokenRecord } from './token.record'
 import { TokenCreationRecord } from './token_creation.record'
+import { SaleCreationRecord } from './sale_creation.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
 import { IssuanceRecord } from './issuance.record'
 import { WithdrawalRecord } from './withdrawal.record'
@@ -18,6 +19,7 @@ export const RecordTypes = {
   TransferV2Record,
   TokenRecord,
   TokenCreationRecord,
+  SaleCreationRecord,
   ExternalAccountEntity,
   IssuanceRecord,
   WithdrawalRecord,
