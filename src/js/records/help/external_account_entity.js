@@ -1,17 +1,13 @@
-const assets = new Map([
-  ['bitcoin', 'BTC'],
-  ['ethereum', 'ETH']
-])
+import _get from 'lodash/get'
 
 export class ExternalAccountEntity {
   constructor (data) {
     this._rawData = data
-    this.asset = this._deriveAsset()
+    this.type = this._deriveType()
     this.address = this._rawData.data
   }
 
-  _deriveAsset () {
-    const name = this._rawData.type.name
-    return assets.has(name) ? assets.get(name) : name
+  _deriveType () {
+    return _get(this._rawData, 'type.value')
   }
 }

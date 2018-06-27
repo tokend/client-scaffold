@@ -1,7 +1,7 @@
+import { ASSET_POLICIES } from '../const/xdr.const'
+import { xdr } from 'swarm-js-sdk'
 import config from '../../config'
 import get from 'lodash/get'
-import { xdr } from 'swarm-js-sdk'
-import { ASSET_POLICIES } from '../const/xdr.const'
 
 export class TokenRecord {
   constructor (record, attachedDetails = {}) {
@@ -20,6 +20,7 @@ export class TokenRecord {
     this.termsUrl = this._getTermsUrl()
     this.logo = this._getLogo()
     this.logoUrl = this._getLogoUrl()
+    this.externalSystemType = get(record, 'details.external_system_type')
 
     this.attachedDetails = attachedDetails
   }
@@ -44,6 +45,10 @@ export class TokenRecord {
 
   get isWithdrawable () {
     return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.withdrawable().value) !== -1
+  }
+
+  get isDepositable () {
+    return !!this.externalSystemType
   }
 
   _getTerms () {
