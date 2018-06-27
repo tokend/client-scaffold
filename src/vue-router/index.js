@@ -57,6 +57,9 @@ import Sales from '../vue/app/sales/Sales.Entry'
 import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
 
+import PreissuanceCreation from '../vue/app/preissuanceCreation/PreissuanceCreation.Entry'
+import PreissuanceCreationIndex from '../vue/app/preissuanceCreation/index/PreissuanceCreation.Index'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -319,6 +322,21 @@ const router = new Router({
               path: '/sales/details/:id',
               name: 'sales.sale-details',
               component: SalesDetails,
+              props: true
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.preissuanceCreation,
+          name: 'app.preissuanceCreation',
+          path: '/preissuance-creation',
+          component: PreissuanceCreation,
+          redirect: { path: '/preissuance-creation/index' },
+          children: [
+            {
+              path: '/preissuance-creation/index',
+              name: 'preissuance-creation.index',
+              component: PreissuanceCreationIndex,
               props: true
             }
           ]

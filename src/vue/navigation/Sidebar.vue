@@ -36,6 +36,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_create_issuance() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/preissuance-creation" v-if="config.FEATURE_FLAGS.preissuanceCreation">
+        <md-icon>zoom_out_map</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance() }}</span>
+      </md-list-item>
+
       <md-list-item @click="closeSidebar" to="/sales" v-if="config.FEATURE_FLAGS.sales">
         <md-icon>trending_up</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_explore_sales() }}</span>
