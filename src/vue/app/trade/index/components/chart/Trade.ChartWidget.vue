@@ -2,8 +2,7 @@
   <div>
     <template v-if="!assets">
       <div class="app__no-data-msg">
-        <md-card class="md-layout-item
-                      ">
+        <md-card class="md-layout-item">
           <md-card-content>
             <md-icon class="md-size-4x">send</md-icon>
             <h2>{{ i18n.trd_no_pairs() }}</h2>
@@ -14,12 +13,12 @@
     </template>
 
     <md-card v-else>
-      <md-card-header class="chart-container__header">
+      <div class="chart-container__header">
         <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
         <div class="chart-container__user-balance">
-          {{ i18n.withdraw_balance({ balance: balance.balance, token: tokenCode }) }}
+          {{ i18n.withdraw_balance({base: baseAmount, quote: quoteAmount}) }}
         </div>
-      </md-card-header>
+      </div>
 
       <md-card-content>
         <div class="chart-container">
@@ -30,7 +29,7 @@
               v-model="scale"
               :isPending="isPending"
             />
-            <div class="md-layout-item md-size-25 md-medium-size-30 chart-container__assets-select">
+            <div class="md-layout-item md-size-25 md-medium-size-50 chart-container__assets-select">
               <assets-select
                 :pairs="pairs"
                 :assets="assets"
@@ -55,6 +54,8 @@
   import { i18n } from '../../../../../../js/i18n'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
+  import { attachEventHandler } from '../../../../../../js/events/helpers'
+  import { commonEvents } from '../../../../../../js/events/common_events'
 
   export default {
     name: 'chart',
@@ -81,12 +82,15 @@
         scale: 'month',
         isPending: false,
         i18n,
-        tokenCode: null
+        tokenCode: null,
+        baseAmount: '',
+        quoteAmount: ''
       }
     },
 
     created () {
       this.tokenCode = this.tokenCodes[0] || null
+      attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
     },
 
     computed: {
@@ -103,12 +107,16 @@
       },
       requiredTicks () {
         return [this.softCap, this.hardCap].filter(value => value)
-      },
-      balance () {
-        return this.accountBalances[this.tokenCode]
       }
     },
     methods: {
+      handleAssetChange (payload) {
+        const base = payload.split('/')[0]
+        const quote = payload.split('/')[1]
+        const baseBalance = this.accountBalances[base]
+        this.baseAmount = baseBalance ? `${i18n.c(baseBalance.balance)} ${quote}` : `${i18n.c(0)} ${quote}`
+        this.quoteAmount = `${i18n.c(this.accountBalances[quote].balance)} ${quote}`
+      }
     }
   }
 </script>
@@ -122,17 +130,10 @@
   }
 
   .chart-container__labels {
+    padding-bottom: 0;
     @include respond-to-custom(1000px) {
       flex-direction: column-reverse;
       align-items: flex-start;
-    }
-  }
-
-  .chart-container__assets-select {
-    @include respond-to-custom(1220px) {
-      position: absolute;
-      top: 8px;
-      right: 30px;
     }
   }
 
@@ -141,6 +142,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding: 1rem 1rem 0;
   }
 
   .chart-container__title {
@@ -150,6 +152,7 @@
   }
 
   .chart-container__user-balance {
+    font-size: 0.75rem;
     color: $col-text-secondary;
   }
 </style>
