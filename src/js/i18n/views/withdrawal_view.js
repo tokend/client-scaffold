@@ -6,7 +6,7 @@ export default {
   withdraw_network_fee: 'Please note that network fee will be separately charged from amount of withdrawal transaction',
   withdraw_wallet: '%{asset} withdrawal address',
   withdraw_success: 'Withdrawal request successfully created',
-  withdraw_balance: 'Your balance is %{balance} %{token}',
+  withdraw_balance: 'Your balance is %{base}/%{quote}',
   withdraw_error_is_trying_to_send_to_yourself: 'Sender can\'t be a recipient! Make sure the address is correct',
   withdraw_error_invalid_address: 'Invalid wallet address',
   withdraw_error_insufficient_funds: 'Insufficient funds',
