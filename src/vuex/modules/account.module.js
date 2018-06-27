@@ -141,7 +141,7 @@ export const getters = {
   accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
-      .reduce((accounts, account) => { accounts[account.asset] = account.address; return accounts }, {}),
+      .reduce((accounts, account) => { accounts[account.type] = account.address; return accounts }, {}),
   // kyc:
   accountKycRequests: state => state.kycRequests,
   accountKycLatestRequest: state => StateHelper.defineLatestKycRequest(state),
