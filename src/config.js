@@ -9,6 +9,7 @@ const featureFlags = {
   tokenCreation: true,
   issuanceCreation: true,
   saleCreation: true,
+  preissuanceCreation: true,
   settings: true,
   tfa: true,
   tokens: true,
