@@ -7,8 +7,11 @@ variables:
   IMAGE_NAME: registry.gitlab.com/tokend/client-scaffold
   IMAGE_BUILD_NAME: $IMAGE_NAME:$CI_COMMIT_SHA
   DEPLOYMENT_DIR: /root/v2
+  DEPLOYMENT_DIR: /root/v2/ansible
   DEPLOYMENT_INV: $DEPLOYMENT_DIR/env/hosts
   DEPLOYMENT_SECRETS: $DEPLOYMENT_DIR/secrets/ops.yml
+  DEPLOYMENT_INV_M: $DEPLOYMENT_DIR/envs/stage.ini
+  DEPLOYMENT_SECRETS_M: $DEPLOYMENT_DIR/secrets/stage.yml
 
 
 stages:
@@ -54,3 +57,15 @@ deploy_demo:
     # TODO add host fingerprint
     - eval $(ssh-agent -s); ssh-add /root/.ssh/id_rsa; ssh-add /root/.ssh/test
     - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV -l testnet_frontend -e @$DEPLOYMENT_SECRETS -e web_client_port=8061 -e web_client_name=demo_web_client -e web_client_revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR/web.yml
+
+deploy_demo:
+  image: williamyeh/ansible:ubuntu16.04
+  stage: deploy
+  tags:
+    - mariniero_stage 
+  only:
+    - mariniero
+  script:
+    # TODO add host fingerprint
+    - eval $(ssh-agent -s); ssh-add /root/.ssh/id_rsa; ssh-add /root/.ssh/test
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV_M  -e @$DEPLOYMENT_SECRETS_M revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR_M/web.yml
