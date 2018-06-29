@@ -114,7 +114,7 @@
         const base = payload.split('/')[0]
         const quote = payload.split('/')[1]
         const baseBalance = this.accountBalances[base]
-        this.baseAmount = baseBalance ? `${i18n.c(baseBalance.balance)} ${quote}` : `${i18n.c(0)} ${quote}`
+        this.baseAmount = baseBalance ? `${i18n.c(baseBalance.balance)} ${base}` : `${i18n.c(0)} ${base}`
         this.quoteAmount = `${i18n.c(this.accountBalances[quote].balance)} ${quote}`
       }
     }
