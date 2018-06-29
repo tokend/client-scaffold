@@ -57,8 +57,8 @@ import Sales from '../vue/app/sales/Sales.Entry'
 import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
 
-import PreissuanceCreation from '../vue/app/preissuanceCreation/PreissuanceCreation.Entry'
-import PreissuanceCreationIndex from '../vue/app/preissuanceCreation/index/PreissuanceCreation.Index'
+import PreissuanceUpload from '../vue/app/preissuanceUpload/PreissuanceUpload.Entry'
+import PreissuanceUploadIndex from '../vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
 
 Vue.use(Router)
 
@@ -327,16 +327,16 @@ const router = new Router({
           ]
         },
         {
-          feature_flag: config.FEATURE_FLAGS.preissuanceCreation,
-          name: 'app.preissuanceCreation',
-          path: '/preissuance-creation',
-          component: PreissuanceCreation,
-          redirect: { path: '/preissuance-creation/index' },
+          feature_flag: config.FEATURE_FLAGS.preissuanceUpload,
+          name: 'app.preissuanceUpload',
+          path: '/preissuance-upload',
+          component: PreissuanceUpload,
+          redirect: { path: '/preissuance-upload/index' },
           children: [
             {
-              path: '/preissuance-creation/index',
-              name: 'preissuance-creation.index',
-              component: PreissuanceCreationIndex,
+              path: '/preissuance-upload/index',
+              name: 'preissuance-upload.index',
+              component: PreissuanceUploadIndex,
               props: true
             }
           ]

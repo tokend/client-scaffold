@@ -1,12 +1,12 @@
 <template>
    <div class="upload-preissuance md-layout md-alignment-center-center">
-      <div class="preissuance-form__upload-wrp
-                    md-layout-item
+      <div class="md-layout-item
                     md-size-50
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
       <md-card>
+        <md-progress-bar v-if="isPending" md-mode="indeterminate"></md-progress-bar>
         <md-card-header>
           <div class="md-title">{{ i18n.lbl_upload_preissuance() }}</div>
         </md-card-header>
@@ -19,28 +19,24 @@
                   <em>Note:</em> you cannot upload the same preissuance twice
                 </p>
                 <template v-if="tokens.length">
-                  <label class="preissuance-form__upload-btn app__btn app__btn--info"
-                          for="file-select">
-                          Select File(s)
-                  </label>
-                  <input class="preissuance-form__upload-input"
-                    id="file-select"
-                    type="file"
-                    accept=".iss"
-                    @change="onFileChange"
-                    multiple
-                  />
+                  <div class="preissuance-form__upload-wrp">
+                    <file-field class="preissuance-form__upload-input"
+                          v-model="documents.preissuance"
+                          label="Select File(s)"
+                          accept=".iss"
+                          id="preissuance-select"
+                    />
+                  </div>
                 </template>
                 <template v-else>
                   <p>
                     Loading...
                   </p>
-                  <md-progress-spinner :md-diameter="30" :md-stroke="3" md-mode="indeterminate"></md-progress-spinner>
                 </template>
-                <ul class="preissuance-form__list" v-if="this.issuances.length">
+                <ul class="preissuance-form__list" v-if="issuances.length">
                   <p>To upload:</p>
 
-                  <li v-for="(item, index) in this.issuances" :key="item.reference">
+                  <li v-for="(item, index) in issuances" :key="item.reference">
                     {{index + 1}}. {{i18n.c(item.amount)}} {{item.asset}}
                   </li>
                 </ul>
@@ -48,11 +44,18 @@
             </div>
           </div>
         </md-card-content>
-        <!-- <md-card-actions>
-          <md-button type="submit" class="md-primary"
-            :disabled="isPending"
-          >{{ i18n.lbl_submit() }}</md-button>
-        </md-card-actions> -->
+        <md-card-actions v-if="issuances.length">
+          <md-button class="md-primary"
+                    @click="upload"
+                    :disabled="isPending">
+            {{ i18n.lbl_upload() }}
+          </md-button>
+          <md-button class="md-primary"
+                    @click="clear"
+                    :disabled="isPending">
+            {{ i18n.lbl_clear() }}
+          </md-button>
+        </md-card-actions>
       </md-card>
     </div>
   </div>
@@ -63,14 +66,21 @@ import { i18n } from '../../../../js/i18n'
 import { mapGetters, mapActions } from 'vuex'
 import { vuexTypes } from '../../../../vuex/types'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-// import { ErrorHandler } from '../../../../js/errors/error_handler'
-// import { issuanceService } from '../../../../js/services/issuances.service'
+import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { issuanceService } from '../../../../js/services/issuances.service'
 import { FileHelper } from '../../../../js/helpers/file.helper'
 import { PreIssuanceRequest, xdr } from 'swarm-js-sdk'
+import FormMixin from '../../../common/mixins/form.mixin'
+import FileField from '../../../common/fields/FileField'
+import config from '../../../../config'
 
 export default {
-  components: {},
+  components: { FileField },
+  mixins: [FormMixin],
   data: _ => ({
+    documents: {
+      preissuance: null
+    },
     issuances: [],
     i18n
   }),
@@ -86,6 +96,9 @@ export default {
     ]),
     userOwnedTokens () {
       return this.tokens.filter(token => token.owner === this.accountId)
+    },
+    nullAssignerTokens () {
+      return this.userOwnedTokens.filter(item => item.signer === config.NULL_ASSET_SIGNER)
     }
   },
 
@@ -94,16 +107,8 @@ export default {
       loadTokens: vuexTypes.GET_ALL_TOKENS
     }),
 
-    async onFileChange (event) {
-      const files = event.target.files || event.dataTransfer.files
-      if (!files.length) return
-      for (let i = 0; i < files.length; i++) {
-        const extracted = await FileHelper.readFileAsText(files[i])
-        this.parsePreIssuances(JSON.parse(extracted).issuances)
-      }
-    },
-
     parsePreIssuances (issuances) {
+      this.issuances = []
       const items = issuances
         .map(function (item) {
           const _xdr = xdr.PreIssuanceRequest.fromXDR(item.preEmission, 'hex')
@@ -119,7 +124,6 @@ export default {
 
       for (let i = 0; i < items.length; i++) {
         const assetCode = items[i].asset
-        console.log(!this.isAssetDefined(assetCode))
         if (!this.isAssetDefined(assetCode)) {
           EventDispatcher.dispatchShowErrorEvent(`Asset with code ${assetCode} does not exist in the system`)
           return
@@ -129,10 +133,56 @@ export default {
     },
     isAssetDefined (assetCode) {
       return !!this.userOwnedTokens.filter(item => item.code === assetCode).length
+    },
+
+    async isNullAssetSigner (asset) {
+      return !!this.nullAssignerTokens.filter(item => item.code === asset).length
+    },
+
+    clear () {
+      this.issuances = []
+      this.documents.preissuance = null
+    },
+
+    async upload () {
+      this.disable()
+      try {
+        for (let item of this.issuances) {
+          if (await this.isNullAssetSigner(item.asset)) {
+            EventDispatcher.dispatchShowErrorEvent(`Preissuance for asset ${item.asset} is not available`)
+            this.enable()
+            return
+          }
+          await issuanceService.createPreIssuanceRequest(this.issuances.map(item => item.xdr))
+        }
+        this.issuances = []
+      } catch (err) {
+        ErrorHandler.processUnexpected(err)
+      }
+      this.enable()
+    }
+  },
+  watch: {
+    'documents.preissuance': async function (value) {
+      if (value) {
+        const extracted = await FileHelper.readFileAsText(value.file)
+        this.parsePreIssuances(JSON.parse(extracted).issuances)
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  @import "../../../../scss/mixins";
+  @import "../../../../scss/variables";
+
+  .preissuance-form__upload-wrp {
+    margin-top: 1rem;
+  }
+
+  .preissuance-form__list {
+    margin-top: 2rem;
+    list-style-type: none;
+  }
 </style>
