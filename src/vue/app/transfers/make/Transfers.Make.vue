@@ -27,7 +27,7 @@
           <md-card-header class="transfer__header">
             <div class="md-title transfer__title">{{ i18n.tr_send() }}</div>
             <div class="transfer__user-balance">
-              {{ i18n.withdraw_balance({ balance: balance.balance, token: form.tokenCode }) }}
+              {{ i18n.tr_balance({ balance: balance.balance, token: form.tokenCode }) }}
             </div>
           </md-card-header>
 
