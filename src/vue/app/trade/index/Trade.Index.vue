@@ -1,7 +1,7 @@
 <template>
   <div class="trade">
-    <div class="md-layout">
-      <chart class="trade__chart md-size-50 md-medium-size-45 md-small-size-100 md-layout-item"
+    <div class="trade-row">
+      <chart class="trade__chart"
         :data="history"
         :pairs="formattedPairs"
         :precision="common.precision"
@@ -9,7 +9,7 @@
         v-on:assets-base-changed="handleAssetChange"
         v-on:assets-quote-changed="handleAssetChange"
       />
-      <trade-history :assets="filters" class="md-layout-item md-size-48 md-medium-size-48 md-small-size-100"/>
+      <trade-history :assets="filters" class="trade__history"/>
     </div>
 
     <div class="md-layout">
@@ -132,6 +132,8 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
+  $large-breakpoint: 1374px;
+  $medium-breakpoint: 1374px;
 
   .transfer__success-msg {
     text-align: center;
@@ -147,5 +149,30 @@
     color: $col-md-primary;
     font-size: $fs-heading;
     margin: 1rem 0 .5rem;
+  }
+
+  .trade-row {
+    display: flex;
+    margin-bottom: 1.5rem;
+    .trade__history,
+    .trade__chart {
+      width: 50%;
+    }
+    @include respond-to-custom($large-breakpoint) {
+      flex-direction: column;
+
+      .trade__history,
+      .trade__chart {
+        width: 100%;
+      }
+    }
+  }
+  .trade__chart {
+    @include respond-to-custom($large-breakpoint) {
+      margin-bottom: 1.5rem;
+    }
+    @include respond-to-custom($medium-breakpoint) {
+      margin-bottom: 0;
+    }
   }
 </style>
