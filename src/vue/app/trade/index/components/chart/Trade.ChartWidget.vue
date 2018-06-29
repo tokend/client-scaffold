@@ -16,7 +16,7 @@
       <div class="chart-container__header">
         <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
         <div class="chart-container__user-balance">
-          {{ i18n.withdraw_balance({base: baseAmount, quote: quoteAmount}) }}
+          {{ i18n.trd_balance({base: baseAmount, quote: quoteAmount}) }}
         </div>
       </div>
 
