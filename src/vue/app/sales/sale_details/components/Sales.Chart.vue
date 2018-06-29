@@ -5,7 +5,7 @@
         class="sale-chart"
         :data="chartData"
         :precision="common.precision"
-        :asset="sale.baseAsset"
+        :asset="sale.defaultQuoteAsset"
       />
     </template>
 
