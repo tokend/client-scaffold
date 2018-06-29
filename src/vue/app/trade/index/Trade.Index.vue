@@ -132,6 +132,8 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
+  $large-breakpoint: 1374px;
+  $medium-breakpoint: 1374px;
 
   .transfer__success-msg {
     text-align: center;
@@ -156,7 +158,7 @@
     .trade__chart {
       width: 50%;
     }
-    @include respond-to-custom('1374px') {
+    @include respond-to-custom($large-breakpoint) {
       flex-direction: column;
 
       .trade__history,
@@ -166,10 +168,10 @@
     }
   }
   .trade__chart {
-    @include respond-to-custom('1374px') {
+    @include respond-to-custom($large-breakpoint) {
       margin-bottom: 1.5rem;
     }
-    @include respond-to-custom('944px') {
+    @include respond-to-custom($medium-breakpoint) {
       margin-bottom: 0;
     }
   }
