@@ -36,6 +36,8 @@
       </div>
       <i class="invest__convert-icon material-icons">compare_arrows</i>
       <span class="get__input-quote-wrp">{{ i18n.cc(form.convertedAmount) }}</span>
+      <md-button @click="form.amount = maxValue"
+                :disabled="available === 0">max</md-button>
       </div>
     </div>
     <!-- <div class="invest__tip">
@@ -139,6 +141,23 @@
       },
       hardCapExceeded () {
         return parseFloat(this.form.convertedAmount) > parseFloat(this.sale.hardCap)
+      },
+      maxValue () {
+        const hardCap = this.sale.hardCaps[this.form.quoteAsset]
+        const currentCap = this.sale.currentCaps[this.form.quoteAsset]
+        const lastOfferAmount = this.offer ? this.offer.quoteAmount : 0
+        const balance = this.accountBalances[this.form.quoteAsset].balance
+        const totalBalance = add(balance, (lastOfferAmount || 0))
+        console.log('hardCap ' + hardCap)
+        console.log('currentCap ' + currentCap)
+        console.log('lastOfferAmount ' + lastOfferAmount)
+        console.log('balance ' + balance)
+        console.log('totalBalance ' + totalBalance)
+        if (totalBalance > hardCap) {
+          return add(subtract(hardCap, currentCap), lastOfferAmount)
+        } else {
+          return totalBalance
+        }
       }
     },
     methods: {
@@ -187,6 +206,7 @@
           await offersService.createSaleOffer(createOpts, cancelOpts)
           this.$emit(commonEvents.investInSale)
           this.loadOffers()
+          this.loadBalances()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
         } catch (error) { ErrorHandler.processUnexpected(error) }
         this.enable()
@@ -204,6 +224,7 @@
           await offersService.cancelOffer(cancelOpts)
           this.$emit(commonEvents.investInSale)
           this.loadOffers()
+          this.loadBalances()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_cancelled({ asset: this.sale.baseAsset }))
         } catch (err) {
           ErrorHandler.processUnexpected(err)
