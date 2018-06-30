@@ -133,7 +133,7 @@
           _get(this.accountBalances, `${this.form.quoteAsset}.balance`, 0),
           _get(this.offer, 'baseAmount', 0))
         const left = balance ? subtract(balance, this.form.amount) : 0
-        return left < 0 ? 0 : left
+        return left <= 0 ? balance : left
       },
       limitExceeded () {
         if (!this.form.amount) return false
@@ -144,15 +144,10 @@
       },
       maxValue () {
         const hardCap = this.sale.hardCaps[this.form.quoteAsset]
-        const currentCap = this.sale.currentCaps[this.form.quoteAsset]
+        const currentCap = this.sale.totalCurrentCaps[this.form.quoteAsset]
         const lastOfferAmount = this.offer ? this.offer.quoteAmount : 0
         const balance = this.accountBalances[this.form.quoteAsset].balance
         const totalBalance = add(balance, (lastOfferAmount || 0))
-        console.log('hardCap ' + hardCap)
-        console.log('currentCap ' + currentCap)
-        console.log('lastOfferAmount ' + lastOfferAmount)
-        console.log('balance ' + balance)
-        console.log('totalBalance ' + totalBalance)
         if (totalBalance > hardCap) {
           return add(subtract(hardCap, currentCap), lastOfferAmount)
         } else {
@@ -205,8 +200,8 @@
           } : null
           await offersService.createSaleOffer(createOpts, cancelOpts)
           this.$emit(commonEvents.investInSale)
-          this.loadOffers()
           this.loadBalances()
+          this.loadOffers()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
         } catch (error) { ErrorHandler.processUnexpected(error) }
         this.enable()
@@ -223,8 +218,8 @@
           } : null
           await offersService.cancelOffer(cancelOpts)
           this.$emit(commonEvents.investInSale)
-          this.loadOffers()
           this.loadBalances()
+          this.loadOffers()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_cancelled({ asset: this.sale.baseAsset }))
         } catch (err) {
           ErrorHandler.processUnexpected(err)
