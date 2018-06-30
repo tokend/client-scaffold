@@ -150,5 +150,12 @@ export default {
   lbl_not_available_exp: '%{screen} is available only for verified users, complete verification to become one.',
   lbl_upload_preissuance: 'Upload pre-issuance',
   lbl_clear: 'Clear',
-  lbl_upload: 'Upload'
+  lbl_upload: 'Upload',
+  lbl_company: 'Company',
+  lbl_headquarters: 'Headquarters',
+  lbl_industry: 'Industry',
+  lbl_founded: 'Founded',
+  lbl_team_size: 'Team size',
+  lbl_homepage: 'Homepage',
+  lbl_edit_details: 'Edit Details'
 }

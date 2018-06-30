@@ -22,6 +22,7 @@ export { CREATE_TOKEN_REQUEST_STATES } from './create_token_request_states'
 export { ISSUANCE_REQUEST_STATES } from './issuance_request_states.const'
 export { REQUEST_STATES, REQUEST_STATES_STR } from './request_states.const'
 export { SIGNER_TYPES } from './signer_types.const'
+export { ACCOUNT_STATES } from './account.const'
 export {
   REQUEST_TYPES,
   FEE_TYPES,
