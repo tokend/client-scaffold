@@ -17,6 +17,7 @@ const mutations = {
   // account.kyc:
   SET_ACCOUNT_KYC_REQUESTS: 'SET_ACCOUNT_KYC_REQUESTS',
   SET_ACCOUNT_KYC_DATA: 'SET_ACCOUNT_KYC_DATA',
+  SET_ACCOUNT_KYC_TYPE: 'SET_ACCOUNT_KYC_TYPE',
   SET_ACCOUNT_KYC_DOCUMENTS: 'SET_ACCOUNT_KYC_DOCUMENTS',
 
   // transactions:
@@ -130,6 +131,7 @@ const getters = {
   accountKycDocuments: 'accountKycDocuments',
   accountLatestBlobId: 'accountLatestBlobId',
   accountKycLatestRequest: 'accountKycLatestRequest',
+  accountLatestKycLevel: 'accountLatestKycLevel',
 
   // tokens:
   tokens: 'tokens',
