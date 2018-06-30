@@ -168,6 +168,8 @@
       this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
       if (this.accountKycData) {
         this.stubData()
+      }
+      if (this.accountKycDocuments) {
         this.stubDocuments()
       }
     },
