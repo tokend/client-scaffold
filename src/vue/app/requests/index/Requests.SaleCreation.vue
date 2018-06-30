@@ -103,8 +103,6 @@ import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
 import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
-// import { salesService } from '../../../../js/services/sales.service'
-// import { ErrorHandler } from '../../../../js/errors/error_handler'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
 export default {

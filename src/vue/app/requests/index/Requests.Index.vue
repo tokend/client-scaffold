@@ -3,11 +3,11 @@
     <md-tab :md-label="`${ i18n.lbl_token_creation()}`" to="/requests/token-creation">
       <token-creation />
     </md-tab>
-    <md-tab :md-label="`${ i18n.preis_upload()}`">
-      <preissuance-upload />
-    </md-tab>
     <md-tab :md-label="`${ i18n.lbl_sale_creation()}`" to="/requests/sale-creation">
       <sale-creation />
+    </md-tab>
+    <md-tab :md-label="`${ i18n.preis_upload()}`">
+      <preissuance-upload />
     </md-tab>
   </md-tabs>
 </template>
@@ -20,8 +20,8 @@ import { i18n } from '../../../../js/i18n'
 export default {
   components: {
     TokenCreation,
-    SaleCreation },
-  components: { TokenCreation, PreissuanceUpload },
+    SaleCreation,
+    PreissuanceUpload },
   data: _ => ({
     i18n
   })
