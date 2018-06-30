@@ -25,12 +25,6 @@ export const mutations = {
 export const actions = {
   async GET_ALL_TOKENS ({ commit }) {
     commit(vuexTypes.SET_ALL_TOKENS, (await tokensService.loadTokens()).map(record => RecordFactory.createTokenRecord(record)))
-  },
-
-  async GET_USER_OWNED_TOKENS ({ commit }) {
-    const userOwnedTokens = (await tokensService.loadTokensForOwner()).map(token => RecordFactory.createTokenRecord(token))
-    await Promise.all(userOwnedTokens.map(token => token.loadAttachedSale()))
-    commit(vuexTypes.SET_USER_OWNED_TOKENS, userOwnedTokens)
   }
 }
 
