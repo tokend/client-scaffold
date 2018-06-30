@@ -148,7 +148,8 @@
         const lastOfferAmount = this.offer ? this.offer.quoteAmount : 0
         const balance = this.accountBalances[this.form.quoteAsset].balance
         const totalBalance = add(balance, (lastOfferAmount || 0))
-        if (totalBalance > hardCap) {
+        if (parseFloat(totalBalance) > parseFloat(hardCap)) {
+          console.log(subtract(hardCap, currentCap))
           return add(subtract(hardCap, currentCap), lastOfferAmount)
         } else {
           return totalBalance
