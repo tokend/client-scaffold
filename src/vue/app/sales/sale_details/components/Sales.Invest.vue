@@ -36,6 +36,12 @@
       </div>
       <i class="invest__convert-icon material-icons">compare_arrows</i>
       <span class="get__input-quote-wrp">{{ i18n.cc(form.convertedAmount) }}</span>
+      <button class="invest__max-value-btn"
+                @click="form.amount = maxValue"
+                :disabled="available === 0">
+        <i class="material-icons">trending_up</i>
+        <md-tooltip md-direction="top">{{ i18n.sale_max_invest() }}</md-tooltip>
+      </button>
       </div>
     </div>
     <!-- <div class="invest__tip">
@@ -131,7 +137,7 @@
           _get(this.accountBalances, `${this.form.quoteAsset}.balance`, 0),
           _get(this.offer, 'baseAmount', 0))
         const left = balance ? subtract(balance, this.form.amount) : 0
-        return left < 0 ? 0 : left
+        return left <= 0 ? balance : left
       },
       limitExceeded () {
         if (!this.form.amount) return false
@@ -139,6 +145,18 @@
       },
       hardCapExceeded () {
         return parseFloat(this.form.convertedAmount) > parseFloat(this.sale.hardCap)
+      },
+      maxValue () {
+        const hardCap = this.sale.hardCaps[this.form.quoteAsset]
+        const currentCap = this.sale.totalCurrentCaps[this.form.quoteAsset]
+        const lastOfferAmount = this.offer ? this.offer.quoteAmount : 0
+        const balance = this.accountBalances[this.form.quoteAsset].balance
+        const totalBalance = add(balance, (lastOfferAmount || 0))
+        if (parseFloat(totalBalance) > parseFloat(hardCap)) {
+          return add(subtract(hardCap, currentCap), lastOfferAmount)
+        } else {
+          return totalBalance
+        }
       }
     },
     methods: {
@@ -186,6 +204,7 @@
           } : null
           await offersService.createSaleOffer(createOpts, cancelOpts)
           this.$emit(commonEvents.investInSale)
+          this.loadBalances()
           this.loadOffers()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
         } catch (error) { ErrorHandler.processUnexpected(error) }
@@ -203,6 +222,7 @@
           } : null
           await offersService.cancelOffer(cancelOpts)
           this.$emit(commonEvents.investInSale)
+          this.loadBalances()
           this.loadOffers()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_cancelled({ asset: this.sale.baseAsset }))
         } catch (err) {
@@ -359,5 +379,10 @@
   .invest__tooltip-icon {
     vertical-align: middle;
     font-size: 1rem;
+  }
+  .invest__max-value-btn {
+    width: 2rem;
+    border: none;
+    cursor: pointer;
   }
 </style>

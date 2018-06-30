@@ -44,6 +44,8 @@ export default {
   sale_not_available_exp: 'Sale creation is available only for corporate users, complete verification to become one.',
   sale_create_request_success: 'Information uploaded. Now please wait for approval',
   sale_offer_overlap: 'Creation of new offer will update the old one',
+  sale_max_invest: 'Set maximum investable amount'
+  sale_offer_overlap: 'Creation of new offer will update the old one',
   sale_creation_requests: 'Sale creation requests',
   sale_no_creation_requests: 'No sale creation requests',
   sale_no_creation_requests_desc: 'Here will be the list of your sale creation requests',

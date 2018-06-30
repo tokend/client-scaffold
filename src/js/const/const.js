@@ -26,6 +26,7 @@ export {
   REQUEST_TYPES,
   FEE_TYPES,
   ASSET_POLICIES,
+  ASSET_POLICIES_VERBOSE,
   ACCOUNT_TYPES
 } from './xdr.const'
 

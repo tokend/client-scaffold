@@ -17,9 +17,9 @@
                       :key="`${i}-trade-history-item`"
                       :class="`trade-history__item-status--${item.priceStatus}`">
           <template v-if="i < maxLengthOfTradeHistory">
-            <md-table-cell>{{ item.baseAmount }}</md-table-cell>
+            <md-table-cell>{{ i18n.c(item.baseAmount) }}</md-table-cell>
             <md-table-cell class="trade-history__item-price">
-              {{ item.price }}
+              {{ i18n.c(item.price) }}
               <template v-if="item.priceStatus === 0">
                 <md-icon>call_received</md-icon>
               </template>
@@ -164,7 +164,7 @@
   }
   .trade-history__no-transactions {
     text-align: center;
-
+    padding: 1rem;
     .md-icon {
       margin-bottom: 1rem;
     }

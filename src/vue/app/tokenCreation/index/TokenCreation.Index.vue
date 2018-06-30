@@ -11,7 +11,7 @@
                         :descr="i18n.lbl_token_not_available_exp()"
                         />
     </div>
-    <token-creation-manager v-else :id = "id"/>
+    <token-creation-manager v-else :id = "id" />
     </div>
   </div>
 </template>

@@ -57,6 +57,9 @@ import Sales from '../vue/app/sales/Sales.Entry'
 import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
 
+import PreissuanceUpload from '../vue/app/preissuanceUpload/PreissuanceUpload.Entry'
+import PreissuanceUploadIndex from '../vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -338,20 +341,25 @@ const router = new Router({
               props: true
             }
           ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.preissuanceUpload,
+          name: 'app.preissuanceUpload',
+          path: '/preissuance-upload',
+          component: PreissuanceUpload,
+          redirect: { path: '/preissuance-upload/index' },
+          children: [
+            {
+              path: '/preissuance-upload/index',
+              name: 'preissuance-upload.index',
+              component: PreissuanceUploadIndex,
+              props: true
+            }
+          ]
         }
       ].filter(route => route.feature_flag !== false)
     }
   ]
-})
-
-router.beforeEach((to, from, next) => {
-  try {
-    console.log('window.Appcues.start()')
-    window.Appcues.start()
-  } catch (e) {
-    console.error(e)
-  }
-  next()
 })
 
 export default router

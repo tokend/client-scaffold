@@ -1,5 +1,5 @@
 import { tokensService } from '../../js/services/tokens.service'
-import { salesService } from '../../js/services/sales.service'
+
 import { RecordFactory } from '../../js/records/factory'
 import { Paginator } from '../../js/helpers/paginator'
 import { vuexTypes } from '../types'
@@ -9,6 +9,12 @@ import cloneDeep from 'lodash/cloneDeep'
 const state = {
   tokenCreationRequests: new Paginator({
     txPerPage: config.REQUESTS_PER_PAGE,
+    recordWrp: RecordFactory.createTokenСreationRecord.bind(RecordFactory)
+  }),
+  preissuanceUploadRequests: new Paginator({
+    txPerPage: config.REQUESTS_PER_PAGE,
+    recordWrp: RecordFactory.createPreissuanceUploadRecord.bind(RecordFactory)
+  })
     recordWrp: RecordFactory.createOfferRecord.bind(RecordFactory)
   }),
   saleCreationRequests: {},
@@ -49,37 +55,11 @@ const actions = {
 
   async NEXT_USER_TOKENS_CREATION_REQUESTS ({ state }) {
     return state.tokenCreationRequests.next()
-  },
-
-  async GET_USER_SALE_CREATION_REQUESTS ({ state, dispatch, commit }, tokenCode) {
-    if (!state.isInitialized) dispatch(vuexTypes.INIT_SALE_REQUESTS_LIST)
-
-    let paginator
-    if (state.saleCreationRequests[tokenCode]) {
-      paginator = state.saleCreationRequests[tokenCode]
-    } else {
-      state.saleCreationRequests[tokenCode] = new Paginator({
-        recordWrp: record => RecordFactory.createSaleСreationRecord(record, tokenCode)
-      })
-      paginator = state.saleCreationRequests[tokenCode]
-    }
-
-    paginator.attachInitLoader(() => salesService.loadSalesRequests(tokenCode))
-
-    await paginator.init()
-    commit(vuexTypes.UPDATE_SALE_REQUEST_LIST_ITEM, { tokenCode, paginator })
-  },
-
-  async NEXT_USER_SALE_CREATION_REQUESTS ({ state, commit, dispatch }, tokenCode) {
-    const paginator = state.saleCreationRequests[tokenCode]
-    await paginator.next()
-    commit(vuexTypes.UPDATE_SALE_REQUEST_LIST_ITEM, paginator)
   }
 }
 
 const getters = {
-  tokenCreationRequests: state => state.tokenCreationRequests,
-  saleCreationRequests: state => state.saleCreationRequests
+  tokenCreationRequests: state => state.tokenCreationRequests
 }
 
 export default {

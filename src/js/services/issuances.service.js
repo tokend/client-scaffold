@@ -1,5 +1,8 @@
-import { PreIssuanceRequestOpBuilder, CreateIssuanceRequestBuilder } from 'swarm-js-sdk'
 import { Service } from './service'
+import { BindExternalSystemAccountIdBuilder,
+  PreIssuanceRequestOpBuilder,
+  CreateIssuanceRequestBuilder
+} from 'swarm-js-sdk'
 
 export class IssuanceService extends Service {
   /**
@@ -45,6 +48,15 @@ export class IssuanceService extends Service {
         asset: opts.token
       }
     }
+  }
+
+  bindExternalAccount (opts) {
+    const operation = BindExternalSystemAccountIdBuilder.createBindExternalSystemAccountIdOp(opts)
+
+    return this._operationBuilder
+      .operation()
+      .add(operation)
+      .submit(this._accountId, this._keypair)
   }
 }
 
