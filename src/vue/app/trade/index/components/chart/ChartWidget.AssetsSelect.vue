@@ -1,6 +1,5 @@
 <template>
   <div class="assets-select">
-
     <div class="md-layout">
       <template v-if="pairs.length">
         <select-field
@@ -32,6 +31,9 @@
       return {
         currentAsset: ''
       }
+    },
+    created () {
+      this.currentAsset = this.pairs[0] || null
     },
     mounted () {
     },

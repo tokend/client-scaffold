@@ -7,7 +7,7 @@ import config from '../../config'
 const state = {
   tokenCreationRequests: new Paginator({
     txPerPage: config.REQUESTS_PER_PAGE,
-    recordWrp: RecordFactory.createOfferRecord.bind(RecordFactory)
+    recordWrp: RecordFactory.createTokenСreationRecord.bind(RecordFactory)
   })
 }
 

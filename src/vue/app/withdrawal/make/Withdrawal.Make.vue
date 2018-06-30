@@ -14,7 +14,7 @@
           <md-card-header class="withdraw__header">
             <div class="md-title withdraw__title">{{ i18n.withdraw_withdrawal() }}</div>
             <div class="withdraw__user-balance">
-              {{ i18n.withdraw_balance({ balance: balance.balance, token: form.tokenCode }) }}
+              {{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}
             </div>
           </md-card-header>
 

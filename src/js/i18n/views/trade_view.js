@@ -47,5 +47,6 @@ export default {
   trd_orders: 'Open orders',
   trd_confirm_match: 'By pressing confirm, you will сreate the opposite to selected order',
   trd_no_pairs: 'No tradable pairs',
-  trd_no_pairs_exp: 'This feature will be available once any tradable pair appears'
+  trd_no_pairs_exp: 'This feature will be available once any tradable pair appears',
+  trd_balance: 'Your balance is %{base}/%{quote}'
 }
