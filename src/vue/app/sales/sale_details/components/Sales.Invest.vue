@@ -36,8 +36,12 @@
       </div>
       <i class="invest__convert-icon material-icons">compare_arrows</i>
       <span class="get__input-quote-wrp">{{ i18n.cc(form.convertedAmount) }}</span>
-      <md-button @click="form.amount = maxValue"
-                :disabled="available === 0">max</md-button>
+      <button class="invest__max-value-btn"
+                @click="form.amount = maxValue"
+                :disabled="available === 0">
+        <i class="material-icons">trending_up</i>
+        <md-tooltip md-direction="top">{{ i18n.sale_max_invest() }}</md-tooltip>
+      </button>
       </div>
     </div>
     <!-- <div class="invest__tip">
@@ -149,7 +153,6 @@
         const balance = this.accountBalances[this.form.quoteAsset].balance
         const totalBalance = add(balance, (lastOfferAmount || 0))
         if (parseFloat(totalBalance) > parseFloat(hardCap)) {
-          console.log(subtract(hardCap, currentCap))
           return add(subtract(hardCap, currentCap), lastOfferAmount)
         } else {
           return totalBalance
@@ -376,5 +379,10 @@
   .invest__tooltip-icon {
     vertical-align: middle;
     font-size: 1rem;
+  }
+  .invest__max-value-btn {
+    width: 2rem;
+    border: none;
+    cursor: pointer;
   }
 </style>
