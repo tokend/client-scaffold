@@ -166,6 +166,10 @@
     }),
     async created () {
       this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
+      if (this.accountKycData) {
+        this.stubData()
+        this.stubDocuments()
+      }
     },
     computed: {
       ...mapGetters([
@@ -228,10 +232,6 @@
       stubDocuments () {
         this.documents = this.accountKycDocuments
       }
-    },
-    watch: {
-      accountKycDocuments () { this.stubDocuments() },
-      accountKycData () { this.stubData() }
     }
   }
 </script>
