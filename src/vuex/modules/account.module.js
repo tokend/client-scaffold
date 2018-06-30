@@ -54,6 +54,10 @@ export const mutations = {
     state.kycData = data
   },
 
+  SET_ACCOUNT_KYC_TYPE (state, data) {
+    state.kycAccountType = data
+  },
+
   SET_ACCOUNT_KYC_DOCUMENTS (state, documents) {
     state.kycDocuments = kycIndividualSchema.docs
       .reduce((kycDocuments, doc) => {
@@ -80,12 +84,15 @@ export const actions = {
     commit(vuexTypes.SET_ACCOUNT_KYC_REQUESTS, requests.records.map(record => RecordFactory.createKycRequestRecord(record)))
   },
 
-  async GET_ACCOUNT_KYC_DATA ({ commit }, blobId) {
+  async GET_ACCOUNT_KYC_DATA ({ commit }, opts) {
     const kycData = await usersService
       .blobsOf()
-      .get(blobId)
+      .get(opts.blobId)
+    commit(vuexTypes.SET_ACCOUNT_KYC_TYPE, opts.type)
     commit(vuexTypes.SET_ACCOUNT_KYC_DATA, kycData)
-    commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
+    if (kycData.documents) {
+      commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
+    }
   },
 
   async UPDATE_ACCOUNT_KYC_DOCUMENTS ({ commit }, documents) {
@@ -148,7 +155,8 @@ export const getters = {
   accountState: (state, getters) => ACCOUNT_STATES[getters.accountKycLatestRequest.state] || ACCOUNT_STATES.nil,
   accountLatestBlobId: (state, getters) => getters.accountKycLatestRequest.blobId,
   accountKycData: state => state.kycData,
-  accountKycDocuments: state => state.kycDocuments
+  accountKycDocuments: state => state.kycDocuments,
+  accountLatestKycLevel: (state, getters) => getters.accountKycLatestRequest.kycLevel
 }
 
 export default {
