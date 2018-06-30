@@ -23,6 +23,7 @@ import verification from './views/verification_view'
 import fileUpload from './views/file-upload'
 import trade from './views/trade_view'
 import companyView from './views/company_view'
+import preissuanceView from './views/preissuance_view'
 import common from './views/common'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
@@ -58,6 +59,7 @@ const dictionary = {
   ...fileUpload,
   ...trade,
   ...companyView,
+  ...preissuanceView,
   ...common
 }
 
