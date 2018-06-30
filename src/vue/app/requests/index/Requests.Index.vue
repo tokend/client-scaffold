@@ -3,14 +3,18 @@
     <md-tab :md-label="`${ i18n.lbl_token_creation()}`">
       <token-creation />
     </md-tab>
+    <md-tab :md-label="`${ i18n.preis_upload()}`">
+      <preissuance-upload />
+    </md-tab>
   </md-tabs>
 </template>
 
 <script>
 import TokenCreation from './Requests.TokenCreation'
+import PreissuanceUpload from './Requests.PreissuanceUpload'
 import { i18n } from '../../../../js/i18n'
 export default {
-  components: { TokenCreation },
+  components: { TokenCreation, PreissuanceUpload },
   data: _ => ({
     i18n
   })

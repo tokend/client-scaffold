@@ -17,6 +17,7 @@ const mutations = {
   // account.kyc:
   SET_ACCOUNT_KYC_REQUESTS: 'SET_ACCOUNT_KYC_REQUESTS',
   SET_ACCOUNT_KYC_DATA: 'SET_ACCOUNT_KYC_DATA',
+  SET_ACCOUNT_KYC_TYPE: 'SET_ACCOUNT_KYC_TYPE',
   SET_ACCOUNT_KYC_DOCUMENTS: 'SET_ACCOUNT_KYC_DOCUMENTS',
 
   // transactions:
@@ -80,7 +81,9 @@ const actions = {
 
   // requests:
   GET_USER_TOKENS_CREATION_REQUESTS: 'GET_USER_TOKENS_CREATION_REQUESTS',
-  NEXT_USER_TOKENS_CREATION_REQUESTS: 'NEXT_USER_TOKENS_CREATION_REQUESTS'
+  NEXT_USER_TOKENS_CREATION_REQUESTS: 'NEXT_USER_TOKENS_CREATION_REQUESTS',
+  GET_USER_PREISSUANCE_UPLOAD_REQUESTS: 'GET_USER_PREISSUANCE_UPLOAD_REQUESTS',
+  NEXT_USER_PREISSUANCE_UPLOAD_REQUESTS: 'NEXT_USER_PREISSUANCE_UPLOAD_REQUESTS'
 
 }
 
@@ -121,6 +124,7 @@ const getters = {
   accountKycDocuments: 'accountKycDocuments',
   accountLatestBlobId: 'accountLatestBlobId',
   accountKycLatestRequest: 'accountKycLatestRequest',
+  accountLatestKycLevel: 'accountLatestKycLevel',
 
   // tokens:
   tokens: 'tokens',
@@ -148,6 +152,7 @@ const getters = {
 
   // requests:
   tokenCreationRequests: 'tokenCreationRequests',
+  preissuanceUploadRequests: 'preissuanceUploadRequests',
 
   // sales:
   sales: 'sales',

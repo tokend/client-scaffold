@@ -42,7 +42,6 @@
                             v-validate="'required'"
                             :label="i18n.lbl_token_code()"
                             :errorMessage="errorMessage('token code')"
-                            :disabled="hasValueToUpdate"
                 />
               </div>
             </div>
@@ -192,9 +191,6 @@ export default {
   },
 
   computed: {
-    hasValueToUpdate () {
-      return typeof this.id !== 'undefined'
-    }
   },
 
   methods: {

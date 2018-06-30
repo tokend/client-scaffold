@@ -140,11 +140,22 @@ export default {
   lbl_sender_fee_asset: 'Sender fee asset',
   lbl_recipient_fee_asset: 'Recipient fee asset',
   lbl_sort_by: 'Sort by',
+  lbl_reject_message: 'Reject message',
   lbl_information: 'Information',
   lbl_not_available: 'Feature is not available',
   lbl_token_not_available_exp: 'Token creation is available only for corporate users, complete verification to become one.',
   lbl_token_not_available_yet: 'Please create token before creating sale',
   lbl_issuance_not_available_exp: 'Issuance creation is available only for corporate users, complete verification to become one.',
   lbl_issuance_not_available_yet: 'Please create token before creating issuance',
-  lbl_not_available_exp: '%{screen} is available only for verified users, complete verification to become one.'
+  lbl_not_available_exp: '%{screen} is available only for verified users, complete verification to become one.',
+  lbl_upload_preissuance: 'Upload pre-issuance',
+  lbl_clear: 'Clear',
+  lbl_upload: 'Upload',
+  lbl_company: 'Company',
+  lbl_headquarters: 'Headquarters',
+  lbl_industry: 'Industry',
+  lbl_founded: 'Founded',
+  lbl_team_size: 'Team size',
+  lbl_homepage: 'Homepage',
+  lbl_edit_details: 'Edit Details'
 }
