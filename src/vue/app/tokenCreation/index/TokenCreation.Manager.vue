@@ -42,7 +42,6 @@
                             v-validate="'required'"
                             :label="i18n.lbl_token_code()"
                             :errorMessage="errorMessage('token code')"
-                            :disabled="hasValueToUpdate"
                 />
               </div>
             </div>
@@ -192,9 +191,6 @@ export default {
   },
 
   computed: {
-    hasValueToUpdate () {
-      return typeof this.id !== 'undefined'
-    }
   },
 
   methods: {
@@ -204,7 +200,7 @@ export default {
       try {
         await this.createRequest()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
-        this.$router.push({ path: '/requests' })
+        this.$router.push({ path: '/requests/token-creation' })
       } catch (error) {
         console.log(error)
         ErrorHandler.processUnexpected(error)

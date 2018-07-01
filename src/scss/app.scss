@@ -104,10 +104,14 @@ html,body {
 
   & .md-table-toolbar {
     padding-left: 0;
+    & .md-title {
+      padding: 24px;
+    }
   }
 
   & .md-tabs-content {
     height: 100% !important;
+    background: transparent;
   }
 
   & .markdown-formatter,

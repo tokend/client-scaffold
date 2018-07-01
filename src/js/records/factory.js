@@ -2,6 +2,7 @@ import { KycRequestRecord } from './kyc_request.record'
 import { TransferRecord } from './transfer.record'
 import { TokenRecord } from './token.record'
 import { TokenCreationRecord } from './token_creation.record'
+import { PreissuanceUploadRecord } from './preissuance_upload.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
 import { IssuanceRecord } from './issuance.record'
 import { WithdrawalRecord } from './withdrawal.record'
@@ -11,6 +12,7 @@ import { MatchRecord } from './match.record'
 import { AssetPairRecord } from './asset_pair.record'
 import { TradeRecord } from './trade.record'
 import { TransferV2Record } from './transferV2.record'
+import { SaleCreationRecord } from './sale_creation.record'
 
 export class RecordFactory {
   static createTransferRecord () {
@@ -45,6 +47,10 @@ export class RecordFactory {
     return new SaleRecord(...arguments)
   }
 
+  static createSaleСreationRecord () {
+    return new SaleCreationRecord(...arguments)
+  }
+
   static createOfferRecord () {
     return new OfferRecord(...arguments)
   }
@@ -63,5 +69,9 @@ export class RecordFactory {
 
   static createKycRequestRecord () {
     return new KycRequestRecord(...arguments)
+  }
+
+  static createPreissuanceUploadRecord () {
+    return new PreissuanceUploadRecord(...arguments)
   }
 }

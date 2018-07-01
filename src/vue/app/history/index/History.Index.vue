@@ -13,7 +13,6 @@
         </div>
       </md-table-toolbar>
 
-
       <template v-if="tokenCode && list.length">
         <md-table-row class="tx-history__row">
           <md-table-head>{{ i18n.lbl_date() }}</md-table-head>

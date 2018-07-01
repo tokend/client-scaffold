@@ -31,6 +31,30 @@ export class KycTemplateParser {
     }
   }
 
+  static fromSyndicateTemplate (template) {
+    return {
+      name: template.name,
+      company: template.company,
+      headquarters: template.headquarters,
+      industry: template.industry,
+      found_date: template.found_date,
+      team_size: template.team_size,
+      homepage: template.homepage
+    }
+  }
+
+  static toSyndicateTemplate (form) {
+    return {
+      name: form.name,
+      company: form.company,
+      headquarters: form.headquarters,
+      industry: form.industry,
+      found_date: form.found_date,
+      team_size: form.team_size,
+      homepage: form.homepage
+    }
+  }
+
   static getSaveableDocuments (documents) {
     const result = {}
     console.log(Object.entries(documents))

@@ -1,5 +1,5 @@
 import { LocalStorageViewer } from '../../../../js/utils/local-storage-viewer.util'
-import { SaleRequestRecord } from '../../../../js/records/sale-request.record'
+import { SaleRequestRecord } from '../../../../js/records/sale_request.record'
 
 const storageKey = 'saleList'
 let localStorageViewer

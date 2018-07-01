@@ -65,7 +65,7 @@
   import steps from './specs/steps.schema'
   import config from '../../../config'
   import { i18n } from '../../../js/i18n'
-  import { SaleRequestRecord } from '../../../js/records/sale-request.record'
+  import { SaleRequestRecord } from '../../../js/records/sale_request.record'
   import { SaleListManager } from './specs/sale-list-manager'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
@@ -75,7 +75,8 @@
   import { ACCOUNT_TYPES } from '../../../js/const/const'
   import { confirmAction } from '../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../js/events/event_dispatcher'
-  import get from 'lodash/get'
+  import { reviewableRequestsService } from '../../../js/services/reviewable_requests.service'
+  import _get from 'lodash/get'
   const VIEW_MODES = {
     list: 'list',
     edit: 'edit',
@@ -86,9 +87,11 @@
     name: 'CreateSale-index',
     components: { RequestList, NotAvailableCard },
     mixins: [FormMixin],
+    props: ['id'],
     data: _ => ({
       activeStep: steps[0].name,
       sale: null,
+      saleRequest: null,
       listManager: new SaleListManager(),
       i18n,
       steps,
@@ -104,7 +107,10 @@
         this.loadBalances(),
         this.listManager.fetch()
       ])
-      if (this.listManager.list.length) {
+      if (this.id) {
+        this.saleRequest = await reviewableRequestsService.loadReviewableRequestById(this.id)
+      }
+      if (!this.id && this.listManager.list.length) {
         this.view.mode = VIEW_MODES.list
         return
       }
@@ -125,7 +131,7 @@
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       startNewSale () {
-        const sale = new SaleRequestRecord()
+        const sale = new SaleRequestRecord(this.saleRequest || undefined)
         this.sale = sale
         this.listManager.add(sale)
         this.view.mode = VIEW_MODES.edit
@@ -153,7 +159,7 @@
       async handleSaleEditEnd () {
         if (!await confirmAction()) return
         await this.listManager.fetch()
-        const opts = get(this.sale.getDetailsForSave(), 'details.sale')
+        const opts = _get(this.sale.getDetailsForSave(), 'details.sale')
         this.disable()
         try {
           await salesService.createSaleCreationRequest({
@@ -178,6 +184,7 @@
           this.listManager.drop(this.sale)
           await this.listManager.fetch()
           this.view.mode = VIEW_MODES.list
+          this.$router.push({ path: '/requests/sale-creation' })
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
           console.error(error)

@@ -16,14 +16,13 @@
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
-
           <md-table-row class="tx-token-creation__row" @click="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ item.request_state }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ humanizeDate(item.created_at) }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ humanizeDate(item.updated_at) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.updatedAt) }}</md-table-cell>
 
-            <md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">
               <md-button class="tx-token-creation__open-details-btn md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
@@ -35,32 +34,30 @@
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="item.details.asset_create.details.logo.key" :src='getUrl(item.details.asset_create.details.logo.key)' :alt="documentTypes.tokenIcon">
+                  <img class="token-icon" v-if="item.logoUrl" :src='item.logoUrl' :alt="documentTypes.tokenIcon">
                   <div class="token-icon" v-else>{{ item.reference.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
                   <detail prop="Request type" :value="`${getFancyName(item.details.request_type)}`"/>
-                  <detail prop="Max issuance amount" :value="`${item.details.asset_create.max_issuance_amount}`"/>
-                  <detail prop="Initial preissued amount" :value="`${item.details.asset_create.initial_preissued_amount}`"/>
-                  <detail prop="Token name" :value="`${item.details.asset_create.details.name}`"/>
-                  <detail prop="Terms" v-if="item.details.asset_create.details.terms.key !== ''" :value="`<a href='${getUrl(item.details.asset_create.details.terms.key)}' target='_blank'>Open file</a>`"/>
+                  <detail prop="Max issuance amount" :value="`${i18n.c(item.maxIssuanceAmount)}`"/>
+                  <detail prop="Initial preissued amount" :value="`${i18n.c(item.initialPreissuedAmount)}`"/>
+                  <detail prop="Token name" :value="`${item.tokenName}`"/>
+                  <detail prop="Terms" v-if="item.termsUrl" :value="`<a href='${item.termsUrl}' target='_blank'>Open file</a>`"/>
                   <detail prop="Terms" v-else />
-                  <detail prop="Policies" :value="`${getPolicies(item.details.asset_create.policies)}`"/>
-                  <detail prop="Reject reason" v-if="item.request_state === 'rejected'" :value="`${item.reject_reason}`"/>
+                  <detail prop="Policies" :value="`${getPolicies(item.policies)}`"/>
+                  <detail prop="Reject reason" v-if="item.isRejected || item.isPermanentlyRejected"  
+                                               :value="`${item.rejectReason}`"/>
 
                 </div>
               </md-card-content>
               <md-card-actions>
                 <md-button class="md-dense md-accent"
-                          :disabled="item.request_state === 'canceled'
-                                  || item.request_state === 'approved'
-                                  || isPending"
+                          :disabled="!item.isPending || isPending"
                           @click="cancelRequest(item.id)">{{ i18n.lbl_cancel() }}</md-button>
-                <md-button class="md-dense md-primary"
-                          :disabled="item.request_state === 'canceled'
-                                  || item.request_state === 'approved'
-                                  || isPending"
-                          @click="updateRequest(item.id)">{{ i18n.lbl_update() }}</md-button>
+                <router-link :to="{name: 'token-creation.index', params: { id: item.id }}" 
+                             tag="md-button" 
+                             class="md-dense md-primary"
+                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -87,19 +84,16 @@
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
-import config from '../../../../config'
-import get from 'lodash/get'
+import _get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { documentTypes, ASSET_POLICIES_VERBOSE } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
 
 import { tokensService } from '../../../../js/services/tokens.service'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
-
-import { humanizeDate } from '../../../../js/utils/dates.util'
 
 export default {
   mixins: [FormMixin],
@@ -109,7 +103,7 @@ export default {
     documentTypes,
     isLoading: false,
     index: -1,
-    humanizeDate
+    ASSET_POLICIES_VERBOSE
   }),
 
   async created () {
@@ -121,15 +115,10 @@ export default {
       vuexTypes.tokenCreationRequests
     ]),
     list () {
-      return (get(this.tokenCreationRequests, 'records') || [])
-        .map(item => item._record)
-        .reduce((list, item) => {
-          list.push(item)
-          return list
-        }, [])
+      return _get(this.tokenCreationRequests, 'records', [])
     },
     isLoaded () {
-      return get(this.tokenCreationRequests, 'isLoaded')
+      return _get(this.tokenCreationRequests, 'isLoaded')
     }
   },
 
@@ -153,7 +142,7 @@ export default {
         await tokensService.cancelTokenCreationRequest({
           requestID: requestID
         })
-        this.requests = await tokensService.loadTokenCreationRequestsForState()
+        this.loadList()
         EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
       } catch (error) {
         console.log(error)
@@ -173,20 +162,12 @@ export default {
       this.isLoading = false
     },
 
-    getUrl (item) {
-      return `${config.FILE_STORAGE}/${item}`
-    },
-
     getPolicies (item) {
-      return item.map(policy => policy.name.replace('AssetPolicy', '')).join(', ')
+      return item.map(policy => ASSET_POLICIES_VERBOSE[policy]).join(', ')
     },
 
     getFancyName (item) {
       return item.replace('_', ' ')
-    },
-
-    async updateRequest (id) {
-      this.$router.push({name: 'token-creation.index', params: { id: id }})
     }
   }
 }
@@ -230,6 +211,13 @@ export default {
     &--counterparty {
       max-width: 10rem;
     }
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  .tx-token-creation__open-details-btn {
+    margin-right: .65rem;
   }
 
   .tx-token-creation__select-outer {
@@ -286,5 +274,9 @@ export default {
       margin-right: 0;
       margin-bottom: 12px;
     }
+  }
+
+  .details-column {
+    margin-right: .2rem;
   }
 </style>
