@@ -59,6 +59,13 @@ export class SalesService extends Service {
       .submit(this._accountId, this._keypair)
   }
 
+  // createSaleUpdateDetailsRequest (opts) {
+  //   const operation = ManageSaleBuilder.createUpdateSaleDetailsRequest(opts)
+  //   return this._operationBuilder
+  //     .operation()
+  //     .add(operation)
+  //     .submit(this._accountId, this._keypair)
+  // }
   /**
    * Loads created sales with specified filters
    * @param filters
@@ -144,6 +151,16 @@ export class SalesService extends Service {
       syndicateDetails: syndicateDetails
     }
     return syndicate
+  }
+
+  loadSalesRequests (tokenCode) {
+    return this._horizonRequestBuilder
+      .reviewableRequestsHelper()
+      .sales()
+      .forBaseAsset(tokenCode)
+      .order('desc')
+      .limit(config.TRANSACTIONS_PER_PAGE)
+      .callWithSignature(this._keypair)
   }
 }
 

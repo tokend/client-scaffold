@@ -1,7 +1,10 @@
 <template>
-  <md-tabs>
-    <md-tab :md-label="`${ i18n.lbl_token_creation()}`">
+  <md-tabs md-sync-route>
+    <md-tab :md-label="`${ i18n.lbl_token_creation()}`" to="/requests/token-creation">
       <token-creation />
+    </md-tab>
+    <md-tab :md-label="`${ i18n.lbl_sale_creation()}`" to="/requests/sale-creation">
+      <sale-creation />
     </md-tab>
     <md-tab :md-label="`${ i18n.preis_upload()}`">
       <preissuance-upload />
@@ -12,9 +15,13 @@
 <script>
 import TokenCreation from './Requests.TokenCreation'
 import PreissuanceUpload from './Requests.PreissuanceUpload'
+import SaleCreation from './Requests.SaleCreation'
 import { i18n } from '../../../../js/i18n'
 export default {
-  components: { TokenCreation, PreissuanceUpload },
+  components: {
+    TokenCreation,
+    SaleCreation,
+    PreissuanceUpload },
   data: _ => ({
     i18n
   })

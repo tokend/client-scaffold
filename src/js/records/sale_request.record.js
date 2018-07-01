@@ -14,10 +14,10 @@ export class SaleRequestRecord extends RequestRecord {
     this.endTime = this._details.end_time || ''
     this.softCap = this._details.soft_cap || ''
     this.hardCap = this._details.hard_cap || ''
-    this.quoteAssets = (this._details.quote_assets || []).map(a => a.asset)
+    this.quoteAssets = (this._details.quote_assets || []).map(a => a.quote_asset)
     this.name = _get(this._details, 'details.name') || ''
     this.description = _get(this._details, 'details.description') || ''
-    this.descriptionID = _get(this._details, 'details.descriptionID') || ''
+    this.descriptionID = _get(this._details, 'details.description') || ''
     this.shortDescription = _get(this._details, 'details.short_description') || ''
     this.youtubeId = _get(this._details, 'details.youtube_video_id') || ''
     this.logo = _get(this._details, 'details.logo') ? new DocumentContainer(_get(this._details, 'details.logo')) : null

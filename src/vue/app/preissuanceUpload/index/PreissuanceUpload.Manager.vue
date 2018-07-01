@@ -1,10 +1,5 @@
 <template>
-   <div class="upload-preissuance md-layout md-alignment-center-center">
-      <div class="md-layout-item
-                    md-size-50
-                    md-medium-size-65
-                    md-small-size-95
-                    md-xsmall-size-100">
+   <div class="upload-preissuance">
       <md-card>
         <md-progress-bar v-if="isPending" md-mode="indeterminate"></md-progress-bar>
         <md-card-header>
@@ -58,7 +53,6 @@
         </md-card-actions>
       </md-card>
     </div>
-  </div>
 </template>
 
 <script>
@@ -154,6 +148,7 @@ export default {
             return
           }
           await issuanceService.createPreIssuanceRequest(this.issuances.map(item => item.xdr))
+          EventDispatcher.dispatchShowSuccessEvent(i18n.preis_uploaded())
         }
         this.issuances = []
       } catch (err) {
