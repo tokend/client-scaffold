@@ -6,7 +6,6 @@
         <div class="tx-preissuance-upload__select-outer">
         </div>
       </md-table-toolbar>
-
       <template v-if="list.length">
         <md-table-row class="tx-preissuance-upload__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>

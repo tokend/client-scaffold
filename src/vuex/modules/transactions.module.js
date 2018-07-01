@@ -55,12 +55,12 @@ export const actions = {
     paginator.attachInitLoader(() => transactionsService.loadTransactionHistory(tokenCode))
 
     await paginator.init()
-    console.log(state.lists)
     commit(vuexTypes.UPDATE_TX_LIST_ITEM, { tokenCode, paginator })
   },
 
   async NEXT_TX_LIST ({ state, commit, dispatch }, tokenCode) {
     const paginator = state.lists[tokenCode]
+    console.dir(paginator)
     await paginator.next()
     commit(vuexTypes.UPDATE_TX_LIST_ITEM, paginator)
   },

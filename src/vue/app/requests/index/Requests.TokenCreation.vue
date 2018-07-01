@@ -216,9 +216,9 @@ export default {
     }
   }
 
-  .tx-token-creation__open-details-btn { 
-    margin-right: .65rem; 
-  } 
+  .tx-token-creation__open-details-btn {
+    margin-right: .65rem;
+  }
 
   .tx-token-creation__select-outer {
     padding: 5px $padding-horizontal;
