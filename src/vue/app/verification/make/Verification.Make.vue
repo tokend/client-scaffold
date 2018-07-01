@@ -125,12 +125,16 @@
     },
     methods: {
       ...mapActions({
+        loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
         loadUser: vuexTypes.GET_USER_DETAILS,
         loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
         loadKycData: vuexTypes.GET_ACCOUNT_KYC_DATA
       }),
       async reset () {
-        await this.loadKycRequests()
+        await Promise.all([
+          this.loadKycRequests(),
+          this.loadAccount()
+        ])
         if (!this.accountLatestBlobId) {
           return
         }
