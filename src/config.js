@@ -9,7 +9,7 @@ const featureFlags = {
   tokenCreation: true,
   issuanceCreation: true,
   saleCreation: true,
-  preissuanceUpload: true,
+  preIssuanceUpload: true,
   settings: true,
   tfa: true,
   tokens: true,
