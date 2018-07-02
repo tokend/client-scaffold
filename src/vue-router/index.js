@@ -343,8 +343,8 @@ const router = new Router({
           ]
         },
         {
-          feature_flag: config.FEATURE_FLAGS.preissuanceUpload,
-          name: 'app.preissuanceUpload',
+          feature_flag: config.FEATURE_FLAGS.preIssuanceUpload,
+          name: 'app.preissuance-upload',
           path: '/preissuance-upload',
           component: PreissuanceUpload,
           redirect: { path: '/preissuance-upload/index' },

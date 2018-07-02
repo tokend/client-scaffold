@@ -2,7 +2,7 @@ import { KycRequestRecord } from './kyc_request.record'
 import { TransferRecord } from './transfer.record'
 import { TokenRecord } from './token.record'
 import { TokenCreationRecord } from './token_creation.record'
-import { PreissuanceUploadRecord } from './preissuance_upload.record'
+import { PreIssuanceRequestRecord } from './preissuance_upload.record'
 import { ExternalAccountEntity } from './help/external_account_entity'
 import { IssuanceRecord } from './issuance.record'
 import { WithdrawalRecord } from './withdrawal.record'
@@ -71,7 +71,7 @@ export class RecordFactory {
     return new KycRequestRecord(...arguments)
   }
 
-  static createPreissuanceUploadRecord () {
-    return new PreissuanceUploadRecord(...arguments)
+  static createPreIssuanceRequestRecord () {
+    return new PreIssuanceRequestRecord(...arguments)
   }
 }

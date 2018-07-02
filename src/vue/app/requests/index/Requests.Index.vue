@@ -7,21 +7,21 @@
       <sale-creation />
     </md-tab>
     <md-tab :md-label="`${ i18n.preis_upload()}`">
-      <preissuance-upload />
+      <pre-issuance-upload />
     </md-tab>
   </md-tabs>
 </template>
 
 <script>
 import TokenCreation from './Requests.TokenCreation'
-import PreissuanceUpload from './Requests.PreissuanceUpload'
+import PreIssuanceUpload from './Requests.PreIssuanceUpload'
 import SaleCreation from './Requests.SaleCreation'
 import { i18n } from '../../../../js/i18n'
 export default {
   components: {
     TokenCreation,
     SaleCreation,
-    PreissuanceUpload },
+    PreIssuanceUpload },
   data: _ => ({
     i18n
   })
