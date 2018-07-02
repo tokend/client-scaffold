@@ -159,6 +159,8 @@ const getters = {
 
   // requests:
   tokenCreationRequests: 'tokenCreationRequests',
+  saleCreationRequests: 'saleCreationRequests',
+  preissuanceUploadRequests: 'preissuanceUploadRequests',
 
   // sales:
   sales: 'sales',

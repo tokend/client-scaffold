@@ -69,8 +69,7 @@
               <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"  
                              tag="md-button"  
                              class="md-dense md-primary"
-                             :disabled="isPending">{{ i18n.lbl_update() }}</router-link>  
-                             <!-- (!item.isPending && !item.isRejected) || -->
+                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>  
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
