@@ -116,7 +116,8 @@
                 <input-field id="token-initial-preissued-amount"
                             name="initial preissued amount"
                             v-model="request.initialPreissuedAmount"
-                            v-validate="{required:true, amount: true, max_value: request.maxIssuanceAmount}"
+                            type="number"
+                            v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
                             :label="i18n.lbl_token_initial_preissued_amount()"
                             :errorMessage="errorMessage('initial preissued amount')"
                 />
