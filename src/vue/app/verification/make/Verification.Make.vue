@@ -172,6 +172,11 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
+
+  .verification {
+    flex-direction: column;
+  }
+
   .verification__card-message {
     display: flex;
     flex-direction: column;
