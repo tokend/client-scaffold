@@ -2,7 +2,7 @@
   <div class="kyc-form md-layout md-alignment-center-center">
     <form novalidate @submit.prevent="submit"
           class="md-layout-item
-                  md-size-50
+                  md-size-100
                   md-medium-size-65
                   md-small-size-95
                   md-xsmall-size-100"
@@ -166,10 +166,10 @@
     }),
     async created () {
       this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
-      if (this.accountKycData) {
+      if (Object.keys(this.accountKycData).length) {
         this.stubData()
       }
-      if (this.accountKycDocuments) {
+      if (Object.keys(this.accountKycDocuments).length) {
         this.stubDocuments()
       }
     },

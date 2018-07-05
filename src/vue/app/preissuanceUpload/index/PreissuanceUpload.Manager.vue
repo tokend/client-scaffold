@@ -9,27 +9,22 @@
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <p class="preissuance-form__hint">
-                  Select file(s) with preissued asset and click <strong>Upload</strong>.<br/>
-                  <em>Note:</em> you cannot upload the same preissuance twice
-                </p>
+                <p class="preissuance-form__hint" v-html="i18n.preis_upload_tip()"></p>
                 <template v-if="tokens.length">
                   <div class="preissuance-form__upload-wrp">
                     <file-field class="preissuance-form__upload-input"
                           v-model="documents.preissuance"
                           label="Select File(s)"
                           accept=".iss"
-                          id="preissuance-select"
+                          id="preissuance-field"
                     />
                   </div>
                 </template>
                 <template v-else>
-                  <p>
-                    Loading...
-                  </p>
+                  <p>{{ i18n.lbl_loading() }}</p>
                 </template>
                 <ul class="preissuance-form__list" v-if="issuances.length">
-                  <p>To upload:</p>
+                  <p>{{ i18n.lbl_to_upload() }}</p>
 
                   <li v-for="(item, index) in issuances" :key="item.reference">
                     {{index + 1}}. {{i18n.c(item.amount)}} {{item.asset}}
@@ -41,7 +36,7 @@
         </md-card-content>
         <md-card-actions v-if="issuances.length">
           <md-button class="md-primary"
-                    @click="upload"
+                    @click="submit"
                     :disabled="isPending">
             {{ i18n.lbl_upload() }}
           </md-button>
@@ -90,9 +85,6 @@ export default {
     ]),
     userOwnedTokens () {
       return this.tokens.filter(token => token.owner === this.accountId)
-    },
-    nullAssignerTokens () {
-      return this.userOwnedTokens.filter(item => item.signer === config.NULL_ASSET_SIGNER)
     }
   },
 
@@ -119,7 +111,7 @@ export default {
       for (let i = 0; i < items.length; i++) {
         const assetCode = items[i].asset
         if (!this.isAssetDefined(assetCode)) {
-          EventDispatcher.dispatchShowErrorEvent(`Asset with code ${assetCode} does not exist in the system`)
+          EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_exist({asset: assetCode}))
           return
         }
       }
@@ -129,8 +121,9 @@ export default {
       return !!this.userOwnedTokens.filter(item => item.code === assetCode).length
     },
 
-    async isNullAssetSigner (asset) {
-      return !!this.nullAssignerTokens.filter(item => item.code === asset).length
+    isNullAssetSigner (asset) {
+      const nullSigner = this.userOwnedTokens.filter(item => item.signer === config.NULL_ASSET_SIGNER)
+      return !!nullSigner.filter(item => item.code === asset).length
     },
 
     clear () {
@@ -138,12 +131,12 @@ export default {
       this.documents.preissuance = null
     },
 
-    async upload () {
+    async submit () {
       this.disable()
       try {
         for (let item of this.issuances) {
-          if (await this.isNullAssetSigner(item.asset)) {
-            EventDispatcher.dispatchShowErrorEvent(`Preissuance for asset ${item.asset} is not available`)
+          if (this.isNullAssetSigner(item.asset)) {
+            EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_available({asset: item.asset}))
             this.enable()
             return
           }

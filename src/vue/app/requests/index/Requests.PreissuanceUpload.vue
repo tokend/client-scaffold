@@ -83,13 +83,13 @@ export default {
 
   computed: {
     ...mapGetters([
-      vuexTypes.preissuanceUploadRequests
+      vuexTypes.preIssuanceUploadRequests
     ]),
     list () {
-      return _get(this.preissuanceUploadRequests, 'records', [])
+      return _get(this.preIssuanceUploadRequests, 'records', [])
     },
     isLoaded () {
-      return _get(this.preissuanceUploadRequests, 'isLoaded')
+      return _get(this.preIssuanceUploadRequests, 'isLoaded')
     }
   },
 

@@ -1,7 +1,7 @@
 import _get from 'lodash/get'
 import { RequestRecord } from './request.record'
 
-export class PreissuanceUploadRecord extends RequestRecord {
+export class PreIssuanceRequestRecord extends RequestRecord {
   constructor (record, attachedDetails = {}) {
     super(record)
     this._record = record

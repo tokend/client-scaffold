@@ -29,9 +29,17 @@
       <div class="file-field__label">
         {{ label }}
       </div>
-      <label :for="id" class="file-field__uploader">
-        <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(maxSize) })}}
-      </label>
+        <template v-if="accept === '.iss'">
+          <label :for="id" class="file-field__uploader file-field__preissuance-uploader">
+            <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_iss_file()}}
+          </label>
+        </template>
+        <template v-else>
+          <label :for="id" class="file-field__uploader">
+            <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(maxSize) })}}
+          </label>
+        </template>
+
       <input type="file"
             class="file-field__input"
             :id="id"
@@ -232,6 +240,10 @@
     &:hover {
       background: lighten($col-md-primary, 3.5%);
     }
+  }
+
+  .file-field__preissuance-uploader {
+    width: auto;
   }
 
   .file-field__icon {
