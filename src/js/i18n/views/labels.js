@@ -157,5 +157,7 @@ export default {
   lbl_founded: 'Founded',
   lbl_team_size: 'Team size',
   lbl_homepage: 'Homepage',
-  lbl_edit_details: 'Edit Details'
+  lbl_edit_details: 'Edit Details',
+  lbl_loading: 'Loading...',
+  lbl_to_upload: 'To upload:'
 }

@@ -12,9 +12,9 @@ const state = {
     txPerPage: config.REQUESTS_PER_PAGE,
     recordWrp: RecordFactory.createTokenСreationRecord.bind(RecordFactory)
   }),
-  preissuanceUploadRequests: new Paginator({
+  preIssuanceUploadRequests: new Paginator({
     txPerPage: config.REQUESTS_PER_PAGE,
-    recordWrp: RecordFactory.createPreissuanceUploadRecord.bind(RecordFactory)
+    recordWrp: RecordFactory.createPreIssuanceRequestRecord.bind(RecordFactory)
   }),
   saleCreationRequests: {},
   isInitialized: false
@@ -57,12 +57,12 @@ const actions = {
   },
 
   async GET_USER_PREISSUANCE_UPLOAD_REQUESTS ({ state }) {
-    state.preissuanceUploadRequests.attachInitLoader(() => reviewableRequestsService.loadPreissuanceUploadRequests())
-    return state.preissuanceUploadRequests.init()
+    state.preIssuanceUploadRequests.attachInitLoader(() => reviewableRequestsService.loadPreIssuanceRequests())
+    return state.preIssuanceUploadRequests.init()
   },
 
   async NEXT_USER_PREISSUANCE_UPLOAD_REQUESTS ({ state }) {
-    return state.preissuanceUploadRequests.next()
+    return state.preIssuanceUploadRequests.next()
   },
 
   async GET_USER_SALE_CREATION_REQUESTS ({ state, dispatch, commit }, tokenCode) {
@@ -92,7 +92,7 @@ const actions = {
 
 const getters = {
   tokenCreationRequests: state => state.tokenCreationRequests,
-  preissuanceUploadRequests: state => state.preissuanceUploadRequests,
+  preIssuanceUploadRequests: state => state.preIssuanceUploadRequests,
   saleCreationRequests: state => state.saleCreationRequests
 }
 

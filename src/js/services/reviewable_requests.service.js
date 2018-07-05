@@ -52,7 +52,7 @@ export class ReviewableRequestsService extends Service {
    *
    * @return {Promise<object>} - Promise object representing rr
    */
-  loadPreissuanceUploadRequests () {
+  loadPreIssuanceRequests () {
     return this._horizonRequestBuilder
       .reviewableRequestsHelper()
       .preissuances()
