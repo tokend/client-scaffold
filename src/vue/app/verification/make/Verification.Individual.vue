@@ -2,7 +2,7 @@
   <div class="kyc-form md-layout md-alignment-center-center">
     <form novalidate @submit.prevent="submit"
           class="md-layout-item
-                  md-size-100
+                 md-size-50
                   md-medium-size-65
                   md-small-size-95
                   md-xsmall-size-100"
@@ -15,8 +15,6 @@
         </md-card-header>
 
         <md-card-content>
-
-
           <template v-for="row in schema.rows">
 
             <template v-if="row.heading">

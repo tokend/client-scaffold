@@ -2,7 +2,7 @@
   <div class="kyc-form md-layout md-alignment-center-center">
     <form novalidate @submit.prevent="submit"
           class="md-layout-item
-                  md-size-100
+                  md-size-50
                   md-medium-size-65
                   md-small-size-95
                   md-xsmall-size-100"
@@ -29,6 +29,7 @@
                                   v-validate="item.validate"
                                   :name="item.name"
                                   :id="item.id"
+                                  :type="item.type"
                                   :required="item.required"
                                   :label="item.label"
                                   :errorMessage="errorMessage(item.name)"
@@ -60,6 +61,7 @@
         </md-card-actions>
       </md-card>
     </form>
+    <kyc />
   </div>
 </template>
 
@@ -78,13 +80,14 @@
 
   import { ACCOUNT_STATES } from '../../../../js/const/account.const'
   import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+  import kyc from '../spec/kyc.index'
 
   const KYC_LEVEL_TO_SET = 0
 
   export default {
     name: 'verification-syndicate',
     mixins: [FormMixin],
-    components: { },
+    components: { kyc },
     data: _ => ({
       form: {
         name: '',
