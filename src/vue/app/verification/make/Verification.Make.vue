@@ -96,21 +96,20 @@
     }),
     async created () {
       await this.reset()
-
-      switch (this.accountLatestKycLevel) {
-        case 0:
-          if (this.accountKycLatestRequest.accountTypeToSet === userTypes.syndicate) {
-            this.selectedUserType = userTypes.syndicate
-          } else {
-            this.selectedUserType = userTypes.general
-          }
-          break
-        case 1:
-          this.selectedUserType = userTypes.general
-          break
-        default:
-          this.selectedUserType = ''
-      }
+      // switch (this.accountLatestKycLevel) {
+      //   case 0:
+      //     if (this.accountKycLatestRequest.accountTypeToSet === userTypes.syndicate) {
+      //       this.selectedUserType = userTypes.syndicate
+      //     } else {
+      //       this.selectedUserType = userTypes.general
+      //     }
+      //     break
+      //   case 1:
+      //     this.selectedUserType = userTypes.general
+      //     break
+      //   default:
+      //     this.selectedUserType = ''
+      // }
     },
     computed: {
       ...mapGetters([
@@ -145,11 +144,13 @@
                 blobId: this.accountLatestBlobId,
                 type: ACCOUNT_TYPES.syndicate
               })
+              this.selectedUserType = userTypes.syndicate
             } else {
               await this.loadKycData({
                 blobId: this.accountLatestBlobId,
                 type: ACCOUNT_TYPES.general
               })
+              this.selectedUserType = userTypes.general
             }
             break
           case 1:
@@ -157,6 +158,7 @@
               blobId: this.accountLatestBlobId,
               type: ACCOUNT_TYPES.general
             })
+            this.selectedUserType = userTypes.general
             break
           default:
             this.selectedUserType = ''

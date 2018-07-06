@@ -1,6 +1,6 @@
 <template>
   <div class="kyc-form md-layout md-alignment-center-center">
-    <form novalidate @submit.prevent="submit"
+    <!-- <form novalidate @submit.prevent="submit"
           class="md-layout-item
                   md-size-50
                   md-medium-size-65
@@ -60,7 +60,7 @@
           >{{ i18n.lbl_submit() }}</md-button>
         </md-card-actions>
       </md-card>
-    </form>
+    </form> -->
     <kyc />
   </div>
 </template>
