@@ -4,7 +4,7 @@ export default {
   form: {
     country: '',
     city: '',
-    address: '',
+    street: '',
     postalCode: ''
   },
   rows: [
@@ -39,9 +39,9 @@ export default {
     ],
     [
       {
-        "model": "address",
-        "name": "address",
-        "id":  "kyc-address",
+        "model": "street",
+        "name": "street",
+        "id":  "kyc-street",
         "required": true,
         "label": "Street name",
         "field": "text",

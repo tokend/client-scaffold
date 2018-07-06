@@ -83,7 +83,9 @@
   import _pick from 'lodash/pick'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { commonEvents } from '../../../../js/events/common_events'
-  // import { documentTypes } from '../../../../js/const/documents.const'
+  // import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../vuex/types'
   export default {
     name: 'Step-default',
     mixins: [ StepMixin ],
@@ -93,19 +95,18 @@
         this.form = _pick(this.kyc, Object.keys(this.schema.form))
         delete this.form.docs
         this.documents = _pick(this.kyc, Object.keys(this.schema.form.docs || {}))
-        // this.documents = {
-        //   [documentTypes.kycOriginationCertificate]: this.kyc.kycOriginationCertificate,
-        //   [documentTypes.kycShareholdersCertificate]: this.kyc.kycShareholdersCertificate,
-        //   [documentTypes.kycAnnualReport]: this.kyc.kycAnnualReport,
-        //   [documentTypes.kycIdDocument]: this.kyc.kycIdDocument,
-        //   [documentTypes.kycProofOfAddress]: this.kyc.kycProofOfAddress,
-        //   [documentTypes.kycMemorandium]: this.kyc.kycMemorandium,
-        //   [documentTypes.kycSignatoriesAuthorization]: this.kyc.kycSignatoriesAuthorization,
-        //   [documentTypes.kycOrganizationChart]: this.kyc.kycOrganizationChart,
-        //   [documentTypes.kycBusinessModel]: this.kyc.kycBusinessModel
-        // }
       }
+      // if (this.accountKycData) {
+      //   this.form = KycCorporateTemplateParser.toTemplate(this.accountKycData)
+      // }
     },
+
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountKycData
+      ])
+    },
+
     methods: {
       async submit () {
         // if (!await this.isValid()) return

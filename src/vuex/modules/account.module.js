@@ -90,9 +90,9 @@ export const actions = {
       .get(opts.blobId)
     commit(vuexTypes.SET_ACCOUNT_KYC_TYPE, opts.type)
     commit(vuexTypes.SET_ACCOUNT_KYC_DATA, kycData)
-    if (kycData.documents) {
-      commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
-    }
+    // if (kycData.documents) {
+    //   commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
+    // }
   },
 
   async UPDATE_ACCOUNT_KYC_DOCUMENTS ({ commit }, documents) {

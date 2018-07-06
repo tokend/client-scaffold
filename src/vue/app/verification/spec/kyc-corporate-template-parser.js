@@ -7,7 +7,7 @@ export class KycCorporateTemplateParser {
       phone_number: template.phoneNumber,
       country: template.country,
       city: template.city,
-      address: template.address,
+      street: template.street,
       postal_code: template.postalCode,
       first_name: template.firstName,
       last_name: template.lastName,
@@ -28,7 +28,7 @@ export class KycCorporateTemplateParser {
       phoneNumber: form.phone_number,
       country: form.country,
       city: form.city,
-      address: form.address,
+      street: form.street,
       postalCode: form.postal_code,
       firstName: form.first_name,
       lastName: form.last_name,
@@ -44,14 +44,15 @@ export class KycCorporateTemplateParser {
   static getSaveableDocuments (documents) {
     const result = {}
     console.log(Object.entries(documents))
-    for (const [type, { front, back }] of Object.entries(documents)) {
-      result[type] = {}
-      if (front) {
-        result[type].front = front.getDetailsForSave()
-      }
-      if (back) {
-        result[type].back = back.getDetailsForSave()
-      }
+    for (const [type, doc] of Object.entries(documents)) {
+      // result[type] = {}
+      result[type] = doc.getDetailsForSave()
+      // if (front) {
+      //   result[type].front = front.getDetailsForSave()
+      // }
+      // if (back) {
+      //   result[type].back = back.getDetailsForSave()
+      // }
     }
     return result
   }

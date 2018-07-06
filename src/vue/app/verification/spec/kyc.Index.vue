@@ -1,7 +1,7 @@
 <template>
   <div class="create-sale md-layout md-alignment-center-center">
     <div class="md-layout-item
-                    md-size-100
+                    md-size-50
                     md-medium-size-65
                     md-small-size-95
                     md-xsmall-size-100">
@@ -34,7 +34,6 @@
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
   import steps from './steps.schema'
-  // import config from '../../../../config'
   import { i18n } from '../../../../js/i18n'
   import { KycCorporateRequestRecord } from '../../../../js/records/kyc_corporate_request.record'
   import { mapGetters, mapActions } from 'vuex'
@@ -45,8 +44,6 @@
   import { confirmAction } from '../../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
-  // import { reviewableRequestsService } from '../../../../js/services/reviewable_requests.service'
-  // import _get from 'lodash/get'
 
   const KYC_LEVEL_TO_SET = 0
   export default {
@@ -55,7 +52,7 @@
     mixins: [FormMixin],
     data: _ => ({
       activeStep: steps[0].name,
-      kyc: new KycCorporateRequestRecord(),
+      kyc: null,
       i18n,
       steps,
       ACCOUNT_TYPES
@@ -65,13 +62,16 @@
         this.loadTokens(),
         this.loadBalances()
       ])
+      this.kyc = new KycCorporateRequestRecord()
     },
 
     computed: {
       ...mapGetters([
         vuexTypes.accountId,
         vuexTypes.accountTypeI,
-        vuexTypes.accountOwnedTokens
+        vuexTypes.accountOwnedTokens,
+        vuexTypes.accountKycLatestRequest,
+        vuexTypes.accountKycData
       ])
     },
 
@@ -80,8 +80,10 @@
         loadTokens: vuexTypes.GET_ALL_TOKENS,
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES,
         loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
-        updateKycData: vuexTypes.UPDATE_ACCOUNT_KYC_DATA
+        updateKycData: vuexTypes.UPDATE_ACCOUNT_KYC_DATA,
+        updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
       }),
+
       handleKycUpdate ({ form, documents }, { step, i }) {
         form = form || {}
         documents = documents || {}
@@ -101,11 +103,13 @@
         if (!await confirmAction()) return
         this.disable()
         try {
+          await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
-            details: KycCorporateTemplateParser.toTemplate(this.kyc),
+            details: KycCorporateTemplateParser.fromTemplate(this.kyc),
             documents: KycCorporateTemplateParser.getSaveableDocuments(this.kyc.documents)
           })
-          await this.submitRequest(blobId)
+          console.log(blobId)
+          // await this.submitRequest(blobId)
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
           console.error(error)
