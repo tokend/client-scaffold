@@ -34,6 +34,17 @@ export default {
       }
       return true
     },
+    isValidDocs (types) {
+      const docs = this.docs || this.documents
+      if (!docs) return true
+      for (const type of types) {
+        if (!docs[type] || (!docs[type].file && !docs[type].key)) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.cm_upload_documents())
+          return false
+        }
+      }
+      return true
+    },
     clear (exeptions = []) {
       this.errors.clear()
       for (const key in this.form) {
