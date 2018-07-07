@@ -12,7 +12,7 @@ import { fileService } from '../../js/services/file.service'
 
 import { ACCOUNT_STATES } from '../../js/const/account.const'
 
-import { kycIndividualSchema } from '../../vue/app/verification/spec/kyc-individual.schema'
+// import { kycIndividualSchema } from '../../vue/app/verification/spec/kyc-individual.schema'
 
 export const state = {
   account: {
@@ -59,13 +59,16 @@ export const mutations = {
   },
 
   SET_ACCOUNT_KYC_DOCUMENTS (state, documents) {
-    state.kycDocuments = kycIndividualSchema.docs
-      .reduce((kycDocuments, doc) => {
-        if (!kycDocuments[doc.type]) {
-          kycDocuments[doc.type] = {}
-        }
-        kycDocuments[doc.type][doc.side] = new DocumentContainer(documents[doc.type][doc.side])
-        return kycDocuments
+    // state.kycDocuments = kycIndividualSchema.docs
+    // .reduce((kycDocuments, doc) => {
+    //   if (!kycDocuments[doc.type])
+    //     kycDocuments[doc.type] = {}
+    //   }
+    //   kycDocuments[doc.type][doc.side] = new DocumentContainer(documents[doc.type][doc.side])
+    //   return kycDocuments
+    state.kycDocuments = Object.entries(documents)
+      .reduce((docs, [type, doc]) => {
+        return {...docs, [type]: new DocumentContainer(doc)}
       }, {})
   }
 }
@@ -90,9 +93,9 @@ export const actions = {
       .get(opts.blobId)
     commit(vuexTypes.SET_ACCOUNT_KYC_TYPE, opts.type)
     commit(vuexTypes.SET_ACCOUNT_KYC_DATA, kycData)
-    // if (kycData.documents) {
-    //   commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
-    // }
+    if (kycData.documents) {
+      commit(vuexTypes.SET_ACCOUNT_KYC_DOCUMENTS, kycData.documents)
+    }
   },
 
   async UPDATE_ACCOUNT_KYC_DOCUMENTS ({ commit }, documents) {
