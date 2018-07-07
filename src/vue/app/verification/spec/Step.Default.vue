@@ -83,7 +83,7 @@
   import _pick from 'lodash/pick'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { commonEvents } from '../../../../js/events/common_events'
-  // import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
+  import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   export default {
@@ -96,9 +96,10 @@
         delete this.form.docs
         this.documents = _pick(this.kyc, Object.keys(this.schema.form.docs || {}))
       }
-      // if (this.accountKycData) {
-      //   this.form = KycCorporateTemplateParser.toTemplate(this.accountKycData)
-      // }
+      if (this.accountKycData) {
+        this.form = KycCorporateTemplateParser.toTemplate(this.accountKycData)
+        // this.documents = this.accountKycDocuments
+      }
     },
 
     computed: {

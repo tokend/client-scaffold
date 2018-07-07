@@ -4,9 +4,6 @@ import FormMixin from '../../../common/mixins/form.mixin'
 import { fileService } from '../../../../js/services/file.service'
 import { usersService } from '../../../../js/services/users.service'
 import { i18n } from '../../../../js/i18n'
-import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
-import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
 export default {
   mixins: [FormMixin],
   components: { FileField },
@@ -27,15 +24,6 @@ export default {
     this.values.countries = [ '', ...(values).data('countries') ]
     this.values.industries = [ '', ...(values).data('industry') ]
     this.values.documentTypes = [ '', ...(values).data('id_document') ]
-    if (this.accountKycData) {
-      this.form = KycCorporateTemplateParser.toTemplate(this.accountKycData)
-    }
-  },
-
-  computed: {
-    ...mapGetters([
-      vuexTypes.accountKycData
-    ])
   },
 
   methods: {

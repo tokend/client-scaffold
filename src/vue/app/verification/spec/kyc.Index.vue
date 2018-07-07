@@ -108,8 +108,8 @@
             details: KycCorporateTemplateParser.fromTemplate(this.kyc),
             documents: KycCorporateTemplateParser.getSaveableDocuments(this.kyc.documents)
           })
-          console.log(blobId)
-          // await this.submitRequest(blobId)
+          await this.submitRequest(blobId)
+          await this.loadKycRequests()
           EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
           console.error(error)
