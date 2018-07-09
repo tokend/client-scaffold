@@ -18,6 +18,7 @@ export class KycCorporateRequestRecord {
     this.residenceCity = record.residence_city || ''
     this.residenceAddress = record.residence_address || ''
     this.residencePostalCode = record.residence_postal_code || ''
+    this.privacyPolicy = record.privacy_policy || false
     this.documents = wrapDocuments(record.documents)
   }
   getDetailsForSave () {
@@ -38,6 +39,7 @@ export class KycCorporateRequestRecord {
       residence_city: this.residenceCity,
       residence_address: this.residenceAddress,
       residence_postal_code: this.residencePostalCode,
+      privacy_policy: this.privacyPolicy,
       documents: unwrapDocuments(this.documents)
     }
   }

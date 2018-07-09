@@ -64,7 +64,7 @@ export const DOCUMENT_POLICIES = Object.freeze({
   [documentTypes.tokenMetrics]: POLICIES.public,
   [documentTypes.kycShareholdersCertificate]: POLICIES.private,
   [documentTypes.kycAnnualReport]: POLICIES.private,
-  [documentTypes.kyc_memorandium]: POLICIES.private,
+  [documentTypes.kycMemorandium]: POLICIES.private,
   [documentTypes.kycSignatoriesAuthorization]: POLICIES.private,
   [documentTypes.kycOrganizationChart]: POLICIES.private,
   [documentTypes.kycBusinessModel]: POLICIES.private

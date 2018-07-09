@@ -24,7 +24,7 @@
     </div>
     <md-card-actions class="step__action">
       <md-button type="submit" class="md-primary md-flat"
-                :disabled="isPending">
+                :disabled="isPending || accountState === ACCOUNT_STATES.pending">
         {{ i18n.lbl_agree_submit() }}
       </md-button>
     </md-card-actions>
@@ -33,25 +33,33 @@
 
 <script>
   import StepMixin from '../step.mixin'
-
-  import { ASSET_POLICIES, documentTypes } from '../../../../../js/const/const'
+  import FormMixin from '../../../../common/mixins/form.mixin'
+  import { ASSET_POLICIES, ACCOUNT_STATES, documentTypes } from '../../../../../js/const/const'
   import { commonEvents } from '../../../../../js/events/common_events'
   import { ErrorHandler } from '../../../../../js/errors/error_handler'
   import { i18n } from '../../../../../js/i18n'
   import { EventDispatcher } from '../../../../../js/events/event_dispatcher'
   import _cloneDeep from 'lodash/cloneDeep'
+  import { vuexTypes } from '../../../../../vuex/types'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'StepCreateToken',
-    mixins: [StepMixin],
+    mixins: [StepMixin, FormMixin],
     data: _ => ({
       form: {},
       documents: {},
       i18n,
       documentTypes,
       ASSET_POLICIES,
-      makeAdditional: false
+      ACCOUNT_STATES
     }),
+
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountState
+      ])
+    },
 
     methods: {
       async submit () {
