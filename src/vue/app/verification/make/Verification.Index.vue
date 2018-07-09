@@ -20,6 +20,7 @@
             >
               <component :is="step.component"
                         :schema="step.schema"
+                        :activeStep="activeStep"
                         :kyc="kyc"
                         @kyc-update="handleKycUpdate($event, { step, i })"
                         @kyc-edit-end="handleKycEditEnd"
@@ -71,7 +72,8 @@
         vuexTypes.accountId,
         vuexTypes.accountTypeI,
         vuexTypes.accountKycLatestRequest,
-        vuexTypes.accountKycData
+        vuexTypes.accountKycData,
+        vuexTypes.accountState
       ])
     },
 

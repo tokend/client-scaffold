@@ -54,7 +54,7 @@
       ASSET_POLICIES,
       ACCOUNT_STATES
     }),
-
+  
     computed: {
       ...mapGetters([
         vuexTypes.accountState
@@ -90,6 +90,11 @@
       kyc: {
         handler: 'stubData',
         immediate: true
+      },
+      activeStep (value) {
+        if (value === 'step-8') {
+          this.stubData()
+        }
       }
     }
   }

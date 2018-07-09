@@ -7,7 +7,7 @@ import { i18n } from '../../../../js/i18n'
 export default {
   mixins: [FormMixin],
   components: { FileField },
-  props: ['schema', 'kyc'],
+  props: ['schema', 'kyc', 'activeStep'],
   data: _ => ({
     i18n,
     form: {},

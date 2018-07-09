@@ -117,7 +117,7 @@
         if (this.schema) {
           this.form = _pick(this.kyc, Object.keys(this.schema.form))
           delete this.form.docs
-          this.documents = _pick(this.kyc.documents, Object.keys(this.schema.form.docs || {}))
+          this.documents = this.accountKycDocuments
         }
       }
     },
