@@ -48,5 +48,6 @@ export default {
   kyc_submit_residence_address: 'Please submit the following residence address information',
   kyc_upload_address_proof: 'Please upload a proof of address document',
   kyc_upload_business_model: 'Upload a file with the description of the business model',
-  kyc_not_privacy_policy: 'Please accept the Privacy policy before submit'
+  kyc_not_privacy_policy: 'Please accept the Privacy policy before submit',
+  kyc_form_submit: 'KYC form submission'
 }

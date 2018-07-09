@@ -80,7 +80,7 @@
 
   import { ACCOUNT_STATES } from '../../../../js/const/account.const'
   import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
-  import kyc from '../spec/kyc.index'
+  import kyc from './Verification.Index'
 
   const KYC_LEVEL_TO_SET = 0
 

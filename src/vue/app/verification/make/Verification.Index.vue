@@ -6,8 +6,9 @@
                     md-small-size-95
                     md-xsmall-size-100">
       <md-card>
+        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
         <md-card-header>
-          <div class="md-title">KYC form submission</div>
+          <div class="md-title">{{ i18n.kyc_form_submit() }}</div>
         </md-card-header>
         <md-card-content>
           <md-steppers md-vertical :md-active-step.sync="activeStep">
@@ -33,17 +34,17 @@
 
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
-  import steps from './steps.schema'
+  import steps from '../spec/steps.schema'
   import { i18n } from '../../../../js/i18n'
-  import { KycCorporateRequestRecord } from '../../../../js/records/kyc_corporate_request.record'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { accountsService } from '../../../../js/services/accounts.service'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
   import { confirmAction } from '../../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
+  import { KycCorporateRequestRecord } from '../../../../js/records/kyc_corporate_request.record'
 
   const KYC_LEVEL_TO_SET = 0
   export default {
@@ -69,7 +70,6 @@
       ...mapGetters([
         vuexTypes.accountId,
         vuexTypes.accountTypeI,
-        vuexTypes.accountOwnedTokens,
         vuexTypes.accountKycLatestRequest,
         vuexTypes.accountKycData
       ])
