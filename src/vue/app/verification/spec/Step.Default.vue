@@ -83,34 +83,23 @@
   import _pick from 'lodash/pick'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { commonEvents } from '../../../../js/events/common_events'
-  import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   export default {
     name: 'Step-default',
     mixins: [ StepMixin ],
     props: ['schema'],
-    created () {
-      if (this.schema) {
-        this.form = _pick(this.kyc, Object.keys(this.schema.form))
-        delete this.form.docs
-        this.documents = _pick(this.kyc, Object.keys(this.schema.form.docs || {}))
-      }
-      if (this.accountKycData) {
-        this.form = KycCorporateTemplateParser.toTemplate(this.accountKycData)
-        // this.documents = this.accountKycDocuments
-      }
-    },
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountKycData
+        vuexTypes.accountKycData,
+        vuexTypes.accountKycDocuments
       ])
     },
 
     methods: {
       async submit () {
-        // if (!await this.isValid()) return
+        if (!await this.isValid()) return
         this.disable()
         try {
           await this.uploadDocuments()
@@ -122,6 +111,21 @@
           ErrorHandler.processUnexpected(error)
         }
         this.enable()
+      },
+
+      stubData () {
+        if (this.schema) {
+          this.form = _pick(this.kyc, Object.keys(this.schema.form))
+          delete this.form.docs
+          this.documents = _pick(this.kyc.documents, Object.keys(this.schema.form.docs || {}))
+        }
+      }
+    },
+
+    watch: {
+      kyc: {
+        handler: 'stubData',
+        immediate: true
       }
     }
   }

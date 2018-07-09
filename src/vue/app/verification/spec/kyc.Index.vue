@@ -48,11 +48,11 @@
   const KYC_LEVEL_TO_SET = 0
   export default {
     name: 'verification-index',
-    components: { },
+    components: {},
     mixins: [FormMixin],
     data: _ => ({
       activeStep: steps[0].name,
-      kyc: null,
+      kyc: new KycCorporateRequestRecord(),
       i18n,
       steps,
       ACCOUNT_TYPES
@@ -62,7 +62,7 @@
         this.loadTokens(),
         this.loadBalances()
       ])
-      this.kyc = new KycCorporateRequestRecord()
+      this.kyc = new KycCorporateRequestRecord(this.accountKycData)
     },
 
     computed: {

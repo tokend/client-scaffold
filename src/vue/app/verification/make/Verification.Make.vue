@@ -96,20 +96,6 @@
     }),
     async created () {
       await this.reset()
-      // switch (this.accountLatestKycLevel) {
-      //   case 0:
-      //     if (this.accountKycLatestRequest.accountTypeToSet === userTypes.syndicate) {
-      //       this.selectedUserType = userTypes.syndicate
-      //     } else {
-      //       this.selectedUserType = userTypes.general
-      //     }
-      //     break
-      //   case 1:
-      //     this.selectedUserType = userTypes.general
-      //     break
-      //   default:
-      //     this.selectedUserType = ''
-      // }
     },
     computed: {
       ...mapGetters([
