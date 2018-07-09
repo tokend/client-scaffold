@@ -105,6 +105,7 @@ export default {
   lbl_date_of_birth: 'Date of birth',
   lbl_id_document_exp_date: 'ID document expiration date',
   lbl_code: 'Code',
+  lbl_document_type: 'Document type',
   lbl_owner: 'Owner',
   lbl_avalilable_for_iss: 'Available',
   lbl_name: 'Name',
@@ -159,5 +160,9 @@ export default {
   lbl_homepage: 'Homepage',
   lbl_edit_details: 'Edit Details',
   lbl_loading: 'Loading...',
-  lbl_to_upload: 'To upload:'
+  lbl_to_upload: 'To upload:',
+  lbl_street_name: 'Street name',
+  lbl_upload_docs: 'Please, upload the following documents',
+  lbl_upload_doc: 'Please, upload the following document',
+  lbl_agree_submit: 'Agree & submit information'
 }
