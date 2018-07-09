@@ -1,13 +1,13 @@
-import step1Schema from './step-1.general.schema'
-import step2Schema from './step-2.address.schema'
-import step3Schema from './step-3.documents.schema'
-import step4Schema from './step-4.directors.schema'
-import step5Schema from './step-5.residence.schema'
-import step6Schema from './step-6.address-proof.schema'
-import step7Schema from './step-7.documents.schema'
-import step8Schema from './step-8.business-model.schema'
+import step1Schema from './specs/step-1.general.schema'
+import step2Schema from './specs/step-2.address.schema'
+import step3Schema from './specs/step-3.documents.schema'
+import step4Schema from './specs/step-4.directors.schema'
+import step5Schema from './specs/step-5.residence.schema'
+import step6Schema from './specs/step-6.address-proof.schema'
+import step7Schema from './specs/step-7.documents.schema'
 
-import DefaultStep from './Step.Default'
+import FinalStep from './steps/Step.Submit'
+import DefaultStep from './steps/Step.Default'
 import { i18n } from '../../../../js/i18n'
 
 export default [
@@ -18,5 +18,5 @@ export default [
   { name: 'step-5', done: false, component: DefaultStep, schema: step5Schema, label: i18n.kyc_residence_address() },
   { name: 'step-6', done: false, component: DefaultStep, schema: step6Schema, label: i18n.kyc_address_proof() },
   { name: 'step-7', done: false, component: DefaultStep, schema: step7Schema, label: i18n.kyc_documents() },
-  { name: 'step-8', done: true, component: DefaultStep, schema: step8Schema, label: i18n.kyc_business_model() }
+  { name: 'step-8', done: true, component: FinalStep, label: i18n.kyc_business_model() }
 ]

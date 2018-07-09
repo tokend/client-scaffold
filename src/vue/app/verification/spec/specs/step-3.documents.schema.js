@@ -1,5 +1,5 @@
-import { i18n } from '../../../../js/i18n'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { i18n } from '../../../../../js/i18n'
+import { documentTypes } from '../../../../../js/const/documents.const'
 
 export default {
   form: {
@@ -13,12 +13,12 @@ export default {
   rows: [
     [
       {
-        "subheading": "Submit the company's documents"
+        "subheading": i18n.kyc_submit_docs()
       }
     ],
     [
       {
-        "subheading": "Upload the audited copy if possible. If this is not available then the most recent company bank statement can be uploaded"
+        "subheading": i18n.kyc_upload_audited_copy()
       }
     ],
     [

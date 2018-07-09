@@ -1,5 +1,5 @@
-// import { i18n } from '../../../../js/i18n'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { i18n } from '../../../../../js/i18n'
+import { documentTypes } from '../../../../../js/const/documents.const'
 
 export default {
   form: {
@@ -11,14 +11,14 @@ export default {
   rows: [
     [
       {
-        "subheading": "Please upload a proof of address document"
+        "subheading": i18n.lbl_upload_doc()
       }
     ],
     [
       {
         "name": "kyc-business-model",
         "id":  "kyc-business-model",
-        "label": "Upload a file with the description of the business model",
+        "label": i18n.kyc_upload_business_model(),
         "field": "file",
         "side": "front",
         "required": true,

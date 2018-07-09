@@ -1,4 +1,4 @@
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '../../../../../js/i18n'
 
 export default {
   form: {
@@ -10,7 +10,7 @@ export default {
   rows: [
     [
       {
-        "subheading": "Please submit the following legal address information"
+        "subheading": i18n.kyc_submit_legal_address()
       }
     ],
     [
@@ -43,7 +43,7 @@ export default {
         "name": "street",
         "id":  "kyc-street",
         "required": true,
-        "label": "Street name",
+        "label": i18n.lbl_street_name(),
         "field": "text",
         "validate": "required|max:45"
       }

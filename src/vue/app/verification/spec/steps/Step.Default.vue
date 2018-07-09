@@ -69,7 +69,6 @@
         </template>
       </div>
     </template>
-
     <md-card-actions class="step__action">
       <md-button type="submit" class="md-primary md-flat step__submit-btn" :disabled="isPending">
         {{ i18n.sale_next_step() }}
@@ -79,12 +78,12 @@
 </template>
 
 <script>
-  import StepMixin from './step.mixin'
+  import StepMixin from '../step.mixin'
   import _pick from 'lodash/pick'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { commonEvents } from '../../../../js/events/common_events'
+  import { ErrorHandler } from '../../../../../js/errors/error_handler'
+  import { commonEvents } from '../../../../../js/events/common_events'
   import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
+  import { vuexTypes } from '../../../../../vuex/types'
   export default {
     name: 'Step-default',
     mixins: [ StepMixin ],
@@ -100,6 +99,7 @@
     methods: {
       async submit () {
         if (!await this.isValid()) return
+        // if (!this.isValidDocs(this.schema.requiredDocs)) return
         this.disable()
         try {
           await this.uploadDocuments()

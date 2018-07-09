@@ -1,5 +1,5 @@
-import { i18n } from '../../../../js/i18n'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { i18n } from '../../../../../js/i18n'
+import { documentTypes } from '../../../../../js/const/documents.const'
 
 export default {
   form: {
@@ -20,7 +20,7 @@ export default {
     ],
     [
       {
-        "subheading": "All documents except the description of the business model, the company organization chart and the company website must be certified (Notarized) by an official of integrity appointed by the local government to serve the public as an impartial witness in performing a variety of official fraud-deterrent acts related to the signing of important documents."
+        "subheading": i18n.kyc_corp_step1_subhead()
       }
     ],
     [
@@ -28,7 +28,7 @@ export default {
         "model": "website",
         "name": "company-website",
         "id":  "kyc-company-website",
-        "label": "Company website",
+        "label": i18n.kyc_company_website(),
         "field": "text",
         "required": true,
         "validate": "required"
@@ -50,7 +50,7 @@ export default {
         "model": "industry",
         "name": "company-industry",
         "id":  "kyc-company-industry",
-        "label": "Industry of the company",
+        "label": i18n.kyc_company_industry(),
         "field": "select",
         "required": true,
         "values": "industries",
@@ -62,7 +62,7 @@ export default {
         "model": "phoneNumber",
         "name": "company-phone-number",
         "id":  "company-phone-number",
-        "label": "Company phone number",
+        "label": i18n.kyc_company_phone(),
         "field": "text",
         "type": "tel",
         "required": true,

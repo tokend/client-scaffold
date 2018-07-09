@@ -1,5 +1,5 @@
-import { i18n } from '../../../../js/i18n'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { i18n } from '../../../../../js/i18n'
+import { documentTypes } from '../../../../../js/const/documents.const'
 
 export default {
   form: {
@@ -15,7 +15,7 @@ export default {
   rows: [
     [
       {
-        "subheading": "Submit the the full KYC documents"
+        "subheading": i18n.kyc_submit_full_kyc_docs()
       }
     ],
     [
@@ -23,7 +23,7 @@ export default {
         "model": "firstName",
         "name": "first-name",
         "id":  "kyc-first-name",
-        "label": "First name",
+        "label": i18n.lbl_first_name(),
         "field": "text",
         "required": true,
         "validate": "required"
@@ -34,7 +34,7 @@ export default {
         "model": "lastName",
         "name": "last-name",
         "id":  "kyc-last-name",
-        "label": "Last name",
+        "label": i18n.lbl_last_name(),
         "field": "text",
         "required": true,
         "validate": "required"
@@ -45,7 +45,7 @@ export default {
         "model": "idDocumentType",
         "name": "id-document-type",
         "id":  "kyc-id-document-type",
-        "label": "Document type",
+        "label": i18n.lbl_document_type(),
         "field": "select",
         "required": true,
         "values": "documentTypes",
@@ -57,7 +57,7 @@ export default {
         "model": "idDocumentNumber",
         "name": "id-document-number",
         "id":  "kyc-id-document-number",
-        "label": "Document number",
+        "label": i18n.lbl_kyc_id(),
         "field": "text",
         "type": "tel",
         "required": true,
