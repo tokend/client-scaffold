@@ -16,7 +16,8 @@ export class KycCorporateTemplateParser {
       residence_country: template.residenceCountry,
       residence_city: template.residenceCity,
       residence_address: template.residenceAddress,
-      residence_postal_code: template.residencePostalCode
+      residence_postal_code: template.residencePostalCode,
+      privacy_policy: template.privacyPolicy
     }
   }
 
@@ -37,7 +38,8 @@ export class KycCorporateTemplateParser {
       residenceCountry: form.residence_country,
       residenceCity: form.residence_city,
       residenceAddress: form.residence_address,
-      residencePostalCode: form.residence_postal_code
+      residencePostalCode: form.residence_postal_code,
+      privacyPolicy: form.privacy_policy
     }
   }
 
@@ -45,14 +47,7 @@ export class KycCorporateTemplateParser {
     const result = {}
     console.log(Object.entries(documents))
     for (const [type, doc] of Object.entries(documents)) {
-      // result[type] = {}
       result[type] = doc.getDetailsForSave()
-      // if (front) {
-      //   result[type].front = front.getDetailsForSave()
-      // }
-      // if (back) {
-      //   result[type].back = back.getDetailsForSave()
-      // }
     }
     return result
   }
