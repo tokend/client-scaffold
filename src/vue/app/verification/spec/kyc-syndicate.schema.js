@@ -13,7 +13,7 @@ export const kycSyndicateSchema = {
         "label": i18n.lbl_name(),
         "field": "text",
         "required": true,
-        "validate": "required|max:30"
+        "validate": "required"
       },
       {
         "model": "company",
@@ -22,7 +22,7 @@ export const kycSyndicateSchema = {
         "label": i18n.lbl_company(),
         "field": "text",
         "required": true,
-        "validate": "required|max:50"
+        "validate": "required"
       }
     ],
     [
@@ -33,7 +33,7 @@ export const kycSyndicateSchema = {
         "required": true,
         "label": i18n.lbl_headquarters(),
         "field": "text",
-        "validate": "required|max:45"
+        "validate": "required"
       },
       {
         "model": "industry",
@@ -42,7 +42,7 @@ export const kycSyndicateSchema = {
         "required": true,
         "label": i18n.lbl_industry(),
         "field": "text",
-        "validate": "max:45"
+        "validate": "required"
       }
     ],
     [
@@ -64,7 +64,7 @@ export const kycSyndicateSchema = {
         "label": i18n.lbl_team_size(),
         "field": "text",
         "required": true,
-        "validate": "required|max:30"
+        "validate": "required"
       }
     ],
     [
@@ -75,7 +75,7 @@ export const kycSyndicateSchema = {
         "label": i18n.lbl_homepage(),
         "field": "text",
         "required": true,
-        "validate": "required|max:30"
+        "validate": "required"
       }
     ]
   ]

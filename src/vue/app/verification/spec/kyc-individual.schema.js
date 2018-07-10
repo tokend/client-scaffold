@@ -14,7 +14,7 @@ export const kycIndividualSchema = {
         "label": i18n.lbl_first_name(),
         "field": "text",
         "required": true,
-        "validate": "required|max:30"
+        "validate": "required"
       },
       {
         "model": "last_name",
@@ -23,7 +23,7 @@ export const kycIndividualSchema = {
         "label": i18n.lbl_last_name(),
         "field": "text",
         "required": true,
-        "validate": "required|max:50"
+        "validate": "required"
       }
     ],
     [
@@ -50,7 +50,7 @@ export const kycIndividualSchema = {
         "required": true,
         "label": i18n.lbl_line_1(),
         "field": "text",
-        "validate": "required|max:45"
+        "validate": "required"
       },
       {
         "model": "line_2",
@@ -58,8 +58,7 @@ export const kycIndividualSchema = {
         "id":  "kyc-line-2",
         "required": false,
         "label": i18n.lbl_line_2(),
-        "field": "text",
-        "validate": "max:45"
+        "field": "text"
       }
     ],
     [
@@ -70,7 +69,7 @@ export const kycIndividualSchema = {
         "label": i18n.lbl_city(),
         "field": "text",
         "required": true,
-        "validate": "required|max:30"
+        "validate": "required"
       },
       {
         "model": "country",
@@ -91,7 +90,7 @@ export const kycIndividualSchema = {
         "label": i18n.lbl_state(),
         "field": "text",
         "required": true,
-        "validate": "required|max:30"
+        "validate": "required"
       },
       {
         "model": "postal_code",
@@ -100,7 +99,7 @@ export const kycIndividualSchema = {
         "label": i18n.lbl_postal_code(),
         "field": "text",
         "required": true,
-        "validate": "required|max:20"
+        "validate": "required"
       }
     ],
     [
