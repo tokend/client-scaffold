@@ -15,7 +15,24 @@
         </md-card-header>
 
         <md-card-content>
-          <template v-for="row in schema.rows">
+          <md-steppers md-vertical :md-active-step.sync="activeStep">
+            <md-step v-for="(step, i) in steps"
+                    :key="i"
+                    :id="step.name"
+                    :md-label="step.label"
+                    :md-done.sync="step.done"
+            >
+              <component :is="step.component"
+                        :schema="step.schema"
+                        :activeStep="activeStep"
+                        :finalStep="finalStep"
+                        :kyc="kyc"
+                        @kyc-update="handleKycUpdate($event, { step, i })"
+                        @kyc-edit-end="handleKycEditEnd"
+              />
+            </md-step>
+          </md-steppers>
+          <!-- <template v-for="row in schema.rows">
 
             <template v-if="row.heading">
               <h4>{{ row.heading }}</h4>
@@ -81,51 +98,36 @@
                           :type="doc.type"
                           :id="doc.id"
               />
-          </template>
+          </template> -->
         </md-card-content>
-        <md-card-actions>
+        <!-- <md-card-actions>
           <md-button type="submit" class="md-primary"
             :disabled="isPending || accountState === ACCOUNT_STATES.pending"
           >{{ i18n.lbl_submit() }}</md-button>
-        </md-card-actions>
+        </md-card-actions> -->
       </md-card>
     </form>
-
-    <md-dialog :md-active.sync="isDialogOpened">
-      <md-dialog-title>
-        {{ i18n.kyc_verification_key() }}
-      </md-dialog-title>
-      <div class="app__dialog__inner">
-        <p class="kyc-form__verification-key">
-          {{ verificationKey }}
-        </p>
-      </div>
-      <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="isDialogOpened = false">{{ i18n.lbl_done() }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
   </div>
 </template>
 
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
   import FileField from '../../../common/fields/FileField'
+  import steps from '../spec/kyc-steps.general.schema'
 
   import { mapGetters, mapActions } from 'vuex'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-  import { documentTypes } from '../../../../js/const/documents.const'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
 
-  import { kycIndividualSchema as schema } from '../spec/kyc-individual.schema'
   import { KycTemplateParser } from '../spec/kyc-template-parser'
-  import { usersService } from '../../../../js/services/users.service'
   import { accountsService } from '../../../../js/services/accounts.service'
 
-  import { ACCOUNT_STATES } from '../../../../js/const/account.const'
-  import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+  import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+  import { confirmAction } from '../../../../js/modals/confirmation_message'
+
+  import { VerificationRequestRecord } from '../../../../js/records/verification.record'
 
   const KYC_LEVEL_TO_SET = 0
 
@@ -134,42 +136,17 @@
     mixins: [FormMixin],
     components: { FileField },
     data: _ => ({
-      form: {
-        first_name: '',
-        last_name: '',
-        date_of_birth: null,
-        id_expiration_date: null,
-        line_1: '',
-        line_2: '',
-        city: '',
-        country: '',
-        state: '',
-        postal_code: ''
-      },
-      documents: schema.docs.reduce((docs, doc) => {
-        if (!docs[doc.type]) {
-          docs[doc.type] = {}
-        }
-        docs[doc.type][doc.side] = null
-        return docs
-      }, {}),
-      values: {
-        countries: []
-      },
       isDialogOpened: false,
-      documentTypes,
+      kyc: null,
+      activeStep: steps[0].name,
+      finalStep: steps[steps.length - 1].name,
       i18n,
-      schema,
-      ACCOUNT_STATES
+      steps,
+      ACCOUNT_STATES,
+      userTypes
     }),
-    async created () {
-      this.values.countries = [ '', ...(await usersService.loadEnums()).data('countries') ]
-      if (Object.keys(this.accountKycData).length) {
-        this.stubData()
-      }
-      if (Object.keys(this.accountKycDocuments).length) {
-        this.stubDocuments()
-      }
+    created () {
+      this.kyc = new VerificationRequestRecord(this.accountKycData)
     },
     computed: {
       ...mapGetters([
@@ -190,20 +167,36 @@
         updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS,
         updateKycData: vuexTypes.UPDATE_ACCOUNT_KYC_DATA
       }),
-      async submit () {
-        if (!await this.isValid()) return
-        if (!this.isAllDocsUploaded()) return
+
+      handleKycUpdate ({ form, documents }, { step, i }) {
+        form = form || {}
+        documents = documents || {}
+        Object.entries(form).forEach(([key, value]) => {
+          this.kyc[key] = value
+        })
+        Object.entries(documents).forEach(([key, value]) => {
+          this.kyc.documents[key] = value
+        })
+        if (this.activeStep === steps[steps.length - 1].name) {
+          this.handleKycEditEnd()
+        }
+        step.done = true
+        this.activeStep = (steps[i + 1] || steps[0]).name
+      },
+      async handleKycEditEnd () {
+        if (!await confirmAction()) return
         this.disable()
         try {
-          await this.updateDocuments(this.documents)
+          await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
-            details: KycTemplateParser.toTemplate(this.form),
-            documents: KycTemplateParser.getSaveableDocuments(this.documents)
+            details: KycTemplateParser.toTemplate(this.kyc, userTypes.general),
+            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
-          EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
         } catch (error) {
+          console.error(error)
           ErrorHandler.processUnexpected(error)
         }
         this.enable()
@@ -216,21 +209,6 @@
           kycLevelToSet: KYC_LEVEL_TO_SET,
           kycData: { blob_id: blobId }
         })
-      },
-      isAllDocsUploaded () {
-        for (const doc of schema.docs) {
-          if (!this.documents[doc.type][doc.side]) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.kyc_not_all_docs())
-            return false
-          }
-        }
-        return true
-      },
-      stubData () {
-        this.form = KycTemplateParser.fromTemplate(this.accountKycData)
-      },
-      stubDocuments () {
-        this.documents = this.accountKycDocuments
       }
     }
   }
