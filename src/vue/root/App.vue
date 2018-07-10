@@ -30,6 +30,8 @@
     </template>
     <template v-else>
       <router-view/>
+      <loader-bar/>
+      <snackbar/>
     </template>
   </div>
 </template>
