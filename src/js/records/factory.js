@@ -47,7 +47,7 @@ export class RecordFactory {
     return new SaleRecord(...arguments)
   }
 
-  static createSaleСreationRecord () {
+  static createSaleCreationRecord () {
     return new SaleCreationRecord(...arguments)
   }
 

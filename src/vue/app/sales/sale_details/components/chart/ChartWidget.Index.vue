@@ -1,7 +1,7 @@
 <template>
   <div class="chart-container">
     <md-card-header class="chart-container__header">
-      <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
+      <div class="md-title chart-container__title">{{ i18n.sale_investments() }}</div>
     </md-card-header>
 
     <md-card-content>

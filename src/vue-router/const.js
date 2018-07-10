@@ -2,7 +2,7 @@ export const vueRoutes = Object.freeze({
   transfersConfirm: { name: 'transfers.confirm', path: 'transfers, confirm' },
   settings: { name: 'app.settings', path: '/settings' },
   verification: { name: 'app.verification', path: 'verification' },
-
+  saleDetails: { name: 'sales.sale-details' },
   hredir: { name: 'horizon-redirect' },
   login: { name: 'login' },
   signup: { name: 'signup' },
