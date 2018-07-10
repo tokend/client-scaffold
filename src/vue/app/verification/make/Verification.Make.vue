@@ -1,5 +1,5 @@
 <template>
-  <div class="verification md-layout md-alignment-center-center">
+  <div class="verification md-layout">
     <user-type-selector v-if="!selectedUserType" @select-user-type="handleUserType"/>
     <template v-if="selectedUserType">
       <template v-if="accountState === ACCOUNT_STATES.approved">
