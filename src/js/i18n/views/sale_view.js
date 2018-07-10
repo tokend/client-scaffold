@@ -51,5 +51,6 @@ export default {
   sale_no_creation_requests: 'No fund creation requests',
   sale_no_creation_requests_desc: 'Here will be the list of your fund creation requests',
   sale_short_description: 'Short description',
-  sale_fund_video: 'Video about fund'
+  sale_fund_video: 'Video about fund',
+  sale_investments: 'Investments'
 }
