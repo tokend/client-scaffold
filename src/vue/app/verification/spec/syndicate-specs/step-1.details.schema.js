@@ -1,10 +1,21 @@
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '../../../../../js/i18n'
 
-export const kycSyndicateSchema = {
-  "rows": [
-    {
-      "heading": "Corporate details"
-    },
+export default {
+  form: {
+    name: '',
+    company: '',
+    headquarters: '',
+    industry: '',
+    found_date: null,
+    team_size: '',
+    homepage: ''
+  },
+  rows: [
+    [
+      {
+        "heading": "Corporate details"
+      }
+    ],
     [
       {
         "model": "name",
