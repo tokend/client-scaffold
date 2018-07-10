@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="auth-page__form-title">Get started</h2>
+    <h2 class="auth-page__form-title">{{ i18n.lbl_get_started() }}</h2>
     <form novalidate @submit.prevent="submit">
       <input-field class="input-field"
                   id="login-email"
@@ -98,7 +98,7 @@
         } catch (error) {
           switch (error.constructor) {
             case errors.ConflictError:
-              error.showBanner(i18n.user_exists())
+              error.showBanner(i18n.auth_user_exists())
               break
             default:
               ErrorHandler.processUnexpected(error)

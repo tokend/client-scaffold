@@ -1,8 +1,8 @@
 <template>
   <div class="auth-page">
     <div class="auth-page__titles">
-      <h3 class="auth-page__title-small">Create, distribute and trade</h3>
-      <h1 class="auth-page__title">Start trading cryptocurrencies <br> in minutes</h1>
+      <h3 class="auth-page__title-small">{{ i18n.auth_phrase() }}</h3>
+      <h1 class="auth-page__title" v-html="i18n.auth_title()"></h1>
     </div>
     <div class="auth-page__form">
       <logotype class="auth-page__form-logotype"/>

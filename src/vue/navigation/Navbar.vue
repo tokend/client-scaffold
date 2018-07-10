@@ -146,7 +146,7 @@
     background-color: $col-md-background;
     padding: 0 40px;
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
 
     @include respond-to(xsmall) {
@@ -164,7 +164,7 @@
 
   .navbar__user {
     display: flex;
-    align-content: flex-end;
+    align-items: flex-end;
     justify-content: space-between;
 
     @include respond-to-custom(800px) {
@@ -179,7 +179,7 @@
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
   }
 
@@ -361,7 +361,7 @@
     position: relative;
     padding: 8px 0;
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
 
     &:after {

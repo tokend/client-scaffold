@@ -1,4 +1,3 @@
-import auth from './to_replace/auth'
 import documents from './to_replace/documens'
 import offers from './to_replace/offers'
 import sales from './to_replace/sales'
@@ -25,6 +24,7 @@ import trade from './views/trade_view'
 import companyView from './views/company_view'
 import preissuanceView from './views/preissuance_view'
 import common from './views/common'
+import auth from './views/auth_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate } from '../utils/dates.util'

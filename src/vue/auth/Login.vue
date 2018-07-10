@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="auth-page__form-title">Sign in</h2>
+    <h2 class="auth-page__form-title">{{ i18n.lbl_signin() }}</h2>
     <form novalidate @submit.prevent="submit">
       <input-field class="input-field"
         id="login-email"
@@ -125,7 +125,7 @@
         } catch (error) {
           switch (error.constructor) {
             case errors.NotFoundError:
-              error.showBanner(i18n.not_found())
+              error.showBanner(i18n.auth_not_found())
               break
             case errors.EmailNotVerifiedError:
               this.handleNotVerifiedError()
@@ -177,7 +177,7 @@
             kdf.attributes()
           )
           await emailService.sendResendEmailRequest(walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_email_sent())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
         }
@@ -187,7 +187,7 @@
       async verifyEmail () {
         try {
           await emailService.sendVerifyEmailRequest(this.verifyEmailParams.token, this.verifyEmailParams.walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.email_verified())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_email_verified())
         } catch (error) {
           console.error(error)
         }

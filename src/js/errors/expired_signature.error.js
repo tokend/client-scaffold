@@ -6,7 +6,7 @@ export class ExpiredSignatureError extends ExtendableError {
   constructor () {
     super('EmailNotVerifiedError')
     this.errorType = 'Email not verified'
-    this.message = i18n.expired_signature()
+    this.message = i18n.auth_expired_signature()
   }
 
   showBanner () {

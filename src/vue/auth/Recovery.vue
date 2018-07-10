@@ -1,44 +1,44 @@
 <template>
   <div>
-    <h2 class="auth-page__form-title">Account recovery</h2>
+    <h2 class="auth-page__form-title">{{ i18n.lbl_account_recovery() }}</h2>
     <form novalidate @submit.prevent="submit">
       <input-field class="input-field"
-                    id="recovery-email"
-                    name="email"
-                  :errorMessage="errorMessage('email')"
-                  :label="i18n.lbl_email()"
-                  v-model.trim="form.email"
-                  v-validate="'required|email'"
+                   id="recovery-email"
+                   name="email"
+                   :errorMessage="errorMessage('email')"
+                   :label="i18n.lbl_email()"
+                   v-model.trim="form.email"
+                   v-validate="'required|email'"
       />
       <input-field class="input-field"
-                    type="password"
-                    id="recovery-seed"
-                    name="seed"
-                  :label="i18n.lbl_recovery_seed()"
-                  :errorMessage="errorMessage('seed')"
-                  v-model.trim="form.recoverySeed"
-                  v-validate="'required|secret_key'"
+                   type="password"
+                   id="recovery-seed"
+                   name="seed"
+                   :label="i18n.lbl_recovery_seed()"
+                   :errorMessage="errorMessage('seed')"
+                   v-model.trim="form.recoverySeed"
+                   v-validate="'required|secret_key'"
       />
       <input-field class="input-field"
-                    id="recovery-password"
-                    type="password"
-                    name="password"
-                  :togglePassword="true"
-                  :label="i18n.lbl_pwd()"
-                  :errorMessage="errorMessage('password')"
-                  v-model.trim="form.password"
-                  v-validate="'required|min:6'"
+                   id="recovery-password"
+                   type="password"
+                   name="password"
+                   :togglePassword="true"
+                   :label="i18n.lbl_pwd()"
+                   :errorMessage="errorMessage('password')"
+                   v-model.trim="form.password"
+                   v-validate="'required|min:6'"
       />
       <input-field class="input-field"
-                    id="recovery-confirm-password"
-                    type="password"
-                    name="confirm-password"
-                  :togglePassword="true"
-                  :label="i18n.lbl_pwd_confirm()"
-                  :errorMessage="errorMessage('confirm-password')"
-                  :data-vv-as="i18n.lbl_pwd().toLowerCase()"
-                  v-validate="'required|confirmed:password'"
-                  v-model.trim="form.confirmPassword"
+                   id="recovery-confirm-password"
+                   type="password"
+                   name="confirm-password"
+                   :togglePassword="true"
+                   :label="i18n.lbl_pwd_confirm()"
+                   :errorMessage="errorMessage('confirm-password')"
+                   :data-vv-as="i18n.lbl_pwd().toLowerCase()"
+                   v-validate="'required|confirmed:password'"
+                   v-model.trim="form.confirmPassword"
       />
 
       <div class="auth-page__submit">
@@ -46,14 +46,14 @@
                 class="auth-page__submit-btn"
                 :disabled="isPending"
                 v-ripple>
-          {{i18n.lbl_make_recovery() }}
+          {{ i18n.lbl_make_recovery() }}
         </button>
       </div>
       <div class="auth-page__tips">
         <div class="auth-page__tip">
-          Know your credentials?
+          {{ i18n.auth_know_credentials() }}
           <router-link class="auth-page__tip-link" :to="routes.login">
-            Sign in now
+            {{ i18n.lbl_signin_now() }}
           </router-link>
         </div>
       </div>
@@ -99,16 +99,16 @@
             newPassword: this.form.password,
             email: this.form.email
           })
-          EventDispatcher.dispatchShowSuccessEvent(i18n.recovered())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_recovered())
           this.$router.push(vueRoutes.login)
         } catch (error) {
           console.error(error)
           switch (error.constructor) {
             case errors.NotFoundError:
-              error.showBanner(i18n.recovery_wallet_not_found())
+              error.showBanner(i18n.auth_recovery_wallet_not_found())
               break
             case errors.EmailNotVerifiedError:
-              error.showBanner(i18n.email_not_verified_on_recovery())
+              error.showBanner(i18n.auth_email_not_verified_on_recovery())
               break
             default:
               ErrorHandler.processUnexpected(error)
