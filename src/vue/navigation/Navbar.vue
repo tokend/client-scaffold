@@ -145,10 +145,24 @@
     min-height: 121px;
     background-color: $col-md-background;
     padding: 0 40px;
+
+    @include respond-to(xsmall) {
+      padding: 0 16px;
+    }
   }
 
   .navbar__title {
     color: $col-md-primary;
+
+    @include respond-to-custom(800px) {
+      display: none;
+    }
+  }
+
+  .navbar__user {
+    @include respond-to-custom(800px) {
+      margin-left: auto;
+    }
   }
 
   .navbar__user-picture {
@@ -157,10 +171,6 @@
     font-size: 24px;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
-  }
-
-  .navbar__user-name {
-    font-family: 'Circular';
   }
 
   .navbar__user-name,
@@ -176,7 +186,6 @@
     font-size: 12px;
     cursor: pointer;
     display: inline-block;
-    font-family: 'Circular';
   }
 
   .navbar__user-notif--has-value {
@@ -222,6 +231,7 @@
     position: relative;
     margin-right: 1rem;
     top: .1rem;
+
     @include respond-to(small) {
       display: none;
     }
@@ -233,7 +243,10 @@
     right: 0;
     top: calc(100% + 14px);
     overflow: visible;
-    padding: 24px 24px 0 24px;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: -15px;
+    transition: .3s ease-out;
 
     & > .md-card-content {
       padding: 0;
@@ -250,23 +263,22 @@
       top: -8px;
       right: 4px;
     }
-
-    @include respond-to-custom(800px) {
-      width: calc(100vw - 230px - 24px); // 230px - sidebar width
-    }
-
-    @include respond-to(small) {
-      padding: 16px;
-      width: calc(100vw - 24px);
-      max-width: 404px;
-    }
   }
 
   .navbar__user-card {
-    visibility: hidden;
-    opacity: 0;
-    transition: .3s ease-out;
-    margin-top: -15px;
+    padding: 24px 24px 0 24px;
+
+    @include respond-to-custom(800px) {
+      width: calc(100vw - 230px - 40px); // 230px - sidebar width
+    }
+    @include respond-to(small) {
+      padding: 16px;
+      width: calc(100vw - 16px);
+      max-width: 404px;
+    }
+    @include respond-to(xsmall) {
+      width: calc(100vw - 32px);
+    }
   }
 
   .navbar__user-card--active {
@@ -293,17 +305,25 @@
   .navbar__notif-card {
     padding: 0;
     width: 404px;
-    visibility: hidden;
-    opacity: 0;
-    margin-top: -15px;
-    transition: .3s ease-out;
 
     & .navbar__notif-card-content { font-size: 12px; }
-    &:before { border-color: transparent transparent #fff transparent; }
-    @include respond-to-custom(800px) {
-      width: calc(100vw - 230px - 24px); // 230px - sidebar width
+    &:before {
+      border-color: transparent transparent #fff transparent;
+      @include respond-to-custom(800px) {
+        right: 150px;
+      }
     }
-    @include respond-to(small) { width: calc(100vw - 24px); }
+    @include respond-to-custom(800px) {
+      right: -125px;
+      max-width: 404px;
+      width: calc(100vw - 404px + 125px);
+    }
+    @include respond-to(small) {
+      width: calc(100vw - 24px);
+    }
+    @include respond-to(xsmall) {
+      width: calc(100vw - 32px);
+    }
   }
 
   .navbar__notif-card--active {

@@ -1,11 +1,11 @@
 <template>
   <md-app id="app" md-waterfall md-mode="fixed">
 
-    <md-app-toolbar class="md-primary toolbar__ctn">
+    <md-app-toolbar class="md-primary app__sidebar">
       <div class="md-toolbar-row">
         <md-button class="md-icon-button app__sidebar-icon"
-                 v-if="isLoggedIn"
-                  @click="menuVisible = !menuVisible">
+                   v-if="isLoggedIn"
+                   @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
         <navbar/>
@@ -15,7 +15,7 @@
     <md-app-drawer md-permanent="full"
                   :md-active.sync="menuVisible"
                    v-if="isLoggedIn">
-      <sidebar v-on:hide-sidebar="hideSidebar"/>
+      <sidebar @hide-sidebar="hideSidebar"/>
     </md-app-drawer>
 
     <md-app-content>
@@ -122,6 +122,7 @@
 
 <style lang="scss">
   @import '../../scss/mixins';
+  @import '../../scss/variables';
 
   .md-app {
     height: 100%;
@@ -141,6 +142,20 @@
 
     @include respond-to(small) {
       display: initial;
+    }
+  }
+
+  .app__sidebar {
+    @include respond-to(small) {
+      background-color: $col-md-background !important;
+    }
+  }
+
+  .app__sidebar-icon {
+    @include respond-to(small) {
+      background-color: $col-md-primary;
+      margin-right: 0;
+      margin-left: 8px !important;
     }
   }
 

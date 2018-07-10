@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <section class="sidebar__logotype">
-      <router-link @click="closeSidebar" to="/dashboard">
+      <router-link @click.native="closeSidebar" to="/dashboard">
         <logotype class="sidebar__logotype-icon"/>
       </router-link>
     </section>
@@ -9,7 +9,7 @@
     <section class="sidebar__list">
       <ul>
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/dashboard"
                      tag="li" v-if="config.FEATURE_FLAGS.dashboard">
           <md-icon class="sidebar__list-item-icon">dashboard</md-icon>
@@ -17,7 +17,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/deposit"
                      tag="li" v-if="config.FEATURE_FLAGS.deposit">
           <md-icon class="sidebar__list-item-icon">file_download</md-icon>
@@ -25,7 +25,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/withdrawal"
                      tag="li" v-if="config.FEATURE_FLAGS.withdrawal">
           <md-icon class="sidebar__list-item-icon">file_upload</md-icon>
@@ -33,7 +33,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/transfers"
                      tag="li" v-if="config.FEATURE_FLAGS.transfers">
           <md-icon class="sidebar__list-item-icon">send</md-icon>
@@ -41,7 +41,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/tokens"
                      tag="li" v-if="config.FEATURE_FLAGS.tokens">
           <md-icon class="sidebar__list-item-icon">toll</md-icon>
@@ -49,7 +49,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/token-creation"
                      tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
           <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
@@ -57,7 +57,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/issuance-creation"
                      tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
           <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
@@ -65,7 +65,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/preissuance-upload"
                      tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
           <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
@@ -73,7 +73,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/sales"
                      tag="li" v-if="config.FEATURE_FLAGS.sales">
           <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
@@ -81,7 +81,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/sale-creation"
                      tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
           <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
@@ -89,7 +89,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      :to="{ name: 'app.requests' }"
                      tag="li" v-if="config.FEATURE_FLAGS.requests">
           <md-icon class="sidebar__list-item-icon">import_contacts</md-icon>
@@ -97,7 +97,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/history"
                      tag="li" v-if="config.FEATURE_FLAGS.history">
           <md-icon class="sidebar__list-item-icon">featured_play_list</md-icon>
@@ -105,7 +105,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/trade"
                      tag="li" v-if="config.FEATURE_FLAGS.trade">
           <md-icon class="sidebar__list-item-icon">compare_arrows</md-icon>
@@ -113,7 +113,7 @@
         </router-link>
 
         <!-- <router-link v-ripple class="sidebar__list-item"
-                          @click="closeSidebar"
+                          @click.native="closeSidebar"
                           to="/help" tag="li">
           <md-icon class="sidebar__list-item-icon">help</md-icon>
           <span class="md-list-item-text">{{ i18n.lbl_help() }}</span>
@@ -125,7 +125,7 @@
       <div class="sidebar__list-title">My account</div>
       <ul>
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/verification"
                      tag="li" v-if="config.FEATURE_FLAGS.verification">
           <md-icon class="sidebar__list-item-icon">verified_user</md-icon>
@@ -133,7 +133,7 @@
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
-                     @click="closeSidebar"
+                     @click.native="closeSidebar"
                      to="/settings"
                      tag="li" v-if="config.FEATURE_FLAGS.settings">
           <md-icon class="sidebar__list-item-icon">settings</md-icon>
