@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar app__layout app__layout--center-space-between">
+  <nav class="navbar">
     <h2 class="navbar__title">{{ $route.meta.pageName }}</h2>
-    <div class="navbar__user app__layout app__layout--bottom-space-between">
-      <div class="navbar__user-picture app__layout app__layout--center-center">
+    <div class="navbar__user">
+      <div class="navbar__user-picture">
         {{ userEmail.substr(0, 1).toUpperCase() }}
       </div>
       <div>
@@ -44,16 +44,16 @@
               <p class="navbar__user-card-status navbar__user-card-status--blocked" v-else>{{ i18n.lbl_userBlocked() }}</p>
               <button v-ripple="'rgba(255, 255, 255, .2)'"
                       @click="goKyc"
-                      class="app__button app__button--raised navbar__user-card-account-btn">
+                      class="navbar__user-card-account-btn">
                 {{ i18n.lbl_my_account() }}
               </button>
             </div>
           </div>
-          <div class="navbar__user-actions app__layout app__layout--center-space-between">
-            <button v-ripple class="app__button app__button--flat" @click="goSettings">
+          <div class="navbar__user-actions">
+            <button v-ripple class="navbar__user-action" @click="goSettings">
               {{ i18n.lbl_settings() }}
             </button>
-            <button v-ripple class="app__button app__button--flat" @click="signOut">
+            <button v-ripple class="navbar__user-action" @click="signOut">
               {{ i18n.lbl_signout() }}
             </button>
           </div>
@@ -145,6 +145,9 @@
     min-height: 121px;
     background-color: $col-md-background;
     padding: 0 40px;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
 
     @include respond-to(xsmall) {
       padding: 0 16px;
@@ -160,6 +163,10 @@
   }
 
   .navbar__user {
+    display: flex;
+    align-content: flex-end;
+    justify-content: space-between;
+
     @include respond-to-custom(800px) {
       margin-left: auto;
     }
@@ -171,6 +178,13 @@
     font-size: 24px;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .navbar__user-action {
+    @include button-flat();
   }
 
   .navbar__user-name,
@@ -346,6 +360,9 @@
   .navbar__user-actions {
     position: relative;
     padding: 8px 0;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
 
     &:after {
       content: '';
@@ -402,6 +419,7 @@
   }
 
   .navbar__user-card-account-btn {
+    @include button-raised();
     margin: 0;
 
     @include respond-to(small) {

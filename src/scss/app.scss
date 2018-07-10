@@ -114,51 +114,6 @@ html,body {
     @include list-reset()
   }
 
-  .app__button {
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-    min-height: 36px;
-    background-color: transparent;
-  }
-
-  .app__button--raised {
-    border-radius: 2px;
-    background-color: $col-md-primary-secondary;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .15);
-    color: #fff;
-  }
-
-  .app__button--flat {
-    color: $col-md-primary;
-    transition: .3s ease-out;
-
-    &:hover {
-      background-color: $gray;
-    }
-  }
-
-  .app__button--uppercase {
-    text-transform: uppercase;
-  }
-
-  .app__layout { display: flex; }
-  .app__layout--center-space-between {
-    align-items: center;
-    justify-content: space-between;
-  }
-  .app__layout--bottom-space-between {
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-  .app__layout--center-center {
-    align-items: center;
-    justify-content: center;
-  }
-
   & .md-tabs-content {
     height: 100% !important;
   }

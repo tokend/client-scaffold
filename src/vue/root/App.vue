@@ -1,31 +1,37 @@
 <template>
-  <md-app id="app" md-waterfall md-mode="fixed">
+  <div id="app">
+    <template v-if="isLoggedIn">
+      <md-app md-waterfall md-mode="fixed">
 
-    <md-app-toolbar class="md-primary app__sidebar">
-      <div class="md-toolbar-row">
-        <md-button class="md-icon-button app__sidebar-icon"
-                   v-if="isLoggedIn"
-                   @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <navbar/>
-      </div>
-    </md-app-toolbar>
+        <md-app-toolbar class="md-primary app__sidebar" v-if="isLoggedIn">
+          <div class="md-toolbar-row">
+            <md-button class="md-icon-button app__sidebar-icon"
+                      @click="menuVisible = !menuVisible">
+              <md-icon>menu</md-icon>
+            </md-button>
+            <navbar/>
+          </div>
+        </md-app-toolbar>
 
-    <md-app-drawer md-permanent="full"
-                  :md-active.sync="menuVisible"
-                   v-if="isLoggedIn">
-      <sidebar @hide-sidebar="hideSidebar"/>
-    </md-app-drawer>
+        <md-app-drawer md-permanent="full"
+                      :md-active.sync="menuVisible"
+                      v-if="isLoggedIn">
+          <sidebar @hide-sidebar="hideSidebar"/>
+        </md-app-drawer>
 
-    <md-app-content>
+        <md-app-content>
+          <router-view/>
+          <snackbar/>
+          <file-viewer/>
+          <loader-bar/>
+        </md-app-content>
+
+      </md-app>
+    </template>
+    <template v-else>
       <router-view/>
-      <snackbar/>
-      <file-viewer/>
-      <loader-bar/>
-    </md-app-content>
-
-  </md-app>
+    </template>
+  </div>
 </template>
 
 <script>

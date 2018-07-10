@@ -8,12 +8,13 @@ import { PAGES_NAMES } from '../js/const/const'
 import { resolveRedirect } from './redirect'
 
 // route components:
-import Login from '../vue/auth/Login.vue'
-import Signup from '../vue/auth/Signup.vue'
-import Recovery from '../vue/auth/Recovery.vue'
-import EmailResend from '../vue/auth/ConfirmEmail.vue'
+import Auth from '../vue/auth/Auth'
+import Login from '../vue/auth/Login'
+import Signup from '../vue/auth/Signup'
+import Recovery from '../vue/auth/Recovery'
+import EmailResend from '../vue/auth/ConfirmEmail'
 
-import AppContent from '../vue/root/AppContent.vue'
+import AppContent from '../vue/root/AppContent'
 
 import Dashboard from '../vue/app/dashboard/Dashboard.Entry'
 import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
@@ -76,29 +77,37 @@ const router = new Router({
       beforeEnter: resolveRedirect
     },
     {
-      path: '/sign-in',
-      name: 'login',
-      component: Login,
-      meta: { some: 'alalal' },
-      beforeEnter: authPageGuard
-    },
-    {
-      path: '/sign-up',
-      name: 'signup',
-      component: Signup,
-      beforeEnter: authPageGuard
-    },
-    {
-      path: '/verify-email',
-      name: 'email',
-      component: EmailResend,
-      beforeEnter: authPageGuard
-    },
-    {
-      path: '/recovery',
-      name: 'recovery',
-      component: Recovery,
-      beforeEnter: authPageGuard
+      path: '/auth',
+      name: 'auth',
+      component: Auth,
+      redirect: { name: 'login' },
+      children: [
+        {
+          path: '/sign-in',
+          name: 'login',
+          component: Login,
+          meta: { some: 'alalal' },
+          beforeEnter: authPageGuard
+        },
+        {
+          path: '/sign-up',
+          name: 'signup',
+          component: Signup,
+          beforeEnter: authPageGuard
+        },
+        {
+          path: '/verify-email',
+          name: 'email',
+          component: EmailResend,
+          beforeEnter: authPageGuard
+        },
+        {
+          path: '/recovery',
+          name: 'recovery',
+          component: Recovery,
+          beforeEnter: authPageGuard
+        }
+      ]
     },
     {
       path: '/',

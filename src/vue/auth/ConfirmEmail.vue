@@ -1,25 +1,18 @@
 <template>
-  <div class="auth-page md-layout md-alignment-center-center">
-    <md-card>
+  <div>
+    <h2 class="auth-page__form-title">Almost done</h2>
 
-      <md-card-header>
-        <div class="md-title">Almost done</div>
-      </md-card-header>
+    <p class="auth-page__form-descr">A confirmation email was sent to <span class="auth-page__form-descr-info">{{ email }}</span>. Please check your inbox to verify your account.</p>
+    <p class="auth-page__form-descr">If you didn't receive a confirmation email, check your spam folder.</p>
 
-      <md-card-content>
-
-        <p>A confirmation email was sent to <span class="info">{{ email }}</span>. Please check your inbox to verify your account</p>
-        <p>If you didn't receive a confirmation email, check your spam folder.</p>
-
-        <div class="md-layout md-alignment-center-right">
-          <md-button @click="requestNew"
-                    :disabled="isButtonDisabled">
-            Request new email
-          </md-button>
-        </div>
-
-      </md-card-content>
-    </md-card>
+    <div class="auth-page__submit">
+      <button @click="requestNew"
+              class="auth-page__submit-btn"
+              :disabled="isButtonDisabled"
+              v-ripple>
+        Request new email
+      </button>
+    </div>
   </div>
 </template>
 
@@ -37,6 +30,12 @@
       return {
         walletId: '',
         email: ''
+      }
+    },
+
+    beforeCreate () {
+      if (!this.$route.query.walletId || !this.$route.query.email) {
+        this.$router.push('/login')
       }
     },
 

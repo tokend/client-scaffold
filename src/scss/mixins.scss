@@ -15,10 +15,35 @@ $xlarge: 1920px;
   list-style-type: none;
 }
 
-@mixin flex-center () {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+@mixin button () {
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  min-height: 36px;
+  background-color: transparent;
+}
+
+@mixin button-raised () {
+  @include button();
+
+  border-radius: 2px;
+  background-color: $col-md-primary-secondary;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .15);
+  color: #fff;
+}
+
+@mixin button-flat () {
+  @include button();
+
+  color: $col-md-primary;
+  transition: .3s ease-out;
+
+  &:hover {
+    background-color: $gray;
+  }
 }
 
 @mixin center-horizontally () {
