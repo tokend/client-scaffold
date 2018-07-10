@@ -16,8 +16,8 @@ export default {
   kyc_approved_title: 'Account approved',
   kyc_general: 'General',
   kyc_corporate: 'Corporate',
-  kyc_inv_tip: 'Can invest in Sales',
-  kyc_corporate_tip: 'Can create Sales',
+  kyc_inv_tip: 'Can invest in funds',
+  kyc_corporate_tip: 'Can create funds',
   kyc_rejected_title: 'Your verification request is rejected',
   kyc_rejected_msg_html: 'Unfortunately, your account was rejected with reason: <span class="reject-message">%{reason}</span>'
 }
