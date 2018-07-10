@@ -21,6 +21,7 @@
               <component :is="step.component"
                         :schema="step.schema"
                         :activeStep="activeStep"
+                        :finalStep="finalStep"
                         :kyc="kyc"
                         @kyc-update="handleKycUpdate($event, { step, i })"
                         @kyc-edit-end="handleKycEditEnd"
@@ -35,17 +36,19 @@
 
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
-  import steps from '../spec/steps.schema'
+  import steps from '../spec/kyc-steps.syndicate.schema'
   import { i18n } from '../../../../js/i18n'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { accountsService } from '../../../../js/services/accounts.service'
-  import { ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+  import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
   import { confirmAction } from '../../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
-  import { KycCorporateRequestRecord } from '../../../../js/records/kyc_corporate_request.record'
+  import { KycTemplateParser } from '../spec/kyc-template-parser'
+  // import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
+  // import { KycCorporateRequestRecord } from '../../../../js/records/kyc_corporate_request.record'
+  import { VerificationRequestRecord } from '../../../../js/records/verification.record'
 
   const KYC_LEVEL_TO_SET = 0
   export default {
@@ -54,7 +57,8 @@
     mixins: [FormMixin],
     data: _ => ({
       activeStep: steps[0].name,
-      kyc: new KycCorporateRequestRecord(),
+      finalStep: steps[steps.length - 1].name,
+      kyc: null,
       i18n,
       steps,
       ACCOUNT_TYPES
@@ -64,7 +68,8 @@
         this.loadTokens(),
         this.loadBalances()
       ])
-      this.kyc = new KycCorporateRequestRecord(this.accountKycData)
+      // this.kyc = new KycCorporateRequestRecord(this.accountKycData)
+      this.kyc = new VerificationRequestRecord(this.accountKycData)
     },
 
     computed: {
@@ -107,8 +112,10 @@
         try {
           await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
-            details: KycCorporateTemplateParser.fromTemplate(this.kyc),
-            documents: KycCorporateTemplateParser.getSaveableDocuments(this.kyc.documents)
+            details: KycTemplateParser.fromTemplate(this.kyc, userTypes.syndicate),
+            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
+            // details: KycCorporateTemplateParser.fromTemplate(this.kyc),
+            // documents: KycCorporateTemplateParser.getSaveableDocuments(this.kyc.documents)
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
