@@ -144,7 +144,7 @@
         return this.available <= 0
       },
       hardCapExceeded () {
-        return parseFloat(this.form.convertedAmount) > parseFloat(this.sale.hardCap)
+        return parseFloat(this.form.convertedAmount) > parseFloat(add(this.sale.hardCap, 1))
       },
       maxValue () {
         const hardCap = this.sale.hardCaps[this.form.quoteAsset]
