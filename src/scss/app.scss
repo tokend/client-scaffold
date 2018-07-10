@@ -28,7 +28,7 @@ body,
 input, select,
 textarea {
   background: $col-background;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Circular', 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif !important;
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.005em;
@@ -59,6 +59,7 @@ html,body {
     height: auto;
     padding-left: 12px;
     padding-right: 12px;
+    border-left: 0;
 
     & .md-card {
       margin-left: 12px;
@@ -107,6 +108,54 @@ html,body {
     & .md-title {
       padding: 24px;
     }
+  }
+
+  & ul, li {
+    @include list-reset()
+  }
+
+  .app__button {
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    min-height: 36px;
+  }
+
+  .app__button--raised {
+    border-radius: 2px;
+    background-color: $col-md-primary-secondary;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .15);
+    color: #fff;
+  }
+
+  .app__button--flat {
+    color: $col-md-primary;
+    transition: .3s ease-out;
+
+    &:hover {
+      background-color: $gray;
+    }
+  }
+
+  .app__button--uppercase {
+    text-transform: uppercase;
+  }
+
+  .app__layout { display: flex; }
+  .app__layout--center-space-between {
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app__layout--bottom-space-between {
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .app__layout--center-center {
+    align-items: center;
+    justify-content: center;
   }
 
   & .md-tabs-content {

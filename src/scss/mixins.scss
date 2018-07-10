@@ -11,6 +11,16 @@ $xlarge: 1920px;
   top: 50%;
 }
 
+@mixin list-reset () {
+  list-style-type: none;
+}
+
+@mixin flex-center () {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 @mixin center-horizontally () {
   left: 50%;
   transform: translateX(-50%);

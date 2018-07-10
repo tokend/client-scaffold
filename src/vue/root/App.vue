@@ -12,7 +12,7 @@
       </div>
     </md-app-toolbar>
 
-    <md-app-drawer md-permanent="clipped"
+    <md-app-drawer md-permanent="full"
                   :md-active.sync="menuVisible"
                    v-if="isLoggedIn">
       <sidebar v-on:hide-sidebar="hideSidebar"/>
@@ -122,10 +122,6 @@
 
 <style lang="scss">
   @import '../../scss/mixins';
-
-  .toolbar__ctn {
-    box-shadow: 0 2px 4px 0px rgba(0,0,0,0.5) !important
-  }
 
   .md-app {
     height: 100%;

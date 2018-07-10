@@ -1,65 +1,64 @@
 <template>
-  <nav class="container md-layout md-alignment-center-space-between"
-      :class="{ 'container--wide': isLoggedIn }"
-  >
-    <div class="md-layout-item logo md-title"><logotype/></div>
-
-    <div class="navbar__root-links md-layout-item md-layout md-alignment-center-right" v-if="!isLoggedIn">
-      <router-link class="md-button"
-                   tag="button"
-                 v-if="!isLoggedIn"
-                  :to="{ name: 'signup' }"
-      >{{ i18n.lbl_signup() }}</router-link>
-      <router-link class="md-button md-accent"
-                   tag="button"
-                  v-if="!isLoggedIn"
-                  :to="{ name: 'login' }"
-      >{{ i18n.lbl_signin() }}</router-link>
-    </div>
-
-    <div class="md-layout md-layout-item md-alignment-center-right" v-else>
-      <div class="navbar__notif">
-        <md-button class="navbar__open-notif-btn" @click="toggleNotificationCardVisibility">
+  <nav class="navbar app__layout app__layout--center-space-between">
+    <h2 class="navbar__title">{{ $route.meta.pageName }}</h2>
+    <div class="navbar__user app__layout app__layout--bottom-space-between">
+      <div class="navbar__user-picture app__layout app__layout--center-center">
+        {{ userEmail.substr(0, 1).toUpperCase() }}
+      </div>
+      <div>
+        <div class="navbar__user-name" @click="toggleUserCardVisibility">
+          {{ userEmail }}
+          <md-icon class="navbar__user-name-icon" :class="{ 'navbar__user-name-icon--active': isUserCardOpen }">
+            keyboard_arrow_down
+          </md-icon>
+        </div>
+        <div class="navbar__user-notif"
+              :class="{ 'navbar__user-notif--has-value': true }"
+              @click="toggleNotificationCardVisibility">
           <span v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-counter">1</span>
-          <md-icon>notifications</md-icon>
-        </md-button>
-        <md-card class="navbar__notif-card" v-show="isNotificationCardOpen">
-          <md-card-content>
-            <div class="navbar__notif-card-content">
-              <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">Your account functionality is restricted. To get advanced functionality
-go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
-              <p v-else class="navbar__notif-status">No new notifications!</p>
-            </div>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div class="navbar__user">
-        <md-button class="navbar__open-info-btn" @click="toggleUserCardVisibility">
-          <span class="navbar__user-email">{{ userEmail }}</span>
-          <md-icon>account_circle</md-icon>
-        </md-button>
-        <md-card class="navbar__user-card" v-show="isUserCardOpen">
-          <md-card-content class="navbar__user-card-ctn">
-            <div class="navbar__user-card-content">
-              <div class="navbar__user-avatar">
-                {{ userEmail.substr(0, 1).toUpperCase() }}
+          2 notifications
+
+          <md-card class="navbar__notif-card md-elevation-6" :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
+            <md-card-content>
+              <div class="navbar__notif-card-content">
+                <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">
+                  Your account functionality is restricted. To get advanced functionality go to
+                  <a class="notif-link" @click="goKyc">KYC</a>.
+                </p>
+                <p v-else class="navbar__notif-status">No new notifications!</p>
               </div>
-              <div class="navbar__user-info">
-                <p class="navbar__user-name">{{ userEmail }}</p>
-                <p class="navbar__user-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
-                <p class="navbar__user-status navbar__user-status-blocked" v-else>{{ i18n.lbl_userBlocked() }}</p>
-                <md-button class="md-primary md-raised navbar__user-account-btn" @click="goKyc">
-                  {{ i18n.lbl_my_account() }}
-                </md-button>
-              </div>
-            </div>
-            <div class="navbar__user-actions md-layout md-alignment-center-space-between">
-              <md-button class="navbar__user-action-btn" @click="goSettings">{{ i18n.lbl_settings() }}</md-button>
-              <md-button class="navbar__user-action-btn" @click="signOut">{{ i18n.lbl_signout() }}</md-button>
-            </div>
-          </md-card-content>
-        </md-card>
+            </md-card-content>
+          </md-card>
+        </div>
       </div>
+
+      <md-card class="navbar__user-card md-elevation-6" :class="{ 'navbar__user-card--active': isUserCardOpen }">
+        <md-card-content class="navbar__user-card-ctn">
+          <div class="navbar__user-card-content">
+            <div class="navbar__user-avatar">
+              {{ userEmail.substr(0, 1).toUpperCase() }}
+            </div>
+            <div class="navbar__user-info">
+              <p class="navbar__user-card-name">{{ userEmail }}</p>
+              <p class="navbar__user-card-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
+              <p class="navbar__user-card-status navbar__user-card-status--blocked" v-else>{{ i18n.lbl_userBlocked() }}</p>
+              <button v-ripple="'rgba(255, 255, 255, .2)'"
+                      @click="goKyc"
+                      class="app__button app__button--raised navbar__user-card-account-btn">
+                {{ i18n.lbl_my_account() }}
+              </button>
+            </div>
+          </div>
+          <div class="navbar__user-actions app__layout app__layout--center-space-between">
+            <button v-ripple class="app__button app__button--flat" @click="goSettings">
+              {{ i18n.lbl_settings() }}
+            </button>
+            <button v-ripple class="app__button app__button--flat" @click="signOut">
+              {{ i18n.lbl_signout() }}
+            </button>
+          </div>
+        </md-card-content>
+      </md-card>
     </div>
   </nav>
 </template>
@@ -72,12 +71,9 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
   import { attachEventHandler } from '../../js/events/helpers'
   import { vueRoutes } from '../../vue-router/const'
   import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
-  import Logotype from '../app/common/Logotype'
 
   export default {
     name: 'root-navbar',
-
-    components: { Logotype },
 
     data: () => ({
       routes: [],
@@ -144,14 +140,67 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
   @import "../../scss/mixins";
   @import "../../scss/variables";
 
-  nav {
-    min-height: 64px;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .navbar {
     width: 100%;
+    min-height: 121px;
+    background-color: $col-md-background;
+    padding: 0 40px;
+  }
+
+  .navbar__title {
+    color: $col-md-primary;
+  }
+
+  .navbar__user-picture {
+    width: 55px;
+    height: 55px;
+    font-size: 24px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
+    margin-right: 16px;
+  }
+
+  .navbar__user-name {
+    font-family: 'Circular';
+  }
+
+  .navbar__user-name,
+  .navbar__user-name-icon {
+    font-size: 18px;
+    cursor: pointer;
+    color: $col-md-primary !important; // TODO: remove important rule when possible
+  }
+
+  .navbar__user-notif {
+    color: $col-md-primary;
+    padding-left: 12px;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Circular';
+  }
+
+  .navbar__user-notif--has-value {
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: calc(50% - 2px);
+      left: 2px;
+      height: 4px;
+      width: 4px;
+      border-radius: 50%;
+      background-color: #f5645b;
+    }
+  }
+
+  .navbar__user-name-icon {
+    transition: .3s ease-out;
+    will-change: transform;
+
+    &.navbar__user-name-icon--active {
+      transform: rotate(-180deg)
+    }
   }
 
   .navbar__root-links {
@@ -181,7 +230,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
   .navbar__notif-card,
   .navbar__user-card {
     position: absolute;
-    right: 10px;
+    right: 0;
     top: calc(100% + 14px);
     overflow: visible;
     padding: 24px 24px 0 24px;
@@ -213,8 +262,22 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
     }
   }
 
+  .navbar__user-card {
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s ease-out;
+    margin-top: -15px;
+  }
+
+  .navbar__user-card--active {
+    visibility: visible;
+    opacity: 1;
+    margin-top: 0;
+  }
+
   .navbar__open-notif-btn {
     position: relative;
+
     & .navbar__notif-counter {
       position: absolute;
       top: 0;
@@ -229,21 +292,24 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
 
   .navbar__notif-card {
     padding: 0;
-    background-color: #fcf6ed;
     width: 404px;
-    & .navbar__notif-card-content {
-      font-size: 12px;
-    }
-    &:before {
-      border-color: transparent transparent #fcf6ed transparent;
-    }
+    visibility: hidden;
+    opacity: 0;
+    margin-top: -15px;
+    transition: .3s ease-out;
+
+    & .navbar__notif-card-content { font-size: 12px; }
+    &:before { border-color: transparent transparent #fff transparent; }
     @include respond-to-custom(800px) {
       width: calc(100vw - 230px - 24px); // 230px - sidebar width
     }
+    @include respond-to(small) { width: calc(100vw - 24px); }
+  }
 
-    @include respond-to(small) {
-      width: calc(100vw - 24px);
-    }
+  .navbar__notif-card--active {
+    margin: 0;
+    visibility: visible;
+    opacity: 1;
   }
 
   .navbar__user-card-content {
@@ -259,6 +325,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
 
   .navbar__user-actions {
     position: relative;
+    padding: 8px 0;
 
     &:after {
       content: '';
@@ -290,7 +357,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
     }
   }
 
-  .navbar__user-name {
+  .navbar__user-card-name {
     font-size: 16px;
     line-height: 1;
     text-align: left;
@@ -302,7 +369,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
     }
   }
 
-  .navbar__user-status {
+  .navbar__user-card-status {
     font-size: 12px;
     line-height: 1;
     text-align: left;
@@ -314,7 +381,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
     }
   }
 
-  .navbar__user-account-btn {
+  .navbar__user-card-account-btn {
     margin: 0;
 
     @include respond-to(small) {
@@ -343,7 +410,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
     padding: 0 !important;
   }
 
-  .navbar__user-status-blocked {
+  .navbar__user-card-status--blocked {
     color: red;
   }
 </style>
