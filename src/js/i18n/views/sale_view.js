@@ -1,7 +1,9 @@
 export default {
   sale_start_time: 'Start time',
   sale_close_time: 'Close time',
+  sale_soft_cap_with_asset: 'Soft cap (%{asset})',
   sale_soft_cap: 'Soft cap',
+  sale_hard_cap_with_asset: 'Hard cap (%{asset})',
   sale_hard_cap: 'Hard cap',
   sale_base_asset_for_hard_cap: 'Base asset for hard cap',
   sale_base_asset_hard_cap_to_sell: '%{asset} to sell',

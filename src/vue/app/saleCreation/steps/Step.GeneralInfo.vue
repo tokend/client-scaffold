@@ -58,7 +58,7 @@
     <div class="step-row md-layout">
         <input-field v-model="form.softCap"
             v-validate="{
-                required:true, 
+                required:true,
                 amount: true
             }"
             class="step__input-field
@@ -68,13 +68,13 @@
                   md-xsmall-size-100"
             name="sale-soft-cap"
             id="sale-soft-cap"
-            :label="i18n.sale_soft_cap()"
+            :label="i18n.sale_soft_cap_with_asset({ asset: config.DEFAULT_QUOTE_ASSET })"
             :errorMessage="errorMessage('sale-soft-cap')"
         />
         <input-field v-model="form.hardCap"
             v-validate="{
-                required:true, 
-                amount: true, 
+                required:true,
+                amount: true,
                 soft_cap: [form.softCap]
             }"
             class="step__input-field
@@ -84,15 +84,15 @@
                   md-xsmall-size-100"
             name="sale-hard-cap"
             id="sale-hard-cap"
-            :label="i18n.sale_hard_cap()"
+            :label="i18n.sale_hard_cap_with_asset({ asset: config.DEFAULT_QUOTE_ASSET })"
             :errorMessage="errorMessage('sale-hard-cap')"
         />
     </div>
     <div class="step-row md-layout step-row__base-asset-input">
       <input-field v-model="form.baseAssetForHardCap"
                   v-validate="{
-                      required: true, 
-                      amount: true, 
+                      required: true,
+                      amount: true,
                       max_issuance: [avalaibleForIssuance, form.baseAsset]
                   }"
                   class="step__input-field
@@ -117,7 +117,7 @@
           {{ token.code }}</md-switch>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
+      <md-button type="submit" class="md-primary md-flat step__submit-btn"
       :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>
@@ -135,6 +135,8 @@
   import { vuexTypes } from '../../../../vuex/types'
   import { mapGetters } from 'vuex'
   import _pick from 'lodash/pick'
+  import config from '../../../../config'
+
   export default {
     name: 'StepGeneralInfo',
     mixins: [StepMixin],
@@ -153,6 +155,7 @@
         quoteAssets: []
       },
       i18n,
+      config,
       documentTypes,
       ASSET_POLICIES,
       uploadVideo: false
