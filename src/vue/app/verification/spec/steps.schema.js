@@ -6,7 +6,7 @@ import step5Schema from './syndicate-specs/step-5.residence.schema'
 import step6Schema from './syndicate-specs/step-6.address-proof.schema'
 import step7Schema from './syndicate-specs/step-7.documents.schema'
 
-import FinalStep from './steps/Step.Submit'
+import FinalStep from './steps/Step.Syndicate-submit'
 import DefaultStep from './steps/Step.Default'
 import { i18n } from '../../../../js/i18n'
 

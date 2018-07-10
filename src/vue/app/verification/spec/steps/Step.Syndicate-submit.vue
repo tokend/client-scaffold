@@ -92,7 +92,7 @@
         immediate: true
       },
       activeStep (value) {
-        if (value === 'step-8') {
+        if (value === this.finalStep) {
           this.stubData()
         }
       }

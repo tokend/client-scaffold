@@ -21,6 +21,7 @@
                        :type="item.type"
                        :key='item.id'
                        :errorMessage="errorMessage(item.name)"
+                       :disabled="accountState === ACCOUNT_STATES.pending"
           />
           <textarea-field v-if="item.field === 'textarea'"
                           v-model="form[item.model]"
@@ -34,6 +35,7 @@
                           :key='item.id'
                           :maxlength="item.maxlength"
                           :errorMessage="errorMessage(item.name)"
+                          :disabled="accountState === ACCOUNT_STATES.pending"
           />
           <file-field v-if="item.field === 'file'"
                       v-model="documents[item.type]"
@@ -44,6 +46,7 @@
                       :type="item.type"
                       :id="item.id"
                       :key='item.id'
+                      :disabled="accountState === ACCOUNT_STATES.pending"
           />
 
           <select-field v-if="item.field === 'select'"
@@ -52,7 +55,8 @@
                       :label="item.label"
                       v-model="form[item.model]"
                       :values="values[item.values]"
-                      :key='item.id'/>
+                      :key='item.id'
+                      :disabled="accountState === ACCOUNT_STATES.pending"/>
 
           <date-field v-if="item.field === 'date'"
                          v-model="form[item.model]"
@@ -61,16 +65,25 @@
                          :id="item.id"
                          :required="item.required"
                          :label="item.label"
+                         :disableAfter="item.disableAfter"
                          :disableBefore="item.disableBefore"
                          :key='item.id'
                          :errorMessage="errorMessage(item.name)"
+                         :disabled="accountState === ACCOUNT_STATES.pending"
           />
 
         </template>
       </div>
     </template>
     <md-card-actions class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn" :disabled="isPending">
+      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
+              :disabled="isPending || accountState === ACCOUNT_STATES.pending"
+              v-if="finished">
+        {{ i18n.lbl_submit() }}
+      </md-button>
+      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
+              :disabled="isPending"
+              v-else>
         {{ i18n.sale_next_step() }}
       </md-button>
     </md-card-actions>
@@ -82,17 +95,25 @@
   import _pick from 'lodash/pick'
   import { ErrorHandler } from '../../../../../js/errors/error_handler'
   import { commonEvents } from '../../../../../js/events/common_events'
+  import { ACCOUNT_STATES } from '../../../../../js/const/const'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../vuex/types'
   export default {
     name: 'Step-default',
     mixins: [ StepMixin ],
     props: ['schema'],
-
+    data: _ => ({
+      finished: false,
+      ACCOUNT_STATES
+    }),
+    created () {
+      this.finished = (this.activeStep === this.finalStep)
+    },
     computed: {
       ...mapGetters([
         vuexTypes.accountKycData,
-        vuexTypes.accountKycDocuments
+        vuexTypes.accountKycDocuments,
+        vuexTypes.accountState
       ])
     },
 
@@ -126,6 +147,9 @@
       kyc: {
         handler: 'stubData',
         immediate: true
+      },
+      activeStep (value) {
+        this.finished = (value === this.finalStep)
       }
     }
   }
