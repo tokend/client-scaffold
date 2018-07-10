@@ -133,6 +133,7 @@ export default {
   lbl_updated_at: 'Updated at',
   lbl_update: 'Update',
   lbl_reference: 'Reference',
+  lbl_view_sale: 'View open fund',
   lbl_create_issuance: 'Create issuance',
   lbl_sender_fee: 'Sender fee',
   lbl_recipient_fee: 'Recipient fee',
