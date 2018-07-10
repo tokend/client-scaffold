@@ -158,6 +158,7 @@ export class SalesService extends Service {
       .reviewableRequestsHelper()
       .sales()
       .forBaseAsset(tokenCode)
+      .forRequestor(this._accountId)
       .order('desc')
       .limit(config.TRANSACTIONS_PER_PAGE)
       .callWithSignature(this._keypair)
