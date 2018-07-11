@@ -57,6 +57,9 @@ import Sales from '../vue/app/sales/Sales.Entry'
 import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
 
+import SalesOwned from '../vue/app/salesOwned/SalesOwned.Entry'
+import SalesOwnedIndex from '../vue/app/salesOwned/SalesOwned.Index'
+
 import PreissuanceUpload from '../vue/app/preissuanceUpload/PreissuanceUpload.Entry'
 import PreissuanceUploadIndex from '../vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
 
@@ -339,6 +342,20 @@ const router = new Router({
               name: 'sales.sale-details',
               component: SalesDetails,
               props: true
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.sales,
+          name: 'app.my-sales',
+          path: '/my-sales',
+          component: SalesOwned,
+          redirect: { path: '/my-sales/index' },
+          children: [
+            {
+              path: '/my-sales/index',
+              name: 'my-sales.index',
+              component: SalesOwnedIndex
             }
           ]
         },
