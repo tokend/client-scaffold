@@ -70,7 +70,8 @@ const actions = {
 const getters = {
   sales: state => state.sales,
   // saleIds: _ => StateHelper.getSaleIdWhereUSerParticipated(),
-  starredSales: state => state.starred
+  starredSales: state => state.starred,
+  salesOwned: (state, getters) => state.sales.filter(sale => sale.owner === getters.accountId)
 }
 
 export default {

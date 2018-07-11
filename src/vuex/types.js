@@ -165,8 +165,9 @@ const getters = {
 
   // sales:
   sales: 'sales',
-  saleIds: 'saleIds',
+  salesOwned: 'salesOwned',
   starredSales: 'starredSales',
+  saleIds: 'saleIds',
 
   // offers:
   saleOffers: 'saleOffers'
