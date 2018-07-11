@@ -196,4 +196,8 @@
       color: $green;
     }
   }
+
+  .verification__card--rejected {
+    align-self: center;
+  }
 </style>
