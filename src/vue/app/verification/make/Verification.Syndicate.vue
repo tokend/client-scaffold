@@ -46,8 +46,6 @@
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { KycTemplateParser } from '../spec/kyc-template-parser'
-  // import { KycCorporateTemplateParser } from '../spec/kyc-corporate-template-parser'
-  // import { KycCorporateRequestRecord } from '../../../../js/records/kyc_corporate_request.record'
   import { VerificationRequestRecord } from '../../../../js/records/verification.record'
 
   const KYC_LEVEL_TO_SET = 0
@@ -68,7 +66,6 @@
         this.loadTokens(),
         this.loadBalances()
       ])
-      // this.kyc = new KycCorporateRequestRecord(this.accountKycData)
       this.kyc = new VerificationRequestRecord(this.accountKycData)
     },
 
@@ -114,8 +111,6 @@
           const blobId = await this.updateKycData({
             details: KycTemplateParser.fromTemplate(this.kyc, userTypes.syndicate),
             documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
-            // details: KycCorporateTemplateParser.fromTemplate(this.kyc),
-            // documents: KycCorporateTemplateParser.getSaveableDocuments(this.kyc.documents)
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
