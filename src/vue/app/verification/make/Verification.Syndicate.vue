@@ -46,7 +46,6 @@
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { KycTemplateParser } from '../spec/kyc-template-parser'
-  import { VerificationRequestRecord } from '../../../../js/records/verification.record'
 
   const KYC_LEVEL_TO_SET = 0
   export default {
@@ -66,7 +65,7 @@
         this.loadTokens(),
         this.loadBalances()
       ])
-      this.kyc = new VerificationRequestRecord(this.accountKycData)
+      this.kyc = KycTemplateParser.fromTemplate(this.accountKycData, userTypes.syndicate)
     },
 
     computed: {

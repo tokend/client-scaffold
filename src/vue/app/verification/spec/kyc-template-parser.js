@@ -1,5 +1,5 @@
 import { userTypes } from '../../../../js/const/const'
-
+import { wrapDocuments } from '../../../../js/helpers/DocumentContainer'
 export class KycTemplateParser {
   static fromTemplate (template, type) {
     switch (type) {
@@ -14,7 +14,8 @@ export class KycTemplateParser {
           state: template.address.state,
           postal_code: template.address.postal_code,
           id_expiration_date: template.id_expiration_date,
-          date_of_birth: template.date_of_birth
+          date_of_birth: template.date_of_birth,
+          documents: wrapDocuments(template.documents)
         }
       case userTypes.syndicate:
         return {
@@ -24,7 +25,8 @@ export class KycTemplateParser {
           industry: template.industry,
           found_date: template.found_date,
           team_size: template.team_size,
-          homepage: template.homepage
+          homepage: template.homepage,
+          documents: wrapDocuments(template.documents)
         }
     }
   }

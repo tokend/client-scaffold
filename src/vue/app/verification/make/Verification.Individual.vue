@@ -127,8 +127,6 @@
   import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
   import { confirmAction } from '../../../../js/modals/confirmation_message'
 
-  import { VerificationRequestRecord } from '../../../../js/records/verification.record'
-
   const KYC_LEVEL_TO_SET = 0
 
   export default {
@@ -146,7 +144,7 @@
       userTypes
     }),
     created () {
-      this.kyc = new VerificationRequestRecord(this.accountKycData)
+      this.kyc = KycTemplateParser.fromTemplate(this.accountKycData, userTypes.general)
     },
     computed: {
       ...mapGetters([

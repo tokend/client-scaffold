@@ -13,7 +13,6 @@ import { AssetPairRecord } from './asset_pair.record'
 import { TradeRecord } from './trade.record'
 import { TransferV2Record } from './transferV2.record'
 import { SaleCreationRecord } from './sale_creation.record'
-import { VerificationRequestRecord } from './verification.record'
 
 export class RecordFactory {
   static createTransferRecord () {
@@ -74,9 +73,5 @@ export class RecordFactory {
 
   static createPreIssuanceRequestRecord () {
     return new PreIssuanceRequestRecord(...arguments)
-  }
-
-  static createVerificationRequestRecord () {
-    return new VerificationRequestRecord(...arguments)
   }
 }
