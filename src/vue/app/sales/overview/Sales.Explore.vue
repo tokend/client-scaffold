@@ -15,14 +15,6 @@
         </router-link>
       </div>
     </template>
-    <template v-if="sales.length">
-      <div class="btn-outer btn-outer--center btn-outer--no-margin"
-    >
-        <button class="more-btn material material--flat"
-                :disabled="isPending"
-                @click="loadMore">More</button>
-      </div>
-    </template>
     <template v-if="sales.length === 0 && isLoaded">
       <div class="sales-overview__no-sales-found-msg md-layout-item md-size-95 md-alignment-center-center">
         <div class="icon">
