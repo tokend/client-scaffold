@@ -19,7 +19,7 @@
 
     <div class="md-layout md-layout-item md-alignment-center-right" v-else>
       <div class="navbar__notif">
-        <md-button class="navbar__open-notif-btn" @click="toggleNotificationCardVisibility">
+        <md-button class="navbar__open-notif-btn" @click.stop="toggleNotificationCardVisibility">
           <span v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-counter">1</span>
           <md-icon>notifications</md-icon>
         </md-button>
@@ -34,7 +34,7 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
         </md-card>
       </div>
       <div class="navbar__user">
-        <md-button class="navbar__open-info-btn" @click="toggleUserCardVisibility">
+        <md-button class="navbar__open-info-btn" @click.stop="toggleUserCardVisibility">
           <span class="navbar__user-email">{{ userEmail }}</span>
           <md-icon>account_circle</md-icon>
         </md-button>
@@ -114,15 +114,26 @@ go to <a class="notif-link" @click="goKyc">KYC</a>.</p>
       toggleUserCardVisibility () {
         this.isUserCardOpen = !this.isUserCardOpen
         this.isNotificationCardOpen = false
+        this.detectOpenedModals()
       },
 
       toggleNotificationCardVisibility () {
         this.isNotificationCardOpen = !this.isNotificationCardOpen
         this.isUserCardOpen = false
+        this.detectOpenedModals()
         if (!this.hasSeenNotif) {
           localStorage.setItem('seen', 'User saw it')
           this.hasSeenNotif = true
         }
+      },
+      detectOpenedModals () {
+        const listener = (e) => {
+          if (e.target.closest('.navbar__notif-card') || e.target.closest('.navbar__user-card')) return
+          this.isUserCardOpen = false
+          this.isNotificationCardOpen = false
+          document.removeEventListener('click', listener)
+        }
+        document.addEventListener('click', listener)
       },
       signOut () {
         this.LOG_OUT()
