@@ -113,7 +113,7 @@
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
-          EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
           console.error(error)
           ErrorHandler.processUnexpected(error)
