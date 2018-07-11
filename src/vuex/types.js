@@ -36,6 +36,7 @@ const mutations = {
   SET_ALL_TOKENS: 'SET_ALL_TOKENS',
 
   // sales:
+  SET_SALES: 'SET_SALES',
   UPDATE_SALE_REQUEST_LIST: 'UPDATE_SALE_REQUEST_LIST',
   UPDATE_SALE_REQUEST_LIST_ITEM: 'UPDATE_SALE_REQUEST_LIST_ITEM',
   SET_SALE_REQUEST_LIST_INITIALIZED: 'SET_SALE_REQUEST_LIST_INITIALIZED'
@@ -164,7 +165,6 @@ const getters = {
 
   // sales:
   sales: 'sales',
-  isSalesLoaded: 'isSalesLoaded',
   saleIds: 'saleIds',
   starredSales: 'starredSales',
 
