@@ -152,8 +152,9 @@
         const lastOfferAmount = this.offer ? this.offer.quoteAmount : 0
         const balance = this.accountBalances[this.form.quoteAsset].balance
         const totalBalance = add(balance, (lastOfferAmount || 0))
-        if (parseFloat(totalBalance) > parseFloat(hardCap)) {
-          return add(subtract(hardCap, currentCap), lastOfferAmount)
+        const sub = add(subtract(hardCap, currentCap), lastOfferAmount)
+        if (parseFloat(totalBalance) > parseFloat(sub)) {
+          return sub
         } else {
           return totalBalance
         }
@@ -275,9 +276,12 @@
   }
 
   .asset-wrp,
-  .invest__input-quote-wrp,
-  .get__input-quote-wrp {
+  .invest__input-quote-wrp {
     width: 40%;
+  }
+  
+  .get__input-quote-wrp {
+    width: 35%;
   }
 
   .invest__input-quote-wrp {

@@ -44,6 +44,8 @@ export default {
   sale_disable_invest_canceled_sale: 'Canceled funds are not investable',
   sale_state: 'Fund state',
   sale_not_available_exp: 'Fund creation is available only for corporate users, complete verification to become one.',
+  sale_nothing_found: 'Nothing found',
+  sale_no_created_sales: 'You have not created any sales yet.',
   sale_create_request_success: 'Information uploaded. Now please wait for approval',
   sale_offer_overlap: 'Creation of new offer will update the old one',
   sale_max_invest: 'Set maximum investable amount',

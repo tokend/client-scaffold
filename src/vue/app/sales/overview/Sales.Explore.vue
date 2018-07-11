@@ -3,7 +3,7 @@
     <searcher
           class="sales-overview__searcher"
           @search-input="loadFilteredSales"
-    /> 
+    />
     <template v-if="sales.length > 0">
       <div class="md-layout md-gutter md-layout-item md-size-90 md-alignment-center-space-around sales-overview__sale-overview-inner">
         <router-link v-for="sale in sales"
@@ -13,14 +13,6 @@
                     class="sales-overview__card-wrapper">
           <sale-card class="sales-overview__card" :sale="sale"/>
         </router-link>
-      </div>
-    </template>
-    <template v-if="sales.length && !isSalesLoaded">
-      <div class="btn-outer btn-outer--center btn-outer--no-margin"
-    >
-        <button class="more-btn material material--flat"
-                :disabled="isPending"
-                @click="loadMore">More</button>
       </div>
     </template>
     <template v-if="sales.length === 0 && isLoaded">
@@ -70,14 +62,12 @@
     },
     computed: {
       ...mapGetters([
-        vuexTypes.isSalesLoaded,
         vuexTypes.sales
       ])
     },
     methods: {
       ...mapActions({
-        loadSales: vuexTypes.GET_SALES,
-        loadNext: vuexTypes.NEXT_SALES
+        loadSales: vuexTypes.GET_SALES
       }),
       loadFilteredSales (filters) {
         if (filters) {
@@ -103,7 +93,7 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
-  
+
   .explore-sales {
     display: flex;
     flex-direction: column;

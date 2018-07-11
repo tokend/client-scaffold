@@ -27,6 +27,7 @@ export default {
   lbl_create_sale: 'Create fund',
   lbl_explore_tokens: 'Explore tokens',
   lbl_explore_sales: 'Explore funds',
+  lbl_my_funds: 'My funds',
   lbl_history: 'History',
   lbl_cancel: 'Cancel',
   lbl_wallet: 'wallet',
