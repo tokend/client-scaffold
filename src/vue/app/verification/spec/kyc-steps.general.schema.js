@@ -1,8 +1,8 @@
-import step1Schema from './general-specs/step-1.general.schema'
-import step2Schema from './general-specs/step-2.address.schema'
+import step1Schema from './general/step-1.general.schema'
+import step2Schema from './general/step-2.address.schema'
 
-import FinalStep from './steps/Step.General-submit'
-import DefaultStep from './steps/Step.Default'
+import FinalStep from '../steps/general/Step.Selfie'
+import DefaultStep from '../steps/Step.Default'
 import { i18n } from '../../../../js/i18n'
 
 export default [

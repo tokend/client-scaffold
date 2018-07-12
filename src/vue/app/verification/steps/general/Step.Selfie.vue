@@ -39,12 +39,12 @@
 </template>
 
 <script>
-  import StepMixin from '../step.mixin'
+  import StepMixin from '../../spec/step.mixin'
   import FormMixin from '../../../../common/mixins/form.mixin'
   import { ASSET_POLICIES, ACCOUNT_STATES, documentTypes } from '../../../../../js/const/const'
   import { commonEvents } from '../../../../../js/events/common_events'
   import { ErrorHandler } from '../../../../../js/errors/error_handler'
-  import { i18n } from '../../../../../js/i18n'
+  import { i18n } from '../../../../../js/i18n/index'
   import _cloneDeep from 'lodash/cloneDeep'
   import { vuexTypes } from '../../../../../vuex/types'
   import { mapGetters } from 'vuex'
@@ -61,7 +61,7 @@
       ASSET_POLICIES,
       ACCOUNT_STATES
     }),
-  
+
     computed: {
       ...mapGetters([
         vuexTypes.accountState,

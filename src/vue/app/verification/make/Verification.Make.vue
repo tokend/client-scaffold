@@ -70,7 +70,7 @@
   import SyndicateForm from './Verification.Syndicate'
   import StateBanner from './Verification.StateBanner'
   import SyndicateBanner from './Verification.SyndicateBanner'
-  import UserTypeSelector from './components/Verification.UserTypeSelector'
+  import UserTypeSelector from './Verification.Selector'
 
   import { i18n } from '../../../../js/i18n'
   import { mapGetters, mapActions } from 'vuex'

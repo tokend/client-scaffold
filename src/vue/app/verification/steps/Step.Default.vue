@@ -76,12 +76,12 @@
       </div>
     </template>
     <md-card-actions class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
+      <md-button type="submit" class="md-primary md-flat step__submit-btn"
               :disabled="isPending || accountState === ACCOUNT_STATES.pending"
               v-if="finished">
         {{ i18n.lbl_submit() }}
       </md-button>
-      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
+      <md-button type="submit" class="md-primary md-flat step__submit-btn"
               :disabled="isPending"
               v-else>
         {{ i18n.sale_next_step() }}
@@ -91,13 +91,13 @@
 </template>
 
 <script>
-  import StepMixin from '../step.mixin'
+  import StepMixin from '../spec/step.mixin'
   import _pick from 'lodash/pick'
-  import { ErrorHandler } from '../../../../../js/errors/error_handler'
-  import { commonEvents } from '../../../../../js/events/common_events'
-  import { ACCOUNT_STATES } from '../../../../../js/const/const'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { commonEvents } from '../../../../js/events/common_events'
+  import { ACCOUNT_STATES } from '../../../../js/const/const'
   import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../../vuex/types'
+  import { vuexTypes } from '../../../../vuex/types'
   export default {
     name: 'Step-default',
     mixins: [ StepMixin ],

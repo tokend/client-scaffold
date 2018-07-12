@@ -1,6 +1,6 @@
-import step1Schema from './syndicate-specs/step-1.details.schema'
+import step1Schema from './syndicate/step-1.details.schema'
 
-import DefaultStep from './steps/Step.Default'
+import DefaultStep from '../steps/Step.Default'
 import { i18n } from '../../../../js/i18n'
 
 export default [
