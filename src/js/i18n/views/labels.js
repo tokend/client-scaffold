@@ -21,6 +21,7 @@ export default {
   lbl_deposit: 'Deposit',
   lbl_withdraw: 'Withdraw',
   lbl_send: 'Send',
+  lbl_send_mass: 'Mass transfer',
   lbl_tokens: 'Tokens',
   lbl_trade: 'Trade',
   lbl_create_token: 'Create token',

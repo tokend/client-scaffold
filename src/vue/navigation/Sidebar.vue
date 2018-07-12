@@ -21,6 +21,11 @@
         <span class="md-list-item-text">{{ i18n.lbl_send() }}</span>
       </md-list-item>
 
+      <md-list-item @click="closeSidebar" to="/mass-transfers" v-if="config.FEATURE_FLAGS.massTransfers">
+        <md-icon>people</md-icon>
+        <span class="md-list-item-text">{{ i18n.lbl_send_mass() }}</span>
+      </md-list-item>
+
       <md-list-item @click="closeSidebar" to="/tokens" v-if="config.FEATURE_FLAGS.tokens">
         <md-icon>toll</md-icon>
         <span class="md-list-item-text">{{ i18n.lbl_explore_tokens() }}</span>
