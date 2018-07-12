@@ -1,18 +1,30 @@
 <template>
-  <div class="mass-transfer">
-    <file-field class="mass-transfer__upload-input"
-                v-model="documents.payment"
-                label="Select File(s)"
-                accept=".csv"
-                id="preissuance-field"
-    />
-    <ul class="mass-transfer__list" v-if="payments.length">
-      <p>{{ i18n.lbl_to_upload() }}</p>
+  <div class="md-alignment md-alignment-center-center">
+    <md-card class="mass-transfer
+                    md-layout-item
+                    md-size-50
+                    md-medium-size-65
+                    md-small-size-95
+                    md-xsmall-size-100">
+      <md-card-header>
+        <div class="md-title">{{ i18n.tr_create_mass() }}</div>
+      </md-card-header>
+      <md-card-content>
+        <file-field class="mass-transfer__upload-input"
+                    v-model="documents.payment"
+                    label="Select File(s)"
+                    accept=".csv"
+                    id="preissuance-field"
+        />
+        <ul class="mass-transfer__list" v-if="payments.length">
+          <p>{{ i18n.lbl_to_upload() }}</p>
 
-      <li v-for="(item, index) in payments" :key="index">
-        {{index + 1}}. {{item.account}} {{i18n.c(item.amount)}} {{item.asset}} {{item.email}} {{item.id}}
-      </li>
-    </ul>
+          <li v-for="(item, index) in payments" :key="index">
+            {{index + 1}}. {{item.account}} {{i18n.c(item.amount)}} {{item.asset}} {{item.email}} {{item.id}}
+          </li>
+        </ul>
+      </md-card-content>
+    </md-card>
   </div>
 </template>
 
@@ -48,7 +60,6 @@
             value.email = value.account
           }
         })
-        console.log(payments)
         this.payments = payments
       }
     },

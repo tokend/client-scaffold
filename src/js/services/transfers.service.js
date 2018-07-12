@@ -14,12 +14,9 @@ export class TransferService extends Service {
    * @param {string} opts.destinationPercentFee
    * @param {string} opts.destinationFeeAsset
    * @param {string} opts.sourceBalanceId
-   * @param {string} opts.destinationBalanceId
    * @param {string} opts.subject
    * @param {boolean} opts.feeFromSource
-   * @return {Object} transferBuilders
-   * @return {Function} transferBuilders.V1
-   * @return {Function} transferBuilders.V2
+   * @returns {TransactionBuilder}
    */
   createTransfer (opts) {
     const operation = PaymentV2Builder.paymentV2(_opts())
@@ -47,6 +44,41 @@ export class TransferService extends Service {
           sourcePaysForDest: opts.feeFromSource
         },
         subject: opts.subject
+      }
+    }
+  }
+
+  /**
+   * @param {array} transfers
+   * @param {object} transfers.transfer
+   * @param {object} transfers.transfer.sourceBalanceId
+   * @param {object} transfers.transfer.destinationAccountId
+   * @param {object} transfers.transfer.amount
+   * @param {object} transfers.transfer.feeData
+   * @param {object} transfers.transfer.feeData.sourceFee
+   * @param {object} transfers.transfer.feeData.sourceFee.maxPaymentFee
+   * @param {object} transfers.transfer.feeData.sourceFee.fixedFee
+   * @param {object} transfers.transfer.feeData.sourceFee.feeAsset
+   * @param {object} transfers.transfer.feeData.destinationFee
+   * @param {object} transfers.transfer.feeData.destinationFee.maxPaymentFee
+   * @param {object} transfers.transfer.feeData.destinationFee.fixedFee
+   * @param {object} transfers.transfer.feeData.destinationFee.feeAsset
+   * @param {object} transfers.transfer.sourcePaysForDest
+   * @param {object} transfers.transfer.subject
+   * @returns {TransactionBuilder}
+   */
+  createMassTransfer (transfers) {
+    const operations = transfers.map(transfer => PaymentV2Builder.paymentV2(_opts(transfer)))
+
+    return this._operationBuilder
+      .operation()
+      .addMany(operations)
+      .submit(this._accountId, this._keypair)
+
+    function _opts (transfer) {
+      return {
+        ...transfer,
+        destination: transfer.destinationAccountId
       }
     }
   }

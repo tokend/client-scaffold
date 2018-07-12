@@ -21,6 +21,12 @@ export class OperationBuilder {
     return this
   }
 
+  addMany (operations) {
+    if (!operations) return this
+    this.operations = operations
+    return this
+  }
+
   submit (source, keypair) {
     const server = initHorizonServer()
     const operations = this.operations
