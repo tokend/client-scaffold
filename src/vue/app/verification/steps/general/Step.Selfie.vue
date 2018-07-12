@@ -50,7 +50,7 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'StepCreateToken',
+    name: 'StepSelfie',
     mixins: [StepMixin, FormMixin],
     data: _ => ({
       isDialogOpened: false,
