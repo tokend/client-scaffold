@@ -1,58 +1,63 @@
 <template>
-  <md-card class="info-widget">
-    <md-card-header class="info-widget__header">
-      <div class="md-title">{{ i18n.dash_activity({ asset: currentAsset || 'assets' }) }}</div>
-    </md-card-header>
-    <md-card-content class="info-widget__asset">
-      <md-list v-if="list.length > 0" class="md-double-line info-widget__asset-list md-layout">
-        <md-list-item :class="['info-widget__asset-item',
-                              tx.state === 'rejected' ||
-                              tx.state === 'failed' ? 'info-widget__asset-item--opacity': ''
-                      ]"
-                      v-for="(tx, i) in list"
-                      :key="i"
-                      v-if="i < transactionsToShow"
-                      @click="makeDialogIsShow(list[i])">
-          <div class="info-widget__asset-item-left  md-layout-item">
-            <div class="info-widget__asset-name"> {{ tx.name }} </div>
-            <div class="info-widget__asset-counterparty">
-              {{ tx.direction === 'in' ? 'from' : 'to' }} {{ tx.counterparty }}
-            </div>
-            <div class="info-widget__asset-date"> {{ tx.date }} </div>
+  <div class="info-widget">
+    <template v-if="list.length">
+      <div class="info-widget__title"> {{ i18n.dash_activity() }} </div>
+      <div class="info-widget__list-wrapper">
+        <div class="info-widget__list" v-table-scroll-shadow>
+          <div class="info-widget__list-header">
+            <div class="info-widget__list-header-item info-widget__list-header-item--date">Date</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--type">Transaction Type</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--asset">Asset</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--amount">Amount</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--counterparty">Counterparty</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--status">Status</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--btn"></div>
           </div>
-          <div class="info-widget__asset-item-right  md-layout-item">
-            <div :class="
-              ['info-widget__asset-amount',
-              'info-widget__asset-amount--' + tx.direction,
-              tx.state === 'pending' ? 'info-widget__asset-amount--pending' : '',
-              tx.state === 'rejected' || tx.state === 'failed' ? 'info-widget__asset-amount--failed' : '']
-            ">
-              {{ tx.direction === 'in' ? '+' : '-' }}{{ i18n.c(tx.amount) }} {{ tx.asset }}
+          <div class="info-widget__list-body">
+            <div class="info-widget__list-body-elem"
+                v-for="(tx, i) in list"
+                v-if="i < transactionsToShow"
+                :key="`activity-item-${i}`">
+              <div class="info-widget__list-body-row">
+                <div :title="tx.date" class="info-widget__list-body-item info-widget__list-body-item--date">
+                  {{ tx.date }}
+                </div>
+                <div :title="tx.name" class="info-widget__list-body-item info-widget__list-body-item--type">
+                  {{ tx.name }}
+                </div>
+                <div :title="tx.asset" class="info-widget__list-body-item info-widget__list-body-item--asset">
+                  {{ tx.asset }}
+                </div>
+                <div :title="tx.direction" class="info-widget__list-body-item info-widget__list-body-item--amount">
+                  {{ tx.direction === 'in' ? '+' : '-' }}{{ tx.amount }}
+                </div>
+                <div :title="tx.counterparty" class="info-widget__list-body-item info-widget__list-body-item--counterparty">
+                  {{ tx.counterparty }}
+                </div>
+                <div :title="tx.state" class="info-widget__list-body-item info-widget__list-body-item--status">
+                  {{ tx.state === 'confirm' ? 'success' : tx.state }}
+                </div>
+                <div class="info-widget__list-body-item info-widget__list-body-item--btn">
+                  <button class="info-widget__list-body-item-btn" @click="makeDialogIsShow(tx)">
+                    {{ i18n.lbl_view() }}
+                  </button>
+                </div>
+              </div>
             </div>
-            <!--<div class="info-widget__asset-converted">-->
-              <!--{{ i18n.cc(convertAmount(tx.amount)) }} {{ DEFAULT_CONVERSION_ASSET }}-->
-            <!--</div>-->
-            <div :class="'info-widget__asset-state info-widget__asset-state--' + tx.state">
-              {{ tx.state === 'confirm' ? 'success' : tx.state }}
-            </div>
+            <info-dialog v-on:close-dialog="closeDialog"
+                         v-if="showDialog"
+                         :dialogValues="dialogValues"
+                         :showDialog="showDialog"/>
           </div>
-        </md-list-item>
-      </md-list>
-      <div class="app__no-data-msg" v-else>
-        <md-icon class="md-size-4x">trending_up</md-icon>
-        <h2>{{ i18n.th_no_transaction_history() }}</h2>
-        <p>{{ i18n.th_here_will_be_the_list() }}</p>
+        </div>
       </div>
-    </md-card-content>
-
-    <md-card-actions class="info-widget__actions">
-      <md-button :to="'/history/index/' + currentAsset" class="md-primary">{{ i18n.lbl_view_more() }}</md-button>
-    </md-card-actions>
-    <info-dialog v-on:close-dialog="closeDialog"
-                  v-if="showDialog"
-                  :dialogValues="dialogValues"
-                  :showDialog="showDialog"/>
-  </md-card>
+    </template>
+    <template v-else>
+      <no-data-message icon-name="trending_up"
+                       :msg-title="i18n.th_no_transaction_history()"
+                       :msg-message="i18n.th_here_will_be_the_list()"/>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -62,6 +67,7 @@
   import { PricesHelper } from '../../../../vuex/helpers/prices.helper'
   import { DEFAULT_CONVERSION_ASSET } from '../../../../js/const/configs.const'
   import { i18n } from '../../../../js/i18n'
+  import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
   import get from 'lodash/get'
 
@@ -69,9 +75,12 @@
 
   export default {
     name: 'info-widget',
-    components: { InfoDialog },
+    components: {
+      InfoDialog,
+      NoDataMessage
+    },
     data: _ => ({
-      transactionsToShow: 3,
+      transactionsToShow: 10,
       showDialog: false,
       dialogValues: {},
       i18n,
@@ -98,8 +107,6 @@
           }, [])
       }
     },
-    mounted () {
-    },
     methods: {
       ...mapActions({
         loadList: vuexTypes.GET_TX_LIST
@@ -125,112 +132,147 @@
 
 <style lang="scss" scoped>
 
-  @import '../../../../scss/variables.scss';
-  @import '../../../../scss/mixins.scss';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
-  .info-widget {
-    max-width: 560px;
-    width: 100%;
+  .info-widget__list {
+    @include respond-to-custom(1300px) {
+      overflow-x: scroll;
+    }
+  }
+
+  .info-widget__title {
+    color: $col-md-primary;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    margin-top: 72px;
+  }
+
+  .info-widget__list-header,
+  .info-widget__list-body-row {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
 
-    @include respond-to(medium) {
-      max-width: inherit;
+  .info-widget__list-body-elem {
+    background-color: #fff;
+    min-width: 970px;
+    @include box-shadow();
+
+    &:not(:last-child) {
+      margin-bottom: 6px;
     }
   }
 
-  .info-widget__asset-item--opacity {
-    opacity: .7;
-  }
-
-  .info-widget__actions {
-    margin-top: auto;
-  }
-
-  .info-widget__asset-item-left {
-    @include respond-to(xsmall) {
-      flex: none;
-      width: 130px;
-    }
-  }
-
-  .info-widget__asset-item-right {
-    text-align: right;
-
-    @include respond-to(xsmall) {
-      flex: none;
-      width: calc(100% - 130px);
-    }
-  }
-
-  .info-widget__header {
-    padding-bottom: 48px;
-  }
-
-  .info-widget__asset {
-    padding: 0;
-  }
-
-  .info-widget__asset-list {
-    padding: 0;
-
-    &:not(:empty) {
-      margin-bottom: 30px;
-    }
-  }
-
-  .info-widget__asset-item {
-    border-bottom: 1px solid #e8e8e8;
-
-    &:first-child {
-      border-top: 1px solid #e8e8e8;
-    }
-  }
-
-  .info-widget__asset-name {
-    letter-spacing: 0.1px;
-  }
-
-  .info-widget__asset-name,
-  .info-widget__asset-amount {
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
-  .info-widget__asset-counterparty,
-  .info-widget__asset-converted {
-    font-size: $fs-tip-smaller;
-    letter-spacing: 0.1px;
-    color: $col-unfocused;
-    margin-bottom: 12px;
-  }
-
-  .info-widget__asset-counterparty {
+  .info-widget__list-body-item,
+  .info-widget__list-header-item {
+    padding: 8px 12px;
     overflow: hidden;
-    max-width: 145px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: $col-md-primary;
   }
 
-  .info-widget__asset-date {
-    font-size: $fs-tip-smaller;
-    letter-spacing: 0.1px;
+  .info-widget__list-body-row-details {
+    padding-top: 17px;
+    padding-bottom: 17px;
+    margin: 0 20px;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 60px;
+      height: 1px;
+      background-color: rgba($col-md-primary, .2);
+    }
   }
 
-  .info-widget__asset-amount--in { color: $green; }
-  .info-widget__asset-amount--out { color: $red; }
-  .info-widget__asset-amount--pending { color: $orange; }
-  .info-widget__asset-amount--failed { color: rgba($black, .5); }
+  .info-widget__history {
+    max-width: 280px;
 
-  .info-widget__asset-state {
-    text-align: right;
-    margin-top: 14px;
+    @include respond-to(medium) {
+      margin-left: auto;
+      margin-right: 30px;
+    }
+  }
+
+  .info-widget__list-body-item--btn,
+  .info-widget__list-header-item--btn {
+    width: 70px;
+    flex: none;
+    padding: 0;
+  }
+
+  .info-widget__list-body-item-btn {
+    @include button();
+    @include button-flat();
+    background: rgba($col-md-primary, .1);
+    font-size: 10px;
+    border-radius: 4px;
+  }
+
+  .info-widget__list-body-item-icon {
+    color: $col-md-primary !important;
+    font-size: 20px !important;
+    font-weight: 400;
+    transition: .3s ease-out;
+    will-change: transform;
+  }
+
+  .info-widget__list-body-item-icon--active { transform: rotate(-180deg) }
+
+  .info-widget__list-header-item--date,
+  .info-widget__list-body-item--date {
+    width: 15%;
+    min-width: 160px;
+  }
+
+  .info-widget__list-body-item--type,
+  .info-widget__list-header-item--type {
+    width: 15%;
+    min-width: 150px;
+  }
+
+  .info-widget__list-body-item--asset,
+  .info-widget__list-header-item--asset {
+    width: 12%;
+    min-width: 100px;
+  }
+
+  .info-widget__list-body-item--amount,
+  .info-widget__list-header-item--amount {
+    width: 18%;
+    min-width: 120px;
+  }
+
+  .info-widget__list-body-item--counterparty,
+  .info-widget__list-header-item--counterparty {
+    width: 24%;
+    min-width: 250px;
+  }
+
+  .info-widget__list-body-item--status,
+  .info-widget__list-header-item--status {
+    width: 12%;
+    min-width: 120px;
+  }
+
+  .info-widget__list-body-row-detail {
+    display: flex;
     font-size: 12px;
-  }
 
-  .info-widget__asset-state--success { color: $green; }
-  .info-widget__asset-state--pending { color: $orange; }
-  .info-widget__asset-state--rejected,
-  .info-widget__asset-state--failed { color: $md-invalid; }
+    label {
+      width: 65px;
+      margin-right: 16px;
+      color: #837fa1;
+    }
+
+    p { color: #3a4180; }
+  }
 
 </style>

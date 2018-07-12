@@ -18,12 +18,15 @@ $xlarge: 1920px;
 @mixin button () {
   border: none;
   padding: 8px 16px;
-  cursor: pointer;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
   min-height: 36px;
   background-color: transparent;
+
+  &:not([disabled]) {
+    cursor: pointer;
+  }
 }
 
 @mixin button-raised () {
@@ -33,6 +36,11 @@ $xlarge: 1920px;
   background-color: $col-md-primary-secondary;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .15);
   color: #fff;
+
+  &[disabled] {
+    box-shadow: none;
+    opacity: .5;
+  }
 }
 
 @mixin button-flat () {
@@ -41,10 +49,16 @@ $xlarge: 1920px;
   color: $col-md-primary;
   transition: .3s ease-out;
 
-  &:hover {
+  &[disabled] {
+    color: $lightGray;
+  }
+
+  &:not([disabled]):hover {
     background-color: $gray;
   }
 }
+
+@mixin box-shadow () { box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15) }
 
 @mixin center-horizontally () {
   left: 50%;

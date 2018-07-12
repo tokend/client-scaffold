@@ -1,10 +1,10 @@
 <template>
-  <div class="dashboard md-layout md-layout-item md-size-80">
-    <portfolio-widget class="md-layout-item"
+  <div class="dashboard">
+    <portfolio-widget class="md-layout-item dashboard__portfolio"
                       :currentAsset="currentAsset"
                       @asset-change="setCurrentAsset"
     />
-    <info-widget :currentAsset="currentAsset" class="md-layout-item"/>
+    <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
   </div>
 </template>
 
@@ -37,7 +37,11 @@
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       setCurrentAsset (value) {
-        this.currentAsset = value || Object.keys(this.accountBalances)[0] || null
+        if (value) {
+          this.currentAsset = value.split(' ')[0]
+        } else {
+          this.currentAsset = Object.keys(this.accountBalances)[0] || null
+        }
       }
     },
     watch: {
@@ -49,9 +53,30 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .dashboard {
-    margin: auto
+    padding: 0 40px;
+
+    @include respond-to(medium) {
+      padding: 0 24px;
+    }
+
+    @include respond-to(small) {
+      padding: 0 16px;
+    }
+
+    @include respond-to(xsmall) {
+      padding: 0 8px;
+    }
+  }
+
+  .dashboard__portfolio {
+    margin-bottom: 24px;
+  }
+
+  .dashboard__activity {
+    width: 100%;
   }
 </style>

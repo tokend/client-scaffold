@@ -61,7 +61,7 @@
                      to="/issuance-creation"
                      tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
           <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_issuance() }}</span>
+          <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"

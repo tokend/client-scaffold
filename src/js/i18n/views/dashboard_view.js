@@ -1,4 +1,4 @@
 export default {
-  dash_activity: 'Your %{asset} activity',
-  dash_wallet: 'Your wallet'
+  dash_wallet: 'Your wallet',
+  dash_activity: 'Activity'
 }

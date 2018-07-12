@@ -85,6 +85,9 @@
     created () {
       if (this.verifyEmailParams) return this.verifyEmail()
       this.hasSeenWarning = localStorage.hasOwnProperty('seenBlockWarning')
+      window.addEventListener('wheel', function () {
+        console.log(11)
+      })
     },
 
     computed: {
