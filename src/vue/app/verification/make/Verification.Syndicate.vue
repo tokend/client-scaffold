@@ -1,139 +1,126 @@
 <template>
-  <div class="kyc-form md-layout md-alignment-center-center">
-    <form novalidate @submit.prevent="submit"
-          class="md-layout-item
-                  md-size-50
-                  md-medium-size-65
-                  md-small-size-95
-                  md-xsmall-size-100"
-    >
+  <div class="create-sale md-layout md-alignment-center-center">
+    <div class="md-layout-item
+                    md-size-50
+                    md-medium-size-65
+                    md-small-size-95
+                    md-xsmall-size-100">
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-
         <md-card-header>
-          <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
+          <div class="md-title">{{ i18n.kyc_form_submit() }}</div>
         </md-card-header>
-
         <md-card-content>
-          <template v-for="row in schema.rows">
-            <template v-if="row.heading">
-              <h4>{{ row.heading }}</h4>
-            </template>
-
-            <template v-if="row instanceof Array">
-              <div class="md-layout md-gutter">
-                <template v-for="item in row">
-                  <div class="md-layout-item md-small-size-100">
-                    <input-field v-if="item.field === 'text'"
-                                  v-model="form[item.model]"
-                                  v-validate="item.validate"
-                                  :name="item.name"
-                                  :id="item.id"
-                                  :required="item.required"
-                                  :label="item.label"
-                                  :errorMessage="errorMessage(item.name)"
-                                  :disabled="accountState === ACCOUNT_STATES.pending"
-                    />
-                    <date-field v-if="item.field === 'date'"
-                                v-model="form[item.model]"
-                                v-validate="item.validate"
-                                :name="item.name"
-                                :id="item.id"
-                                :required="item.required"
-                                :disableBefore="item.disableBefore"
-                                :disableAfter="item.disableAfter"
-                                :label="item.label"
-                                :errorMessage="errorMessage(item.name)"
-                                :disabled="accountState === ACCOUNT_STATES.pending"
-                    />
-                  </div>
-                </template>
-              </div>
-            </template>
-
-          </template>
+          <md-steppers md-vertical :md-active-step.sync="activeStep">
+            <md-step v-for="(step, i) in steps"
+                    :key="i"
+                    :id="step.name"
+                    :md-label="step.label"
+                    :md-done.sync="step.done"
+            >
+              <component :is="step.component"
+                        :schema="step.schema"
+                        :activeStep="activeStep"
+                        :finalStep="finalStep"
+                        :kyc="kyc"
+                        @kyc-update="handleKycUpdate($event, { step, i })"
+                        @kyc-edit-end="handleKycEditEnd"
+              />
+            </md-step>
+          </md-steppers>
         </md-card-content>
-        <md-card-actions>
-          <md-button type="submit" class="md-primary"
-            :disabled="isPending || accountState === ACCOUNT_STATES.pending"
-          >{{ i18n.lbl_submit() }}</md-button>
-        </md-card-actions>
       </md-card>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
-
-  import { mapGetters, mapActions } from 'vuex'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-  import { vuexTypes } from '../../../../vuex/types'
+  import steps from '../spec/kyc-steps.syndicate.schema'
   import { i18n } from '../../../../js/i18n'
-
-  import { kycSyndicateSchema as schema } from '../spec/kyc-syndicate.schema'
-  import { KycTemplateParser } from '../spec/kyc-template-parser'
+  import { mapGetters, mapActions } from 'vuex'
+  import { vuexTypes } from '../../../../vuex/types'
   import { accountsService } from '../../../../js/services/accounts.service'
-
-  import { ACCOUNT_STATES } from '../../../../js/const/account.const'
-  import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+  import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+  import { confirmAction } from '../../../../js/modals/confirmation_message'
+  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { KycTemplateParser } from '../spec/kyc-template-parser'
 
   const KYC_LEVEL_TO_SET = 0
-
   export default {
-    name: 'verification-syndicate',
+    name: 'verification-index',
+    components: {},
     mixins: [FormMixin],
-    components: { },
     data: _ => ({
-      form: {
-        name: '',
-        company: '',
-        headquarters: '',
-        industry: '',
-        found_date: null,
-        team_size: '',
-        homepage: ''
-      },
-      isDialogOpened: false,
+      activeStep: steps[0].name,
+      finalStep: steps[steps.length - 1].name,
+      kyc: null,
       i18n,
-      schema,
-      ACCOUNT_STATES
+      steps,
+      ACCOUNT_TYPES
     }),
-    created () {
-      if (this.accountKycData) {
-        this.stubData()
-      }
+    async created () {
+      await Promise.all([
+        this.loadTokens(),
+        this.loadBalances()
+      ])
+      this.kyc = KycTemplateParser.fromTemplate(this.accountKycData, userTypes.syndicate)
     },
+
     computed: {
       ...mapGetters([
-        vuexTypes.accountLatestBlobId,
         vuexTypes.accountId,
+        vuexTypes.accountTypeI,
+        vuexTypes.accountKycLatestRequest,
         vuexTypes.accountKycData,
-        vuexTypes.accountState,
-        vuexTypes.accountKycLatestRequest
+        vuexTypes.accountState
       ])
     },
+
     methods: {
       ...mapActions({
+        loadTokens: vuexTypes.GET_ALL_TOKENS,
+        loadBalances: vuexTypes.GET_ACCOUNT_BALANCES,
         loadKycRequests: vuexTypes.GET_ACCOUNT_KYC_REQUESTS,
-        updateKycData: vuexTypes.UPDATE_ACCOUNT_KYC_DATA
+        updateKycData: vuexTypes.UPDATE_ACCOUNT_KYC_DATA,
+        updateDocuments: vuexTypes.UPDATE_ACCOUNT_KYC_DOCUMENTS
       }),
-      async submit () {
-        if (!await this.isValid()) return
+
+      handleKycUpdate ({ form, documents }, { step, i }) {
+        form = form || {}
+        documents = documents || {}
+        Object.entries(form).forEach(([key, value]) => {
+          this.kyc[key] = value
+        })
+        Object.entries(documents).forEach(([key, value]) => {
+          this.kyc.documents[key] = value
+        })
+        if (this.activeStep === steps[steps.length - 1].name) {
+          this.handleKycEditEnd()
+        }
+        step.done = true
+        this.activeStep = (steps[i + 1] || steps[0]).name
+      },
+      async handleKycEditEnd () {
+        if (!await confirmAction()) return
         this.disable()
         try {
+          await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
-            details: KycTemplateParser.toSyndicateTemplate(this.form)
+            details: KycTemplateParser.fromTemplate(this.kyc, userTypes.syndicate),
+            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
           EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         } catch (error) {
+          console.error(error)
           ErrorHandler.processUnexpected(error)
         }
         this.enable()
       },
+
       async submitRequest (blobId) {
         await accountsService.createKycRequest({
           requestID: this.accountState === ACCOUNT_STATES.rejected ? this.accountKycLatestRequest.id : '0',
@@ -142,21 +129,11 @@
           kycLevelToSet: KYC_LEVEL_TO_SET,
           kycData: { blob_id: blobId }
         })
-      },
-      stubData () {
-        this.form = KycTemplateParser.fromSyndicateTemplate(this.accountKycData)
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
 
-  .kyc-form__verification-key {
-    font-size: $fs-big;
-    font-weight: bold;
-    margin: 2rem 0;
-    text-align: center;
-  }
 </style>
