@@ -6,16 +6,16 @@ const POLICIES = {
 }
 
 export const DOCUMENT_POLICIES = Object.freeze({
-  [documentTypes.kycIdDocument]: POLICIES.private,
-  [documentTypes.kycProofOfAddress]: POLICIES.private,
-  [documentTypes.kycSelfie]: POLICIES.private,
+  [documentTypes.kycIdDocument]: POLICIES.public,
+  [documentTypes.kycProofOfAddress]: POLICIES.public,
+  [documentTypes.kycSelfie]: POLICIES.public,
   [documentTypes.fundLogo]: POLICIES.public,
   [documentTypes.fundDocument]: POLICIES.public,
   [documentTypes.navReport]: POLICIES.public,
   [documentTypes.syndicate_member_photo]: POLICIES.public,
-  [documentTypes.bravo]: '',
-  [documentTypes.charlie]: '',
-  [documentTypes.delta]: '',
+  [documentTypes.bravo]: POLICIES.public,
+  [documentTypes.charlie]: POLICIES.public,
+  [documentTypes.delta]: POLICIES.public,
   [documentTypes.tokenTerms]: POLICIES.public,
   [documentTypes.tokenLogo]: POLICIES.public,
   [documentTypes.tokenMetrics]: POLICIES.public
