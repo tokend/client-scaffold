@@ -1,4 +1,5 @@
 <template>
+  <div class="transfer__wrapper">
   <div class="transfer md-layout md-alignment-center-center" >
     <template v-if="!tokenCodes.length">
       <div class="app__no-data-msg">
@@ -117,10 +118,28 @@
     </template>
 
   </div>
+    <div class="preissuance-form__upload-wrp">
+      <file-field class="preissuance-form__upload-input"
+            v-model="documents.payment"
+            label="Select File(s)"
+            accept=".csv"
+            id="preissuance-field"
+      />
+      <ul class="payment-form__list" v-if="payments.length">
+        <p>{{ i18n.lbl_to_upload() }}</p>
+
+        <li v-for="(item, index) in payments" :key="index">
+          {{index + 1}}. {{item.account}} {{i18n.c(item.amount)}} {{item.asset}} {{item.email}} {{item.id}}
+        </li>
+      </ul>
+    </div>
+  </div>
 
 </template>
 
 <script>
+  import { FileHelper } from '../../../../js/helpers/file.helper'
+  import FileField from '../../../common/fields/FileField'
   import FormMixin from '../../../common/mixins/form.mixin'
   import ConfirmTransfer from './Transfers.Confirm'
 
@@ -144,7 +163,7 @@
   export default {
     name: 'transfers-make',
     mixins: [FormMixin],
-    components: { ConfirmTransfer },
+    components: { ConfirmTransfer, FileField },
     data: _ => ({
       form: {
         tokenCode: null,
@@ -152,6 +171,10 @@
         recipient: '',
         subject: ''
       },
+      documents: {
+        payment: null
+      },
+      payments: [],
       view: {
         mode: VIEW_MODES.submit,
         opts: {}
@@ -264,6 +287,37 @@
       },
       setTokenCode () {
         this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
+      },
+      parsePayments (payments) {
+        payments.forEach(async (value) => {
+          if (Keypair.isValidPublicKey(value.account)) {
+            value.email = await accountsService.loadEmailByAccountId(value.account)
+            value.id = value.account
+          } else {
+            value.id = await accountsService.loadAccountIdByEmail(value.account)
+            value.email = value.account
+          }
+        })
+        console.log(payments)
+        this.payments = payments
+      }
+    },
+    watch: {
+      'documents.payment': async function (value) {
+        if (value) {
+          const extracted = await FileHelper.readFileAsText(value.file)
+          const extractedArr = extracted.replace(/\r\n/g, '\n').split('\n')
+          const parsedPayment = extractedArr.map((payment) => {
+            const split = payment.split(',')
+            const objKeys = ['account', 'amount', 'asset']
+            const converted = split.reduce((obj, item, i) => {
+              obj[objKeys[i]] = item
+              return obj
+            }, {})
+            return converted
+          })
+          this.parsePayments(parsedPayment)
+        }
       }
     }
   }
@@ -297,5 +351,9 @@
 
   .transfer__user-balance {
     color: $col-text-secondary;
+  }
+
+  .payment-form__list {
+    list-style-type: none;
   }
 </style>
