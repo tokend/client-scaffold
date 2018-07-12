@@ -13,11 +13,6 @@ export default {
   rows: [
     [
       {
-        "heading": "Corporate details"
-      }
-    ],
-    [
-      {
         "model": "name",
         "name": "corporate-name",
         "id":  "kyc-corporate-name",

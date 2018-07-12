@@ -13,10 +13,9 @@ export default {
   kyc_waiting_msg: `Your verification request is submitted. Please wait until we review the information.
                     You will be able to update details once the request is reviewed`,
   kyc_rejected_msg: 'Unfortunately, your account was rejected with reason: %{reason}',
-  kyc_general_company_information: 'Company general information',
-  kyc_company_legal_address: 'Company legal address',
+  kyc_personal_details: 'Personal details',
+  kyc_corporate_details: 'Corporate details',
   kyc_documents: 'Documents',
-  kyc_business_model: 'Business model',
   kyc_approved_title: 'Account approved',
   kyc_general: 'General',
   kyc_corporate: 'Corporate',

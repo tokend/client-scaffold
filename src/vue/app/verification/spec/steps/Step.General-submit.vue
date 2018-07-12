@@ -2,7 +2,6 @@
   <form class="step" @submit.prevent="submit">
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
-          <h4>{{ i18n.kyc_photo_verification() }}</h4>
           <p>{{ i18n.kyc_photo_explain() }}</p>
           <md-button @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</md-button>
       </div>

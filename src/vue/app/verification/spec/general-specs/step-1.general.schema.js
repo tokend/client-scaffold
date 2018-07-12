@@ -15,11 +15,6 @@ export default {
   rows: [
     [
       {
-        "heading": "Personal details"
-      }
-    ],
-    [
-      {
         "model": "first_name",
         "name": "first-name",
         "id":  "kyc-first-name",
