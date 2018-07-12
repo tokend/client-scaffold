@@ -32,79 +32,7 @@
               />
             </md-step>
           </md-steppers>
-          <!-- <template v-for="row in schema.rows">
-
-            <template v-if="row.heading">
-              <h4>{{ row.heading }}</h4>
-            </template>
-
-            <template v-if="row instanceof Array">
-              <div class="md-layout md-gutter">
-                  <template v-for="item in row">
-                    <div class="md-layout-item md-small-size-100">
-                      <input-field v-if="item.field === 'text'"
-                                   v-model="form[item.model]"
-                                   v-validate="item.validate"
-                                   :name="item.name"
-                                   :id="item.id"
-                                   :required="item.required"
-                                   :label="item.label"
-                                   :errorMessage="errorMessage(item.name)"
-                                   :disabled="accountState === ACCOUNT_STATES.pending"
-                      />
-                      <date-field v-if="item.field === 'date'"
-                                  v-model="form[item.model]"
-                                  v-validate="item.validate"
-                                  :name="item.name"
-                                  :id="item.id"
-                                  :required="item.required"
-                                  :disableBefore="item.disableBefore"
-                                  :disableAfter="item.disableAfter"
-                                  :label="item.label"
-                                  :errorMessage="errorMessage(item.name)"
-                                  :disabled="accountState === ACCOUNT_STATES.pending"
-                      />
-                      <select-field v-if="item.field === 'select'"
-                                    v-model="form[item.model]"
-                                    v-validate="item.validate"
-                                    :values="values[item.values]"
-                                    :name="item.name"
-                                    :id="item.id"
-                                    :required="item.required"
-                                    :label="item.label"
-                                    :errorMessage="errorMessage(item.name)"
-                                    :disabled="accountState === ACCOUNT_STATES.pending"
-                      />
-                    </div>
-                  </template>
-              </div>
-            </template>
-
-          </template>
-
-          <h4>{{ i18n.kyc_required_documents() }}</h4>
-
-          <template v-for="doc in schema.docs">
-            <template v-if="doc.type === documentTypes.kycSelfie">
-              <h4>{{ i18n.kyc_photo_verification() }}</h4>
-              <p>{{ i18n.kyc_photo_explain() }}</p>
-              <md-button @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</md-button>
-            </template>
-
-            <file-field class="kyc-form__file-field"
-                          v-model="documents[doc.type][doc.side]"
-                          :private="doc.private"
-                          :label="doc.label"
-                          :type="doc.type"
-                          :id="doc.id"
-              />
-          </template> -->
         </md-card-content>
-        <!-- <md-card-actions>
-          <md-button type="submit" class="md-primary"
-            :disabled="isPending || accountState === ACCOUNT_STATES.pending"
-          >{{ i18n.lbl_submit() }}</md-button>
-        </md-card-actions> -->
       </md-card>
     </form>
   </div>
