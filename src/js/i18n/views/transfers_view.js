@@ -8,5 +8,7 @@ export default {
   tr_no_assets_exp: 'This feature will be available once you have any transferable asset',
   tr_no_assets_exists: 'No assets exists in the system',
   tr_no_assets_exists_exp: 'This feature will be available once  any asset appears',
-  tr_balance: 'Your balance is %{balance} %{token}'
+  tr_balance: 'Your balance is %{balance} %{token}',
+  tr_create_mass: 'Make mass transfer',
+  tr_mass_how_to: 'To create mass transfer, please upload a .csv file with '
 }

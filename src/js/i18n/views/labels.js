@@ -65,6 +65,8 @@ export default {
   lbl_recipient_account_id: 'Recipient account ID',
   lbl_recipient_balance_id: 'Recipient balance ID',
   lbl_recipient__email: 'Recipient email',
+  lbl_source_fees: 'Source fees',
+  lbl_destination_fees: 'Destination fees',
   lbl_recipient_fixed_fee: 'Recipient fixed fee',
   lbl_recipient_percent_fee: 'Recipient percent fee',
   lbl_sender_balance_id: 'Recipient balance ID',
