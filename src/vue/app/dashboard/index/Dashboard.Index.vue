@@ -56,6 +56,8 @@
   @import '~@scss/variables';
   @import '~@scss/mixins';
 
+  $custom-breakpoint: 800px;
+
   .dashboard {
     padding: 0 40px;
 
@@ -63,7 +65,7 @@
       padding: 0 24px;
     }
 
-    @include respond-to(small) {
+    @include respond-to-custom($custom-breakpoint) {
       padding: 0 16px;
     }
 

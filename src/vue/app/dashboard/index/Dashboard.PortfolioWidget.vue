@@ -34,7 +34,7 @@
     <template v-if="currentAsset">
       <div class="portfolio-widget__asset-available">
         <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
-        <div class="portfolio-widget__asset-usd">{{ convertedBalance }} USD</div>
+        <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
       </div>
     </template>
     <template v-if="!currentAsset">
@@ -68,7 +68,8 @@
       i18n,
       events: {
         assetChange: commonEvents.assetChangeEvent
-      }
+      },
+      config
     }),
     computed: {
       ...mapGetters([
@@ -114,17 +115,28 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables.scss';
-  @import '../../../../scss/mixins.scss';
+  @import '~@scss/variables.scss';
+  @import '~@scss/mixins.scss';
+
+  $custom-breakpoint: 800px;
 
   .portfolio-widget__wrapper {
     display: flex;
     justify-content: space-between;
+
+    @include respond-to(medium) {
+      align-items: flex-start;
+    }
+
+    @include respond-to-custom($custom-breakpoint) {
+      flex-direction: column-reverse;
+    }
   }
 
   .portfolio-widget__select {
     display: flex;
     align-items: center;
+    margin-right: 16px;
   }
 
   .portfolio-widget__select-picture {
@@ -138,6 +150,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: none;
+
+    @include respond-to(small) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .portfolio-widget__asset-btns {
+    @include respond-to(medium) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @include respond-to-custom($custom-breakpoint) {
+      margin-bottom: 16px;
+      flex-direction: row;
+    }
   }
 
   .portfolio-widget__asset-btn {
@@ -147,8 +177,23 @@
     position: relative;
     height: 36px;
 
+    @include respond-to-custom($custom-breakpoint) {
+      width: 160px;
+      margin-bottom: 0;
+      padding-left: 30px;
+    }
+
     &:not(:last-child) {
       margin-right: 16px;
+
+      @include respond-to(medium) {
+        margin-right: 0;
+        margin-bottom: 8px;
+      }
+
+      @include respond-to-custom($custom-breakpoint) {
+        margin-right: 8px;
+      }
     }
   }
 
@@ -174,6 +219,10 @@
     position: absolute;
     left: 10px;
     top: calc(50% - 1px);
+
+    @include respond-to-custom($custom-breakpoint) {
+      left: 6px;
+    }
   }
 
   .portfolio-widget__asset-btn-icon--rotate {

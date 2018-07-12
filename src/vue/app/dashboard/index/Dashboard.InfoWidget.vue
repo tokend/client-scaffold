@@ -5,12 +5,12 @@
       <div class="info-widget__list-wrapper">
         <div class="info-widget__list" v-table-scroll-shadow>
           <div class="info-widget__list-header">
-            <div class="info-widget__list-header-item info-widget__list-header-item--date">Date</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--type">Transaction Type</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--asset">Asset</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--amount">Amount</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--counterparty">Counterparty</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--status">Status</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--date">{{ i18n.lbl_date() }}</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--type">{{ i18n.lbl_tx_type() }} Type</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--asset">{{ i18n.lbl_asset() }}</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--amount">{{ i18n.lbl_amount() }}</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--counterparty">{{ i18n.lbl_counterparty() }}</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--status">{{ i18n.lbl_status() }}</div>
             <div class="info-widget__list-header-item info-widget__list-header-item--btn"></div>
           </div>
           <div class="info-widget__list-body">
