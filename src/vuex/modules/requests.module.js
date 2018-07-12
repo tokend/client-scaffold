@@ -24,7 +24,7 @@ const mutations = {
   UPDATE_SALE_REQUEST_LIST (state, tokenCodes) {
     tokenCodes.forEach(code => {
       state.saleCreationRequests[code] = new Paginator({
-        recordWrp: (record) => RecordFactory.createSaleСreationRecord(record, code)
+        recordWrp: (record) => RecordFactory.createSaleCreationRecord(record, code)
       })
     })
   },
@@ -72,7 +72,7 @@ const actions = {
       paginator = state.saleCreationRequests[tokenCode]
     } else {
       state.saleCreationRequests[tokenCode] = new Paginator({
-        recordWrp: record => RecordFactory.createSaleСreationRecord(record, tokenCode)
+        recordWrp: record => RecordFactory.createSaleCreationRecord(record, tokenCode)
       })
       paginator = state.saleCreationRequests[tokenCode]
     }

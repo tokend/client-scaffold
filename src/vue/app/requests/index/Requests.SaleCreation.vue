@@ -56,9 +56,10 @@
                   <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
                   <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
                   <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
-                  <detail :prop="`${i18n.lbl_reject_message()}`" v-if="item.requestState === REQUEST_STATES_STR.rejected ||
-                                                                       item.requestState === REQUEST_STATES_STR.permanentlyRejected"
-                                                                :value="`${item.rejectReason}`"/>
+                  <detail :prop="`${i18n.lbl_reject_message()}`"
+                          v-if="item.requestState === REQUEST_STATES_STR.rejected ||
+                                item.requestState === REQUEST_STATES_STR.permanentlyRejected"
+                                :value="`${item.rejectReason}`"/>
                 </div>
               </md-card-content>
               <md-card-actions>
@@ -66,10 +67,16 @@
                           :disabled="item.requestState !== REQUEST_STATES_STR.pending
                                   || isPending"
                           @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
-              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"  
-                             tag="md-button"  
+              <template v-if="item.isApproved">
+                <md-button class="md-primary"
+                           @click="goFundDetails(item.tokenCode)">
+                  {{ i18n.lbl_view_sale() }}
+                </md-button>
+              </template>
+              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"
+                             tag="md-button"
                              class="md-dense md-primary"
-                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>  
+                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -102,7 +109,10 @@ import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
 import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
+import { vueRoutes } from '../../../../vue-router/const'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+
+import { salesService } from '../../../../js/services/sales.service'
 
 export default {
   mixins: [FormMixin],
@@ -159,6 +169,16 @@ export default {
         EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
       }
       this.isLoading = false
+    },
+
+    async goFundDetails (code) {
+      const sale = await salesService.loadSaleByTokenCode(code)
+      console.log('sale.id')
+      console.log(sale.id)
+      this.$router.push({
+        ...vueRoutes.saleDetails,
+        params: { id: sale.id }
+      })
     }
   },
   watch: {

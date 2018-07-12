@@ -1,5 +1,5 @@
 import { Keypair } from 'swarm-js-sdk'
-import { Paginator } from '../../js/helpers/paginator'
+// import { Paginator } from '../../js/helpers/paginator'
 import { RecordFactory } from '../../js/records/factory'
 import { vuexTypes } from '../types'
 import { accountsService } from '../../js/services/accounts.service'
@@ -7,9 +7,7 @@ import { salesService } from '../../js/services/sales.service'
 // import { StateHelper } from '../helpers/state.helper'
 
 const state = {
-  sales: new Paginator({
-    recordWrp: RecordFactory.createSaleRecord.bind(RecordFactory)
-  }),
+  sales: [],
   starred: []
 }
 
@@ -38,15 +36,9 @@ const mutations = {
 }
 
 const actions = {
-  async GET_SALES ({ state }, filters) {
-    const sales = state.sales
-    sales.attachInitLoader(salesService.loadSales.bind(salesService))
-    await sales.init(filters)
-  },
-
-  async NEXT_SALES ({ commit, dispatch, state }) {
-    const records = await state.sales.next()
-    await dispatch(vuexTypes.GET_OWNERS, records)
+  async GET_SALES ({ commit }, filters) {
+    const response = await salesService.loadSales(filters)
+    commit(vuexTypes.SET_SALES, response.records.map(record => RecordFactory.createSaleRecord(record)))
   },
 
   async GET_OWNERS ({ commit }, sales) {
@@ -76,10 +68,10 @@ const actions = {
 }
 
 const getters = {
-  sales: state => state.sales.records,
-  isSalesLoaded: state => state.sales.isLoaded,
+  sales: state => state.sales,
   // saleIds: _ => StateHelper.getSaleIdWhereUSerParticipated(),
-  starredSales: state => state.starred
+  starredSales: state => state.starred,
+  salesOwned: (state, getters) => state.sales.filter(sale => sale.owner === getters.accountId)
 }
 
 export default {
