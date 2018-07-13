@@ -14,7 +14,8 @@ const featureFlags = {
   tfa: true,
   tokens: true,
   sales: true,
-  requests: true
+  requests: true,
+  massTransfers: true
 }
 
 export default {

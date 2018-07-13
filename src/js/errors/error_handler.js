@@ -1,3 +1,4 @@
+import _get from 'lodash/get'
 import { i18n } from '../i18n'
 import { EventDispatcher } from '../events/event_dispatcher'
 
@@ -9,5 +10,9 @@ export class ErrorHandler {
       return
     }
     EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
+  }
+
+  static deriveTxErrorMessages (rawError) {
+    return _get(rawError, 'response.data.extras.result_codes.messages', [])
   }
 }

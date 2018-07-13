@@ -9,6 +9,10 @@ export const FEE_TYPES = Object.freeze(
   xdrEnumToConstant('FeeType')
 )
 
+export const PAYMENT_FEE_SUBTYPES = Object.freeze(
+  xdrEnumToConstant('PaymentFeeType')
+)
+
 export const ASSET_POLICIES = Object.freeze(
   xdrEnumToConstant('AssetPolicy')
 )

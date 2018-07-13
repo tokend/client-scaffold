@@ -16,11 +16,13 @@ export default {
   lbl_my_account: 'My account',
   lbl_account: 'Account',
   lbl_verified: 'Verified user',
+  lbl_got_it: 'Got it',
   lbl_unverified: 'Unverified user',
   lbl_dashboard: 'Dashboard',
   lbl_deposit: 'Deposit',
   lbl_withdraw: 'Withdraw',
   lbl_send: 'Send',
+  lbl_send_mass: 'Mass transfer',
   lbl_tokens: 'Tokens',
   lbl_trade: 'Trade',
   lbl_create_token: 'Create token',
@@ -64,6 +66,9 @@ export default {
   lbl_recipient_account_id: 'Recipient account ID',
   lbl_recipient_balance_id: 'Recipient balance ID',
   lbl_recipient__email: 'Recipient email',
+  lbl_source_fees: 'Source fees',
+  lbl_fixed_percent: '(Fixed/percent)',
+  lbl_destination_fees: 'Destination fees',
   lbl_recipient_fixed_fee: 'Recipient fixed fee',
   lbl_recipient_percent_fee: 'Recipient percent fee',
   lbl_sender_balance_id: 'Recipient balance ID',
@@ -166,5 +171,6 @@ export default {
   lbl_street_name: 'Street name',
   lbl_upload_docs: 'Please, upload the following documents',
   lbl_upload_doc: 'Please, upload the following document',
-  lbl_agree_submit: 'Agree & submit information'
+  lbl_agree_submit: 'Agree & submit information',
+  lbl_pay_all_fees: 'Pay fees'
 }

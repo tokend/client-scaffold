@@ -1,121 +1,122 @@
 <template>
-  <div class="transfer md-layout md-alignment-center-center" >
-    <template v-if="!tokenCodes.length">
-      <div class="app__no-data-msg">
-        <md-card class="md-layout-item
-                      md-size-100">
-          <md-card-content>
-            <md-icon class="md-size-4x">send</md-icon>
-            <h2>{{ i18n.tr_no_assets() }}</h2>
-            <p>{{ i18n.tr_no_assets_exp() }}</p>
-          </md-card-content>
-        </md-card>
-      </div>
-    </template>
+  <div class="transfer__wrapper">
+    <div class="transfer md-layout md-alignment-center-center" >
+      <template v-if="!tokenCodes.length">
+        <div class="app__no-data-msg">
+          <md-card class="md-layout-item
+                        md-size-100">
+            <md-card-content>
+              <md-icon class="md-size-4x">send</md-icon>
+              <h2>{{ i18n.tr_no_assets() }}</h2>
+              <p>{{ i18n.tr_no_assets_exp() }}</p>
+            </md-card-content>
+          </md-card>
+        </div>
+      </template>
 
-    <template v-else-if="view.mode === VIEW_MODES.submit">
-      <form novalidate @submit.prevent="processTransfer"
-            class="md-layout-item
-                   md-size-50
-                   md-medium-size-65
-                   md-small-size-95
-                   md-xsmall-size-100"
-      >
-        <md-card>
-          <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+      <template v-else-if="view.mode === VIEW_MODES.submit">
+        <form novalidate @submit.prevent="processTransfer"
+              class="md-layout-item
+                     md-size-50
+                     md-medium-size-65
+                     md-small-size-95
+                     md-xsmall-size-100"
+        >
+          <md-card>
+            <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-          <md-card-header class="transfer__header">
-            <div class="md-title transfer__title">{{ i18n.tr_send() }}</div>
-            <div class="transfer__user-balance">
-              {{ i18n.tr_balance({ balance: balance.balance, token: form.tokenCode }) }}
-            </div>
+            <md-card-header class="transfer__header">
+              <div class="md-title transfer__title">{{ i18n.tr_send() }}</div>
+              <div class="transfer__user-balance">
+                {{ i18n.tr_balance({ balance: balance.balance, token: form.tokenCode }) }}
+              </div>
+            </md-card-header>
+
+            <md-card-content>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <select-field id="transfer-token"
+                                name="token"
+                                :label="i18n.lbl_asset()"
+                                :values="tokenCodes"
+                                v-model="form.tokenCode"
+                  />
+                </div>
+
+                <div class="md-layout-item md-small-size-100">
+                  <input-field id="transfer-amount"
+                               name="amount"
+                               type="number"
+                               v-model="form.amount"
+                               v-validate="'required|amount'"
+                               :label="i18n.lbl_amount()"
+                               :errorMessage="errorMessage('amount')"
+                  />
+                </div>
+              </div>
+
+              <input-field id="transfer-recipient"
+                           name="recipient"
+                           v-model="form.recipient"
+                           v-validate="'required|email_or_account_id'"
+                           :label="i18n.lbl_recipient_email_or_account()"
+                           :errorMessage="errorMessage('recipient')"
+              />
+
+              <textarea-field id="transfer-description"
+                              name="description"
+                              v-model="form.subject"
+                              v-validate="'max:250'"
+                              :label="i18n.lbl_add_note()"
+                              :maxlength="250"
+                              :errorMessage="errorMessage('recipient')"
+              />
+            </md-card-content>
+            <md-dialog-actions class="transfer-dialog__actions">
+                <md-button type="submit" class="md-primary" :isPending="isPending">
+                  {{ i18n.lbl_send() }}
+                </md-button>
+            </md-dialog-actions>
+          </md-card>
+        </form>
+      </template>
+
+      <template v-else-if="view.mode === VIEW_MODES.confirm">
+        <confirm-transfer :opts="view.opts"
+                           class="md-layout-item
+                                md-size-50
+                                md-medium-size-45
+                                md-small-size-100
+                                md-xsmall-size-100"
+                           :isPending="isPending"
+                           @cancel-click="updateView(VIEW_MODES.submit)"
+                           @confirm-click="submit"
+        />
+      </template>
+
+      <template v-if="view.mode === VIEW_MODES.success">
+        <md-card class="transfer__success-msg
+                        md-layout-item
+                        md-size-50
+                        md-medium-size-45
+                        md-small-size-100
+                        md-xsmall-size-100">
+          <md-card-header>
+            <div class="md-title">{{ i18n.tr_successful() }}</div>
           </md-card-header>
-
           <md-card-content>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <select-field id="transfer-token"
-                              name="token"
-                              :label="i18n.lbl_asset()"
-                              :values="tokenCodes"
-                              v-model="form.tokenCode"
-                />
-              </div>
-
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="transfer-amount"
-                             name="amount"
-                             type="number"
-                             v-model="form.amount"
-                             v-validate="'required|amount'"
-                             :label="i18n.lbl_amount()"
-                             :errorMessage="errorMessage('amount')"
-                />
+            <div>
+              <div class="transfer__success-amount">
+                {{ form.amount }} {{ form.tokenCode }}
               </div>
             </div>
-
-            <input-field id="transfer-recipient"
-                         name="recipient"
-                         v-model="form.recipient"
-                         v-validate="'required|email_or_account_id'"
-                         :label="i18n.lbl_recipient_email_or_account()"
-                         :errorMessage="errorMessage('recipient')"
-            />
-
-            <textarea-field id="transfer-description"
-                            name="description"
-                            v-model="form.subject"
-                            v-validate="'max:250'"
-                            :label="i18n.lbl_add_note()"
-                            :maxlength="250"
-                            :errorMessage="errorMessage('recipient')"
-            />
           </md-card-content>
           <md-dialog-actions class="transfer-dialog__actions">
-              <md-button type="submit" class="md-primary" :isPending="isPending">
-                {{ i18n.lbl_send() }}
-              </md-button>
+              <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
           </md-dialog-actions>
         </md-card>
-      </form>
-    </template>
-
-    <template v-else-if="view.mode === VIEW_MODES.confirm">
-      <confirm-transfer :opts="view.opts"
-                         class="md-layout-item
-                              md-size-50
-                              md-medium-size-45
-                              md-small-size-100
-                              md-xsmall-size-100"
-                         :isPending="isPending"
-                         @cancel-click="updateView(VIEW_MODES.submit)"
-                         @confirm-click="submit"
-      />
-    </template>
-
-    <template v-if="view.mode === VIEW_MODES.success">
-      <md-card class="transfer__success-msg
-                      md-layout-item
-                      md-size-50
-                      md-medium-size-45
-                      md-small-size-100
-                      md-xsmall-size-100">
-        <md-card-header>
-          <div class="md-title">{{ i18n.tr_successful() }}</div>
-        </md-card-header>
-        <md-card-content>
-          <div>
-            <div class="transfer__success-amount">
-              {{ form.amount }} {{ form.tokenCode }}
-            </div>
-          </div>
-        </md-card-content>
-        <md-dialog-actions class="transfer-dialog__actions">
-            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
-        </md-dialog-actions>
-      </md-card>
-    </template>
-
+      </template>
+    </div>
   </div>
 
 </template>
@@ -297,5 +298,9 @@
 
   .transfer__user-balance {
     color: $col-text-secondary;
+  }
+
+  .payment-form__list {
+    list-style-type: none;
   }
 </style>
