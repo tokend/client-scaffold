@@ -35,39 +35,47 @@
                {{ amount }} {{ asset }}
              </template>
            </p>
-
-           <md-table>
-             <md-table-row>
-               <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
-               <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_email() }}</md-table-head>
-               <md-table-head class="mass-transfer__table-cell">
-                 {{ i18n.lbl_source_fees() }}
-                 {{ i18n.lbl_fixed_percent() }}
-               </md-table-head>
-               <md-table-head class="mass-transfer__table-cell">
-                 {{ i18n.lbl_destination_fees() }}
-                 {{ i18n.lbl_fixed_percent() }}
-               </md-table-head>
-             </md-table-row>
-             <template v-for="transfer in transfers">
-               <md-table-row>
-                 <md-table-cell class="mass-transfer__table-cell">
-                   {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
-                 </md-table-cell>
-                 <md-table-cell class="mass-transfer__table-cell">{{ transfer.email }}</md-table-cell>
-                 <md-table-cell class="mass-transfer__table-cell">
-                   {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
-                   {{ transfer.sourceFees.feeAsset }}
-                 </md-table-cell>
-                 <md-table-cell class="mass-transfer__table-cell">
-                   {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
-                   {{ transfer.destinationFees.feeAsset }}
-                 </md-table-cell>
-               </md-table-row>
-             </template>
-           </md-table>
          </template>
        </md-card-content>
+       <md-card-actions md-alignment="left">
+         <md-button class="mass-transfer__confirm-btn
+                           md-primary"
+                    :disabled="!transfers.length"
+         >{{ i18n.lbl_confirm() }}</md-button>
+       </md-card-actions>
+       <template v-if="transfers.length">
+         <md-table>
+           <md-table-row>
+             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
+             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_email() }}</md-table-head>
+             <md-table-head class="mass-transfer__table-cell">
+               {{ i18n.lbl_source_fees() }}
+               {{ i18n.lbl_fixed_percent() }}
+             </md-table-head>
+             <md-table-head class="mass-transfer__table-cell">
+               {{ i18n.lbl_destination_fees() }}
+               {{ i18n.lbl_fixed_percent() }}
+             </md-table-head>
+           </md-table-row>
+           <template v-for="transfer in transfers">
+             <md-table-row>
+               <md-table-cell class="mass-transfer__table-cell">
+                 {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
+               </md-table-cell>
+               <md-table-cell class="mass-transfer__table-cell">{{ transfer.email }}</md-table-cell>
+               <md-table-cell class="mass-transfer__table-cell">
+                 {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
+                 {{ transfer.sourceFees.feeAsset }}
+               </md-table-cell>
+               <md-table-cell class="mass-transfer__table-cell">
+                 {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
+                 {{ transfer.destinationFees.feeAsset }}
+               </md-table-cell>
+             </md-table-row>
+           </template>
+         </md-table>
+
+       </template>
      </md-card>
    </div>
 </template>
@@ -193,7 +201,7 @@
 
 
   .mass-transfer__card {
-    max-width: 1200px;
+    max-width: 755px;
     margin: auto;
     width: 100%;
   }
