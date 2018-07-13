@@ -46,7 +46,8 @@
        </md-card-content>
        <md-card-actions md-alignment="space-between">
          <md-button class="md-primary"
-                    :disabled="!transfers.length"
+                    :disabled="!transfers.length || isPending"
+                    @click="submit"
          >
            {{ i18n.lbl_confirm() }}
          </md-button>
@@ -58,6 +59,7 @@
        <template v-if="transfers.length">
          <md-table>
            <md-table-row>
+             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_status() }}</md-table-head>
              <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
              <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_email() }}</md-table-head>
              <md-table-head class="mass-transfer__table-cell">
@@ -71,6 +73,13 @@
            </md-table-row>
            <template v-for="transfer in transfers">
              <md-table-row>
+               <md-table-cell class="mass-transfer__table-cell"
+                             :class="{ 'mass-transfer__table-cell--error':
+                                        transfer.status && transfer.status !== 'Success'
+                                     }"
+               >
+                 {{ transfer.status || '--' }}
+               </md-table-cell>
                <md-table-cell class="mass-transfer__table-cell">
                  {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
                </md-table-cell>
@@ -138,9 +147,11 @@
 <script>
   import { FileHelper } from '../../../js/helpers/file.helper'
   import { ErrorHandler } from '../../../js/errors/error_handler'
+  import { EventDispatcher } from '../../../js/events/event_dispatcher'
   import { Keypair } from 'swarm-js-sdk'
 
   import { accountsService } from '../../../js/services/accounts.service'
+  import { transferService } from '../../../js/services/transfers.service'
   import { feeService } from '../../../js/services/fees.service'
 
   import { i18n } from '../../../js/i18n'
@@ -151,6 +162,9 @@
   import FormMixin from '../../common/mixins/form.mixin'
 
   import { add } from '../../../js/utils/math.util'
+
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../vuex/types'
 
   export default {
     name: 'MassTransfersIndex',
@@ -165,6 +179,9 @@
       isHowToOpened: false
     }),
     computed: {
+      ...mapGetters([
+        vuexTypes.accountBalances
+      ]),
       totals () {
         const amountsByAssets = {}
         const sourceFeesByAssets = {}
@@ -204,6 +221,42 @@
       }
     },
     methods: {
+      async submit () {
+        this.disable()
+        try {
+          await transferService.createMassTransfer(this.transfers.map(transfer => ({
+            sourceBalanceId: this.accountBalances[transfer.asset].balance_id,
+            destinationAccountId: transfer.accountId,
+            amount: transfer.amount,
+            feeData: {
+              sourceFee: {
+                maxPaymentFee: transfer.sourceFees.percent,
+                fixedFee: transfer.sourceFees.fixed,
+                feeAsset: transfer.sourceFees.feeAsset
+              },
+              destinationFee: {
+                maxPaymentFee: transfer.destinationFees.percent,
+                fixedFee: transfer.destinationFees.fixed,
+                feeAsset: transfer.destinationFees.feeAsset
+              }
+            },
+            sourcePaysForDest: false,
+            subject: ''
+          })))
+          EventDispatcher.dispatchShowSuccessEvent(i18n.tr_successful())
+        } catch (e) {
+          const messages = ErrorHandler.deriveTxErrorMessages(e)
+          if (!messages || !messages.length) {
+            ErrorHandler.processUnexpected(e)
+          } else {
+            this.transfers.forEach((transfer, i) => {
+              transfer.status = messages[i]
+            })
+            EventDispatcher.dispatchShowErrorEvent(i18n.tr_mass_payment_failed())
+          }
+        }
+        this.enable()
+      },
       async parseFile () {
         if (!this.documents.transfers) return
         const objKeys = ['recipient', 'amount', 'asset']
@@ -263,7 +316,7 @@
 
 
   .mass-transfer__card {
-    max-width: 755px;
+    max-width: 1200px;
     margin: auto;
     width: 100%;
   }
@@ -274,6 +327,10 @@
 
     .md-checkbox {
       margin: 0 !important;
+    }
+
+    &--error {
+      color: $col-md-accent;
     }
   }
 

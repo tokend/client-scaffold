@@ -73,6 +73,7 @@ export class TransferService extends Service {
     return this._operationBuilder
       .operation()
       .addMany(operations)
+      .withRawError()
       .submit(this._accountId, this._keypair)
 
     function _opts (transfer) {

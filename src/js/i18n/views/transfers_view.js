@@ -19,5 +19,6 @@ export default {
   tr_total_amount: 'Total amount',
   tr_total_source_fee: 'Total sender fee',
   tr_total_recipient_fee: 'Total recipients fee',
-  tr_mass_payment_details: 'Here what you will pay:'
+  tr_mass_payment_details: 'Here what you will pay:',
+  tr_mass_payment_failed: 'One or more operations are not valid. Please review them and try again'
 }
