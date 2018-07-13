@@ -66,6 +66,7 @@ export default {
   lbl_recipient_balance_id: 'Recipient balance ID',
   lbl_recipient__email: 'Recipient email',
   lbl_source_fees: 'Source fees',
+  lbl_fixed_percent: '(Fixed/percent)',
   lbl_destination_fees: 'Destination fees',
   lbl_recipient_fixed_fee: 'Recipient fixed fee',
   lbl_recipient_percent_fee: 'Recipient percent fee',
@@ -164,5 +165,6 @@ export default {
   lbl_homepage: 'Homepage',
   lbl_edit_details: 'Edit Details',
   lbl_loading: 'Loading...',
-  lbl_to_upload: 'To upload:'
+  lbl_to_upload: 'To upload:',
+  lbl_pay_all_fees: 'Pay fees'
 }

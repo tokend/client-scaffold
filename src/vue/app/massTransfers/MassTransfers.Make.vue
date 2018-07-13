@@ -1,58 +1,75 @@
 <template>
-  <div class="md-layout md-alignment md-alignment-center-center">
-    <md-card class="mass-transfer
-                    md-layout-item
-                    md-size-75
-                    md-small-size-95
-                    md-xsmall-size-100">
-      <md-card-header>
-        <div class="md-title">{{ i18n.tr_create_mass() }}</div>
-      </md-card-header>
-      <md-card-content>
-        <file-field class="mass-transfer__upload-input"
-                    v-model="documents.transfers"
-                    label="Select File(s)"
-                    accept=".csv"
-                    id="preissuance-field"
-        />
-        <template v-if="transfers.length">
-          <p>{{ i18n.lbl_to_upload() }}</p>
-          <md-table>
-            <md-table-row>
-              <md-table-head>{{ i18n.lbl_amount() }}</md-table-head>
-              <md-table-head>{{ i18n.lbl_email() }}</md-table-head>
-              <md-table-head class="mass-transfer__table-row--account-id">{{ i18n.lbl_recipient_account_id() }}</md-table-head>
-              <md-table-head>{{ i18n.lbl_source_fees() }}</md-table-head>
-              <md-table-head>{{ i18n.lbl_destination_fees() }}</md-table-head>
-              <md-table-head>{{ i18n.lbl_fee_from_source() }}</md-table-head>
-            </md-table-row>
-            <template v-for="transfer in transfers">
-              <md-table-row>
-                <md-table-cell>
-                  {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
-                </md-table-cell>
-                <md-table-cell>{{ transfer.email }}</md-table-cell>
-                <md-table-cell class="mass-transfer__table-row--account-id">
-                  {{ transfer.accountId }}
-                </md-table-cell>
-                <md-table-cell>
-                  {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
-                  {{ transfer.sourceFees.feeAsset }}
-                </md-table-cell>
-                <md-table-cell>
-                  {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
-                  {{ transfer.destinationFees.feeAsset }}
-                </md-table-cell>
-                <md-table-cell>
-                  <md-checkbox v-model="transfer.sourcePaysForDest"/>
-                </md-table-cell>
-              </md-table-row>
-            </template>
-          </md-table>
-        </template>
-      </md-card-content>
-    </md-card>
-  </div>
+  <div class="mass-transfer">
+     <md-card class="mass-transfer__card">
+       <md-card-header>
+         <div class="md-title">{{ i18n.tr_create_mass() }}</div>
+       </md-card-header>
+       <md-card-content>
+         <file-field class="mass-transfer__upload-input"
+                     v-model="documents.transfers"
+                     label="Select File(s)"
+                     accept=".csv"
+                     id="preissuance-field"
+         />
+         <template v-if="transfers.length">
+           <p class="mass-transfer__total">
+             {{ i18n.tr_total_amount() }}:
+             <template v-for="(amount, asset, i) in totals.amounts">
+               <template v-if="totals.amounts.length > 1">{{ i+1 }}.</template>
+               {{ amount }} {{ asset }}
+             </template>
+           </p>
+
+           <p class="mass-transfer__total">
+             {{ i18n.tr_total_source_fee() }}:
+             <template v-for="(amount, asset, i) in totals.sourceFees">
+               <template v-if="totals.sourceFees.length > 1">{{ i+1 }}.</template>
+               {{ amount }} {{ asset }}
+             </template>
+           </p>
+
+           <p class="mass-transfer__total">
+             {{ i18n.tr_total_recipient_fee() }}:
+             <template v-for="(amount, asset, i) in totals.destinationFees">
+               <template v-if="totals.destinationFees.length > 1">{{ i+1 }}.</template>
+               {{ amount }} {{ asset }}
+             </template>
+           </p>
+
+           <md-table>
+             <md-table-row>
+               <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
+               <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_email() }}</md-table-head>
+               <md-table-head class="mass-transfer__table-cell">
+                 {{ i18n.lbl_source_fees() }}
+                 {{ i18n.lbl_fixed_percent() }}
+               </md-table-head>
+               <md-table-head class="mass-transfer__table-cell">
+                 {{ i18n.lbl_destination_fees() }}
+                 {{ i18n.lbl_fixed_percent() }}
+               </md-table-head>
+             </md-table-row>
+             <template v-for="transfer in transfers">
+               <md-table-row>
+                 <md-table-cell class="mass-transfer__table-cell">
+                   {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
+                 </md-table-cell>
+                 <md-table-cell class="mass-transfer__table-cell">{{ transfer.email }}</md-table-cell>
+                 <md-table-cell class="mass-transfer__table-cell">
+                   {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
+                   {{ transfer.sourceFees.feeAsset }}
+                 </md-table-cell>
+                 <md-table-cell class="mass-transfer__table-cell">
+                   {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
+                   {{ transfer.destinationFees.feeAsset }}
+                 </md-table-cell>
+               </md-table-row>
+             </template>
+           </md-table>
+         </template>
+       </md-card-content>
+     </md-card>
+   </div>
 </template>
 
 <script>
@@ -69,6 +86,8 @@
   import FileField from '../../common/fields/FileField'
   import FormMixin from '../../common/mixins/form.mixin'
 
+  import { add } from '../../../js/utils/math.util'
+
   export default {
     name: 'MassTransfersIndex',
     components: { FileField },
@@ -80,6 +99,45 @@
       transfers: [],
       i18n
     }),
+    computed: {
+      totals () {
+        const amountsByAssets = {}
+        const sourceFeesByAssets = {}
+        const destinationFeesByAssets = {}
+
+        this.transfers.forEach(transfer => {
+          amountsByAssets[transfer.asset] = [...(amountsByAssets[transfer.asset] || []), transfer.amount]
+          sourceFeesByAssets[transfer.sourceFees.feeAsset] = [
+            ...(sourceFeesByAssets[transfer.sourceFees.feeAsset] || []),
+            add(transfer.sourceFees.fixed, transfer.sourceFees.percent)
+          ]
+          destinationFeesByAssets[transfer.destinationFees.feeAsset] = [
+            ...(destinationFeesByAssets[transfer.destinationFees.feeAsset] || []),
+            add(transfer.destinationFees.fixed, transfer.destinationFees.percent)
+          ]
+        })
+
+        const totalAmounts = {}
+        const totalSourceFees = {}
+        const totalDestinationFees = {}
+
+        for (const [asset, amounts] of Object.entries(amountsByAssets)) {
+          totalAmounts[asset] = amounts.reduce((total, amount) => add(total, amount), 0)
+        }
+        for (const [asset, amounts] of Object.entries(sourceFeesByAssets)) {
+          totalSourceFees[asset] = amounts.reduce((total, amount) => add(total, amount), 0)
+        }
+        for (const [asset, amounts] of Object.entries(destinationFeesByAssets)) {
+          totalDestinationFees[asset] = amounts.reduce((total, amount) => add(total, amount), 0)
+        }
+
+        return {
+          amounts: totalAmounts,
+          sourceFees: totalSourceFees,
+          destinationFees: totalDestinationFees
+        }
+      }
+    },
     methods: {
       async parseFile () {
         if (!this.documents.transfers) return
@@ -126,7 +184,30 @@
 </script>
 
 <style lang="scss">
-  .mass-transfer__table-row--account-id {
+
+  .mass-transfer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+
+  .mass-transfer__card {
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
+  }
+
+
+  .mass-transfer__table-cell {
+    white-space: nowrap;
+
+    .md-checkbox {
+      margin: 0 !important;
+    }
+  }
+
+  .mass-transfer__table-cell--account-id {
     .md-table-cell-container {
       max-width: 150px;
       overflow: hidden;

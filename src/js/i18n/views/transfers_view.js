@@ -10,5 +10,9 @@ export default {
   tr_no_assets_exists_exp: 'This feature will be available once  any asset appears',
   tr_balance: 'Your balance is %{balance} %{token}',
   tr_create_mass: 'Make mass transfer',
-  tr_mass_how_to: 'To create mass transfer, please upload a .csv file with '
+  tr_mass_how_to: 'To create mass transfer, please upload a .csv file with ',
+  tr_total_amount: 'Total amount',
+  tr_total_source_fee: 'Total sender fee',
+  tr_total_recipient_fee: 'Total recipients fee',
+  tr_mass_payment_details: 'Here what you will pay:'
 }
