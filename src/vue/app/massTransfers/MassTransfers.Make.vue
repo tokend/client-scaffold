@@ -4,7 +4,55 @@
        <md-card-header>
          <div class="md-title">{{ i18n.tr_create_mass() }}</div>
        </md-card-header>
+
        <md-card-content>
+         <p>{{ i18n.tr_mass_about() }}</p>
+         <p><md-button @click="isHowToOpened = true">{{ i18n.tr_tell_me_more() }}</md-button></p>
+         <md-dialog :md-active.sync="isHowToOpened">
+           <md-dialog-title>{{ i18n.tr_about_csv() }}</md-dialog-title>
+           <div class="app__dialog-inner">
+             <p>{{ i18n.tr_mass_about_detailed() }}</p>
+             <md-table>
+               <md-table-row>
+                 <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_recipient_email_or_account() }}</md-table-head>
+                 <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
+                 <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_asset() }}</md-table-head>
+               </md-table-row>
+               <md-table-row>
+                 <md-table-cell>alice@mail.com</md-table-cell>
+                 <md-table-cell>0.012</md-table-cell>
+                 <md-table-cell>BTC</md-table-cell>
+               </md-table-row>
+               <md-table-row>
+                 <md-table-cell>bob@mail.com</md-table-cell>
+                 <md-table-cell>1.541</md-table-cell>
+                 <md-table-cell>ETH</md-table-cell>
+               </md-table-row>
+               <md-table-row>
+                 <md-table-cell>john@mail.com</md-table-cell>
+                 <md-table-cell>0.998</md-table-cell>
+                 <md-table-cell>ETH</md-table-cell>
+               </md-table-row>
+             </md-table>
+
+             <p>{{ i18n.tr_should_look_like() }}</p>
+
+             <blockquote class="mass-transfer__csv-example">
+               alice@mail.com,0.012,BTC <br>
+               bob@mail.com,1.541,ETH <br>
+               john@mail.com,0.998,ETH <br>
+             </blockquote>
+
+             <p>{{ i18n.tr_use_editor() }}</p>
+
+           </div>
+           <md-dialog-actions>
+             <md-button class="md-primary" @click="isHowToOpened = false">
+               {{ i18n.lbl_got_it() }}
+             </md-button>
+           </md-dialog-actions>
+         </md-dialog>
+
          <file-field class="mass-transfer__upload-input"
                      v-model="documents.transfers"
                      label="Select File(s)"
@@ -82,6 +130,7 @@
 
 <script>
   import { FileHelper } from '../../../js/helpers/file.helper'
+  import { ErrorHandler } from '../../../js/errors/error_handler'
   import { Keypair } from 'swarm-js-sdk'
 
   import { accountsService } from '../../../js/services/accounts.service'
@@ -105,7 +154,8 @@
         transfers: null
       },
       transfers: [],
-      i18n
+      i18n,
+      isHowToOpened: false
     }),
     computed: {
       totals () {
@@ -164,27 +214,31 @@
         await this.loadTransferDetails(parsed)
       },
       async loadTransferDetails (transfers) {
-        for (const transfer of transfers) {
-          if (Keypair.isValidPublicKey(transfer.recipient)) {
-            transfer.email = await accountsService.loadEmailByAccountId(transfer.recipient)
-            transfer.accountId = transfer.recipient
-          } else {
-            transfer.accountId = await accountsService.loadAccountIdByEmail(transfer.recipient)
-            transfer.email = transfer.recipient
+        this.disable()
+        try {
+          for (const transfer of transfers) {
+            if (Keypair.isValidPublicKey(transfer.recipient)) {
+              transfer.email = await accountsService.loadEmailByAccountId(transfer.recipient)
+              transfer.accountId = transfer.recipient
+            } else {
+              transfer.accountId = await accountsService.loadAccountIdByEmail(transfer.recipient)
+              transfer.email = transfer.recipient
+            }
+            transfer.sourceFees = await feeService.loadPaymentFeeByAmount(
+              transfer.asset,
+              transfer.amount
+            )
+            transfer.destinationFees = await feeService.loadPaymentFeeByAmount(
+              transfer.asset,
+              transfer.amount,
+              transfer.accountId,
+              PAYMENT_FEE_SUBTYPES.incoming
+            )
+            transfer.sourcePaysForDest = false
           }
-          transfer.sourceFees = await feeService.loadPaymentFeeByAmount(
-            transfer.asset,
-            transfer.amount
-          )
-          transfer.destinationFees = await feeService.loadPaymentFeeByAmount(
-            transfer.asset,
-            transfer.amount,
-            transfer.accountId,
-            PAYMENT_FEE_SUBTYPES.incoming
-          )
-          transfer.sourcePaysForDest = false
-        }
-        this.transfers = transfers
+          this.transfers = transfers
+        } catch (e) { ErrorHandler.processUnexpected(e) }
+        this.enable()
       }
     },
     watch: { 'documents.transfers': 'parseFile' }
@@ -192,6 +246,7 @@
 </script>
 
 <style lang="scss">
+  @import '../../../scss/variables';
 
   .mass-transfer {
     display: flex;
@@ -221,5 +276,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+
+  .mass-transfer__csv-example {
+    border: 1px solid rgba($col-unfocused, .5);
+    background: rgba($col-md-primary, .05);
+    color: $col-md-accent;
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    border-radius: 5px;
+    padding: .5rem 1rem;
   }
 </style>

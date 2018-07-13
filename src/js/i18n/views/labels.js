@@ -16,6 +16,7 @@ export default {
   lbl_my_account: 'My account',
   lbl_account: 'Account',
   lbl_verified: 'Verified user',
+  lbl_got_it: 'Got it',
   lbl_unverified: 'Unverified user',
   lbl_dashboard: 'Dashboard',
   lbl_deposit: 'Deposit',
