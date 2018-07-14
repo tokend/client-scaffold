@@ -68,4 +68,4 @@ deploy_mariniero:
   script:
     # TODO add host fingerprint
     - eval $(ssh-agent -s); ssh-add /root/.ssh/id_rsa; ssh-add /root/.ssh/test
-    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV_M  -e @$DEPLOYMENT_SECRETS_M revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR_M/web.yml
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $DEPLOYMENT_INV_M  -e @$DEPLOYMENT_SECRETS_M -e revision=$CI_COMMIT_SHA $DEPLOYMENT_DIR_M/web.yml
