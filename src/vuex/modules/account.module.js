@@ -59,7 +59,7 @@ export const mutations = {
   SET_ACCOUNT_KYC_DOCUMENTS (state, documents) {
     state.kycDocuments = Object.entries(documents)
       .reduce((docs, [type, doc]) => {
-        return {...docs, [type]: new DocumentContainer(doc)}
+        return {...docs, [type]: new DocumentContainer(doc.front || doc)}
       }, {})
   }
 }

@@ -123,7 +123,8 @@ export function wrapDocuments (documents) {
   if (!documents) return {}
   return Object.entries(documents)
     .reduce((documents, [type, doc]) => {
-      documents[type] = doc && (doc.key || doc.file) ? new DocumentContainer(doc) : null
+      // .front is here only for backwards compatibility:
+      documents[type] = doc && (doc.key || doc.file || doc.front) ? new DocumentContainer(doc.front || doc) : null
       return documents
     }, {})
 }
