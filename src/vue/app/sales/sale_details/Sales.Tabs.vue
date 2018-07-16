@@ -25,6 +25,11 @@
         <sale-banner :sale="sale" />
       </div>
     </md-tab>
+    <md-tab name="Documents"  md-label="Documents">
+      <div class="tabs__tab-inner">
+        <documents-tab :sale="sale"/>
+      </div>
+    </md-tab>
   </md-tabs>
 
 </template>
@@ -34,11 +39,13 @@
   import CrowdfundTab from './tabs/Sales.CrowdfundTab'
   import SaleBanner from './components/Sales.Banner'
   import TokenTab from './tabs/Sales.TokenTab'
+  import DocumentsTab from './tabs/Sales.DocumentsTab'
   import SaleTab from './tabs/Sales.SaleTab'
   export default {
     name: 'sale-details-tabs',
     props: ['sale', 'description', 'syndicate', 'token'],
     components: {
+      DocumentsTab,
       DescriptionTab,
       CrowdfundTab,
       SaleBanner,
