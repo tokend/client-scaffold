@@ -95,12 +95,20 @@
               </div>
             </md-card-content>
             <md-card-actions class="explore-tokens__token-actions">
-                <md-button class="md-primary" @click="createBalance"
-                          v-if="!hasBalance(selected)"
-                          :disabled="isPending">
-                  {{ i18n.lbl_add_to_balances() }}
-                </md-button>
-                <md-button class="md-primary" @click="goHistory" v-else>{{ i18n.lbl_view_history() }}</md-button>
+              <button v-ripple
+                      @click="createBalance"
+                      v-if="!hasBalance(selected)"
+                      class="app__button-flat"
+                      :disabled="isPending">
+                {{ i18n.lbl_add_to_balances() }}
+              </button>
+              <button v-ripple
+                      @click="goHistory"
+                      v-else
+                      class="app__button-flat"
+                      :disabled="isPending">
+                {{ i18n.lbl_view_history() }}
+              </button>
             </md-card-actions>
           </md-card>
         </template>

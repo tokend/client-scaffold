@@ -7,13 +7,12 @@
     md-persistent
   >
     <span>{{ config.msg }}</span>
-    <md-button
-      class="md-primary"
-      @click="isActive = false"
-      v-if="config.showButton"
-    >
+    <button v-ripple
+            @click="isActive = false"
+            v-if="config.showButton"
+            class="app__button-flat">
       {{ config.btnText }}
-    </md-button>
+    </button>
   </md-snackbar>
 </template>
 

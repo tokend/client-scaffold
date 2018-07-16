@@ -117,10 +117,12 @@
           {{ token.code }}</md-switch>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn"
-      :disabled="isPending">
+      <button v-ripple
+              type="submit"
+              class="step__submit-btn app__button-flat"
+              :disabled="isPending">
         {{ i18n.sale_next_step() }}
-      </md-button>
+      </button>
     </div>
   </form>
 </template>

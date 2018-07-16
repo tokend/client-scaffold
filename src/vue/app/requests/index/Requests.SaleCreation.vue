@@ -61,14 +61,11 @@
                 </div>
               </md-card-content>
               <md-card-actions>
-                <!-- <md-button class="md-dense md-accent"
-                          :disabled="item.requestState !== REQUEST_STATES_STR.pending
-                                  || isPending"
-                          @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
               <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"
-                             tag="md-button"
-                             class="md-dense md-primary"
-                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                            tag="button"
+                            v-ripple
+                            class="app__button-flat"
+                            :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
@@ -76,7 +73,12 @@
          <md-table-row v-if="!isLoaded">
             <md-table-cell colspan="7">
                 <div class="tx-history__btn-outer">
-                <md-button @click="more" :disabled="isLoading">{{ i18n.lbl_view_more() }}</md-button>
+                  <button v-ripple
+                          @click="more"
+                          class="app__button-flat"
+                          :disabled="isLoading">
+                    {{ i18n.lbl_view_more() }}
+                  </button>
                 </div>
             </md-table-cell>
          </md-table-row>

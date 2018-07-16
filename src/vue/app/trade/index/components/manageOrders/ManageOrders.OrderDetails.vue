@@ -6,7 +6,9 @@
     <detail :prop="'Price'" :value="`${tx.price} ${tx.quoteAssetCode}`"/>
     <detail :prop="'Fee'" :value="`${tx.fee} ${tx.baseAssetCode}`"/>
     <detail :prop="'Date'" :value="i18n.d(tx.createdAt)"/>
-    <md-button class="md-accent cancel-button" @click="cancelOffer" :disabled="isPending">Cancel order</md-button>
+    <button v-ripple @click="cancelOffer" class="cancel-button" :disabled="isPending">
+      {{ i18n.trd_cancel_order() }}
+    </button>
   </div>
 </template>
 
@@ -70,9 +72,11 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../../scss/mixins";
+  @import "~@scss/mixins";
 
   .cancel-button {
+    @include button-accent();
+
     margin-left: auto;
     margin-right: 0;
     margin-top: 24px;

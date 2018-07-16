@@ -24,8 +24,8 @@ const template = `
     </div>
 
     <md-dialog-actions>
-     <md-button class="md-primary" @click="close">{{ i18n.lbl_cancel() }}</md-button>
-     <md-button class="md-primary" :disabled="isPending" @click="submit">{{ i18n.lbl_submit() }}</md-button>
+      <button v-ripple @click="submit" class="app__button-flat">{{ i18n.lbl_cancel() }}</button>
+      <button v-ripple @click="close" class="app__button-flat" :disabled="isPending">{{ i18n.lbl_submit() }}</button>
     </md-dialog-actions>
 
    </md-dialog>

@@ -7,6 +7,7 @@ export default {
   trd_created: 'Created',
   trd_ask: 'Ask',
   trd_bid: 'Bid',
+  trd_cancel_order: 'Cancel order',
   trd_offer_canceled: 'Offer successfully cancelled',
   trd_offer_created: 'Offer successfully created',
   trd_offer_failed_to_cancel: 'Failed to cancel offer',

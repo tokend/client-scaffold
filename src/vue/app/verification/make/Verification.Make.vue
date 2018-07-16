@@ -33,10 +33,11 @@
           </md-card-content>
 
           <md-card-actions class="md-layout">
-            <md-button  @click="showForm = true"
-                        class="md-primary">
-            {{ i18n.lbl_edit_details() }}
-            </md-button>
+            <button v-ripple
+                    @click="showForm = true"
+                    class="app__button-flat">
+              {{ i18n.lbl_edit_details() }}
+            </button>
           </md-card-actions>
 
         </md-card>

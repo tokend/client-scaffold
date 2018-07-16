@@ -7,13 +7,12 @@
     md-persistent
   >
     <span>{{ config.msg }}</span>
-    <md-button
-      class="md-primary"
-      @click="isActive = false"
-      v-if="config.showButton"
-    >
+    <button v-ripple
+            v-if="config.showButton"
+            @click="isActive = false"
+            class="app__button-flat snackbar__btn">
       {{ config.btnText }}
-    </md-button>
+    </button>
   </md-snackbar>
 </template>
 
@@ -80,6 +79,14 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import '~@scss/variables';
 
+  .snackbar__btn {
+    color: #fff;
+
+    &:hover {
+      background-color: $col-md-primary-flat-hover;
+    }
+  }
 </style>

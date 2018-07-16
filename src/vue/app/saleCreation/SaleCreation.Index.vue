@@ -15,7 +15,7 @@
                           :title="i18n.lbl_not_available()"
                           :descr="i18n.lbl_token_not_available_yet()"/>
     </template>
-    <template v-else-if="view.mode === VIEW_MODES.edit">  
+    <template v-else-if="view.mode === VIEW_MODES.edit">
           <md-card class="create-sale__heading">
             <md-card-header>
               <div class="md-title">{{ i18n.lbl_create_sale() }}</div>
@@ -49,7 +49,11 @@
             <div class="md-title">{{ i18n.sale_open_requests() }}</div>
           </md-card-header>
           <md-card-content>
-            <md-button @click="startNewSale">{{ i18n.sale_start_new_sale() }}</md-button>
+            <button v-ripple
+                    @click="startNewSale"
+                    class="app__button-flat">
+              {{ i18n.sale_start_new_sale() }}
+            </button>
             <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
           </md-card-content>
         </md-card>

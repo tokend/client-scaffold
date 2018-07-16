@@ -20,7 +20,12 @@
             <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-type-icon">person</md-icon>
           </md-card-content>
           <md-card-actions>
-            <md-button class="user-type-selector__user-type-button md-primary" @click="selectType(userTypes.general)" :disabled="isPending">SUBMIT KYC</md-button>
+            <button v-ripple
+                    @click="selectType(userTypes.general)"
+                    class="app__button-flat user-type-selector__user-type-button"
+                    :disabled="isPending">
+              {{ i18n.kyc_submit() }}
+            </button>
           </md-card-actions>
         </md-card>
         <md-card class="user-type-selector__user-types-item md-layout-item md-size-30">
@@ -35,7 +40,12 @@
             <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-type-icon">domain</md-icon>
           </md-card-content>
           <md-card-actions>
-            <md-button class="user-type-selector__user-type-button md-primary" @click="selectType(userTypes.syndicate)" :disabled="isPending">SUBMIT KYC</md-button>
+            <button v-ripple
+                    @click="selectType(userTypes.syndicate)"
+                    class="app__button-flat user-type-selector__user-type-button"
+                    :disabled="isPending">
+              {{ i18n.kyc_submit() }}
+            </button>
           </md-card-actions>
         </md-card>
       </div>

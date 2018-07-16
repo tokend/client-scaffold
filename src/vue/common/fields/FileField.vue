@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <input type="file" 
+        <input type="file"
                accept="image/*"
                @change="onChange">
       </div>
@@ -30,12 +30,12 @@
         {{ label }}
       </div>
         <template v-if="accept === '.iss'">
-          <label :for="id" class="file-field__uploader file-field__preissuance-uploader">
+          <label :for="id" v-ripple class="file-field__uploader file-field__preissuance-uploader">
             <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_iss_file()}}
           </label>
         </template>
         <template v-else>
-          <label :for="id" class="file-field__uploader">
+          <label :for="id" v-ripple class="file-field__uploader">
             <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(maxSize) })}}
           </label>
         </template>
@@ -226,20 +226,8 @@
   }
 
   .file-field__uploader {
-    background: $col-md-primary;
-    border-radius: 3px;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-    color: $col-md-primary-txt;
-    display: block;
-    cursor: pointer;
-    margin-right: .5rem;
-    padding: .75rem 1rem;
-    width: 12.5rem;
-    transition: .4s cubic-bezier(.4,0,.2,1);
-
-    &:hover {
-      background: lighten($col-md-primary, 3.5%);
-    }
+    @include button();
+    @include button-raised();
   }
 
   .file-field__preissuance-uploader {

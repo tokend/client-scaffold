@@ -43,6 +43,8 @@ export default {
   lbl_cancel: 'Cancel',
   lbl_wallet: 'wallet',
   lbl_date: 'Date',
+  lbl_buy: 'Buy',
+  lbl_sell: 'Sell',
   lbl_tx_type: 'Transaction type',
   lbl_status: 'Status',
   lbl_counterparty: 'Counterparty',

@@ -9,11 +9,11 @@
     </div>
     <div class="invest__row">
       <div class="asset-wrp">
-        <select-field v-model="form.quoteAsset"
-                      :values="sale.quoteAssetCodes"
-                      class="invest__select-quote-assets"
-                      :label="i18n.lbl_asset()"
-        />
+        <select-field-custom
+          class="invest__select-quote-assets"
+          :label="i18n.lbl_asset()"
+          v-model="form.quoteAsset"
+          :values="sale.quoteAssetCodes"/>
       </div>
       <div class="invest-wrp">
         <div class="invest__input-quote-wrp">
@@ -52,19 +52,21 @@
         <md-tooltip md-direction="top">
           {{ i18n.sale_offer_cancel_tip({amount: i18n.c(investedAmount), asset: form.quoteAsset}) }}
         </md-tooltip>
-        <md-button class="md-primary invest__cancel-btn"
-                 @click="cancelOffer"
-                 v-if="sale.isOpened && offer"
-                 :disabled="isPending">
-                 {{i18n.sale_offer_cancel()}}
-        </md-button>
+        <button v-ripple
+                @click="cancelOffer"
+                v-if="sale.isOpened && offer"
+                class="app__button-flat invest__cancel-btn"
+                :disabled="isPending">
+          {{ i18n.sale_offer_cancel() }}
+        </button>
       </div>
       <div class="invest__submit-btn-ctn">
-        <md-button class="md-primary invest__submit-btn"
-                 @click="invest"
-                 :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
-                 {{i18n.sale_invest()}}
-        </md-button>
+        <button v-ripple
+                @click="invest"
+                class="app__button-flat invest__submit-btn"
+                :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
+          {{ i18n.sale_invest() }}
+        </button>
         <md-tooltip v-if="sale.isUpcoming"
                     md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
         <md-tooltip v-else-if="isOwner"

@@ -123,9 +123,12 @@
           </div>
         </md-card-content>
         <md-card-actions>
-          <md-button type="submit" class="md-primary"
-            :disabled="isPending"
-          >{{ i18n.lbl_submit() }}</md-button>
+          <button v-ripple
+                  type="submit"
+                  class="app__button-flat"
+                  :disabled="isPending">
+            {{ i18n.lbl_submit() }}
+          </button>
         </md-card-actions>
       </md-card>
     </form>
@@ -136,7 +139,9 @@
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
       </md-card-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+        <button v-ripple @click="showDialog = false" class="app__button-flat">
+          {{ i18n.lbl_close() }}
+        </button>
       </md-dialog-actions>
     </md-dialog>
   </div>

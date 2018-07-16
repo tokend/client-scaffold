@@ -74,7 +74,11 @@
             <template v-if="doc.type === documentTypes.kycSelfie">
               <h4>{{ i18n.kyc_photo_verification() }}</h4>
               <p>{{ i18n.kyc_photo_explain() }}</p>
-              <md-button @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</md-button>
+              <button v-ripple
+                      @click="isDialogOpened = true"
+                      class="app__button-flat">>
+                {{ i18n.kyc_show_key() }}
+              </button>
             </template>
 
             <file-field class="kyc-form__file-field"
@@ -87,9 +91,12 @@
           </template>
         </md-card-content>
         <md-card-actions>
-          <md-button type="submit" class="md-primary"
-            :disabled="isPending || accountState === ACCOUNT_STATES.pending"
-          >{{ i18n.lbl_submit() }}</md-button>
+           <button v-ripple
+                  type="submit"
+                  class="app__button-flat"
+                  :disabled="isPending || accountState === ACCOUNT_STATES.pending">
+            {{ i18n.lbl_submit() }}
+          </button>
         </md-card-actions>
       </md-card>
     </form>
@@ -104,7 +111,11 @@
         </p>
       </div>
       <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button class="md-primary" @click="isDialogOpened = false">{{ i18n.lbl_done() }}</md-button>
+        <button v-ripple
+                @click="isDialogOpened = false"
+                class="app__button-flat">
+          {{ i18n.lbl_done() }}
+        </button>
       </md-dialog-actions>
     </md-dialog>
 

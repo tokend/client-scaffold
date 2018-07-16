@@ -21,9 +21,11 @@
       <description-editor class="description-step__editor" v-model="form.description"/>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn">
+      <button v-ripple
+              type="submit"
+              class="step__submit-btn app__button-flat">
         {{ i18n.sale_create_sale() }}
-      </md-button>
+      </button>
     </div>
   </form>
 </template>
@@ -112,9 +114,9 @@
     display: flex;
     flex-direction: column;
   }
-  
+
   .step__action {
     margin-top: 1rem;
   }
-  
+
 </style>

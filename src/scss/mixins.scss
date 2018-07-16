@@ -1,3 +1,5 @@
+@import './variables';
+
 // https://material.io/guidelines/layout/responsive-ui.html#responsive-ui-breakpoints
 $xsmall: 480px;
 $small: 600px;
@@ -40,6 +42,20 @@ $xlarge: 1920px;
   &[disabled] {
     box-shadow: none;
     opacity: .5;
+  }
+}
+
+@mixin button-accent () {
+  @include button();
+  transition: .3s ease-out;
+  color: $col-md-accent;
+
+  &[disabled] {
+    color: $lightGray;
+  }
+
+  &:not([disabled]):hover {
+    background-color: $col-md-accent-flat-hover;
   }
 }
 

@@ -54,12 +54,18 @@
 
     </md-card-content>
     <md-dialog-actions class="transfer-dialog__actions">
-      <md-button class="md-primary" @click="$emit(commonEvents.cancelClickEvent)" :disabled="isPending">
+      <button v-ripple
+              @click="$emit(commonEvents.cancelClickEvent)"
+              class="app__button-flat"
+              :disabled="isPending">
         {{ i18n.lbl_cancel() }}
-      </md-button>
-      <md-button class="md-primary" @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)" :disabled="isPending">
+      </button>
+      <button v-ripple
+              @click="$emit(commonEvents.confirmClickEvent, form.sourcePaysForDest)"
+              class="app__button-flat"
+              :disabled="isPending">
         {{ i18n.lbl_confirm() }}
-      </md-button>
+      </button>
     </md-dialog-actions>
   </md-card>
 </template>

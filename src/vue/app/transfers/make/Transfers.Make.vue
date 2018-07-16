@@ -70,9 +70,12 @@
             />
           </md-card-content>
           <md-dialog-actions class="transfer-dialog__actions">
-              <md-button type="submit" class="md-primary" :isPending="isPending">
-                {{ i18n.lbl_send() }}
-              </md-button>
+            <button v-ripple
+                    type="submit"
+                    class="app__button-flat"
+                    :disabled="isPending">
+              {{ i18n.lbl_send() }}
+            </button>
           </md-dialog-actions>
         </md-card>
       </form>
@@ -109,7 +112,11 @@
           </div>
         </md-card-content>
         <md-dialog-actions class="transfer-dialog__actions">
-            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {}, true)">{{ i18n.lbl_go_back() }}</md-button>
+          <button v-ripple
+                  @click="updateView(VIEW_MODES.submit, {}, true)"
+                  class="app__button-flat">
+            {{ i18n.lbl_go_back() }}
+          </button>
         </md-dialog-actions>
       </md-card>
     </template>

@@ -36,7 +36,7 @@ const template = `
      </div>
 
      <md-dialog-actions>
-       <md-button class="md-primary" @click="submit">{{i18n.lbl_ok() }}</md-button>
+      <button v-ripple @click="submit" class="app__button-flat"> {{ i18n.lbl_ok() }} </button>
      </md-dialog-actions>
    </md-dialog>
  </form>

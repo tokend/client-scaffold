@@ -24,8 +24,12 @@
       </div>
 
       <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button @click="isSettingsOpened = false" class="md-primary">Cancel</md-button>
-        <md-button @click="updateFactor" class="md-primary">Confirm</md-button>
+        <button v-ripple @click="isSettingsOpened = false" class="app__button-flat">
+          {{ i18n.lbl_cancel() }}
+        </button>
+        <button v-ripple @click="updateFactor" class="app__button-flat">
+          {{ i18n.lbl_confirm() }}
+        </button>
       </md-dialog-actions>
 
     </md-dialog>

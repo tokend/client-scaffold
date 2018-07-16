@@ -81,7 +81,12 @@
             />
           </md-card-content>
           <md-dialog-actions class="withdrawal-dialog__actions">
-              <md-button type="submit" class="md-primary withdraw__submit">withdraw</md-button>
+            <button v-ripple
+                    type="submit"
+                    class="app__button-flat withdraw__submit"
+                    :disabled="isPending">
+              {{ i18n.withdraw_withdrawal() }}
+            </button>
           </md-dialog-actions>
         </md-card>
       </form>
@@ -113,8 +118,18 @@
             <div class="withdraw__success-amount">
               {{ form.amount }} {{ form.tokenCode }}
             </div>
-            <md-button class="md-primary" @click="updateView(VIEW_MODES.submit, {} , true)">{{ i18n.lbl_go_back() }}</md-button>
-            <md-button :to="'/history/index/' + form.tokenCode" class="md-primary">{{ i18n.lbl_view_history() }}</md-button>
+            <button v-ripple
+                    class="app__button-flat"
+                    @click="updateView(VIEW_MODES.submit, {} , true)">
+              {{ i18n.lbl_go_back() }}
+            </button>
+            <router-link v-ripple
+                        @click="updateView(VIEW_MODES.submit, {} , true)"
+                        tag="button"
+                        class="app__button-flat"
+                        :to="'/history/index/' + form.tokenCode">
+              {{ i18n.lbl_view_history() }}
+            </router-link>
           </div>
         </md-card-content>
       </md-card>

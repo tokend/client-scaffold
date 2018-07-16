@@ -75,9 +75,11 @@ $col-pb-fill: $vividBlue;
 
 $col-md-primary: rgb(58, 65, 128);
 $col-md-primary-inactive: rgba($col-md-primary, .7);
+$col-md-primary-flat-hover: rgba($col-md-primary, .2);
 $col-md-primary-secondary: #7b6eff;
 $col-md-background: #f2f2f4;
 $col-md-accent: #ef5350;
+$col-md-accent-flat-hover: rgba($col-md-accent, .2);
 $col-md-primary-txt: #fff;
 $col-md-unfocused: rgba(0, 0, 0, .54);
 $col-md-block: #fff;

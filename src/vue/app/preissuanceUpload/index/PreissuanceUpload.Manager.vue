@@ -32,16 +32,18 @@
           </div>
         </md-card-content>
         <md-card-actions v-if="issuances.length">
-          <md-button class="md-primary"
-                    @click="submit"
-                    :disabled="isPending">
+          <button v-ripple
+                  @click="submit"
+                  class="app__button-flat"
+                  :disabled="isPending">
             {{ i18n.lbl_upload() }}
-          </md-button>
-          <md-button class="md-primary"
-                    @click="clear"
-                    :disabled="isPending">
+          </button>
+          <button v-ripple
+                  @click="clear"
+                  class="app__button-flat"
+                  :disabled="isPending">
             {{ i18n.lbl_clear() }}
-          </md-button>
+          </button>
         </md-card-actions>
       </md-card>
     </div>

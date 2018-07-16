@@ -54,9 +54,12 @@
           </template>
         </md-card-content>
         <md-card-actions>
-          <md-button type="submit" class="md-primary"
-            :disabled="isPending || accountState === ACCOUNT_STATES.pending"
-          >{{ i18n.lbl_submit() }}</md-button>
+          <button v-ripple
+                  type="submit"
+                  class="app__button-flat"
+                  :disabled="isPending || accountState === ACCOUNT_STATES.pending">
+            {{ i18n.lbl_submit() }}
+          </button>
         </md-card-actions>
       </md-card>
     </form>

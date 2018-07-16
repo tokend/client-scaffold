@@ -49,7 +49,12 @@
       </md-card-content>
 
       <md-card-actions>
-        <md-button type="submit" class="md-primary" :disabled="isPending">Buy</md-button>
+        <button v-ripple
+                type="submit"
+                class="app__button-flat"
+                :disabled="isPending">
+          {{ i18n.lbl_buy() }}
+        </button>
       </md-card-actions>
     </md-card>
   </form>
