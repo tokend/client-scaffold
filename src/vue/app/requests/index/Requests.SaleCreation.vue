@@ -4,11 +4,10 @@
       <md-table-toolbar class="tx-sale-creation__table-toolbar">
         <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1>
         <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
-          <select-field
+           <select-field-custom
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
-            :values="accountOwnedTokens"
-          />
+            :values="accountOwnedTokens"/>
         </div>
       </md-table-toolbar>
       <template v-if="tokenCode && list.length">
@@ -66,10 +65,10 @@
                           :disabled="item.requestState !== REQUEST_STATES_STR.pending
                                   || isPending"
                           @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
-              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"  
-                             tag="md-button"  
+              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"
+                             tag="md-button"
                              class="md-dense md-primary"
-                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>  
+                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>

@@ -49,17 +49,18 @@
                                   :errorMessage="errorMessage(item.name)"
                                   :disabled="accountState === ACCOUNT_STATES.pending"
                       />
-                      <select-field v-if="item.field === 'select'"
-                                    v-model="form[item.model]"
-                                    v-validate="item.validate"
-                                    :values="values[item.values]"
-                                    :name="item.name"
-                                    :id="item.id"
-                                    :required="item.required"
-                                    :label="item.label"
-                                    :errorMessage="errorMessage(item.name)"
-                                    :disabled="accountState === ACCOUNT_STATES.pending"
-                      />
+                      <select-field-custom
+                        v-if="item.field === 'select'"
+                        class="md-layout-item assets-select__select"
+                        :label="item.label"
+                        v-model="form[item.model]"
+                        v-validate="item.validate"
+                        :name="item.name"
+                        :id="item.id"
+                        :required="item.required"
+                        :errorMessage="errorMessage(item.name)"
+                        :disabled="accountState === ACCOUNT_STATES.pending"
+                        :values="values[item.values]"/>
                     </div>
                   </template>
               </div>

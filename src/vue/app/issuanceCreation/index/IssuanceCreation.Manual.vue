@@ -35,9 +35,9 @@
                 />
               </div>
               <div class="md-layout-item md-small-size-100">
-                <select-field :label="i18n.lbl_asset()"
-                              v-model="request.code"
-                              :values="accountOwnedTokens" />
+                <select-field-custom :values="accountOwnedTokens"
+                                     v-model="request.code"
+                                     :label="i18n.lbl_asset()"/>
               </div>
             </div>
             <div class="md-layout md-gutter">
@@ -76,7 +76,7 @@
 
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
-import SelectField from '../../../common/fields/SelectField'
+import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 import NotAvailableCard from '../../common/NotAvailableCard'
 import { i18n } from '../../../../js/i18n'
 import { mapGetters } from 'vuex'
@@ -90,7 +90,7 @@ import { errors } from '../../../../js/errors/factory'
 
 export default {
   mixins: [FormMixin],
-  components: { SelectField, NotAvailableCard },
+  components: { SelectFieldCustom, NotAvailableCard },
   data: _ => ({
     request: {},
     i18n,

@@ -1,5 +1,8 @@
 <template>
   <div class="select">
+    <div v-if="label" class="select__label">
+      {{ label }}
+    </div>
     <div class="select__selected" @click="toggleListVisibility()">
       <div class="select__selected-value">{{ selected }}</div>
       <md-icon class="select__selected-icon" :class="{ 'select__selected-icon--active': showList }">
@@ -27,8 +30,7 @@
     props: {
       value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
       values: { type: Array, default: _ => [] },
-      multiple: { type: Boolean, default: false },
-      dense: { type: Boolean, default: false }
+      label: { type: String, default: '' }
     },
     data: _ => ({
       selected: '',
@@ -109,6 +111,11 @@
     &:hover {
       background-color: rgba(58, 65, 128, .1);
     }
+  }
+
+  .select__label {
+    color: $col-md-unfocused;
+    font-size: 12px;
   }
 
   .select__list-item--selected {

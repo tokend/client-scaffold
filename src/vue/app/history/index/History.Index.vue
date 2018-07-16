@@ -5,11 +5,10 @@
       <md-table-toolbar class="tx-history__table-toolbar">
         <h1 class="tx-history__table-title md-title">{{ i18n.th_transaction_history() }}</h1>
         <div class="tx-history__select-outer">
-          <select-field
+          <select-field-custom
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
-            :values="tokens"
-          />
+            :values="tokens"/>
         </div>
       </md-table-toolbar>
 
@@ -77,7 +76,7 @@
 
 <script>
   import TxDetails from './History.TxDetails'
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 
   import { mapGetters, mapActions } from 'vuex'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
@@ -88,7 +87,7 @@
 
   export default {
     name: 'history-index',
-    components: { TxDetails, SelectField },
+    components: { TxDetails, SelectFieldCustom },
     data: _ => ({
       isLoading: false,
       tokenCode: null,

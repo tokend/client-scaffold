@@ -44,6 +44,14 @@
                       :key='item.id'
           />
 
+          <select-field-custom
+            v-if="item.field === 'select'"
+            :name="item.name"
+            :id="item.id"
+            v-model="form[item.model]"
+            :key='item.id'
+            :label="item.label"/>
+
           <select-field v-if="item.field === 'select'"
                       :name="item.name"
                       :id="item.id"

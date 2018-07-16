@@ -17,22 +17,20 @@
         />
       </div>
       <div class="searcher__filters md-layout-item">
-        <select-field
-          v-model="filters.state"
-          class="searcher__filter"
-          title="Status"
-          :label="i18n.lbl_state()"
+        <select-field-custom
           :values="states"
-        />
+          class="searcher__filter"
+          :title="i18n.lbl_state"
+          v-model="filters.state"
+          :label="i18n.lbl_state()"/>
       </div>
       <div class="searcher__filters md-layout-item">
-        <select-field
-          v-model="filters.sortBy"
-          class="searcher__filter"
-          title="Sort by"
-          :label="i18n.lbl_sort_by()"
+        <select-field-custom
           :values="sortTypes"
-        />
+          class="searcher__filter"
+          :title="i18n.lbl_sort_by"
+          v-model="filters.sortBy"
+          :label="i18n.lbl_state()"/>
       </div>
     </div>
 
@@ -41,7 +39,7 @@
 
 <script>
   import InputField from '../../../common/fields/InputField'
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
   import { i18n } from '../../../../js/i18n'
   import { commonEvents } from '../../../../js/events/common_events'
   import debounce from 'lodash/debounce'
@@ -52,7 +50,7 @@
 
     components: {
       InputField,
-      SelectField
+      SelectFieldCustom
     },
 
     props: [],

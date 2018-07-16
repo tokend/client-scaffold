@@ -2,12 +2,11 @@
   <div class="assets-select">
     <div class="md-layout">
       <template v-if="pairs.length">
-        <select-field
+        <select-field-custom
           class="md-layout-item assets-select__select"
           label="Assets"
-          :values="pairs"
           v-model="currentAsset"
-        />
+          :values="pairs"/>
       </template>
     </div>
 
@@ -15,14 +14,14 @@
 </template>
 
 <script>
-  import SelectField from '../../../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 
   import { dispatchAppEvent } from '../../../../../../js/events/helpers'
   import { commonEvents } from '../../../../../../js/events/common_events'
 
   export default {
     name: 'assets-select',
-    components: { SelectField },
+    components: { SelectFieldCustom },
     props: {
       assets: { type: String, required: false },
       pairs: { type: Array, require: true, default: [] }

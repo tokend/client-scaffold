@@ -74,12 +74,12 @@ $col-pb-line: $lightGray;
 $col-pb-fill: $vividBlue;
 
 $col-md-primary: rgb(58, 65, 128);
-$col-md-primary-inactive: rgba(58, 65, 128, .7);
+$col-md-primary-inactive: rgba($col-md-primary, .7);
 $col-md-primary-secondary: #7b6eff;
 $col-md-background: #f2f2f4;
 $col-md-accent: #ef5350;
 $col-md-primary-txt: #fff;
-$col-md-unfocused: rgba(0, 0, 0, 0.54);
+$col-md-unfocused: rgba(0, 0, 0, .54);
 $col-md-block: #fff;
 $col-md-pending: $orange;
 

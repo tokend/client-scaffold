@@ -2,6 +2,7 @@ import InputField from '../fields/InputField.vue'
 import SelectField from '../fields/SelectField.vue'
 import TextareaField from '../fields/TextareaField'
 import DateField from '../fields/DateField'
+import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
@@ -21,6 +22,7 @@ export default {
   components: {
     InputField,
     SelectField,
+    SelectFieldCustom,
     TextareaField,
     DateField,
     ImageInput

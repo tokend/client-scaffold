@@ -14,17 +14,17 @@
                     :label="i18n.lbl_sale_name()"
                     :errorMessage="errorMessage('sale-name')"
         />
-        <select-field name="sale-base-asset"
-                    id="sale-base-asset"
-                    class="step__input-field
-                          md-layout-item
-                          md-size-45
-                          md-small-size-95
-                          md-xsmall-size-100"
-                    :label="i18n.lbl_base_asset()"
-                    v-model="form.baseAsset"
-                    :values="values.tokens"
-        />
+        <select-field-custom
+            name="sale-base-asset"
+            id="sale-base-asset"
+            class="step__input-field
+                  md-layout-item
+                  md-size-45
+                  md-small-size-95
+                  md-xsmall-size-100"
+            v-model="form.baseAsset"
+            :values="values.tokens"
+            :label="i18n.lbl_base_asset()"/>
     </div>
     <div class="step-row md-layout">
         <date-field v-model="form.startTime"
@@ -58,7 +58,7 @@
     <div class="step-row md-layout">
         <input-field v-model="form.softCap"
             v-validate="{
-                required:true, 
+                required:true,
                 amount: true
             }"
             class="step__input-field
@@ -73,8 +73,8 @@
         />
         <input-field v-model="form.hardCap"
             v-validate="{
-                required:true, 
-                amount: true, 
+                required:true,
+                amount: true,
                 soft_cap: [form.softCap]
             }"
             class="step__input-field
@@ -91,8 +91,8 @@
     <div class="step-row md-layout step-row__base-asset-input">
       <input-field v-model="form.baseAssetForHardCap"
                   v-validate="{
-                      required: true, 
-                      amount: true, 
+                      required: true,
+                      amount: true,
                       max_issuance: [avalaibleForIssuance, form.baseAsset]
                   }"
                   class="step__input-field
@@ -117,7 +117,7 @@
           {{ token.code }}</md-switch>
     </div>
     <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn" 
+      <md-button type="submit" class="md-primary md-flat step__submit-btn"
       :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </md-button>

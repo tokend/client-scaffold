@@ -30,12 +30,9 @@
             </p>
 
             <div class="md-layout withdraw__flex-wrapper">
-              <select-field
-                class="md-layout-item withdraw__select"
-                :label="i18n.lbl_asset()"
-                :values="tokenCodes"
-                v-model="form.tokenCode"
-              />
+              <select-field-custom :values="tokenCodes"
+                                   v-model="form.tokenCode"
+                                   :label="i18n.lbl_asset()"/>
 
               <input-field
                 class="md-layout-item withdraw__field"
@@ -146,7 +143,7 @@
   import debounce from 'lodash/debounce'
   import get from 'lodash/get'
 
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
   import InputField from '../../../common/fields/InputField'
   import ConfirmWithdraw from './Withdrawal.Confirm'
 
@@ -169,7 +166,11 @@
   export default {
     name: 'Withdraw',
     mixins: [formMixin],
-    components: { SelectField, InputField, ConfirmWithdraw },
+    components: {
+      InputField,
+      ConfirmWithdraw,
+      SelectFieldCustom
+    },
     data: _ => ({
       form: {
         tokenCode: null,
@@ -354,6 +355,7 @@
   .withdraw__flex-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
   }
 
   .withdraw__select,

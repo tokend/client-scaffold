@@ -34,12 +34,11 @@
           <md-card-content>
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <select-field id="transfer-token"
-                              name="token"
-                              :label="i18n.lbl_asset()"
-                              :values="tokenCodes"
-                              v-model="form.tokenCode"
-                />
+                <select-field-custom :values="tokenCodes"
+                                     v-model="form.tokenCode"
+                                     id="transfer-token"
+                                     name="token"
+                                     :label="i18n.lbl_asset()"/>
               </div>
 
               <div class="md-layout-item md-small-size-100">
@@ -123,6 +122,7 @@
 <script>
   import FormMixin from '../../../common/mixins/form.mixin'
   import ConfirmTransfer from './Transfers.Confirm'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { mapGetters, mapActions } from 'vuex'
@@ -144,7 +144,10 @@
   export default {
     name: 'transfers-make',
     mixins: [FormMixin],
-    components: { ConfirmTransfer },
+    components: {
+      ConfirmTransfer,
+      SelectFieldCustom
+    },
     data: _ => ({
       form: {
         tokenCode: null,

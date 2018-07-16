@@ -23,15 +23,11 @@
                 {{ i18n.dep_how_long() }}
               </p>
 
-              <div class="md-layout">
-                <select-field
-                  class="md-layout-item"
-                  :label="i18n.lbl_asset()"
-                  :values="tokenCodes"
-                  v-model="form.tokenCode"
-                />
+              <div class="deposit__asset-select">
+                <select-field-custom :values="tokenCodes"
+                                     v-model="form.tokenCode"
+                                     :label="i18n.lbl_asset()"/>
               </div>
-
 
               <template v-if="address">
                 <div class="deposit__qr-outer">
@@ -87,7 +83,7 @@
 </template>
 
 <script>
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
   import InputField from '../../../common/fields/InputField'
   import Qrcode from 'vue-qrcode-component'
   import ClipboardField from '../../../common/fields/ClipboardField'
@@ -103,7 +99,7 @@
   export default {
     name: 'deposit-make',
     components: {
-      SelectField,
+      SelectFieldCustom,
       InputField,
       Qrcode,
       ClipboardField,
@@ -211,5 +207,9 @@
 
   .deposit__progress-wrp {
     text-align: center;
+  }
+
+  .deposit__asset-select {
+    margin-bottom: 16px;
   }
 </style>
