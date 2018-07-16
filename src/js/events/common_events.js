@@ -53,6 +53,8 @@ const componentEvents = Object.freeze({
   cancelOfferEvent: 'cancel-offer',
   makeOfferEvent: 'make-offer',
   assetChangeEvent: 'asset-change',
+  changeDashboardScale: 'change-dashboard-scale',
+  checkDashboardChartHasValue: 'check-dashboard-chart-has-value',
   saleUpdateEvent: 'sale-update',
   saleSelectEvent: 'sale-select',
   saleEditEndEvent: 'sale-edit-end',

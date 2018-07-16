@@ -147,6 +147,8 @@
     font-weight: bold;
     margin-bottom: 16px;
     margin-top: 72px;
+
+    @include respond-to(medium) { margin-top: 24px }
   }
 
   .info-widget__list-header,

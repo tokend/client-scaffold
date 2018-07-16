@@ -3,7 +3,13 @@
     <portfolio-widget class="md-layout-item dashboard__portfolio"
                       :currentAsset="currentAsset"
                       @asset-change="setCurrentAsset"
+                      @change-dashboard-scale="changeDashboardScale"
+                      :scale="scale"
+                      :show-tabls="showTabs"
     />
+    <div class="dashboard__chart">
+      <chart :currency="currentAsset" :scale="scale" @check-dashboard-chart-has-value="checkDashboardHasValue"/>
+    </div>
     <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
   </div>
 </template>
@@ -11,6 +17,7 @@
 <script>
   import PortfolioWidget from './Dashboard.PortfolioWidget'
   import InfoWidget from './Dashboard.InfoWidget'
+  import Chart from './Dashboard.Chart'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
 
@@ -18,10 +25,13 @@
     name: 'dashboard',
     components: {
       PortfolioWidget,
-      InfoWidget
+      InfoWidget,
+      Chart
     },
     data: _ => ({
-      currentAsset: null
+      currentAsset: null,
+      showTabs: false,
+      scale: 'day'
     }),
     async created () {
       await this.loadBalances()
@@ -42,6 +52,12 @@
         } else {
           this.currentAsset = Object.keys(this.accountBalances)[0] || null
         }
+      },
+      changeDashboardScale (value) {
+        this.scale = value
+      },
+      checkDashboardHasValue (value) {
+        this.showTabs = value
       }
     },
     watch: {

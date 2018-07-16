@@ -32,9 +32,33 @@
       </div>
     </div>
     <template v-if="currentAsset">
-      <div class="portfolio-widget__asset-available">
-        <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
-        <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
+      <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
+        <div class="portfolio-widget__asset-available">
+          <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
+          <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
+        </div>
+        <div class="portfolio-widget__select-scale" v-if="showTabls">
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.hour }"
+                  @click="$emit(events.changeDashboardScale, tabs.hour)">
+            Hour
+          </button>
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.day }"
+                  @click="$emit(events.changeDashboardScale, tabs.day)">
+            Day
+          </button>
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.month }"
+                  @click="$emit(events.changeDashboardScale, tabs.month)">
+            Month
+          </button>
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.year }"
+                  @click="$emit(events.changeDashboardScale, tabs.year)">
+            Year
+          </button>
+        </div>
       </div>
     </template>
     <template v-if="!currentAsset">
@@ -63,11 +87,24 @@
       SelectFieldCustom,
       NoDataMessage
     },
-    props: ['currentAsset'],
+    props: {
+      scale: { type: String, required: true },
+      currentAsset: { type: [String, Object], required: true },
+      showTabls: { type: Boolean, default: false }
+    },
     data: _ => ({
       i18n,
       events: {
-        assetChange: commonEvents.assetChangeEvent
+        assetChange: commonEvents.assetChangeEvent,
+        changeDashboardScale: commonEvents.changeDashboardScale
+      },
+      tabs: {
+        hour: 'hour',
+        day: 'day',
+        week: 'week',
+        month: 'month',
+        year: 'year',
+        all: 'all'
       },
       config
     }),
@@ -133,6 +170,25 @@
     }
   }
 
+  .portfolio-widget__wrapper--values {
+    align-items: flex-end;
+
+    @include respond-to(medium) {
+      align-items: flex-end;
+    }
+
+    @include respond-to-custom($custom-breakpoint) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .portfolio-widget__select-scale {
+    @include respond-to-custom($custom-breakpoint) {
+      margin-top: 16px;
+    }
+  }
+
   .portfolio-widget__select {
     display: flex;
     align-items: center;
@@ -168,6 +224,16 @@
       margin-bottom: 16px;
       flex-direction: row;
     }
+  }
+
+  .portfolio-widget__select-scale-btn {
+    @include button();
+    @include button-flat();
+    font-weight: 400;
+  }
+
+  .portfolio-widget__select-scale-btn--selected {
+    font-weight: 700;
   }
 
   .portfolio-widget__asset-btn {
