@@ -25,7 +25,6 @@
           <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
           <md-card-header class="transfer__header">
-            <div class="md-title transfer__title">{{ i18n.tr_send() }}</div>
             <div class="transfer__user-balance">
               {{ i18n.tr_balance({ balance: balance.balance, token: form.tokenCode }) }}
             </div>
@@ -288,7 +287,7 @@
   .transfer__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-wrap: wrap;
   }
 

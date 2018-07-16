@@ -14,11 +14,6 @@
     </template>
 
     <md-card class="explore-tokens__card" v-else>
-
-      <md-card-header>
-        <div class="md-title">{{ i18n.lbl_explore_tokens() }}</div>
-      </md-card-header>
-
       <div class="explore-tokens__inner">
         <div class="explore-tokens__list-wrp">
           <div class="explore-tokens__list">

@@ -13,10 +13,6 @@
                       md-small-size-95
                       md-xsmall-size-100">
           <md-card>
-            <md-card-header>
-              <div class="md-title">{{ i18n.dep_deposit() }}</div>
-            </md-card-header>
-
             <md-card-content>
               <p class="deposit__explanations">
                 {{ i18n.dep_how_to({ asset: form.tokenCode }) }}.

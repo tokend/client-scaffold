@@ -2,9 +2,6 @@
    <div class="upload-preissuance">
       <md-card>
         <md-progress-bar v-if="isPending" md-mode="indeterminate"></md-progress-bar>
-        <md-card-header>
-          <div class="md-title">{{ i18n.lbl_upload_preissuance() }}</div>
-        </md-card-header>
         <md-card-content>
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">

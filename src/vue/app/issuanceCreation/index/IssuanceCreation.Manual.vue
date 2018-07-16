@@ -19,9 +19,6 @@
       <form novalidate @submit.prevent="submit">
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-        <md-card-header>
-          <div class="md-title">{{ i18n.lbl_manual_issuance() }}</div>
-        </md-card-header>
         <md-card-content>
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">

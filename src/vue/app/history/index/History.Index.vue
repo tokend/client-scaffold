@@ -3,7 +3,6 @@
 
     <md-table md-card class="tx-history__table">
       <md-table-toolbar class="tx-history__table-toolbar">
-        <h1 class="tx-history__table-title md-title">{{ i18n.th_transaction_history() }}</h1>
         <div class="tx-history__select-outer">
           <select-field-custom
             :label="i18n.lbl_asset()"
@@ -172,7 +171,7 @@
   .tx-history__table-toolbar {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     @media (max-width: 840px) {
       flex-direction: column;

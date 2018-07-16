@@ -9,9 +9,6 @@
     >
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-        <md-card-header>
-          <div class="md-title">{{ i18n.lbl_create_token() }}</div>
-        </md-card-header>
         <md-card-content>
           <div class="md-card-content-item">
             <div class="md-layout-item">
@@ -45,18 +42,18 @@
                 />
               </div>
             </div>
-            <div class="md-layout md-gutter"> 
-              <div class="md-layout-item md-small-size-100"> 
-                <input-field id="token-max-issuance-amount" 
-                            name="max issuance amount" 
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <input-field id="token-max-issuance-amount"
+                            name="max issuance amount"
                             type="number"
-                            v-model="request.maxIssuanceAmount" 
-                            v-validate="'required|amount'" 
-                            :label="i18n.lbl_token_max_issuance_amount()" 
-                            :errorMessage="errorMessage('max issuance amount')" 
-                /> 
-              </div> 
-            </div> 
+                            v-model="request.maxIssuanceAmount"
+                            v-validate="'required|amount'"
+                            :label="i18n.lbl_token_max_issuance_amount()"
+                            :errorMessage="errorMessage('max issuance amount')"
+                />
+              </div>
+            </div>
           </div>
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">
