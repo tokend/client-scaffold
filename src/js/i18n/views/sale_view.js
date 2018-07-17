@@ -64,5 +64,6 @@ export default {
   sale_upd_tab_add_update: 'Add update to the timeline',
   sale_upd_tab_add_timeline: 'Add item to timeline',
   sale_upd_tab_share_updates: 'Share your updates with your backers and potential investors!',
-  sale_upd_tab_important_updated: 'Important updates will be posted here'
+  sale_upd_tab_important_updated: 'Important updates will be posted here',
+  sale_upd_tab_warning: 'You won\'t be able to edit or delete update later'
 }
