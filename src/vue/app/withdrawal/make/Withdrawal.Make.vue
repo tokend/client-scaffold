@@ -11,12 +11,6 @@
         <md-card>
           <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-          <md-card-header class="withdraw__header">
-            <div class="withdraw__user-balance">
-              {{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}
-            </div>
-          </md-card-header>
-
           <md-card-content>
             <p class="withdraw__explanations" >
               <template v-if="minAmounts[form.tokenCode]">
@@ -28,62 +22,69 @@
               </template>
             </p>
 
-            <div class="md-layout withdraw__flex-wrapper">
-              <select-field-custom :values="tokenCodes"
-                                   v-model="form.tokenCode"
-                                   :label="i18n.lbl_asset()"/>
+            <div class="app__form-row">
+              <div class="app__form-field">
+                <select-field-custom :values="tokenCodes"
+                                    v-model="form.tokenCode"
+                                    :label="i18n.lbl_asset()"/>
+                <div class="app__form-field-descr">
+                  {{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}
+                </div>
+              </div>
+            </div>
 
-              <input-field
-                class="md-layout-item withdraw__field"
-                v-model.trim="form.amount"
-                :label="i18n.lbl_amount()"
-                name="amount"
-                type="number"
-                title="Amount"
-                align="right"
-                vvValidateOn="change"
-                v-validate="'required|amount'"
-                :errorMessage="errors.first('amount') ||
-                            (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
-                            (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
-                                                      value: minAmounts[form.tokenCode],
-                                                      asset: form.tokenCode })
-                                                   : '')"
+            <div class="app__form-row">
+              <div class="app__form-field">
+                <input-field-unchained
+                  class="md-layout-item"
+                  v-model.trim="form.amount"
+                  :label="i18n.lbl_amount()"
+                  name="amount"
+                  type="number"
+                  title="Amount"
+                  vvValidateOn="change"
+                  v-validate="'required|amount'"
+                  :errorMessage="errors.first('amount') ||
+                              (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
+                              (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
+                                                        value: minAmounts[form.tokenCode],
+                                                        asset: form.tokenCode })
+                                                      : '')"
+                />
+
+                <div class="withdraw__fees-container app__form-field-descr" :class="{ loading: isFeesLoadPending }">
+
+                  <div class="fees-container__fee fees-container__fee--fixed" v-if="fixedFee && !isLimitExceeded">
+                    <!-- TODO: localize -->
+                    <span>- {{ fixedFee }} {{ form.tokenCode }} <span class="fee__fee-type">fixed fee</span></span>
+                  </div>
+
+                  <div class="fees-container__fee fees-container__fee--percent" v-if="percentFee && !isLimitExceeded">
+                    <span>- {{ percentFee }} {{ form.tokenCode }} <span class="fee__fee-type">percent fee</span></span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="app__form-row">
+              <input-field-unchained
+                class="md-layout-item"
+                v-model.trim="form.wallet"
+                :label="i18n.withdraw_wallet({ asset: form.tokenCode })"
+                name="wallet-address"
+                v-validate="'required|wallet_address'"
+                :errorMessage="
+                  errors.first('wallet-address') ||
+                  (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
+                "
               />
             </div>
-
-            <div class="withdraw__fees-container" :class="{ loading: isFeesLoadPending }">
-
-              <div class="fees-container__fee fees-container__fee--fixed" v-if="fixedFee && !isLimitExceeded">
-                - <span class="fee__fee-amount">{{ fixedFee }}</span>
-                <span class="fee__fee-asset">{{ form.tokenCode }}</span>
-                <span class="fee__fee-type">fixed fee</span>
-              </div>
-
-              <div class="fees-container__fee fees-container__fee--percent" v-if="percentFee && !isLimitExceeded">
-                - <span class="fee__fee-amount">{{ percentFee }}</span>
-                <span class="fee__fee-asset">{{ form.tokenCode }}</span>
-                <span class="fee__fee-type">percent fee</span>
-              </div>
-
-            </div>
-
-            <input-field
-              class="md-layout-item"
-              v-model.trim="form.wallet"
-              :label="i18n.withdraw_wallet({ asset: form.tokenCode })"
-              name="wallet-address"
-              v-validate="'required|wallet_address'"
-              :errorMessage="
-             errors.first('wallet-address') ||
-             (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
-           "
-            />
           </md-card-content>
           <md-dialog-actions class="withdrawal-dialog__actions">
             <button v-ripple
                     type="submit"
-                    class="app__button-flat withdraw__submit"
+                    class="withdraw__submit"
                     :disabled="isPending">
               {{ i18n.withdraw_withdrawal() }}
             </button>
@@ -159,6 +160,7 @@
 
   import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
   import InputField from '../../../common/fields/InputField'
+  import InputFieldUnchained from '../../../common/fields/InputFieldUnchained'
   import ConfirmWithdraw from './Withdrawal.Confirm'
 
   import { mapGetters, mapActions } from 'vuex'
@@ -183,7 +185,8 @@
     components: {
       InputField,
       ConfirmWithdraw,
-      SelectFieldCustom
+      SelectFieldCustom,
+      InputFieldUnchained
     },
     data: _ => ({
       form: {
@@ -342,8 +345,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables.scss';
+  @import '~@scss/mixins.scss';
 
   .withdraw__header {
     display: flex;
@@ -363,7 +366,9 @@
   }
 
   .withdraw__explanations {
+    font-size: 1rem;
     margin-bottom: 1.5rem;
+    color: $col-md-primary;
   }
 
   .withdraw__flex-wrapper {
@@ -379,15 +384,12 @@
   }
 
   .withdraw__fees-container {
-    font-size: $fs-tip;
-    transform: translateY(-13px);
-
     &.loading {
       opacity: .7;
     }
 
     .fee__fee-type {
-      color: $col-active;
+      color: $col-md-primary-secondary;
     }
   }
 
@@ -402,8 +404,12 @@
   }
 
   .withdraw__submit {
-    display: block;
-    margin-left: auto;
+      @include button();
+      @include button-raised();
+      width: 180px;
+      position: relative;
+      height: 36px;
+      margin: 0 auto 1rem;
   }
 
   .withdraw__success-msg {
