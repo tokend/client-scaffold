@@ -16,7 +16,7 @@
             </md-table-row>
 
             <template v-for="(order, i) in offers">
-              <md-table-row class="manage-orders__row" @click="toggleDetails(i)" :key="`${i}-row`">
+              <md-table-row class="manage-orders__row" @click.native="toggleDetails(i)" :key="`${i}-row`">
                 <md-table-cell class="manage-orders__table-cell">{{ i18n.d(order.createdAt) }}</md-table-cell>
                 <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell>
                 <md-table-cell class="manage-orders__table-cell">

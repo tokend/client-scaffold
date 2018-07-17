@@ -22,7 +22,7 @@
         </md-table-row>
         <template v-for="(item, i) in list">
 
-          <md-table-row class="tx-sale-creation__row" @click="toggleDetails(i)" :key="i">
+          <md-table-row class="tx-sale-creation__row" @click.native="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.saleName }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
@@ -77,7 +77,7 @@
          <md-table-row v-if="!isLoaded">
             <md-table-cell colspan="7">
                 <div class="tx-history__btn-outer">
-                <md-button @click="more" :disabled="isLoading">{{ i18n.lbl_view_more() }}</md-button>
+                <md-button @click.native="more" :disabled="isLoading">{{ i18n.lbl_view_more() }}</md-button>
                 </div>
             </md-table-cell>
          </md-table-row>
