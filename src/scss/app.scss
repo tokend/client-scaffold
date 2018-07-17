@@ -3,6 +3,7 @@
 @import '../../static/fonts/index.css';
 @import '../../node_modules/mdi/css/materialdesignicons.min.css';
 @import "../../node_modules/vue-material/dist/theme/engine";
+@import 'forms';
 
 @include md-register-theme("default", (
   primary: $col-md-primary,

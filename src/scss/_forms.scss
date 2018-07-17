@@ -1,0 +1,48 @@
+@import '~@scss/variables.scss';
+
+$point: 10px; // TODO: replace with rem
+
+.app__form-row {
+  display: flex;
+  width: 100%;
+
+  & + & {
+    margin-top: 2.5 * $point;
+  }
+
+  & > .app__form-field {
+    flex: 1;
+
+    &--halved {
+      flex: 0.5;
+      margin-right: 2 * $point;
+    }
+  }
+
+  & > .app__form-field + .app__form-field {
+    margin-left: 2 * $point;
+  }
+
+  & + .app__form-actions {
+    margin-top: 3.5 * $point;
+  }
+}
+
+.app__form-actions {
+  display: flex;
+
+  & > button + button {
+    margin-left: 1 * $point;
+  }
+}
+
+.app__form-field-descr {
+  margin-top: .5 * $point;
+  font-size: 1.4 * $point;
+  color: $col-md-primary;
+}
+
+.app__form-field-hint {
+  @extend .app__form-field-descr;
+  color: $col-md-primary-inactive;
+}
