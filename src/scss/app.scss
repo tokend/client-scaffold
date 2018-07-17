@@ -98,6 +98,7 @@ html,body {
 
   & .md-toolbar {
     padding: 0;
+
     & .md-title {
       margin-left: 0;
     }
@@ -105,6 +106,7 @@ html,body {
 
   & .md-table-toolbar {
     padding-left: 0;
+
     & .md-title {
       padding: 24px;
     }
@@ -256,6 +258,36 @@ input:-webkit-autofill {
   @include button-raised();
 }
 
+.app__card {
+  @include box-shadow();
+  background-color: #fff;
+}
+
+.app__card-content,
+.app__card-header {
+  padding: 24px;
+
+  @include respond-to(medium) {
+    padding: 16px;
+  }
+
+  @include respond-to(small) {
+    padding: 16px 12px;
+  }
+}
+
+.app__card-actions {
+  padding: 8px 24px 24px;
+
+  @include respond-to(medium) {
+    padding: 8px 16px 16px;
+  }
+
+  @include respond-to(small) {
+    padding: 8px 12px 12px;
+  }
+}
+
 .app__table-left-shadow {
   position: relative;
   overflow: hidden;
@@ -341,8 +373,8 @@ input:-webkit-autofill {
 .md-list-item-content {
   .portfolio-widget__asset-item & {
     padding: 9px 24px;
-
   }
+
   .info-widget__asset-item & {
     @include respond-to(xsmall) {
       padding: 4px 8px;

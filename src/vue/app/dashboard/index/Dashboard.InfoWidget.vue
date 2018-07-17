@@ -136,6 +136,7 @@
   @import '~@scss/mixins';
 
   .info-widget__list {
+    padding: 0 4px;
     @include respond-to-custom(1300px) {
       overflow-x: scroll;
     }

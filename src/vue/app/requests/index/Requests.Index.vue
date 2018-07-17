@@ -1,5 +1,5 @@
 <template>
-  <md-tabs md-sync-route>
+  <md-tabs md-sync-route :md-dynamic-height="true">
     <md-tab :md-label="`${ i18n.lbl_token_creation()}`" to="/requests/token-creation">
       <token-creation />
     </md-tab>
@@ -33,7 +33,7 @@ export default {
     margin: 1rem .75rem 0;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
   }
-  
+
   .md-tab {
     padding: 0;
   }

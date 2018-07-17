@@ -8,71 +8,69 @@
     <template v-else>
       <template v-if="form.tokenCode">
         <div class="md-layout-item
-                      md-size-50
-                      md-medium-size-65
-                      md-small-size-95
-                      md-xsmall-size-100">
-          <md-card>
-            <md-card-content>
-              <p class="deposit__explanations">
-                {{ i18n.dep_how_to({ asset: form.tokenCode }) }}.
-                {{ i18n.dep_how_long() }}
-              </p>
+                    md-size-50
+                    md-medium-size-65
+                    md-small-size-95
+                    md-xsmall-size-100
+                    app__card">
+          <div class="app__card-content">
+            <p class="deposit__explanations">
+              {{ i18n.dep_how_to({ asset: form.tokenCode }) }}.
+              {{ i18n.dep_how_long() }}
+            </p>
 
-              <div class="deposit__asset-select">
-                <select-field-custom :values="tokenCodes"
-                                     v-model="form.tokenCode"
-                                     :label="i18n.lbl_asset()"/>
+            <div class="deposit__asset-select">
+              <select-field-custom :values="tokenCodes"
+                                    v-model="form.tokenCode"
+                                    :label="i18n.lbl_asset()"/>
+            </div>
+
+            <template v-if="address">
+              <div class="deposit__qr-outer">
+                <p class="deposit__qr-tip">{{ i18n.dep_send_only_asset({ asset: form.tokenCode }) }}</p>
+
+                <qrcode class="deposit__qr-code"
+                        :text="address"
+                        :size="225"
+                        color="#3f4244"
+                />
               </div>
 
-              <template v-if="address">
-                <div class="deposit__qr-outer">
-                  <p class="deposit__qr-tip">{{ i18n.dep_send_only_asset({ asset: form.tokenCode }) }}</p>
+              <clipboard-field
+                :value="address"
+                :label="i18n.dep_where_to({ asset: form.tokenCode })"
+              />
+            </template>
 
-                  <qrcode class="deposit__qr-code"
-                          :text="address"
-                          :size="225"
-                          color="#3f4244"
-                  />
-                </div>
+            <template v-else-if="isPending">
+              <div class="deposit__progress-wrp">
+                <md-progress-spinner md-mode="indeterminate"/>
+              </div>
+            </template>
 
-                <clipboard-field
-                  :value="address"
-                  :label="i18n.dep_where_to({ asset: form.tokenCode })"
-                />
-              </template>
-
-              <template v-else-if="isPending">
-                <div class="deposit__progress-wrp">
-                  <md-progress-spinner md-mode="indeterminate"/>
-                </div>
-              </template>
-
-              <template v-else>
-                <p class="deposit__no-available-addresses">
-                  {{ i18n.dep_no_address() }}
-                </p>
-              </template>
-
-            </md-card-content>
-
-          </md-card>
+            <template v-else>
+              <p class="deposit__no-available-addresses">
+                {{ i18n.dep_no_address() }}
+              </p>
+            </template>
+          </div>
         </div>
       </template>
       <template v-else>
-        <md-card class="md-layout-item
+        <div class="md-layout-item
                         md-size-50
                         md-medium-size-65
                         md-small-size-95
-                        md-xsmall-size-100">
-          <md-card-content>
+                        md-xsmall-size-100
+                        app__card">
+          <div class="app__card-content">
             <div class="app__no-data-msg">
               <md-icon class="md-size-4x">file_download</md-icon>
               <h2>{{ i18n.dep_no_assets() }}</h2>
               <p>{{ i18n.dep_no_assets_exp() }}</p>
             </div>
-          </md-card-content>
-        </md-card>
+          </div>
+        </div>
       </template>
     </template>
   </div>

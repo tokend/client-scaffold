@@ -328,7 +328,7 @@
       }
     }
     @include respond-to-custom(800px) {
-      right: -125px;
+      right: -113px;
       max-width: 404px;
       width: calc(100vw - 404px + 125px);
     }

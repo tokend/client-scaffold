@@ -12,7 +12,7 @@
         </md-table-row>
 
         <template v-for="(order, i) in list">
-          <md-table-row class="order-list__row" :key="`${i}-order-row`" @click="matchOrder(order)">
+          <md-table-row class="order-list__row" :key="`${i}-order-row`" @click.native="matchOrder(order)">
             <md-table-cell class="order-list__cell">{{ order.baseAmount }} {{ order.baseAssetCode }}</md-table-cell>
             <md-table-cell class="order-list__cell">{{ order.quoteAmount }} {{ order.quoteAssetCode }}</md-table-cell>
             <md-table-cell class="order-list__cell">{{ order.price }} {{ order.quoteAssetCode }}</md-table-cell>

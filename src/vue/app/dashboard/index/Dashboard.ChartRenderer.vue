@@ -239,7 +239,7 @@
             .attr('width', '1')
             .attr('height', function (localData) {
               if ((height / d3.max(data.map(item => item.value))) * localData.value) {
-                return (height / d3.max(data.map(item => item.value))) * localData.value - 10
+                return (height / d3.max(data.map(item => item.value))) * localData.value - 20
               } else {
                 return 0
               }
@@ -249,9 +249,29 @@
             })
             .attr('y', function (localData) {
               if ((height / d3.max(data.map(item => item.value))) * localData.value) {
-                return height - ((height / d3.max(data.map(item => item.value))) * localData.value)
+                return height - ((height / d3.max(data.map(item => item.value))) * localData.value) + 10
               } else {
                 return 0
+              }
+            })
+
+          svg.append('g')
+            .attr('height', height)
+            .attr('width', width)
+            .attr('class', 'alalal')
+            .selectAll('circle')
+            .data(data)
+            .enter().append('circle')
+            .attr('r', '3')
+            .attr('fill', '#bdb6ff')
+            .attr('cx', function (localData) {
+              return x(localData.time)
+            })
+            .attr('cy', function (localData) {
+              if ((height / d3.max(data.map(item => item.value))) * localData.value) {
+                return height - ((height / d3.max(data.map(item => item.value))) * localData.value) + 10
+              } else {
+                return height - 10
               }
             })
         }
@@ -274,12 +294,17 @@
           .attr('class', `${className}__tip`)
 
         // Tip line
-        tip.append('line')
+        const tipLine = tip.append('line')
           .attr('class', `${className}__tip-line`)
           .attr('x1', 0)
           .attr('y1', 15)
           .attr('x2', 0)
-          .attr('y2', height)
+          .attr('y2', 0)
+
+        tip.append('polygon')
+          .attr('points', '0,0 11.5,7 11.5,7 21,0') // width 21, height 7
+          .style('fill', 'white')
+          .attr('transform', 'translate(-11.5, 17)')
 
         // Tip circle
         const tipCircle = tip.append('circle')
@@ -370,6 +395,9 @@
             // Change X position of the tip
             tip.attr('transform', `translate(${x(nearestPoint.time)})`)
 
+            tipLine.attr('y2', height / d3.max(data.map(item => item.value)) * nearestPoint.value - 10)
+            // tipTextBoxBox.attr('transform', `translate(-75, ${height - (height / d3.max(data.map(item => item.value)) * nearestPoint.value + 55 + 38)})`)
+
             // Change Y position of the circle
             tipCircle.attr('cy', y(nearestPoint.value))
           })
@@ -377,7 +405,7 @@
 
         for (const event of ['mouseout', 'touchout']) {
           motionCaptureArea.on(event, function () {
-            tip.classed(`${className}__tip--show`, false)
+            // tip.classed(`${className}__tip--show`, false)
           })
         }
 
