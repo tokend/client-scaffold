@@ -16,7 +16,7 @@
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
-          <md-table-row class="tx-token-creation__row" @click="toggleDetails(i)" :key="i">
+          <md-table-row class="tx-token-creation__row" @click.native="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>

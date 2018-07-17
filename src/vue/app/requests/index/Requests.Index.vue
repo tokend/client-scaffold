@@ -14,7 +14,7 @@
 
 <script>
 import TokenCreation from './Requests.TokenCreation'
-import PreIssuanceUpload from './Requests.PreIssuanceUpload'
+import PreIssuanceUpload from './Requests.PreissuanceUpload'
 import SaleCreation from './Requests.SaleCreation'
 import { i18n } from '../../../../js/i18n'
 export default {

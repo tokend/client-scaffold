@@ -21,7 +21,7 @@
         </md-table-row>
         <template v-for="(item, i) in list">
 
-          <md-table-row class="tx-sale-creation__row" @click="toggleDetails(i)" :key="i">
+          <md-table-row class="tx-sale-creation__row" @click.native="toggleDetails(i)" :key="i">
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.saleName }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
