@@ -1,6 +1,6 @@
 <template>
   <div class="timeline-item">
-    <h2 class="timeline-item__title">{{ title }}</h2>
+    <h3 class="timeline-item__title">{{ title }}</h3>
     <span class="timeline-item__date" >{{ date }}</span>
     <p class="timeline-item__message" v-html="message"></p>
   </div>
