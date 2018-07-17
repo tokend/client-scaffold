@@ -54,5 +54,11 @@ export default {
   sale_no_creation_requests_desc: 'Here will be the list of your fund creation requests',
   sale_short_description: 'Short description',
   sale_fund_video: 'Video about fund',
-  sale_investments: 'Investments'
+  sale_investments: 'Investments',
+  sale_confirm_upload_ttl: 'Important',
+  sale_confirm_upload: 'Please ensure your document is up to date and valid. It will be publicly visible and can be downloaded by anyone. Documents can be deleted if required.',
+  sale_upload_success: 'Document uploaded successfully',
+  sale_doc_tab_title_is_my: 'Valid legal documents allow investors to build trust in your corporate',
+  sale_doc_tab_docs_is_my: 'Uploaded documents will be listed here',
+  sale_doc_tab_docs_desc: 'Valid legal documents allow investors to build trust in the asset manager'
 }
