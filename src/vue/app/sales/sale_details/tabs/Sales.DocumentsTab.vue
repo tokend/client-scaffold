@@ -135,7 +135,7 @@
   @import '../../../../../scss/variables';
   @import '../../../../../scss/mixins';
   .documents-tab {
-    padding: 60px 30px 20px;
+    padding-top: 1rem;
   }
 
   .documents-tab__no-docs-message {
