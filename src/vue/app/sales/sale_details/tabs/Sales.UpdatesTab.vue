@@ -45,13 +45,11 @@
       AddUpdateForm
     },
     props: ['sale'],
-    data () {
-      return {
-        isAddFormOpened: false,
-        updates: [],
-        updatesLoaded: false
-      }
-    },
+    data: _ => ({
+      isAddFormOpened: false,
+      updates: [],
+      updatesLoaded: false
+    }),
 
     methods: {
       async getUpdates () {

@@ -43,18 +43,16 @@
     mixins: [SubmitterMixin, FormMixin],
     props: ['sale'],
 
-    data () {
-      return {
-        form: {
-          title: '',
-          message: ''
-        },
-        events: {
-          closeEvent: commonEvents.closeEvent
-        },
-        i18n
-      }
-    },
+    data: _ => ({
+      form: {
+        title: '',
+        message: ''
+      },
+      events: {
+        closeEvent: commonEvents.closeEvent
+      },
+      i18n
+    }),
 
     computed: {
       symbols () {

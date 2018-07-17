@@ -22,14 +22,12 @@
 
     props: ['sale'],
 
-    data () {
-      return {
-        i18n,
-        common: {
-          timelineAddClick: commonEvents.timelineAddClick
-        }
+    data: _ => ({
+      i18n,
+      common: {
+        timelineAddClick: commonEvents.timelineAddClick
       }
-    },
+    }),
 
     computed: {
       isAllowedToEdit () {
