@@ -5,7 +5,7 @@
     <p v-if="sale.isMy">{{i18n.sale_upd_tab_share_updates()}}</p>
     <p v-else>{{i18n.sale_upd_tab_important_updated()}}</p>
 
-    <div class="btn-outer" v-if="sale.isMy">
+    <div class="btn-outer" v-if="isMy">
       <button class="btn"
               v-if="isAllowedToEdit"
               @click="$emit(common.timelineAddClick)">{{i18n.sale_upd_tab_add_timeline()}}</button>
@@ -17,6 +17,8 @@
 <script>
   import { commonEvents } from '../../../../../../js/events/common_events'
   import { i18n } from '../../../../../../js/i18n'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../../../vuex/types'
   export default {
     name: 'empty-UpdatesTimeline-message',
 
@@ -30,8 +32,14 @@
     }),
 
     computed: {
+      ...mapGetters([
+        vuexTypes.accountId
+      ]),
       isAllowedToEdit () {
         return true
+      },
+      isMy () {
+        return this.sale.owner === this.accountId
       }
     }
   }
