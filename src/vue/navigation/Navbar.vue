@@ -2,10 +2,27 @@
   <nav class="navbar">
     <h2 class="navbar__title">{{ $route.meta.pageName }}</h2>
     <div class="navbar__user">
-      <div class="navbar__user-picture">
+      <div class="navbar__user-notif navbar__user-notif--mobile">
+        <button @click="toggleNotificationCardVisibility"
+                class="app__button-icon">
+          <md-icon>notifications</md-icon>
+        </button>
+        <md-card class="navbar__notif-card md-elevation-6" :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
+          <md-card-content>
+            <div class="navbar__notif-card-content">
+              <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">
+                Your account functionality is restricted. To get advanced functionality go to
+                <a class="notif-link" @click="goKyc">KYC</a>.
+              </p>
+              <p v-else class="navbar__notif-status">No new notifications!</p>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
+      <div class="navbar__user-picture" @click="toggleUserCardVisibility">
         {{ userEmail.substr(0, 1).toUpperCase() }}
       </div>
-      <div>
+      <div class="navbar__user-info">
         <div class="navbar__user-name" @click="toggleUserCardVisibility">
           {{ userEmail }}
           <md-icon class="navbar__user-name-icon" :class="{ 'navbar__user-name-icon--active': isUserCardOpen }">
@@ -38,7 +55,7 @@
             <div class="navbar__user-avatar">
               {{ userEmail.substr(0, 1).toUpperCase() }}
             </div>
-            <div class="navbar__user-info">
+            <div class="navbar__user-card-info">
               <p class="navbar__user-card-name">{{ userEmail }}</p>
               <p class="navbar__user-card-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
               <p class="navbar__user-card-status navbar__user-card-status--blocked" v-else>{{ i18n.lbl_userBlocked() }}</p>
@@ -140,6 +157,8 @@
   @import "../../scss/mixins";
   @import "../../scss/variables";
 
+  $custom-breakpoint: 800px;
+
   .navbar {
     width: 100%;
     min-height: 121px;
@@ -154,12 +173,14 @@
     }
   }
 
-  .navbar__title {
-    color: $col-md-primary;
-
-    @include respond-to-custom(800px) {
+  .navbar__user-info {
+    @include respond-to-custom($custom-breakpoint) {
       display: none;
     }
+  }
+
+  .navbar__title {
+    color: $col-md-primary;
   }
 
   .navbar__user {
@@ -167,8 +188,9 @@
     align-items: flex-end;
     justify-content: space-between;
 
-    @include respond-to-custom(800px) {
+    @include respond-to-custom($custom-breakpoint) {
       margin-left: auto;
+      align-items: center;
     }
   }
 
@@ -176,11 +198,17 @@
     width: 55px;
     height: 55px;
     font-size: 24px;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
+    box-shadow: 0 4px 10px 0 rgba($col-md-primary, .15);
     margin-right: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    background: rgba($col-md-primary, .15);
+
+    @include respond-to-custom($custom-breakpoint) {
+      margin-right: 0;
+    }
   }
 
   .navbar__user-action {
@@ -192,6 +220,10 @@
     font-size: 18px;
     cursor: pointer;
     color: $col-md-primary !important; // TODO: remove important rule when possible
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .navbar__user-notif {
@@ -200,6 +232,29 @@
     font-size: 12px;
     cursor: pointer;
     display: inline-block;
+
+    &.navbar__user-notif--mobile {
+      display: none;
+
+      @include respond-to-custom($custom-breakpoint) {
+        display: flex;
+      }
+    }
+
+    @include respond-to-custom($custom-breakpoint) {
+      display: none;
+      margin-right: 16px;
+      display: flex;
+
+      i {
+        color: rgba($col-md-primary, .8) !important;
+        font-size: 28px !important;
+      }
+    }
+
+    &:not(.navbar__user-notif--mobile):hover {
+      text-decoration: underline;
+    }
   }
 
   .navbar__user-notif--has-value {
@@ -282,7 +337,7 @@
   .navbar__user-card {
     padding: 24px 24px 0 24px;
 
-    @include respond-to-custom(800px) {
+    @include respond-to-custom($custom-breakpoint) {
       width: calc(100vw - 230px - 40px); // 230px - sidebar width
     }
     @include respond-to(small) {
@@ -292,6 +347,12 @@
     }
     @include respond-to(xsmall) {
       width: calc(100vw - 32px);
+    }
+
+    &:before {
+      @include respond-to-custom($custom-breakpoint) {
+        right: 19px;
+      }
     }
   }
 
@@ -323,12 +384,12 @@
     & .navbar__notif-card-content { font-size: 12px; }
     &:before {
       border-color: transparent transparent #fff transparent;
-      @include respond-to-custom(800px) {
+      @include respond-to-custom($custom-breakpoint) {
         right: 150px;
       }
     }
-    @include respond-to-custom(800px) {
-      right: -113px;
+    @include respond-to-custom($custom-breakpoint) {
+      right: 0;
       max-width: 404px;
       width: calc(100vw - 404px + 125px);
     }
@@ -401,7 +462,7 @@
     color: #000;
     margin-bottom: 12px;
 
-    @include respond-to-custom(800px) {
+    @include respond-to-custom($custom-breakpoint) {
       word-break: break-word;
     }
   }

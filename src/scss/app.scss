@@ -248,13 +248,15 @@ input:-webkit-autofill {
   }
 }
 
+.app__button-icon {
+  @include button-icon();
+}
+
 .app__button-flat {
-  @include button();
   @include button-flat();
 }
 
 .app__button-raised {
-  @include button();
   @include button-raised();
 }
 
