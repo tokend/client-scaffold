@@ -4,9 +4,9 @@
     <div class="divider"></div>
     <md-button class="timeline__add-btn"
             @click="handleAddClick"
-            v-if="sale.isMy"
+            v-if="isMy"
     >
-      New Update
+      {{i18n.sale_new_update()}}
     </md-button>
     <timeline-item
       class="timeline__timeline-item"
@@ -25,6 +25,8 @@
   import TimelineItem from './TimelineItem'
   import { commonEvents } from '../../../../../../js/events/common_events'
   import { i18n } from '../../../../../../js/i18n'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../../../vuex/types'
   export default {
     name: 'timeline',
 
@@ -35,6 +37,14 @@
     data: _ => ({
       i18n
     }),
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountId
+      ]),
+      isMy () {
+        return this.sale.owner === this.accountId
+      }
+    },
     methods: {
       handleAddClick () {
         this.$emit(commonEvents.timelineAddClick)

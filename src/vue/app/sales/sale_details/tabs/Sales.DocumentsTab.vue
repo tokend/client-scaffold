@@ -21,7 +21,7 @@
         </div>
       </template>
     </div>
-    <div class="documents-tab__file-input" v-if="sale.isMy">
+    <div class="documents-tab__file-input" v-if="isMy">
       <file-field v-model="upload"
               label="Select File(s)"
               id="documents-tab__file-field"/>
