@@ -55,8 +55,6 @@
   import SaleTabs from './Sales.Tabs'
   import InvestProgressBar from '../sale_card/Sales.ProgressBar'
 
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
   export default {
     name: 'sale-details',
     props: ['id'],
@@ -82,15 +80,9 @@
       }
     },
 
-    computed: {
-      ...mapGetters([
-        vuexTypes.accountId
-      ])
-    },
-
     methods: {
       async loadDetails () {
-        this.sale = new SaleRecord(await salesService.loadSaleById(this.id), this.accountId)
+        this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
         await Promise.all([
           this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset)),
           this.description = await salesService.loadSaleDescription(this.sale.owner, this.sale.descriptionID)
