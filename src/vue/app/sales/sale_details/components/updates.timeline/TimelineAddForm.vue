@@ -15,7 +15,7 @@
     <textarea-field v-model="form.message"
                     v-validate="'required'"
                     class="step__input-field"
-                    :maxlength="symbols"
+                    :maxlength="250"
     />
     <md-card-actions>
       <md-button class="btn" :disabled="!isAllowedToSubmit" @click="createUpdate">{{i18n.lbl_submit()}}</md-button>
@@ -55,9 +55,6 @@
     }),
 
     computed: {
-      symbols () {
-        return 220
-      },
       isAllowedToSubmit () {
         return this.form.title &&
                this.form.message &&
@@ -68,7 +65,7 @@
 
     methods: {
       async createUpdate () {
-        const confirmed = await confirmAction({ message: 'You won\'t be able to edit or delete update later' })
+        const confirmed = await confirmAction({ message: i18n.sale_upd_tab_warning() })
         if (!confirmed) return
         this.disable()
         try {

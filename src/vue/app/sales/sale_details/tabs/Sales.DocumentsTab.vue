@@ -1,6 +1,6 @@
 <template>
   <div class="documents-tab">
-    <p class="documents-tab__explain" v-if="sale.isMy">{{i18n.sale_doc_tab_title_is_my()}}</p>
+    <p class="documents-tab__explain" v-if="isMy">{{i18n.sale_doc_tab_title_is_my()}}</p>
 
     <div class="no-data-msg__wrapper" v-else-if="documents.length === 0 && !sale.isMy">
 
@@ -14,17 +14,10 @@
     <div class="documents-tab__docs-list" v-if="documents.length > 0">
       <template v-for="document in documents">
         <div class="documents-tab__file-download-wrp">
-          <div class="file-download">
-
-            <a :href="getUrl(document)" class="file-download__link" download>
-              <i class="mdi mdi-download"></i>
-              <span class="file-download__file-name" :title="document.name">{{ document.name }}</span>
-            </a>
-
-            <a :href="getUrl(document)" class="view-btn" target="_blank" rel="noopener">
-              <span>View  <i class="material-icons">open_in_new</i></span>
-            </a>
-          </div>
+          <h3 class="file-download__file-name" :title="document.name">{{ document.name }}</h3>
+          <a :href="getUrl(document)" class="file-view__link" target="_blank" rel="noopener">
+            <span>{{i18n.fi_view_file()}}</span>
+          </a>
         </div>
       </template>
     </div>
@@ -33,9 +26,9 @@
               label="Select File(s)"
               id="documents-tab__file-field"/>
     </div>
-      <md-button class="documents-tab__file-submit" 
+      <md-button class="documents-tab__file-submit"
                 v-if="upload.file"
-                @click="submit" 
+                @click="submit"
                 :disabled="isPending">
         {{i18n.lbl_submit()}}
       </md-button>
@@ -53,8 +46,11 @@
   import { blobTypes, blobFilters } from '../../../../../js/const/const'
   import { fileService } from '../../../../../js/services/file.service'
   import { usersService } from '../../../../../js/services/users.service'
+  import { DocumentContainer } from
+  '../../../../../js/helpers/DocumentContainer'
   import _get from 'lodash/get'
-  import config from '../../../../../config'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../../../../vuex/types'
 
   export default {
     name: 'documents-tab',
@@ -76,6 +72,15 @@
       }
     }),
 
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountId
+      ]),
+      isMy () {
+        return this.sale.owner === this.accountId
+      }
+    },
+
     methods: {
       async submit () {
         if (!await confirmAction({
@@ -85,7 +90,7 @@
         const tokenCode = this.sale.baseAsset
         this.disable()
         try {
-          const fileKey = await fileService.uploadFile({ ...this.upload, type: 'fund_document' })
+          const fileKey = await fileService.uploadFile({ ...this.upload, type: blobTypes.fundDocument.str })
           await usersService.blobsOf(this.sale.owner).create(
             blobTypes.fundDocument.str,
             {
@@ -106,20 +111,20 @@
       },
       async getDocuments () {
         if (!_get(this.sale, 'baseAsset')) return
-        this.documents = await usersService
+        this.documents = (await usersService
           .blobsOf(this.sale.owner)
           .getAll({
             [blobFilters.tokenCode]: this.sale.baseAsset,
             [blobFilters.type]: blobTypes.fundDocument.num
-          })
+          }))
+          .map(doc => new DocumentContainer(doc))
       },
       reset () {
         this.upload.file = ''
         this.upload.mimeType = ''
       },
       getUrl (file) {
-        if (file.key) return `${config.FILE_STORAGE}/${file.key}`
-        if (file.url) return file.url
+        return file.publicUrl
       }
     },
     watch: {
@@ -157,49 +162,30 @@
   }
 
   .documents-tab__docs-list {
-    max-width: 460px;
     margin: 40px auto;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
   }
 
   .documents-tab__file-download-wrp {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 1.5rem;
+    width: 50%;
   }
 
-  .documents-tab__remove-btn {
-    font-size: 1rem;
-    margin-right: 1rem;
-    i { color: $col-danger }
-  }
-
-    .file-download {
+  .file-download {
     display: flex;
+    flex-direction: column;
   }
 
-  .file-download__link {
-    color: $col-text;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    i {
-      font-size: $material-icon-big;
-      margin-right: 10px;
-    }
-  }
-
-  .view-btn {
+  .file-view__link {
     color: $col-active;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     font-size: $fs-tip;
-    margin-left: 15px;
     text-decoration: underline;
-
-
     i {
       font-size: $fs-tip;
       color: $col-active;
@@ -210,6 +196,7 @@
   .file-download__file-name {
     max-width: 180px;
     overflow: hidden;
+    margin-right: 0.5rem;
     text-overflow: ellipsis;
   }
 

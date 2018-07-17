@@ -1,11 +1,8 @@
 <template>
   <div class="timeline-item">
-
-    <div class="timeline-item__date">{{ date }}</div>
-
     <h2 class="timeline-item__title">{{ title }}</h2>
+    <span class="timeline-item__date" >{{ date }}</span>
     <p class="timeline-item__message" v-html="message"></p>
-
   </div>
 </template>
 
@@ -23,7 +20,14 @@
   .timeline-item__date {
     color: lighten($col-text, 10%);
     font-weight: bold;
-    margin-bottom: 15px;
+  }
+  
+  .timeline-item__title {
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-item {
+    margin-bottom: 2rem;
   }
 
 </style>
