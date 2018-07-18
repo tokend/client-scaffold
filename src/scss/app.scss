@@ -266,14 +266,14 @@ input:-webkit-autofill {
 
 .app__card-content,
 .app__card-header {
-  padding: 24px;
+  padding: 32px;
 
   @include respond-to(medium) {
-    padding: 16px;
+    padding: 24px;
   }
 
   @include respond-to(small) {
-    padding: 16px 12px;
+    padding: 12px 16px;
   }
 }
 
