@@ -18,21 +18,20 @@
                     :maxlength="250"
     />
     <md-card-actions>
-      <md-button class="btn" :disabled="!isAllowedToSubmit" @click="createUpdate">{{i18n.lbl_submit()}}</md-button>
+      <md-button class="btn" :disabled="isPending" @click="createUpdate">{{i18n.lbl_submit()}}</md-button>
     </md-card-actions>
   </div>
 </template>
 
 <script>
-  import InputField from '../../../../../common/fields/InputField'
-  import FormMixin from '../../../../../common/mixins/form.mixin'
-  import SubmitterMixin from '../../../../../common/mixins/submitter.mixin'
-  import { i18n } from '../../../../../../js/i18n'
+  import InputField from '../../../../common/fields/InputField'
+  import FormMixin from '../../../../common/mixins/form.mixin'
+  import { i18n } from '../../../../../js/i18n'
   import moment from 'moment'
-  import { commonEvents } from '../../../../../../js/events/common_events'
-  import { confirmAction } from '../../../../../../js/modals/confirmation_message'
-  import { blobTypes, blobFilters } from '../../../../../../js/const/const'
-  import { usersService } from '../../../../../../js/services/users.service'
+  import { commonEvents } from '../../../../../js/events/common_events'
+  import { confirmAction } from '../../../../../js/modals/confirmation_message'
+  import { blobTypes, blobFilters } from '../../../../../js/const/const'
+  import { usersService } from '../../../../../js/services/users.service'
   export default {
     name: 'add-update-form',
 
@@ -40,7 +39,7 @@
       InputField
     },
 
-    mixins: [SubmitterMixin, FormMixin],
+    mixins: [FormMixin],
     props: ['sale'],
 
     data: _ => ({
@@ -54,17 +53,9 @@
       i18n
     }),
 
-    computed: {
-      isAllowedToSubmit () {
-        return this.form.title &&
-               this.form.message &&
-               this.form.message.length <= this.symbols &&
-              !this.isPending
-      }
-    },
-
     methods: {
       async createUpdate () {
+        if (!await this.isValid()) return
         const confirmed = await confirmAction({ message: i18n.sale_upd_tab_warning() })
         if (!confirmed) return
         this.disable()
@@ -91,7 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../../scss/variables";
+  @import "../../../../../scss/variables";
 
   .add-update-form__heading {
     display: inline-block;

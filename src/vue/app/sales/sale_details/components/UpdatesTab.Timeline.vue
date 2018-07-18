@@ -1,10 +1,8 @@
 <template>
   <div class="timeline">
-
-    <div class="divider"></div>
     <md-button class="timeline__add-btn"
             @click="handleAddClick"
-            v-if="isMy"
+            v-if="sale.owner === accountId"
     >
       {{i18n.sale_new_update()}}
     </md-button>
@@ -16,17 +14,16 @@
       :date="i18n.d(item.date)"
       :message="linkify(item.message)"
     />
-
   </div>
 
 </template>
 
 <script>
-  import TimelineItem from './TimelineItem'
-  import { commonEvents } from '../../../../../../js/events/common_events'
-  import { i18n } from '../../../../../../js/i18n'
+  import TimelineItem from './UpdatesTab.Timeline.Item'
+  import { commonEvents } from '../../../../../js/events/common_events'
+  import { i18n } from '../../../../../js/i18n'
   import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../../../vuex/types'
+  import { vuexTypes } from '../../../../../vuex/types'
   export default {
     name: 'timeline',
 
@@ -40,10 +37,7 @@
     computed: {
       ...mapGetters([
         vuexTypes.accountId
-      ]),
-      isMy () {
-        return this.sale.owner === this.accountId
-      }
+      ])
     },
     methods: {
       handleAddClick () {
@@ -60,8 +54,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../../scss/mixins";
-  @import "../../../../../../scss/variables";
+  @import "../../../../../scss/mixins";
+  @import "../../../../../scss/variables";
 
   .timeline {
     display: flex;

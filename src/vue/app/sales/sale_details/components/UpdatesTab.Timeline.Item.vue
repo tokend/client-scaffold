@@ -15,7 +15,7 @@
 </script>
 
 <style lang="scss" scoped>  
-  @import "../../../../../../scss/variables";
+  @import "../../../../../scss/variables";
 
   .timeline-item__date {
     color: lighten($col-text, 10%);
