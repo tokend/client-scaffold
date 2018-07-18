@@ -47,9 +47,6 @@
         return valueIsPresent
       }
     },
-    mounted () {
-      console.log(1)
-    },
     async created () {
       await this.loadPrices(this.currency)
     },
