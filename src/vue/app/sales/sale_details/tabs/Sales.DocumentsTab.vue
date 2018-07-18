@@ -1,17 +1,28 @@
 <template>
   <div class="documents-tab">
-    <p class="documents-tab__explain" v-if="isMy">{{i18n.sale_doc_tab_title_is_my()}}</p>
+    <template v-if="isMy">
+      <p class="documents-tab__explain" >{{i18n.sale_doc_tab_title_is_my()}}</p>
+      <div class="documents-tab__file-input">
+      <file-field v-model="upload"
+              label="Select File(s)"
+              id="documents-tab__file-field"/>
+     </div>
+      <md-button class="documents-tab__file-submit"
+                v-if="upload.file"
+                @click="submit"
+                :disabled="isPending">
+        {{i18n.lbl_submit()}}
+      </md-button>
+    </template>
 
-    <div class="no-data-msg__wrapper" v-else-if="documents.length === 0 && !sale.isMy">
-
-      <i class="no-data-msg__icon material-icons">search</i>
-      <h2>{{i18n.sale_doc_tab_docs_is_my()}}</h2>
-
-    </div>
-    <p class="documents-tab__explain" v-else>
-      {{i18n.sale_doc_tab_docs_desc()}}
-    </p>
-    <div class="documents-tab__docs-list" v-if="documents.length > 0">
+    <template v-else-if="!documents.length && !isMy">
+      <div class="no-data-msg__wrapper">
+        <i class="no-data-msg__icon material-icons">search</i>
+        <h2>{{i18n.sale_doc_tab_docs_is_my()}}</h2>
+      </div>
+    </template>
+    
+    <div class="documents-tab__docs-list" v-if="documents.length">
       <template v-for="document in documents">
         <div class="documents-tab__file-download-wrp">
           <h3 class="file-download__file-name" :title="document.name">{{ document.name }}</h3>
@@ -21,17 +32,6 @@
         </div>
       </template>
     </div>
-    <div class="documents-tab__file-input" v-if="isMy">
-      <file-field v-model="upload"
-              label="Select File(s)"
-              id="documents-tab__file-field"/>
-    </div>
-      <md-button class="documents-tab__file-submit"
-                v-if="upload.file"
-                @click="submit"
-                :disabled="isPending">
-        {{i18n.lbl_submit()}}
-      </md-button>
   </div>
 </template>
 
