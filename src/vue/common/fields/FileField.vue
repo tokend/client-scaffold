@@ -223,6 +223,7 @@
   .file-field__label {
     font-size: $fs-tip;
     color: $col-unfocused;
+    margin-bottom: 8px;
   }
 
   .file-field__uploader {

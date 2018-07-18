@@ -233,6 +233,10 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
+.app__button {
+  @include button();
+}
+
 .app__button-icon {
   @include button-icon();
 }

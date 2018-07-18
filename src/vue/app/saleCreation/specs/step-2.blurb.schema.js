@@ -12,11 +12,6 @@ export default {
   rows: [
     [
       {
-        "heading": i18n.sale_short_blurb()
-      }
-    ],
-    [
-      {
         "field": "file",
         "fileType": "image",
         "id": "sale-blurb-image",

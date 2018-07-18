@@ -1,46 +1,43 @@
 <template>
   <div class="create-sale md-layout md-alignment-center-center">
     <div class="md-layout-item
-                    md-size-50
-                    md-medium-size-65
+                    md-size-70
+                    md-medium-size-95
                     md-small-size-95
                     md-xsmall-size-100">
-    <template v-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
-      <not-available-card icon='work'
-                          :title="i18n.lbl_not_available()"
-                          :descr="i18n.sale_not_available_exp()"/>
-    </template>
-    <template v-else-if="!accountOwnedTokens.length">
-      <not-available-card icon='work'
-                          :title="i18n.lbl_not_available()"
-                          :descr="i18n.lbl_token_not_available_yet()"/>
-    </template>
-    <template v-else-if="view.mode === VIEW_MODES.edit">
-          <md-card class="create-sale__heading">
-            <md-card-header>
-              <div class="md-title">{{ i18n.lbl_create_sale() }}</div>
-            </md-card-header>
-          </md-card>
-
-          <md-card>
-            <md-card-content>
-              <md-steppers md-vertical md-linear :md-active-step.sync="activeStep">
-                <md-step v-for="(step, i) in steps"
-                        :key="i"
-                        :id="step.name"
-                        :md-label="step.label"
-                        :md-done.sync="step.done"
-                >
-                  <component :is="step.component"
-                            :schema="step.schema"
-                            :sale="sale"
-                            @sale-update="handleSaleUpdate($event, { step, i })"
-                            @sale-edit-end="handleSaleEditEnd"
-                  />
-                </md-step>
-              </md-steppers>
-            </md-card-content>
-          </md-card>
+      <template v-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
+        <not-available-card icon='work'
+                            :title="i18n.lbl_not_available()"
+                            :descr="i18n.sale_not_available_exp()"/>
+      </template>
+      <template v-else-if="!accountOwnedTokens.length">
+        <not-available-card icon='work'
+                            :title="i18n.lbl_not_available()"
+                            :descr="i18n.lbl_token_not_available_yet()"/>
+      </template>
+      <template v-else-if="view.mode === VIEW_MODES.edit">
+        <md-card>
+          <md-card-content>
+            <md-steppers class="create-sale__steppers"
+                          md-vertical
+                          md-linear
+                          :md-active-step.sync="activeStep">
+              <md-step v-for="(step, i) in steps"
+                      :key="i"
+                      :id="step.name"
+                      :md-label="step.label"
+                      :md-done.sync="step.done"
+              >
+                <component :is="step.component"
+                          :schema="step.schema"
+                          :sale="sale"
+                          @sale-update="handleSaleUpdate($event, { step, i })"
+                          @sale-edit-end="handleSaleEditEnd"
+                />
+              </md-step>
+            </md-steppers>
+          </md-card-content>
+        </md-card>
       </template>
 
       <template v-else-if="view.mode === VIEW_MODES.list">
@@ -201,5 +198,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .create-sale__steppers {
+    margin-left: -20px;
+  }
 </style>

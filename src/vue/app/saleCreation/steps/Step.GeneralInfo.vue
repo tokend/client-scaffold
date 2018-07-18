@@ -1,6 +1,5 @@
 <template>
   <form class="step" @submit.prevent="submit">
-    <h3>{{ i18n.sale_provide_information() }}</h3>
     <div class="step-row md-layout">
         <input-field v-model="form.name"
                     v-validate="'required'"
