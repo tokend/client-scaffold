@@ -1,34 +1,25 @@
 <template>
   <div class="withdraw md-layout md-alignment-center-center">
     <template v-if="view.mode === VIEW_MODES.submit">
-      <form class="md-layout-item
-                 md-size-50
-                 md-medium-size-65
-                 md-small-size-95
-                 md-xsmall-size-100"
-            @submit.prevent="processTransfer">
-
-        <md-card>
-          <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-
-          <md-card-content>
-            <p class="withdraw__explanations" >
-              <template v-if="minAmounts[form.tokenCode]">
-                {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}.
-                {{ i18n.withdraw_minimal() }}.
-              </template>
-              <template v-else>
-                {{  i18n.withdraw_network_fee()  }}
-              </template>
-            </p>
+      <div class="md-layout-item
+                  md-size-50
+                  md-medium-size-65
+                  md-small-size-95
+                  md-xsmall-size-100
+                  app__card">
+        <div class="app__card-content">
+          <form @submit.prevent="processTransfer">
+            <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
             <div class="app__form-row">
               <div class="app__form-field">
                 <select-field-custom :values="tokenCodes"
                                     v-model="form.tokenCode"
                                     :label="i18n.lbl_asset()"/>
-                <div class="app__form-field-descr">
-                  {{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}
+                <div class="app__form-field-descr" v-if="minAmounts[form.tokenCode]">
+                  <span>{{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}</span>
+                  <br>
+                  <span>{{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}</span>
                 </div>
               </div>
             </div>
@@ -36,7 +27,6 @@
             <div class="app__form-row">
               <div class="app__form-field">
                 <input-field-unchained
-                  class="md-layout-item"
                   v-model.trim="form.amount"
                   :label="i18n.lbl_amount()"
                   name="amount"
@@ -54,12 +44,13 @@
 
                 <div class="withdraw__fees-container app__form-field-descr" :class="{ loading: isFeesLoadPending }">
 
-                  <div class="fees-container__fee fees-container__fee--fixed" v-if="fixedFee && !isLimitExceeded">
+                  <div v-if="fixedFee">
                     <!-- TODO: localize -->
                     <span>- {{ fixedFee }} {{ form.tokenCode }} <span class="fee__fee-type">fixed fee</span></span>
                   </div>
 
-                  <div class="fees-container__fee fees-container__fee--percent" v-if="percentFee && !isLimitExceeded">
+                  <div v-if="percentFee">
+                    <!-- TODO: localize -->
                     <span>- {{ percentFee }} {{ form.tokenCode }} <span class="fee__fee-type">percent fee</span></span>
                   </div>
 
@@ -69,9 +60,20 @@
 
             <div class="app__form-row">
               <input-field-unchained
-                class="md-layout-item"
+                v-model="amountToWithdraw"
+                :label="i18n.lbl_amount_to_withdraw()"
+                name="amount-to-send"
+                type="number"
+                title="Amount to be sent"
+                :readonly="true"
+              />
+            </div>
+
+            <div class="app__form-row">
+              <input-field-unchained
                 v-model.trim="form.wallet"
                 :label="i18n.withdraw_wallet({ asset: form.tokenCode })"
+                :monospaced="true"
                 name="wallet-address"
                 v-validate="'required|wallet_address'"
                 :errorMessage="
@@ -80,17 +82,18 @@
                 "
               />
             </div>
-          </md-card-content>
-          <md-dialog-actions class="withdrawal-dialog__actions">
-            <button v-ripple
-                    type="submit"
-                    class="withdraw__submit"
-                    :disabled="isPending">
-              {{ i18n.withdraw_withdrawal() }}
-            </button>
-          </md-dialog-actions>
-        </md-card>
-      </form>
+
+            <div class="app__form-actions">
+              <button v-ripple
+                type="submit"
+                class="withdraw__submit"
+                :disabled="isPending || !isAllowedToSubmit">
+                {{ i18n.withdraw_withdrawal() }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </template>
     <template v-else-if="view.mode === VIEW_MODES.confirm">
       <confirm-withdraw :opts="view.opts"
@@ -236,7 +239,17 @@
         return this.form.amount !== '' ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode] : false
       },
       isAllowedToSubmit () {
-        return !this.isFeesLoadPending && !this.isLimitExceeded && !this.isTryingToSendToYourself && !this.lessThenMinimumAmount
+        return !this.isFeesLoadPending &&
+          !this.isLimitExceeded &&
+          !this.isTryingToSendToYourself &&
+          !this.lessThenMinimumAmount &&
+          this.amountToWithdraw > 0
+      },
+      amountToWithdraw () {
+        const result = Number(this.form.amount) -
+          Number(this.fixedFee) -
+          Number(this.percentFee)
+        return result > 0 ? result : 0
       }
     },
     methods: {
@@ -348,39 +361,10 @@
   @import '~@scss/variables.scss';
   @import '~@scss/mixins.scss';
 
-  .withdraw__header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-  }
-
-  .withdraw__title {
-    .withdraw__header &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  .withdraw__user-balance {
-    color: $col-text-secondary;
-  }
-
   .withdraw__explanations {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     color: $col-md-primary;
-  }
-
-  .withdraw__flex-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .withdraw__select,
-  .withdraw__field {
-    width: 47%;
-    flex: none;
   }
 
   .withdraw__fees-container {
@@ -393,23 +377,13 @@
     }
   }
 
-  .withdraw__fee-error {
-    position: absolute;
-    @include center-vertically;
-    right: -60%;
-  }
-
-  .md-field.md-theme-default.md-invalid.md-focused label {
-    border-color: #ff1744
-  }
-
   .withdraw__submit {
       @include button();
       @include button-raised();
       width: 180px;
       position: relative;
       height: 36px;
-      margin: 0 auto 1rem;
+      margin: 0 auto;
   }
 
   .withdraw__success-msg {

@@ -8,6 +8,7 @@ export default {
   lbl_confirm: 'Confirm',
   lbl_asset: 'Asset',
   lbl_amount: 'Amount',
+  lbl_amount_to_withdraw: 'Amount to be send',
   lbl_settings: 'Settings',
   lbl_settings_page: PAGES_NAMES.settings,
   lbl_verification: PAGES_NAMES.verification,
