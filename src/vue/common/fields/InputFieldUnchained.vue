@@ -1,6 +1,10 @@
 <template>
   <div class="input-field"
-    :class="{'input-field--error': errorMessage}">
+    :class="{
+      'input-field--error': errorMessage,
+      'input-field--monospaced': monospaced,
+      'input-field--readonly': readonly
+    }">
     <input class="input-field__input"
       :type="type"
       :placeholder="placeholder || ' '"
@@ -16,6 +20,8 @@
       :readonly="readonly"
       :title="title"
       :form="form"
+      :monospaced="monospaced"
+      :tabindex="readonly ? -1 : tabindex"
       @input="onInput"
     >
 
@@ -41,6 +47,8 @@ export default {
     label: { type: String, default: 'Label' },
     value: { type: [String, Number], default: undefined },
     errorMessage: { type: String, default: undefined },
+    monospaced: { type: Boolean, default: false },
+    tabindex: { type: Number, default: 0 },
 
     // proxies
     autocomplete: { type: String, default: undefined },
@@ -57,7 +65,7 @@ export default {
     // [type="number"] proxies
     min: { type: [String, Number], default: undefined },
     max: { type: [String, Number], default: undefined },
-    step: { type: [String, Number], default: 0.1 }
+    step: { type: [String, Number], default: undefined }
   },
 
   data () {
@@ -146,7 +154,10 @@ export default {
   flex: 1;
 }
 
-.input-field__input {
+.input-field__input,
+.input-field__input:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0 50px #fff; // autofill hack
+  -webkit-text-fill-color: $field-color-text; // autofill hack
   width: 100%;
   background: none;
   border: none;
@@ -255,6 +266,10 @@ export default {
   line-height: $field-error-line-height;
 }
 
+.input-field--monospaced > .input-field__input {
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
 // TODO: fix issue when decimal number entered in the input that have
 // mismatched "step" attribute
 //.input-field__input:not(:placeholder-shown):invalid,
@@ -268,6 +283,10 @@ export default {
 .input-field--error > .input-field__label,
 .input-field--error > .input-field__input:focus ~ .input-field__label {
   color: $field-color-error;
+}
+
+.input-field--readonly > .input-field__input {
+  @include readonly-material-border($field-color-focused);
 }
 
 .input-field__err-transition-enter-active {

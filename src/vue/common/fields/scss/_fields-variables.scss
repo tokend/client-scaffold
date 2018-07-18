@@ -46,8 +46,12 @@ $field-placeholer-color: $field-color-unfocused;
   transition-duration: $field-transition-duration;
 
   &:focus {
-    // border-bottom-color: transparent;
     background-size: 100% .2 * $point;
   }
+}
+
+@mixin readonly-material-border($color) {
+  border-bottom: .1 * $point dashed $color;
+  background: none !important;
 }
 
