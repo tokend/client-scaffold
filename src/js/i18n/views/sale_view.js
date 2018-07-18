@@ -60,7 +60,6 @@ export default {
   sale_upload_success: 'Document uploaded successfully',
   sale_doc_tab_title_is_my: 'Valid legal documents allow investors to build trust in your corporate',
   sale_doc_tab_docs_is_my: 'Uploaded documents will be listed here',
-  sale_doc_tab_docs_desc: 'Valid legal documents allow investors to build trust in the asset manager',
   sale_upd_tab_add_update: 'Add update to the timeline',
   sale_upd_tab_add_timeline: 'Add item to timeline',
   sale_upd_tab_share_updates: 'Share your updates with your backers and potential investors!',
