@@ -100,7 +100,7 @@
           </div>
           <div class="md-card-content-item" v-if="makeAdditional">
             <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
+              <div class="md-layout-item">
                 <input-field id="token-preissued-asset-signer"
                             name="preissued asset signer"
                             v-model="request.preissuedAssetSigner"
@@ -109,7 +109,9 @@
                             :errorMessage="errorMessage('preissued asset signer')"
                 />
               </div>
-              <div class="md-layout-item md-small-size-100">
+            </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item">
                 <input-field id="token-initial-preissued-amount"
                             name="initial preissued amount"
                             v-model="request.initialPreissuedAmount"
