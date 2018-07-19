@@ -15,7 +15,7 @@
       :id="id"
       @input="onInput"
     >
-      <md-option v-for="(value, i) in values" :value="value" :key="i">{{ value }}</md-option>
+      <md-option v-for="(val, i) in values" :value="val" :selected="val === value" :key="i">{{ val }}</md-option>
     </md-select>
     <span class="md-error" v-if="errorMessage">{{ errorMessage }}</span>
   </md-field>
