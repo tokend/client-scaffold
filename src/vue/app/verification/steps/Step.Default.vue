@@ -49,13 +49,14 @@
                       :disabled="accountState === ACCOUNT_STATES.pending"
           />
 
-          <select-field v-if="item.field === 'select'"
+          <select-field v-if="item.field === 'select' && values[item.values].length"
                       :name="item.name"
                       :id="item.id"
                       :label="item.label"
                       v-model="form[item.model]"
                       :values="values[item.values]"
                       :key='item.id'
+                    
                       :disabled="accountState === ACCOUNT_STATES.pending"/>
 
           <date-field v-if="item.field === 'date'"
