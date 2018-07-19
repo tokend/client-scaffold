@@ -18,7 +18,7 @@ export class SaleCreationRecord extends RequestRecord {
     this.saleLogo = _get(this._record, 'details.sale.details.logo')
     this.saleLogoUrl = this._getSaleLogoUrl()
     this.softCap = _get(this._record, 'details.sale.soft_cap')
-    this.hardCap = _get(this._record, 'details.sale.soft_cap')
+    this.hardCap = _get(this._record, 'details.sale.hard_cap')
     this.baseAssetForHardCap = _get(this._record, 'details.sale.base_asset_for_hard_cap')
     this.shortDescription = _get(this._record, 'details.sale.details.short_description')
     this.youtubeVideoId = _get(this._record, 'details.sale.details.youtube_video_id')
