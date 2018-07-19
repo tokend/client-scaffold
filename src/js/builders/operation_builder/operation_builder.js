@@ -8,6 +8,7 @@ export class OperationBuilder {
     this.operations = []
     this.config = {}
     this.repeatDetails = {}
+    this.isRawError = false
   }
 
   operation () {
@@ -18,6 +19,17 @@ export class OperationBuilder {
   add (operation) {
     if (!operation) return this
     this.operations.push(operation)
+    return this
+  }
+
+  addMany (operations) {
+    if (!operations) return this
+    this.operations = operations
+    return this
+  }
+
+  withRawError () {
+    this.isRawError = true
     return this
   }
 
@@ -44,7 +56,7 @@ export class OperationBuilder {
       this.repeatDetails = error.repeatDetails
       return createTfaDialog(this.repeat.bind(this), parsedError.meta)
     } else {
-      return Promise.reject(parsedError)
+      return Promise.reject(this.isRawError ? error : parsedError)
     }
   }
 }

@@ -23,6 +23,9 @@ import DepositMake from '../vue/app/deposit/make/Deposit.Make'
 import Transfers from '../vue/app/transfers/Transfers.Entry'
 import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
 
+import MassTransfers from '../vue/app/massTransfers/MassTransfers.Entry'
+import MassTransfersMake from '../vue/app/massTransfers/MassTransfers.Make'
+
 import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
 import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
 
@@ -152,6 +155,20 @@ const router = new Router({
               path: '/transfers/make/:tokenCode',
               name: 'transfers.make:tokenCode',
               component: TransfersMake
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.massTransfers,
+          name: 'app.mass-transfers',
+          path: '/mass-transfers',
+          component: MassTransfers,
+          redirect: { path: '/mass-transfers/make' },
+          children: [
+            {
+              path: '/mass-transfers/make',
+              name: 'mass-transfers.make',
+              component: MassTransfersMake
             }
           ]
         },

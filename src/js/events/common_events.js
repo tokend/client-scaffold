@@ -56,7 +56,9 @@ const componentEvents = Object.freeze({
   saleUpdateEvent: 'sale-update',
   saleSelectEvent: 'sale-select',
   saleEditEndEvent: 'sale-edit-end',
-  selectUserTypeEvent: 'select-user-type'
+  selectUserTypeEvent: 'select-user-type',
+  kycUpdateEvent: 'kyc-update',
+  kycEditEndEvent: 'kyc-edit-end'
 })
 
 export const commonEvents = {

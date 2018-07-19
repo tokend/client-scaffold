@@ -44,9 +44,9 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../../../js/events/common_events'
-  import { userTypes } from '../../../../../js/const/const'
-  import { i18n } from '../../../../../js/i18n'
+  import { commonEvents } from '../../../../js/events/common_events'
+  import { userTypes } from '../../../../js/const/const'
+  import { i18n } from '../../../../js/i18n/index'
 
   export default {
     name: 'user-type-selector',
@@ -69,8 +69,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+  @import '../../../../scss/variables';
+  @import '../../../../scss/mixins';
 
   .user-type-selector {
     margin: auto;

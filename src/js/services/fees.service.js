@@ -1,5 +1,5 @@
 import { Service } from './service'
-
+import { PAYMENT_FEE_SUBTYPES } from '../const/xdr.const'
 import { xdr } from 'swarm-js-sdk'
 
 const feeTypes = {
@@ -9,11 +9,11 @@ const feeTypes = {
 }
 
 export class FeeService extends Service {
-  loadPaymentFeeByAmount (asset, amount, accountId = this._accountId) {
+  loadPaymentFeeByAmount (asset, amount, accountId = this._accountId, subtype = PAYMENT_FEE_SUBTYPES.outgoing) {
     const feeType = xdr.FeeType.fromName(feeTypes.PAYMENT_FEE).value
 
     return this._horizonRequestBuilder.fees()
-      .fee(feeType, asset, accountId, amount)
+      .fee(feeType, asset, accountId, amount, subtype)
       .call()
       .then(result => ({ fixed: result.fixed, percent: result.percent, feeAsset: result.fee_asset }))
   }
