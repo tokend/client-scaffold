@@ -7,7 +7,7 @@
         <detail-row :prop="i18n.sale_base_asset_for_hard_cap()" :value="`${sale.defaultQuoteAsset}`"/>
         <detail-row :prop="i18n.sale_soft_cap()" :value="`${i18n.cc(sale.softCap)}`"/>
         <detail-row :prop="i18n.sale_hard_cap()" :value="`${i18n.cc(sale.hardCap)}`"/>
-        <detail-row :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset:sale.baseAsset})}`" :value="`${i18n.cc(sale.baseHardCap)}`"/>
+        <detail-row :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset:sale.baseAsset})}`" :value="`${i18n.c(sale.baseHardCap)}`"/>
       </div>
     </div>
   </div>
