@@ -204,6 +204,7 @@
 
   .info-widget__list-body-elem--pending:before {
     background-color: #ffb454;
+    content: '';
   }
 
   .info-widget__list-body-elem--success:before {
