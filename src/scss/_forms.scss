@@ -1,13 +1,17 @@
 @import '~@scss/variables.scss';
+@import '~@scss/mixins.scss';
 
 $point: 10px; // TODO: replace with rem
+$margin-row-to-row: 4 * $point;
+$margin-row-to-row-small: 3 * $point;
+$field-to-field-gap: 2 * $point;
 
 .app__form-row {
   display: flex;
   width: 100%;
 
-  & + & {
-    margin-top: 2.5 * $point;
+  &:not(:first-child) {
+    margin-top: $margin-row-to-row;
   }
 
   & > .app__form-field {
@@ -15,24 +19,71 @@ $point: 10px; // TODO: replace with rem
 
     &--halved {
       flex: 0.5;
-      margin-right: 2 * $point;
+      margin-right: $field-to-field-gap;
+    }
+
+    &--right {
+      text-align: right;
     }
   }
 
   & > .app__form-field + .app__form-field {
-    margin-left: 2 * $point;
+    margin-left: $field-to-field-gap;
   }
 
-  & + .app__form-actions {
-    margin-top: 3.5 * $point;
+  @include respond-to(small) {
+    flex-direction: column;
+
+    & + & {
+      margin-top: $margin-row-to-row-small;
+    }
+
+    & > .app__form-field + .app__form-field {
+      flex: 1;
+      margin-left: 0;
+      margin-top: $margin-row-to-row-small;
+    }
   }
 }
 
 .app__form-actions {
   display: flex;
 
+  &:not(:first-child) {
+    margin-top: 5 * $point;
+  }
+
   & > button + button {
     margin-left: 1 * $point;
+  }
+
+  & > .app__form-field {
+    flex: 1;
+
+    &--halved {
+      flex: 0.5;
+      margin-right: $field-to-field-gap;
+    }
+
+    &--right {
+      text-align: right;
+    }
+  }
+
+  & > .app__form-field + .app__form-field {
+    margin-left: $field-to-field-gap;
+  }
+
+  @include respond-to(small) {
+    &:not(:first-child) {
+      margin-top: 4 * $point;
+    }
+
+    & > .app__form-field + .app__form-field {
+      flex: 1;
+      margin-left: 0;
+      margin-top: $margin-row-to-row-small;
+    }
   }
 }
 
