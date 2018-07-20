@@ -20,19 +20,18 @@
             <template v-if="tokens.length">
               <md-list class="md-double-line">
                 <md-content class="md-scrollbar">
-                  <template v-for="(token, i) in tokens">
-                    <md-list-item @click="selectToken(token)">
-
-                      <md-avatar class="md-avatar-icon"
-                                 :class="`${hasBalance(token) ? 'md-primary' : 'md-accent'}`"
-                      >
+                  <template v-for="token in tokens">
+                    <md-list-item @click="selectToken(token)" :key="`explore-tokens-token-${token.code}`">
+                      <div class="explore-tokens__list-item-avatar"
+                           :class="`${hasBalance(token)
+                                    ? 'explore-tokens__list-item-avatar--primary'
+                                    : 'explore-tokens__list-item-avatar--accent'}`">
                         <template v-if="token.logoUrl">
                           <img :src="token.logoUrl" :alt="avatar(token.code)">
                         </template>
 
                         <template v-else>{{ avatar(token.code) }}</template>
-
-                      </md-avatar>
+                      </div>
 
                       <div class="md-list-item-text explore-tokens__token-name"
                            :class="{ 'selected': selected.code === token.code }"
@@ -237,6 +236,27 @@
     @include respond-to(medium) {
       display: none;
     }
+  }
+
+  .explore-tokens__list-item-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 4px 16px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+  }
+
+  .explore-tokens__list-item-avatar--accent {
+    background-color: $col-md-accent;
+  }
+
+  .explore-tokens__list-item-avatar--primary {
+    background-color: $col-md-primary;
   }
 
   .explore-tokens__token-details-inner {

@@ -46,7 +46,8 @@
 
     data: _ => ({
       barTicks: 24,
-      defaultAsset: config.DEFAULT_QUOTE_ASSET
+      defaultAsset: config.DEFAULT_QUOTE_ASSET,
+      chartRenderingTime: 500
     }),
 
     watch: {
@@ -185,7 +186,7 @@
           .attr('stroke-dasharray', totalLength + ' ' + totalLength)
           .attr('stroke-dashoffset', totalLength)
           .transition()
-          .duration(500)
+          .duration(this.chartRenderingTime)
           .ease(d3.easeLinear)
           .attr('stroke-dashoffset', 0)
 
@@ -223,11 +224,17 @@
             .style('stop-color', '#d5ceff')
             .style('stop-opacity', 0.05)
 
-          svg
+          const chartAreaWithGradient = svg
             .append('path')
             .datum(data)
             .attr('fill', 'url(#area-gradient)')
             .attr('d', area)
+            .style('opacity', '0')
+            .style('transition', '0.3s ease-out')
+
+          setTimeout(() => {
+            chartAreaWithGradient.style('opacity', '1')
+          }, this.chartRenderingTime)
 
           svg.append('g')
             .attr('height', height)
@@ -255,7 +262,7 @@
               }
             })
 
-          svg.append('g')
+          const chartTipsPoints = svg.append('g')
             .attr('height', height)
             .attr('width', width)
             .attr('class', 'alalal')
@@ -264,6 +271,8 @@
             .enter().append('circle')
             .attr('r', '3')
             .attr('fill', '#bdb6ff')
+            .style('opacity', '0')
+            .style('transition', '0.3s ease-out')
             .attr('cx', function (localData) {
               return x(localData.time)
             })
@@ -274,6 +283,9 @@
                 return height - 10
               }
             })
+          setTimeout(() => {
+            chartTipsPoints.style('opacity', '1')
+          }, this.chartRenderingTime)
         }
 
         // // Render y-axis

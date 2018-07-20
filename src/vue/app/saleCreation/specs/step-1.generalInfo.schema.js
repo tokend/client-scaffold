@@ -13,11 +13,6 @@ export default {
   rows: [
     [
       {
-        "heading": i18n.sale_provide_information()
-      }
-    ],
-    [
-      {
         "field": "text",
         "model": "name",
         "name": "sale-name",

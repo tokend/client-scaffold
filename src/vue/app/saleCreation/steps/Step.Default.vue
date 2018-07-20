@@ -2,10 +2,9 @@
   <form class="step"
         novalidate
         @submit.prevent="submit">
-    <template v-for="row in schema.rows">
-      <div class="step__row">
+    <template v-for="(row, r) in schema.rows">
+      <div class="step__row" :key="`sale-creation-step-${r}`">
         <template v-for="item in row">
-          <h3 v-if="item.heading">{{ item.heading }}</h3>
 
           <input-field v-if="item.field === 'text'"
 

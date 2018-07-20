@@ -23,6 +23,22 @@
           <div class="md-card-content-item">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
+                <select-field-custom :values="accountOwnedTokens"
+                                     v-model="request.code"
+                                     :label="i18n.lbl_asset()"/>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <input-field id="token-max-issuance-amount"
+                            name="amount"
+                            v-model="request.amount"
+                            v-validate="'required|amount'"
+                            :label="i18n.lbl_amount()"
+                            :errorMessage="errorMessage('amount')"
+                />
+              </div>
+            </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
                 <input-field id="token-name"
                             name="issuance email"
                             v-model="request.receiver"
@@ -30,11 +46,6 @@
                             :label="i18n.lbl_email()"
                             :errorMessage="errorMessage('issuance email')"
                 />
-              </div>
-              <div class="md-layout-item md-small-size-100">
-                <select-field-custom :values="accountOwnedTokens"
-                                     v-model="request.code"
-                                     :label="i18n.lbl_asset()"/>
               </div>
             </div>
             <div class="md-layout md-gutter">
@@ -45,15 +56,6 @@
                             v-validate="'required'"
                             :label="i18n.lbl_reference()"
                             :errorMessage="errorMessage('reference')"
-                />
-              </div>
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="token-max-issuance-amount"
-                            name="amount"
-                            v-model="request.amount"
-                            v-validate="'required|amount'"
-                            :label="i18n.lbl_amount()"
-                            :errorMessage="errorMessage('amount')"
                 />
               </div>
             </div>

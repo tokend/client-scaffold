@@ -9,11 +9,6 @@ export default {
   rows: [
     [
       {
-        "heading": i18n.sale_tell_about_fund()
-      }
-    ],
-    [
-      {
         "field": "text",
         "model": "youtubeId",
         "name": "video-description",

@@ -31,6 +31,18 @@ $xlarge: 1920px;
   }
 }
 
+@mixin button-icon () {
+  @include button();
+
+  padding: 8px;
+  border-radius: 50%;
+  transition: .3s ease-out;
+
+  &:hover {
+    background-color: $col-md-primary-flat-hover;
+  }
+}
+
 @mixin button-raised () {
   @include button();
 

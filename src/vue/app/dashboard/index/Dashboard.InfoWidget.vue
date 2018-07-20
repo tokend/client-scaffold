@@ -17,8 +17,10 @@
             <div class="info-widget__list-body-elem"
                 v-for="(tx, i) in list"
                 v-if="i < transactionsToShow"
-                :key="`activity-item-${i}`">
-              <div class="info-widget__list-body-row">
+                :key="`activity-item-${i}`"
+                :class="`info-widget__list-body-elem--${tx.state}`">
+              <div class="info-widget__list-body-row"
+                   @click="makeDialogIsShow(tx)">
                 <div :title="tx.date" class="info-widget__list-body-item info-widget__list-body-item--date">
                   {{ tx.date }}
                 </div>
@@ -35,16 +37,16 @@
                   {{ tx.counterparty }}
                 </div>
                 <div :title="tx.state" class="info-widget__list-body-item info-widget__list-body-item--status">
-                  {{ tx.state === 'confirm' ? 'success' : tx.state }}
+                  {{ tx.state }}
                 </div>
                 <div class="info-widget__list-body-item info-widget__list-body-item--btn">
                   <button class="info-widget__list-body-item-btn" @click="makeDialogIsShow(tx)">
-                    {{ i18n.lbl_view() }}
+                    <md-icon>keyboard_arrow_down</md-icon>
                   </button>
                 </div>
               </div>
             </div>
-            <info-dialog v-on:close-dialog="closeDialog"
+            <info-dialog @close-dialog="closeDialog"
                          v-if="showDialog"
                          :dialogValues="dialogValues"
                          :showDialog="showDialog"/>
@@ -67,6 +69,7 @@
   import { PricesHelper } from '../../../../vuex/helpers/prices.helper'
   import { DEFAULT_CONVERSION_ASSET } from '../../../../js/const/configs.const'
   import { i18n } from '../../../../js/i18n'
+  import { TX_STATES } from '../../../../js/const/const'
   import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
   import get from 'lodash/get'
@@ -84,7 +87,8 @@
       showDialog: false,
       dialogValues: {},
       i18n,
-      DEFAULT_CONVERSION_ASSET
+      DEFAULT_CONVERSION_ASSET,
+      TX_STATES
     }),
     props: ['currentAsset'],
     created () {
@@ -136,7 +140,8 @@
   @import '~@scss/mixins';
 
   .info-widget__list {
-    padding: 0 4px;
+    padding: 0 4px 6px 4px;
+
     @include respond-to-custom(1300px) {
       overflow-x: scroll;
     }
@@ -159,10 +164,60 @@
     padding: 8px 0;
   }
 
+  .info-widget__list-wrapper {
+    position: relative;
+  }
+
+  .info-widget__list-body-elem--failed,
+  .info-widget__list-body-elem--pending,
+  .info-widget__list-body-elem--success {
+    &:before {
+      position: absolute;
+      left: -29px;
+      margin-top: 22px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 10px;
+      line-height: 18px;
+
+      @include respond-to(medium) {
+        left: -25px;
+      }
+
+      @include respond-to-custom(800px) {
+        left: -21px;
+      }
+
+      @include respond-to(xsmall) {
+        left: -17px;
+      }
+    }
+  }
+
+  .info-widget__list-body-elem--failed:before {
+    content: '\2715';
+    background-color: $col-md-accent;
+    padding: 0 4px;
+  }
+
+  .info-widget__list-body-elem--pending:before {
+    background-color: #ffb454;
+    content: '';
+  }
+
+  .info-widget__list-body-elem--success:before {
+    content: '\2713';
+    background-color: #51ca90;
+    padding: 0 3px;
+  }
+
   .info-widget__list-body-elem {
+    @include box-shadow();
+
     background-color: #fff;
     min-width: 970px;
-    @include box-shadow();
 
     &:not(:last-child) {
       margin-bottom: 6px;
@@ -214,9 +269,11 @@
   .info-widget__list-body-item-btn {
     @include button();
     @include button-flat();
+
     background: rgba($col-md-primary, .1);
     font-size: 10px;
     border-radius: 4px;
+    padding: 8px;
   }
 
   .info-widget__list-body-item-icon {

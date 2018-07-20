@@ -1,11 +1,18 @@
 .step {
   width: 100%;
+  margin-left: 10px;
+
+  @media only screen and (max-width: 600px) {
+    width: calc(100% + 25px);
+    margin-left: -25px;
+  }
 }
 
 .step__row {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  margin-top: 8px;
 }
 
 .step__input-field {
@@ -13,6 +20,7 @@
   margin-top: 1.1rem;
   margin-right: .5rem;
 }
+
 .step__input-field:last-child { margin-right: 0; }
 .step__file-field { width: 100%; min-width: 50%; margin-right: .5rem }
 .step__file-field:last-child { margin-right: 0 }
