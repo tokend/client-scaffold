@@ -2,8 +2,11 @@ export default {
   withdraw_withdrawal: 'Withdraw',
   withdraw_confirm: 'Withdrawal confirmation',
   withdraw_how_much: 'Minimal withdrawal is %{value} %{asset}.',
-  withdraw_minimal: 'Also note that network fee will be separately charged from amount of withdrawal transaction',
-  withdraw_network_fee: 'Please note that network fee will be separately charged from amount of withdrawal transaction',
+  withdraw_network_fee: 'network fee',
+  withdraw_network_fee_prefix: 'Unknown',
+  withdraw_network_fee_hint: 'Blockchain network will charge additional transaction fee independently.',
+  withdraw_fixed_fee: 'fixed fee', // prefix is omitted
+  withdraw_percent_fee: 'percent fee', // prefix is omitted
   withdraw_wallet: 'Destination %{asset} address',
   withdraw_success: 'Withdrawal request successfully created',
   withdraw_balance: 'Balance is %{amount} %{asset}.',

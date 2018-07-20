@@ -6,14 +6,13 @@
                   md-medium-size-65
                   md-small-size-95
                   md-xsmall-size-100
-                  app__card">
+                  app__card
+                  withdraw__card">
         <div class="app__card-content">
           <form @submit.prevent="processTransfer">
-            <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-
             <div class="app__form-row">
               <div class="app__form-field">
-                <select-field-custom :values="tokenCodes"
+                <select-field-unchained :values="tokenCodes"
                                     v-model="form.tokenCode"
                                     :label="i18n.lbl_asset()"/>
                 <div class="app__form-field-descr" v-if="minAmounts[form.tokenCode]">
@@ -43,30 +42,24 @@
                 />
 
                 <div class="withdraw__fees-container app__form-field-descr" :class="{ loading: isFeesLoadPending }">
+                  <span>- {{ i18n.withdraw_network_fee_prefix() }}</span>
+                  <hint-wrapper :hint="i18n.withdraw_network_fee_hint()">
+                    <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
+                  </hint-wrapper>
 
-                  <div v-if="fixedFee">
-                    <!-- TODO: localize -->
-                    <span>- {{ fixedFee }} {{ form.tokenCode }} <span class="fee__fee-type">fixed fee</span></span>
-                  </div>
+                  <template v-if="fixedFee">
+                    <br>
+                    <span>- {{ fixedFee }} {{ form.tokenCode }} </span>
+                    <span class="fee__fee-type">{{ i18n.withdraw_fixed_fee() }}</span>
+                  </template>
 
-                  <div v-if="percentFee">
-                    <!-- TODO: localize -->
-                    <span>- {{ percentFee }} {{ form.tokenCode }} <span class="fee__fee-type">percent fee</span></span>
-                  </div>
-
+                  <template v-if="percentFee">
+                    <br>
+                    <span>- {{ percentFee }} {{ form.tokenCode }} </span>
+                    <span class="fee__fee-type">{{ i18n.withdraw_percent_fee() }}</span>
+                  </template>
                 </div>
               </div>
-            </div>
-
-            <div class="app__form-row">
-              <input-field-unchained
-                v-model="amountToWithdraw"
-                :label="i18n.lbl_amount_to_withdraw()"
-                name="amount-to-send"
-                type="number"
-                title="Amount to be sent"
-                :readonly="true"
-              />
             </div>
 
             <div class="app__form-row">
@@ -161,7 +154,8 @@
   import debounce from 'lodash/debounce'
   import get from 'lodash/get'
 
-  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+  import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+  import HintWrapper from '@/vue/common/hint-wrapper/HintWrapper'
   import InputField from '../../../common/fields/InputField'
   import InputFieldUnchained from '../../../common/fields/InputFieldUnchained'
   import ConfirmWithdraw from './Withdrawal.Confirm'
@@ -187,8 +181,9 @@
     mixins: [formMixin],
     components: {
       InputField,
+      HintWrapper,
       ConfirmWithdraw,
-      SelectFieldCustom,
+      SelectFieldUnchained,
       InputFieldUnchained
     },
     data: _ => ({
@@ -242,14 +237,7 @@
         return !this.isFeesLoadPending &&
           !this.isLimitExceeded &&
           !this.isTryingToSendToYourself &&
-          !this.lessThenMinimumAmount &&
-          this.amountToWithdraw > 0
-      },
-      amountToWithdraw () {
-        const result = Number(this.form.amount) -
-          Number(this.fixedFee) -
-          Number(this.percentFee)
-        return result > 0 ? result : 0
+          !this.lessThenMinimumAmount
       }
     },
     methods: {
@@ -394,5 +382,12 @@
     color: $col-md-primary;
     font-size: $fs-heading;
     margin: 1rem 0 .5rem;
+  }
+
+  .withdraw__card {
+    min-width: 0;
+    max-width: 550px;
+    flex: 1;
+    width: 100%;
   }
 </style>
