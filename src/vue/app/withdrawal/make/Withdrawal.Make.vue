@@ -1,8 +1,8 @@
 <template>
   <div class="withdraw">
     <template v-if="tokenCodes.length">
-      <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
       <div class="app__page-content-wrp">
+        <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
         <form @submit.prevent="processTransfer"
           id="withdrawal-form"
           v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
