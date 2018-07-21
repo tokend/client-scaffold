@@ -91,9 +91,17 @@ $field-to-field-gap: 2 * $point;
   margin-top: .5 * $point;
   font-size: 1.4 * $point;
   color: $col-md-primary;
+
+  & > p {
+    margin: 0;
+  }
 }
 
 .app__form-field-hint {
   @extend .app__form-field-descr;
   color: $col-md-primary-inactive;
+
+  & > p {
+    margin: 0;
+  }
 }

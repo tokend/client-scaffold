@@ -15,10 +15,13 @@
                 <select-field-unchained :values="tokenCodes"
                                     v-model="form.tokenCode"
                                     :label="i18n.lbl_asset()"/>
-                <div class="app__form-field-descr" v-if="minAmounts[form.tokenCode]">
-                  <span>{{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}</span>
-                  <br>
-                  <span>{{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}</span>
+                <div class="app__form-field-descr">
+                  <p v-if="minAmounts[form.tokenCode]">
+                    {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}
+                  </p>
+                  <p>
+                    {{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -42,22 +45,22 @@
                 />
 
                 <div class="withdraw__fees-container app__form-field-descr" :class="{ loading: isFeesLoadPending }">
-                  <span>- {{ i18n.withdraw_network_fee_prefix() }}</span>
-                  <hint-wrapper :hint="i18n.withdraw_network_fee_hint()">
-                    <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
-                  </hint-wrapper>
+                  <p>
+                    - {{ i18n.withdraw_network_fee_prefix() }}
+                    <hint-wrapper :hint="i18n.withdraw_network_fee_hint()">
+                      <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
+                    </hint-wrapper>
+                  </p>
 
-                  <template v-if="fixedFee">
-                    <br>
-                    <span>- {{ fixedFee }} {{ form.tokenCode }} </span>
+                  <p v-if="fixedFee">
+                    - {{ fixedFee }} {{ form.tokenCode }}
                     <span class="fee__fee-type">{{ i18n.withdraw_fixed_fee() }}</span>
-                  </template>
+                  </p>
 
-                  <template v-if="percentFee">
-                    <br>
-                    <span>- {{ percentFee }} {{ form.tokenCode }} </span>
+                  <p v-if="percentFee">
+                    - {{ percentFee }} {{ form.tokenCode }}
                     <span class="fee__fee-type">{{ i18n.withdraw_percent_fee() }}</span>
-                  </template>
+                  </p>
                 </div>
               </div>
             </div>
