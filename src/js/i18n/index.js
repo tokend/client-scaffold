@@ -25,6 +25,7 @@ import companyView from './views/company_view'
 import preissuanceView from './views/preissuance_view'
 import common from './views/common'
 import auth from './views/auth_view'
+import formConfirmation from './views/form_confirmation_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate } from '../utils/dates.util'
@@ -60,7 +61,8 @@ const dictionary = {
   ...trade,
   ...companyView,
   ...preissuanceView,
-  ...common
+  ...common,
+  ...formConfirmation
 }
 
 polyglot.extend(dictionary)
