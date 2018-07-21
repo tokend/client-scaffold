@@ -16,8 +16,8 @@
                             :descr="i18n.lbl_token_not_available_yet()"/>
       </template>
       <template v-else-if="view.mode === VIEW_MODES.edit">
-        <md-card>
-          <md-card-content>
+        <div class="app__card">
+          <div class="app__card-content">
             <md-steppers class="create-sale__steppers"
                           md-vertical
                           md-linear
@@ -36,24 +36,24 @@
                 />
               </md-step>
             </md-steppers>
-          </md-card-content>
-        </md-card>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="view.mode === VIEW_MODES.list">
-        <md-card class="create-sale__request-list">
-          <md-card-header>
+        <div class="create-sale__request-list app__card">
+          <div class="app__card-header">
             <div class="md-title">{{ i18n.sale_open_requests() }}</div>
-          </md-card-header>
-          <md-card-content>
+          </div>
+          <div class="app__card-content">
             <button v-ripple
                     @click="startNewSale"
                     class="app__button-flat">
               {{ i18n.sale_start_new_sale() }}
             </button>
             <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
-          </md-card-content>
-        </md-card>
+          </div>
+        </div>
       </template>
     </div>
   </div>
@@ -199,6 +199,6 @@
 
 <style lang="scss" scoped>
   .create-sale__steppers {
-    margin-left: -20px;
+    margin-left: -10px;
   }
 </style>

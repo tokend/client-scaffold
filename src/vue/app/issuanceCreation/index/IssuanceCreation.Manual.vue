@@ -17,10 +17,10 @@
       </template>
       <template v-else>
       <form novalidate @submit.prevent="submit">
-      <md-card>
+      <div class="app__card">
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-        <md-card-content>
-          <div class="md-card-content-item">
+        <div class="app__card-content">
+          <div class="create-issuance__content-item">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <select-field-custom :values="accountOwnedTokens"
@@ -60,16 +60,16 @@
               </div>
             </div>
           </div>
-        </md-card-content>
-        <md-card-actions>
+        </div>
+        <div class="app__card-actions">
           <button v-ripple
                   type="submit"
                   class="app__button-flat"
                   :disabled="isPending">
             {{ i18n.lbl_submit() }}
           </button>
-        </md-card-actions>
-      </md-card>
+        </div>
+      </div>
     </form>
     </template>
     </div>
@@ -147,7 +147,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .md-card-content-item:not(:last-child) {
+  .create-issuance__content-item:not(:last-child) {
     margin-bottom: 24px;
   }
 </style>

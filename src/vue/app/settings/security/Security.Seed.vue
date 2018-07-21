@@ -7,14 +7,14 @@
     <md-dialog class="account-seed__dialog" :md-active.sync="isDialogOpened">
       <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
 
-      <md-card-content class="account-seed__content">
+      <div class="account-seed__content app__card-content">
         <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
 
         <clipboard-field class="account-seed__clipboard"
           :value="accountSeed"
         />
 
-      </md-card-content>
+      </div>
 
       <md-dialog-actions class="md-layout md-alignment-center-right">
         <button v-ripple

@@ -249,9 +249,62 @@ input:-webkit-autofill {
   @include button-raised();
 }
 
+.app__card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include respond-to(medium) {
+    flex-direction: column;
+  }
+
+  & > .app__card:first-child {
+    margin-right: 8px;
+    width: calc(50% - 8px);
+
+    @include respond-to(medium) {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  & > .app__card:last-child {
+    margin-left: 8px;
+    width: calc(50% - 8px);
+
+    @include respond-to(medium) {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 16px;
+    }
+  }
+
+  &.app__card-wrapper--xmedium-breakpoint {
+    @include respond-to(xmedium) {
+      flex-direction: column;
+    }
+
+    & > .app__card:first-child {
+      @include respond-to(xmedium) {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    & > .app__card:last-child {
+      @include respond-to(xmedium) {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
 .app__card {
-  @include box-shadow();
   background-color: #fff;
+
+  &:not(.app__card--shadow-none) {
+    @include box-shadow();
+  }
 }
 
 .app__card-content,
@@ -269,6 +322,8 @@ input:-webkit-autofill {
 
 .app__card-actions {
   padding: 8px 24px 24px;
+  display: flex;
+  justify-content: flex-end;
 
   @include respond-to(medium) {
     padding: 8px 16px 16px;

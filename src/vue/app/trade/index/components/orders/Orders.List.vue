@@ -1,38 +1,36 @@
 <template>
-  <div>
-    <md-table class="order-list">
-      <md-table-toolbar class="order-list__title">
-        <h2>{{ type === ORDER_TYPES.buy ? i18n.trd_ask () : i18n.trd_bid() }}</h2>
-      </md-table-toolbar>
-      <template v-if="list.length">
-        <md-table-row>
-          <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_want() : i18n.trd_order() }}</md-table-head>
-          <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_order() : i18n.trd_want() }}</md-table-head>
-          <md-table-head class="order-list__cell">{{ i18n.trd_price() }}</md-table-head>
+  <md-table class="order-list">
+    <md-table-toolbar class="order-list__title">
+      <h2>{{ type === ORDER_TYPES.buy ? i18n.trd_ask () : i18n.trd_bid() }}</h2>
+    </md-table-toolbar>
+    <template v-if="list.length">
+      <md-table-row>
+        <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_want() : i18n.trd_order() }}</md-table-head>
+        <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_order() : i18n.trd_want() }}</md-table-head>
+        <md-table-head class="order-list__cell">{{ i18n.trd_price() }}</md-table-head>
+      </md-table-row>
+
+      <template v-for="(order, i) in list">
+        <md-table-row class="order-list__row" :key="`${i}-order-row`" @click.native="matchOrder(order)">
+          <md-table-cell class="order-list__cell">{{ order.baseAmount }} {{ order.baseAssetCode }}</md-table-cell>
+          <md-table-cell class="order-list__cell">{{ order.quoteAmount }} {{ order.quoteAssetCode }}</md-table-cell>
+          <md-table-cell class="order-list__cell">{{ order.price }} {{ order.quoteAssetCode }}</md-table-cell>
         </md-table-row>
-
-        <template v-for="(order, i) in list">
-          <md-table-row class="order-list__row" :key="`${i}-order-row`" @click.native="matchOrder(order)">
-            <md-table-cell class="order-list__cell">{{ order.baseAmount }} {{ order.baseAssetCode }}</md-table-cell>
-            <md-table-cell class="order-list__cell">{{ order.quoteAmount }} {{ order.quoteAssetCode }}</md-table-cell>
-            <md-table-cell class="order-list__cell">{{ order.price }} {{ order.quoteAssetCode }}</md-table-cell>
-          </md-table-row>
-        </template>
-
       </template>
-      <template v-else>
-        <div class="order-list__no-transactions">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.trd_no_orders_history() }}</h2>
-          <p>{{
-            type === ORDER_TYPES.buy ?
-            i18n.trd_here_will_be_the_order_ask_list() :
-            i18n.trd_here_will_be_the_order_bid_list()
-          }}</p>
-        </div>
-      </template>
-    </md-table>
-  </div>
+
+    </template>
+    <template v-else>
+      <div class="order-list__no-transactions">
+        <md-icon class="md-size-4x">trending_up</md-icon>
+        <h2>{{ i18n.trd_no_orders_history() }}</h2>
+        <p>{{
+          type === ORDER_TYPES.buy ?
+          i18n.trd_here_will_be_the_order_ask_list() :
+          i18n.trd_here_will_be_the_order_bid_list()
+        }}</p>
+      </div>
+    </template>
+  </md-table>
 </template>
 
 <script>

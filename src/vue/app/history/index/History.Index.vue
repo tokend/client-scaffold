@@ -1,7 +1,7 @@
 <template>
   <div class="tx-history">
 
-    <md-table md-card class="tx-history__table">
+    <md-table class="tx-history__table app__card">
       <md-table-toolbar class="tx-history__table-toolbar">
         <div class="tx-history__select-outer">
           <select-field-custom
