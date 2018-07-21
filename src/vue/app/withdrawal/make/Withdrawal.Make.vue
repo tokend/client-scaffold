@@ -1,5 +1,5 @@
 <template>
-  <div class="withdraw md-layout1 md-alignment-center-center1">
+  <div class="withdraw">
     <template v-if="tokenCodes.length">
       <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
       <div class="app__page-content-wrp">
