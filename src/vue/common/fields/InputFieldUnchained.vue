@@ -156,7 +156,8 @@ export default {
 
 .input-field__input,
 .input-field__input:-webkit-autofill {
-  -webkit-box-shadow: inset 0 0 0 50px #fff; // autofill hack
+  // TODO: better autofill hack
+  // -webkit-box-shadow: inset 0 0 0 50px #fff; // autofill hack
   -webkit-text-fill-color: $field-color-text; // autofill hack
   width: 100%;
   background: none;
