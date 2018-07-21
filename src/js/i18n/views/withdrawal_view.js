@@ -1,6 +1,6 @@
 export default {
   withdraw_withdrawal: 'Withdraw',
-  withdraw_confirm: 'Withdrawal confirmation',
+  withdraw_heading: 'Withdrawal form',
   withdraw_how_much: 'Minimal withdrawal is %{value} %{asset}.',
   withdraw_network_fee: 'network fee',
   withdraw_network_fee_prefix: 'Unknown',
@@ -14,6 +14,7 @@ export default {
   withdraw_error_invalid_address: 'Invalid wallet address',
   withdraw_error_insufficient_funds: 'Insufficient funds',
   withdraw_error_minimum_amount: 'The minimum amount is %{value} %{asset}',
-  withdraw_no_assets: 'No withdrawable assets in your wallet',
-  withdraw_no_assets_exp: 'This feature will be available once you have any withdrawable asset'
+  withdraw_no_assets: 'Your wallet doesn\'t contain any withdrawable tokens yet. You can discover some on the token list.',
+  withdraw_no_assets_heading: 'Ops!',
+  withdraw_discover_tokens_btn: 'Discover tokens'
 }

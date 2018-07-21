@@ -1,7 +1,7 @@
 <template>
   <div class="withdraw md-layout1 md-alignment-center-center1">
-    <h2 class="app__page-heading">Withdrawal Form</h2>
     <template v-if="tokenCodes.length">
+      <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
       <div class="withdraw__form-wrp">
         <form @submit.prevent="processTransfer"
           id="withdrawal-form"
@@ -98,6 +98,16 @@
           />
         </div>
       </div>
+    </template>
+
+    <template v-else>
+      <h2 class="app__page-heading">{{ i18n.withdraw_no_assets_heading() }}</h2>
+      <p class="withdraw__no-assets-msg">
+        {{ i18n.withdraw_no_assets() }}
+      </p>
+      <router-link to="/tokens" tag="button" class="app__button-raised">
+        {{ i18n.withdraw_discover_tokens_btn() }}
+      </router-link>
     </template>
   </div>
 </template>
@@ -312,4 +322,12 @@ export default {
   width: 100%;
   max-width: 450px;
 }
+
+.withdraw__no-assets-msg {
+  max-width: 450px;
+  color: $col-md-primary-inactive;
+  font-size: 1.6 * $point;
+  margin-bottom: 4 * $point;
+}
+
 </style>
