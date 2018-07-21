@@ -106,7 +106,7 @@
         {{ i18n.withdraw_no_assets() }}
       </p>
       <router-link to="/tokens" tag="button" class="app__button-raised">
-        {{ i18n.withdraw_discover_tokens_btn() }}
+        {{ i18n.withdraw_discover_assets_btn() }}
       </router-link>
     </template>
   </div>

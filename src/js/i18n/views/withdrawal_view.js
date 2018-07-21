@@ -14,7 +14,7 @@ export default {
   withdraw_error_invalid_address: 'Invalid wallet address',
   withdraw_error_insufficient_funds: 'Insufficient funds',
   withdraw_error_minimum_amount: 'The minimum amount is %{value} %{asset}',
-  withdraw_no_assets: 'Your wallet doesn\'t contain any withdrawable tokens yet. You can discover some on the token list.',
+  withdraw_no_assets: 'Your wallet doesn\'t contain any withdrawable assets yet. You can discover some on the token list.',
   withdraw_no_assets_heading: 'Ops!',
-  withdraw_discover_tokens_btn: 'Discover tokens'
+  withdraw_discover_assets_btn: 'Discover assets'
 }
