@@ -2,7 +2,7 @@
   <div class="withdraw md-layout1 md-alignment-center-center1">
     <template v-if="tokenCodes.length">
       <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
-      <div class="withdraw__form-wrp">
+      <div class="app__page-content-wrp">
         <form @submit.prevent="processTransfer"
           id="withdrawal-form"
           v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
@@ -102,7 +102,7 @@
 
     <template v-else>
       <h2 class="app__page-heading">{{ i18n.withdraw_no_assets_heading() }}</h2>
-      <p class="withdraw__no-assets-msg">
+      <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.withdraw_no_assets() }}
       </p>
       <router-link to="/tokens" tag="button" class="app__button-raised">
@@ -316,18 +316,4 @@ export default {
     color: $col-md-primary-secondary;
   }
 }
-
-.withdraw__form-wrp {
-  flex: 1;
-  width: 100%;
-  max-width: 450px;
-}
-
-.withdraw__no-assets-msg {
-  max-width: 450px;
-  color: $col-md-primary-inactive;
-  font-size: 1.6 * $point;
-  margin-bottom: 4 * $point;
-}
-
 </style>

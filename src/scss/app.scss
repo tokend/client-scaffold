@@ -68,6 +68,23 @@ html,body {
     }
   }
 
+  .app__page-content-wrp {
+    flex: 1;
+    width: 100%;
+    max-width: 45 * $point;
+  }
+
+  p.app__page-explanations {
+    max-width: 45 * $point;
+    color: $col-md-primary;
+    font-size: 1.6 * $point;
+    margin-bottom: 4 * $point;
+
+    &--secondary {
+      color: $col-md-primary-inactive;
+    }
+  }
+
   h1.app__page-heading,
   h2.app__page-heading,
   h3.app__page-heading,
