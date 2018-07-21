@@ -6,7 +6,10 @@ export default {
   tr_successful: 'Payment successful',
   tr_no_assets: 'No transferable assets in your wallet',
   tr_no_assets_exp: 'This feature will be available once you have any transferable asset',
-  tr_no_assets_exists: 'No assets exists in the system',
-  tr_no_assets_exists_exp: 'This feature will be available once  any asset appears',
-  tr_balance: 'Your balance is %{balance} %{token}'
+  transfer_balance: 'Balance is %{amount} %{asset}.',
+  transfer_heading: 'Transfer form',
+  transfer_no_assets: 'Your wallet doesn\'t contain any transferable assets yet. You can discover some on the token list.',
+  transfer_no_assets_heading: 'No assets, no transfers',
+  transfer_error_insufficient_funds: 'Insufficient funds',
+  transfer_discover_assets_btn: 'Discover assets'
 }

@@ -1,87 +1,116 @@
 <template>
-  <div class="transfer md-layout md-alignment-center-center" >
+  <div class="transfer app__page-content-wrp">
     <template v-if="!tokenCodes.length">
-      <div class="app__no-data-msg">
-        <md-card class="md-layout-item
-                      md-size-100">
-          <md-card-content>
-            <md-icon class="md-size-4x">send</md-icon>
-            <h2>{{ i18n.tr_no_assets() }}</h2>
-            <p>{{ i18n.tr_no_assets_exp() }}</p>
-          </md-card-content>
-        </md-card>
+      <h2 class="app__page-heading">{{ i18n.transfer_no_assets_heading() }}</h2>
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.transfer_no_assets() }}
+      </p>
+      <router-link to="/tokens" tag="button" class="app__button-raised">
+        {{ i18n.transfer_discover_assets_btn() }}
+      </router-link>
+    </template>
+
+    <!-- TODO: remove template -->
+    <template v-else-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+      <h2 class="app__page-heading">{{ i18n.transfer_heading() }}</h2>
+      <form @submit.prevent="processTransfer"
+        id="transfer-form"
+        v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+        <div class="app__form-row">
+          <div class="app__form-field">
+            <select-field-unchained :values="tokenCodes"
+              v-model="form.tokenCode"
+              :label="i18n.lbl_asset()"
+              :readonly="view.mode === VIEW_MODES.confirm"/>
+              <div class="app__form-field-description">
+                <p v-if="form.tokenCode">
+                  {{ i18n.transfer_balance({ amount: balance.balance, asset: form.tokenCode }) }}
+                </p>
+              </div>
+          </div>
+        </div>
+
+        <div class="app__form-row">
+          <div class="app__form-field">
+            <input-field-unchained name="amount"
+              step="0.000001"
+              type="number"
+              v-model.trim="form.amount"
+              v-validate="'required|amount'"
+              :label="i18n.lbl_amount()"
+              :readonly="view.mode === VIEW_MODES.confirm"
+              :errorMessage="errors.first('amount') ||
+                (isLimitExceeded ? i18n.transfer_error_insufficient_funds() : '')"
+            />
+            <!-- TODO: fees -->
+
+            <div class="withdraw__fees-container app__form-field-description" :class="{ loading: isFeesLoadPending }">
+              <p>
+                - {{ i18n.withdraw_network_fee_prefix() }}
+                <hint-wrapper :hint="i18n.withdraw_network_fee_hint()">
+                  <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
+                </hint-wrapper>
+              </p>
+
+              <!-- <p v-if="fixedFee">
+                - {{ fixedFee }} {{ form.tokenCode }}
+                <span class="fee__fee-type">{{ i18n.withdraw_fixed_fee() }}</span>
+              </p>
+
+              <p v-if="percentFee">
+                - {{ percentFee }} {{ form.tokenCode }}
+                <span class="fee__fee-type">{{ i18n.withdraw_percent_fee() }}</span>
+              </p> -->
+            </div>
+
+          </div>
+
+
+        </div>
+
+        <div class="app__form-row">
+          <input-field-unchained name="recipient"
+            v-model.trim="form.recipient"
+            v-validate="'required|email_or_account_id'"
+            :label="i18n.lbl_recipient_email_or_account()"
+            :errorMessage="errorMessage('recipient')"
+            :readonly="view.mode === VIEW_MODES.confirm"
+          />
+        </div>
+
+        <div class="app__form-row">
+          <textarea-field id="transfer-description"
+            name="description"
+            v-model="form.subject"
+            v-validate="'max:250'"
+            :label="i18n.lbl_add_note()"
+            :maxlength="250"
+            :errorMessage="errorMessage('recipient')"
+            :readonly="view.mode === VIEW_MODES.confirm"
+          />
+        </div>
+      </form>
+
+      <div class="app__form-actions">
+        <button v-ripple
+          v-if="view.mode === VIEW_MODES.submit"
+          type="submit"
+          class="app__form-submit-btn"
+          :disabled="isPending"
+          form="transfer-form">
+          {{ i18n.lbl_send() }}
+        </button>
+
+        <form-confirmation
+          v-if="view.mode === VIEW_MODES.confirm"
+          :pending="isPending"
+          @cancel="updateView(VIEW_MODES.submit)"
+          @ok="submit"
+        />
       </div>
     </template>
 
-    <template v-else-if="view.mode === VIEW_MODES.submit">
-      <form novalidate @submit.prevent="processTransfer"
-            class="md-layout-item
-                   md-size-50
-                   md-medium-size-65
-                   md-small-size-95
-                   md-xsmall-size-100"
-      >
-        <md-card>
-          <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-
-          <md-card-header class="transfer__header">
-            <div class="transfer__user-balance">
-              {{ i18n.tr_balance({ balance: balance.balance, token: form.tokenCode }) }}
-            </div>
-          </md-card-header>
-
-          <md-card-content>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <select-field-custom :values="tokenCodes"
-                                     v-model="form.tokenCode"
-                                     id="transfer-token"
-                                     name="token"
-                                     :label="i18n.lbl_asset()"/>
-              </div>
-
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="transfer-amount"
-                             name="amount"
-                             type="number"
-                             v-model="form.amount"
-                             v-validate="'required|amount'"
-                             :label="i18n.lbl_amount()"
-                             :errorMessage="errorMessage('amount')"
-                />
-              </div>
-            </div>
-
-            <input-field id="transfer-recipient"
-                         name="recipient"
-                         v-model="form.recipient"
-                         v-validate="'required|email_or_account_id'"
-                         :label="i18n.lbl_recipient_email_or_account()"
-                         :errorMessage="errorMessage('recipient')"
-            />
-
-            <textarea-field id="transfer-description"
-                            name="description"
-                            v-model="form.subject"
-                            v-validate="'max:250'"
-                            :label="i18n.lbl_add_note()"
-                            :maxlength="250"
-                            :errorMessage="errorMessage('recipient')"
-            />
-          </md-card-content>
-          <md-dialog-actions class="transfer-dialog__actions">
-            <button v-ripple
-                    type="submit"
-                    class="app__button-flat"
-                    :disabled="isPending">
-              {{ i18n.lbl_send() }}
-            </button>
-          </md-dialog-actions>
-        </md-card>
-      </form>
-    </template>
-
-    <template v-else-if="view.mode === VIEW_MODES.confirm">
+    <template v-else-if="false">
       <confirm-transfer :opts="view.opts"
                          class="md-layout-item
                               md-size-50
@@ -126,9 +155,13 @@
 </template>
 
 <script>
+  import get from 'lodash/get'
+
   import FormMixin from '../../../common/mixins/form.mixin'
   import ConfirmTransfer from './Transfers.Confirm'
-  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+  import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+  import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+  import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
 
   import { ErrorHandler } from '../../../../js/errors/error_handler'
   import { mapGetters, mapActions } from 'vuex'
@@ -152,7 +185,9 @@
     mixins: [FormMixin],
     components: {
       ConfirmTransfer,
-      SelectFieldCustom
+      SelectFieldUnchained,
+      InputFieldUnchained,
+      FormConfirmation
     },
     data: _ => ({
       form: {
@@ -165,6 +200,7 @@
         mode: VIEW_MODES.submit,
         opts: {}
       },
+      isFeesLoadPending: false,
       i18n,
       VIEW_MODES
     }),
@@ -182,6 +218,9 @@
       },
       balance () {
         return this.accountBalances[this.form.tokenCode]
+      },
+      isLimitExceeded () {
+        return Number(this.form.amount) > Number(get(this.balance, 'balance') || 0)
       }
     },
     methods: {
