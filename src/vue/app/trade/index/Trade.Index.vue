@@ -1,6 +1,6 @@
 <template>
   <div class="trade">
-    <div class="trade-row">
+    <div class="trade-row app__card-wrapper app__card-wrapper--xmedium-breakpoint">
       <chart class="trade__chart"
         :data="history"
         :pairs="formattedPairs"
@@ -13,7 +13,7 @@
     </div>
 
     <div class="md-layout">
-      <orders :assets="filters" class="md-layout-item md-size-100"/>
+      <orders class="md-layout-item md-size-100"/>
     </div>
 
     <div class="md-layout">
@@ -154,19 +154,8 @@
   .trade-row {
     display: flex;
     margin-bottom: 1.5rem;
-    .trade__history,
-    .trade__chart {
-      width: 50%;
-    }
-    @include respond-to-custom($large-breakpoint) {
-      flex-direction: column;
-
-      .trade__history,
-      .trade__chart {
-        width: 100%;
-      }
-    }
   }
+
   .trade__chart {
     @include respond-to-custom($large-breakpoint) {
       margin-bottom: 1.5rem;

@@ -1,17 +1,17 @@
 <template>
   <div>
-    <md-card class="orders">
-      <md-card-header class="orders__title">
+    <div class="app__card orders">
+      <div class="app__card-header orders__title">
         <div class="md-title">{{ i18n.trd_orders() }}</div>
-      </md-card-header>
+      </div>
 
-      <md-card-content class="orders__list-container">
+      <div class="app__card-content orders__list-container">
         <div class="orders__list-wrp">
           <order-list class="orders__list" :type="ORDER_TYPES.buy" :list="formattedBuyOffers"/>
           <order-list class="orders__list" :type="ORDER_TYPES.sell" :list="formattedSellOffers"/>
         </div>
-      </md-card-content>
-    </md-card>
+      </div>
+    </div>
   </div>
 </template>
 

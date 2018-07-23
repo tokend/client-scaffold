@@ -7,10 +7,10 @@
                   md-small-size-95
                   md-xsmall-size-100"
     >
-      <md-card>
+      <div class="app__card">
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-        <md-card-content>
-          <div class="md-card-content-item">
+        <div class="app__card-content">
+          <div class="kyc-form__content-item">
             <div class="md-layout-item">
               <file-field fileType="image"
                           v-model="documents[documentTypes.tokenIcon]"
@@ -21,7 +21,7 @@
                           :type="documentTypes.tokenIcon"/>
             </div>
           </div>
-          <div class="md-card-content-item">
+          <div class="kyc-form__content-item">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <input-field id="token-name"
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-          <div class="md-card-content-item">
+          <div class="kyc-form__content-item">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-size-50">
                 <md-checkbox v-model="request.policies"
@@ -77,7 +77,7 @@
               </div>
             </div>
           </div>
-          <div class="md-card-content-item">
+          <div class="kyc-form__content-item">
             <div class="md-layout-item">
               <file-field class="token_terms__file-field"
                           name="token terms document"
@@ -88,7 +88,7 @@
               />
             </div>
           </div>
-          <div class="md-card-content-item">
+          <div class="kyc-form__content-item">
             <md-radio class="md-primary"
                       v-model="makeAdditional"
                       :value="false">I don't want to make additional issuance later</md-radio>
@@ -98,7 +98,7 @@
               <!--(<a @click.stop.prevent="showDialog = true">tell me more</a>)-->
             </md-radio>
           </div>
-          <div class="md-card-content-item" v-if="makeAdditional">
+          <div class="kyc-form__content-item" v-if="makeAdditional">
             <div class="md-layout md-gutter">
               <div class="md-layout-item">
                 <input-field id="token-preissued-asset-signer"
@@ -123,23 +123,23 @@
               </div>
             </div>
           </div>
-        </md-card-content>
-        <md-card-actions>
+        </div>
+        <div class="app__card-actions">
           <button v-ripple
                   type="submit"
                   class="app__button-flat"
                   :disabled="isPending">
             {{ i18n.lbl_submit() }}
           </button>
-        </md-card-actions>
-      </md-card>
+        </div>
+      </div>
     </form>
 
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Tell you something more</md-dialog-title>
-      <md-card-content>
+      <div class="app__card-content">
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-      </md-card-content>
+      </div>
       <md-dialog-actions>
         <button v-ripple @click="showDialog = false" class="app__button-flat">
           {{ i18n.lbl_close() }}
@@ -253,7 +253,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .md-card-content-item:not(:last-child) {
+  .kyc-form__content-item:not(:last-child) {
     margin-bottom: 24px;
   }
 </style>

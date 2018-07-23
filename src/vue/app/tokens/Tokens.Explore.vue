@@ -2,18 +2,18 @@
   <div class="explore-tokens md-layout md-alignment-center-center md-layout-item md-size-80">
     <template v-if="!tokens.length">
       <div class="app__no-data-msg">
-        <md-card class="md-layout-item
+        <div class="app__card md-layout-item
                       md-size-100">
-          <md-card-content>
+          <div class="app__card-content">
             <md-icon class="md-size-4x">toll</md-icon>
             <h2>{{ i18n.tr_no_assets() }}</h2>
             <p>{{ i18n.tr_no_assets_exp() }}</p>
-          </md-card-content>
-        </md-card>
+          </div>
+        </div>
       </div>
     </template>
 
-    <md-card class="explore-tokens__card" v-else>
+    <div class="app__card explore-tokens__card" v-else>
       <div class="explore-tokens__inner">
         <div class="explore-tokens__list-wrp">
           <div class="explore-tokens__list">
@@ -53,8 +53,8 @@
         </div>
 
         <template v-if="selected">
-          <md-card class="explore-tokens__token-ctn">
-            <md-card-content class="explore-tokens__token-details">
+          <div class="app__card explore-tokens__token-ctn">
+            <div class="app__card-content explore-tokens__token-details">
               <md-list class="md-triple-line">
                 <md-list-item>
                   <md-avatar class="md-avatar-icon"
@@ -92,8 +92,8 @@
                         : ''"
                 />
               </div>
-            </md-card-content>
-            <md-card-actions class="explore-tokens__token-actions">
+            </div>
+            <div class="app__card-actions explore-tokens__token-actions">
               <button v-ripple
                       @click="createBalance"
                       v-if="!hasBalance(selected)"
@@ -108,12 +108,12 @@
                       :disabled="isPending">
                 {{ i18n.lbl_view_history() }}
               </button>
-            </md-card-actions>
-          </md-card>
+            </div>
+          </div>
         </template>
       </div>
 
-    </md-card>
+    </div>
   </div>
 </template>
 

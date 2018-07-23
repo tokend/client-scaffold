@@ -1,18 +1,16 @@
 <template>
-  <div>
+  <div class="app__card">
     <template v-if="!assets">
       <div class="app__no-data-msg">
-        <md-card class="md-layout-item">
-          <md-card-content>
-            <md-icon class="md-size-4x">send</md-icon>
-            <h2>{{ i18n.trd_no_pairs() }}</h2>
-            <p>{{ i18n.trd_no_pairs_exp() }}</p>
-          </md-card-content>
-        </md-card>
+        <div class="app__card-content">
+          <md-icon class="md-size-4x">send</md-icon>
+          <h2>{{ i18n.trd_no_pairs() }}</h2>
+          <p>{{ i18n.trd_no_pairs_exp() }}</p>
+        </div>
       </div>
     </template>
 
-    <md-card v-else>
+    <div v-else>
       <div class="chart-container__header">
         <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
         <div class="chart-container__user-balance">
@@ -20,7 +18,7 @@
         </div>
       </div>
 
-      <md-card-content>
+      <div class="app__card-content">
         <div class="chart-container">
 
           <div class="md-layout md-alignment-center-space-between chart-container__labels">
@@ -41,8 +39,8 @@
           <div class="chart-container__loader" v-else>Loading...</div>
 
         </div>
-      </md-card-content>
-    </md-card>
+      </div>
+    </div>
   </div>
 
 </template>

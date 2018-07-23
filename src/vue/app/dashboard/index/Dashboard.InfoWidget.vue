@@ -6,7 +6,7 @@
         <div class="info-widget__list" v-table-scroll-shadow>
           <div class="info-widget__list-header">
             <div class="info-widget__list-header-item info-widget__list-header-item--date">{{ i18n.lbl_date() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--type">{{ i18n.lbl_tx_type() }} Type</div>
+            <div class="info-widget__list-header-item info-widget__list-header-item--type">{{ i18n.lbl_tx_type() }}</div>
             <div class="info-widget__list-header-item info-widget__list-header-item--asset">{{ i18n.lbl_asset() }}</div>
             <div class="info-widget__list-header-item info-widget__list-header-item--amount">{{ i18n.lbl_amount() }}</div>
             <div class="info-widget__list-header-item info-widget__list-header-item--counterparty">{{ i18n.lbl_counterparty() }}</div>
@@ -19,10 +19,9 @@
                 v-if="i < transactionsToShow"
                 :key="`activity-item-${i}`"
                 :class="`info-widget__list-body-elem--${tx.state}`">
-              <div class="info-widget__list-body-row"
-                   @click="makeDialogIsShow(tx)">
+              <div class="info-widget__list-body-row">
                 <div :title="tx.date" class="info-widget__list-body-item info-widget__list-body-item--date">
-                  {{ tx.date }}
+                  {{ i18n.dmy(tx.date) }}
                 </div>
                 <div :title="tx.name" class="info-widget__list-body-item info-widget__list-body-item--type">
                   {{ tx.name }}
@@ -71,6 +70,7 @@
   import { i18n } from '../../../../js/i18n'
   import { TX_STATES } from '../../../../js/const/const'
   import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+  import { humanizePastDate } from '../../../../js/utils/dates.util'
 
   import get from 'lodash/get'
 
@@ -112,6 +112,7 @@
       }
     },
     methods: {
+      humanizePastDate,
       ...mapActions({
         loadList: vuexTypes.GET_TX_LIST
       }),
@@ -121,6 +122,7 @@
       makeDialogIsShow (list) {
         this.showDialog = true
         this.dialogValues = list
+        this.dialogValues.date = humanizePastDate(list.date)
       },
       closeDialog (status) {
         this.showDialog = status
@@ -162,6 +164,12 @@
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
+  }
+
+  .info-widget__list-header {
+    @include respond-to(medium) {
+      min-width: 670px;
+    }
   }
 
   .info-widget__list-wrapper {
@@ -217,7 +225,10 @@
     @include box-shadow();
 
     background-color: #fff;
-    min-width: 970px;
+
+    @include respond-to(medium) {
+      min-width: 670px;
+    }
 
     &:not(:last-child) {
       margin-bottom: 6px;
@@ -264,6 +275,10 @@
     width: 70px;
     flex: none;
     padding: 0;
+
+    @include respond-to(medium) {
+      width: 47px;
+  }
   }
 
   .info-widget__list-body-item-btn {
@@ -288,38 +303,61 @@
 
   .info-widget__list-header-item--date,
   .info-widget__list-body-item--date {
-    width: 15%;
-    min-width: 160px;
+    width: 20%;
+
+    @include respond-to(medium) {
+      width: 16%;
+      min-width: 114px;
+  }
   }
 
   .info-widget__list-body-item--type,
   .info-widget__list-header-item--type {
-    width: 15%;
-    min-width: 150px;
+    width: 30%;
+
+    @include respond-to(medium) {
+      width: 25%;
+      min-width: 166px;
+    }
   }
 
   .info-widget__list-body-item--asset,
   .info-widget__list-header-item--asset {
     width: 12%;
-    min-width: 100px;
+
+    @include respond-to(medium) {
+      display: none;
+    }
   }
 
   .info-widget__list-body-item--amount,
   .info-widget__list-header-item--amount {
-    width: 18%;
-    min-width: 120px;
+    width: 20%;
+
+    @include respond-to(medium) {
+      width: 11%;
+      min-width: 107px;
+    }
   }
 
   .info-widget__list-body-item--counterparty,
   .info-widget__list-header-item--counterparty {
-    width: 24%;
-    min-width: 250px;
+    width: 25%;
+
+    @include respond-to(medium) {
+      width: 18%;
+      min-width: 118px;
+    }
   }
 
   .info-widget__list-body-item--status,
   .info-widget__list-header-item--status {
-    width: 12%;
-    min-width: 120px;
+    width: 15%;
+
+    @include respond-to(medium) {
+      width: 15%;
+      min-width: 97px;
+    }
   }
 
   .info-widget__list-body-row-detail {

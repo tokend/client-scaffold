@@ -1,10 +1,10 @@
 <template>
   <div class="chart-container">
-    <md-card-header class="chart-container__header">
+    <div class="chart-container__header app__card-header">
       <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
-    </md-card-header>
+    </div>
 
-    <md-card-content>
+    <div class="app__card-content">
       <div class="chart-container__main">
 
         <div class="md-layout md-alignment-center-space-between chart-container__labels">
@@ -19,7 +19,7 @@
         <div class="chart-container__loader" v-else>Loading...</div>
 
       </div>
-    </md-card-content>
+    </div>
   </div>
 
 </template>

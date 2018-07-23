@@ -7,16 +7,14 @@
                   md-small-size-95
                   md-xsmall-size-100"
     >
-      <md-card>
+      <div class="app__card">
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-        <md-card-header>
+        <div class="app__card-header">
           <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
-        </md-card-header>
+        </div>
 
-        <md-card-content>
-
-
+        <div class="app__card-content">
           <template v-for="row in schema.rows">
 
             <template v-if="row.heading">
@@ -89,16 +87,16 @@
                           :id="doc.id"
               />
           </template>
-        </md-card-content>
-        <md-card-actions>
+        </div>
+        <div class="app__card-actions">
            <button v-ripple
                   type="submit"
                   class="app__button-flat"
                   :disabled="isPending || accountState === ACCOUNT_STATES.pending">
             {{ i18n.lbl_submit() }}
           </button>
-        </md-card-actions>
-      </md-card>
+        </div>
+      </div>
     </form>
 
     <md-dialog :md-active.sync="isDialogOpened">

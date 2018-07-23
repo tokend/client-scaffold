@@ -1,12 +1,12 @@
 <template>
   <div class="manage-orders">
-    <md-card>
-      <md-card-header>
+    <div class="app__card">
+      <div class="app__card-header">
         <h2 class="md-title">{{ i18n.trd_manage({ pair: `${assets.base}/${assets.quote}` }) }}</h2>
-      </md-card-header>
-      <md-card-content>
+      </div>
+      <div class="app__card-content">
         <template v-if="offers.length">
-          <md-table md-card class="manage-orders__table md-elevation-0">
+          <md-table class="app__card app__card--shadow-none manage-orders__table">
             <md-table-row class="manage-orders__row">
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
               <md-table-head>{{ i18n.trd_manahe_marken() }}</md-table-head>
@@ -50,8 +50,8 @@
             <p>{{ i18n.trd_here_will_be_the_order_list() }}</p>
           </div>
         </template>
-      </md-card-content>
-    </md-card>
+      </div>
+    </div>
   </div>
 </template>
 

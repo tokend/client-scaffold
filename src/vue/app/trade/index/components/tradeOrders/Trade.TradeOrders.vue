@@ -1,11 +1,7 @@
 <template>
-  <div>
-    <md-card>
-      <md-card-content class="md-layout trade-orders__list">
-        <buy-order :assets="assets" class="md-layout-item"/>
-        <sell-order :assets="assets" class="md-layout-item"/>
-      </md-card-content>
-    </md-card>
+  <div class="app__card-wrapper">
+    <buy-order :assets="assets" class="md-layout-item"/>
+    <sell-order :assets="assets" class="md-layout-item"/>
   </div>
 </template>
 
@@ -18,23 +14,6 @@
     components: { BuyOrder, SellOrder },
     props: {
       assets: { type: Object, require: true }
-    },
-    data () {
-      return {
-
-      }
-    },
-    created () {
-
-    },
-    computed: {
-
-    },
-    methods: {
-
-    },
-    watch: {
-
     }
   }
 </script>
@@ -45,6 +24,7 @@
 
   .trade-orders__list {
     padding: 0 !important;
+
     @include respond-to (small) {
       flex-direction: column;
     }

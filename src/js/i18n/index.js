@@ -28,8 +28,7 @@ import auth from './views/auth_view'
 import formConfirmation from './views/form_confirmation_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
-import { humanizePastDate } from '../utils/dates.util'
-
+import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
 import Polyglot from 'node-polyglot'
 
 const polyglot = new Polyglot()
@@ -76,5 +75,6 @@ export const i18n = {
   n: formatNumber(),
   c: formatCurrency(),
   cc: formatConvertedCurrency(),
-  d: humanizePastDate
+  d: humanizePastDate,
+  dmy: getDateByDMY
 }

@@ -4,6 +4,7 @@
 $xsmall: 480px;
 $small: 600px;
 $medium: 1024px;
+$xmedium: 1200px;
 $large: 1440px;
 $xlarge: 1920px;
 
@@ -108,7 +109,11 @@ $xlarge: 1920px;
       @content;
     }
   } @else if $media == medium {
-    @media only screen and (max-width: $medium - 1px) {
+    @media only screen and (max-width: $medium) {
+      @content;
+    }
+  } @else if $media == xmedium {
+    @media only screen and (max-width: $xmedium - 1px) {
       @content;
     }
   } @else if $media == large {

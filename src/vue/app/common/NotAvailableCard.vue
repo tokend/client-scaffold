@@ -1,13 +1,13 @@
 <template>
-  <md-card>
-    <md-card-content>
+  <div class="app__card">
+    <div class="app__card-content">
       <div class="app__no-data-msg">
         <md-icon class="md-size-4x">{{ icon }}</md-icon>
         <h2>{{ title }}</h2>
         <p>{{ descr }}</p>
       </div>
-    </md-card-content>
-  </md-card>
+    </div>
+  </div>
 </template>
 
 <script>
