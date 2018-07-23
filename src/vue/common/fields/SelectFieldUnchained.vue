@@ -60,13 +60,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// @import '../../../scss/variables';
 @import "./scss/fields-variables";
 
 .select-field {
   width: 100%;
   flex: 1;
   position: relative;
+  margin: 8px 0;
 }
 
 .select-field__selected {

@@ -3,6 +3,8 @@ import SelectField from '../fields/SelectField.vue'
 import TextareaField from '../fields/TextareaField'
 import DateField from '../fields/DateField'
 import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
 
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
@@ -23,6 +25,8 @@ export default {
     InputField,
     SelectField,
     SelectFieldCustom,
+    InputFieldUnchained,
+    SelectFieldUnchained,
     TextareaField,
     DateField,
     ImageInput

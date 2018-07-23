@@ -1,66 +1,55 @@
 <template>
-  <div class="kyc-form md-layout md-alignment-center-center">
+  <div class="kyc-form">
     <form novalidate @submit.prevent="submit"
-          class="md-layout-item
-                  md-size-100
-                  md-medium-size-65
-                  md-small-size-95
-                  md-xsmall-size-100"
-    >
-      <div class="app__card">
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+          class="app__page-content-wrp">
+      <h2 class="app__page-heading">{{ i18n.kyc_account_verification() }}</h2>
+      <template v-for="(row, r) in schema.rows">
+        <template v-if="row.heading">
+          <h4 :key="`verification-individual-heading-${r}`">{{ row.heading }}</h4>
+        </template>
 
-        <div class="card__header">
-          <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
-        </div>
-
-        <div class="card__content">
-          <template v-for="row in schema.rows">
-            <template v-if="row.heading">
-              <h4>{{ row.heading }}</h4>
-            </template>
-
-            <template v-if="row instanceof Array">
-              <div class="md-layout md-gutter">
-                <template v-for="item in row">
-                  <div class="md-layout-item md-small-size-100">
-                    <input-field v-if="item.field === 'text'"
-                                  v-model="form[item.model]"
-                                  v-validate="item.validate"
-                                  :name="item.name"
-                                  :id="item.id"
-                                  :required="item.required"
-                                  :label="item.label"
-                                  :errorMessage="errorMessage(item.name)"
-                                  :disabled="accountState === ACCOUNT_STATES.pending"
-                    />
-                    <date-field v-if="item.field === 'date'"
-                                v-model="form[item.model]"
-                                v-validate="item.validate"
-                                :name="item.name"
-                                :id="item.id"
-                                :required="item.required"
-                                :disableBefore="item.disableBefore"
-                                :disableAfter="item.disableAfter"
-                                :label="item.label"
-                                :errorMessage="errorMessage(item.name)"
-                                :disabled="accountState === ACCOUNT_STATES.pending"
-                    />
-                  </div>
-                </template>
+        <template v-if="row">
+          <div class="md-layout md-gutter"
+              :key="`verification-individual-layout-${r}`">
+            <template v-for="(item, i) in row">
+              <div class="md-layout-item md-small-size-100"
+                  :key="`verification-individual-heading-${r}-item-${i}`">
+                <input-field-unchained
+                  v-if="item.field === 'text'"
+                  v-model="form[item.model]"
+                  v-validate="item.validate"
+                  :name="item.name"
+                  :id="item.id"
+                  :required="item.required"
+                  :label="item.label"
+                  :errorMessage="errorMessage(item.name)"
+                  :disabled="accountState === ACCOUNT_STATES.pending"
+                />
+                <date-field v-if="item.field === 'date'"
+                            v-model="form[item.model]"
+                            v-validate="item.validate"
+                            :name="item.name"
+                            :id="item.id"
+                            :required="item.required"
+                            :disableBefore="item.disableBefore"
+                            :disableAfter="item.disableAfter"
+                            :label="item.label"
+                            :errorMessage="errorMessage(item.name)"
+                            :disabled="accountState === ACCOUNT_STATES.pending"
+                />
               </div>
             </template>
+          </div>
+        </template>
 
-          </template>
-        </div>
-        <div class="card__actions">
-          <button v-ripple
-                  type="submit"
-                  class="app__button-flat"
-                  :disabled="isPending || accountState === ACCOUNT_STATES.pending">
-            {{ i18n.lbl_submit() }}
-          </button>
-        </div>
+      </template>
+      <div class="app__form-actions">
+        <button v-ripple
+                type="submit"
+                class="app__button-flat"
+                :disabled="isPending || accountState === ACCOUNT_STATES.pending">
+          {{ i18n.lbl_submit() }}
+        </button>
       </div>
     </form>
   </div>
