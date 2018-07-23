@@ -354,7 +354,7 @@ export default {
   margin-bottom: 1 * $point;
   font-weight: normal;
   display: block;
-  font-size: 1.8 * $point;
+  font-size: 1.6 * $point;
   color: $col-md-primary;
 }
 
@@ -373,7 +373,7 @@ export default {
   color: $col-md-primary-inactive;
   font-size: 1.6 * $point;
   line-height: 1.5;
-  margin: 1.5 * $point 0;
+  margin: 1 * $point 0;
 }
 
 .transfer__fee-type {

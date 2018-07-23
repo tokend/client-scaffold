@@ -165,7 +165,7 @@ export default {
   caret-color: $field-color-focused;
   color: $field-color-text;
   padding: $field-input-padding;
-  @include material-border($field-color-focused);
+  @include material-border($field-color-focused, $field-color-unfocused);
   @include text-font-sizes;
 }
 
@@ -275,7 +275,7 @@ export default {
 // mismatched "step" attribute
 //.input-field__input:not(:placeholder-shown):invalid,
 .input-field--error > .input-field__input {
-  @include material-border($field-color-error);
+  @include material-border($field-color-error, $field-color-error);
 }
 
 // TODO: fix issue when decimal number entered in the input that have
@@ -287,7 +287,11 @@ export default {
 }
 
 .input-field--readonly > .input-field__input {
-  @include readonly-material-border($field-color-focused);
+  @include readonly-material-border($field-color-unfocused);
+}
+
+.input-field--readonly > .input-field__input:focus ~ .input-field__label {
+  color: $field-color-unfocused;
 }
 
 .input-field__err-transition-enter-active {

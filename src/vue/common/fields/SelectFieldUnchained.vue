@@ -79,7 +79,7 @@ export default {
   caret-color: $field-color-focused;
   color: $field-color-text;
   padding: $field-input-padding;
-  @include material-border($field-color-focused);
+  @include material-border($field-color-focused, $field-color-unfocused);
   @include text-font-sizes;
 }
 

@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@scss/variables.scss";
 @import "./scss/fields-variables.scss";
 
 .textarea-field {
@@ -46,7 +45,11 @@ export default {
 .textarea-field:after,
 .textarea-field.md-field.md-theme-default.md-has-textarea:not(.md-autogrow):before {
   // TODO: kill yourselves, vue-material
-  border-color: $col-md-primary !important;
+  border-color: $field-color-unfocused !important;
+}
+
+.textarea-field.md-field.md-theme-default.md-has-textarea:not(.md-autogrow):before {
+  border-color: $field-color-focused !important;
 }
 
 .textarea-field--readonly.textarea-field:after {
@@ -70,7 +73,7 @@ export default {
 
 .textarea-field__textarea {
   @include text-font-sizes;
-  color: $col-md-primary !important;
-  -webkit-text-fill-color: $col-md-primary !important;
+  color: $field-color-text !important;
+  -webkit-text-fill-color: $field-color-text !important;
 }
 </style>
