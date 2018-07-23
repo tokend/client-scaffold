@@ -16,6 +16,7 @@ $field-input-padding-top: 1.7 * $point;
 $field-input-padding-bottom: .6 * $point;
 $field-input-padding: $field-input-padding-top 0 $field-input-padding-bottom 0;
 $field-placeholer-color: $field-color-unfocused;
+$textarea-background-color: #fafafa;
 
 @mixin input-paddings {
   font-size: $field-text-font-size;

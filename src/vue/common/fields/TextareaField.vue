@@ -38,6 +38,11 @@ export default {
 @import "~@scss/variables.scss";
 @import "./scss/fields-variables.scss";
 
+.textarea-field {
+  margin: 0 !important;
+  background-color: $textarea-background-color !important;
+}
+
 .textarea-field:after,
 .textarea-field.md-field.md-theme-default.md-has-textarea:not(.md-autogrow):before {
   // TODO: kill yourselves, vue-material
