@@ -10,7 +10,6 @@
       </router-link>
     </template>
 
-    <!-- TODO: remove template -->
     <template v-else-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
       <h2 class="app__page-heading">{{ i18n.transfer_heading() }}</h2>
       <form @submit.prevent="processTransfer"
@@ -42,30 +41,7 @@
               :errorMessage="errors.first('amount') ||
                 (isLimitExceeded ? i18n.transfer_error_insufficient_funds() : '')"
             />
-            <!-- TODO: fees -->
-
-            <div class="withdraw__fees-container app__form-field-description" :class="{ loading: isFeesLoadPending }">
-              <p>
-                - {{ i18n.withdraw_network_fee_prefix() }}
-                <hint-wrapper :hint="i18n.withdraw_network_fee_hint()">
-                  <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
-                </hint-wrapper>
-              </p>
-
-              <!-- <p v-if="fixedFee">
-                - {{ fixedFee }} {{ form.tokenCode }}
-                <span class="fee__fee-type">{{ i18n.withdraw_fixed_fee() }}</span>
-              </p>
-
-              <p v-if="percentFee">
-                - {{ percentFee }} {{ form.tokenCode }}
-                <span class="fee__fee-type">{{ i18n.withdraw_percent_fee() }}</span>
-              </p> -->
-            </div>
-
           </div>
-
-
         </div>
 
         <div class="app__form-row">
@@ -91,6 +67,70 @@
         </div>
       </form>
 
+      <transition name="app__fade-in">
+        <div class="transfer__fee-box" v-if="isFeesLoaded">
+          <h3 class="transfer__fee-box-heading">
+            {{ i18n.transfer_source_fees() }}
+          </h3>
+
+          <template v-if="+fees.source.fixed || +fees.source.percent || form.isPaidForRecipient">
+            <p class="transfer__fee" v-if="fees.source.fixed">
+              - {{ fees.source.fixed }} {{ fees.source.feeAsset }}
+              <span class="transfer__fee-type">{{ i18n.transfer_source_fixed_fee() }}</span>
+            </p>
+
+            <p class="transfer__fee" v-if="fees.source.percent">
+              - {{ fees.source.percent }} {{ fees.source.feeAsset }}
+              <span class="transfer__fee-type">{{ i18n.transfer_source_percent_fee() }}</span>
+            </p>
+
+            <p class="transfer__fee" v-if="form.isPaidForRecipient && +fees.destination.fixed">
+              - {{ fees.destination.fixed }} {{ fees.destination.feeAsset }}
+              <span class="transfer__fee-type">{{ i18n.transfer_destination_fixed_fee() }}</span>
+            </p>
+
+            <p class="transfer__fee" v-if="form.isPaidForRecipient && +fees.destination.percent">
+              - {{ fees.destination.percent }} {{ fees.destination.feeAsset }}
+              <span class="transfer__fee-type">{{ i18n.transfer_destination_percent_fee() }}</span>
+            </p>
+          </template>
+
+          <template v-else>
+            <p class="transfer__no-fee-msg">
+              {{ i18n.transfer_source_no_fees() }}
+            </p>
+          </template>
+
+          <h3 class="transfer__fee-box-heading">
+            {{ i18n.transfer_destination_fees() }}
+          </h3>
+
+          <template v-if="(+fees.destination.fixed || +fees.destination.percent) && !form.isPaidForRecipient">
+            <p class="transfer__fee" v-if="fees.destination.fixed">
+              - {{ fees.destination.fixed }} {{ fees.destination.feeAsset }}
+              <span class="transfer__fee-type">{{ i18n.transfer_destination_fixed_fee() }}</span>
+            </p>
+
+            <p class="transfer__fee" v-if="fees.destination.percent">
+              - {{ fees.destination.percent }} {{ fees.destination.feeAsset }}
+              <span class="transfer__fee-type">{{ i18n.transfer_destination_percent_fee() }}</span>
+            </p>
+          </template>
+
+          <template v-else>
+            <p class="transfer__no-fee-msg">
+              {{ i18n.transfer_destination_no_fees() }}
+            </p>
+          </template>
+
+          <div class="app__form-row" v-if="+fees.destination.fixed || +fees.destination.percent">
+            <tick-field v-model="form.isPaidForRecipient">
+              {{ i18n.transfer_pay_fees_for_recipient() }}
+            </tick-field>
+          </div>
+        </div>
+      </transition>
+
       <div class="app__form-actions">
         <button v-ripple
           v-if="view.mode === VIEW_MODES.submit"
@@ -98,252 +138,245 @@
           class="app__form-submit-btn"
           :disabled="isPending"
           form="transfer-form">
-          {{ i18n.lbl_send() }}
+          {{ i18n.transfer_check_fees_btn() }}
         </button>
 
         <form-confirmation
           v-if="view.mode === VIEW_MODES.confirm"
           :pending="isPending"
+          :message="i18n.transfer_recheck_form()"
+          :ok-button="i18n.transfer_submit()"
           @cancel="updateView(VIEW_MODES.submit)"
-          @ok="submit"
+          @ok="submit(form.isPaidForRecipient)"
         />
       </div>
     </template>
-
-    <template v-else-if="false">
-      <confirm-transfer :opts="view.opts"
-                         class="md-layout-item
-                              md-size-50
-                              md-medium-size-45
-                              md-small-size-100
-                              md-xsmall-size-100"
-                         :isPending="isPending"
-                         @cancel-click="updateView(VIEW_MODES.submit)"
-                         @confirm-click="submit"
-      />
-    </template>
-
-    <template v-if="view.mode === VIEW_MODES.success">
-      <md-card class="transfer__success-msg
-                      md-layout-item
-                      md-size-50
-                      md-medium-size-45
-                      md-small-size-100
-                      md-xsmall-size-100">
-        <md-card-header>
-          <div class="md-title">{{ i18n.tr_successful() }}</div>
-        </md-card-header>
-        <md-card-content>
-          <div>
-            <div class="transfer__success-amount">
-              {{ form.amount }} {{ form.tokenCode }}
-            </div>
-          </div>
-        </md-card-content>
-        <md-dialog-actions class="transfer-dialog__actions">
-          <button v-ripple
-                  @click="updateView(VIEW_MODES.submit, {}, true)"
-                  class="app__button-flat">
-            {{ i18n.lbl_go_back() }}
-          </button>
-        </md-dialog-actions>
-      </md-card>
-    </template>
-
   </div>
 
 </template>
 
 <script>
-  import get from 'lodash/get'
+import get from 'lodash/get'
 
-  import FormMixin from '../../../common/mixins/form.mixin'
-  import ConfirmTransfer from './Transfers.Confirm'
-  import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-  import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-  import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
+import FormMixin from '../../../common/mixins/form.mixin'
+import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+import TickField from '@/vue/common/fields/TickField'
+import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
 
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { Keypair } from 'swarm-js-sdk'
-  import { errors } from '../../../../js/errors/factory'
-  import { i18n } from '../../../../js/i18n'
+import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { mapGetters, mapActions } from 'vuex'
+import { vuexTypes } from '../../../../vuex/types'
+import { Keypair } from 'swarm-js-sdk'
+import { errors } from '../../../../js/errors/factory'
+import { i18n } from '../../../../js/i18n'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
 
-  import { accountsService } from '../../../../js/services/accounts.service'
-  import { feeService } from '../../../../js/services/fees.service'
-  import { transferService } from '../../../../js/services/transfers.service'
+import { accountsService } from '../../../../js/services/accounts.service'
+import { feeService } from '../../../../js/services/fees.service'
+import { transferService } from '../../../../js/services/transfers.service'
 
-  const VIEW_MODES = {
-    submit: 'submit',
-    confirm: 'confirm',
-    success: 'success'
-  }
+const VIEW_MODES = {
+  submit: 'submit',
+  confirm: 'confirm',
+  success: 'success'
+}
 
-  export default {
-    name: 'transfers-make',
-    mixins: [FormMixin],
-    components: {
-      ConfirmTransfer,
-      SelectFieldUnchained,
-      InputFieldUnchained,
-      FormConfirmation
+export default {
+  name: 'transfers-make',
+  mixins: [FormMixin],
+  components: {
+    SelectFieldUnchained,
+    InputFieldUnchained,
+    FormConfirmation,
+    TickField
+  },
+  data: _ => ({
+    form: {
+      tokenCode: null,
+      amount: '',
+      recipient: '',
+      subject: '',
+      isPaidForRecipient: false
     },
-    data: _ => ({
-      form: {
-        tokenCode: null,
-        amount: '',
-        recipient: '',
-        subject: ''
+    view: {
+      mode: VIEW_MODES.submit,
+      opts: {}
+    },
+    i18n,
+    fees: {
+      source: {
+        fixed: '',
+        percent: '',
+        feeAsset: ''
       },
-      view: {
-        mode: VIEW_MODES.submit,
-        opts: {}
-      },
-      isFeesLoadPending: false,
-      i18n,
-      VIEW_MODES
+      destination: {
+        fixed: '',
+        percent: '',
+        feeAsset: ''
+      }
+    },
+    isFeesLoaded: false,
+    VIEW_MODES
+  }),
+  created () {
+    this.setTokenCode()
+    this.loadCurrentBalances()
+  },
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountBalances,
+      vuexTypes.userTransferableTokens
+    ]),
+    tokenCodes () {
+      return this.userTransferableTokens.map(token => token.code)
+    },
+    balance () {
+      return this.accountBalances[this.form.tokenCode]
+    },
+    isLimitExceeded () {
+      return Number(this.form.amount) > Number(get(this.balance, 'balance') || 0)
+    }
+  },
+  methods: {
+    ...mapActions({
+      loadCurrentBalances: vuexTypes.GET_ACCOUNT_BALANCES
     }),
-    created () {
-      this.setTokenCode()
-      this.loadCurrentBalances()
-    },
-    computed: {
-      ...mapGetters([
-        vuexTypes.accountBalances,
-        vuexTypes.userTransferableTokens
-      ]),
-      tokenCodes () {
-        return this.userTransferableTokens.map(token => token.code)
-      },
-      balance () {
-        return this.accountBalances[this.form.tokenCode]
-      },
-      isLimitExceeded () {
-        return Number(this.form.amount) > Number(get(this.balance, 'balance') || 0)
+    async submit (feeFromSource) {
+      this.disable()
+      try {
+        await transferService.createTransfer({
+          ...this.view.opts,
+          feeFromSource,
+          asset: this.form.tokenCode
+        })
+        EventDispatcher.dispatchShowSuccessEvent(i18n.transfer_successful())
+        await this.loadCurrentBalances()
+        this.rerenderForm()
+      } catch (error) {
+        console.error(error)
+        ErrorHandler.processUnexpected(error)
       }
+      this.enable()
     },
-    methods: {
-      ...mapActions({
-        loadCurrentBalances: vuexTypes.GET_ACCOUNT_BALANCES
-      }),
-      async submit (feeFromSource) {
-        this.disable()
-        try {
-          await transferService.createTransfer({
-            ...this.view.opts,
-            feeFromSource,
-            asset: this.form.tokenCode
-          })
-          this.view.mode = VIEW_MODES.success
-          await this.loadCurrentBalances()
-        } catch (error) {
-          console.error(error)
-          ErrorHandler.processUnexpected(error)
-        }
-        this.enable()
-      },
-      async processTransfer () {
-        if (!await this.isValid()) return
-        this.disable()
-        try {
-          const counterparty = await this.loadCounterparty()
-          const fees = await this.loadFees(counterparty.accountId)
+    async processTransfer () {
+      if (!await this.isValid()) return
+      this.disable()
+      try {
+        const counterparty = await this.loadCounterparty()
+        const fees = await this.loadFees(counterparty.accountId)
+        this.fees = fees
+        this.isFeesLoaded = true
 
-          const opts = {
-            amount: this.form.amount,
-            destinationAccountId: counterparty.accountId,
-            destinationEmail: counterparty.email,
-            destinationFixedFee: fees.destination.fixed,
-            destinationPercentFee: fees.destination.percent,
-            destinationFeeAsset: fees.destination.feeAsset,
-            sourceBalanceId: this.balance.balance_id,
-            sourceFixedFee: fees.source.fixed,
-            sourcePercentFee: fees.source.percent,
-            sourceFeeAsset: fees.source.feeAsset,
-            subject: this.form.subject,
-            tokenCode: this.form.tokenCode
-          }
-          this.updateView(VIEW_MODES.confirm, opts)
-        } catch (error) {
-          console.error(error)
-          if (error instanceof errors.NotFoundError) {
-            error.showBanner(i18n.tr_recipient_not_found())
-            this.enable()
-            return
-          }
-          ErrorHandler.processUnexpected(error)
+        const opts = {
+          amount: this.form.amount,
+          destinationAccountId: counterparty.accountId,
+          destinationEmail: counterparty.email,
+          destinationFixedFee: fees.destination.fixed,
+          destinationPercentFee: fees.destination.percent,
+          destinationFeeAsset: fees.destination.feeAsset,
+          sourceBalanceId: this.balance.balance_id,
+          sourceFixedFee: fees.source.fixed,
+          sourcePercentFee: fees.source.percent,
+          sourceFeeAsset: fees.source.feeAsset,
+          subject: this.form.subject,
+          tokenCode: this.form.tokenCode
         }
-        this.enable()
-      },
-      async loadCounterparty () {
-        const counterparty = {}
-        const providedRecipient = this.form.recipient
-        if (Keypair.isValidPublicKey(providedRecipient)) {
-          counterparty.accountId = providedRecipient
-          counterparty.email = await accountsService.loadEmailByAccountId(providedRecipient)
-          return counterparty
+        this.updateView(VIEW_MODES.confirm, opts)
+      } catch (error) {
+        console.error(error)
+        if (error instanceof errors.NotFoundError) {
+          error.showBanner(i18n.tr_recipient_not_found())
+          this.enable()
+          return
         }
-        counterparty.email = providedRecipient
-        counterparty.accountId = await accountsService.loadAccountIdByEmail(providedRecipient)
-        return counterparty
-      },
-      async loadFees (recipientAccountId) {
-        const fees = { source: {}, destination: {} }
-        const [ senderFees, recipientFees ] = await Promise.all([
-          feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount),
-          feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount, recipientAccountId)
-        ])
-        fees.source.fixed = senderFees.fixed
-        fees.source.percent = senderFees.percent
-        fees.source.feeAsset = senderFees.feeAsset
-        fees.destination.fixed = recipientFees.fixed
-        fees.destination.percent = recipientFees.percent
-        fees.destination.feeAsset = recipientFees.feeAsset
-        return fees
-      },
-      updateView (mode, opts = {}, clear = false) {
-        this.view.mode = mode
-        this.view.opts = opts
-        if (clear) {
-          this.clear()
-          this.setTokenCode()
-        }
-      },
-      setTokenCode () {
-        this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
+        ErrorHandler.processUnexpected(error)
       }
+      this.enable()
+    },
+    async loadCounterparty () {
+      const counterparty = {}
+      const providedRecipient = this.form.recipient
+      if (Keypair.isValidPublicKey(providedRecipient)) {
+        counterparty.accountId = providedRecipient
+        counterparty.email = await accountsService.loadEmailByAccountId(providedRecipient)
+        return counterparty
+      }
+      counterparty.email = providedRecipient
+      counterparty.accountId = await accountsService.loadAccountIdByEmail(providedRecipient)
+      return counterparty
+    },
+    async loadFees (recipientAccountId) {
+      const fees = { source: {}, destination: {} }
+      const [senderFees, recipientFees] = await Promise.all([
+        feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount),
+        feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount, recipientAccountId)
+      ])
+      fees.source.fixed = senderFees.fixed
+      fees.source.percent = senderFees.percent
+      fees.source.feeAsset = senderFees.feeAsset
+      fees.destination.fixed = recipientFees.fixed
+      fees.destination.percent = recipientFees.percent
+      fees.destination.feeAsset = recipientFees.feeAsset
+      return fees
+    },
+    updateView (mode, opts = {}, clear = false) {
+      this.view.mode = mode
+      this.view.opts = opts
+      if (clear) {
+        this.clear()
+        this.setTokenCode()
+      }
+    },
+    rerenderForm () {
+      this.updateView(null)
+      this.isFeesLoaded = false
+      setTimeout(() => this.updateView(VIEW_MODES.submit, {}, true), 1)
+    },
+    setTokenCode () {
+      this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
+@import "~@scss/variables";
 
-  .transfer__success-msg {
-    text-align: center;
-  }
+.transfer__fee-box {
+  margin-top: 4 * $point;
+  padding-top: 4 * $point;
+  border-top: 0.1 * $point dashed $col-md-primary-inactive;
+}
 
-  .transfer__success-amount {
-    color: $col-md-primary;
-    font-size: $fs-heading;
-    margin: 1rem 0 .5rem;
-  }
+.transfer__fee-box-heading {
+  margin-top: 0;
+  margin-bottom: 1 * $point;
+  font-weight: normal;
+  display: block;
+  font-size: 1.8 * $point;
+  color: $col-md-primary;
+}
 
-  .transfer__header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-  }
+.transfer__fee-box-heading:not(:first-child) {
+  margin-top: 2.5 * $point;
+}
 
-  .transfer__title {
-    .transfer__header &:first-child {
-      margin-top: 0;
-    }
-  }
+.transfer__fee {
+  color: $col-md-primary;
+  font-size: 1.6 * $point;
+  line-height: 1.5;
+  margin: 0;
+}
 
-  .transfer__user-balance {
-    color: $col-text-secondary;
-  }
+.transfer__no-fee-msg {
+  color: $col-md-primary-inactive;
+  font-size: 1.6 * $point;
+  line-height: 1.5;
+  margin: 1.5 * $point 0;
+}
+
+.transfer__fee-type {
+  color: $col-md-primary-secondary;
+}
 </style>
