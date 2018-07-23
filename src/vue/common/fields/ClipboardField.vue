@@ -54,7 +54,7 @@
     justify-content: space-between;
     flex: 1;
     width: 100%;
-    @include material-border($field-color-focused);
+    @include material-border($field-color-focused, $field-color-unfocused);
   }
 
   .clipboard__outer {

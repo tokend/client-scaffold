@@ -528,3 +528,21 @@ input:-webkit-autofill {
     padding-bottom: 8px;
   }
 }
+
+.app__fade-in-enter-active {
+  animation: app__fade-in-keyframes 0.2s ease-in-out;
+}
+
+.app__fade-in-leave-active {
+  display: none;
+  animation: app__fade-in-keyframes 0s ease-in-out reverse;
+}
+
+@keyframes app__fade-in-keyframes {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

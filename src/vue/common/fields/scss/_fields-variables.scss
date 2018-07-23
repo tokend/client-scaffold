@@ -2,11 +2,11 @@
 
 $field-color-text: $col-md-primary;
 $field-color-focused: $field-color-text;
-$field-color-unfocused: $field-color-text;
+$field-color-unfocused: $col-md-primary-inactive;
 $field-color-error: $col-md-accent;
 $field-label-font-size: 1.2 * $point;
 $field-label-line-height: 1;
-$field-text-font-size: 1.8 * $point;
+$field-text-font-size: 1.6 * $point;
 $field-text-line-height: 1.25;
 $field-error-font-size: 1.2 * $point;
 $field-error-line-height: 1.25;
@@ -16,6 +16,7 @@ $field-input-padding-top: 1.7 * $point;
 $field-input-padding-bottom: .6 * $point;
 $field-input-padding: $field-input-padding-top 0 $field-input-padding-bottom 0;
 $field-placeholer-color: $field-color-unfocused;
+$textarea-background-color: #fafafa;
 
 @mixin input-paddings {
   font-size: $field-text-font-size;
@@ -32,9 +33,9 @@ $field-placeholer-color: $field-color-unfocused;
   line-height: $field-label-line-height;
 }
 
-@mixin material-border($color) {
-  border-bottom: .1 * $point solid $color;
-  background: radial-gradient($color, $color) bottom -.1 * $point center no-repeat;
+@mixin material-border($color-focused, $color-unfocused) {
+  border-bottom: .1 * $point solid $color-unfocused;
+  background: radial-gradient($color-focused, $color-focused) bottom -.1 * $point center no-repeat;
   background-size: 0 .2 * $point;
   -webkit-transition-property: background-size, border-color;
   -moz-transition-property: background-size, border-color;
