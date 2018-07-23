@@ -205,8 +205,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .file-field__outer {
     display: flex;
@@ -222,7 +222,7 @@
 
   .file-field__label {
     font-size: $fs-tip;
-    color: $col-unfocused;
+    color: $col-md-primary-inactive;
     margin-bottom: 8px;
   }
 
@@ -253,7 +253,9 @@
 
   .file-field__file-name {
     position: relative;
-    top: .55rem;
+    left: 1rem;
+    top: .85rem;
+    color: $col-md-primary-inactive
   }
 
   .link-btn {
