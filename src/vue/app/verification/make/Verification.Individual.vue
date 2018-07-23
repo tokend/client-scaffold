@@ -1,101 +1,93 @@
 <template>
-  <div class="kyc-form md-layout md-alignment-center-center">
+  <div class="kyc-form">
     <form novalidate @submit.prevent="submit"
-          class="md-layout-item
-                  md-size-100
-                  md-medium-size-65
-                  md-small-size-95
-                  md-xsmall-size-100"
-    >
-      <div class="app__card">
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+          class="app__page-content-wrp">
+      <h2 class="app__page-heading">{{ i18n.kyc_account_verification() }}</h2>
 
-        <div class="app__card-header">
-          <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
-        </div>
+      <template v-for="(row, r) in schema.rows">
 
-        <div class="app__card-content">
-          <template v-for="row in schema.rows">
+        <template v-if="row.heading">
+          <h4 :key="`verification-individual-heading-${r}`">{{ row.heading }}</h4>
+        </template>
 
-            <template v-if="row.heading">
-              <h4>{{ row.heading }}</h4>
-            </template>
-
-            <template v-if="row instanceof Array">
-              <div class="md-layout md-gutter">
-                  <template v-for="item in row">
-                    <div class="md-layout-item md-small-size-100">
-                      <input-field v-if="item.field === 'text'"
-                                   v-model="form[item.model]"
-                                   v-validate="item.validate"
-                                   :name="item.name"
-                                   :id="item.id"
-                                   :required="item.required"
-                                   :label="item.label"
-                                   :errorMessage="errorMessage(item.name)"
-                                   :disabled="accountState === ACCOUNT_STATES.pending"
-                      />
-                      <date-field v-if="item.field === 'date'"
-                                  v-model="form[item.model]"
-                                  v-validate="item.validate"
-                                  :name="item.name"
-                                  :id="item.id"
-                                  :required="item.required"
-                                  :disableBefore="item.disableBefore"
-                                  :disableAfter="item.disableAfter"
-                                  :label="item.label"
-                                  :errorMessage="errorMessage(item.name)"
-                                  :disabled="accountState === ACCOUNT_STATES.pending"
-                      />
-                      <select-field-custom
-                        v-if="item.field === 'select'"
-                        class="md-layout-item assets-select__select"
-                        :label="item.label"
-                        v-model="form[item.model]"
-                        v-validate="item.validate"
-                        :name="item.name"
-                        :id="item.id"
-                        :required="item.required"
-                        :errorMessage="errorMessage(item.name)"
-                        :disabled="accountState === ACCOUNT_STATES.pending"
-                        :values="values[item.values]"/>
-                    </div>
-                  </template>
+        <template v-if="row instanceof Array">
+          <div class="md-layout md-gutter"
+              :key="`verification-individual-layout-${r}`">
+            <template v-for="(item, i) in row">
+              <div class="md-layout-item md-small-size-100"
+                   :key="`verification-individual-heading-${r}-item-${i}`">
+                <input-field-unchained
+                  v-if="item.field === 'text'"
+                  v-model="form[item.model]"
+                  v-validate="item.validate"
+                  :name="item.name"
+                  :id="item.id"
+                  :required="item.required"
+                  :label="item.label"
+                  :errorMessage="errorMessage(item.name)"
+                  :disabled="accountState === ACCOUNT_STATES.pending"
+                />
+                <date-field v-if="item.field === 'date'"
+                            v-model="form[item.model]"
+                            v-validate="item.validate"
+                            :name="item.name"
+                            :id="item.id"
+                            :required="item.required"
+                            :disableBefore="item.disableBefore"
+                            :disableAfter="item.disableAfter"
+                            :label="item.label"
+                            :errorMessage="errorMessage(item.name)"
+                            :disabled="accountState === ACCOUNT_STATES.pending"
+                />
+                <select-field-unchained
+                  v-if="item.field === 'select'"
+                  :values="values[item.values]"
+                  v-model="form[item.model]"
+                  :label="item.label"
+                  :name="item.name"
+                  :id="item.id"
+                  :required="item.required"
+                  :errorMessage="errorMessage(item.name)"
+                  :disabled="accountState === ACCOUNT_STATES.pending"
+                  v-validate="item.validate"/>
               </div>
             </template>
+          </div>
+        </template>
 
-          </template>
+      </template>
 
-          <h4>{{ i18n.kyc_required_documents() }}</h4>
+      <h4>{{ i18n.kyc_required_documents() }}</h4>
 
-          <template v-for="doc in schema.docs">
-            <template v-if="doc.type === documentTypes.kycSelfie">
-              <h4>{{ i18n.kyc_photo_verification() }}</h4>
-              <p>{{ i18n.kyc_photo_explain() }}</p>
-              <button v-ripple
-                      @click="isDialogOpened = true"
-                      class="app__button-flat">>
-                {{ i18n.kyc_show_key() }}
-              </button>
-            </template>
-
-            <file-field class="kyc-form__file-field"
-                          v-model="documents[doc.type][doc.side]"
-                          :private="doc.private"
-                          :label="doc.label"
-                          :type="doc.type"
-                          :id="doc.id"
-              />
-          </template>
-        </div>
-        <div class="app__card-actions">
-           <button v-ripple
-                  type="submit"
-                  class="app__button-flat"
-                  :disabled="isPending || accountState === ACCOUNT_STATES.pending">
-            {{ i18n.lbl_submit() }}
+      <template v-for="(doc, d) in schema.docs">
+        <template v-if="doc.type === documentTypes.kycSelfie">
+          <h4 :key="`verification-individual-doc-title-${d}`">{{ i18n.kyc_photo_verification() }}</h4>
+          <p :key="`verification-individual-doc-descr-${d}`">{{ i18n.kyc_photo_explain() }}</p>
+          <button v-ripple
+                  @click="isDialogOpened = true"
+                  type="button"
+                  :key="`verification-individual-doc-button-${d}`"
+                  class="app__button-flat">
+            {{ i18n.kyc_show_key() }}
           </button>
-        </div>
+        </template>
+
+        <file-field class="kyc-form__file-field"
+                      v-model="documents[doc.type][doc.side]"
+                      :key="`verification-individual-doc-field-${d}`"
+                      :private="doc.private"
+                      :label="doc.label"
+                      :type="doc.type"
+                      :id="doc.id"
+          />
+      </template>
+      <div class="app__form-actions">
+        <button v-ripple
+              type="submit"
+              class="app__button-flat"
+              :disabled="isPending || accountState === ACCOUNT_STATES.pending">
+          {{ i18n.lbl_submit() }}
+        </button>
       </div>
     </form>
 
@@ -116,28 +108,27 @@
         </button>
       </md-dialog-actions>
     </md-dialog>
-
   </div>
 </template>
 
 <script>
-  import FormMixin from '../../../common/mixins/form.mixin'
-  import FileField from '../../../common/fields/FileField'
+  import FormMixin from '@/vue/common/mixins/form.mixin'
+  import FileField from '@/vue/common/fields/FileField'
 
   import { mapGetters, mapActions } from 'vuex'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-  import { documentTypes } from '../../../../js/const/documents.const'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { i18n } from '../../../../js/i18n'
+  import { ErrorHandler } from '@/js/errors/error_handler'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { documentTypes } from '@/js/const/documents.const'
+  import { vuexTypes } from '@/vuex/types'
+  import { i18n } from '@/js/i18n'
 
   import { kycIndividualSchema as schema } from '../spec/kyc-individual.schema'
   import { KycTemplateParser } from '../spec/kyc-template-parser'
-  import { usersService } from '../../../../js/services/users.service'
-  import { accountsService } from '../../../../js/services/accounts.service'
+  import { usersService } from '@/js/services/users.service'
+  import { accountsService } from '@/js/services/accounts.service'
 
-  import { ACCOUNT_STATES } from '../../../../js/const/account.const'
-  import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+  import { ACCOUNT_STATES } from '@/js/const/account.const'
+  import { ACCOUNT_TYPES } from '@/js/const/xdr.const'
 
   const KYC_LEVEL_TO_SET = 0
 

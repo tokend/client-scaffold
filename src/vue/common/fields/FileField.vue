@@ -236,7 +236,7 @@
   }
 
   .file-field__icon {
-    color: $col-md-primary-txt!important;
+    color: $col-md-primary-txt !important;
     margin-right: .5rem;
     position: relative;
     bottom: .05rem;
@@ -278,7 +278,7 @@
     width: 100%;
 
     &:hover {
-      border-color: $col-active;
+      border-color: $col-md-primary;
     }
   }
 
@@ -288,7 +288,7 @@
     overflow: hidden;
     width: 100%;
 
-    input[type="file"] {
+    input[type='file'] {
       cursor: pointer;
       opacity: 0;
       height: 100%;
@@ -305,7 +305,7 @@
     width: 100%;
 
     .title {
-      color: $col-active;
+      color: $col-md-primary;
       margin-bottom: 10px;
     }
   }
@@ -316,7 +316,6 @@
     line-height: 160%;
   }
 
-  $ratio_16: 448px;
   $ratio_9: 153px;
 
   .image-input__image-preview {
