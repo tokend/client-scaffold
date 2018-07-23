@@ -70,6 +70,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "~@scss/variables.scss";
 @import "~@scss/mixins.scss";
 
 .form-confirmation {
@@ -88,6 +89,7 @@ export default {
 .form-confirmation__msg {
   font-size: 1rem;
   line-height: 1.25;
+  padding-right: 1 * $point;
 }
 
 .form-confirmation__btns {
