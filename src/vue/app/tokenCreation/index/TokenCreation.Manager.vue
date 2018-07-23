@@ -1,137 +1,130 @@
 <template>
-   <div class="kyc-form md-layout md-alignment-center-center">
-    <form novalidate @submit.prevent="submit"
-          class="md-layout-item
-                  md-size-50
-                  md-medium-size-65
-                  md-small-size-95
-                  md-xsmall-size-100"
-    >
-      <div class="app__card">
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-        <div class="app__card-content">
-          <div class="kyc-form__content-item">
-            <div class="md-layout-item">
-              <file-field fileType="image"
-                          v-model="documents[documentTypes.tokenIcon]"
-                          :label="i18n.lbl_token_icon()"
-                          :minWidth='120'
-                          :minHeight='120'
-                          :accept="'image/*'"
-                          :type="documentTypes.tokenIcon"/>
-            </div>
+   <div class="kyc-form">
+    <form novalidate @submit.prevent="submit">
+      <div class="kyc-form__content-item">
+        <div class="md-layout-item">
+          <file-field fileType="image"
+                      v-model="documents[documentTypes.tokenIcon]"
+                      :label="i18n.lbl_token_icon()"
+                      :minWidth='120'
+                      :minHeight='120'
+                      :accept="'image/*'"
+                      :type="documentTypes.tokenIcon"/>
+        </div>
+      </div>
+      <div class="kyc-form__content-item">
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item md-small-size-100">
+            <input-field-unchained
+              id="token-name"
+              v-model="request.tokenName"
+              v-validate="'required'"
+              :label="i18n.lbl_token_name()"
+              name="token name"
+              :errorMessage="errorMessage('token name')"
+            />
           </div>
-          <div class="kyc-form__content-item">
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="token-name"
-                            name="token name"
-                            v-model="request.tokenName"
-                            v-validate="'required'"
-                            :label="i18n.lbl_token_name()"
-                            :errorMessage="errorMessage('token name')"
-                />
-              </div>
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="token-code"
-                            name="token code"
-                            v-model="request.tokenCode"
-                            v-validate="'required'"
-                            :label="i18n.lbl_token_code()"
-                            :errorMessage="errorMessage('token code')"
-                />
-              </div>
-            </div>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <input-field id="token-max-issuance-amount"
-                            name="max issuance amount"
-                            type="number"
-                            v-model="request.maxIssuanceAmount"
-                            v-validate="'required|amount'"
-                            :label="i18n.lbl_token_max_issuance_amount()"
-                            :errorMessage="errorMessage('max issuance amount')"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="kyc-form__content-item">
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-size-50">
-                <md-checkbox v-model="request.policies"
-                              :value="ASSET_POLICIES.transferable"
-                              name="policy-transferable"
-                              id="policy-transferable"
-                              class="md-primary">
-                            Transferable
-                </md-checkbox>
-              </div>
-              <div class="md-layout-item md-size-50">
-                <md-checkbox v-model="request.policies"
-                              :value="ASSET_POLICIES.requiresKyc"
-                              name="policy-requiresKyc"
-                              id="policy-requiresKyc"
-                              class="md-primary">
-                            Requires KYC
-                </md-checkbox>
-              </div>
-            </div>
-          </div>
-          <div class="kyc-form__content-item">
-            <div class="md-layout-item">
-              <file-field class="token_terms__file-field"
-                          name="token terms document"
-                          v-model="documents[documentTypes.tokenTerms]"
-                          :label="i18n.lbl_token_terms()"
-                          id="document.id"
-                          :type="documentTypes.tokenTerms"
-              />
-            </div>
-          </div>
-          <div class="kyc-form__content-item">
-            <md-radio class="md-primary"
-                      v-model="makeAdditional"
-                      :value="false">I don't want to make additional issuance later</md-radio>
-            <md-radio class="md-primary"
-                      v-model="makeAdditional"
-                      :value="true">I want to make additional issuance later
-              <!--(<a @click.stop.prevent="showDialog = true">tell me more</a>)-->
-            </md-radio>
-          </div>
-          <div class="kyc-form__content-item" v-if="makeAdditional">
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item">
-                <input-field id="token-preissued-asset-signer"
-                            name="preissued asset signer"
-                            v-model="request.preissuedAssetSigner"
-                            v-validate="'required|account_id'"
-                            :label="i18n.lbl_token_preissued_asset_signer()"
-                            :errorMessage="errorMessage('preissued asset signer')"
-                />
-              </div>
-            </div>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item">
-                <input-field id="token-initial-preissued-amount"
-                            name="initial preissued amount"
-                            v-model="request.initialPreissuedAmount"
-                            type="number"
-                            v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
-                            :label="i18n.lbl_token_initial_preissued_amount()"
-                            :errorMessage="errorMessage('initial preissued amount')"
-                />
-              </div>
-            </div>
+          <div class="md-layout-item md-small-size-100">
+            <input-field-unchained
+              id="token-code"
+              v-model="request.tokenCode"
+              v-validate="'required'"
+              :label="i18n.lbl_token_code()"
+              name="token code"
+              :errorMessage="errorMessage('token code')"
+            />
           </div>
         </div>
-        <div class="app__card-actions">
-          <button v-ripple
-                  type="submit"
-                  class="app__button-flat"
-                  :disabled="isPending">
-            {{ i18n.lbl_submit() }}
-          </button>
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item md-small-size-100">
+            <input-field-unchained
+              id="token-max-issuance-amount"
+              type="number"
+              v-model="request.maxIssuanceAmount"
+              v-validate="'required|amount'"
+              :label="i18n.lbl_token_max_issuance_amount()"
+              name="max issuance amount"
+              :errorMessage="errorMessage('max issuance amount')"
+            />
+          </div>
         </div>
+      </div>
+      <div class="kyc-form__content-item">
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item md-size-50">
+            <md-checkbox v-model="request.policies"
+                          :value="ASSET_POLICIES.transferable"
+                          name="policy-transferable"
+                          id="policy-transferable"
+                          class="md-primary">
+                        Transferable
+            </md-checkbox>
+          </div>
+          <div class="md-layout-item md-size-50">
+            <md-checkbox v-model="request.policies"
+                          :value="ASSET_POLICIES.requiresKyc"
+                          name="policy-requiresKyc"
+                          id="policy-requiresKyc"
+                          class="md-primary">
+                        Requires KYC
+            </md-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="kyc-form__content-item">
+        <div class="md-layout-item">
+          <file-field class="token_terms__file-field"
+                      name="token terms document"
+                      v-model="documents[documentTypes.tokenTerms]"
+                      :label="i18n.lbl_token_terms()"
+                      id="document.id"
+                      :type="documentTypes.tokenTerms"
+          />
+        </div>
+      </div>
+      <div class="kyc-form__content-item">
+        <md-radio class="md-primary"
+                  v-model="makeAdditional"
+                  :value="false">I don't want to make additional issuance later</md-radio>
+        <md-radio class="md-primary"
+                  v-model="makeAdditional"
+                  :value="true">I want to make additional issuance later
+          <!--(<a @click.stop.prevent="showDialog = true">tell me more</a>)-->
+        </md-radio>
+      </div>
+      <div class="kyc-form__content-item" v-if="makeAdditional">
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item">
+            <input-field-unchained
+              id="token-preissued-asset-signer"
+              v-model="request.preissuedAssetSigner"
+              v-validate="'required|account_id'"
+              :label="i18n.lbl_token_preissued_asset_signer()"
+              :errorMessage="errorMessage('preissued asset signer')"
+            />
+          </div>
+        </div>
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item">
+            <input-field-unchained
+              id="token-initial-preissued-amount"
+              name="initial preissued amount"
+              v-model="request.initialPreissuedAmount"
+              type="number"
+              v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
+              :label="i18n.lbl_token_initial_preissued_amount()"
+              :errorMessage="errorMessage('initial preissued amount')"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="app__form-actions">
+        <button v-ripple
+                type="submit"
+                class="app__button-flat"
+                :disabled="isPending">
+          {{ i18n.lbl_submit() }}
+        </button>
       </div>
     </form>
 
