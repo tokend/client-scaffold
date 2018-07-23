@@ -3,6 +3,7 @@
 @import '../../static/fonts/index.css';
 @import '../../node_modules/mdi/css/materialdesignicons.min.css';
 @import "../../node_modules/vue-material/dist/theme/engine";
+@import 'forms';
 
 @include md-register-theme("default", (
   primary: $col-md-primary,
@@ -57,8 +58,8 @@ html,body {
   & .md-app-content {
     padding-bottom: 30px;
     height: auto;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 40px;
+    padding-right: 40px;
     border-left: 0;
 
     & .md-card {
@@ -66,6 +67,71 @@ html,body {
       margin-right: 12px;
     }
   }
+
+  .app__page-content-wrp {
+    flex: 1;
+    width: 100%;
+    max-width: 45 * $point;
+  }
+
+  p.app__page-explanations {
+    max-width: 45 * $point;
+    color: $col-md-primary;
+    font-size: 1.6 * $point;
+    margin-top: 2.5 * $point;
+    margin-bottom: 4 * $point;
+
+    &--secondary {
+      color: $col-md-primary-inactive;
+    }
+  }
+
+  h1.app__page-heading,
+  h2.app__page-heading,
+  h3.app__page-heading,
+  h4.app__page-heading,
+  h5.app__page-heading,
+  h6.app__page-heading {
+    display: block;
+    color: $col-md-primary;
+  }
+
+  h1.app__page-heading {
+    font-size: 2em;
+    margin: 0 0 0.67em 0;
+    font-weight: 300;
+  }
+
+  h2.app__page-heading {
+    font-size: 1.5em;
+    margin:0 0  1.5em 0;
+    font-weight: 300;
+  }
+
+  h3.app__page-heading {
+    font-size: 1.17em;
+    margin: 0 0 1em 0;
+    font-weight: bold;
+  }
+
+  h4.app__page-heading {
+    font-size: 1em;
+    margin: 0 0 1.33em 0;
+    font-weight: bold;
+  }
+
+  h5.app__page-heading {
+    font-size: .83em;
+    margin: 0 0 1.67em 0;
+    font-weight: bold;
+  }
+
+  h6.app__page-heading {
+    font-size: .67em;
+    margin: 0 0 2.33em 0;
+    font-weight: bold;
+  }
+
 
   & .sidebar .router-link-active {
     color: $col-md-primary;
@@ -309,14 +375,14 @@ input:-webkit-autofill {
 
 .app__card-content,
 .app__card-header {
-  padding: 24px;
+  padding: 32px;
 
   @include respond-to(medium) {
-    padding: 16px;
+    padding: 24px;
   }
 
   @include respond-to(small) {
-    padding: 16px 12px;
+    padding: 12px 16px;
   }
 }
 

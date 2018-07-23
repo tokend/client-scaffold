@@ -95,3 +95,8 @@ $fs-root: 1rem;
 $fs-tip: .8rem;
 $fs-tip-smaller: .74rem;
 $fs-label: .8rem;
+
+// misc.
+
+// use as multiplier for more convenient way to calculating sizes
+$point: 0.625rem; // 10px in case of 1rem=16px

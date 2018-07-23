@@ -75,7 +75,7 @@
   $custom-breakpoint: 800px;
 
   .dashboard {
-    padding: 0 40px;
+    padding: 0 0;
 
     @include respond-to(medium) {
       padding: 0 24px;
