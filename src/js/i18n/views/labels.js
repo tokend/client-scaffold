@@ -133,6 +133,7 @@ export default {
   lbl_add_to_balances: 'Add to my balances',
   lbl_balance_exists: 'Balance exists',
   lbl_view_history: 'View history',
+  lbl_view_dashboard: 'View dashboard',
   lbl_user: 'user',
   lbl_view: 'View',
   lbl_userBlocked: 'User is blocked',
