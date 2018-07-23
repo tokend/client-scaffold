@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import MarkdownFormatter from '../components/MarkDownFormatter'
+  import MarkdownFormatter from '../components/DescriptionTab.MarkDownFormatter'
   import { i18n } from '../../../../../js/i18n'
   export default {
     name: 'description-tab',
