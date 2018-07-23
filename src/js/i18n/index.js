@@ -17,6 +17,7 @@ import issuancesView from './views/issuances_view'
 import settingsView from './views/settings_view'
 import dashboardView from './views/dashboard_view'
 import transfersView from './views/transfers_view'
+import tokensView from './views/tokens_view'
 import modals from './views/modals'
 import verification from './views/verification_view'
 import fileUpload from './views/file-upload'
@@ -61,7 +62,8 @@ const dictionary = {
   ...companyView,
   ...preissuanceView,
   ...common,
-  ...formConfirmation
+  ...formConfirmation,
+  ...tokensView
 }
 
 polyglot.extend(dictionary)
