@@ -29,6 +29,7 @@
         </div>
 
         <div class="deposit__qr-outer">
+          <span class="deposit__qr-code-hint">{{ i18n.deposit_qr_code_hint() }}</span>
           <qrcode class="deposit__qr-code"
                   :text="address"
                   :size="225"
@@ -154,7 +155,6 @@ export default {
 .deposit__qr-outer {
   margin: 4 * $point auto 0;
   text-align: center;
-  width: 225px;
 }
 
 .deposit__progress-wrp {
@@ -163,5 +163,19 @@ export default {
 
 .deposit__warn-msg {
   margin: 4 * $point 0 0 0 !important;
+}
+
+.deposit__qr-code {
+  width: 225px;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+.deposit__qr-code-hint {
+  color: $col-md-primary-inactive;
+  text-align: center;
+  font-size: 1.4 * $point;
+  margin-bottom: 1 * $point;
+  display: inline-block;
 }
 </style>
