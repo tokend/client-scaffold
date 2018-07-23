@@ -2,14 +2,15 @@
   <div class="transfer md-layout md-alignment-center-center" >
     <template v-if="!tokenCodes.length">
       <div class="app__no-data-msg">
-        <md-card class="md-layout-item
-                      md-size-100">
-          <md-card-content>
+        <div class="md-layout-item
+                    md-size-100
+                    app__card">
+          <div class="app__card-content">
             <md-icon class="md-size-4x">send</md-icon>
             <h2>{{ i18n.tr_no_assets() }}</h2>
             <p>{{ i18n.tr_no_assets_exp() }}</p>
-          </md-card-content>
-        </md-card>
+      </div>
+        </div>
       </div>
     </template>
 
@@ -21,16 +22,16 @@
                    md-small-size-95
                    md-xsmall-size-100"
       >
-        <md-card>
+        <div class="app__card">
           <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-          <md-card-header class="transfer__header">
+          <div class="app__card-header transfer__header">
             <div class="transfer__user-balance">
               {{ i18n.tr_balance({ balance: balance.balance, token: form.tokenCode }) }}
             </div>
-          </md-card-header>
+          </div>
 
-          <md-card-content>
+          <div class="app__card-content">
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <select-field-custom :values="tokenCodes"
@@ -68,16 +69,16 @@
                             :maxlength="250"
                             :errorMessage="errorMessage('recipient')"
             />
-          </md-card-content>
-          <md-dialog-actions class="transfer-dialog__actions">
+          </div>
+          <div class="app__card-actions transfer-dialog__actions">
             <button v-ripple
                     type="submit"
                     class="app__button-flat"
                     :disabled="isPending">
               {{ i18n.lbl_send() }}
             </button>
-          </md-dialog-actions>
-        </md-card>
+          </div>
+        </div>
       </form>
     </template>
 
@@ -95,30 +96,31 @@
     </template>
 
     <template v-if="view.mode === VIEW_MODES.success">
-      <md-card class="transfer__success-msg
-                      md-layout-item
-                      md-size-50
-                      md-medium-size-45
-                      md-small-size-100
-                      md-xsmall-size-100">
-        <md-card-header>
+      <div class="transfer__success-msg
+                  md-layout-item
+                  md-size-50
+                  md-medium-size-45
+                  md-small-size-100
+                  md-xsmall-size-100
+                  app__card">
+        <div class="app__card-header">
           <div class="md-title">{{ i18n.tr_successful() }}</div>
-        </md-card-header>
-        <md-card-content>
+        </div>
+        <div class="app__card-content">
           <div>
             <div class="transfer__success-amount">
               {{ form.amount }} {{ form.tokenCode }}
             </div>
           </div>
-        </md-card-content>
-        <md-dialog-actions class="transfer-dialog__actions">
+        </div>
+        <div class="app__card-actions transfer-dialog__actions">
           <button v-ripple
                   @click="updateView(VIEW_MODES.submit, {}, true)"
                   class="app__button-flat">
             {{ i18n.lbl_go_back() }}
           </button>
-        </md-dialog-actions>
-      </md-card>
+        </div>
+      </div>
     </template>
 
   </div>

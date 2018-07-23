@@ -7,14 +7,14 @@
                   md-small-size-95
                   md-xsmall-size-100"
     >
-      <md-card>
+      <div class="app__card">
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-        <md-card-header>
+        <div class="card__header">
           <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
-        </md-card-header>
+        </div>
 
-        <md-card-content>
+        <div class="card__content">
           <template v-for="row in schema.rows">
             <template v-if="row.heading">
               <h4>{{ row.heading }}</h4>
@@ -52,16 +52,16 @@
             </template>
 
           </template>
-        </md-card-content>
-        <md-card-actions>
+        </div>
+        <div class="card__actions">
           <button v-ripple
                   type="submit"
                   class="app__button-flat"
                   :disabled="isPending || accountState === ACCOUNT_STATES.pending">
             {{ i18n.lbl_submit() }}
           </button>
-        </md-card-actions>
-      </md-card>
+        </div>
+      </div>
     </form>
   </div>
 </template>

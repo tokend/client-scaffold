@@ -1,5 +1,5 @@
 <template >
-  <div class="app__no-data-message">
+  <div class="no-data-message">
     <md-icon v-if="iconName" class="md-size-4x">{{ iconName }}</md-icon>
     <h2>{{ msgTitle }}</h2>
     <p>{{ msgMessage }}</p>
@@ -16,3 +16,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .no-data-message {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 8px;
+
+    h2 {
+      margin-bottom: 16px;
+    }
+  }
+</style>

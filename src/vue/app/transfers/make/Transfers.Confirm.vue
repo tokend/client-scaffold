@@ -1,12 +1,12 @@
 <template>
-  <md-card class="transfer-confirm">
+  <div class="app__card transfer-confirm">
     <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-    <md-card-header>
+    <div class="app__card-header">
       <div class="md-title">{{ i18n.tr_confirm() }}</div>
-    </md-card-header>
+    </div>
 
-    <md-card-content>
+    <div class="app__card-content">
 
       <div class="transfer-confirm__inner">
         <detail-row :prop="i18n.lbl_asset()"
@@ -52,8 +52,8 @@
 
       </div>
 
-    </md-card-content>
-    <md-dialog-actions class="transfer-dialog__actions">
+    </div>
+    <div class="app__card-actions transfer-dialog__actions">
       <button v-ripple
               @click="$emit(commonEvents.cancelClickEvent)"
               class="app__button-flat"
@@ -66,8 +66,8 @@
               :disabled="isPending">
         {{ i18n.lbl_confirm() }}
       </button>
-    </md-dialog-actions>
-  </md-card>
+    </div>
+  </div>
 </template>
 
 <script>

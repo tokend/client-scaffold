@@ -1,56 +1,46 @@
 <template>
-  <md-card class="user-type-selector
-                  md-layout-item
-                  md-size-90
-                  md-medium-size-95
-                  md-small-size-90
-                  md-xsmall-size-100">
-
-    <md-card-content class="md-layout">
-      <div class="user-type-selector__user-types md-layout-item md-layout">
-        <md-card class="user-type-selector__user-types-item md-layout-item md-size-30">
-          <md-card-header class="user-type-selector__card-header">
-            <span class="user-type-selector__user-types-item-title md-title">{{ i18n.kyc_general() }}</span>
-            <md-icon>
-              info
-              <md-tooltip md-direction="top">{{ i18n.kyc_inv_tip() }}</md-tooltip>
-            </md-icon>
-          </md-card-header>
-          <md-card-content class="user-type-selector__user-types-item-content">
-            <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-type-icon">person</md-icon>
-          </md-card-content>
-          <md-card-actions>
-            <button v-ripple
-                    @click="selectType(userTypes.general)"
-                    class="app__button-flat user-type-selector__user-type-button"
-                    :disabled="isPending">
-              {{ i18n.kyc_submit() }}
-            </button>
-          </md-card-actions>
-        </md-card>
-        <md-card class="user-type-selector__user-types-item md-layout-item md-size-30">
-          <md-card-header class="user-type-selector__card-header">
-            <span class="md-title">{{ i18n.kyc_corporate() }}</span>
-            <md-icon>
-              info
-              <md-tooltip md-direction="top">{{ i18n.kyc_corporate_tip() }}</md-tooltip>
-            </md-icon>
-          </md-card-header>
-          <md-card-content class="user-type-selector__user-types-item-content">
-            <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-type-icon">domain</md-icon>
-          </md-card-content>
-          <md-card-actions>
-            <button v-ripple
-                    @click="selectType(userTypes.syndicate)"
-                    class="app__button-flat user-type-selector__user-type-button"
-                    :disabled="isPending">
-              {{ i18n.kyc_submit() }}
-            </button>
-          </md-card-actions>
-        </md-card>
+  <div class="user-type-selector">
+    <div class="app__card user-type-selector__user md-layout-item md-size-30">
+      <div class="app__card-header user-type-selector__card-header">
+        <span class="user-type-selector__user-title md-title">{{ i18n.kyc_general() }}</span>
+        <md-icon>
+          info
+          <md-tooltip md-direction="top">{{ i18n.kyc_inv_tip() }}</md-tooltip>
+        </md-icon>
       </div>
-    </md-card-content>
-  </md-card>
+      <div class="app__card-content user-type-selector__user-content">
+        <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">person</md-icon>
+      </div>
+      <div class="app__card-actions">
+        <button v-ripple
+                @click="selectType(userTypes.general)"
+                class="app__button-flat user-type-selector__user-button"
+                :disabled="isPending">
+          {{ i18n.kyc_submit() }}
+        </button>
+      </div>
+    </div>
+    <div class="app__card user-type-selector__user md-layout-item md-size-30">
+      <div class="app__card-header user-type-selector__card-header">
+        <span class="md-title">{{ i18n.kyc_corporate() }}</span>
+        <md-icon>
+          info
+          <md-tooltip md-direction="top">{{ i18n.kyc_corporate_tip() }}</md-tooltip>
+        </md-icon>
+      </div>
+      <div class="app__card-content user-type-selector__user-content">
+        <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">domain</md-icon>
+      </div>
+      <div class="app__card-actions">
+        <button v-ripple
+                @click="selectType(userTypes.syndicate)"
+                class="app__button-flat user-type-selector__user-button"
+                :disabled="isPending">
+          {{ i18n.kyc_submit() }}
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -83,13 +73,16 @@
   @import '../../../../../scss/mixins';
 
   .user-type-selector {
-    margin: auto;
-    padding: 25px 30px;
-    width: 100%;
-    background: transparent;
-    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
     @include respond-to-custom(1130px) {
       max-width: 860px;
+    }
+
+    @include respond-to-custom(960px) {
+      flex-direction: column;
     }
   }
 
@@ -110,17 +103,7 @@
     }
   }
 
-  .user-type-selector__user-types {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    @include respond-to-custom(960px) {
-      flex-direction: column;
-    }
-  }
-
-  .user-type-selector__user-type-btn {
+  .user-type-selector__user-btn {
     align-items: center;
     border-radius: 3px;
     cursor: pointer;
@@ -139,21 +122,27 @@
     }
   }
 
-  .user-type-selector__user-types-item {
+  .user-type-selector__user {
     min-width: 320px;
     margin: auto;
-    /*margin: 2rem;*/
-    .user-type-selector__user-types-item-title {
+
+    @include respond-to-custom(960px) {
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+
+    .user-type-selector__user-title {
       white-space: nowrap;
     }
 
-    .user-type-selector__user-types-item-content {
+    .user-type-selector__user-content {
       display: flex;
       justify-content: center;
       position: relative;
     }
 
-    .user-type-selector__user-type-icon--secondary {
+    .user-type-selector__user-icon--secondary {
       position: absolute;
       right: 3.5rem;
       top: 1rem;
@@ -161,7 +150,7 @@
     }
   }
 
-  .user-type-selector__user-type {
+  .user-type-selector__user {
     font-size: $fs-root;
     margin: 0 16px;
   }
