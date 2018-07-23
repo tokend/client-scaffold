@@ -2,13 +2,13 @@
   <p class="detail-row">
     <span class="detail-row__key">{{ prop }}</span>
     <span class="detail-row__value">
-      <span class="detail-row__value-text" :id="copiable ? 'clipboard-target' : ''" v-html="value || '—'"></span>
+      <span class="detail-row__value-text" :id="copiable ? `clipboard-target-${id}` : ''" v-html="value || '—'"></span>
       <md-button
         v-if="copiable"
         class="detail-row__clipboard-btn md-icon-button"
         id="clipboard-btn"
         @click="showCopySuccess"
-        data-clipboard-target="#clipboard-target"
+        :data-clipboard-target="`#clipboard-target-${id}`"
       >
         <md-icon class="detail-row__clipboard-icon md-icon-size-065x">content_copy</md-icon>
         <md-tooltip>Copy</md-tooltip>
@@ -30,9 +30,12 @@
       copiable: { type: Boolean, default: false }
     },
     data: _ => ({
-      clipboard: null
+      clipboard: null,
+      id: null
     }),
+
     mounted () {
+      this.id = this._uid
       if (!this.copiable) return
       this.clipboard = new Clipboard(this.$el.querySelector('#clipboard-btn'))
     },

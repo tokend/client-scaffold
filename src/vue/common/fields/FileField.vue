@@ -29,16 +29,11 @@
       <div class="file-field__label">
         {{ label }}
       </div>
-        <template v-if="accept === '.iss'">
-          <label :for="id" class="file-field__uploader file-field__preissuance-uploader">
-            <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_iss_file()}}
-          </label>
-        </template>
-        <template v-else>
-          <label :for="id" class="file-field__uploader">
-            <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>{{ i18n.fi_upload_file({ size: i18n.n(maxSize) })}}
-          </label>
-        </template>
+
+      <label :for="id" class="file-field__uploader">
+        <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>
+        {{ acceptLabel }}
+      </label>
 
       <input type="file"
             class="file-field__input"
@@ -119,6 +114,17 @@
           return this.value.publicUrl
         }
         return this.value.privateUrl
+      },
+
+      acceptLabel () {
+        switch (this.accept) {
+          case '.iss':
+            return i18n.fi_upload_iss_file()
+          case '.csv':
+            return i18n.fi_upload_csv_file({ size: i18n.n(this.maxSize) })
+          default:
+            return i18n.fi_upload_file({ size: i18n.n(this.maxSize) })
+        }
       }
     },
     async created () {
@@ -234,16 +240,12 @@
     cursor: pointer;
     margin-right: .5rem;
     padding: .75rem 1rem;
-    width: 12.5rem;
+    // width: 12.5rem;
     transition: .4s cubic-bezier(.4,0,.2,1);
 
     &:hover {
       background: lighten($col-md-primary, 3.5%);
     }
-  }
-
-  .file-field__preissuance-uploader {
-    width: auto;
   }
 
   .file-field__icon {

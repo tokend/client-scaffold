@@ -10,9 +10,8 @@ const STATES = {
 }
 
 export class SaleRecord {
-  constructor (record, userAccountId) {
+  constructor (record) {
     this._record = record
-    this.userAccountId = userAccountId
 
     this.id = record.id
     this.owner = record.owner_id
@@ -108,9 +107,5 @@ export class SaleRecord {
     const now = moment().startOf('day')
     const starts = moment(this.startTime)
     return starts.diff(now, 'days')
-  }
-
-  get isMy () {
-    return this.owner === this.userAccountId
   }
 }
