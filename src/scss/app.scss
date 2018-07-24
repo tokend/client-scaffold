@@ -87,53 +87,6 @@ html,body {
     }
   }
 
-  h1.app__page-heading,
-  h2.app__page-heading,
-  h3.app__page-heading,
-  h4.app__page-heading,
-  h5.app__page-heading,
-  h6.app__page-heading {
-    display: block;
-    color: $col-md-primary;
-  }
-
-  h1.app__page-heading {
-    font-size: 2em;
-    margin: 0 0 0.67em 0;
-    font-weight: 300;
-  }
-
-  h2.app__page-heading {
-    font-size: 1.5em;
-    margin:0 0  1.5em 0;
-    font-weight: 300;
-  }
-
-  h3.app__page-heading {
-    font-size: 1.17em;
-    margin: 0 0 1em 0;
-    font-weight: bold;
-  }
-
-  h4.app__page-heading {
-    font-size: 1em;
-    margin: 0 0 1.33em 0;
-    font-weight: bold;
-  }
-
-  h5.app__page-heading {
-    font-size: .83em;
-    margin: 0 0 1.67em 0;
-    font-weight: bold;
-  }
-
-  h6.app__page-heading {
-    font-size: .67em;
-    margin: 0 0 2.33em 0;
-    font-weight: bold;
-  }
-
-
   & .sidebar .router-link-active {
     color: $col-md-primary;
 
@@ -284,6 +237,54 @@ html,body {
     @include resize-icon(16px)
   }
 }
+
+h1.app__page-heading,
+h2.app__page-heading,
+h3.app__page-heading,
+h4.app__page-heading,
+h5.app__page-heading,
+h6.app__page-heading {
+  display: block;
+  color: $col-md-primary;
+  padding: 0;
+}
+
+h1.app__page-heading {
+  font-size: 2em;
+  margin: 0 0 0.67em 0;
+  font-weight: 300;
+}
+
+h2.app__page-heading {
+  font-size: 1.5em;
+  margin:0 0  1.5em 0;
+  font-weight: 300;
+}
+
+h3.app__page-heading {
+  font-size: 1.17em;
+  margin: 0 0 1em 0;
+  font-weight: bold;
+}
+
+h4.app__page-heading {
+  font-size: 1em;
+  margin: 0 0 1.33em 0;
+  font-weight: bold;
+}
+
+h5.app__page-heading {
+  font-size: .83em;
+  margin: 0 0 1.67em 0;
+  font-weight: bold;
+}
+
+h6.app__page-heading {
+  font-size: .67em;
+  margin: 0 0 2.33em 0;
+  font-weight: bold;
+}
+
 
 h4 {
   font-size: $fs-tip;

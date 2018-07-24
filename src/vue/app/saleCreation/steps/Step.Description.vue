@@ -1,6 +1,6 @@
 <template>
   <form class="step" @submit.prevent="submit">
-    <div class="step-row">
+    <div class="app__form-row">
       <div class="video-container" :class="{ 'video-container--empty': !form.youtubeId }">
         <div v-if="!form.youtubeId">
           <p>Insert YouTube video by its ID</p>
@@ -13,7 +13,7 @@
         <md-dialog-prompt
           :md-active.sync="uploadVideo"
           v-model="form.youtubeId"
-          md-title="You can find YouTube video ID in it's URL"
+          md-title="You can find YouTube video ID in its URL"
           md-input-maxlength="30"
           md-input-placeholder="Type your YouTube video ID..."
           md-confirm-text="Done" />
@@ -25,13 +25,13 @@
         </div>
       </div>
     </div>
-    <div class="step-row">
+    <div class="app__form-row">
       <description-editor class="description-step__editor" v-model="form.description"/>
     </div>
-    <div class="step__action">
+    <div class="app__form-actions">
       <button v-ripple
               type="submit"
-              class="step__submit-btn app__button-flat">
+              class="app__form-submit-btn">
         {{ i18n.sale_create_sale() }}
       </button>
     </div>
@@ -130,7 +130,7 @@
     justify-content: center;
     width: 100%;
     border: 1px dashed transparent;
-    border-radius: 20px;
+    border-radius: 4px;
     text-align: center;
     height: 300px;
 

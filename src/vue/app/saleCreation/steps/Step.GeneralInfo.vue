@@ -1,26 +1,18 @@
 <template>
   <form class="step" @submit.prevent="submit">
-    <div class="step-row md-layout">
-        <input-field v-model="form.name"
+    <div class="app__form-row">
+        <input-field-unchained v-model="form.name"
                     v-validate="'required'"
-                    class="step__input-field
-                          md-layout-item
-                          md-size-45
-                          md-small-size-95
-                          md-xsmall-size-100"
+                    class="app__form-field"
                     name="sale-name"
                     id="sale-name"
                     :label="i18n.lbl_sale_name()"
                     :errorMessage="errorMessage('sale-name')"
         />
-        <select-field-custom
+        <select-field-unchained
             name="sale-base-asset"
             id="sale-base-asset"
-            class="step__input-field
-                  md-layout-item
-                  md-size-45
-                  md-small-size-95
-                  md-xsmall-size-100"
+            class="app__form-field"
             v-model="form.baseAsset"
             :values="values.tokens"
             :label="i18n.lbl_base_asset()"/>
@@ -52,47 +44,39 @@
           :errorMessage="errorMessage('sale-close-time')"/>
       </div>
     </div>
-    <div class="step-row md-layout">
-        <input-field v-model="form.softCap"
+    <div class="app__form-row md-layout">
+        <input-field-unchained v-model="form.softCap"
             v-validate="{
                 required:true,
                 amount: true
             }"
-            class="step__input-field
-                  md-layout-item
-                  md-size-45
-                  md-small-size-95
-                  md-xsmall-size-100"
+            class="app__form-field"
             name="sale-soft-cap"
             id="sale-soft-cap"
             :label="i18n.sale_soft_cap()"
             :errorMessage="errorMessage('sale-soft-cap')"
         />
-        <input-field v-model="form.hardCap"
+        <input-field-unchained v-model="form.hardCap"
             v-validate="{
                 required:true,
                 amount: true,
                 soft_cap: [form.softCap]
             }"
-            class="step__input-field
-                  md-layout-item
-                  md-size-45
-                  md-small-size-95
-                  md-xsmall-size-100"
+            class="app__form-field"
             name="sale-hard-cap"
             id="sale-hard-cap"
             :label="i18n.sale_hard_cap()"
             :errorMessage="errorMessage('sale-hard-cap')"
         />
     </div>
-    <div class="step-row md-layout step-row__base-asset-input">
-      <input-field v-model="form.baseAssetForHardCap"
+    <div class="app__form-row md-layout app__form-row__base-asset-input">
+      <input-field-unchained v-model="form.baseAssetForHardCap"
                   v-validate="{
                       required: true,
                       amount: true,
                       max_issuance: [avalaibleForIssuance, form.baseAsset]
                   }"
-                  class="step__input-field
+                  class="app__form-field
                         md-layout-item
                         md-size-31
                         md-small-size-95
@@ -103,22 +87,24 @@
                   :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
       />
     </div>
-    <div class="step__quote-assets">
-      <h3>{{ i18n.sale_quote_assets() }}</h3>
-      <div class="step__quote-assets-checkboxes">
-        <tick-field class="step__quote-assets-checkbox"
-                    v-for="(token,i) in walletTokens"
-                    v-model="form.quoteAssets"
-                    :cbValue="token.code"
-                    :key="i">
-          {{ token.code }}
-        </tick-field>
+    <div class="app__form-row">
+      <div class="app__form-field">
+        <label class="step__quote-assets-label">{{ i18n.sale_quote_assets() }}</label>
+        <div class="step__quote-assets-checkboxes">
+          <tick-field class="step__quote-assets-checkbox"
+                      v-for="(token,i) in walletTokens"
+                      v-model="form.quoteAssets"
+                      :cbValue="token.code"
+                      :key="i">
+            {{ token.code }}
+          </tick-field>
+        </div>
       </div>
     </div>
-    <div class="step__action">
+    <div class="app__form-actions">
       <button v-ripple
               type="submit"
-              class="step__submit-btn app__button-flat"
+              class="app__form-submit-btn"
               :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </button>
@@ -211,21 +197,28 @@
 
 <style scoped lang="scss">
   @import './step.scss';
+  @import "~@scss/variables";
 
-  .step-row {
+  .app__form-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
   }
 
-  .step-row__base-asset-input {
+  .app__form-row__base-asset-input {
     margin-bottom: 1rem;
+  }
+
+  .step__quote-assets-label {
+    font-weight: bold;
+    font-size: 1.4 * $point;
+    color: $col-md-primary;
   }
 
   .step__quote-assets-checkboxes {
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
+    margin-top: 1 * $point;
   }
   .step__quote-assets-checkbox {
     &:not(:last-child) {
