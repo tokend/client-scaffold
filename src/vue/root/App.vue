@@ -155,6 +155,8 @@
   }
 
   .app__sidebar {
+    z-index: 10;
+
     @include respond-to(small) {
       background-color: $col-md-background !important;
     }
