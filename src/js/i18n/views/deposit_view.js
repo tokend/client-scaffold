@@ -9,5 +9,6 @@ export default {
   deposit_no_assets: 'Your wallet doesn\'t contain any assets to deposit yet. You can discover some on the token list.',
   deposit_no_assets_heading: 'Oh dear...',
   deposit_discover_assets_btn: 'Discover assets',
-  dep_no_address: 'No available addresses to deposit yet. Please try again later.'
+  dep_no_address: 'No available addresses to deposit yet. Please try again later.',
+  deposit_qr_code_hint: 'The address also available in QR code:'
 }
