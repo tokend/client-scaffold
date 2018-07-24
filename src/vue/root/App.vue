@@ -133,7 +133,8 @@
   @import '../../scss/variables';
 
   .md-app {
-    height: 100%;
+    // NOTE: temp. disabled
+    // height: 100%;
   }
 
   .md-app-content {
@@ -166,5 +167,4 @@
       margin-left: 8px !important;
     }
   }
-
 </style>

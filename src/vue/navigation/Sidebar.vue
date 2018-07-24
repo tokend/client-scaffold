@@ -195,6 +195,7 @@
     background-color: #e9eaed !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
     min-height: 100vh;
+    height: 100%;
   }
 
   .sidebar__list-item {
