@@ -5,5 +5,7 @@ export default {
   tokens_open_doc: 'Open in a new tab',
   tokens_no_doc: '—',
   tokens_no_name: '—',
-  tokens_lbl_unissued: 'Unissued'
+  tokens_lbl_unissued: 'Unissued',
+  tokens_form_creation: 'Create token form',
+  tokens_want_to_make_additional_issuance_later: 'I want to make additional issuance later'
 }

@@ -10,26 +10,23 @@
 </template>
 
 <script>
-import TokenCreationManager from './TokenCreation.Manager'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
-import { vuexTypes } from '../../../../vuex/types'
-import { ACCOUNT_TYPES } from '../../../../js/const/const'
-import { i18n } from '../../../../js/i18n'
-import { mapGetters } from 'vuex'
-export default {
-  components: { TokenCreationManager, NoDataMessage },
-  props: ['id'],
-  data: _ => ({
-    i18n,
-    ACCOUNT_TYPES
-  }),
-  computed: {
-    ...mapGetters([
-      vuexTypes.accountTypeI
-    ])
+  import TokenCreationManager from './TokenCreation.Manager'
+  import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+  import { vuexTypes } from '../../../../vuex/types'
+  import { ACCOUNT_TYPES } from '../../../../js/const/const'
+  import { i18n } from '../../../../js/i18n'
+  import { mapGetters } from 'vuex'
+  export default {
+    components: { TokenCreationManager, NoDataMessage },
+    props: ['id'],
+    data: _ => ({
+      i18n,
+      ACCOUNT_TYPES
+    }),
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountTypeI
+      ])
+    }
   }
-}
 </script>
-
-<style lang="scss" scoped>
-</style>

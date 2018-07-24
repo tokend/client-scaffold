@@ -89,7 +89,7 @@
     },
     props: {
       scale: { type: String, required: true },
-      currentAsset: { type: [String, Object], required: true },
+      currentAsset: { type: [String, Object], default: 'USD' },
       showTabls: { type: Boolean, default: false }
     },
     data: _ => ({
