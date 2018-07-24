@@ -48,7 +48,7 @@
       }
     },
     async created () {
-      await this.loadPrices(this.currency)
+      if (this.currency) await this.loadPrices(this.currency)
     },
     methods: {
       async loadPrices (asset) {
@@ -58,7 +58,6 @@
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             this.isActualData = false
-            console.log('error')
             ErrorHandler.processUnexpected(error)
           }
         }
@@ -66,7 +65,7 @@
     },
     watch: {
       async currency (value) {
-        await this.loadPrices(value)
+        if (value) await this.loadPrices(value)
       },
       historyHasValue (value) {
         this.$emit(commonEvents.checkDashboardChartHasValue, this.isActualData && value)
