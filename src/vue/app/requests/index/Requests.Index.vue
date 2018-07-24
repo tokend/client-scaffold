@@ -1,5 +1,5 @@
 <template>
-  <md-tabs md-sync-route :md-dynamic-height="true">
+  <md-tabs md-card class="requests__tabs" md-sync-route :md-dynamic-height="true">
     <md-tab :md-label="`${ i18n.lbl_token_creation()}`" to="/requests/token-creation">
       <token-creation />
     </md-tab>
@@ -21,21 +21,39 @@ export default {
   components: {
     TokenCreation,
     SaleCreation,
-    PreIssuanceUpload },
+    PreIssuanceUpload
+  },
   data: _ => ({
     i18n
   })
 }
 </script>
 
-<style lang="scss" scoped>
-  .md-tabs {
-    margin: 1rem .75rem 0;
-    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
+<style lang="scss">
+@import "~@scss/variables";
+
+.requests__tabs {
+  .md-title,
+  .md-table-cell-container {
+    color: $col-md-primary !important;
+  }
+
+  .md-table-head-label {
+    color: $col-md-primary-inactive !important;
   }
 
   .md-tab {
     padding: 0;
   }
 
+  .md-card {
+    box-shadow: none;
+  }
+
+  .md-tabs-content {
+    height: auto !important;
+    min-height: 100% !important;
+    background-color: transparent;
+  }
+}
 </style>

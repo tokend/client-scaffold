@@ -1,11 +1,6 @@
 <template>
   <div class="tx-preissuance-upload">
     <md-table md-card class="tx-preissuance-upload__table">
-      <md-table-toolbar class="tx-preissuance-upload__table-toolbar">
-        <h1 class="tx-preissuance-upload__table-title md-title">{{ i18n.preis_requests() }}</h1>
-        <div class="tx-preissuance-upload__select-outer">
-        </div>
-      </md-table-toolbar>
       <template v-if="list.length">
         <md-table-row class="tx-preissuance-upload__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
