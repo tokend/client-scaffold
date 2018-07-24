@@ -1,5 +1,10 @@
 <template>
-  <div class="chart-root"></div>
+  <div class="chart-root">
+    <div v-if="!hasValue" class="chart-root__wrapper">
+      <div class="chart-root__wrapper-message"> {{ i18n.dash_empty_volume() }} </div>
+    </div>
+    <div class="chart-root__chart" ref="chart"></div>
+  </div>
 </template>
 
 <script>
@@ -22,32 +27,19 @@
   export default {
     name: 'chart-renderer',
     props: {
-      data: {
-        type: Array,
-        default: () => []
-      },
-      currency: {
-        type: String,
-        default: 'SUN'
-      },
-      scale: {
-        type: String,
-        default: 'hour'
-      },
-      requiredTicks: {
-        type: Array,
-        default: () => []
-      },
-      precision: {
-        type: Number,
-        default: 0
-      }
+      data: { type: Array, default: () => [] },
+      currency: { type: String, default: 'SUN' },
+      scale: { type: String, default: 'hour' },
+      requiredTicks: { type: Array, default: () => [] },
+      precision: { type: Number, default: 0 },
+      hasValue: { type: Boolean, default: false }
     },
 
     data: _ => ({
       barTicks: 24,
       defaultAsset: config.DEFAULT_QUOTE_ASSET,
-      chartRenderingTime: 500
+      chartRenderingTime: 500,
+      i18n
     }),
 
     watch: {
@@ -149,7 +141,7 @@
 
         const viewWidth = width + margin.left
         const viewHeight = height + margin.top + margin.bottom
-        const svg = d3.select(this.$el)
+        const svg = d3.select(this.$refs.chart)
           .append('svg')
           .attr('width', '100%')
           .attr('viewBox', `0 0 ${viewWidth} ${viewHeight}`)
@@ -417,7 +409,7 @@
 
         for (const event of ['mouseout', 'touchout']) {
           motionCaptureArea.on(event, function () {
-            // tip.classed(`${className}__tip--show`, false)
+            tip.classed(`${className}__tip--show`, false)
           })
         }
 
@@ -429,9 +421,35 @@
 
 <style lang="scss">
   @import "~@scss/variables";
+  @import "~@scss/mixins";
 
-  .chart-root,
-  .chart-root svg {
+  .chart-root {
+    position: relative;
+  }
+
+  .chart-root__wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(#f2f2f4, .8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 5px #f2f2f4;
+  }
+
+  .chart-root__wrapper-message {
+    background-color: #fff;
+    padding: 24px 32px;
+    min-width: 20rem;
+    color: $col-md-primary;
+    text-align: center;
+    box-shadow: 0 0 10px 5px #f2f2f4;
+    margin-top: -35px;
+  }
+
+  .chart-root__chart,
+  .chart-root__chart svg {
     @media (min-width: 767px) {
       min-height: 200px;
     }

@@ -1,18 +1,16 @@
 <template>
   <div class="dashboard-cart">
-    <template v-if="isActualData && historyHasValue">
-      <chart :scale="scale" :currency="currency" :data="history" :precision="common.precision"/>
-    </template>
-    <template v-else>
-      <div class="dashboard-cart__no-message">Current asset doesn't have volume yet</div>
-    </template>
+    <chart :scale="scale"
+          :has-value="isActualData && historyHasValue"
+          :currency="currency"
+          :data="history"
+          :precision="common.precision"/>
   </div>
 </template>
 
 <script>
   import { chartsService } from '../../../../js/services/charts.service'
   import { errors } from '../../../../js/errors/factory'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
   import config from '../../../../config'
   import { commonEvents } from '../../../../js/events/common_events'
 
@@ -58,9 +56,18 @@
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             this.isActualData = false
-            ErrorHandler.processUnexpected(error)
+            this.data = {
+              day: this.generateRandomData(),
+              week: this.generateRandomData(),
+              hour: this.generateRandomData(),
+              month: this.generateRandomData(),
+              year: this.generateRandomData()
+            }
           }
         }
+      },
+      generateRandomData () {
+        return [{ value: '0', timestamp: new Date().toString() }]
       }
     },
     watch: {

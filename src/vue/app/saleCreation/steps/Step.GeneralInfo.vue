@@ -103,15 +103,17 @@
                   :errorMessage="errorMessage('sale-base-asset-for-hard-cap')"
       />
     </div>
-    <div class="step__switchers">
+    <div class="step__quote-assets">
       <h3>{{ i18n.sale_quote_assets() }}</h3>
-      <md-switch class="md-primary"
-                   v-for="(token,i) in walletTokens"
-                   v-model="form.quoteAssets"
-                   :value="token.code"
-                   :key="i"
-        >
-          {{ token.code }}</md-switch>
+      <div class="step__quote-assets-checkboxes">
+        <tick-field class="step__quote-assets-checkbox"
+                    v-for="(token,i) in walletTokens"
+                    v-model="form.quoteAssets"
+                    :cbValue="token.code"
+                    :key="i">
+          {{ token.code }}
+        </tick-field>
+      </div>
     </div>
     <div class="step__action">
       <button v-ripple
@@ -207,7 +209,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   @import './step.scss';
 
   .step-row {
@@ -218,5 +220,16 @@
 
   .step-row__base-asset-input {
     margin-bottom: 1rem;
+  }
+
+  .step__quote-assets-checkboxes {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+  }
+  .step__quote-assets-checkbox {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
   }
 </style>

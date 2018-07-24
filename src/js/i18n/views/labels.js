@@ -95,6 +95,8 @@ export default {
   lbl_token_policies: 'Policies',
   lbl_token_initial_preissued_amount: 'Initial preissued amount',
   lbl_is_transferable: 'Is transferable',
+  lbl_transferable: 'Transferable',
+  lbl_requires_kyc: 'Requires KYC',
   lbl_is_additional_issuance_allowed: 'Is additional issuance allowed',
   lbl_is_tradable: 'Is tradable',
   lbl_fees: 'Fees',

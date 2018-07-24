@@ -51,22 +51,22 @@
       <div class="kyc-form__content-item">
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-50">
-            <md-checkbox v-model="request.policies"
-                          :value="ASSET_POLICIES.transferable"
-                          name="policy-transferable"
-                          id="policy-transferable"
-                          class="md-primary">
-                        Transferable
-            </md-checkbox>
+            <tick-field v-model="request.policies"
+                        :cbValue="ASSET_POLICIES.transferable"
+                        name="policy-transferable"
+                        id="policy-transferable"
+                        class="md-primary">
+              {{ i18n.lbl_transferable() }}
+            </tick-field>
           </div>
           <div class="md-layout-item md-size-50">
-            <md-checkbox v-model="request.policies"
-                          :value="ASSET_POLICIES.requiresKyc"
-                          name="policy-requiresKyc"
-                          id="policy-requiresKyc"
-                          class="md-primary">
-                        Requires KYC
-            </md-checkbox>
+            <tick-field v-model="request.policies"
+                        :cbValue="ASSET_POLICIES.requiresKyc"
+                        name="policy-requiresKyc"
+                        id="policy-requiresKyc"
+                        class="md-primary">
+              {{ i18n.lbl_requires_kyc() }}
+            </tick-field>
           </div>
         </div>
       </div>
@@ -82,16 +82,13 @@
         </div>
       </div>
       <div class="kyc-form__content-item">
-        <md-radio class="md-primary"
-                  v-model="makeAdditional"
-                  :value="false">I don't want to make additional issuance later</md-radio>
-        <md-radio class="md-primary"
-                  v-model="makeAdditional"
-                  :value="true">I want to make additional issuance later
-          <!--(<a @click.stop.prevent="showDialog = true">tell me more</a>)-->
-        </md-radio>
+        <tick-field v-model="makeAdditional"
+                    name="additional-issuance"
+                    id="additional-issuance">
+          {{ i18n.tokens_want_to_make_additional_issuance_later() }}
+        </tick-field>
       </div>
-      <div class="kyc-form__content-item" v-if="makeAdditional">
+      <div class="kyc-form__content-item" v-if="makeAdditional"> <!-- Transfrom to Boolean -->
         <div class="app__form-row">
           <input-field-unchained
             id="token-preissued-asset-signer"
@@ -116,7 +113,7 @@
       <div class="app__form-actions">
         <button v-ripple
                 type="submit"
-                class="app__button-flat"
+                class="app__form-submit-btn"
                 :disabled="isPending">
           {{ i18n.lbl_submit() }}
         </button>
