@@ -17,14 +17,15 @@
         </div>
       </div>
     </template>
-    <template v-if="sales.length && !isSalesLoaded">
+    <!-- TODO: fix the load button -->
+    <!-- <template v-if="sales.length && !isSalesLoaded">
       <div class="btn-outer btn-outer--center btn-outer--no-margin"
     >
-        <button class="more-btn material material--flat"
+        <button class="app__button-flat"
                 :disabled="isPending"
                 @click="loadMore">More</button>
       </div>
-    </template>
+    </template> -->
     <template v-if="sales.length === 0 && isLoaded">
       <div class="sales-overview__no-sales-found-msg md-layout-item md-alignment-center-center1">
         <div class="icon">
@@ -67,8 +68,8 @@
       i18n
     }),
     async created () {
-      this.isLoaded = true
       await this.loadFilteredSales()
+      this.isLoaded = true
     },
     computed: {
       ...mapGetters([

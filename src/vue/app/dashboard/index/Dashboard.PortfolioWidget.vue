@@ -215,9 +215,10 @@
   }
 
   .portfolio-widget__asset-btns {
-    @include respond-to(medium) {
+    @include respond-to(small) {
       display: flex;
       flex-direction: column;
+      align-items: flex-end;
     }
 
     @include respond-to-custom($custom-breakpoint) {

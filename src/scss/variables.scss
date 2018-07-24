@@ -61,12 +61,6 @@ $col-pending: $orange;
 $col-approve: $green;
 $col-reject: $red;
 
-$col-chart-line: $blue;
-$col-chart-fill: $col-inactive;
-$col-chart-ticks: $black;
-$col-chart-text: $col-text;
-$col-chart-tip-text: $white;
-
 $col-btc: #FF9900;
 
 // progress bar
@@ -84,6 +78,12 @@ $col-md-primary-txt: #fff;
 $col-md-unfocused: rgba(0, 0, 0, .54);
 $col-md-block: #fff;
 $col-md-pending: $orange;
+
+$col-chart-line: $col-md-primary-secondary;
+$col-chart-fill: $white;
+$col-chart-ticks: $col-md-primary-inactive;
+$col-chart-text: $col-md-primary-inactive;
+$col-chart-tip-text: $white;
 
 // fonts:
 $fs-top-heading: 32px;

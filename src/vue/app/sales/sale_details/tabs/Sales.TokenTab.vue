@@ -12,9 +12,9 @@
     </div>
     <div class="crowdfund-token-main">
       <div class="details-column md-layout-item">
-        <detail-row :prop="i18n.lbl_token_max_issuance_amount()" :value="`${i18n.cc(token.max)}`"/>
-        <detail-row :prop="i18n.lbl_token_initial_preissued_amount()" :value="`${i18n.cc(token.issued)}`"/>
-        <detail-row :prop="i18n.tokens_lbl_unissued()" :value="`${i18n.cc(token.available)}`"/>
+        <detail-row :prop="i18n.lbl_token_max_issuance_amount()" :value="`${i18n.c(token.max)}`"/>
+        <detail-row :prop="i18n.lbl_token_initial_preissued_amount()" :value="`${i18n.c(token.issued)}`"/>
+        <detail-row :prop="i18n.tokens_lbl_unissued()" :value="`${i18n.c(token.available)}`"/>
         <detail-row :prop="i18n.lbl_terms()" v-if="token.termsUrl" :value="`<a href='${token.termsUrl}' target='_blank'>Open file</a>`"/>
         <detail-row :prop="i18n.lbl_terms()" v-else />
         <detail-row :prop="i18n.lbl_policies()" :value="`${getPolicies(token.policies)}`"/>

@@ -152,7 +152,6 @@ export default {
   position: relative;
   width: 100%;
   flex: 1;
-  margin: 8px 0;
 }
 
 .input-field__input,

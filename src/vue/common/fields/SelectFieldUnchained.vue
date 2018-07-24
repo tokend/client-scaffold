@@ -66,7 +66,6 @@ export default {
   width: 100%;
   flex: 1;
   position: relative;
-  margin: 8px 0;
 }
 
 .select-field__selected {
@@ -94,6 +93,8 @@ export default {
   color: $col-md-primary !important;
   transition: 0.2s ease-out;
   margin-top: -2px;
+  width: 20px;
+  height: 20px;
 
   &.select-field__selected-icon--active {
     transform: rotate(-180deg);

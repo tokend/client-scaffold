@@ -1,0 +1,40 @@
+<template>
+  <button class="back-button" @click="back">
+    <md-icon class="back-button__icon">
+      arrow_back
+    </md-icon>
+  </button>
+</template>
+
+<script>
+export default {
+  methods: {
+    back () {
+      this.$router.go(-1)
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+@import "~@scss/variables";
+
+.back-button {
+  width: 3.2 * $point;
+  height: 3.2 * $point;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.back-button__icon {
+  width: 3.2 * $point;
+  height: 3.2 * $point;
+  color: $col-md-primary-inactive !important;
+  transition: color ease-in-out 0.2s;
+}
+
+.back-button:hover > .back-button__icon {
+  color: $col-md-primary-secondary !important;
+}
+</style>

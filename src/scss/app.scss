@@ -182,10 +182,6 @@ html,body {
     @include list-reset()
   }
 
-  & .md-tabs-content {
-    height: 100% !important;
-  }
-
   & .markdown-formatter,
   & .editor-preview {
 
