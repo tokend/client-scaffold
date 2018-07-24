@@ -28,7 +28,7 @@
                       <div class="explore-tokens__list-item-avatar"
                            :class="`${hasBalance(token)
                                     ? 'explore-tokens__list-item-avatar--success'
-                                    : 'explore-tokens__list-item-avatar--primary'}`">
+                                    : 'explore-tokens__list-item-avatar--default'}`">
                         <template v-if="token.logoUrl">
                           <img :src="token.logoUrl" :alt="avatar(token.code)">
                         </template>
@@ -63,7 +63,7 @@
                 <md-avatar class="tokens__details-avatar-icon"
                           :class="`${hasBalance(selected)
                             ? 'tokens__details-avatar-icon--success'
-                            : 'tokens__details-avatar-icon--primary'}`"
+                            : 'tokens__details-avatar-icon--default'}`"
                 >
                   <template v-if="selected.logoUrl">
                     <img :src="selected.logoUrl" :alt="avatar(selected.code)">
@@ -287,8 +287,8 @@ export default {
   background-color: $col-success;
 }
 
-.explore-tokens__list-item-avatar--primary {
-  background-color: $col-md-primary;
+.explore-tokens__list-item-avatar--default {
+  background-color: rgb(190, 190, 190);
 }
 
 .explore-tokens__token-details {
@@ -355,8 +355,8 @@ export default {
     background-color: $col-success;
   }
 
-  &--primary {
-    background-color: $col-md-primary;
+  &--default {
+    background-color: rgb(190, 190, 190);
   }
 }
 
