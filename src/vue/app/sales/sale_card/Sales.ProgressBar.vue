@@ -2,7 +2,7 @@
   <div class="invest-progress-bar">
     <div class="invest-progress-bar__details">
       <span class="invest-progress-bar__detail">Buy
-        <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.baseHardCap) }}</span> 
+        <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.baseHardCap) }}</span>
         {{sale.baseAsset}} for
         <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.hardCap) }}</span>
         {{sale.defaultQuoteAsset}}
@@ -51,7 +51,11 @@
 <style lang="scss" scoped>
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
-  
+
+  .invest-progress-bar {
+    color: $col-md-primary;
+  }
+
   .invest-progress-bar__container {
     background: $col-pb-line;
     height: 0.2rem;
@@ -60,7 +64,7 @@
   }
 
   .invest-progress-bar__progress {
-    background: $col-pb-fill;
+    background: $col-md-primary-secondary;
     height: 100%;
   }
 
@@ -72,7 +76,7 @@
   .invest-progress-bar__detail {
     font-size: $fs-tip;
     .invest-progress-bar__detail-value {
-      color: $col-active;
+      color: $col-md-primary-secondary;
     }
   }
 </style>
