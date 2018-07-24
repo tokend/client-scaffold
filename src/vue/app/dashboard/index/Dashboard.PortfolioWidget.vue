@@ -6,8 +6,10 @@
           <img class="portfolio-widget__asset" :src="imgUrl">
         </div>
         <div class="portfolio-widget__select-field">
+          <!-- :key is a hack to ensure that the component will be updated after computed calculated -->
           <select-field-custom :value="currentAssetForSelect"
                                :values="tokensList"
+                               :key="currentAssetForSelect"
                                @input="$emit(events.assetChange, $event)"
           />
         </div>
