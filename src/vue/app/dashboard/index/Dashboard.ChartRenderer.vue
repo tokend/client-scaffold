@@ -1,6 +1,9 @@
 <template>
   <div class="chart-root">
-    <div v-if="!hasValue" class="chart-root__wrapper">
+    <div v-if="isLoading" class="chart-root__wrapper">
+      <div class="chart-root__wrapper-message"> {{ i18n.dash_chart_loading() }} </div>
+    </div>
+    <div v-else-if="!hasValue" class="chart-root__wrapper">
       <div class="chart-root__wrapper-message"> {{ i18n.dash_empty_volume() }} </div>
     </div>
     <div class="chart-root__chart" ref="chart"></div>
@@ -32,7 +35,8 @@
       scale: { type: String, default: 'hour' },
       requiredTicks: { type: Array, default: () => [] },
       precision: { type: Number, default: 0 },
-      hasValue: { type: Boolean, default: false }
+      hasValue: { type: Boolean, default: false },
+      isLoading: { type: Boolean, default: false }
     },
 
     data: _ => ({
@@ -148,6 +152,26 @@
           .attr('preserveAspectRatio', 'xMinYMin')
           .attr('class', className)
           .append('g')
+
+        if (!this.hasValue) {
+          const y = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, 12])
+
+          const yAxisLine = d3.axisRight(y)
+            .tickValues([0, 5, 10])
+            .tickFormat((d) => `${i18n.c(d)} ${this.defaultAsset}`)
+            .tickSizeInner(width)
+            .tickSizeOuter(0)
+            .tickPadding(25)
+
+          svg.append('g')
+            .attr('class', `${className}__y-axis`)
+            .call(yAxisLine)
+            .selectAll('line')
+
+          return
+        }
 
         // Define domains
         const y = d3.scaleLinear()
@@ -431,21 +455,23 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgba(#f2f2f4, .8);
+    background-color: rgba(#f2f2f4, .5);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 10px 5px #f2f2f4;
   }
 
   .chart-root__wrapper-message {
     background-color: #fff;
-    padding: 24px 32px;
+    padding: 16px 28px;
     min-width: 20rem;
     color: $col-md-primary;
     text-align: center;
-    box-shadow: 0 0 10px 5px #f2f2f4;
-    margin-top: -35px;
+    box-shadow: 0 0 14px 1px #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .chart-root__chart,

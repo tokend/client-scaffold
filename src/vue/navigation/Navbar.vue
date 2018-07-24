@@ -3,7 +3,8 @@
     <h2 class="navbar__title">{{ $route.meta.pageName }}</h2>
     <div class="navbar__user">
       <div class="navbar__user-notif navbar__user-notif--mobile">
-        <button @click="toggleNotificationCardVisibility"
+        <!-- NOTE: notifications are temporarily disabled -->
+        <!-- <button @click="toggleNotificationCardVisibility"
                 class="app__button-icon">
           <md-icon>notifications</md-icon>
         </button>
@@ -17,7 +18,7 @@
               <p v-else class="navbar__notif-status">No new notifications!</p>
             </div>
           </md-card-content>
-        </md-card>
+        </md-card> -->
       </div>
       <div class="navbar__user-picture" @click="toggleUserCardVisibility">
         {{ userEmail.substr(0, 1).toUpperCase() }}
@@ -29,7 +30,19 @@
             keyboard_arrow_down
           </md-icon>
         </div>
-        <div class="navbar__user-notif"
+        <div class="navbar__account-type">
+          <template v-if="accountTypeI === ACCOUNT_TYPES.notVerified">
+            {{ i18n.lbl_type_unverified() }}
+          </template>
+          <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
+            {{ i18n.lbl_type_individual() }}
+          </template>
+          <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
+            {{ i18n.lbl_type_syndicate() }}
+          </template>
+        </div>
+        <!-- NOTE: notifications are temporarily disabled -->
+        <!-- <div class="navbar__user-notif"
               :class="{ 'navbar__user-notif--has-value': true }"
               @click="toggleNotificationCardVisibility">
           <span v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-counter">1</span>
@@ -46,7 +59,7 @@
               </div>
             </md-card-content>
           </md-card>
-        </div>
+        </div> -->
       </div>
 
       <md-card class="navbar__user-card md-elevation-6" :class="{ 'navbar__user-card--active': isUserCardOpen }">
@@ -57,8 +70,20 @@
             </div>
             <div class="navbar__user-card-info">
               <p class="navbar__user-card-name">{{ userEmail }}</p>
-              <p class="navbar__user-card-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
-              <p class="navbar__user-card-status navbar__user-card-status--blocked" v-else>{{ i18n.lbl_userBlocked() }}</p>
+              <!-- TODO: account status temporarily disabled -->
+              <!-- <p class="navbar__user-card-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
+              <p class="navbar__user-card-status navbar__user-card-status--blocked" v-else>{{ i18n.lbl_userBlocked() }}</p> -->
+              <div class="navbar__user-card-status">
+                <template v-if="accountTypeI === ACCOUNT_TYPES.notVerified">
+                  {{ i18n.lbl_type_unverified() }}
+                </template>
+                <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
+                  {{ i18n.lbl_type_individual() }}
+                </template>
+                <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
+                  {{ i18n.lbl_type_syndicate() }}
+                </template>
+              </div>
               <button v-ripple="'rgba(255, 255, 255, .2)'"
                       @click="goKyc"
                       class="navbar__user-card-account-btn">
@@ -108,6 +133,7 @@
         vuexTypes.userType,
         vuexTypes.accountState,
         vuexTypes.accountType,
+        vuexTypes.accountTypeI,
         vuexTypes.accountBlocked
       ])
     },
@@ -185,13 +211,8 @@
 
   .navbar__user {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-
-    @include respond-to-custom($custom-breakpoint) {
-      margin-left: auto;
-      align-items: center;
-    }
   }
 
   .navbar__user-picture {
@@ -224,6 +245,11 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  .navbar__account-type {
+    color: $col-md-primary;
+    font-size: 12px;
   }
 
   .navbar__user-notif {
@@ -459,8 +485,9 @@
     font-size: 16px;
     line-height: 1;
     text-align: left;
-    color: #000;
-    margin-bottom: 12px;
+    color: $col-md-primary;
+    margin-top: 4px;
+    margin-bottom: 4px;
 
     @include respond-to-custom($custom-breakpoint) {
       word-break: break-word;
@@ -471,8 +498,7 @@
     font-size: 12px;
     line-height: 1;
     text-align: left;
-    color: rgba(0, 0, 0, .5);
-    margin-bottom: 26px;
+    color: $col-md-primary;
 
     @include respond-to(small) {
       text-align: center;
@@ -480,8 +506,8 @@
   }
 
   .navbar__user-card-account-btn {
+    margin: 26px 0 0 0;
     @include button-raised();
-    margin: 0;
 
     @include respond-to(small) {
       display: block;

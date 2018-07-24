@@ -161,10 +161,6 @@
     display: flex;
     justify-content: space-between;
 
-    @include respond-to(medium) {
-      align-items: flex-start;
-    }
-
     @include respond-to-custom($custom-breakpoint) {
       flex-direction: column-reverse;
     }
@@ -215,16 +211,20 @@
   }
 
   .portfolio-widget__asset-btns {
-    @include respond-to(small) {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    margin: -4px;
 
     @include respond-to-custom($custom-breakpoint) {
+      justify-content: flex-start;
       margin-bottom: 16px;
-      flex-direction: row;
     }
+
+    // @include respond-to-custom($custom-breakpoint) {
+    //   flex-direction: row;
+    // }
   }
 
   .portfolio-widget__select-scale-btn {
@@ -240,6 +240,8 @@
   .portfolio-widget__asset-btn {
     @include button();
     @include button-raised();
+    margin: 4px;
+
     width: 180px;
     position: relative;
     height: 36px;
@@ -248,19 +250,6 @@
       width: 160px;
       margin-bottom: 0;
       padding-left: 30px;
-    }
-
-    &:not(:last-child) {
-      margin-right: 16px;
-
-      @include respond-to(medium) {
-        margin-right: 0;
-        margin-bottom: 8px;
-      }
-
-      @include respond-to-custom($custom-breakpoint) {
-        margin-right: 8px;
-      }
     }
   }
 

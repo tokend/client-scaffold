@@ -2,6 +2,7 @@
   <div class="dashboard-cart">
     <chart :scale="scale"
           :has-value="isActualData && historyHasValue"
+          :is-loading="isLoading"
           :currency="currency"
           :data="history"
           :precision="common.precision"/>
@@ -28,6 +29,7 @@
     data: _ => ({
       data: {},
       isActualData: false,
+      isLoading: false,
       common: {
         precision: config.DECIMAL_POINTS
       }
@@ -50,6 +52,7 @@
     },
     methods: {
       async loadPrices (asset) {
+        this.isLoading = true
         try {
           this.isActualData = true
           this.data = (await chartsService.loadChartsForToken(asset)).data()
@@ -65,6 +68,7 @@
             }
           }
         }
+        this.isLoading = false
       },
       generateRandomData () {
         return [{ value: '0', timestamp: new Date().toString() }]

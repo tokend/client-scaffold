@@ -145,7 +145,7 @@
     padding: 0 4px 6px 4px;
 
     @include respond-to-custom(1300px) {
-      overflow-x: scroll;
+      overflow-x: auto;
     }
   }
 
@@ -316,7 +316,7 @@
     width: 30%;
 
     @include respond-to(medium) {
-      width: 25%;
+      width: 15%;
       min-width: 166px;
     }
   }
@@ -355,6 +355,7 @@
     width: 15%;
 
     @include respond-to(medium) {
+      display: none;
       width: 15%;
       min-width: 97px;
     }

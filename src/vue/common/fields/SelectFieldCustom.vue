@@ -61,6 +61,7 @@
 
   .select__selected {
     color: $col-md-primary;
+    white-space: nowrap;
     font-size: 18px;
     display: flex;
     cursor: pointer;
