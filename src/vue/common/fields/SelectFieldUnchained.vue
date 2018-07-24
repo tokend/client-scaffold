@@ -66,7 +66,6 @@ export default {
   width: 100%;
   flex: 1;
   position: relative;
-  margin: 8px 0;
 }
 
 .select-field__selected {

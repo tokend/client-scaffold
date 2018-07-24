@@ -25,34 +25,32 @@
             :values="values.tokens"
             :label="i18n.lbl_base_asset()"/>
     </div>
-    <div class="step-row md-layout">
-        <date-field v-model="form.startTime"
-                    v-validate="'required'"
-                    name="sale-open-time"
-                    id="sale-open-time"
-                    class="step__input-field
-                           md-layout-item
-                           md-size-45
-                           md-small-size-95
-                           md-xsmall-size-100"
-                    :label="i18n.sale_start_time()"
-                    :disableBefore="new Date().toString()"
-                    :disableAfter="form.endTime"
-                    :errorMessage="errorMessage('sale-open-time')"
-        />
-        <date-field v-model="form.endTime"
-                    v-validate="'required'"
-                    name="sale-close-time"
-                    id="sale-close-time"
-                    class="step__input-field
-                          md-layout-item
-                          md-size-45
-                          md-small-size-95
-                          md-xsmall-size-100"
-                    :label="i18n.sale_close_time()"
-                    :disableBefore="form.startTime"
-                    :errorMessage="errorMessage('sale-close-time')"
-        />
+    <div class="app__form-row">
+      <div class="app__form-field">
+        <!-- hack with key is necessary for correct rendering when disableAfter and disableBefore is changed -->
+        <date-field-flatpickr
+          v-model="form.startTime"
+          name="sale-start-time"
+          id="sale-start-time"
+          :key="`sale-creation-general-info-${form.endTime}`"
+          :label="i18n.sale_start_time()"
+          :disableBefore="currentDate"
+          :disableAfter="form.endTime"
+          v-validate="'required'"
+          :errorMessage="errorMessage('sale-open-time')"/>
+      </div>
+      <div class="app__form-field">
+        <!-- hack with key is necessary for correct rendering when disableAfter and disableBefore is changed -->
+        <date-field-flatpickr
+          v-model="form.endTime"
+          name="sale-close-time"
+          id="sale-close-time"
+          :key="`sale-creation-general-info-${form.startTime}`"
+          :label="i18n.sale_close_time()"
+          :disableBefore="form.startTime"
+          v-validate="'required'"
+          :errorMessage="errorMessage('sale-close-time')"/>
+      </div>
     </div>
     <div class="step-row md-layout">
         <input-field v-model="form.softCap"
@@ -136,6 +134,8 @@
   import { vuexTypes } from '../../../../vuex/types'
   import { mapGetters } from 'vuex'
   import _pick from 'lodash/pick'
+  import moment from 'moment'
+
   export default {
     name: 'StepGeneralInfo',
     mixins: [StepMixin],
@@ -177,6 +177,9 @@
         const token = this.userAcquiredTokens
           .find(token => token.code === this.form.baseAsset)
         return token.available
+      },
+      currentDate () {
+        return moment(new Date().toString()).format()
       }
     },
 

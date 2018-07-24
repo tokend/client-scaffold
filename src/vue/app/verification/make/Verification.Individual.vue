@@ -7,14 +7,14 @@
       <template v-for="(row, r) in schema.rows">
 
         <template v-if="row.heading">
-          <h4 :key="`verification-individual-heading-${r}`">{{ row.heading }}</h4>
+          <h4 class="app__form-subheading" :key="`verification-individual-heading-${r}`">{{ row.heading }}</h4>
         </template>
 
         <template v-if="row instanceof Array">
-          <div class="md-layout md-gutter"
+          <div class="app__form-row"
               :key="`verification-individual-layout-${r}`">
             <template v-for="(item, i) in row">
-              <div class="md-layout-item md-small-size-100"
+              <div class="app__form-field"
                    :key="`verification-individual-heading-${r}-item-${i}`">
                 <input-field-unchained
                   v-if="item.field === 'text'"
@@ -27,17 +27,18 @@
                   :errorMessage="errorMessage(item.name)"
                   :disabled="accountState === ACCOUNT_STATES.pending"
                 />
-                <date-field v-if="item.field === 'date'"
-                            v-model="form[item.model]"
-                            v-validate="item.validate"
-                            :name="item.name"
-                            :id="item.id"
-                            :required="item.required"
-                            :disableBefore="item.disableBefore"
-                            :disableAfter="item.disableAfter"
-                            :label="item.label"
-                            :errorMessage="errorMessage(item.name)"
-                            :disabled="accountState === ACCOUNT_STATES.pending"
+                <date-field-flatpickr
+                  v-if="item.field === 'date'"
+                  v-model="form[item.model]"
+                  v-validate="item.validate"
+                  :name="item.name"
+                  :id="item.id"
+                  :required="item.required"
+                  :disableBefore="item.disableBefore"
+                  :disableAfter="item.disableAfter"
+                  :label="item.label"
+                  :errorMessage="errorMessage(item.name)"
+                  :disabled="accountState === ACCOUNT_STATES.pending"
                 />
                 <select-field-unchained
                   v-if="item.field === 'select'"

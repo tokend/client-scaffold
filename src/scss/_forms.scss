@@ -110,3 +110,8 @@ $field-to-field-gap: 2 * $point;
   min-width: 16 * $point;
   height: 36px;
 }
+
+.app__form-subheading {
+  margin-top: 1.5rem;
+  margin-bottom: -1.5rem;
+}

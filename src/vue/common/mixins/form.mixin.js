@@ -5,6 +5,7 @@ import DateField from '../fields/DateField'
 import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+import DateFieldFlatpickr from '@/vue/common/fields/DateFieldFlatpickr'
 
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
@@ -29,7 +30,8 @@ export default {
     SelectFieldUnchained,
     TextareaField,
     DateField,
-    ImageInput
+    ImageInput,
+    DateFieldFlatpickr
   },
 
   methods: {

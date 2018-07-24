@@ -58,18 +58,17 @@
                       v-model="form[item.model]"
                       :key='item.id'/>
 
-          <date-field v-if="item.field === 'date'"
-                         v-model="form[item.model]"
-                         v-validate="'required'"
-                         :name="item.name"
-                         :id="item.id"
-                         :required="item.required"
-                         :label="item.label"
-                         :disableBefore="item.disableBefore"
-                         :key='item.id'
-                         :errorMessage="errorMessage(item.name)"
-          />
-
+          <date-field-flatpickr
+            v-if="item.field === 'date'"
+            v-model="form[item.model]"
+            v-validate="'required'"
+            :name="item.name"
+            :id="item.id"
+            :required="item.required"
+            :label="item.label"
+            :disableBefore="item.disableBefore"
+            :key='item.id'
+            :errorMessage="errorMessage(item.name)"/>
         </template>
       </div>
     </template>

@@ -1,5 +1,6 @@
 <template>
    <div class="kyc-form">
+     <h2 class="app__page-heading">{{ i18n.tokens_form_creation() }}</h2>
     <form novalidate @submit.prevent="submit">
       <div class="kyc-form__content-item">
         <div class="md-layout-item">
@@ -13,8 +14,8 @@
         </div>
       </div>
       <div class="kyc-form__content-item">
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
+        <div class="app__form-row">
+          <div class="app__form-field">
             <input-field-unchained
               id="token-name"
               v-model="request.tokenName"
@@ -24,7 +25,7 @@
               :errorMessage="errorMessage('token name')"
             />
           </div>
-          <div class="md-layout-item md-small-size-100">
+          <div class="app__form-field">
             <input-field-unchained
               id="token-code"
               v-model="request.tokenCode"
@@ -35,18 +36,16 @@
             />
           </div>
         </div>
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field-unchained
-              id="token-max-issuance-amount"
-              type="number"
-              v-model="request.maxIssuanceAmount"
-              v-validate="'required|amount'"
-              :label="i18n.lbl_token_max_issuance_amount()"
-              name="max issuance amount"
-              :errorMessage="errorMessage('max issuance amount')"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            id="token-max-issuance-amount"
+            type="number"
+            v-model="request.maxIssuanceAmount"
+            v-validate="'required|amount'"
+            :label="i18n.lbl_token_max_issuance_amount()"
+            name="max issuance amount"
+            :errorMessage="errorMessage('max issuance amount')"
+          />
         </div>
       </div>
       <div class="kyc-form__content-item">
@@ -93,29 +92,25 @@
         </md-radio>
       </div>
       <div class="kyc-form__content-item" v-if="makeAdditional">
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item">
-            <input-field-unchained
-              id="token-preissued-asset-signer"
-              v-model="request.preissuedAssetSigner"
-              v-validate="'required|account_id'"
-              :label="i18n.lbl_token_preissued_asset_signer()"
-              :errorMessage="errorMessage('preissued asset signer')"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            id="token-preissued-asset-signer"
+            v-model="request.preissuedAssetSigner"
+            v-validate="'required|account_id'"
+            :label="i18n.lbl_token_preissued_asset_signer()"
+            :errorMessage="errorMessage('preissued asset signer')"
+          />
         </div>
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item">
-            <input-field-unchained
-              id="token-initial-preissued-amount"
-              name="initial preissued amount"
-              v-model="request.initialPreissuedAmount"
-              type="number"
-              v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
-              :label="i18n.lbl_token_initial_preissued_amount()"
-              :errorMessage="errorMessage('initial preissued amount')"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            id="token-initial-preissued-amount"
+            name="initial preissued amount"
+            v-model="request.initialPreissuedAmount"
+            type="number"
+            v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
+            :label="i18n.lbl_token_initial_preissued_amount()"
+            :errorMessage="errorMessage('initial preissued amount')"
+          />
         </div>
       </div>
       <div class="app__form-actions">
