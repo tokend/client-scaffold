@@ -254,7 +254,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      right: 60px;
+      right: 0;
       height: 1px;
       background-color: rgba($col-md-primary, .2);
     }
