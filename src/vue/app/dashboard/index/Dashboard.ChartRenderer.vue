@@ -182,40 +182,40 @@
           .ease(d3.easeLinear)
           .attr('stroke-dashoffset', 0)
 
+        let defs = svg.append('defs')
+        let lg = defs.append('linearGradient')
+          .attr('id', 'area-gradient')
+          .attr('x1', '0%')
+          .attr('x2', '0%')
+          .attr('y1', '0%')
+          .attr('y2', '100%')
+
+        lg.append('stop')
+          .attr('offset', '30%')
+          .style('stop-color', '#d5ceff')
+          .style('stop-opacity', 0.5)
+
+        lg.append('stop')
+          .attr('offset', '50%')
+          .style('stop-color', '#d5ceff')
+          .style('stop-opacity', 0.25)
+
+        lg.append('stop')
+          .attr('offset', '70%')
+          .style('stop-color', '#d5ceff')
+          .style('stop-opacity', 0.1)
+
+        lg.append('stop')
+          .attr('offset', '90%')
+          .style('stop-color', '#d5ceff')
+          .style('stop-opacity', 0.07)
+
+        lg.append('stop')
+          .attr('offset', '100%')
+          .style('stop-color', '#d5ceff')
+          .style('stop-opacity', 0.05)
+
         if (max !== min) {
-          let defs = svg.append('defs')
-          let lg = defs.append('linearGradient')
-            .attr('id', 'area-gradient')
-            .attr('x1', '0%')
-            .attr('x2', '0%')
-            .attr('y1', '0%')
-            .attr('y2', '100%')
-
-          lg.append('stop')
-            .attr('offset', '30%')
-            .style('stop-color', '#d5ceff')
-            .style('stop-opacity', 0.5)
-
-          lg.append('stop')
-            .attr('offset', '50%')
-            .style('stop-color', '#d5ceff')
-            .style('stop-opacity', 0.25)
-
-          lg.append('stop')
-            .attr('offset', '70%')
-            .style('stop-color', '#d5ceff')
-            .style('stop-opacity', 0.1)
-
-          lg.append('stop')
-            .attr('offset', '90%')
-            .style('stop-color', '#d5ceff')
-            .style('stop-opacity', 0.07)
-
-          lg.append('stop')
-            .attr('offset', '100%')
-            .style('stop-color', '#d5ceff')
-            .style('stop-opacity', 0.05)
-
           const chartAreaWithGradient = svg
             .append('path')
             .datum(data)
@@ -301,14 +301,9 @@
         const tipLine = tip.append('line')
           .attr('class', `${className}__tip-line`)
           .attr('x1', 0)
-          .attr('y1', 15)
+          .attr('y1', 10)
           .attr('x2', 0)
           .attr('y2', 0)
-
-        tip.append('polygon')
-          .attr('points', '0,0 11.5,7 11.5,7 21,0') // width 21, height 7
-          .style('fill', 'white')
-          .attr('transform', 'translate(-11.5, 17)')
 
         // Tip circle
         const tipCircle = tip.append('circle')
@@ -319,13 +314,18 @@
         // Tip text box
         const tipTextBox = tip.append('g')
 
+        tipTextBox.append('polygon')
+          .attr('points', '0,0 11.5,7 11.5,7 21,0') // width 21, height 7
+          .style('fill', 'white')
+          .attr('transform', 'translate(-11.5, 17)')
+
         tipTextBox.append('rect')
           .attr('class', `${className}__tip-text-box`)
           .attr('width', 150)
           .attr('height', 55)
           .attr('transform', 'translate(-75, -38)')
           .attr('rx', 3)
-          .attr('ry', 3)
+          .attr('ry', 30)
 
         const tipPriceText = tipTextBox.append('text')
           .attr('class', `${className}__tip-text-price`)
@@ -337,12 +337,12 @@
           .attr('text-anchor', 'middle')
           .attr('y', 5)
 
-        const tipTimeTextDD = tipTextBox.append('text')
+        const tipTimeTextDD = tip.append('text')
           .attr('class', `${className}__tip-text-time-dd`)
           .attr('text-anchor', 'middle')
           .attr('y', height + margin.bottom - 5)
 
-        const tipTimeTextMM = tipTextBox.append('text')
+        const tipTimeTextMM = tip.append('text')
           .attr('class', `${className}__tip-text-time-mm`)
           .attr('text-anchor', 'middle')
           .attr('y', height + margin.bottom + 5)
@@ -398,9 +398,12 @@
 
             // Change X position of the tip
             tip.attr('transform', `translate(${x(nearestPoint.time)})`)
-
-            tipLine.attr('y2', height / d3.max(data.map(item => item.value)) * nearestPoint.value - 10)
-            // tipTextBoxBox.attr('transform', `translate(-75, ${height - (height / d3.max(data.map(item => item.value)) * nearestPoint.value + 55 + 38)})`)
+            tipTextBox.style('transform', `translateY(${y(nearestPoint.value) - 35}px)`)
+            tipLine.attr('y2', min !== max ? height - y(nearestPoint.value) : '0')
+            if (min === max) {
+              tipLine.attr('y1', height / 2)
+              tipLine.attr('y2', height)
+            }
 
             // Change Y position of the circle
             tipCircle.attr('cy', y(nearestPoint.value))

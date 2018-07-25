@@ -39,16 +39,18 @@
                   {{ tx.state }}
                 </div>
                 <div class="info-widget__list-body-item info-widget__list-body-item--btn">
-                  <button class="info-widget__list-body-item-btn" @click="makeDialogIsShow(tx)">
-                    <md-icon>keyboard_arrow_down</md-icon>
+                  <button class="info-widget__list-body-item-btn" @click="toggleDetails(i)">
+                    <md-icon class="info-widget__list-body-item-icon"
+                            :class="{ 'info-widget__list-body-item-icon--active': isSelected(i) }">
+                      keyboard_arrow_down
+                    </md-icon>
                   </button>
                 </div>
               </div>
+              <div class="info-widget__list-body-row" v-if="isSelected(i)">
+                <tx-details class="info-widget__list-body-row-details" :tx="tx"/>
+              </div>
             </div>
-            <info-dialog @close-dialog="closeDialog"
-                         v-if="showDialog"
-                         :dialogValues="dialogValues"
-                         :showDialog="showDialog"/>
           </div>
         </div>
       </div>
@@ -71,24 +73,22 @@
   import { TX_STATES } from '../../../../js/const/const'
   import NoDataMessage from '@/vue/common/messages/NoDataMessage'
   import { humanizePastDate } from '../../../../js/utils/dates.util'
+  import TxDetails from '../../history/index/History.TxDetails'
 
   import get from 'lodash/get'
-
-  import InfoDialog from './Dashboard.InfoDialog'
 
   export default {
     name: 'info-widget',
     components: {
-      InfoDialog,
-      NoDataMessage
+      NoDataMessage,
+      TxDetails
     },
     data: _ => ({
       transactionsToShow: 10,
-      showDialog: false,
-      dialogValues: {},
       i18n,
       DEFAULT_CONVERSION_ASSET,
-      TX_STATES
+      TX_STATES,
+      index: -1
     }),
     props: ['currentAsset'],
     created () {
@@ -116,16 +116,14 @@
       ...mapActions({
         loadList: vuexTypes.GET_TX_LIST
       }),
+      toggleDetails (index) {
+        this.index = this.index === index ? -1 : index
+      },
+      isSelected (i) {
+        return this.index === i
+      },
       convertAmount (amount) {
         return PricesHelper.baseToQuote(amount, this.currentAsset, DEFAULT_CONVERSION_ASSET)
-      },
-      makeDialogIsShow (list) {
-        this.showDialog = true
-        this.dialogValues = list
-        this.dialogValues.date = humanizePastDate(list.date)
-      },
-      closeDialog (status) {
-        this.showDialog = status
       }
     },
     watch: {
@@ -249,6 +247,7 @@
     padding-bottom: 17px;
     margin: 0 20px;
     position: relative;
+    min-width: 25rem;
 
     &:after {
       content: '';
@@ -295,7 +294,7 @@
     color: $col-md-primary !important;
     font-size: 20px !important;
     font-weight: 400;
-    transition: .3s ease-out;
+    transition: transform .15s ease-out;
     will-change: transform;
   }
 
