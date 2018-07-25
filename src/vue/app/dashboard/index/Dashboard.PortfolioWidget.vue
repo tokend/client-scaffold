@@ -118,6 +118,7 @@
       ]),
       tokensList () {
         return this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
+                          .filter(token => token.name) // TODO: temp. hack
                           .map(item => `${item.name} (${item.code})`)
       },
       currentAssetForSelect () {

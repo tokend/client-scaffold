@@ -455,7 +455,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgba(#f2f2f4, .5);
+    background-color: rgba(#f2f2f4, .25);
     display: flex;
     align-items: center;
     justify-content: center;
