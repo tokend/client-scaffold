@@ -58,34 +58,41 @@
 
       </template>
 
-      <h4>{{ i18n.kyc_required_documents() }}</h4>
+      <h4 class="app__form-subheading">{{ i18n.kyc_required_documents() }}</h4>
 
       <template v-for="(doc, d) in schema.docs">
         <template v-if="doc.type === documentTypes.kycSelfie">
-          <h4 :key="`verification-individual-doc-title-${d}`">{{ i18n.kyc_photo_verification() }}</h4>
-          <p :key="`verification-individual-doc-descr-${d}`">{{ i18n.kyc_photo_explain() }}</p>
-          <button v-ripple
-                  @click="isDialogOpened = true"
-                  type="button"
-                  :key="`verification-individual-doc-button-${d}`"
-                  class="app__button-flat">
-            {{ i18n.kyc_show_key() }}
-          </button>
+          <div class="app__form-row">
+            <div class="app__form-field">
+              <h4 :key="`verification-individual-doc-title-${d}`">{{ i18n.kyc_photo_verification() }}</h4>
+              <p :key="`verification-individual-doc-descr-${d}`">{{ i18n.kyc_photo_explain() }}</p>
+              <br/>
+              <button v-ripple
+                      @click="isDialogOpened = true"
+                      type="button"
+                      :key="`verification-individual-doc-button-${d}`"
+                      class="app__button-raised">
+                {{ i18n.kyc_show_key() }}
+              </button>
+            </div>
+          </div>
         </template>
 
-        <file-field class="kyc-form__file-field"
-                      v-model="documents[doc.type][doc.side]"
-                      :key="`verification-individual-doc-field-${d}`"
-                      :private="doc.private"
-                      :label="doc.label"
-                      :type="doc.type"
-                      :id="doc.id"
-          />
+        <div class="app__form-row">
+          <file-field class="kyc-form__file-field"
+                        v-model="documents[doc.type][doc.side]"
+                        :key="`verification-individual-doc-field-${d}`"
+                        :private="doc.private"
+                        :label="doc.label"
+                        :type="doc.type"
+                        :id="doc.id"
+            />
+        </div>
       </template>
       <div class="app__form-actions">
         <button v-ripple
               type="submit"
-              class="app__button-flat"
+              class="app__form-submit-btn"
               :disabled="isPending || accountState === ACCOUNT_STATES.pending">
           {{ i18n.lbl_submit() }}
         </button>

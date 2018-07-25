@@ -143,7 +143,7 @@
     padding: 0 4px 6px 4px;
 
     @include respond-to-custom(1300px) {
-      overflow-x: scroll;
+      overflow-x: auto;
     }
   }
 
@@ -179,7 +179,7 @@
   .info-widget__list-body-elem--success {
     &:before {
       position: absolute;
-      left: -29px;
+      left: -25px;
       margin-top: 22px;
       width: 16px;
       height: 16px;
@@ -315,7 +315,7 @@
     width: 30%;
 
     @include respond-to(medium) {
-      width: 25%;
+      width: 15%;
       min-width: 166px;
     }
   }
@@ -354,6 +354,7 @@
     width: 15%;
 
     @include respond-to(medium) {
+      display: none;
       width: 15%;
       min-width: 97px;
     }

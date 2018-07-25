@@ -96,13 +96,14 @@
           <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
         </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
+        <!-- TEMP. HIDDEN -->
+        <!-- <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
                      to="/history"
                      tag="li" v-if="config.FEATURE_FLAGS.history">
           <md-icon class="sidebar__list-item-icon">featured_play_list</md-icon>
           <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
-        </router-link>
+        </router-link> -->
 
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
@@ -194,6 +195,7 @@
     background-color: #e9eaed !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
     min-height: 100vh;
+    height: 100%;
   }
 
   .sidebar__list-item {

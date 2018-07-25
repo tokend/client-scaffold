@@ -61,6 +61,7 @@
 
   .select__selected {
     color: $col-md-primary;
+    white-space: nowrap;
     font-size: 18px;
     display: flex;
     cursor: pointer;
@@ -114,7 +115,7 @@
   }
 
   .select__label {
-    color: $col-md-unfocused;
+    color: $col-md-primary-inactive;
     font-size: 12px;
   }
 

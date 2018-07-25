@@ -9,7 +9,7 @@
           <md-table class="app__card app__card--shadow-none manage-orders__table">
             <md-table-row class="manage-orders__row">
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
-              <md-table-head>{{ i18n.trd_manahe_marken() }}</md-table-head>
+              <!-- <md-table-head>{{ i18n.trd_manahe_marken() }}</md-table-head> -->
               <md-table-head>{{ i18n.trd_manahe_order() }}</md-table-head>
               <md-table-head>{{ i18n.trd_manage_base_asset_amount() }}</md-table-head>
               <md-table-head>{{ i18n.trd_manage_quote_asset_price() }}</md-table-head>
@@ -17,8 +17,8 @@
 
             <template v-for="(order, i) in offers">
               <md-table-row class="manage-orders__row" @click.native="toggleDetails(i)" :key="`${i}-row`">
-                <md-table-cell class="manage-orders__table-cell">{{ i18n.d(order.createdAt) }}</md-table-cell>
-                <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell>
+                <md-table-cell class="manage-orders__table-cell">{{ i18n.dmy(order.createdAt) }}</md-table-cell>
+                <!-- <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell> -->
                 <md-table-cell class="manage-orders__table-cell">
                   {{ order.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell() }}
                 </md-table-cell>

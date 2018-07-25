@@ -18,14 +18,25 @@ export default {
 </script>
 
 <style lang="scss">
-  .no-data-message {
-    text-align: center;
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 0 8px;
+@import "~@scss/variables";
 
-    h2 {
-      margin-bottom: 16px;
-    }
+.no-data-message {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 8px;
+
+  h2 {
+    margin-bottom: 8px;
+    color: $col-md-primary;
   }
+
+  p {
+    color: $col-md-primary-inactive;
+  }
+
+  .md-icon {
+    color: lighten($col-md-primary, 45) !important;
+  }
+}
 </style>

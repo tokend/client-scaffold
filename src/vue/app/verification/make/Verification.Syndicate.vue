@@ -46,7 +46,7 @@
       <div class="app__form-actions">
         <button v-ripple
                 type="submit"
-                class="app__button-flat"
+                class="app__form-submit-btn"
                 :disabled="isPending || accountState === ACCOUNT_STATES.pending">
           {{ i18n.lbl_submit() }}
         </button>

@@ -120,7 +120,7 @@
 
         // Setup svg
         const className = 'chart'
-        const yAxisTickWidth = this.formatMoney(max).length * 9 + 5
+        const yAxisTickWidth = this.formatMoney(max).length * 8.2
         const margin = { top: 2, left: yAxisTickWidth, bottom: 32, right: 0 }
         const dimensions = this.getDimensions(this.$el)
         const width = dimensions.width // - margin.right - margin.left
@@ -297,7 +297,7 @@
 </script>
 
 <style lang="scss">
-  @import "../../../../../../scss/variables";
+  @import "~@scss/variables";
 
   .chart-root,
   .chart-root svg {

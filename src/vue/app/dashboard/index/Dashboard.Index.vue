@@ -1,16 +1,23 @@
 <template>
   <div class="dashboard">
-    <portfolio-widget class="md-layout-item dashboard__portfolio"
-                      :currentAsset="currentAsset"
-                      @asset-change="setCurrentAsset"
-                      @change-dashboard-scale="changeDashboardScale"
-                      :scale="scale"
-                      :show-tabls="showTabs"
-    />
-    <div class="dashboard__chart">
-      <chart :currency="currentAsset" :scale="scale" @check-dashboard-chart-has-value="checkDashboardHasValue"/>
-    </div>
-    <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
+    <template v-if="isLoading">
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.dash_loading() }}
+      </p>
+    </template>
+    <template v-else>
+      <portfolio-widget class="md-layout-item dashboard__portfolio"
+                        :currentAsset="currentAsset"
+                        @asset-change="setCurrentAsset"
+                        @change-dashboard-scale="changeDashboardScale"
+                        :scale="scale"
+                        :show-tabls="showTabs"
+      />
+      <div class="dashboard__chart" v-if="currentAsset">
+        <chart :currency="currentAsset" :scale="scale" @check-dashboard-chart-has-value="checkDashboardHasValue"/>
+      </div>
+      <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
+    </template>
   </div>
 </template>
 
@@ -20,6 +27,7 @@
   import Chart from './Dashboard.Chart'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
+  import { i18n } from '@/js/i18n'
 
   export default {
     name: 'dashboard',
@@ -31,11 +39,15 @@
     data: _ => ({
       currentAsset: null,
       showTabs: false,
-      scale: 'day'
+      isLoading: false,
+      scale: 'month',
+      i18n
     }),
     async created () {
+      this.isLoading = true
       await this.loadBalances()
       this.setCurrentAsset()
+      this.isLoading = false
     },
     computed: {
       ...mapGetters([
@@ -50,7 +62,9 @@
         if (value) {
           this.currentAsset = value.split(' ')[0]
         } else {
-          this.currentAsset = Object.keys(this.accountBalances)[0] || null
+          const keys = Object.keys(this.accountBalances)
+          this.currentAsset =
+            keys.filter(a => a === 'ETH')[0] || keys[0] || null
         }
       },
       changeDashboardScale (value) {
@@ -76,18 +90,6 @@
 
   .dashboard {
     padding: 0 0;
-
-    @include respond-to(medium) {
-      padding: 0 24px;
-    }
-
-    @include respond-to-custom($custom-breakpoint) {
-      padding: 0 16px;
-    }
-
-    @include respond-to(xsmall) {
-      padding: 0 8px;
-    }
   }
 
   .dashboard__portfolio {

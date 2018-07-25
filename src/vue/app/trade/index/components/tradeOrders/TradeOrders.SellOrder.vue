@@ -1,5 +1,5 @@
 <template>
-  <div class="app__card">
+  <div class="sell-order__card app__card">
     <form @submit.prevent="submit">
       <div class="app__card-header">
         <div class="md-title">{{ i18n.trd_create_sell_order() }}</div>
@@ -51,8 +51,8 @@
       <div class="app__card-actions">
         <button v-ripple
                 type="submit"
-                class="app__button-flat"
-                :disabled="isPending">
+                class="app__form-submit-btn"
+                :disabled="!+form.quoteAmount || isPending">
           {{ i18n.lbl_sell() }}
         </button>
       </div>
@@ -143,4 +143,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .sell-order__card {
+    .app__card-actions {
+      justify-content: flex-start;
+    }
+  }
 </style>

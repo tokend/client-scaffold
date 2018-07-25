@@ -1,18 +1,18 @@
 <template>
   <div class="tx-token-creation">
     <md-table md-card class="tx-token-creation__table">
-      <md-table-toolbar class="tx-token-creation__table-toolbar">
+      <!-- <md-table-toolbar class="tx-token-creation__table-toolbar">
         <h1 class="tx-token-creation__table-title md-title">{{ i18n.lbl_token_creation_requests() }}</h1>
         <div class="tx-token-creation__select-outer">
         </div>
-      </md-table-toolbar>
+      </md-table-toolbar> -->
 
       <template v-if="list.length">
         <md-table-row class="tx-token-creation__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_updated_at() }}</md-table-head>
+          <md-table-head class="tx-token-creation__hide-md">{{ i18n.lbl_updated_at() }}</md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
@@ -20,7 +20,7 @@
             <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.updatedAt) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell tx-token-creation__hide-md">{{ i18n.d(item.updatedAt) }}</md-table-cell>
 
             <md-table-cell class="tx-token-creation__table-cell">
               <md-button class="tx-token-creation__open-details-btn md-icon-button">
@@ -81,9 +81,9 @@
       </template>
       <template v-else>
         <div class="tx-token-creation__no-requests">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.lbl_no_token_creation_requests() }}</h2>
-          <p>{{ i18n.lbl_no_token_creation_requests_desc() }}</p>
+          <no-data-message icon-name="trending_up"
+            :msg-title="i18n.lbl_no_token_creation_requests()"
+            :msg-message="i18n.lbl_no_token_creation_requests_desc()"/>
         </div>
       </template>
     </md-table>
@@ -94,6 +94,7 @@
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
@@ -106,7 +107,7 @@ import { ErrorHandler } from '../../../../js/errors/error_handler'
 
 export default {
   mixins: [FormMixin],
-  components: { Detail },
+  components: { Detail, NoDataMessage },
   data: _ => ({
     i18n,
     documentTypes,
@@ -117,6 +118,7 @@ export default {
 
   async created () {
     await this.loadList()
+    this.$emit('loaded')
   },
 
   computed: {
@@ -287,5 +289,11 @@ export default {
 
   .details-column {
     margin-right: .2rem;
+  }
+
+  .tx-token-creation__hide-md {
+    @include respond-to(medium) {
+      display: none;
+    }
   }
 </style>

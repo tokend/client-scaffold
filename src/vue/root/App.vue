@@ -133,7 +133,8 @@
   @import '../../scss/variables';
 
   .md-app {
-    height: 100%;
+    // NOTE: temp. disabled
+    // height: 100%;
   }
 
   .md-app-content {
@@ -154,6 +155,8 @@
   }
 
   .app__sidebar {
+    z-index: 10;
+
     @include respond-to(small) {
       background-color: $col-md-background !important;
     }
@@ -166,5 +169,4 @@
       margin-left: 8px !important;
     }
   }
-
 </style>

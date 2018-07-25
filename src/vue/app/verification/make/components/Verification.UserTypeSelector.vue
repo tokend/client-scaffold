@@ -11,12 +11,12 @@
       <div class="app__card-content user-type-selector__user-content">
         <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">person</md-icon>
       </div>
-      <div class="app__card-actions">
+      <div class="user-type-selector__actions">
         <button v-ripple
                 @click="selectType(userTypes.general)"
-                class="app__button-flat user-type-selector__user-button"
+                class="app__button-raised user-type-selector__user-button"
                 :disabled="isPending">
-          {{ i18n.kyc_submit() }}
+          {{ i18n.kyc_apply_general() }}
         </button>
       </div>
     </div>
@@ -31,12 +31,12 @@
       <div class="app__card-content user-type-selector__user-content">
         <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">domain</md-icon>
       </div>
-      <div class="app__card-actions">
+      <div class="user-type-selector__actions">
         <button v-ripple
                 @click="selectType(userTypes.syndicate)"
-                class="app__button-flat user-type-selector__user-button"
+                class="app__button-raised user-type-selector__user-button"
                 :disabled="isPending">
-          {{ i18n.kyc_submit() }}
+          {{ i18n.kyc_apply_corporate() }}
         </button>
       </div>
     </div>
@@ -123,7 +123,7 @@
   }
 
   .user-type-selector__user {
-    min-width: 320px;
+    min-width: 280px;
     margin: auto;
 
     @include respond-to-custom(960px) {
@@ -153,5 +153,10 @@
   .user-type-selector__user {
     font-size: $fs-root;
     margin: 0 16px;
+  }
+
+  .user-type-selector__actions {
+    text-align: center;
+    margin-bottom: 3 * $point;
   }
 </style>

@@ -1,50 +1,45 @@
 <template>
-   <div class="upload-preissuance">
-      <div class="app__card">
-        <md-progress-bar v-if="isPending" md-mode="indeterminate"></md-progress-bar>
-        <div class="app__card-content">
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <p class="preissuance-form__hint" v-html="i18n.preis_upload_tip()"></p>
-              <template v-if="tokens.length">
-                <div class="preissuance-form__upload-wrp">
-                  <file-field class="preissuance-form__upload-input"
-                        v-model="documents.preissuance"
-                        label="Select File(s)"
-                        accept=".iss"
-                        id="preissuance-field"
-                  />
-                </div>
-              </template>
-              <template v-else>
-                <p>{{ i18n.lbl_loading() }}</p>
-              </template>
-              <ul class="preissuance-form__list" v-if="issuances.length">
-                <p>{{ i18n.lbl_to_upload() }}</p>
-
-                <li v-for="(item, index) in issuances" :key="item.reference">
-                  {{index + 1}}. {{i18n.c(item.amount)}} {{item.asset}}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="app__card-actions" v-if="issuances.length">
-          <button v-ripple
-                  @click="submit"
-                  class="app__button-flat"
-                  :disabled="isPending">
-            {{ i18n.lbl_upload() }}
-          </button>
-          <button v-ripple
-                  @click="clear"
-                  class="app__button-flat"
-                  :disabled="isPending">
-            {{ i18n.lbl_clear() }}
-          </button>
-        </div>
+   <div class="upload-preissuance app__page-content-wrp">
+    <h2 class="app__page-heading">
+      {{ i18n.preis_heading() }}
+    </h2>
+    <p class="app__page-explanations" v-html="i18n.preis_upload_tip()"></p>
+    <template v-if="tokens.length">
+      <div class="preissuance-form__upload-wrp">
+        <file-field class="preissuance-form__upload-input"
+              v-model="documents.preissuance"
+              label="Select File(s)"
+              accept=".iss"
+              id="preissuance-field"
+        />
       </div>
+    </template>
+    <template v-else>
+      <p>{{ i18n.lbl_loading() }}</p>
+    </template>
+    <ul class="preissuance-form__list" v-if="issuances.length">
+      <p>{{ i18n.lbl_to_upload() }}</p>
+
+      <li v-for="(item, index) in issuances" :key="item.reference">
+        {{index + 1}}. {{i18n.c(item.amount)}} {{item.asset}}
+      </li>
+    </ul>
+
+    <div class="app__form-actions" v-if="issuances.length">
+      <button v-ripple
+              @click="submit"
+              class="app__button-raised"
+              :disabled="isPending">
+        {{ i18n.lbl_upload() }}
+      </button>
+      <button v-ripple
+              @click="clear"
+              class="app__button-flat"
+              :disabled="isPending">
+        {{ i18n.lbl_clear() }}
+      </button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -159,8 +154,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/mixins";
-  @import "../../../../scss/variables";
+  @import "~@scss/mixins";
+  @import "~@scss/variables";
 
   .preissuance-form__upload-wrp {
     margin-top: 1rem;
@@ -169,5 +164,6 @@ export default {
   .preissuance-form__list {
     margin-top: 2rem;
     list-style-type: none;
+    color: $col-md-primary;
   }
 </style>

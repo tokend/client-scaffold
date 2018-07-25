@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 $sidebar-width: 210px;
 $material-icons-small: 14px;
 $material-icon-size: 18px;
@@ -18,8 +20,8 @@ $z-modal-dialog: 20;
 $z-embed-page: 45;
 $z-markdown-editor: 45;
 
-// colors:
-// CAUTION: do not use these colors externally
+/* colors: */
+/* CAUTION: do not use these colors externally */
 
 $black: #3f4244;
 $gray:#e2e3e3;
@@ -61,12 +63,6 @@ $col-pending: $orange;
 $col-approve: $green;
 $col-reject: $red;
 
-$col-chart-line: $blue;
-$col-chart-fill: $col-inactive;
-$col-chart-ticks: $black;
-$col-chart-text: $col-text;
-$col-chart-tip-text: $white;
-
 $col-btc: #FF9900;
 
 // progress bar
@@ -85,7 +81,13 @@ $col-md-unfocused: rgba(0, 0, 0, .54);
 $col-md-block: #fff;
 $col-md-pending: $orange;
 
-// fonts:
+$col-chart-line: $col-md-primary-secondary;
+$col-chart-fill: $white;
+$col-chart-ticks: $col-md-primary-inactive;
+$col-chart-text: $col-md-primary-inactive;
+$col-chart-tip-text: $white;
+
+/* fonts: */
 $fs-top-heading: 32px;
 $fs-offer-input: 24px;
 
@@ -99,4 +101,4 @@ $fs-label: .8rem;
 // misc.
 
 // use as multiplier for more convenient way to calculating sizes
-$point: 0.625rem; // 10px in case of 1rem=16px
+$point: 0.625rem; /* 10px in case of 1rem=16px */

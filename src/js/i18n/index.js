@@ -27,6 +27,8 @@ import preissuanceView from './views/preissuance_view'
 import common from './views/common'
 import auth from './views/auth_view'
 import formConfirmation from './views/form_confirmation_view'
+import saleInvest from './views/sale_invest_view'
+import marketPriceChartView from './views/market_price_chart_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
@@ -63,7 +65,9 @@ const dictionary = {
   ...preissuanceView,
   ...common,
   ...formConfirmation,
-  ...tokensView
+  ...tokensView,
+  ...saleInvest,
+  ...marketPriceChartView
 }
 
 polyglot.extend(dictionary)

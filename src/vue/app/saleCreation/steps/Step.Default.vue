@@ -3,14 +3,13 @@
         novalidate
         @submit.prevent="submit">
     <template v-for="(row, r) in schema.rows">
-      <div class="step__row" :key="`sale-creation-step-${r}`">
+      <div class="app__form-row" :key="`sale-creation-step-${r}`">
         <template v-for="item in row">
 
-          <input-field v-if="item.field === 'text'"
+          <input-field-unchained v-if="item.field === 'text'"
 
                        v-model="form[item.model]"
                        v-validate="item.validate"
-                       class="step__input-field"
                        :name="item.name"
                        :id="item.id"
                        :required="item.required"
@@ -22,7 +21,6 @@
           <textarea-field v-if="item.field === 'textarea'"
                           v-model="form[item.model]"
                           v-validate="item.validate"
-                          class="step__input-field"
                           :name="item.name"
                           :id="item.id"
                           :required="item.required"
@@ -43,7 +41,7 @@
                       :key='item.id'
           />
 
-          <select-field-custom
+          <select-field-unchained
             v-if="item.field === 'select'"
             :name="item.name"
             :id="item.id"
@@ -51,7 +49,7 @@
             :key='item.id'
             :label="item.label"/>
 
-          <select-field v-if="item.field === 'select'"
+          <select-field-unchained v-if="item.field === 'select'"
                       :name="item.name"
                       :id="item.id"
                       :label="item.label"
@@ -73,10 +71,10 @@
       </div>
     </template>
 
-    <div class="step__action">
+    <div class="app__form-actions">
       <button v-ripple
               type="submit"
-              class="step__submit-btn app__button-flat"
+              class="app__form-submit-btn"
               :disabled="isPending">
         {{ i18n.sale_next_step() }}
       </button>

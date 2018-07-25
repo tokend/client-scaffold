@@ -44,10 +44,12 @@ export default {
   trd_chart_hour: 'Hour',
   trd_chart_day: 'Day',
   trd_chart_month: 'Month',
+  trd_chart_tabs_prefix: 'Scale the chart by:',
   trd_chart_year: 'Year',
   trd_orders: 'Open orders',
   trd_confirm_match: 'By pressing confirm, you will сreate the opposite to selected order',
   trd_no_pairs: 'No tradable pairs',
   trd_no_pairs_exp: 'This feature will be available once any tradable pair appears',
-  trd_balance: 'Your balance is %{base}/%{quote}'
+  trd_balance_label: 'Balances',
+  trd_balance: '%{base} / %{quote}'
 }

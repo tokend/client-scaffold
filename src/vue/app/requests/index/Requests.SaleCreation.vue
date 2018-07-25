@@ -2,7 +2,7 @@
   <div class="tx-sale-creation">
     <md-table md-card class="tx-sale-creation__table">
       <md-table-toolbar class="tx-sale-creation__table-toolbar">
-        <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1>
+        <!-- <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1> -->
         <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
            <select-field-custom
             :label="i18n.lbl_asset()"
@@ -16,7 +16,7 @@
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_updated_at() }}</md-table-head>
+          <md-table-head class="tx-sale-creation__hide-md">{{ i18n.lbl_updated_at() }}</md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
@@ -26,7 +26,7 @@
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
             <md-table-cell class="tx-sale-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ i18n.d(item.updatedAt) }}</md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell tx-sale-creation__hide-md">{{ i18n.d(item.updatedAt) }}</md-table-cell>
 
             <md-table-cell class="tx-sale-creation__table-cell">
               <md-button class="tx-sale-creation__open-details-btn md-icon-button">
@@ -85,9 +85,9 @@
       </template>
       <template v-else>
         <div class="tx-sale-creation__no-requests">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.sale_no_creation_requests() }}</h2>
-          <p>{{ i18n.sale_no_creation_requests_desc() }}</p>
+          <no-data-message icon-name="trending_up"
+            :msg-title="i18n.sale_no_creation_requests()"
+            :msg-message="i18n.sale_no_creation_requests_desc()"/>
         </div>
       </template>
     </md-table>
@@ -104,10 +104,11 @@ import { i18n } from '../../../../js/i18n'
 import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 export default {
   mixins: [FormMixin],
-  components: { Detail },
+  components: { Detail, NoDataMessage },
   data: _ => ({
     i18n,
     tokenCode: null,
@@ -275,5 +276,11 @@ export default {
 
   .details-column {
     margin-right: .2rem;
+  }
+
+  .tx-sale-creation__hide-md {
+    @include respond-to(medium) {
+      display: none;
+    }
   }
 </style>

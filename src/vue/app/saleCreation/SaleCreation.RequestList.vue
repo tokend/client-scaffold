@@ -1,15 +1,14 @@
 <template>
-  <div class="request-list">
-    <md-list class="md-triple-line">
+  <div class="sale-creation__request-list">
+    <md-list class="md-double-line">
       <template v-for="request in list">
         <md-list-item :key="request.saleIndex" @click="$emit(commonEvents.saleSelectEvent, request)">
           <md-avatar class="md-avatar-icon">
             <img v-if="request.logoUrl" :src="request.logoUrl" alt="">
-            <span v-else>{{ cookUpHeading(request).charAt(0) }}</span>
+            <span v-else>{{ request.name.charAt(0) }}</span>
           </md-avatar>
 
           <div class="md-list-item-text">
-            <span>{{ cookUpHeading(request) }}</span>
             <span>{{ request.name }}</span>
             <span :class="`request-list__request
                            request-list__request--${request.state}`">
@@ -33,16 +32,11 @@
     data: _ => ({
       i18n,
       commonEvents
-    }),
-    methods: {
-      cookUpHeading (request) {
-        return request.name
-      }
-    }
+    })
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../../../scss/variables';
 
   .request-list__request {
@@ -55,4 +49,23 @@
       align-self: auto !important;
     }
   }
+
+.sale-creation__request-list {
+  .md-list {
+    background-color: transparent;
+  }
+
+  .md-list-item-button {
+    margin-left: -16px;
+  }
+
+  .md-list-item-text {
+    color: $col-md-primary;
+  }
+
+  .md-list-item-text :nth-child(2) {
+    color: $col-md-primary-inactive !important;
+  }
+}
+
 </style>

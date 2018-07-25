@@ -1,7 +1,12 @@
 <template>
   <div>
-    <user-type-selector v-if="!selectedUserType" @select-user-type="handleUserType"/>
-    <template v-if="selectedUserType">
+    <template v-if="isLoading">
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.kyc_loading() }}
+      </p>
+    </template>
+    <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
+    <template v-else>
       <template v-if="accountState === ACCOUNT_STATES.approved">
         <syndicate-banner/>
       </template>
@@ -94,6 +99,7 @@
       ACCOUNT_STATES,
       userTypes,
       showForm: false,
+      isLoading: false,
       i18n
     }),
     async created () {
@@ -133,6 +139,7 @@
         loadKycData: vuexTypes.GET_ACCOUNT_KYC_DATA
       }),
       async reset () {
+        this.isLoading = true
         await Promise.all([
           this.loadKycRequests(),
           this.loadAccount()
@@ -163,6 +170,7 @@
           default:
             this.selectedUserType = ''
         }
+        this.isLoading = false
       },
       handleUserType (type) {
         this.selectedUserType = type

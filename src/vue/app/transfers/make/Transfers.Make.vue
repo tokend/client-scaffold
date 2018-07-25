@@ -138,7 +138,7 @@
           class="app__form-submit-btn"
           :disabled="isPending"
           form="transfer-form">
-          {{ i18n.transfer_check_fees_btn() }}
+          {{ i18n.transfer_continue_btn() }}
         </button>
 
         <form-confirmation

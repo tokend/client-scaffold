@@ -1,24 +1,28 @@
 <template>
-  <div class="md-layout md-alignment-center-center">
-    <div class="md-layout-item
-              md-size-50
-              md-medium-size-65
-              md-small-size-95
-              md-xsmall-size-100">
-      <template v-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
-        <not-available-card icon='work'
-                            :title="i18n.lbl_not_available()"
-                            :descr="i18n.sale_not_available_exp()"/>
-      </template>
-      <template v-else-if="!accountOwnedTokens.length">
-        <not-available-card icon='work'
-                            :title="i18n.lbl_not_available()"
-                            :descr="i18n.lbl_token_not_available_yet()"/>
-      </template>
-      <template v-else>
-        <preissuance-upload-manager/>
-      </template>
-    </div>
+  <div>
+    <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
+      <h2 class="app__page-heading">{{ i18n.preis_not_available_heading() }}</h2>
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.preis_not_available() }}
+      </p>
+      <router-link to="/verification" tag="button" class="app__button-raised">
+        {{ i18n.preis_kyc_btn() }}
+      </router-link>
+    </template>
+
+    <template v-else-if="!accountOwnedTokens.length">
+      <h2 class="app__page-heading">{{ i18n.preis_no_assets_heading() }}</h2>
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.preis_no_assets() }}
+      </p>
+      <router-link to="/token-creation" tag="button" class="app__button-raised">
+        {{ i18n.preis_create_assets_btn() }}
+      </router-link>
+    </template>
+
+    <template v-else>
+      <preissuance-upload-manager/>
+    </template>
   </div>
 </template>
 
