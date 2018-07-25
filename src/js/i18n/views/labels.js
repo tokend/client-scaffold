@@ -32,7 +32,6 @@ export default {
   lbl_type_general: 'General account',
   lbl_type_corporate: 'Corporate account',
   lbl_tokens: 'Tokens',
-  lbl_create_issuance: 'Create issuance',
   lbl_almost_done: 'Almost done',
   lbl_account_recovery: 'Account recovery',
   lbl_request_new_email: 'Request new email',
