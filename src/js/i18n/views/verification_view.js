@@ -14,11 +14,14 @@ export default {
                     You will be able to update details once the request is reviewed`,
   kyc_rejected_msg: 'Unfortunately, your account was rejected with reason: %{reason}',
   kyc_approved_title: 'Account approved',
-  kyc_general: 'General',
+  kyc_general: 'Individual',
   kyc_corporate: 'Corporate',
   kyc_submit: 'Submit KYC',
   kyc_inv_tip: 'Can invest in Sales',
   kyc_corporate_tip: 'Can create Sales',
   kyc_rejected_title: 'Your verification request is rejected',
-  kyc_rejected_msg_html: 'Unfortunately, your account was rejected with reason: <span class="reject-message">%{reason}</span>'
+  kyc_rejected_msg_html: 'Unfortunately, your account was rejected with reason: <span class="reject-message">%{reason}</span>',
+  kyc_loading: 'Fetching the KYC data...',
+  kyc_apply_general: 'Apply to General',
+  kyc_apply_corporate: 'Apply to Corporate'
 }

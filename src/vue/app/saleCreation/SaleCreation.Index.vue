@@ -215,7 +215,7 @@ export default {
 }
 
 .sale-creation__request-list-heading {
-  margin: 0 0 -.5 * $point 0;
+  margin: 0 0 -.5 * $point 0 !important;
 }
 
 .sale-creation__request-list-wrp {

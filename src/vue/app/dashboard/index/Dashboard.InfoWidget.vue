@@ -181,7 +181,7 @@
   .info-widget__list-body-elem--success {
     &:before {
       position: absolute;
-      left: -29px;
+      left: -25px;
       margin-top: 22px;
       width: 16px;
       height: 16px;

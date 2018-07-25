@@ -48,9 +48,9 @@
       </template>
       <template v-else>
         <div class="tx-preissuance-upload__no-requests">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.preis_no_token_creation_requests() }}</h2>
-          <p>{{ i18n.preis_no_token_creation_requests_desc() }}</p>
+          <no-data-message icon-name="trending_up"
+            :msg-title="i18n.preis_no_token_creation_requests()"
+            :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
         </div>
       </template>
     </md-table>
@@ -61,6 +61,7 @@
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
@@ -70,7 +71,7 @@ import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
 export default {
   mixins: [FormMixin],
-  components: { Detail },
+  components: { Detail, NoDataMessage },
   data: _ => ({
     i18n,
     isLoading: false,

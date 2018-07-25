@@ -14,7 +14,7 @@ export default {
   transfer_source_percent_fee: 'sender’s percent fee', // prefix is omitted
   transfer_destination_fixed_fee: 'recipient’s fixed fee', // prefix is omitted
   transfer_destination_percent_fee: 'recipient’s percent fee', // prefix is omitted
-  transfer_check_fees_btn: 'Check fees',
+  transfer_continue_btn: 'Continue',
   transfer_balance: 'Balance is %{amount} %{asset}.',
   transfer_heading: 'Transfer form',
   transfer_no_assets: 'Your wallet doesn\'t contain any transferable assets yet. You can discover some on the token list.',

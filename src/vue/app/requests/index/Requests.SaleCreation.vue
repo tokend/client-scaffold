@@ -85,9 +85,9 @@
       </template>
       <template v-else>
         <div class="tx-sale-creation__no-requests">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.sale_no_creation_requests() }}</h2>
-          <p>{{ i18n.sale_no_creation_requests_desc() }}</p>
+          <no-data-message icon-name="trending_up"
+            :msg-title="i18n.sale_no_creation_requests()"
+            :msg-message="i18n.sale_no_creation_requests_desc()"/>
         </div>
       </template>
     </md-table>
@@ -104,10 +104,11 @@ import { i18n } from '../../../../js/i18n'
 import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
 import { vuexTypes } from '../../../../vuex/types'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 export default {
   mixins: [FormMixin],
-  components: { Detail },
+  components: { Detail, NoDataMessage },
   data: _ => ({
     i18n,
     tokenCode: null,

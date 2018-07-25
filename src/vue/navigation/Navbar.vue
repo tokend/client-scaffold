@@ -35,10 +35,10 @@
             {{ i18n.lbl_type_unverified() }}
           </template>
           <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
-            {{ i18n.lbl_type_individual() }}
+            {{ i18n.lbl_type_general() }}
           </template>
           <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
-            {{ i18n.lbl_type_syndicate() }}
+            {{ i18n.lbl_type_corporate() }}
           </template>
         </div>
         <!-- NOTE: notifications are temporarily disabled -->
@@ -78,10 +78,10 @@
                   {{ i18n.lbl_type_unverified() }}
                 </template>
                 <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
-                  {{ i18n.lbl_type_individual() }}
+                  {{ i18n.lbl_type_general() }}
                 </template>
                 <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
-                  {{ i18n.lbl_type_syndicate() }}
+                  {{ i18n.lbl_type_corporate() }}
                 </template>
               </div>
               <button v-ripple="'rgba(255, 255, 255, .2)'"
