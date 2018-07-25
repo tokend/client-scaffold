@@ -1,7 +1,12 @@
 <template>
-  <div class="verification md-layout">
-    <user-type-selector v-if="!selectedUserType" @select-user-type="handleUserType"/>
-    <template v-if="selectedUserType">
+  <div>
+    <template v-if="isLoading">
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.kyc_loading() }}
+      </p>
+    </template>
+    <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
+    <template v-else>
       <template v-if="accountState === ACCOUNT_STATES.approved">
         <syndicate-banner/>
       </template>
@@ -14,32 +19,34 @@
         <template v-if="selectedUserType === userTypes.syndicate">
           <syndicate-form />
         </template>
-
       </template>
+
       <template v-if="accountState === ACCOUNT_STATES.rejected">
-        <md-card class="verification__card
-                        verification__card--rejected
-                        md-size-55
-                        md-medium-size-75
-                        md-small-size-100
-                        md-layout-item"
-                 v-show="!showForm" >
-          <md-card-content>
+        <div class="verification__card
+                    verification__card--rejected
+                    md-size-55
+                    md-medium-size-75
+                    md-small-size-100
+                    md-layout-item
+                    app__card"
+              v-show="!showForm" >
+          <div class="app__card-content">
             <div class="verification__card-message">
               <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
               <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
               <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
             </div>
-          </md-card-content>
+          </div>
 
-          <md-card-actions class="md-layout">
-            <md-button  @click="showForm = true"
-                        class="md-primary">
-            {{ i18n.lbl_edit_details() }}
-            </md-button>
-          </md-card-actions>
+          <div class="app__card-actions md-layout">
+            <button v-ripple
+                    @click="showForm = true"
+                    class="app__button-flat">
+              {{ i18n.lbl_edit_details() }}
+            </button>
+          </div>
+        </div>
 
-        </md-card>
         <template v-if="showForm">
           <template v-if="selectedUserType === userTypes.general">
             <individual-form />
@@ -92,6 +99,7 @@
       ACCOUNT_STATES,
       userTypes,
       showForm: false,
+      isLoading: false,
       i18n
     }),
     async created () {
@@ -116,6 +124,7 @@
         loadKycData: vuexTypes.GET_ACCOUNT_KYC_DATA
       }),
       async reset () {
+        this.isLoading = true
         await Promise.all([
           this.loadKycRequests(),
           this.loadAccount()
@@ -149,6 +158,7 @@
           default:
             this.selectedUserType = ''
         }
+        this.isLoading = false
       },
       handleUserType (type) {
         this.selectedUserType = type

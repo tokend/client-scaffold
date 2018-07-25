@@ -1,4 +1,4 @@
-import { humanizePastDate } from '../utils/dates.util'
+import { getDateByDMY } from '../utils/dates.util'
 import { feeAsset } from '../const/const'
 
 export class TxRecord {
@@ -13,6 +13,6 @@ export class TxRecord {
   }
 
   _getDate () {
-    return humanizePastDate(this._record.ledger_close_time)
+    return getDateByDMY(this._record.ledger_close_time)
   }
 }

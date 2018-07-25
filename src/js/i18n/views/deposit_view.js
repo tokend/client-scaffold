@@ -1,11 +1,14 @@
 export default {
-  dep_deposit: 'Deposit',
-  dep_how_to: 'To make a deposit send %{asset} to the wallet address provided below',
-  dep_how_long: 'Coins will be deposited immediately after 6 network confirmations',
-  dep_send_only_asset: 'Send only %{asset} to this deposit address',
-  dep_where_to: 'Send funds to this %{asset} address',
+  dep_heading: 'Deposit instructions',
+  dep_how_to: 'To make a deposit send some tokens to the wallet address provided below. Coins will be deposited immediately after 6 network confirmations.',
+  dep_asset_only_prefix: 'Attention:',
+  dep_asset_only: 'The address below accepts %{asset} only! All the other tokens will be irretrievably lost.',
+  dep_where_to: '%{asset} address to deposit',
   dep_copied: 'Copied',
-  dep_no_assets: 'No assets can be deposited',
-  dep_no_assets_exp: 'This feature will be available once you have any asset that can be deposited',
-  dep_no_address: 'Currently there are no available addresses. Please try again later'
+  dep_binding_address: 'Please wait while we are trying to bind the address for you...',
+  deposit_no_assets: 'Your wallet doesn\'t contain any assets to deposit yet. You can discover some on the token list.',
+  deposit_no_assets_heading: 'Oh dear...',
+  deposit_discover_assets_btn: 'Discover assets',
+  dep_no_address: 'No available addresses to deposit yet. Please try again later.',
+  deposit_qr_code_hint: 'The address also available in QR code:'
 }

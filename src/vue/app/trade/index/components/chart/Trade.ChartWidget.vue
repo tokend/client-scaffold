@@ -1,48 +1,37 @@
 <template>
-  <div>
+  <div class="app__card">
     <template v-if="!assets">
       <div class="app__no-data-msg">
-        <md-card class="md-layout-item">
-          <md-card-content>
-            <md-icon class="md-size-4x">send</md-icon>
-            <h2>{{ i18n.trd_no_pairs() }}</h2>
-            <p>{{ i18n.trd_no_pairs_exp() }}</p>
-          </md-card-content>
-        </md-card>
+        <div class="app__card-content">
+          <md-icon class="md-size-4x">send</md-icon>
+          <h2>{{ i18n.trd_no_pairs() }}</h2>
+          <p>{{ i18n.trd_no_pairs_exp() }}</p>
+        </div>
       </div>
     </template>
 
-    <md-card v-else>
+    <div v-else>
       <div class="chart-container__header">
         <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
-        <div class="chart-container__user-balance">
-          {{ i18n.trd_balance({base: baseAmount, quote: quoteAmount}) }}
-        </div>
       </div>
 
-      <md-card-content>
+      <div class="app__card-content">
         <div class="chart-container">
 
-          <div class="md-layout md-alignment-center-space-between chart-container__labels">
+          <div class="md-layout md-alignment-center-space-between chart-container__tabs">
             <scale-tabs class="md-layout-item md-size-70 md-small-size-100"
               :asset="assets"
               v-model="scale"
               :isPending="isPending"
             />
-            <div class="md-layout-item md-size-25 md-medium-size-50 chart-container__assets-select">
-              <assets-select
-                :pairs="pairs"
-                :assets="assets"
-              />
-            </div>
           </div>
 
           <d3-chart :data="history" :currency="assets.split('/')[1]" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
           <div class="chart-container__loader" v-else>Loading...</div>
 
         </div>
-      </md-card-content>
-    </md-card>
+      </div>
+    </div>
   </div>
 
 </template>
@@ -50,20 +39,16 @@
 <script>
   import D3Chart from './ChartWidget.ChartRenderer'
   import ScaleTabs from './ChartWidget.DateTabs'
-  import AssetsSelect from './ChartWidget.AssetsSelect'
   import { i18n } from '../../../../../../js/i18n'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../../vuex/types'
-  import { attachEventHandler } from '../../../../../../js/events/helpers'
-  import { commonEvents } from '../../../../../../js/events/common_events'
 
   export default {
     name: 'chart',
 
     components: {
       ScaleTabs,
-      D3Chart,
-      AssetsSelect
+      D3Chart
     },
 
     props: {
@@ -73,8 +58,7 @@
       currentCap: { type: [String, Number], required: false },
       hardCap: { type: [String, Number], required: false },
       softCap: { typ: [String, Number], required: false },
-      precision: { type: Number, default: 0 },
-      pairs: { type: Array, require: true, default: [] }
+      precision: { type: Number, default: 0 }
     },
 
     data () {
@@ -90,7 +74,6 @@
 
     created () {
       this.tokenCode = this.tokenCodes[0] || null
-      attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
     },
 
     computed: {
@@ -108,15 +91,6 @@
       requiredTicks () {
         return [this.softCap, this.hardCap].filter(value => value)
       }
-    },
-    methods: {
-      handleAssetChange (payload) {
-        const base = payload.split('/')[0]
-        const quote = payload.split('/')[1]
-        const baseBalance = this.accountBalances[base]
-        this.baseAmount = baseBalance ? `${i18n.c(baseBalance.balance)} ${base}` : `${i18n.c(0)} ${base}`
-        this.quoteAmount = `${i18n.c(this.accountBalances[quote].balance)} ${quote}`
-      }
     }
   }
 </script>
@@ -129,8 +103,8 @@
     text-align: center;
   }
 
-  .chart-container__labels {
-    padding-bottom: 0;
+.chart-container__tabs {
+    margin-bottom: 4.5 * $point;
     @include respond-to-custom(1000px) {
       flex-direction: column-reverse;
       align-items: flex-start;

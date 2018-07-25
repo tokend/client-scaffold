@@ -7,7 +7,11 @@
     </div>
 
     <md-dialog-actions class="info-dialog__actions">
-      <md-button class="md-primary" @click="closeDialog">{{ i18n.lbl_close() }}</md-button>
+      <button v-ripple
+              @click="closeDialog"
+              class="app__button-flat">
+        {{ i18n.lbl_close() }}
+      </button>
     </md-dialog-actions>
   </md-dialog>
 </template>

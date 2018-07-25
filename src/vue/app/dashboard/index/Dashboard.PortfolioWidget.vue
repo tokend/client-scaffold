@@ -1,54 +1,83 @@
 <template>
-  <md-card class="portfolio-widget">
-    <md-card-header class="portfolio-widget__header">
-      <div class="md-title portfolio-widget__title">{{ i18n.dash_wallet() }}</div>
-
-      <div class="portfolio-widget__select-wrp">
-        <select-field v-if="currentAsset"
-                      :value="currentAsset"
-                      :values="Object.keys(accountBalances)"
-                      @input="$emit(events.assetChange, $event)"
-        />
-      </div>
-    </md-card-header>
-
-
-    <template v-if="currentAsset">
-      <md-card-content class="portfolio-widget__asset">
-        <div class="portfolio-widget__asset-picture">
+  <div class="portfolio-widget">
+    <div class="portfolio-widget__wrapper" v-if="currentAsset">
+      <div class="portfolio-widget__select">
+        <div class="portfolio-widget__select-picture">
           <img class="portfolio-widget__asset" :src="imgUrl">
         </div>
+        <div class="portfolio-widget__select-field">
+          <!-- :key is a hack to ensure that the component will be updated after computed calculated -->
+          <select-field-custom :value="currentAssetForSelect"
+                               :values="tokensList"
+                               :key="currentAssetForSelect"
+                               @input="$emit(events.assetChange, $event)"
+          />
+        </div>
+      </div>
+      <div class="portfolio-widget__asset-btns">
+        <router-link tag="button"
+                      to="/issuance-creation"
+                      :disabled="checkTransferable"
+                      class="portfolio-widget__asset-btn"
+                      v-ripple>
+          <md-icon class="portfolio-widget__asset-btn-icon">add</md-icon>
+          {{ i18n.lbl_create_issuance() }}
+        </router-link>
+        <router-link tag="button"
+                      :to="'/transfers/make/' + currentAsset"
+                      :disabled="checkTransferable"
+                      class="portfolio-widget__asset-btn"
+                      v-ripple>
+          <md-icon class="portfolio-widget__asset-btn-icon portfolio-widget__asset-btn-icon--rotate">send</md-icon>
+          {{ i18n.lbl_send() }} {{ currentAsset }}
+        </router-link>
+      </div>
+    </div>
+    <template v-if="currentAsset">
+      <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
         <div class="portfolio-widget__asset-available">
           <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
-          <div class="portfolio-widget__asset-usd">{{ convertedBalance }} USD</div>
+          <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
         </div>
-      </md-card-content>
-      <md-card-actions class="portfolio-widget__actions">
-        <md-button :to="'/transfers/make/' + currentAsset"
-                   class="md-primary"
-                   :disabled="checkTransferable"
-                   >{{ i18n.lbl_send() }}</md-button>
-      </md-card-actions>
+        <div class="portfolio-widget__select-scale" v-if="showTabls">
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.hour }"
+                  @click="$emit(events.changeDashboardScale, tabs.hour)">
+            Hour
+          </button>
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.day }"
+                  @click="$emit(events.changeDashboardScale, tabs.day)">
+            Day
+          </button>
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.month }"
+                  @click="$emit(events.changeDashboardScale, tabs.month)">
+            Month
+          </button>
+          <button class="portfolio-widget__select-scale-btn"
+                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.year }"
+                  @click="$emit(events.changeDashboardScale, tabs.year)">
+            Year
+          </button>
+        </div>
+      </div>
+    </template>
+    <template v-if="!currentAsset">
+      <no-data-message icon-name="toll"
+                       :msg-title="i18n.th_no_assets_in_your_wallet()"
+                       :msg-message="i18n.th_here_will_be_tokens()"/>
     </template>
 
-    <template v-else>
-      <md-card-content>
-        <div class="app__no-data-msg">
-          <md-icon class="md-size-4x">toll</md-icon>
-          <h2>{{ i18n.th_no_assets_in_your_wallet() }}</h2>
-          <p>{{ i18n.th_here_will_be_tokens() }}</p>
-        </div>
-      </md-card-content>
-    </template>
-
-  </md-card>
+  </div>
 </template>
 
 <script>
   import config from '../../../../config'
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+  import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
   import { commonEvents } from '../../../../js/events/common_events'
@@ -56,18 +85,46 @@
 
   export default {
     name: 'portfolio-widget',
-    components: { SelectField },
+    components: {
+      SelectFieldCustom,
+      NoDataMessage
+    },
+    props: {
+      scale: { type: String, required: true },
+      currentAsset: { type: [String, Object], default: 'USD' },
+      showTabls: { type: Boolean, default: false }
+    },
     data: _ => ({
       i18n,
       events: {
-        assetChange: commonEvents.assetChangeEvent
-      }
+        assetChange: commonEvents.assetChangeEvent,
+        changeDashboardScale: commonEvents.changeDashboardScale
+      },
+      tabs: {
+        hour: 'hour',
+        day: 'day',
+        week: 'week',
+        month: 'month',
+        year: 'year',
+        all: 'all'
+      },
+      config
     }),
     computed: {
       ...mapGetters([
         vuexTypes.accountBalances,
-        vuexTypes.userTransferableTokens
+        vuexTypes.userTransferableTokens,
+        vuexTypes.tokens
       ]),
+      tokensList () {
+        return this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
+                          .filter(token => token.name) // TODO: temp. hack
+                          .map(item => `${item.name} (${item.code})`)
+      },
+      currentAssetForSelect () {
+        return this.tokens.filter(token => token.code === this.currentAsset)
+                          .map(item => `${item.name} (${item.code})`)[0]
+      },
       balance () {
         return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
       },
@@ -86,127 +143,150 @@
         return !(this.userTransferableTokens.map(token => token.code)).includes(this.currentAsset)
       }
     },
-    props: ['currentAsset'],
+    async created () {
+      await this.loadTokens()
+    },
     methods: {
-
+      ...mapActions({
+        loadTokens: vuexTypes.GET_ALL_TOKENS
+      })
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables.scss';
-  @import '../../../../scss/mixins.scss';
+  @import '~@scss/variables.scss';
+  @import '~@scss/mixins.scss';
 
-  $custom-breakpoint: 860px;
+  $custom-breakpoint: 800px;
 
-  .portfolio-widget {
-    width: 100%;
-    max-width: 370px;
-    min-width: 248px;
-
-    @include respond-to(medium) {
-      width: 100%;
-      max-width: inherit;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      flex: 1 1 auto;
-      padding: 16px;
-    }
-
-    @include respond-to(medium) {
-      margin-bottom: 24px;
-    }
-
-    @include respond-to(small) {
-      padding: 8px;
-    }
-  }
-
-  .portfolio-widget__header {
+  .portfolio-widget__wrapper {
     display: flex;
     justify-content: space-between;
-    @include respond-to(medium) {
-      display: none;
+
+    @include respond-to-custom($custom-breakpoint) {
+      flex-direction: column-reverse;
     }
   }
 
-  .portfolio-widget__title {
+  .portfolio-widget__wrapper--values {
+    align-items: flex-end;
+
     @include respond-to(medium) {
-      display: none;
+      align-items: flex-end;
+    }
+
+    @include respond-to-custom($custom-breakpoint) {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
-  .portfolio-widget__select-wrp {
-    max-width: 5rem;
+  .portfolio-widget__select-scale {
+    @include respond-to-custom($custom-breakpoint) {
+      margin-top: 16px;
+    }
+  }
+
+  .portfolio-widget__select {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+  }
+
+  .portfolio-widget__select-picture {
+    width: 55px;
+    height: 55px;
+    padding: 4px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+
+    @include respond-to(small) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .portfolio-widget__asset-btns {
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    margin: -4px;
+
+    @include respond-to-custom($custom-breakpoint) {
+      justify-content: flex-start;
+      margin-bottom: 16px;
+    }
+
+    // @include respond-to-custom($custom-breakpoint) {
+    //   flex-direction: row;
+    // }
+  }
+
+  .portfolio-widget__select-scale-btn {
+    @include button();
+    @include button-flat();
+    font-weight: 400;
+  }
+
+  .portfolio-widget__select-scale-btn--selected {
+    font-weight: 700;
+  }
+
+  .portfolio-widget__asset-btn {
+    @include button();
+    @include button-raised();
+    margin: 4px;
+
+    width: 180px;
     position: relative;
-    bottom: 1.55rem;
-  }
+    height: 36px;
 
-  .portfolio-widget__asset {
-    text-align: center;
-
-    @include respond-to(medium) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    @include respond-to-custom($custom-breakpoint) {
+      width: 160px;
       margin-bottom: 0;
-      padding-bottom: 0;
-      padding: 0 8px;
+      padding-left: 30px;
     }
   }
 
-  .portfolio-widget__asset-picture {
-    margin-bottom: 32px;
-
-    @include respond-to(medium) {
-      margin-right: 16px;
-      margin-bottom: 0;
-    }
-
-    img {
-      width: 142px;
-      height: 142px;
-
-      @include respond-to(medium) {
-        width: 80px;
-        height: 80px;
-        padding: 0;
-      }
-    }
+  .portfolio-widget__asset-available {
+    margin-top: 32px;
   }
 
   .portfolio-widget__asset-value {
-    margin-bottom: 16px;
-    font-size: 24px;
-    letter-spacing: .2px;
-
-    @include respond-to(medium) {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    @include respond-to(xsmall) {
-      font-size: 16px;
-    }
+    font-size: 30px;
+    color: $col-md-primary;
   }
 
   .portfolio-widget__asset-usd {
+    margin-top: 8px;
     font-size: 16px;
-    letter-spacing: .2px;
-    color: rgba(0, 0, 0, .55);
+    color: rgba($col-md-primary, .5);
+  }
 
-    @include respond-to(xsmall) {
-      font-size: 14px;
+  .portfolio-widget__asset-btn-icon {
+    color: $white !important;
+    transform: scale(.8);
+    margin-top: -10px;
+    position: absolute;
+    left: 10px;
+    top: calc(50% - 1px);
+
+    @include respond-to-custom($custom-breakpoint) {
+      left: 6px;
     }
   }
 
-  .portfolio-widget__actions {
-    @include respond-to(medium) {
-      padding: 0;
-      margin-left: auto;
-    }
+  .portfolio-widget__asset-btn-icon--rotate {
+    transform: rotate(-45deg) scale(.8);
+    top: calc(50% - 4px);
   }
 
 </style>

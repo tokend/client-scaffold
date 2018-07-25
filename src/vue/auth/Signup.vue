@@ -1,74 +1,55 @@
 <template>
-  <div class="auth-page md-layout md-alignment-center-center">
+  <div>
+    <h2 class="auth-page__form-title">{{ i18n.lbl_get_started() }}</h2>
+    <form novalidate @submit.prevent="submit">
+      <input-field class="input-field"
+                  id="login-email"
+                  name="email"
+                  :label="i18n.su_email()"
+                  :errorMessage="errorMessage('email')"
+                  v-model.trim="form.email"
+                  v-validate="'required|email'"
+      />
 
-    <form novalidate
-          class="auth-page__form
-                 md-layout
-                 md-alignment-center-center"
-          @submit.prevent="submit">
+      <input-field class="input-field"
+                  id="login-password"
+                  type="password"
+                  name="password"
+                  :togglePassword="true"
+                  :label="i18n.su_pwd()"
+                  :errorMessage="errorMessage('password')"
+                  v-model.trim="form.password"
+                  v-validate="'required|min:6'"
+      />
 
-      <md-card
-        class="auth-page__card
-               md-layout-item
-               md-size-30
-               md-medium-size-45
-               md-small-size-65
-               md-xsmall-size-100">
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+      <input-field class="input-field"
+                  id="login-confirm-password"
+                  type="password"
+                  name="confirm-password"
+                  :label="i18n.su_confirm()"
+                  :togglePassword="true"
+                  :errorMessage="errorMessage('confirm-password')"
+                  v-model.trim="form.confirmPassword"
+                  v-validate="'required|confirmed:password'"
+                  data-vv-as="password"
+      />
 
-        <md-card-header>
-          <div class="md-title">{{ i18n.su_sign_up() }}</div>
-        </md-card-header>
-
-
-        <md-card-content>
-          <input-field class="input-field"
-                       id="login-email"
-                       name="email"
-                      :label="i18n.su_email()"
-                      :errorMessage="errorMessage('email')"
-                     v-model.trim="form.email"
-                     v-validate="'required|email'"
-          />
-
-          <input-field class="input-field"
-                       id="login-password"
-                       type="password"
-                       name="password"
-                      :togglePassword="true"
-                      :label="i18n.su_pwd()"
-                      :errorMessage="errorMessage('password')"
-                     v-model.trim="form.password"
-                     v-validate="'required|min:6'"
-          />
-
-          <input-field class="input-field"
-                       id="login-confirm-password"
-                       type="password"
-                       name="confirm-password"
-                      :label="i18n.su_confirm()"
-                      :togglePassword="true"
-                      :errorMessage="errorMessage('confirm-password')"
-                     v-model.trim="form.confirmPassword"
-                     v-validate="'required|confirmed:password'"
-               data-vv-as="password"
-          />
-
-          <div class="auth-page__bottom">
-            <div class="auth-page__tips">
-              <div class="tips__tip">
-                {{ i18n.su_already_have_an_account() }}
-                <router-link :to="routes.login">{{ i18n.su_sign_in() }}</router-link>
-              </div>
-            </div>
-          </div>
-        </md-card-content>
-        <md-dialog-actions class="auth-page__actions">
-          <md-button type="submit" class="md-primary" :disabled="isPending">
-              {{ i18n.su_sign_up() }}
-          </md-button>
-        </md-dialog-actions>
-      </md-card>
+      <div class="auth-page__submit">
+        <button type="submit"
+                class="auth-page__submit-btn"
+                :disabled="isPending"
+                v-ripple>
+          {{ i18n.su_sign_up() }}
+        </button>
+      </div>
+      <div class="auth-page__tips">
+        <div class="auth-page__tip">
+          {{ i18n.su_already_have_an_account() }}
+          <router-link class="auth-page__tip-link" :to="routes.login">
+            {{ i18n.su_sign_in() }}
+          </router-link>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -117,7 +98,7 @@
         } catch (error) {
           switch (error.constructor) {
             case errors.ConflictError:
-              error.showBanner(i18n.user_exists())
+              error.showBanner(i18n.auth_user_exists())
               break
             default:
               ErrorHandler.processUnexpected(error)

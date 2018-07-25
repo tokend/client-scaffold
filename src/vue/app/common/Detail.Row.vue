@@ -59,11 +59,14 @@
   }
 
   .detail-row__key {
-    color: $col-md-unfocused;
+    color: #837fa1;
+    // font-size: 12px;
   }
 
   .detail-row__value {
     position: relative;
+    color: #3a4180;
+    // font-size: 12px;
 
     .detail-row__clipboard-btn {
       @include center-vertically;

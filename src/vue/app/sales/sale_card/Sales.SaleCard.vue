@@ -59,18 +59,15 @@
 
   $padding-side: 20px;
 
-  $ratio_16: 335px;
+  $ratio_16: 100%;
   $ratio_9: $ratio_16 * (9/16);
 
   .card {
-    $height: 26rem;
     font-weight: 200;
     overflow: hidden;
     position: relative;
-    height: $height;
-    max-height: $height;
-    min-height: $height;
     width: $ratio_16;
+    color: $col-md-primary;
 
     &:before {
       bottom: 0;
@@ -85,10 +82,10 @@
 
   .card__image-wrp {
     position: relative;
-    height: $ratio_9;
-    width: $ratio_16;
+    padding-bottom: $ratio_9;
 
     img {
+      position: absolute;
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -97,21 +94,10 @@
 
   .card__content {
     padding: 1.2rem 1rem;
-    position: relative;
     height: 15rem;
-
-    &:before {
-      background-size: 120%;
-      background-position: 31% 83%;
-      background-repeat: no-repeat;
-      bottom: 0;
-      content: '';
-      left: 0;
-      right: 0;
-      position: absolute;
-      opacity: 0.03;
-      top: 0;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .card__name {
@@ -119,7 +105,6 @@
   }
 
   .card__header {
-    margin-bottom: 1rem;
     position: relative;
   }
 
@@ -135,10 +120,8 @@
   }
 
   .card__description {
-    margin-bottom: 3rem;
-
     $line-height: 1.15rem;
-    $max-lines: 4;
+    $max-lines: 3;
     text-align: justify;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -146,16 +129,8 @@
     -webkit-line-clamp: $max-lines;
     -webkit-box-orient: vertical;
     line-height: $line-height;
-    max-height: 4.6rem;
-    min-height: 4.6rem;
-  }
-
-  .card__progress-wrp {
-    @include center-horizontally;
-
-    bottom: 2rem;
-    position: absolute;
-    width: 88%;
+    max-height: 3.45rem;
+    min-height: 3.45rem;
   }
 
   .card__state-tip {

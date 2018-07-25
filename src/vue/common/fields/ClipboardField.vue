@@ -46,33 +46,46 @@
 <style lang="scss" scoped>
   @import '../../../scss/variables';
   @import '../../../scss/mixins';
+  @import './scss/fields-variables.scss';
 
   .clipboard {
     align-items: center;
-    border-bottom: 1px solid $col-unfocused;
     display: flex;
     justify-content: space-between;
-    max-width: 100%;
+    flex: 1;
+    width: 100%;
+    @include material-border($field-color-focused, $field-color-unfocused);
+  }
+
+  .clipboard__outer {
+    width: 100%;
   }
 
   .clipboard__value {
-    max-width: 100%;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: $field-color-text;
+    display: inline-block;
+    padding: $field-input-padding;
+    @include text-font-sizes;
   }
 
   .clipboard__value-outer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-
-    @include respond-to(xsmall) {
-      max-width: 80%;
-    }
+    position: relative;
+    width: 75%;
+    width: calc(100% - 48px);
   }
 
   .clipboard__label {
     font-size: $fs-tip;
-    color: $col-unfocused;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    color: $field-color-unfocused;
+    @include label-font-sizes;
   }
 </style>

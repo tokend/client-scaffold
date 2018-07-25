@@ -1,65 +1,50 @@
 <template>
-  <div class="auth-page md-layout md-alignment-center-center">
+  <div>
+    <h2 class="auth-page__form-title">{{ i18n.lbl_signin() }}</h2>
+    <form novalidate @submit.prevent="submit">
+      <input-field class="input-field"
+        id="login-email"
+        v-model.trim="form.email"
+        :label="i18n.lbl_email()"
+        name="email"
+        :errorMessage="errorMessage('email')"
+                    v-validate="'required'"
+      />
+      <input-field
+        class="input-field"
+        id="login-password"
+        v-model.trim="form.password"
+        type="password"
+        :togglePassword="true"
+        :label="i18n.lbl_pwd()"
+        name="password"
+        :errorMessage="errorMessage('password')"
+        v-validate="'required'"
+      />
 
-    <form novalidate
-          class="auth-page__form
-                 md-layout
-                 md-layout-item
-                 md-alignment-center-center"
-          @submit.prevent="submit">
+      <div class="auth-page__submit">
+        <button type="submit"
+                class="auth-page__submit-btn"
+                :disabled="isPending"
+                v-ripple>
+          {{ i18n.log_signin() }}
+        </button>
+      </div>
 
-      <md-card
-        class="auth-page__card
-               md-layout-item
-               md-size-30
-               md-medium-size-45
-               md-small-size-65
-               md-xsmall-size-100">
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-
-        <md-card-header>
-          <div class="md-title">{{ i18n.log_signin() }}</div>
-        </md-card-header>
-
-        <md-card-content>
-          <input-field class="input-field"
-            id="login-email"
-            v-model.trim="form.email"
-            :label="i18n.lbl_email()"
-            name="email"
-            :errorMessage="errorMessage('email')"
-                       v-validate="'required'"
-          />
-          <input-field
-            class="input-field"
-            id="login-password"
-            v-model.trim="form.password"
-            type="password"
-            :togglePassword="true"
-            :label="i18n.lbl_pwd()"
-            name="password"
-            :errorMessage="errorMessage('password')"
-            v-validate="'required'"
-          />
-
-          <div class="auth-page__bottom">
-            <div class="auth-page__tips">
-              <div class="tips__tip">
-                {{ i18n.log_dont_have_an_account() }}
-                <router-link :to="{ name: 'signup' }">{{ i18n.log_register_now() }}</router-link>
-              </div>
-              <div class="tips__tip">
-                {{ i18n.log_forgot_password() }}
-                <router-link :to="{ name: 'recovery' }">{{ i18n.log_recover_it() }}</router-link>
-              </div>
-            </div>
-            
-          </div>
-        </md-card-content>
-        <md-dialog-actions class="auth-page__actions">
-          <md-button type="submit" class="md-primary" :disabled="isPending">{{ i18n.log_signin() }}</md-button>
-        </md-dialog-actions>
-      </md-card>
+      <div class="auth-page__tips">
+        <div class="auth-page__tip">
+          {{ i18n.log_dont_have_an_account() }}
+          <router-link class="auth-page__tip-link" :to="{ name: 'signup' }">
+            {{ i18n.log_register_now() }}
+          </router-link>
+        </div>
+        <div class="auth-page__tip">
+          {{ i18n.log_forgot_password() }}
+          <router-link class="auth-page__tip-link" :to="{ name: 'recovery' }">
+            {{ i18n.log_recover_it() }}
+          </router-link>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -140,7 +125,7 @@
         } catch (error) {
           switch (error.constructor) {
             case errors.NotFoundError:
-              error.showBanner(i18n.not_found())
+              error.showBanner(i18n.auth_not_found())
               break
             case errors.EmailNotVerifiedError:
               this.handleNotVerifiedError()
@@ -192,7 +177,7 @@
             kdf.attributes()
           )
           await emailService.sendResendEmailRequest(walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.email_sent())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_email_sent())
         } catch (error) {
           ErrorHandler.processUnexpected(error)
         }
@@ -202,7 +187,7 @@
       async verifyEmail () {
         try {
           await emailService.sendVerifyEmailRequest(this.verifyEmailParams.token, this.verifyEmailParams.walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.email_verified())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_email_verified())
         } catch (error) {
           console.error(error)
         }

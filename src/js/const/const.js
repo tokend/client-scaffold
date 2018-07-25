@@ -25,6 +25,8 @@ export { SIGNER_TYPES } from './signer_types.const'
 export { ACCOUNT_STATES } from './account.const'
 export { DOCUMENT_POLICIES } from './document-policies.const'
 
+export { PAGES_NAMES } from './pages-names.const'
+export { TX_STATES } from './transaction_statuses'
 export {
   REQUEST_TYPES,
   FEE_TYPES,

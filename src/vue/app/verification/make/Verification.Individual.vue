@@ -1,5 +1,5 @@
 <template>
-  <div class="kyc-form md-layout md-alignment-center-center">
+  <div class="kyc-form">
     <form novalidate @submit.prevent="submit"
           class="md-layout-item
                   md-size-50
@@ -10,29 +10,28 @@
       <md-card>
         <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-        <md-card-header>
-          <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
-        </md-card-header>
+      <template v-for="(row, r) in schema.rows">
 
-        <md-card-content>
-          <md-steppers md-vertical :md-active-step.sync="activeStep">
-            <md-step v-for="(step, i) in steps"
-                    :key="i"
-                    :id="step.name"
-                    :md-label="step.label"
-                    :md-done.sync="step.done"
-            >
-              <component :is="step.component"
-                        :schema="step.schema"
-                        :activeStep="activeStep"
-                        :finalStep="finalStep"
-                        :kyc="kyc"
-                        @kyc-update="handleKycUpdate($event, { step, i })"
-                        @kyc-edit-end="handleKycEditEnd"
-              />
-            </md-step>
-          </md-steppers>
-        </md-card-content>
+          <md-card-content>
+            <md-steppers md-vertical :md-active-step.sync="activeStep">
+              <md-step v-for="(step, i) in steps"
+                      :key="i"
+                      :id="step.name"
+                      :md-label="step.label"
+                      :md-done.sync="step.done"
+              >
+                <component :is="step.component"
+                          :schema="step.schema"
+                          :activeStep="activeStep"
+                          :finalStep="finalStep"
+                          :kyc="kyc"
+                          @kyc-update="handleKycUpdate($event, { step, i })"
+                          @kyc-edit-end="handleKycEditEnd"
+                />
+              </md-step>
+            </md-steppers>
+          </md-card-content>
+        </template>
       </md-card>
     </form>
   </div>

@@ -1,11 +1,6 @@
 <template>
   <div class="tx-preissuance-upload">
     <md-table md-card class="tx-preissuance-upload__table">
-      <md-table-toolbar class="tx-preissuance-upload__table-toolbar">
-        <h1 class="tx-preissuance-upload__table-title md-title">{{ i18n.preis_requests() }}</h1>
-        <div class="tx-preissuance-upload__select-outer">
-        </div>
-      </md-table-toolbar>
       <template v-if="list.length">
         <md-table-row class="tx-preissuance-upload__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
@@ -41,16 +36,21 @@
          <md-table-row v-if="!isLoaded">
             <md-table-cell colspan="7">
                 <div class="tx-history__btn-outer">
-                <md-button @click="more" :disabled="isLoading">{{ i18n.lbl_view_more() }}</md-button>
+                  <button v-ripple
+                          @click="more"
+                          class="app__button-flat"
+                          :disabled="isLoading">
+                    {{ i18n.lbl_view_more() }}
+                  </button>
                 </div>
             </md-table-cell>
          </md-table-row>
       </template>
       <template v-else>
         <div class="tx-preissuance-upload__no-requests">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.preis_no_token_creation_requests() }}</h2>
-          <p>{{ i18n.preis_no_token_creation_requests_desc() }}</p>
+          <no-data-message icon-name="trending_up"
+            :msg-title="i18n.preis_no_token_creation_requests()"
+            :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
         </div>
       </template>
     </md-table>
@@ -61,6 +61,7 @@
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '../../../../js/i18n'
@@ -70,7 +71,7 @@ import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
 export default {
   mixins: [FormMixin],
-  components: { Detail },
+  components: { Detail, NoDataMessage },
   data: _ => ({
     i18n,
     isLoading: false,

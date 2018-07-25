@@ -1,29 +1,39 @@
 <template>
   <form class="step" @submit.prevent="submit">
-    <h3>{{ i18n.sale_tell_about_fund() }}</h3>
-    <div class="step-row">
-        <div class="video-container">
-            <a @click="uploadVideo = true">Upload video from YouTube</a>
-            <md-dialog-prompt
-                :md-active.sync="uploadVideo"
-                v-model="form.youtubeId"
-                md-title="You can find YouTube video ID in it's URL"
-                md-input-maxlength="30"
-                md-input-placeholder="Type your YouTube video ID..."
-                md-confirm-text="Done" />
-
-            <iframe :src="`https://www.youtube.com/embed/${form.youtubeId}`"
-                    width="320px" height="180px"
-                    v-if="form.youtubeId"></iframe>
+    <div class="app__form-row">
+      <div class="video-container" :class="{ 'video-container--empty': !form.youtubeId }">
+        <div v-if="!form.youtubeId">
+          <p>Insert YouTube video by its ID</p>
+          <button @click="uploadVideo = true"
+                  type="button"
+                  class="app__button-raised">
+            Enter ID
+          </button>
         </div>
+        <md-dialog-prompt
+          :md-active.sync="uploadVideo"
+          v-model="form.youtubeId"
+          md-title="You can find YouTube video ID in its URL"
+          md-input-maxlength="30"
+          md-input-placeholder="Type your YouTube video ID..."
+          md-confirm-text="Done" />
+
+        <div class="video-container__iframe-wrapper" v-show="form.youtubeId">
+          <iframe :src="`https://www.youtube.com/embed/${form.youtubeId}`"
+                  class="video-container__iframe"></iframe>
+          <a @click="uploadVideo = true">Insert another YouTube video</a>
+        </div>
+      </div>
     </div>
-    <div class="step-row">
+    <div class="app__form-row">
       <description-editor class="description-step__editor" v-model="form.description"/>
     </div>
-    <div class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn">
+    <div class="app__form-actions">
+      <button v-ripple
+              type="submit"
+              class="app__form-submit-btn">
         {{ i18n.sale_create_sale() }}
-      </md-button>
+      </button>
     </div>
   </form>
 </template>
@@ -99,8 +109,10 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   @import './step.scss';
+  @import '~@scss/mixins';
+  @import '~@scss/variables';
 
   .step-row {
     display: flex;
@@ -108,13 +120,61 @@
     align-items: flex-start;
   }
 
+  .step-row--description {
+    margin-top: 8px;
+  }
+
   .video-container {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px dashed transparent;
+    border-radius: 4px;
+    text-align: center;
+    height: 300px;
+
+    & button {
+      margin-top: 24px;
+    }
+
+    @include respond-to(small) {
+      height: 220px;
+    }
   }
-  
+
+  .video-container--empty {
+    border-color: $col-md-primary;
+    padding: 20px;
+  }
+
+  .video-container__iframe-wrapper {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 24px;
+    color: $col-md-primary;
+
+    & a {
+      margin-top: 8px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .video-container__iframe {
+    width: 100%;
+    height: 300px;
+
+    @include respond-to(small) {
+      height: 220px;
+    }
+  }
+
   .step__action {
     margin-top: 1rem;
   }
-  
+
 </style>

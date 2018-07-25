@@ -11,7 +11,7 @@ const template = `
   <form novalidate>
    <md-dialog :md-fullscreen="false" :md-active.sync="isOpened">
     <md-dialog-title>{{ i18n.mod_tfa_required() }}</md-dialog-title>
-    
+
     <div class="app__dialog-inner">
       <input-field
        v-model="form.code"
@@ -22,14 +22,14 @@ const template = `
         :label="i18n.lbl_tfa_code()"
       />
     </div>
-      
+
     <md-dialog-actions>
-     <md-button class="md-primary" @click="close">{{ i18n.lbl_cancel() }}</md-button>
-     <md-button class="md-primary" :disabled="isPending" @click="submit">{{ i18n.lbl_submit() }}</md-button>
+      <button v-ripple @click="submit" class="app__button-flat">{{ i18n.lbl_cancel() }}</button>
+      <button v-ripple @click="close" class="app__button-flat" :disabled="isPending">{{ i18n.lbl_submit() }}</button>
     </md-dialog-actions>
-    
+
    </md-dialog>
-  </form>   
+  </form>
  `
 
 export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
@@ -58,7 +58,7 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
             await factorsService.verifyFactor(factorId, token, this.form.code, walletId)
           } catch (error) {
             if (error instanceof errors.TFAWrongCodeError) {
-              EventDispatcher.dispatchShowErrorEvent(i18n.tfa_wrong_code())
+              EventDispatcher.dispatchShowErrorEvent(i18n.auth_tfa_wrong_code())
               this.enable()
               return
             }

@@ -1,12 +1,12 @@
 <template>
-  <md-card>
-    <md-card-header>
+  <div class="app__card">
+    <div class="app__card-header">
       <div class="md-title">Wallet tokens</div>
-    </md-card-header>
+    </div>
     <token-list
       v-model="tokenCode"
       :tokens="userWalletTokens"/>
-  </md-card>
+  </div>
 </template>
 
 <script>

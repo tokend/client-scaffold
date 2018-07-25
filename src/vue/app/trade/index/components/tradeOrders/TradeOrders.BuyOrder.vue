@@ -1,11 +1,11 @@
 <template>
-  <form class="md-layout" @submit.prevent="submit">
-    <md-card class="md-layout-item md-size-100 md-small-size-100 md-elevation-0">
-      <md-card-header>
+  <div class="buy-order__card app__card">
+    <form @submit.prevent="submit">
+      <div class="app__card-header">
         <div class="md-title">{{ i18n.trd_create_buy_order() }}</div>
-      </md-card-header>
+      </div>
 
-      <md-card-content>
+      <div class="app__card-content">
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
             <input-field
@@ -46,13 +46,18 @@
             />
           </div>
         </div>
-      </md-card-content>
+      </div>
 
-      <md-card-actions>
-        <md-button type="submit" class="md-primary" :disabled="isPending">Buy</md-button>
-      </md-card-actions>
-    </md-card>
-  </form>
+      <div class="app__card-actions">
+        <button v-ripple
+                type="submit"
+                class="app__form-submit-btn"
+                :disabled="!+form.quoteAmount || isPending">
+          {{ i18n.lbl_buy() }}
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -139,4 +144,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .buy-order__card {
+    .app__card-actions {
+      justify-content: flex-start;
+    }
+  }
 </style>

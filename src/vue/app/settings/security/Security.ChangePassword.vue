@@ -35,8 +35,19 @@
           </div>
 
           <md-dialog-actions class="md-layout md-alignment-center-right">
-            <md-button type="button" class="md-primary" :disabled="isPending" @click="isFormOpened = !isFormOpened">Cancel</md-button>
-            <md-button type="submit" class="md-primary" :disabled="isPending">Submit</md-button>
+            <button v-ripple
+                    type="button"
+                    @click="isFormOpened = !isFormOpened"
+                    class="app__button-flat"
+                    :disabled="isPending">
+              {{ i18n.lbl_cancel() }}
+            </button>
+            <button v-ripple
+                    type="submit"
+                    class="app__button-flat"
+                    :disabled="isPending">
+              {{ i18n.lbl_submit() }}
+            </button>
           </md-dialog-actions>
         </form>
     </md-dialog>

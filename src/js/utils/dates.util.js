@@ -28,3 +28,7 @@ export function humanizePastDate (date) {
     sameElse: 'DD MMMM YYYY [at] HH:mm'
   })
 }
+
+export function getDateByDMY (date) { // Day, Month, Year
+  return moment(date).format('DD MMM YYYY')
+}
