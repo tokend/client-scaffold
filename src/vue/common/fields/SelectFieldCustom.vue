@@ -115,7 +115,7 @@
   }
 
   .select__label {
-    color: $col-md-unfocused;
+    color: $col-md-primary-inactive;
     font-size: 12px;
   }
 

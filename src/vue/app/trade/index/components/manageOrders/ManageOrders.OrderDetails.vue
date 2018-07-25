@@ -76,9 +76,7 @@
 
   .cancel-button {
     @include button-accent();
-
-    margin-left: auto;
-    margin-right: 0;
+    margin-left: -16px;
     margin-top: 24px;
     display: block;
 
