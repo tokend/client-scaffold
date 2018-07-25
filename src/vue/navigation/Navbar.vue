@@ -165,15 +165,16 @@
           this.hasSeenNotif = true
         }
       },
-      detectOpenedModals () {
-        const listener = (e) => {
-          if (e.target.closest('.navbar__notif-card') || e.target.closest('.navbar__user-card')) return
-          this.isUserCardOpen = false
-          this.isNotificationCardOpen = false
-          document.removeEventListener('click', listener)
-        }
-        document.addEventListener('click', listener)
-      },
+      // TODO: fix and uncomment
+      // detectOpenedModals () {
+      //   const listener = (e) => {
+      //     if (e.target.closest('.navbar__notif-card') || e.target.closest('.navbar__user-card')) return
+      //     this.isUserCardOpen = false
+      //     this.isNotificationCardOpen = false
+      //     document.removeEventListener('click', listener)
+      //   }
+      //   document.addEventListener('click', listener)
+      // },
       signOut () {
         this.LOG_OUT()
       },
