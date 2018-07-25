@@ -73,7 +73,7 @@
   import { TX_STATES } from '../../../../js/const/const'
   import NoDataMessage from '@/vue/common/messages/NoDataMessage'
   import { humanizePastDate } from '../../../../js/utils/dates.util'
-  import TxDetails from '../../history/index/History.TxDetails'
+  import TxDetails from './Dashboard.TxDetails'
 
   import get from 'lodash/get'
 

@@ -132,6 +132,40 @@ html,body {
     }
   }
 
+  & .app__table-details {
+    font-size: 1.6 * $point;
+    line-height: 1.5;
+
+    & > tr > td:first-child {
+      color: $col-md-primary-inactive;
+    }
+
+    & > tr > td:last-child {
+      color: $col-md-primary;
+      padding-left: 3 * $point;
+    }
+
+    & .app__table-details-counterparty {
+      max-width: 25 * $point;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.app__table-details-copyable {
+        padding-right: 25px;
+        position: relative;
+      }
+    }
+
+    & .app__table-details-copyable {
+      & > span {
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+      }
+    }
+  }
+
   & ul, li {
     @include list-reset()
   }

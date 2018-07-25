@@ -84,7 +84,7 @@
 
               <h4 class="tokens__props-heading">{{ i18n.lbl_token_details() }}</h4>
               <div class="explore-tokens__token-details-inner">
-                <table class="tokens__details-table">
+                <table class="app__table-details">
                   <tr>
                     <td>{{ i18n.lbl_code() }}</td>
                     <td>{{ selected.code }}</td>
@@ -370,20 +370,6 @@ export default {
 
 .tokens__actions {
   margin-top: 3 * $point;
-}
-
-.tokens__details-table {
-  font-size: 1.6 * $point;
-  line-height: 1.5;
-
-  & > tr > td:first-child {
-    color: $col-md-primary-inactive;
-  }
-
-  & > tr > td:last-child {
-    color: $col-md-primary;
-    padding-left: 3 * $point;
-  }
 }
 
 .tokens__open-doc-link {
