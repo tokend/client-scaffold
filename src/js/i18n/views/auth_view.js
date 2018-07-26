@@ -12,7 +12,7 @@ export default {
   auth_recovered: 'Account successfully recovered. You can now login with new credentials',
   auth_tfa_wrong_code: 'Wrong code',
   auth_phrase: 'Create, distribute and trade',
-  auth_title: 'Start trading cryptocurrencies <br> in minutes',
+  auth_title: 'Start tokenizing <br> your assets <br> in minutes',
   auth_user_exists: 'User with such email already exists',
   auth_confirmation_email_path_1: 'A confirmation email was sent to ',
   auth_confirmation_email_path_2: '. Please check your inbox to verify your account.',
