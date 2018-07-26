@@ -10,10 +10,10 @@
 </template>
 
 <script>
-  import { chartsService } from '../../../../js/services/charts.service'
-  import { errors } from '../../../../js/errors/factory'
-  import config from '../../../../config'
-  import { commonEvents } from '../../../../js/events/common_events'
+  import { chartsService } from '@/js/services/charts.service'
+  import { errors } from '@/js/errors/factory'
+  import config from '@/config'
+  import { commonEvents } from '@/js/events/common_events'
 
   import Chart from './Dashboard.ChartRenderer'
 
@@ -31,7 +31,8 @@
       isActualData: false,
       isLoading: false,
       common: {
-        precision: config.DECIMAL_POINTS
+        precision: config.DECIMAL_POINTS,
+        defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET
       }
     }),
     computed: {
@@ -55,7 +56,7 @@
         this.isLoading = true
         try {
           this.isActualData = true
-          this.data = (await chartsService.loadChartsForToken(asset)).data()
+          this.data = (await chartsService.loadChartsForTokenPair(asset, this.common.defaultQuoteAsset)).data()
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             this.isActualData = false
