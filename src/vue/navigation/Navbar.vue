@@ -20,11 +20,11 @@
           </md-card-content>
         </md-card> -->
       </div>
-      <div class="navbar__user-picture" @click="toggleUserCardVisibility">
+      <div class="navbar__user-picture" @click="isUserCardOpen = true">
         {{ userEmail.substr(0, 1).toUpperCase() }}
       </div>
       <div class="navbar__user-info">
-        <div class="navbar__user-name" @click="toggleUserCardVisibility">
+        <div class="navbar__user-name" @click="isUserCardOpen = true">
           {{ userEmail }}
           <md-icon class="navbar__user-name-icon" :class="{ 'navbar__user-name-icon--active': isUserCardOpen }">
             keyboard_arrow_down
@@ -113,6 +113,7 @@
   import { attachEventHandler } from '../../js/events/helpers'
   import { vueRoutes } from '../../vue-router/const'
   import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
+  import { closeElement } from '@/js/helpers/closeElement'
 
   export default {
     name: 'root-navbar',
@@ -153,28 +154,16 @@
       toggleUserCardVisibility () {
         this.isUserCardOpen = !this.isUserCardOpen
         this.isNotificationCardOpen = false
-        this.detectOpenedModals()
       },
 
       toggleNotificationCardVisibility () {
         this.isNotificationCardOpen = !this.isNotificationCardOpen
         this.isUserCardOpen = false
-        this.detectOpenedModals()
         if (!this.hasSeenNotif) {
           localStorage.setItem('seen', 'User saw it')
           this.hasSeenNotif = true
         }
       },
-      // TODO: fix and uncomment
-      // detectOpenedModals () {
-      //   const listener = (e) => {
-      //     if (e.target.closest('.navbar__notif-card') || e.target.closest('.navbar__user-card')) return
-      //     this.isUserCardOpen = false
-      //     this.isNotificationCardOpen = false
-      //     document.removeEventListener('click', listener)
-      //   }
-      //   document.addEventListener('click', listener)
-      // },
       signOut () {
         this.LOG_OUT()
       },
@@ -186,6 +175,14 @@
         this.isUserCardOpen = false
         this.isNotificationCardOpen = false
         this.$router.push(vueRoutes.verification)
+      }
+    },
+    watch: {
+      isUserCardOpen (value) {
+        closeElement('navbar__user-card', value, this.toggleUserCardVisibility)
+      },
+      isNotificationCardOpen (value) {
+        closeElement('navbar__user-notif', value, this.toggleNotificationCardVisibility)
       }
     }
   }

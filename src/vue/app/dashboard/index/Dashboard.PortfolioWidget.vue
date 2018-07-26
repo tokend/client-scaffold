@@ -118,7 +118,7 @@
       ]),
       tokensList () {
         return this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
-                          .filter(token => token.name) // TODO: temp. hack
+                          // .filter(token => token.name) // TODO: temp. hack
                           .filter(token => token.code !== this.config.DEFAULT_QUOTE_ASSET)
                           .map(item => `${item.name} (${item.code})`)
       },
