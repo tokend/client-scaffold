@@ -1,9 +1,7 @@
 <template>
   <div class="dashboard">
     <template v-if="isLoading">
-      <p class="app__page-explanations app__page-explanations--secondary">
-        {{ i18n.dash_loading() }}
-      </p>
+      <loader :message="i18n.dash_loading()"/>
     </template>
     <template v-else>
       <portfolio-widget class="md-layout-item dashboard__portfolio"
@@ -28,13 +26,15 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '@/vuex/types'
   import { i18n } from '@/js/i18n'
+  import Loader from '@/vue/app/common/Loader'
 
   export default {
     name: 'dashboard',
     components: {
       PortfolioWidget,
       InfoWidget,
-      Chart
+      Chart,
+      Loader
     },
     data: _ => ({
       currentAsset: null,

@@ -8,9 +8,7 @@
     </template>
 
     <template v-if="isLoading">
-      <p class="app__page-explanations app__page-explanations--secondary">
-        {{ i18n.tokens_loading() }}
-      </p>
+      <loader :message="i18n.tokens_loading()"/>
     </template>
 
     <div class="" v-else>
@@ -139,20 +137,21 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { accountsService } from '../../../js/services/accounts.service'
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../js/errors/error_handler'
-import { vuexTypes } from '../../../vuex/types'
-import { confirmAction } from '../../../js/modals/confirmation_message'
-import { i18n } from '../../../js/i18n'
+import { accountsService } from '@/js/services/accounts.service'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { vuexTypes } from '@/vuex/types'
+import { confirmAction } from '@/js/modals/confirmation_message'
+import { i18n } from '@/js/i18n'
 
-import Detail from '../common/Detail.Row'
+import Detail from '@/vue/app/common/Detail.Row'
+import Loader from '@/vue/app/common/Loader'
 import SubmitterMixin from '../../common/mixins/submitter.mixin'
 
 export default {
   name: 'TokensExplore',
   mixins: [SubmitterMixin],
-  components: { Detail },
+  components: { Detail, Loader },
   data: _ => ({
     selected: null,
     isLoading: false,

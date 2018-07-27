@@ -12,6 +12,7 @@
           v-model="filters.token"
           class="searcher__filter"
           name="token-name"
+          :whiteAutofill="true"
           title="Token symbol"
           :label="i18n.lbl_token_code()"
         />

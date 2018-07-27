@@ -2,9 +2,7 @@
   <div class="create-sale">
     <div>
       <template v-if="!isReady">
-        <p class="app__page-explanations app__page-explanations--secondary">
-          {{ i18n.sale_create_loading() }}
-        </p>
+        <loader :message="i18n.sale_create_loading()"/>
       </template>
       <template v-else-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
         <not-available-card icon='work'
@@ -64,21 +62,23 @@
 import FormMixin from '../../common/mixins/form.mixin'
 import RequestList from './SaleCreation.RequestList'
 import NotAvailableCard from '../common/NotAvailableCard'
+import Loader from '@/vue/app/common/Loader'
 import steps from './specs/steps.schema'
-import config from '../../../config'
-import { i18n } from '../../../js/i18n'
-import { SaleRequestRecord } from '../../../js/records/sale_request.record'
+import config from '@/config'
+import { i18n } from '@/js/i18n'
+import { SaleRequestRecord } from '@/js/records/sale_request.record'
 import { SaleListManager } from './specs/sale-list-manager'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../vuex/types'
-import { salesService } from '../../../js/services/sales.service'
-import { DateHelper } from '../../../js/helpers/date.helper'
-import { ErrorHandler } from '../../../js/errors/error_handler'
-import { ACCOUNT_TYPES } from '../../../js/const/const'
-import { confirmAction } from '../../../js/modals/confirmation_message'
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { reviewableRequestsService } from '../../../js/services/reviewable_requests.service'
+import { vuexTypes } from '@/vuex/types'
+import { salesService } from '@/js/services/sales.service'
+import { DateHelper } from '@/js/helpers/date.helper'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { ACCOUNT_TYPES } from '@/js/const/const'
+import { confirmAction } from '@/js/modals/confirmation_message'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { reviewableRequestsService } from '@/js/services/reviewable_requests.service'
 import _get from 'lodash/get'
+
 const VIEW_MODES = {
   list: 'list',
   edit: 'edit',
@@ -87,7 +87,11 @@ const VIEW_MODES = {
 
 export default {
   name: 'CreateSale-index',
-  components: { RequestList, NotAvailableCard },
+  components: {
+    RequestList,
+    NotAvailableCard,
+    Loader
+  },
   mixins: [FormMixin],
   props: ['id'],
   data: _ => ({
