@@ -1,36 +1,22 @@
 <template>
-  <div class="create-sale md-layout md-alignment-center-center">
-    <div class="md-layout-item
-                    md-size-50
-                    md-medium-size-65
-                    md-small-size-95
-                    md-xsmall-size-100">
-      <md-card>
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-        <md-card-header>
-          <div class="md-title">{{ i18n.kyc_form_submit() }}</div>
-        </md-card-header>
-        <md-card-content>
-          <md-steppers md-vertical :md-active-step.sync="activeStep">
-            <md-step v-for="(step, i) in steps"
-                    :key="i"
-                    :id="step.name"
-                    :md-label="step.label"
-                    :md-done.sync="step.done"
-            >
-              <component :is="step.component"
-                        :schema="step.schema"
-                        :activeStep="activeStep"
-                        :finalStep="finalStep"
-                        :kyc="kyc"
-                        @kyc-update="handleKycUpdate($event, { step, i })"
-                        @kyc-edit-end="handleKycEditEnd"
-              />
-            </md-step>
-          </md-steppers>
-        </md-card-content>
-      </md-card>
-    </div>
+  <div class="app__page-content-wrp">
+    <md-steppers md-vertical :md-active-step.sync="activeStep">
+      <md-step v-for="(step, i) in steps"
+              :key="i"
+              :id="step.name"
+              :md-label="step.label"
+              :md-done.sync="step.done"
+      >
+        <component :is="step.component"
+                  :schema="step.schema"
+                  :activeStep="activeStep"
+                  :finalStep="finalStep"
+                  :kyc="kyc"
+                  @kyc-update="handleKycUpdate($event, { step, i })"
+                  @kyc-edit-end="handleKycEditEnd"
+        />
+      </md-step>
+    </md-steppers>
   </div>
 </template>
 

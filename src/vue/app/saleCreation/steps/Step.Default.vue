@@ -4,7 +4,7 @@
         @submit.prevent="submit">
     <template v-for="(row, r) in schema.rows">
       <div class="app__form-row" :key="`sale-creation-step-${r}`">
-        <template v-for="item in row">
+        <div class="app__form-field" v-for="(item, i) in row" :key="i">
 
           <input-field-unchained v-if="item.field === 'text'"
 
@@ -67,7 +67,7 @@
             :disableBefore="item.disableBefore"
             :key='item.id'
             :errorMessage="errorMessage(item.name)"/>
-        </template>
+        </div>
       </div>
     </template>
 

@@ -32,5 +32,10 @@ export default {
   FEATURE_FLAGS: featureFlags,
   NULL_ASSET_SIGNER: 'GAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHV4',
   LOCAL_STORAGE_KEY: 'tokend-client',
-  DEFAULT_QUOTE_ASSET: 'USD'
+  DEFAULT_QUOTE_ASSET: 'USD',
+  DEFAULT_TRADE_PAIRS_RE: [
+    // Descending priority
+    /BTC.*\/.*ETH/,
+    /ETH.*\/.*BTC/
+  ]
 }

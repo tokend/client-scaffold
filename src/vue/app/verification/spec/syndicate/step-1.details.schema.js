@@ -61,7 +61,8 @@ export default {
         "required": true,
         "validate": "required",
         "disableAfter": new Date().toString(),
-        "disableBefore": ""
+        "disableBefore": "",
+        "enableTime": false
       },
       {
         "model": "team_size",

@@ -1,12 +1,10 @@
 <template>
   <form class="step" @submit.prevent="submit">
-    <div class="md-layout md-gutter">
-      <div class="md-layout-item">
-          <p>{{ i18n.kyc_photo_explain() }}</p>
-          <md-button @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</md-button>
-      </div>
-    </div>
-    <div class="step__row">
+    <p class="app__page-explanations kyc-form__page-explanations">
+      {{ i18n.kyc_photo_explain() }}
+    </p>
+    <span class="app__button-raised" @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</span>
+    <div class="app__form-row">
       <file-field class="kyc-form__file-field"
                   id="kyc-file-photo"
                   v-model="documents[documentTypes.kycSelfie]"
@@ -16,12 +14,12 @@
                   :data-vv-as="i18n.lbl_kyc_selfie()"
       />
     </div>
-    <md-card-actions class="step__action">
-      <md-button type="submit" class="md-primary md-flat"
-                :disabled="isPending || accountState === ACCOUNT_STATES.pending">
+    <div class="app__form-actions">
+      <button class="app__form-submit-btn"
+        :disabled="isPending || accountState === ACCOUNT_STATES.pending">
         {{ i18n.lbl_agree_submit() }}
-      </md-button>
-    </md-card-actions>
+      </button>
+    </div>
     <md-dialog :md-active.sync="isDialogOpened">
       <md-dialog-title>
         {{ i18n.kyc_verification_key() }}
@@ -109,6 +107,11 @@
 
 <style lang="scss" scoped>
   @import '../../../../../scss/variables';
+
+  .kyc-form__page-explanations.app__page-explanations {
+    margin-top: 0 !important;
+    margin-bottom: 1.5 * $point !important;
+  }
 
   .kyc-form__verification-key {
     font-size: $fs-big;

@@ -5,7 +5,7 @@
         class="assets-select__select"
         v-model="currentAsset"
         :label="i18n.lbl_asset()"
-        :values="pairs"
+        :values="sortedPairs"
         :key="currentAsset"/>
     </template>
 
@@ -28,11 +28,11 @@ import { commonEvents } from '../../../../../../js/events/common_events'
 import { mapGetters } from 'vuex'
 import { vuexTypes } from '@/vuex/types'
 import { i18n } from '@/js/i18n'
+import config from '@/config'
 
 export default {
   components: { SelectFieldCustom },
   props: {
-    // assets: { type: String, required: false },
     pairs: { type: Array, require: true, default: [] }
   },
   data () {
@@ -44,30 +44,57 @@ export default {
     }
   },
   created () {
-    this.currentAsset = this.currentAsset || this.pairs[0] || null
-    // console.log(this.currentAsset)
+    this.currentAsset = this.currentAsset ||
+      this.tryFindDefaultPair(this.pairs) ||
+      this.pairs[0] ||
+      null
   },
   mounted () {
   },
   computed: {
-    // computedPropAssets () {
-    //   return this.assets
-    // },
     ...mapGetters([
-      // vuexTypes.userWithdrawableTokens,
       vuexTypes.accountBalances
-    ])
+    ]),
+    sortedPairs () {
+      if (!this.pairs.length) return
+      let pairsTmp = [].concat(this.pairs)
+
+      const priorityRexes = config.DEFAULT_TRADE_PAIRS_RE
+      const prioritized = []
+
+      for (const pair of pairsTmp) {
+        for (const re of priorityRexes) {
+          if (re.test(pair)) {
+            prioritized.push(pair)
+            pairsTmp.filter(item => item !== pair)
+            break
+          }
+        }
+      }
+
+      return [...prioritized, ...pairsTmp]
+    }
   },
   watch: {
     'currentAsset' (value) {
       dispatchAppEvent(commonEvents.changePairsAsset, value)
       this.handleAssetChange(value)
     }
-    // computedPropAssets (val) {
-    //   this.currentAsset = val
-    // }
   },
   methods: {
+    tryFindDefaultPair (pairs) {
+      const fallbackResult = null
+      if (!pairs || !pairs.length) return fallbackResult
+
+      let result = fallbackResult
+      const criteriaRexes = config.DEFAULT_TRADE_PAIRS_RE
+      for (const criteriaRe of criteriaRexes) {
+        result = pairs.filter(pair => criteriaRe.test(pair))[0]
+        if (result) break
+      }
+
+      return result
+    },
     handleAssetChange (payload) {
       const base = payload.split('/')[0]
       const quote = payload.split('/')[1]
