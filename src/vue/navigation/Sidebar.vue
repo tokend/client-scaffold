@@ -48,6 +48,27 @@
           <span class="md-list-item-text">{{ i18n.lbl_send_mass() }}</span>
         </router-link>
 
+        <!-- TEMP. HIDDEN -->
+        <!-- <router-link v-ripple class="sidebar__list-item"
+                     @click.native="closeSidebar"
+                     to="/history"
+                     tag="li" v-if="config.FEATURE_FLAGS.history">
+          <md-icon class="sidebar__list-item-icon">featured_play_list</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
+        </router-link> -->
+
+        <!-- <router-link v-ripple class="sidebar__list-item"
+                          @click.native="closeSidebar"
+                          to="/help" tag="li">
+          <md-icon class="sidebar__list-item-icon">help</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_help() }}</span>
+        </router-link> -->
+      </ul>
+    </section>
+
+    <section class="sidebar__section sidebar__section--account sidebar__list">
+      <div class="sidebar__list-title">{{ i18n.sidebar_section_explore() }}</div>
+      <ul>
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
                      to="/tokens"
@@ -58,34 +79,32 @@
 
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
-                     to="/token-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
+                     to="/sales"
+                     tag="li" v-if="config.FEATURE_FLAGS.sales">
+          <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_explore_sales() }}</span>
+        </router-link>
+      </ul>
+    </section>
+
+    <section class="sidebar__section sidebar__section--account sidebar__list"
+      v-if="accountTypeI === ACCOUNT_TYPES.syndicate">
+      <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
+      <ul>
+        <router-link v-ripple class="sidebar__list-item"
+                    @click.native="closeSidebar"
+                    to="/token-creation"
+                    tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
           <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
           <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
-                     to="/issuance-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
-          <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
-        </router-link>
-
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/preissuance-upload"
-                     tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
-          <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
-        </router-link>
-
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/sales"
-                     tag="li" v-if="config.FEATURE_FLAGS.sales">
-          <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_explore_sales() }}</span>
+                     to="/sale-creation"
+                     tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
+          <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
         </router-link>
 
         <!-- <router-link v-ripple class="sidebar__list-item"
@@ -98,10 +117,18 @@
 
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
-                     to="/sale-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
+                     to="/preissuance-upload"
+                     tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
+          <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
+        </router-link>
+
+        <router-link v-ripple class="sidebar__list-item"
+                     @click.native="closeSidebar"
+                     to="/issuance-creation"
+                     tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
           <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
+          <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
         </router-link>
 
         <router-link v-ripple class="sidebar__list-item"
@@ -111,35 +138,11 @@
           <md-icon class="sidebar__list-item-icon">import_contacts</md-icon>
           <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
         </router-link>
-
-        <!-- TEMP. HIDDEN -->
-        <!-- <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/history"
-                     tag="li" v-if="config.FEATURE_FLAGS.history">
-          <md-icon class="sidebar__list-item-icon">featured_play_list</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
-        </router-link> -->
-
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/trade"
-                     tag="li" v-if="config.FEATURE_FLAGS.trade">
-          <md-icon class="sidebar__list-item-icon">compare_arrows</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_trade() }}</span>
-        </router-link>
-
-        <!-- <router-link v-ripple class="sidebar__list-item"
-                          @click.native="closeSidebar"
-                          to="/help" tag="li">
-          <md-icon class="sidebar__list-item-icon">help</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_help() }}</span>
-        </router-link> -->
       </ul>
     </section>
 
     <section class="sidebar__section sidebar__section--account sidebar__list">
-      <div class="sidebar__list-title">My account</div>
+      <div class="sidebar__list-title">{{ i18n.sidebar_section_account() }}</div>
       <ul>
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
@@ -168,6 +171,7 @@
   import { vuexTypes } from '../../vuex/types'
   import { i18n } from '../../js/i18n'
   import Logotype from '../app/common/Logotype'
+  import { ACCOUNT_TYPES } from '@/js/const/const'
 
   export default {
     name: 'sidebar',
@@ -178,14 +182,14 @@
       return {
         isSidebarOpened: false,
         i18n,
-        config
+        config,
+        ACCOUNT_TYPES
       }
     },
 
     computed: {
       ...mapGetters([
-        vuexTypes.userType,
-        vuexTypes.userState
+        vuexTypes.accountTypeI
       ]),
       discourseURL () {
         return `${config.DISCOURSE_CLIENT}`
