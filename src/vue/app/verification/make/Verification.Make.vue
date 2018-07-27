@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="verification">
     <template v-if="isLoading">
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.kyc_loading() }}
@@ -130,6 +130,7 @@
           this.loadAccount()
         ])
         if (!this.accountLatestBlobId) {
+          this.isLoading = false
           return
         }
         switch (this.accountLatestKycLevel) {
@@ -161,13 +162,14 @@
         this.isLoading = false
       },
       handleUserType (type) {
+        console.log(type)
         this.selectedUserType = type
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
 
@@ -210,4 +212,18 @@
   .verification__card--rejected {
     align-self: center;
   }
+
+// overwrite styles of md
+.verification {
+  .md-steppers {
+    margin-left: -23px;
+    max-width: 560px;
+    background-color: transparent;
+
+    .md-stepper-content.md-active {
+      padding-top: 20px;
+      padding-left: 80px;
+    }
+  }
+}
 </style>
