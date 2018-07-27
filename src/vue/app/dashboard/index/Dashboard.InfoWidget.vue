@@ -47,7 +47,7 @@
                   </button>
                 </div>
               </div>
-              <div class="info-widget__list-body-row" v-if="isSelected(i)">
+              <div class="info-widget__list-body-row info-widget__list-body-row--details" v-if="isSelected(i)">
                 <tx-details class="info-widget__list-body-row-details" :tx="tx"/>
               </div>
             </div>
@@ -164,6 +164,24 @@
     padding: 8px 0;
   }
 
+  .info-widget__list-body-row--details {
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 16px;
+      right: 30px;
+      height: 1px;
+      background-color: rgba($col-md-primary, .2);
+
+      @include respond-to(medium) {
+        right: 10px;
+      }
+    }
+  }
+
   .info-widget__list-header {
     @include respond-to(medium) {
       min-width: 670px;
@@ -246,18 +264,7 @@
     padding-top: 17px;
     padding-bottom: 17px;
     margin: 0 20px;
-    position: relative;
     min-width: 25rem;
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: rgba($col-md-primary, .2);
-    }
   }
 
   .info-widget__history {
