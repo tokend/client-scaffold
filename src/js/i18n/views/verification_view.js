@@ -17,7 +17,7 @@ export default {
   kyc_corporate_details: 'Corporate details',
   kyc_documents: 'Documents',
   kyc_approved_title: 'Account approved',
-  kyc_general: 'Individual',
+  kyc_general: 'General',
   kyc_corporate: 'Corporate',
   kyc_inv_tip: 'Can invest in funds',
   kyc_corporate_tip: 'Can create funds',
