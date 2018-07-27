@@ -1,13 +1,22 @@
 <template>
-  <div class="select-field" :class="{ 'select-field--readonly': readonly }">
+  <div class="select-field" :class="{
+      'select-field--readonly': readonly,
+      'select-field--focused': showList,
+      'select-field--label-minimized': selected
+    }">
     <div v-if="label" class="select-field__label">
       {{ label }}
     </div>
-    <div class="select-field__selected" @click="toggleListVisibility()">
-      <div class="select-field__selected-value">{{ selected }}</div>
-      <md-icon class="select-field__selected-icon" :class="{ 'select-field__selected-icon--active': showList }">
-        keyboard_arrow_down
-      </md-icon>
+    <div class="select-field__selected" :class="{
+        'select-field__selected--focused': showList
+      }"
+      @click="toggleListVisibility()">
+      <div class="select-field__selected-value">{{ selected || '&nbsp;' }}</div>
+      <div>
+        <md-icon class="select-field__selected-icon" :class="{ 'select-field__selected-icon--active': showList }">
+          keyboard_arrow_down
+        </md-icon>
+      </div>
     </div>
     <div class="select-field__list" :class="{ 'select-field__list--active': showList }">
       <template v-for="(value, i) in values">
@@ -26,7 +35,7 @@
 import { commonEvents } from '../../../js/events/common_events'
 
 export default {
-  name: 'select-field-unchanined',
+  name: 'select-field-unchained',
   props: {
     value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
     values: { type: Array, default: _ => [] },
@@ -78,13 +87,40 @@ export default {
   caret-color: $field-color-focused;
   color: $field-color-text;
   padding: $field-input-padding;
-  @include material-border($field-color-focused, $field-color-unfocused);
+  @include material-border($field-color-focused, $field-color-unfocused, '&.select-field__selected--focused');
+  @include text-font-sizes;
+}
+
+.select-field__selected-value {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-field__label {
+  position: absolute;
+  left: 0;
+  top: $field-input-padding-top;
+  transition: all $field-transition-duration;
+  pointer-events: none;
+  color: $field-color-unfocused;
   @include text-font-sizes;
 }
 
 .select-field--readonly > .select-field__selected {
   cursor: default;
   @include readonly-material-border($field-color-focused);
+}
+
+.select-field--focused > .select-field__label {
+  color: $field-color-focused;
+  @include label-font-sizes;
+}
+
+.select-field--label-minimized > .select-field__label {
+  top: 0;
+  @include label-font-sizes;
 }
 
 .select-field__selected-icon {
@@ -134,16 +170,6 @@ export default {
   &:hover {
     background-color: rgba(58, 65, 128, 0.1);
   }
-}
-
-.select-field__label {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: all $field-transition-duration;
-  pointer-events: none;
-  color: $field-color-unfocused;
-  @include label-font-sizes;
 }
 
 .select-field__list-item--selected {
