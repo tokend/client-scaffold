@@ -1,9 +1,7 @@
 <template>
   <div>
     <template v-if="isLoading">
-      <p class="app__page-explanations app__page-explanations--secondary">
-        {{ i18n.kyc_loading() }}
-      </p>
+      <loader :message="i18n.kyc_loading()"/>
     </template>
     <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
     <template v-else>
@@ -78,6 +76,7 @@
   import StateBanner from './Verification.StateBanner'
   import SyndicateBanner from './Verification.SyndicateBanner'
   import UserTypeSelector from './Verification.Selector'
+  import Loader from '@/vue/app/common/Loader'
 
   import { i18n } from '../../../../js/i18n'
   import { mapGetters, mapActions } from 'vuex'
@@ -91,7 +90,8 @@
       SyndicateForm,
       SyndicateBanner,
       StateBanner,
-      UserTypeSelector
+      UserTypeSelector,
+      Loader
     },
     data: _ => ({
       selectedUserType: '',
