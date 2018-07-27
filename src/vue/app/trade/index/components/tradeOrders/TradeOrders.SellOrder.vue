@@ -6,47 +6,41 @@
       </div>
 
       <div class="app__card-content">
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field-unchained
-              class="md-layout-item"
-              v-model.trim="form.price"
-              :label="i18n.trd_price_per({ asset: assets.base })"
-              name="order-buy-price"
-              v-validate="'required'"
-              :whiteAutofill="true"
-              type="number"
-              :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
-                            Number(form.price) < 0) ? i18n.trd_validate_minimal_price() : '')"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            class="md-layout-item"
+            v-model.trim="form.price"
+            :label="i18n.trd_price_per({ asset: assets.base })"
+            name="order-buy-price"
+            v-validate="'required'"
+            :whiteAutofill="true"
+            type="number"
+            :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
+                          Number(form.price) < 0) ? i18n.trd_validate_minimal_price() : '')"
+          />
         </div>
 
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field-unchained
-              class="md-layout-item"
-              v-model.trim="form.amount"
-              :label="i18n.trd_amount_for({ asset: assets.base })"
-              name="order-buy-amount"
-              v-validate="'required'"
-              :whiteAutofill="true"
-              type="number"
-              :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount() : ''"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            class="md-layout-item"
+            v-model.trim="form.amount"
+            :label="i18n.trd_amount_for({ asset: assets.base })"
+            name="order-buy-amount"
+            v-validate="'required'"
+            :whiteAutofill="true"
+            type="number"
+            :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount() : ''"
+          />
         </div>
 
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field-unchained
-              class="md-layout-item"
-              :value="i18n.c(form.quoteAmount)"
-              :label="i18n.trd_total_value({ value: assets.quote })"
-              name="order-buy-total"
-              :disabled="true"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            class="md-layout-item"
+            :value="i18n.c(form.quoteAmount)"
+            :label="i18n.trd_total_value({ value: assets.quote })"
+            name="order-buy-total"
+            :readonly="true"
+          />
         </div>
       </div>
 
