@@ -110,7 +110,7 @@
       },
 
       render () {
-        this.clear(this.$el)
+        this.clear()
 
         // Setup the data
         // const scale = this.scale
@@ -185,7 +185,7 @@
         // Render the line and area
         const area = d3.area()
           .x((d) => x(d.time))
-          .y0(y(0))
+          .y0(y(min))
           .y1((d) => y(d.value))
 
         const line = d3.line()
@@ -260,28 +260,13 @@
             .attr('fill', '#837fa1')
             .attr('opacity', '0.2')
             .attr('width', '1')
-            .attr('height', function (localData) {
-              if ((height / d3.max(data.map(item => item.value))) * localData.value) {
-                return (height / d3.max(data.map(item => item.value))) * localData.value - 20
-              } else {
-                return 0
-              }
-            })
-            .attr('x', function (localData) {
-              return x(localData.time)
-            })
-            .attr('y', function (localData) {
-              if ((height / d3.max(data.map(item => item.value))) * localData.value) {
-                return height - ((height / d3.max(data.map(item => item.value))) * localData.value) + 10
-              } else {
-                return 0
-              }
-            })
+            .attr('height', (localData) => height - y(localData.value) - 9)
+            .attr('x', (localData) => x(localData.time))
+            .attr('y', (localData) => y(localData.value))
 
           const chartTipsPoints = svg.append('g')
             .attr('height', height)
             .attr('width', width)
-            .attr('class', 'alalal')
             .selectAll('circle')
             .data(data)
             .enter().append('circle')
@@ -289,25 +274,22 @@
             .attr('fill', '#bdb6ff')
             .style('opacity', '0')
             .style('transition', '0.3s ease-out')
-            .attr('cx', function (localData) {
-              return x(localData.time)
-            })
-            .attr('cy', function (localData) {
-              if ((height / d3.max(data.map(item => item.value))) * localData.value) {
-                return height - ((height / d3.max(data.map(item => item.value))) * localData.value) + 10
-              } else {
-                return height - 10
-              }
-            })
+            .attr('cx', (localData) => x(localData.time))
+            .attr('cy', (localData) => y(localData.value))
           setTimeout(() => {
             chartTipsPoints.style('opacity', '1')
           }, this.chartRenderingTime)
         }
 
-        // // Render y-axis
+        // Render y-axis
         const yAxisLine = d3.axisRight(y)
-          .tickValues([ max, max / 3, max / 3 + (max / 3), min ].concat(this.requiredTicks))
-          .tickFormat((d) => `${i18n.c(d)} ${this.defaultAsset}`)
+          .tickValues([
+            max,
+            max - ((max - min) * 0.3333),
+            max - ((max - min) * 0.3333) - ((max - min) * 0.3333),
+            min
+          ].concat(this.requiredTicks))
+          .tickFormat((d) => `${i18n.c(d.toFixed(2))} ${this.defaultAsset}`)
           .tickSizeInner(width)
           .tickSizeOuter(0)
           .tickPadding(25)
@@ -423,10 +405,12 @@
             // Change X position of the tip
             tip.attr('transform', `translate(${x(nearestPoint.time)})`)
             tipTextBox.style('transform', `translateY(${y(nearestPoint.value) - 35}px)`)
-            tipLine.attr('y2', min !== max ? height - y(nearestPoint.value) : '0')
             if (min === max) {
               tipLine.attr('y1', height / 2)
               tipLine.attr('y2', height)
+            } else {
+              tipLine.attr('y1', y(nearestPoint.value))
+              tipLine.attr('y2', height - 10)
             }
 
             // Change Y position of the circle

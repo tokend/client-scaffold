@@ -230,10 +230,6 @@
       justify-content: flex-start;
       margin-bottom: 16px;
     }
-
-    // @include respond-to-custom($custom-breakpoint) {
-    //   flex-direction: row;
-    // }
   }
 
   .portfolio-widget__select-scale-btn {
@@ -280,10 +276,10 @@
   .portfolio-widget__asset-btn-icon {
     color: $white !important;
     transform: scale(.8);
-    margin-top: -10px;
     position: absolute;
-    left: 10px;
-    top: calc(50% - 1px);
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 
     @include respond-to-custom($custom-breakpoint) {
       left: 6px;
@@ -291,7 +287,8 @@
   }
 
   .portfolio-widget__asset-btn-icon--rotate {
-    transform: rotate(-45deg) scale(.8);
+    transform: translateY(-40%) rotate(-45deg) scale(.8);
+    left: 10px;
     top: calc(50% - 4px);
   }
 
