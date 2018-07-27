@@ -44,7 +44,7 @@
   const initialSort = saleSortTypes.created
 
   export default {
-    name: 'TokensExplore',
+    name: 'SalesExplore',
     mixins: [FormMixin],
     components: { SaleCard, Searcher },
     data: _ => ({

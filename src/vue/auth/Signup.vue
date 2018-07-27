@@ -2,37 +2,52 @@
   <div>
     <h2 class="auth-page__form-title">{{ i18n.lbl_get_started() }}</h2>
     <form novalidate @submit.prevent="submit">
-      <input-field class="input-field"
-                  id="login-email"
-                  name="email"
-                  :label="i18n.su_email()"
-                  :errorMessage="errorMessage('email')"
-                  v-model.trim="form.email"
-                  v-validate="'required|email'"
-      />
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="login-email"
+            name="email"
+            :label="i18n.su_email()"
+            :errorMessage="errorMessage('email')"
+            v-model.trim="form.email"
+            v-validate="'required|email'"
+          />
+        </div>
+      </div>
 
-      <input-field class="input-field"
-                  id="login-password"
-                  type="password"
-                  name="password"
-                  :togglePassword="true"
-                  :label="i18n.su_pwd()"
-                  :errorMessage="errorMessage('password')"
-                  v-model.trim="form.password"
-                  v-validate="'required|min:6'"
-      />
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="login-password"
+            type="password"
+            name="password"
+            :togglePassword="true"
+            :label="i18n.su_pwd()"
+            :errorMessage="errorMessage('password')"
+            v-model.trim="form.password"
+            v-validate="'required|min:6'"
+          />
+        </div>
+      </div>
 
-      <input-field class="input-field"
-                  id="login-confirm-password"
-                  type="password"
-                  name="confirm-password"
-                  :label="i18n.su_confirm()"
-                  :togglePassword="true"
-                  :errorMessage="errorMessage('confirm-password')"
-                  v-model.trim="form.confirmPassword"
-                  v-validate="'required|confirmed:password'"
-                  data-vv-as="password"
-      />
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="login-confirm-password"
+            type="password"
+            name="confirm-password"
+            :label="i18n.su_confirm()"
+            :togglePassword="true"
+            :errorMessage="errorMessage('confirm-password')"
+            v-model.trim="form.confirmPassword"
+            v-validate="'required|confirmed:password'"
+            data-vv-as="password"
+          />
+        </div>
+      </div>
 
       <div class="auth-page__submit">
         <button type="submit"
