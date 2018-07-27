@@ -230,10 +230,6 @@
       justify-content: flex-start;
       margin-bottom: 16px;
     }
-
-    // @include respond-to-custom($custom-breakpoint) {
-    //   flex-direction: row;
-    // }
   }
 
   .portfolio-widget__select-scale-btn {
