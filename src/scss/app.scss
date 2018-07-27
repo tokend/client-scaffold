@@ -419,16 +419,16 @@ h4 {
 }
 
 .app__card-actions {
-  padding: 8px 24px 24px;
+  padding: 12px 32px 32px;
   display: flex;
   justify-content: flex-end;
 
   @include respond-to(medium) {
-    padding: 8px 16px 16px;
+    padding: 8px 24px 24px;
   }
 
   @include respond-to(small) {
-    padding: 8px 12px 12px;
+    padding: 8px 16px 16px;
   }
 }
 
