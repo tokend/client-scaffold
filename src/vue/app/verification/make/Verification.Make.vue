@@ -1,9 +1,7 @@
 <template>
-  <div>
+  <div class="verification">
     <template v-if="isLoading">
-      <p class="app__page-explanations app__page-explanations--secondary">
-        {{ i18n.kyc_loading() }}
-      </p>
+      <loader :message="i18n.kyc_loading()"/>
     </template>
     <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
     <template v-else>
@@ -78,6 +76,7 @@
   import StateBanner from './Verification.StateBanner'
   import SyndicateBanner from './Verification.SyndicateBanner'
   import UserTypeSelector from './Verification.Selector'
+  import Loader from '@/vue/app/common/Loader'
 
   import { i18n } from '../../../../js/i18n'
   import { mapGetters, mapActions } from 'vuex'
@@ -91,7 +90,8 @@
       SyndicateForm,
       SyndicateBanner,
       StateBanner,
-      UserTypeSelector
+      UserTypeSelector,
+      Loader
     },
     data: _ => ({
       selectedUserType: '',
@@ -130,6 +130,7 @@
           this.loadAccount()
         ])
         if (!this.accountLatestBlobId) {
+          this.isLoading = false
           return
         }
         switch (this.accountLatestKycLevel) {
@@ -161,13 +162,14 @@
         this.isLoading = false
       },
       handleUserType (type) {
+        console.log(type)
         this.selectedUserType = type
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
 
@@ -210,4 +212,18 @@
   .verification__card--rejected {
     align-self: center;
   }
+
+// overwrite styles of md
+.verification {
+  .md-steppers {
+    margin-left: -23px;
+    max-width: 560px;
+    background-color: transparent;
+
+    .md-stepper-content.md-active {
+      padding-top: 20px;
+      padding-left: 80px;
+    }
+  }
+}
 </style>

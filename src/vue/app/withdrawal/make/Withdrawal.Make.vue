@@ -46,8 +46,9 @@
               <div class="withdraw__fees-container app__form-field-description" :class="{ loading: isFeesLoadPending }">
                 <p>
                   - {{ i18n.withdraw_network_fee_prefix() }}
-                  <hint-wrapper :hint="i18n.withdraw_network_fee_hint()">
-                    <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
+                  <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
+                  <hint-wrapper :hint="i18n.withdraw_network_fee_hint()" :decorated="false">
+                    <span class="fee__hint-icon"><md-icon>help_outline</md-icon></span>
                   </hint-wrapper>
                 </p>
 
@@ -314,6 +315,14 @@ export default {
 
   .fee__fee-type {
     color: $col-md-primary-secondary;
+  }
+}
+
+.fee__hint-icon {
+  .md-icon {
+    width: 1 * $point;
+    height: 1 * $point;
+    font-size: 1.6 * $point !important;
   }
 }
 </style>

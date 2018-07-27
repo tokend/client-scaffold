@@ -44,7 +44,7 @@
   const initialSort = saleSortTypes.created
 
   export default {
-    name: 'TokensExplore',
+    name: 'SalesExplore',
     mixins: [FormMixin],
     components: { SaleCard, Searcher },
     data: _ => ({
@@ -80,11 +80,6 @@
           this.filters.baseAsset = filters.token
         }
         return this.loadSales(this.filters)
-      },
-      loadMore () {
-        this.disable()
-        this.next()
-        this.enable()
       }
     },
     watch: {
@@ -118,12 +113,14 @@
     align-items: flex-start;
     justify-content: flex-start;
 
-    flex: 0.333333;
-    min-width: 33.333333%;
+    flex: 0.333;
+    min-width: 33.333%;
+    max-width: 33.333%;
 
     @include respond-to(xmedium) {
       flex: 0.5;
-      min-width: 49.99999%;
+      min-width: 49.999%;
+      max-width: 50%;
     }
 
     @media only screen and (max-width: 767px) {

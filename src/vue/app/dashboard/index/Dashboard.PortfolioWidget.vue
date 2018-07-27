@@ -73,14 +73,15 @@
 </template>
 
 <script>
-  import config from '../../../../config'
+  import config from '@/config'
   import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
   import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+  import { ASSET_POLICIES } from '@/js/const/const'
 
   import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { i18n } from '../../../../js/i18n'
-  import { commonEvents } from '../../../../js/events/common_events'
+  import { vuexTypes } from '@/vuex/types'
+  import { i18n } from '@/js/i18n'
+  import { commonEvents } from '@/js/events/common_events'
   import get from 'lodash/get'
 
   export default {
@@ -91,7 +92,7 @@
     },
     props: {
       scale: { type: String, required: true },
-      currentAsset: { type: [String, Object], default: 'USD' },
+      currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET },
       showTabls: { type: Boolean, default: false }
     },
     data: _ => ({
@@ -108,7 +109,8 @@
         year: 'year',
         all: 'all'
       },
-      config
+      config,
+      ASSET_POLICIES
     }),
     computed: {
       ...mapGetters([
@@ -117,9 +119,13 @@
         vuexTypes.tokens
       ]),
       tokensList () {
-        return this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
-                          .filter(token => token.name) // TODO: temp. hack
-                          .map(item => `${item.name} (${item.code})`)
+        const tokens = this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
+                                  .filter(token => token.code !== this.config.DEFAULT_QUOTE_ASSET)
+        const baseAssets = tokens.filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
+                                  .sort((a, b) => a.code.localeCompare(b.code))
+        const otherAssets = tokens.filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))
+                                  .sort((a, b) => a.code.localeCompare(b.code))
+        return [...baseAssets, ...otherAssets].map(item => `${item.name} (${item.code})`)
       },
       currentAssetForSelect () {
         return this.tokens.filter(token => token.code === this.currentAsset)

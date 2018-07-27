@@ -33,7 +33,7 @@ $textarea-background-color: #fafafa;
   line-height: $field-label-line-height;
 }
 
-@mixin material-border($color-focused, $color-unfocused) {
+@mixin material-border($color-focused, $color-unfocused, $focused-selector:'') {
   border-bottom: .1 * $point solid $color-unfocused;
   background: radial-gradient($color-focused, $color-focused) bottom -.1 * $point center no-repeat;
   background-size: 0 .2 * $point;
@@ -44,9 +44,17 @@ $textarea-background-color: #fafafa;
   transition-property: background-size, border-color;
   transition-duration: $field-transition-duration;
 
-  &:focus {
-    background-size: 100% .2 * $point;
+  @if $focused-selector != '' {
+    #{$focused-selector},
+    &:focus {
+      background-size: 100% .2 * $point;
+    }
+  } @else {
+    &:focus {
+      background-size: 100% .2 * $point;
+    }
   }
+
 }
 
 @mixin readonly-material-border($color) {

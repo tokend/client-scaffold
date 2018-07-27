@@ -2,25 +2,34 @@
   <div>
     <h2 class="auth-page__form-title">{{ i18n.lbl_signin() }}</h2>
     <form novalidate @submit.prevent="submit">
-      <input-field class="input-field"
-        id="login-email"
-        v-model.trim="form.email"
-        :label="i18n.lbl_email()"
-        name="email"
-        :errorMessage="errorMessage('email')"
-                    v-validate="'required'"
-      />
-      <input-field
-        class="input-field"
-        id="login-password"
-        v-model.trim="form.password"
-        type="password"
-        :togglePassword="true"
-        :label="i18n.lbl_pwd()"
-        name="password"
-        :errorMessage="errorMessage('password')"
-        v-validate="'required'"
-      />
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="login-email"
+            v-model.trim="form.email"
+            :label="i18n.lbl_email()"
+            name="email"
+            :errorMessage="errorMessage('email')"
+            v-validate="'required'"
+          />
+        </div>
+      </div>
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="login-password"
+            v-model.trim="form.password"
+            type="password"
+            :togglePassword="true"
+            :label="i18n.lbl_pwd()"
+            name="password"
+            :errorMessage="errorMessage('password')"
+            v-validate="'required'"
+          />
+        </div>
+      </div>
 
       <div class="auth-page__submit">
         <button type="submit"

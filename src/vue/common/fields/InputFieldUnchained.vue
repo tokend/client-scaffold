@@ -6,6 +6,7 @@
       'input-field--readonly': readonly
     }">
     <input class="input-field__input"
+      :class="{ 'app__input-autofill--white': whiteAutofill }"
       :type="type"
       :placeholder="placeholder || ' '"
       :value="value"
@@ -52,6 +53,7 @@ export default {
 
     // proxies
     autocomplete: { type: String, default: undefined },
+    whiteAutofill: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     name: { type: String, default: undefined },
@@ -154,10 +156,9 @@ export default {
   flex: 1;
 }
 
-.input-field__input,
-.input-field__input:-webkit-autofill {
+.input-field__input {
   // TODO: better autofill hack
-  // -webkit-box-shadow: inset 0 0 0 50px #fff; // autofill hack
+  -webkit-box-shadow: inset 0 0 0 50px $col-md-background; // autofill hack
   -webkit-text-fill-color: $field-color-text; // autofill hack
   width: 100%;
   background: none;

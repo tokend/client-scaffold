@@ -2,44 +2,64 @@
   <div>
     <h2 class="auth-page__form-title">{{ i18n.lbl_account_recovery() }}</h2>
     <form novalidate @submit.prevent="submit">
-      <input-field class="input-field"
-                   id="recovery-email"
-                   name="email"
-                   :errorMessage="errorMessage('email')"
-                   :label="i18n.lbl_email()"
-                   v-model.trim="form.email"
-                   v-validate="'required|email'"
-      />
-      <input-field class="input-field"
-                   type="password"
-                   id="recovery-seed"
-                   name="seed"
-                   :label="i18n.lbl_recovery_seed()"
-                   :errorMessage="errorMessage('seed')"
-                   v-model.trim="form.recoverySeed"
-                   v-validate="'required|secret_key'"
-      />
-      <input-field class="input-field"
-                   id="recovery-password"
-                   type="password"
-                   name="password"
-                   :togglePassword="true"
-                   :label="i18n.lbl_pwd()"
-                   :errorMessage="errorMessage('password')"
-                   v-model.trim="form.password"
-                   v-validate="'required|min:6'"
-      />
-      <input-field class="input-field"
-                   id="recovery-confirm-password"
-                   type="password"
-                   name="confirm-password"
-                   :togglePassword="true"
-                   :label="i18n.lbl_pwd_confirm()"
-                   :errorMessage="errorMessage('confirm-password')"
-                   :data-vv-as="i18n.lbl_pwd().toLowerCase()"
-                   v-validate="'required|confirmed:password'"
-                   v-model.trim="form.confirmPassword"
-      />
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="recovery-email"
+            name="email"
+            :errorMessage="errorMessage('email')"
+            :label="i18n.lbl_email()"
+            v-model.trim="form.email"
+            v-validate="'required|email'"
+          />
+        </div>
+      </div>
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            type="password"
+            id="recovery-seed"
+            name="seed"
+            :label="i18n.lbl_recovery_seed()"
+            :errorMessage="errorMessage('seed')"
+            v-model.trim="form.recoverySeed"
+            v-validate="'required|secret_key'"
+          />
+        </div>
+      </div>
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="recovery-password"
+            type="password"
+            name="password"
+            :togglePassword="true"
+            :label="i18n.lbl_pwd()"
+            :errorMessage="errorMessage('password')"
+            v-model.trim="form.password"
+            v-validate="'required|min:6'"
+          />
+        </div>
+      </div>
+      <div class="app__form-row">
+        <div class="app__form-field">
+          <input-field-unchained
+            class="input-field"
+            id="recovery-confirm-password"
+            type="password"
+            name="confirm-password"
+            :togglePassword="true"
+            :label="i18n.lbl_pwd_confirm()"
+            :errorMessage="errorMessage('confirm-password')"
+            :data-vv-as="i18n.lbl_pwd().toLowerCase()"
+            v-validate="'required|confirmed:password'"
+            v-model.trim="form.confirmPassword"
+          />
+        </div>
+      </div>
 
       <div class="auth-page__submit">
         <button type="submit"

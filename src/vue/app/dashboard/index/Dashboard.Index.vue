@@ -1,9 +1,7 @@
 <template>
   <div class="dashboard">
     <template v-if="isLoading">
-      <p class="app__page-explanations app__page-explanations--secondary">
-        {{ i18n.dash_loading() }}
-      </p>
+      <loader :message="i18n.dash_loading()"/>
     </template>
     <template v-else>
       <portfolio-widget class="md-layout-item dashboard__portfolio"
@@ -26,15 +24,17 @@
   import InfoWidget from './Dashboard.InfoWidget'
   import Chart from './Dashboard.Chart'
   import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
+  import { vuexTypes } from '@/vuex/types'
   import { i18n } from '@/js/i18n'
+  import Loader from '@/vue/app/common/Loader'
 
   export default {
     name: 'dashboard',
     components: {
       PortfolioWidget,
       InfoWidget,
-      Chart
+      Chart,
+      Loader
     },
     data: _ => ({
       currentAsset: null,
@@ -59,8 +59,9 @@
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
       setCurrentAsset (value) {
+        const regExp = /\(([^)]+)\)/
         if (value) {
-          this.currentAsset = value.split(' ')[0]
+          this.currentAsset = regExp.exec(value)[1]
         } else {
           const keys = Object.keys(this.accountBalances)
           this.currentAsset =
