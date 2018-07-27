@@ -18,7 +18,6 @@
   @import '~@scss/variables';
 
   .loader {
-    text-align: center;
     display: flex;
     align-items: center;
   }
