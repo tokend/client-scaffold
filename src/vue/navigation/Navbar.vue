@@ -250,10 +250,10 @@
     font-size: 18px;
     cursor: pointer;
     color: $col-md-primary !important; // TODO: remove important rule when possible
+  }
 
-    &:hover {
-      text-decoration: underline;
-    }
+  .navbar__user-name:hover > .navbar__user-email {
+    text-decoration: underline;
   }
 
   .navbar__account-type {
@@ -329,16 +329,6 @@
   .navbar__open-info-btn {
     text-transform: none;
     margin-left: 0;
-  }
-
-  .navbar__user-email {
-    position: relative;
-    margin-right: 1rem;
-    top: .1rem;
-
-    @include respond-to(small) {
-      display: none;
-    }
   }
 
   .navbar__notif-card,

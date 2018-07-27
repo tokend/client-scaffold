@@ -75,10 +75,12 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     width: 100%;
   }
 
   .date-tabs__prefix {
+    white-space: nowrap;
     display: inline-block;
     margin-right: 1 * $point;
   }
