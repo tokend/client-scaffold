@@ -48,6 +48,14 @@
           <span class="md-list-item-text">{{ i18n.lbl_send_mass() }}</span>
         </router-link>
 
+        <router-link v-ripple class="sidebar__list-item"
+                     @click.native="closeSidebar"
+                     to="/trade"
+                     tag="li" v-if="config.FEATURE_FLAGS.trade">
+          <md-icon class="sidebar__list-item-icon">compare_arrows</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_trade() }}</span>
+        </router-link>
+
         <!-- TEMP. HIDDEN -->
         <!-- <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
