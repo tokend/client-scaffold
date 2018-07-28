@@ -1,6 +1,6 @@
 <template>
   <div class="clipboard__outer">
-    <div class="clipboard">
+    <div class="clipboard" :class="{'clipboard--monospaced': monospaced}">
       <div class="clipboard__value-outer">
         <label class="clipboard__label">{{ label }}</label>
         <span class="clipboard__value" id="clipboard-target">{{ value }}</span>
@@ -28,7 +28,8 @@
     name: 'clipboard-field',
     props: {
       value: { type: String, default: '' },
-      label: { type: String, default: '' }
+      label: { type: String, default: '' },
+      monospaced: {type: Boolean, default: false}
     },
     mounted () {
       const btn = document.querySelector('#clipboard-btn')
@@ -55,6 +56,12 @@
     flex: 1;
     width: 100%;
     @include material-border($field-color-focused, $field-color-unfocused);
+  }
+
+
+  .clipboard--monospaced > .clipboard__value-outer > .clipboard__value {
+    font-family: 'SourceCodePro', Courier, monospace !important;
+    font-weight: 500;
   }
 
   .clipboard__outer {

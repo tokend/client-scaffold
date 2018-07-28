@@ -25,6 +25,7 @@
           <clipboard-field
             :value="address"
             :label="i18n.dep_where_to({ asset: form.tokenCode })"
+            :monospaced="true"
           />
         </div>
 
