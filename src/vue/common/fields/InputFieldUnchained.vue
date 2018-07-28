@@ -6,7 +6,7 @@
       'input-field--readonly': readonly
     }">
     <input class="input-field__input"
-      :class="{ 'app__input-autofill--white': whiteAutofill }"
+      :class="{ 'input-field__input--autofill-white': whiteAutofill }"
       :type="type"
       :placeholder="placeholder || ' '"
       :value="value"
@@ -157,8 +157,6 @@ export default {
 }
 
 .input-field__input {
-  // TODO: better autofill hack
-  -webkit-box-shadow: inset 0 0 0 50px $col-md-background; // autofill hack
   -webkit-text-fill-color: $field-color-text; // autofill hack
   width: 100%;
   background: none;
@@ -168,6 +166,14 @@ export default {
   padding: $field-input-padding;
   @include material-border($field-color-focused, $field-color-unfocused);
   @include text-font-sizes;
+
+  &:not([readonly]) {
+    -webkit-box-shadow: inset 0 0 0 50px $col-md-background; // autofill hack
+  }
+
+  &--autofill-white:not([readonly]) {
+    -webkit-box-shadow: inset 0 0 0 50px $white !important;
+  }
 }
 
 .input-field__input {

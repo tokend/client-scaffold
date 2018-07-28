@@ -44,7 +44,7 @@
           :errorMessage="errorMessage('sale-close-time')"/>
       </div>
     </div>
-    <div class="app__form-row md-layout">
+    <div class="app__form-row">
         <input-field-unchained v-model="form.softCap"
             v-validate="{
                 required:true,
@@ -69,7 +69,7 @@
             :errorMessage="errorMessage('sale-hard-cap')"
         />
     </div>
-    <div class="app__form-row md-layout app__form-row__base-asset-input">
+    <div class="app__form-row">
       <input-field-unchained v-model="form.baseAssetForHardCap"
                   v-validate="{
                       required: true,
@@ -205,10 +205,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-  }
-
-  .app__form-row__base-asset-input {
-    margin-bottom: 1rem;
   }
 
   .step__quote-assets-label {
