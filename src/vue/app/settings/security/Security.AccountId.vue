@@ -9,6 +9,7 @@
 
       <div class="app__dialog-inner">
         <div class="account-id__wrapper">
+          <!--TODO: use vue-qr instead for consistency-->
           <qrcode class="qr-code account-id__qr-code"
                 :text="accountId"
                 :size="250"

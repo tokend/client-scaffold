@@ -30,6 +30,7 @@
 
         <div class="deposit__qr-outer">
           <span class="deposit__qr-code-hint">{{ i18n.deposit_qr_code_hint() }}</span>
+          <!--TODO: use vue-qr instead for consistency-->
           <qrcode class="deposit__qr-code"
                   :text="address"
                   :size="225"
