@@ -453,5 +453,14 @@ function authPageGuard (to, from, next) {
 // doesn't allow to visit in-app page if user is not already logged in
 function inAppRouteGuard (to, from, next) {
   const isLoggedIn = store.getters.isLoggedIn
-  isLoggedIn ? next() : next({ name: 'login' })
+  isLoggedIn
+    ? next()
+    : next({
+      name: 'login',
+      params: {
+        redirect: {
+          name: to.name || 'app'
+        }
+      }
+    })
 }
