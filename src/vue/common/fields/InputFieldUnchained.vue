@@ -275,7 +275,8 @@ export default {
 }
 
 .input-field--monospaced > .input-field__input {
-  font-family: 'Courier New', Courier, monospace !important;
+  font-family: 'SourceCodePro', Courier, monospace !important;
+  font-weight: 500;
 }
 
 // TODO: fix issue when decimal number entered in the input that have

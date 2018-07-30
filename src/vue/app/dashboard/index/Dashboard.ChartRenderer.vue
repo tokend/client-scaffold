@@ -40,9 +40,9 @@
     },
 
     data: _ => ({
-      barTicks: 24,
       defaultAsset: config.DEFAULT_QUOTE_ASSET,
       chartRenderingTime: 500,
+      dataCount: 360,
       i18n
     }),
 
@@ -67,6 +67,15 @@
           time: moment(item.timestamp).toDate(),
           value: parseFloat(parseFloat(item.value).toFixed(this.precision))
         }))
+      },
+      barTicks () {
+        switch (this.scale) {
+          case 'year': return this.dataCount / 24
+          case 'month': return this.dataCount / 30
+          case 'day': return this.dataCount / 24
+          case 'hour': return this.dataCount / 30
+          default: return this.dataCount / 30
+        }
       }
     },
 
@@ -351,7 +360,7 @@
         const tipTimeTextMM = tip.append('text')
           .attr('class', `${className}__tip-text-time-mm`)
           .attr('text-anchor', 'middle')
-          .attr('y', height + margin.bottom + 5)
+          .attr('y', height + margin.bottom + 8)
 
         // Tip motion capture area
         const motionCaptureArea = svg.append('rect')
@@ -378,8 +387,34 @@
             const nearestPoint = x0 - d0.time > d1.time - x0 ? d1 : d0
             // Change text of the tooltip
             tipPriceText.text(`${i18n.c(nearestPoint.value)} ${this.defaultAsset}`)
-            tipTimeTextDD.text(moment(nearestPoint.time).format('DD'))
-            tipTimeTextMM.text(moment(nearestPoint.time).format('MMM'))
+
+            switch (this.scale) {
+              case 'year': {
+                tipTimeTextDD.text(moment(nearestPoint.time).format('DD MMM'))
+                tipTimeTextMM.text(moment(nearestPoint.time).format('YYYY'))
+                break
+              }
+              case 'month': {
+                tipTimeTextDD.text(moment(nearestPoint.time).format('DD'))
+                tipTimeTextMM.text(moment(nearestPoint.time).format('MMM'))
+                break
+              }
+              case 'day': {
+                tipTimeTextDD.text(moment(nearestPoint.time).format('h:mm'))
+                tipTimeTextMM.text(moment(nearestPoint.time).format('DD MMM'))
+                break
+              }
+              case 'hour': {
+                tipTimeTextDD.text(moment(nearestPoint.time).format('h:mm'))
+                tipTimeTextMM.text(moment(nearestPoint.time).format('DD MMM'))
+                break
+              }
+              default: {
+                tipTimeTextDD.text(moment(nearestPoint.time).format('DD'))
+                tipTimeTextMM.text(moment(nearestPoint.time).format('MMM'))
+                break
+              }
+            }
 
             function getPrecision (number) {
               return number.toString().split('.')[0].length + 1
