@@ -13,6 +13,7 @@ import Login from '../vue/auth/Login'
 import Signup from '../vue/auth/Signup'
 import Recovery from '../vue/auth/Recovery'
 import EmailResend from '../vue/auth/ConfirmEmail'
+import Terms from '../vue/public/legals/Legal.Terms'
 
 import AppContent from '../vue/root/AppContent'
 
@@ -81,6 +82,11 @@ const router = new Router({
       path: '/r/*',
       name: 'horizon-redirect',
       beforeEnter: resolveRedirect
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: Terms
     },
     {
       path: '/auth',

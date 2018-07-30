@@ -9,6 +9,7 @@ export const vueRoutes = Object.freeze({
   email: { name: 'email' },
   support: { name: 'contact-us' },
   app: { name: 'app' },
+  terms: { name: 'terms' },
 
   sunWallet: { name: 'app.SUN-wallet' },
   sunWalletOverview: { name: 'SUN-wallet.overview' },
