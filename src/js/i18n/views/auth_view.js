@@ -23,5 +23,5 @@ export default {
   auth_copyright: '2018 © Distributed Lab.',
   auth_rights: 'All Rights Reserved.',
   auth_terms: 'Terms',
-  auth_download_apps: 'Android app'
+  auth_download_apps: 'Downloads'
 }

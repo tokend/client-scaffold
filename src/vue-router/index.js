@@ -14,6 +14,7 @@ import Signup from '../vue/auth/Signup'
 import Recovery from '../vue/auth/Recovery'
 import EmailResend from '../vue/auth/ConfirmEmail'
 import Terms from '../vue/public/legals/Legal.Terms'
+import Downloads from '../vue/public/Public.Downloads'
 
 import AppContent from '../vue/root/AppContent'
 
@@ -87,6 +88,11 @@ const router = new Router({
       path: '/terms',
       name: 'terms',
       component: Terms
+    },
+    {
+      path: '/downloads',
+      name: 'downloads',
+      component: Downloads
     },
     {
       path: '/auth',
