@@ -9,6 +9,7 @@
       <div class="app__dialog-inner">
         <p class="tfa-settings__explain">{{ i18n.set_tfa_scan_the_qr_code() }}</p>
         <div class="tfa-settings__qr-outer" v-if="inputMode === INPUT_MODES.qr">
+          <!--TODO: use vue-qr instead for consistency-->
           <qrcode class="tfa-settings__qr-code"
                   :text="factor.qr"
                   :size="225"

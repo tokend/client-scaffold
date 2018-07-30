@@ -13,6 +13,8 @@ import Login from '../vue/auth/Login'
 import Signup from '../vue/auth/Signup'
 import Recovery from '../vue/auth/Recovery'
 import EmailResend from '../vue/auth/ConfirmEmail'
+import Terms from '../vue/public/legals/Legal.Terms'
+import Downloads from '../vue/public/Public.Downloads'
 
 import AppContent from '../vue/root/AppContent'
 
@@ -81,6 +83,18 @@ const router = new Router({
       path: '/r/*',
       name: 'horizon-redirect',
       beforeEnter: resolveRedirect
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: Terms,
+      meta: { pageName: PAGES_NAMES.terms }
+    },
+    {
+      path: '/downloads',
+      name: 'downloads',
+      component: Downloads,
+      meta: { pageName: PAGES_NAMES.downloads }
     },
     {
       path: '/auth',
@@ -440,5 +454,14 @@ function authPageGuard (to, from, next) {
 // doesn't allow to visit in-app page if user is not already logged in
 function inAppRouteGuard (to, from, next) {
   const isLoggedIn = store.getters.isLoggedIn
-  isLoggedIn ? next() : next({ name: 'login' })
+  isLoggedIn
+    ? next()
+    : next({
+      name: 'login',
+      params: {
+        redirect: {
+          name: to.name || 'app'
+        }
+      }
+    })
 }

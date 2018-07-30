@@ -19,5 +19,9 @@ export default {
   auth_check_span_folder: 'If you didn\'t receive a confirmation email, check your spam folder.',
   auth_request_sent: 'Request successfully sent. Please check your inbox',
   auth_email_confirmed: 'Email already confirmed',
-  auth_know_credentials: 'Know your credentials?'
+  auth_know_credentials: 'Know your credentials?',
+  auth_copyright: '2018 © Distributed Lab.',
+  auth_rights: 'All Rights Reserved.',
+  auth_terms: 'Terms',
+  auth_download_apps: 'Downloads'
 }
