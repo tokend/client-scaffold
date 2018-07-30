@@ -26,7 +26,7 @@
           id="sale-start-time"
           :key="`sale-creation-general-info-${form.endTime}`"
           :label="i18n.sale_start_time()"
-          :disableBefore="currentDate"
+          :disableBefore="yesterday"
           :disableAfter="form.endTime"
           v-validate="'required'"
           :errorMessage="errorMessage('sale-open-time')"/>
@@ -168,8 +168,8 @@
           .find(token => token.code === this.form.baseAsset)
         return token.available
       },
-      currentDate () {
-        return moment(new Date().toString()).format()
+      yesterday () {
+        return moment().subtract(1, 'd').format()
       }
     },
 
