@@ -1,31 +1,47 @@
 <template>
-  <div class="downloads">
-    <div class="downloads__android">
-      <div class="downloads__android-inner">
-        <div class="downloads__android-img">
+  <div class="downloads"
+      :class="{ 'downloads--public': !isLoggedIn }"
+  >
 
-          <img src="../../../static/android.png" alt="">
-        </div>
+    <template v-if="!isLoggedIn">
+      <div class="downloads__header">
+        <span class="downloads__title">{{ $route.meta.pageName }}</span>
 
-        <div class="downloads__android-content">
+        <span class="downloads__links">
+          <router-link class="downloads__link" :to="vueRoutes.signup">{{ i18n.lbl_signup() }}</router-link>
+          <router-link class="downloads__link" :to="vueRoutes.login">{{ i18n.lbl_signin() }}</router-link>
+        </span>
+      </div>
+    </template>
 
-          <div class="downloads__android-content-section">
-            <h1 class="downloads__heading">{{ i18n.dl_download_android() }}</h1>
-            <p class="downloads__paragraph">{{ i18n.dl_about_android() }}</p>
-            <a class="downloads__pm-link"
-               href="https://play.google.com/store/apps/details?id=org.tokend.template"
-               target="_blank" rel="noopener"
-            >
-              <img src="../../../static/googleplay.png">
-            </a>
+    <div class="downloads__inner">
+      <div class="downloads__android">
+        <div class="downloads__android-inner">
+          <div class="downloads__android-img">
+
+            <img src="../../../static/android.png" alt="">
           </div>
 
-          <div class="downloads__android-content-section">
-            <h1 class="downloads__heading">{{ i18n.dl_use_config() }}</h1>
-            <p class="downloads__paragraph">{{ i18n.dl_android_qr() }}</p>
-            <qr-code :text="qrValue"
-                     :margin="0"
-                     :size="175"/>
+          <div class="downloads__android-content">
+
+            <div class="downloads__android-content-section">
+              <h1 class="downloads__heading">{{ i18n.dl_download_android() }}</h1>
+              <p class="downloads__paragraph">{{ i18n.dl_about_android() }}</p>
+              <a class="downloads__pm-link"
+                 href="https://play.google.com/store/apps/details?id=org.tokend.template"
+                 target="_blank" rel="noopener"
+              >
+                <img src="../../../static/googleplay.png">
+              </a>
+            </div>
+
+            <div class="downloads__android-content-section">
+              <h1 class="downloads__heading">{{ i18n.dl_use_config() }}</h1>
+              <p class="downloads__paragraph">{{ i18n.dl_android_qr() }}</p>
+              <qr-code :text="qrValue"
+                       :margin="0"
+                       :size="175"/>
+            </div>
           </div>
         </div>
       </div>
@@ -40,13 +56,21 @@
   import { i18n } from '../../js/i18n'
   import config from '../../config'
 
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '../../vuex/types'
+  import { vueRoutes } from '../../vue-router/const'
+
   export default {
     name: 'PublicMobiles',
     components: { QrCode },
     data: _ => ({
-      i18n
+      i18n,
+      vueRoutes
     }),
     computed: {
+      ...mapGetters([
+        vuexTypes.isLoggedIn
+      ]),
       qrValue () {
         return JSON.stringify({
           api: config.HORIZON_SERVER,
@@ -62,9 +86,9 @@
 <style lang="scss" scoped>
   @import '../../scss/variables';
 
-  .downloads {
-    max-width: 90 * $point;
-  }
+  $side-padding: 5 * $point;
+
+  .downloads--public .downloads__inner { padding-left: $side-padding }
 
   .downloads__android-img {
     margin-right: 3 * $point;
@@ -74,6 +98,25 @@
     img { width: 100% }
   }
 
+  .downloads__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10 * $point;
+    padding: 3 * $point $side-padding;
+  }
+
+  .downloads__title {
+    font-size: 2.5 * $point;
+  }
+
+  .downloads__title,
+  .downloads__link {
+    color: $col-md-primary;
+    font-weight: 700;
+  }
+
+  .downloads__link { font-size: 1.5 * $point }
+  .downloads__link:first-child { margin-right: 2.5 * $point }
   .downloads__android-inner { display: flex }
   .downloads__android-content { padding-top: 5 * $point }
   .downloads__android-content-section { margin-bottom: 6 * $point }
