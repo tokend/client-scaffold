@@ -61,7 +61,7 @@
   import { vueRoutes } from '../../vue-router/const'
 
   export default {
-    name: 'PublicMobiles',
+    name: 'PublicDownloads',
     components: { QrCode },
     data: _ => ({
       i18n,
@@ -72,11 +72,13 @@
         vuexTypes.isLoggedIn
       ]),
       qrValue () {
+        const hostname = window.location.hostname
+
         return JSON.stringify({
           api: config.HORIZON_SERVER,
           storage: config.FILE_STORAGE,
-          kyc: `${config.HORIZON_SERVER}/verification`,
-          terms: `${config.HORIZON_SERVER}/terms`
+          kyc: `${hostname}/verification`,
+          terms: `${hostname}/terms`
         })
       }
     }
