@@ -14,5 +14,6 @@ export const PAGES_NAMES = Object.freeze({
   trade: 'Trade',
   verification: 'Verification',
   settings: 'Settings',
-  help: 'Help'
+  help: 'Help',
+  downloads: 'TokenD downloads'
 })

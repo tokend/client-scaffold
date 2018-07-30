@@ -92,7 +92,8 @@ const router = new Router({
     {
       path: '/downloads',
       name: 'downloads',
-      component: Downloads
+      component: Downloads,
+      meta: { pageName: PAGES_NAMES.downloads }
     },
     {
       path: '/auth',
