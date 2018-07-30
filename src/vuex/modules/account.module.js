@@ -1,4 +1,3 @@
-import { blobTypes } from '../../js/const/documents.const'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import { usersService } from '../../js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
@@ -117,7 +116,7 @@ export const actions = {
       documents: opts.documents
     }
     return (await usersService.blobsOf()
-      .create(blobTypes.kycForm.str, data))
+    .create(opts.blobType, data))
       .data('id')
   }
 }
