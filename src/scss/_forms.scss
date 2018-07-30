@@ -15,7 +15,7 @@ $field-to-field-gap: 2 * $point;
 
   & > .app__form-field {
     flex: 1;
-    min-width: 49.999%;
+    min-width: 0;
 
     &--halved {
       flex: 0.5;
