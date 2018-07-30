@@ -7,6 +7,7 @@
     <div class="auth-page__form">
       <logotype class="auth-page__form-logotype"/>
       <router-view/>
+      <app-footer/>
     </div>
   </div>
 </template>
@@ -14,9 +15,13 @@
 <script>
   import { i18n } from '../../js/i18n'
   import Logotype from '../app/common/Logotype'
+  import AppFooter from '../navigation/Footer'
 
   export default {
-    components: { Logotype },
+    components: {
+      Logotype,
+      AppFooter
+    },
 
     data () {
       return {

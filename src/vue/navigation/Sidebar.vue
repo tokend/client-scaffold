@@ -169,6 +169,8 @@
         </router-link>
       </ul>
     </section>
+
+    <app-footer/>
   </div>
 </template>
 
@@ -179,12 +181,16 @@
   import { vuexTypes } from '../../vuex/types'
   import { i18n } from '../../js/i18n'
   import Logotype from '../app/common/Logotype'
+  import AppFooter from '../navigation/Footer'
   import { ACCOUNT_TYPES } from '@/js/const/const'
 
   export default {
     name: 'sidebar',
 
-    components: { Logotype },
+    components: {
+      Logotype,
+      AppFooter
+    },
 
     data () {
       return {
@@ -274,4 +280,5 @@
     font-size: 16px;
     margin-bottom: 8px;
   }
+
 </style>
