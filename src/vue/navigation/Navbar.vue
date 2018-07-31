@@ -34,7 +34,7 @@
           <template v-if="accountTypeI === ACCOUNT_TYPES.notVerified">
             {{ i18n.lbl_type_unverified() }}
           </template>
-          <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
+          <template v-else-if="accountTypeI === ACCOUNT_TYPES.general">
             {{ i18n.lbl_type_general() }}
           </template>
           <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
