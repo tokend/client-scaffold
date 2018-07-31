@@ -92,7 +92,9 @@ const actions = {
   NEXT_USER_PREISSUANCE_UPLOAD_REQUESTS: 'NEXT_USER_PREISSUANCE_UPLOAD_REQUESTS',
   GET_USER_SALE_CREATION_REQUESTS: 'GET_USER_SALE_CREATION_REQUESTS',
   NEXT_USER_SALE_CREATION_REQUESTS: 'NEXT_USER_SALE_CREATION_REQUESTS',
-  INIT_SALE_REQUESTS_LIST: 'INIT_SALE_REQUESTS_LIST'
+  INIT_SALE_REQUESTS_LIST: 'INIT_SALE_REQUESTS_LIST',
+  GET_LIMITS_REQUESTS: 'GET_LIMITS_REQUESTS',
+  NEXT_LIMITS_REQUESTS: 'NEXT_LIMITS_REQUESTS'
 }
 
 const getters = {
@@ -162,6 +164,8 @@ const getters = {
   tokenCreationRequests: 'tokenCreationRequests',
   saleCreationRequests: 'saleCreationRequests',
   preIssuanceUploadRequests: 'preIssuanceUploadRequests',
+  limitsRequests: 'limitsRequests',
+  isLimitsRequestsLoaded: 'isLimitsRequestsLoaded',
 
   // sales:
   sales: 'sales',
