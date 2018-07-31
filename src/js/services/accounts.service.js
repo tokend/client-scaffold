@@ -55,7 +55,6 @@ export class AccountsService extends Service {
       .submit(this._accountId, this._keypair)
   }
 
-
   /**
    * Creates limits update request
    * @param {object} opts
