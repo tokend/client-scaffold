@@ -42,6 +42,15 @@
 
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
+                     to="/limits"
+                     tag="li" v-if="config.FEATURE_FLAGS.limits">
+          <md-icon class="sidebar__list-item-icon">insert_chart</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_limits() }}</span>
+        </router-link>
+
+
+        <router-link v-ripple class="sidebar__list-item"
+                     @click.native="closeSidebar"
                      to="/mass-transfers"
                      tag="li" v-if="config.FEATURE_FLAGS.massTransfers">
           <md-icon class="sidebar__list-item-icon">people</md-icon>
