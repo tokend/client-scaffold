@@ -74,5 +74,6 @@ export const documentTypes = Object.freeze({
   tokenMetrics: 'token_metrics',
   kycIdDocument: 'kyc_id_document',
   kycProofOfAddress: 'kyc_poa',
-  kycSelfie: 'kyc_selfie'
+  kycSelfie: 'kyc_selfie',
+  limitsProofOfIncome: 'limits_poi'
 })

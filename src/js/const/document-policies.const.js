@@ -18,5 +18,6 @@ export const DOCUMENT_POLICIES = Object.freeze({
   [documentTypes.delta]: POLICIES.public,
   [documentTypes.tokenTerms]: POLICIES.public,
   [documentTypes.tokenIcon]: POLICIES.public,
-  [documentTypes.tokenMetrics]: POLICIES.public
+  [documentTypes.tokenMetrics]: POLICIES.public,
+  [documentTypes.limitsProofOfIncome]: POLICIES.private
 })
