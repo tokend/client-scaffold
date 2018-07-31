@@ -14,6 +14,7 @@ const mutations = {
   SET_ACCOUNT_KEYS: 'SET_ACCOUNT_KEYS',
   SET_ACCOUNT_BALANCES: 'SET_ACCOUNT_BALANCES',
   SET_ACCOUNT_DETAILS: 'SET_ACCOUNT_DETAILS',
+  SET_ACCOUNT_LIMITS: 'SET_ACCOUNT_LIMITS',
   // account.kyc:
   SET_ACCOUNT_KYC_REQUESTS: 'SET_ACCOUNT_KYC_REQUESTS',
   SET_ACCOUNT_KYC_DATA: 'SET_ACCOUNT_KYC_DATA',
@@ -57,6 +58,7 @@ const actions = {
   // account:
   GET_ACCOUNT_DETAILS: 'GET_ACCOUNT_DETAILS',
   GET_ACCOUNT_BALANCES: 'GET_ACCOUNT_BALANCES',
+  GET_ACCOUNT_LIMITS: 'GET_ACCOUNT_LIMITS',
   // account.kyc:
   GET_ACCOUNT_KYC_DATA: 'GET_ACCOUNT_KYC_DATA',
   GET_ACCOUNT_KYC_REQUESTS: 'GET_ACCOUNT_KYC_REQUESTS',
@@ -118,6 +120,7 @@ const getters = {
   accountType: 'accountType',
   accountTypeI: 'accountTypeI',
   accountBlocked: 'accountBlocked',
+  accountLimits: 'accountLimits',
   accountSeed: 'accountSeed',
   accountPublicKey: 'accountPublicKey',
   accountKeypair: 'accountKeypair',
