@@ -75,7 +75,7 @@
 
       </template>
 
-      <template v-if="requestedToUpdate">
+      <template v-if="requestedToUpdate && accountState === ACCOUNT_STATES.approved" >
         <state-banner/>
         <template v-if="selectedUserType === userTypes.general">
           <individual-form />
