@@ -14,7 +14,8 @@
           />
         </div>
       </div>
-      <div class="portfolio-widget__asset-btns">
+      <!-- Hided as requested in "Redesign fixes" -->
+      <!-- <div class="portfolio-widget__asset-btns">
         <router-link tag="button"
                       to="/issuance-creation"
                       :disabled="checkTransferable"
@@ -31,7 +32,7 @@
           <md-icon class="portfolio-widget__asset-btn-icon portfolio-widget__asset-btn-icon--rotate">send</md-icon>
           {{ i18n.lbl_send() }} {{ currentAsset }}
         </router-link>
-      </div>
+      </div> -->
     </div>
     <template v-if="currentAsset">
       <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
