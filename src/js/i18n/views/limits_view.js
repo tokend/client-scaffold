@@ -14,5 +14,8 @@ export default {
   lim_request_id: 'Request ID',
   lim_state: 'State',
   lim_asset: 'Asset',
-  lim_proof: 'Proof of income'
+  lim_proof: 'Proof of income',
+  lim_heading: 'Limits imposed on account',
+  lim_left: 'left',
+  lim_total: 'total'
 }

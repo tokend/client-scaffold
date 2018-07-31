@@ -50,6 +50,9 @@ export default {
       vuexTypes.limitsRequests,
       vuexTypes.accountId
     ]),
+    balance () {
+      return this.accountBalances[this.filters.tokenCode]
+    },
     limits () {
       const limits = this.accountLimits
         .filter(limit => limit.tokenCode === this.filters.tokenCode)
