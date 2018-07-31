@@ -400,12 +400,12 @@
                 break
               }
               case 'day': {
-                tipTimeTextDD.text(moment(nearestPoint.time).format('h:mm'))
+                tipTimeTextDD.text(moment(nearestPoint.time).format('h:mm a'))
                 tipTimeTextMM.text(moment(nearestPoint.time).format('DD MMM'))
                 break
               }
               case 'hour': {
-                tipTimeTextDD.text(moment(nearestPoint.time).format('h:mm'))
+                tipTimeTextDD.text(moment(nearestPoint.time).format('h:mm a'))
                 tipTimeTextMM.text(moment(nearestPoint.time).format('DD MMM'))
                 break
               }
