@@ -61,9 +61,5 @@ export default {
     background-color: transparent;
     // overflow: visible !important;
   }
-
-  .md-button {
-    border-bottom: 1px solid $col-md-primary;
-  }
 }
 </style>

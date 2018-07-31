@@ -1,5 +1,5 @@
 <template>
-  <md-tabs md-card class="security-settings app__page-content-wrp">
+  <md-tabs md-card class="security-settings-tabs">
     <md-tab :md-label="`${ i18n.set_change_password()}`">
       <change-password class="security-settings__change-password"/>
     </md-tab>
@@ -39,10 +39,48 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import './settings.scss';
+  @import "~@scss/variables";
 
-  .security-settings {
-    max-width: 48rem;
+  .security-settings-tabs {
+    min-width: 48rem;
+    .md-title,
+    .md-table-cell-container {
+      color: $col-md-primary !important;
+    }
+
+    .md-tabs-navigation {
+      background-color: transparent !important;
+      margin-bottom: 1rem;
+    }
+
+    .md-tab {
+      padding: 0;
+      background-color: transparent !important;
+    }
+
+    .md-card {
+      box-shadow: none;
+    }
+
+    .md-content {
+      background-color: transparent !important;
+    }
+
+    .md-tabs-content {
+      height: auto !important;
+      min-height: 100% !important;
+      background-color: transparent !important;
+      // overflow: visible !important;
+    }
+  }
+
+  .security-settings__change-password,
+  .security-settings__tfa-settings,
+  .security-settings__account-id,
+  .security-settings__seed {
+    margin: 3rem auto 0;
+    max-width: 40rem;
   }
 </style>
