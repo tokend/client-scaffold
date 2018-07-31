@@ -6,7 +6,15 @@
     <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
     <template v-else>
       <template v-if="accountState === ACCOUNT_STATES.approved">
-        <syndicate-banner/>
+        <div class="verification__approved-wrapper" v-if="!requestedToUpdate">
+          <syndicate-banner/>
+          <button v-ripple
+              @click="requestedToUpdate = true"
+              class="verification__update-btn app__form-submit-btn">
+              {{ i18n.lbl_update_information() }}
+          </button>
+
+        </div>
       </template>
       <template v-if="accountState === ACCOUNT_STATES.pending">
         <state-banner/>
@@ -66,6 +74,17 @@
         </template>
 
       </template>
+
+      <template v-if="requestedToUpdate">
+        <state-banner/>
+        <template v-if="selectedUserType === userTypes.general">
+          <individual-form />
+        </template>
+
+        <template v-if="selectedUserType === userTypes.syndicate">
+          <syndicate-form />
+        </template>
+      </template>
     </template>
   </div>
 </template>
@@ -100,7 +119,8 @@
       userTypes,
       showForm: false,
       isLoading: false,
-      i18n
+      i18n,
+      requestedToUpdate: false
     }),
     async created () {
       await this.reset()
@@ -226,4 +246,14 @@
     }
   }
 }
+
+.verification__approved-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .verification__update-btn {
+    margin-top: 1rem;
+  }
+}
+
 </style>
