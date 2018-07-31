@@ -1,92 +1,92 @@
 <template>
   <div class="tx-token-creation">
-    <md-table md-card class="tx-token-creation__table">
-      <!-- <md-table-toolbar class="tx-token-creation__table-toolbar">
-        <h1 class="tx-token-creation__table-title md-title">{{ i18n.lbl_token_creation_requests() }}</h1>
-        <div class="tx-token-creation__select-outer">
+    <div class="requests__list-wrapper" v-if="list.length">
+      <div class="requests__list" v-table-scroll-shadow>
+        <div class="requests__list-header">
+          <div class="requests__list-header-item requests__list-header-item--token">{{ i18n.lbl_token_code() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--updated">{{ i18n.lbl_updated_at() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--btn"></div>
         </div>
-      </md-table-toolbar> -->
-
-      <template v-if="list.length">
-        <md-table-row class="tx-token-creation__row">
-          <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head class="tx-token-creation__hide-md">{{ i18n.lbl_updated_at() }}</md-table-head>
-          <md-table-head><!--Button--></md-table-head>
-        </md-table-row>
-        <template v-for="(item, i) in list">
-          <md-table-row class="tx-token-creation__row" @click.native="toggleDetails(i)" :key="i">
-            <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell tx-token-creation__hide-md">{{ i18n.d(item.updatedAt) }}</md-table-cell>
-
-            <md-table-cell class="tx-token-creation__table-cell">
-              <md-button class="tx-token-creation__open-details-btn md-icon-button">
-                <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
-                <md-icon v-else>keyboard_arrow_down</md-icon>
-              </md-button>
-            </md-table-cell>
-
-          </md-table-row>
-          <md-table-row class="th-token-creation__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
-            <md-table-cell colspan="7">
+        <div class="requests__list-body">
+          <div class="requests__list-body-elem"
+              v-for="(tx, i) in list"
+              :key="`activity-item-${i}`"
+              :class="`requests__list-body-elem--${tx.state}`">
+            <div class="requests__list-body-row">
+              <div :title="tx.reference" class="requests__list-body-item requests__list-body-item--token">
+                {{ tx.reference }}
+              </div>
+              <div :title="tx.state" class="requests__list-body-item requests__list-body-item--state">
+                {{ tx.state }}
+              </div>
+              <div :title="tx.createdAt" class="requests__list-body-item requests__list-body-item--created">
+                {{ i18n.dmy(tx.createdAt) }}
+              </div>
+              <div :title="tx.direction" class="requests__list-body-item requests__list-body-item--updated">
+                {{ i18n.dmy(tx.updatedAt) }}
+              </div>
+              <div class="requests__list-body-item requests__list-body-item--btn">
+                <button class="requests__list-body-item-btn" @click="toggleDetails(i)">
+                  <md-icon class="requests__list-body-item-icon"
+                          :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
+                    keyboard_arrow_down
+                  </md-icon>
+                </button>
+              </div>
+            </div>
+            <div class="requests__list-body-row requests__list-body-row--details" v-if="isSelected(i)">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="item.logoUrl" :src='item.logoUrl' :alt="documentTypes.tokenIcon">
-                  <div class="token-icon" v-else>{{ item.reference.substr(0, 1).toUpperCase() }}</div>
+                  <img class="token-icon" v-if="tx.logoUrl" :src='tx.logoUrl' :alt="documentTypes.tokenIcon">
+                  <div class="token-icon" v-else>{{ tx.reference.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type" :value="`${getFancyName(item.details.request_type)}`"/>
-                  <detail prop="Max issuance amount" :value="`${i18n.c(item.maxIssuanceAmount)}`"/>
-                  <detail prop="Initial preissued amount" :value="`${i18n.c(item.initialPreissuedAmount)}`"/>
-                  <detail prop="Token name" :value="`${item.tokenName}`"/>
-                  <detail prop="Terms" v-if="item.termsUrl" :value="`<a href='${item.termsUrl}' target='_blank'>Open file</a>`"/>
+                  <detail prop="Request type" :value="`${getFancyName(tx.details.request_type)}`"/>
+                  <detail prop="Max issuance amount" :value="`${i18n.c(tx.maxIssuanceAmount)}`"/>
+                  <detail prop="Initial preissued amount" :value="`${i18n.c(tx.initialPreissuedAmount)}`"/>
+                  <detail prop="Token name" :value="`${tx.tokenName}`"/>
+                  <detail prop="Terms" v-if="tx.termsUrl" :value="`<a href='${tx.termsUrl}' target='_blank'>Open file</a>`"/>
                   <detail prop="Terms" v-else />
-                  <detail prop="Policies" :value="`${getPolicies(item.policies)}`"/>
-                  <detail prop="Reject reason" v-if="item.isRejected || item.isPermanentlyRejected"
-                                               :value="`${item.rejectReason}`"/>
-
+                  <detail prop="Policies" :value="`${getPolicies(tx.policies)}`"/>
+                  <detail prop="Reject reason" v-if="tx.isRejected || tx.isPermanentlyRejected"
+                                              :value="`${tx.rejectReason}`"/>
                 </div>
               </md-card-content>
               <md-card-actions>
                 <button v-ripple
-                        @click="cancelRequest(item.id)"
+                        @click="cancelRequest(tx.id)"
                         class="app__button-flat"
-                        :disabled="!item.isPending || isPending">
+                        :disabled="!tx.isPending || isPending">
                   {{ i18n.lbl_cancel() }}
                 </button>
-                <router-link :to="{name: 'token-creation.index', params: { id: item.id }}"
-                             tag="button"
-                             v-ripple
-                             class="app__button-flat"
-                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                <router-link :to="{name: 'token-creation.index', params: { id: tx.id }}"
+                            tag="button"
+                            v-ripple
+                            class="app__button-flat"
+                            :disabled="(!tx.isPending && !tx.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
-            </md-table-cell>
-          </md-table-row>
-        </template>
-         <md-table-row v-if="!isLoaded">
-            <md-table-cell colspan="7">
-                <div class="tx-history__btn-outer">
-                  <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
-                  </button>
-                </div>
-            </md-table-cell>
-         </md-table-row>
-      </template>
-      <template v-else>
-        <div class="tx-token-creation__no-requests">
-          <no-data-message icon-name="trending_up"
-            :msg-title="i18n.lbl_no_token_creation_requests()"
-            :msg-message="i18n.lbl_no_token_creation_requests_desc()"/>
+            </div>
+          </div>
         </div>
-      </template>
-    </md-table>
+        <div class="requests__btn-outer" v-if="!isLoaded">
+          <button v-ripple 
+                          @click="more" 
+                          class="app__button-flat" 
+                          :disabled="isLoading"> 
+                    {{ i18n.lbl_view_more() }} 
+          </button> 
+        </div>
+      </div>
+    </div>
+    <template v-else>
+      <div class="tx-token-creation__no-requests">
+        <no-data-message icon-name="trending_up"
+          :msg-title="i18n.lbl_no_token_creation_requests()"
+          :msg-message="i18n.lbl_no_token_creation_requests_desc()"/>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -185,8 +185,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/mixins";
-  @import "../../../../scss/variables";
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   $padding-vertical: 20px;
   $padding-horizontal: 25px;
@@ -196,55 +196,6 @@ export default {
     width: 100%;
   }
 
-  .tx-token-creation__table {
-    margin: 0 !important;
-  }
-
-  .tx-token-creation__table-toolbar {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    @media (max-width: 840px) {
-      flex-direction: column;
-      padding-top: $padding-vertical;
-    }
-  }
-
-  .tx-token-creation__row {
-    cursor: pointer;
-  }
-
-  .tx-token-creation__table-cell {
-    overflow: hidden;
-    white-space: nowrap;
-
-    &--counterparty {
-      max-width: 10rem;
-    }
-    &:last-child {
-      text-align: right;
-    }
-  }
-
-  .tx-token-creation__open-details-btn {
-    margin-right: .65rem;
-  }
-
-  .tx-token-creation__select-outer {
-    padding: 5px $padding-horizontal;
-  }
-
-  .tx-token-creation__details {
-    padding: $padding;
-    max-width: 25rem;
-    width: 100%;
-  }
-
-  .tx-token-creation__btn-outer {
-    text-align: center;
-  }
-
   .tx-token-creation__no-requests {
     padding: 0 16px 32px;
     text-align: center;
@@ -252,11 +203,6 @@ export default {
     p {
       margin-top: 10px;
     }
-  }
-
-  .tx-token-creation__table-title {
-    padding: 24px;
-    font-size: 24px;
   }
 
   .tx-token-creation__no-requests {
@@ -295,5 +241,160 @@ export default {
     @include respond-to(medium) {
       display: none;
     }
+  }
+
+  .requests__list-wrapper {
+    position: relative;
+  }
+
+  .requests__list {
+    padding: 0 4px 6px 4px;
+
+    @include respond-to-custom(1300px) {
+      overflow-x: auto;
+    }
+  }
+
+  .requests__list-header,
+  .requests__list-body-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .requests__list-header-item--token,
+  .requests__list-body-item--token {
+    width: 25%;
+  }
+
+  .requests__list-body-item--state,
+  .requests__list-header-item--state {
+    width: 20%;
+  }
+
+  .requests__list-body-item--created,
+  .requests__list-header-item--created {
+    width: 20%;
+  }
+
+  .requests__list-body-item--updated,
+  .requests__list-header-item--updated {
+    width: 20%;
+  }
+
+  .requests__list-body-item--btn,
+  .requests__list-header-item--btn {
+    width: 70px;
+    flex: none;
+    padding: 0;
+
+    @include respond-to(medium) {
+      width: 47px;
+    }
+  }
+
+  .requests__list-body-item-btn {
+    @include button();
+    @include button-flat();
+
+    background: rgba($col-md-primary, .1);
+    font-size: 10px;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
+  .requests__list-body-elem {
+    @include box-shadow();
+
+    background-color: #fff;
+
+    @include respond-to(medium) {
+      min-width: 670px;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 6px;
+    }
+  }
+
+  .requests__list-body-item,
+  .requests__list-header-item {
+    padding: 8px 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: $col-md-primary;
+    display: flex;
+    align-items: center;
+  }
+
+  .requests__list-body-row--details {
+    padding-top: 17px;
+    padding-bottom: 17px;
+    margin: 0 20px;
+    min-width: 25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .requests__list-body-item-icon--active { transform: rotate(-180deg) }
+
+  .requests__list-body-elem--canceled,
+  .requests__list-body-elem--pending,
+  .requests__list-body-elem--approved,
+  .requests__list-body-elem--rejected,
+  .requests__list-body-elem--permanentlyRejected {
+    &:before {
+      position: absolute;
+      left: -25px;
+      margin-top: 22px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 10px;
+      line-height: 18px;
+
+      @include respond-to(medium) {
+        left: -25px;
+      }
+
+      @include respond-to-custom(800px) {
+        left: -21px;
+      }
+
+      @include respond-to(xsmall) {
+        left: -17px;
+      }
+    }
+  }
+
+  .requests__list-wrapper {
+    position: relative;
+  }
+
+  .requests__list-body-elem--canceled:before,
+  .requests__list-body-elem--rejected:before,
+  .requests__list-body-elem--permanentlyRejected:before {
+    content: '\2715';
+    background-color: $col-md-accent;
+    padding: 0 4px;
+  }
+
+  .requests__list-body-elem--pending:before {
+    background-color: #ffb454;
+    content: '';
+  }
+
+  .requests__list-body-elem--approved:before {
+    content: '\2713';
+    background-color: #51ca90;
+    padding: 0 3px;
+  }
+
+  .requests__btn-outer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
   }
 </style>
