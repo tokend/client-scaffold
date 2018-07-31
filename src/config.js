@@ -14,6 +14,7 @@ const featureFlags = {
   tfa: true,
   tokens: true,
   sales: true,
+  limits: true,
   requests: true,
   massTransfers: true
 }

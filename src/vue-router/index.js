@@ -39,6 +39,9 @@ import TokensExplore from '../vue/app/tokens/Tokens.Explore'
 import History from '../vue/app/history/History.Entry'
 import HistoryIndex from '../vue/app/history/index/History.Index'
 
+import Limits from '../vue/app/limits/Limits.Entry'
+import LimitsIndex from '../vue/app/limits/Limits.Index'
+
 import Trade from '../vue/app/trade/Trade.Entry'
 import TradeIndex from '../vue/app/trade/index/Trade.Index'
 
@@ -163,6 +166,21 @@ const router = new Router({
               name: 'deposit.make',
               meta: { pageName: PAGES_NAMES.deposit },
               component: DepositMake
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.limits,
+          name: 'app.limits',
+          path: '/limits',
+          component: Limits,
+          redirect: {path: '/limits/index'},
+          children: [
+            {
+              path: '/limits/index',
+              name: 'limits.index',
+              meta: { pageName: PAGES_NAMES.limits },
+              component: LimitsIndex
             }
           ]
         },

@@ -164,6 +164,7 @@ export default {
   lbl_view_sale: 'View the fund',
   lbl_create_issuance: 'Create issuance',
   lbl_create_issuance_page: PAGES_NAMES.createIssuance,
+  lbl_limits: PAGES_NAMES.limits,
   lbl_sender_fee: 'Sender fee',
   lbl_recipient_fee: 'Recipient fee',
   lbl_fee_from_source: 'Sender paid fees',

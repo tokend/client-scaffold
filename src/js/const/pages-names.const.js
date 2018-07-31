@@ -1,6 +1,7 @@
 export const PAGES_NAMES = Object.freeze({
   dashboard: 'Dashboard',
   deposit: 'Deposit',
+  limits: 'Limits',
   withdraw: 'Withdraw',
   send: 'Send',
   exploreTokens: 'Explore tokens',
