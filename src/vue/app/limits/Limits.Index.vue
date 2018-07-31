@@ -3,7 +3,12 @@
 </template>
 
 <script>
+  import LimitsRequestsList from './Limits.List'
+  import LimitsIndexMixin from './limits-index.mixin'
+
   export default {
-    name: 'LimitsIndex'
+    name: 'LimitsIndex',
+    mixins: [LimitsIndexMixin],
+    components: { LimitsRequestsList }
   }
 </script>
