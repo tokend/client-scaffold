@@ -1,4 +1,9 @@
-import { xdr, Operation, CreateUpdateKYCRequestBuilder } from 'swarm-js-sdk'
+import {
+  xdr,
+  Operation,
+  CreateUpdateKYCRequestBuilder,
+  CreateManageLimitsRequestBuilder
+} from 'swarm-js-sdk'
 import { ErrorFactory, errorTypes } from '../errors/factory'
 import { Service } from './service'
 import get from 'lodash/get'
@@ -44,6 +49,23 @@ export class AccountsService extends Service {
    */
   createKycRequest (opts) {
     const operation = CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
+    return this._operationBuilder
+      .operation()
+      .add(operation)
+      .submit(this._accountId, this._keypair)
+  }
+
+
+  /**
+   * Creates limits update request
+   * @param {object} opts
+   * @param {string} opts.details - JSON string about proof document
+   * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
+   * @returns {TransactionBuilder}
+   */
+  createLimitRequest (opts) {
+    const operation = CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
+
     return this._operationBuilder
       .operation()
       .add(operation)
