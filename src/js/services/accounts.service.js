@@ -19,6 +19,19 @@ export class AccountsService extends Service {
   }
 
   /**
+   * Loads account limits
+   * @param {int} type - operation type limits imposed on
+   * @param {asset} asset - asset type limits imposed on
+   * @return {Promise<object>} - promise object representing account limits
+   */
+
+  loadAccountLimits () {
+    return this._horizonRequestBuilder.accounts()
+      .limits(this._accountId)
+      .callWithSignature(this._keypair)
+  }
+
+  /**
    * Creates operation to create KYC request
    * @param {object} opts
    * @param {number|string} opts.requestID - set to zero to create new request
