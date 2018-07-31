@@ -31,6 +31,7 @@ import saleInvest from './views/sale_invest_view'
 import marketPriceChartView from './views/market_price_chart_view'
 import sidebarView from './views/sidebar_view'
 import downloadsView from './views/downloads_view'
+import limitsView from './views/limits_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
@@ -71,7 +72,8 @@ const dictionary = {
   ...saleInvest,
   ...marketPriceChartView,
   ...sidebarView,
-  ...downloadsView
+  ...downloadsView,
+  ...limitsView
 }
 
 polyglot.extend(dictionary)
