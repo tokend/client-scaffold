@@ -42,6 +42,7 @@
 <style lang="scss">
   @import './settings.scss';
   @import "~@scss/variables";
+  @import "~@scss/mixins";
 
   .security-settings-tabs {
     min-width: 48rem;
@@ -74,6 +75,8 @@
       background-color: transparent !important;
       // overflow: visible !important;
     }
+
+    @include overwrite-tabs(57);
   }
 
   .security-settings__change-password,

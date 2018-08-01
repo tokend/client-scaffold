@@ -4,7 +4,7 @@
         <div class="md-title">{{ i18n.tr_create_mass() }}</div>
       </md-card-header> -->
       <div class="mass-transfer__desc app__page-content-wrp">
-        <h2 class="app__page-heading">{{ i18n.tr_create_mass() }}</h2>
+        <h2 class="app__page-heading mass-transfers__page-heading">{{ i18n.tr_create_mass() }}</h2>
 
         <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about() }}</p>
 
@@ -42,8 +42,8 @@
             </template>
           </p>
         </template>
-        <md-card-actions md-alignment="space-between">
-          <md-button class="md-primary"
+        <md-card-actions md-alignment="space-between" class="mass-transfer__actions">
+          <md-button class="md-primary mass-transfer__confirm-btn"
                     :disabled="!transfers.length || isPending"
                     @click="submit"
           >
@@ -74,7 +74,7 @@
                 v-for="(transfer, i) in transfers"
                 :key="`activity-item-${i}`">
               <div class="mass-transfer__list-body-row">
-                <div :title="transfer.status" 
+                <div :title="transfer.status"
                      class="mass-transfer__list-body-item mass-transfer__list-body-item--status"
                      :class="{ 'mass-transfer__table-cell--error':
                                       transfer.status && transfer.status !== 'Success'
@@ -92,7 +92,7 @@
                   {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
                   {{ transfer.sourceFees.feeAsset }}
                 </div>
-                
+
                 <div :title="transfer.destinationFees.feeAsset" class="mass-transfer__list-body-item mass-transfer__list-body-item--destination-fees">
                   {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
                   {{ transfer.destinationFees.feeAsset }}
@@ -347,6 +347,10 @@
     margin-bottom: 1rem;
   }
 
+  .mass-transfer__confirm-btn {
+    margin-left: -23px;
+  }
+
   .mass-transfer__total {
     margin-bottom: 1rem;
   }
@@ -369,6 +373,15 @@
     &:not(:last-child) {
       margin-bottom: 6px;
     }
+  }
+
+  .mass-transfers__page-heading,
+  .mass-transfer__text-paragraph{
+    margin-bottom: 5.5 * $point;
+  }
+
+  .mass-transfer__actions {
+    margin-top: 5.5 * $point;
   }
 
   .mass-transfer__list-header,
