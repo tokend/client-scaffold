@@ -21,7 +21,7 @@
         <p v-if="isMy">{{i18n.sale_upd_tab_share_updates()}}</p>
         <p v-else>{{i18n.sale_upd_tab_important_updated()}}</p>
 
-        <md-button class="md-primary md-raised"
+        <md-button class="md-primary md-flat"
                 v-if="isMy"
                 @click="openForm">{{i18n.sale_upd_tab_add_timeline()}}</md-button>
       </div>
