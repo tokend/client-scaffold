@@ -145,3 +145,25 @@ $xlarge: 1920px;
     @content;
   }
 }
+
+@mixin overwrite-tabs ($width) {
+  .md-tabs-navigation {
+    border-bottom: 2px solid rgba($col-md-primary-secondary, .1);
+    max-width: $width * $point;
+    margin-bottom: 4 * $point;
+
+    a, button {
+      font-size: 1.8 * $point;
+      text-transform: none !important;
+
+      .md-button-content {
+        color: $col-md-primary;
+      }
+    }
+
+    .md-tabs-indicator {
+      background: $col-md-primary-secondary;
+      bottom: -2px
+    }
+  }
+}
