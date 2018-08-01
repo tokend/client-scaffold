@@ -223,6 +223,7 @@
     background-color: #e9eaed !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
     min-height: 100vh;
+    padding-bottom: 10 *  $point;
     height: 100%;
   }
 
