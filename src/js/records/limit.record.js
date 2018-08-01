@@ -29,18 +29,18 @@ export class LimitRecord {
   }
 
   get dailyLeft () {
-    return subtract(this.dailyLimit, this.dailySpent)
+    return subtract(this.dailyLimit, this.dailySpent || 0)
   }
 
   get weeklyLeft () {
-    return subtract(this.weeklyLimit, this.weeklySpent)
+    return subtract(this.weeklyLimit, this.weeklySpent || 0)
   }
 
   get monthlyLeft () {
-    return subtract(this.monthlyLimit, this.monthlySpent)
+    return subtract(this.monthlyLimit, this.monthlySpent || 0)
   }
 
   get annualLeft () {
-    return subtract(this.annualLimit, this.annualSpent)
+    return subtract(this.annualLimit, this.annualSpent || 0)
   }
 }

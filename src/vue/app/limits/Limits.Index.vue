@@ -24,28 +24,36 @@
             <div class="limits__list-content">
               <p class="limits__list-item">
                 <span class="limits__list-item-label">{{ i18n.lim_daily() }}:</span>
-                {{ limits[op].dailyLeft ? i18n.c(limits[op].dailyLeft) : '—' }} / {{ limits[op].dailyLimit ? i18n.c(limits[op].dailyLimit) : '—' }}
+                {{ limits[op].dailyLeft ? i18n.c(limits[op].dailyLeft) : '—' }}
+                /
+                {{ limits[op].dailyLimit ? i18n.c(limits[op].dailyLimit) : '—' }}
                 <template v-if="limits[op].dailyLimit">{{ i18n.lim_total() }}</template>
               </p>
 
 
               <p class="limits__list-item">
                 <span class="limits__list-item-label">{{ i18n.lim_weekly() }}:</span>
-                {{ limits[op].weeklyLeft ? i18n.c(limits[op].dailyLeft) : '—' }} / {{ limits[op].weeklyLimit ? i18n.c(limits[op].weeklyLimit) : '—' }}
+                {{ limits[op].weeklyLeft ? i18n.c(limits[op].weeklyLeft) : '—' }}
+                /
+                {{ limits[op].weeklyLimit ? i18n.c(limits[op].weeklyLimit) : '—' }}
                 <template v-if="limits[op].weeklyLimit">{{ i18n.lim_total() }}</template>
               </p>
 
 
               <p class="limits__list-item">
                 <span class="limits__list-item-label">{{ i18n.lim_monthly() }}:</span>
-                {{ limits[op].monthlyLeft ? i18n.c(limits[op].dailyLeft) : '—' }} / {{ limits[op].monthlyLimit ? i18n.c(limits[op].monthlyLimit) : '—' }}
+                {{ limits[op].monthlyLeft ? i18n.c(limits[op].monthlyLeft) : '—' }}
+                /
+                {{ limits[op].monthlyLimit ? i18n.c(limits[op].monthlyLimit) : '—' }}
                 <template v-if="limits[op].monthlyLimit">{{ i18n.lim_total() }}</template>
               </p>
 
 
               <p class="limits__list-item">
                 <span class="limits__list-item-label">{{ i18n.lim_annual() }}:</span>
-                {{ limits[op].annualLeft ? i18n.c(limits[op].dailyLeft) : '—' }} / {{ limits[op].annualLimit ? i18n.c(limits[op].annualLimit) : '—' }}
+                {{ limits[op].annualLeft ? i18n.c(limits[op].annualLeft) : '—' }}
+                /
+                {{ limits[op].annualLimit ? i18n.c(limits[op].annualLimit) : '—' }}
                 <template v-if="limits[op].annualLimit">{{ i18n.lim_total() }}</template>
               </p>
 
