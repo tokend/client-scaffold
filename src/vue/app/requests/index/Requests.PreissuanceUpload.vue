@@ -58,8 +58,8 @@
     <template v-else>
       <div class="tx-token-creation__no-requests">
         <no-data-message icon-name="trending_up"
-          :msg-title="i18n.lbl_no_token_creation_requests()"
-          :msg-message="i18n.lbl_no_token_creation_requests_desc()"/>
+          :msg-title="i18n.preis_no_token_creation_requests()"
+          :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
       </div>
     </template>
   </div>
@@ -250,7 +250,6 @@ export default {
   .requests__list-body-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
   }
 
   .requests__list-header-item--token-code,

@@ -329,7 +329,6 @@ export default {
   .requests__list-body-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
   }
 
   .requests__list-header-item--sale-name,
