@@ -183,7 +183,6 @@ const router = new Router({
             {
               path: '/mass-transfers/make',
               name: 'mass-transfers.make',
-              meta: { pageName: PAGES_NAMES.massTransfer },
               component: MassTransfersMake
             }
           ]
