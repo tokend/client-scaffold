@@ -1,13 +1,7 @@
 <template>
-  <md-list-item class="account-id" @click="isDialogOpened = !isDialogOpened">
-
-    <span class="md-list-item-text">{{ i18n.set_account_id() }}</span>
-    <md-icon class="md-icon--half-sized">play_arrow</md-icon>
-
-    <md-dialog class="account-id__dialog" :md-active.sync="isDialogOpened">
-      <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title>
-
-      <div class="app__dialog-inner">
+  <div class="settings-account-id">
+    <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title> 
+    <div class="app__dialog-inner">
         <div class="account-id__wrapper">
           <!--TODO: use vue-qr instead for consistency-->
           <qrcode class="qr-code account-id__qr-code"
@@ -30,9 +24,7 @@
           {{ i18n.lbl_cancel() }}
         </button>
       </md-dialog-actions>
-
-    </md-dialog>
-  </md-list-item>
+  </div>
 </template>
 
 <script>

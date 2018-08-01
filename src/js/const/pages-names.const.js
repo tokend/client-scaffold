@@ -17,5 +17,6 @@ export const PAGES_NAMES = Object.freeze({
   settings: 'Settings',
   help: 'Help',
   downloads: 'TokenD downloads',
-  terms: 'Terms'
+  terms: 'Terms',
+  massTransfer: 'Mass transfer'
 })

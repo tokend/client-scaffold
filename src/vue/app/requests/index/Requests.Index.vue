@@ -42,6 +42,11 @@ export default {
     color: $col-md-primary-inactive !important;
   }
 
+  .md-tabs-navigation {
+    background-color: transparent !important;
+    margin-bottom: 1rem;
+  }
+
   .md-tab {
     padding: 0;
   }
@@ -54,6 +59,7 @@ export default {
     height: auto !important;
     min-height: 100% !important;
     background-color: transparent;
+    // overflow: visible !important;
   }
 }
 </style>

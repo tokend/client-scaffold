@@ -1,64 +1,72 @@
 <template>
   <div class="tx-sale-creation">
-    <md-table md-card class="tx-sale-creation__table">
-      <md-table-toolbar class="tx-sale-creation__table-toolbar">
-        <!-- <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1> -->
-        <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
-           <select-field-custom
-            :label="i18n.lbl_asset()"
-            v-model="tokenCode"
-            :values="accountOwnedTokens"/>
+    <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
+      <select-field-custom
+      :label="i18n.lbl_asset()"
+      v-model="tokenCode"
+      :values="accountOwnedTokens"/>
+    </div>
+    <div class="requests__list-wrapper" v-if="list.length">
+      <div class="requests__list" v-table-scroll-shadow>
+        <div class="requests__list-header">
+          <div class="requests__list-header-item requests__list-header-item--sale-name">{{ i18n.lbl_sale_name() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--token-code">{{ i18n.lbl_token_code() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--updated">{{ i18n.lbl_updated_at() }}</div>
+          <div class="requests__list-header-item requests__list-header-item--btn"></div>
         </div>
-      </md-table-toolbar>
-      <template v-if="tokenCode && list.length">
-        <md-table-row class="tx-sale-creation__row">
-          <md-table-head>{{ i18n.lbl_sale_name() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head class="tx-sale-creation__hide-md">{{ i18n.lbl_updated_at() }}</md-table-head>
-          <md-table-head><!--Button--></md-table-head>
-        </md-table-row>
-        <template v-for="(item, i) in list">
-
-          <md-table-row class="tx-sale-creation__row" @click.native="toggleDetails(i)" :key="i">
-            <md-table-cell class="tx-sale-creation__table-cell">{{ item.saleName }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell tx-sale-creation__hide-md">{{ i18n.d(item.updatedAt) }}</md-table-cell>
-
-            <md-table-cell class="tx-sale-creation__table-cell">
-              <md-button class="tx-sale-creation__open-details-btn md-icon-button">
-                <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
-                <md-icon v-else>keyboard_arrow_down</md-icon>
-              </md-button>
-            </md-table-cell>
-
-          </md-table-row>
-
-          <md-table-row class="tx-sale-creation__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
-            <md-table-cell colspan="7">
+        <div class="requests__list-body">
+          <div class="requests__list-body-elem"
+              v-for="(tx, i) in list"
+              :key="`activity-item-${i}`"
+              :class="`requests__list-body-elem--${tx.state}`">
+            <div class="requests__list-body-row">
+              <div :title="tx.saleName" class="requests__list-body-item requests__list-body-item--sale-name">
+                {{ tx.saleName }}
+              </div>
+              <div :title="tx.tokenCode" class="requests__list-body-item requests__list-body-item--token-code">
+                {{ tx.tokenCode }}
+              </div>
+              <div :title="tx.state" class="requests__list-body-item requests__list-body-item--state">
+                {{ tx.state }}
+              </div>
+              <div :title="tx.createdAt" class="requests__list-body-item requests__list-body-item--created">
+                {{ i18n.dmy(tx.createdAt) }}
+              </div>
+              <div :title="tx.direction" class="requests__list-body-item requests__list-body-item--updated">
+                {{ i18n.dmy(tx.updatedAt) }}
+              </div>
+              <div class="requests__list-body-item requests__list-body-item--btn">
+                <button class="requests__list-body-item-btn" @click="toggleDetails(i)">
+                  <md-icon class="requests__list-body-item-icon"
+                          :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
+                    keyboard_arrow_down
+                  </md-icon>
+                </button>
+              </div>
+            </div>
+            <div class="requests__list-body-row requests__list-body-row--details" v-if="isSelected(i)">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="item.saleLogoUrl" :src='item.saleLogoUrl' :alt="documentTypes.fundLogo">
-                  <div class="token-icon" v-else>{{ item.saleName.substr(0, 1).toUpperCase() }}</div>
+                  <img class="token-icon" v-if="tx.saleLogoUrl" :src='tx.saleLogoUrl' :alt="documentTypes.fundLogo">
+                  <div class="token-icon" v-else>{{ tx.saleName.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type" :value="`${ item.requestType }`"/>
-                  <detail prop="Token name" :value="`${item.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${i18n.d(item.startTime)}`"/>
-                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${i18n.d(item.endTime)}`"/>
-                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${i18n.c(item.softCap)} ${item.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${i18n.c(item.hardCap)} ${item.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: item.tokenCode})}`" :value="`${i18n.c(item.baseAssetForHardCap)} ${item.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
-                  <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
-                  <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
+                  <detail prop="Request type" :value="`${ tx.requestType }`"/>
+                  <detail prop="Token name" :value="`${tx.tokenCode}`"/>
+                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${i18n.d(tx.startTime)}`"/>
+                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${i18n.d(tx.endTime)}`"/>
+                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${i18n.c(tx.softCap)} ${tx.defaultQuoteAsset}`"/>
+                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${i18n.c(tx.hardCap)} ${tx.defaultQuoteAsset}`"/>
+                  <detail :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: tx.tokenCode})}`" :value="`${i18n.c(tx.baseAssetForHardCap)} ${tx.tokenCode}`"/>
+                  <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${tx.quoteAssets}`"/>
+                  <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${tx.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
+                  <detail :prop="`${i18n.sale_short_description()}`" :value="`${tx.shortDescription}`"/>
                   <detail :prop="`${i18n.lbl_reject_message()}`"
-                          v-if="item.requestState === REQUEST_STATES_STR.rejected ||
-                                item.requestState === REQUEST_STATES_STR.permanentlyRejected"
-                                :value="`${item.rejectReason}`"/>
+                          v-if="tx.requestState === REQUEST_STATES_STR.rejected ||
+                                tx.requestState === REQUEST_STATES_STR.permanentlyRejected"
+                                :value="`${tx.rejectReason}`"/>
                 </div>
               </md-card-content>
               <md-card-actions>
@@ -66,42 +74,39 @@
                           :disabled="item.requestState !== REQUEST_STATES_STR.pending
                                   || isPending"
                           @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
-              <template v-if="item.isApproved">
-                <md-button class="md-primary"
-                           @click="goFundDetails(item.tokenCode)">
+              <template v-if="tx.isApproved">
+                <button v-ripple
+                           class="app__button-flat" 
+                           @click="goFundDetails(tx.tokenCode)">
                   {{ i18n.lbl_view_sale() }}
-                </md-button>
+                </button>
               </template>
-              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"
+              <router-link :to="{name: 'sale-creation.index', params: { id: tx.id }}"
                             tag="button"
                             v-ripple
                             class="app__button-flat"
-                            :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                            :disabled="(!tx.isPending && !tx.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
-            </md-table-cell>
-          </md-table-row>
-        </template>
-         <md-table-row v-if="!isLoaded">
-            <md-table-cell colspan="7">
-                <div class="tx-history__btn-outer">
-                  <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
-                  </button>
-                </div>
-            </md-table-cell>
-         </md-table-row>
-      </template>
-      <template v-else>
+            </div>
+          </div>
+        </div>
+        <div class="requests__btn-outer" v-if="!isLoaded">
+          <button v-ripple 
+                          @click="more" 
+                          class="app__button-flat" 
+                          :disabled="isLoading"> 
+                    {{ i18n.lbl_view_more() }} 
+          </button> 
+        </div>
+      </div>
+    </div>
+    <template v-else>
         <div class="tx-sale-creation__no-requests">
           <no-data-message icon-name="trending_up"
             :msg-title="i18n.sale_no_creation_requests()"
             :msg-message="i18n.sale_no_creation_requests_desc()"/>
         </div>
-      </template>
-    </md-table>
+    </template>
   </div>
 </template>
 
@@ -306,5 +311,164 @@ export default {
     @include respond-to(medium) {
       display: none;
     }
+  }
+
+  .requests__list-wrapper {
+    position: relative;
+  }
+
+  .requests__list {
+    padding: 0 4px 6px 4px;
+
+    @include respond-to-custom(1300px) {
+      overflow-x: auto;
+    }
+  }
+
+  .requests__list-header,
+  .requests__list-body-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .requests__list-header-item--sale-name,
+  .requests__list-body-item--sale-name {
+    width: 20%;
+  }
+
+  .requests__list-header-item--token-code,
+  .requests__list-body-item--token-code {
+    width: 15%;
+  }
+
+  .requests__list-body-item--state,
+  .requests__list-header-item--state {
+    width: 20%;
+  }
+
+  .requests__list-body-item--created,
+  .requests__list-header-item--created {
+    width: 20%;
+  }
+
+  .requests__list-body-item--updated,
+  .requests__list-header-item--updated {
+    width: 20%;
+  }
+
+  .requests__list-body-item--btn,
+  .requests__list-header-item--btn {
+    width: 70px;
+    flex: none;
+    padding: 0;
+
+    @include respond-to(medium) {
+      width: 47px;
+    }
+  }
+
+  .requests__list-body-item-btn {
+    @include button();
+    @include button-flat();
+
+    background: rgba($col-md-primary, .1);
+    font-size: 10px;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
+  .requests__list-body-elem {
+    @include box-shadow();
+
+    background-color: #fff;
+
+    @include respond-to(medium) {
+      min-width: 670px;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 6px;
+    }
+  }
+
+  .requests__list-body-item,
+  .requests__list-header-item {
+    padding: 8px 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: $col-md-primary;
+    display: flex;
+    align-items: center;
+  }
+
+  .requests__list-body-row--details {
+    padding-top: 17px;
+    padding-bottom: 17px;
+    margin: 0 20px;
+    min-width: 25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .requests__list-body-item-icon--active { transform: rotate(-180deg) }
+
+  .requests__list-body-elem--canceled,
+  .requests__list-body-elem--pending,
+  .requests__list-body-elem--approved,
+  .requests__list-body-elem--rejected,
+  .requests__list-body-elem--permanentlyRejected {
+    &:before {
+      position: absolute;
+      left: -25px;
+      margin-top: 22px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 10px;
+      line-height: 18px;
+
+      @include respond-to(medium) {
+        left: -25px;
+      }
+
+      @include respond-to-custom(800px) {
+        left: -21px;
+      }
+
+      @include respond-to(xsmall) {
+        left: -17px;
+      }
+    }
+  }
+
+  .requests__list-wrapper {
+    position: relative;
+  }
+
+  // .requests__list-body-elem--canceled:before,
+  // .requests__list-body-elem--rejected:before,
+  // .requests__list-body-elem--permanentlyRejected:before {
+  //   content: '\2715';
+  //   background-color: $col-md-accent;
+  //   padding: 0 4px;
+  // }
+
+  // .requests__list-body-elem--pending:before {
+  //   background-color: #ffb454;
+  //   content: '';
+  // }
+
+  // .requests__list-body-elem--approved:before {
+  //   content: '\2713';
+  //   background-color: #51ca90;
+  //   padding: 0 3px;
+  // }
+
+  .requests__btn-outer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
   }
 </style>

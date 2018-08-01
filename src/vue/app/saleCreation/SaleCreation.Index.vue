@@ -1,5 +1,5 @@
 <template>
-  <div class="create-sale">
+  <div class="create-sale app__page-content-wrp">
     <div>
       <template v-if="!isReady">
         <loader :message="i18n.sale_create_loading()"/>

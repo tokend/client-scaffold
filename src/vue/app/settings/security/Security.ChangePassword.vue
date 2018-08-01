@@ -1,57 +1,50 @@
 <template>
-  <md-list-item class="change-password" @click="isFormOpened = !isFormOpened">
+  <div class="change-password">
+    <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+    <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title> 
+    <form novalidate
+            class="change-password"
+            @submit.prevent="submit">
 
-    <span class="md-list-item-text">{{i18n.set_change_password() }}</span>
-    <md-icon class="md-icon--half-sized">play_arrow</md-icon>
+      <div class="app__dialog-inner">
+        <input-field
+          v-model="form.password"
+          id="settings-password"
+          name="password"
+          type="password"
+          :togglePassword="true"
+          :label="i18n.lbl_new_pwd()"
+          :errorMessage="errorMessage('password')"
+          v-validate="'required|min:6'"
+        />
+        <input-field
+          v-model="form.confirmPassword"
+          id="settings-confirm-password"
+          name="confirm-password"
+          type="password"
+          :label="i18n.lbl_pwd_confirm()"
+          v-validate="'required'"
+          :errorMessage="pwdUnconfirmedMessage"
+        />
+      </div>
 
-    <md-dialog class="change-password__dialog" :md-active.sync="isFormOpened" :md-click-outside-to-close="!isPending">
-      <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-      <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title>
-      <form novalidate
-              class="change-password"
-              @submit.prevent="submit">
-
-
-          <div class="app__dialog-inner">
-            <input-field
-              v-model="form.password"
-              id="settings-password"
-              name="password"
-              type="password"
-              :togglePassword="true"
-              :label="i18n.lbl_new_pwd()"
-              :errorMessage="errorMessage('password')"
-              v-validate="'required|min:6'"
-            />
-            <input-field
-              v-model="form.confirmPassword"
-              id="settings-confirm-password"
-              name="confirm-password"
-              type="password"
-              :label="i18n.lbl_pwd_confirm()"
-              v-validate="'required'"
-              :errorMessage="pwdUnconfirmedMessage"
-            />
-          </div>
-
-          <md-dialog-actions class="md-layout md-alignment-center-right">
-            <button v-ripple
-                    type="button"
-                    @click="isFormOpened = !isFormOpened"
-                    class="app__button-flat"
-                    :disabled="isPending">
-              {{ i18n.lbl_cancel() }}
-            </button>
-            <button v-ripple
-                    type="submit"
-                    class="app__button-flat"
-                    :disabled="isPending">
-              {{ i18n.lbl_submit() }}
-            </button>
-          </md-dialog-actions>
-        </form>
-    </md-dialog>
-  </md-list-item>
+      <md-dialog-actions class="md-layout md-alignment-center-right">
+        <button v-ripple
+                type="button"
+                @click="isFormOpened = !isFormOpened"
+                class="app__button-flat"
+                :disabled="isPending">
+          {{ i18n.lbl_cancel() }}
+        </button>
+        <button v-ripple
+                type="submit"
+                class="app__button-flat"
+                :disabled="isPending">
+          {{ i18n.lbl_submit() }}
+        </button>
+      </md-dialog-actions>
+    </form>
+  </div>
 </template>
 
 <script>

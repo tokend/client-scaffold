@@ -18,7 +18,7 @@
       </div>
     </template>
     <template v-if="sales.length === 0 && isLoaded">
-      <div class="sales-overview__no-sales-found-msg md-layout-item md-alignment-center-center1">
+      <div class="sales-overview__no-sales-found-msg">
         <div class="icon">
           <i class="mdi mdi-inbox"></i>
         </div>
@@ -138,6 +138,7 @@
     cursor: pointer;
     font-size: initial;
     text-align: initial;
+    width: 100%;
   }
 
   .sales-overview__btn {
@@ -147,7 +148,6 @@
   .sales-overview__no-sales-found-msg {
     padding: 10px 40px;
     text-align: center;
-    background-color: $col-content-block;
     margin: 0 auto;
     .icon {
       margin-bottom: 20px;

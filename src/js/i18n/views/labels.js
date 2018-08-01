@@ -196,5 +196,6 @@ export default {
   lbl_upload_docs: 'Please, upload the following documents',
   lbl_upload_doc: 'Please, upload the following document',
   lbl_agree_submit: 'Agree & submit information',
-  lbl_pay_all_fees: 'Pay fees'
+  lbl_pay_all_fees: 'Pay fees',
+  lbl_update_information: 'Update information'
 }
