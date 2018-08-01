@@ -31,6 +31,7 @@ export default {
 
 <style lang="scss">
 @import "~@scss/variables";
+@import "~@scss/mixins";
 
 .requests__tabs {
   .md-title,
@@ -62,5 +63,7 @@ export default {
     background-color: transparent;
     // overflow: visible !important;
   }
+
+  @include overwrite-tabs(50);
 }
 </style>
