@@ -247,7 +247,7 @@
             sourcePaysForDest: false,
             subject: ''
           })))
-          EventDispatcher.dispatchShowSuccessEvent(i18n.tr_successful())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.transfer_successful())
         } catch (e) {
           const messages = ErrorHandler.deriveTxErrorMessages(e)
           if (!messages || !messages.length) {
