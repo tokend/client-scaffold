@@ -232,7 +232,8 @@ export default {
 }
 
 .explore-tokens__list-wrp {
-  max-width: 38 * $point;
+  width: 100%;
+  max-width: 55 * $point;
 
 }
 
