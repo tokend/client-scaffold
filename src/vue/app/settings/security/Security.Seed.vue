@@ -1,22 +1,32 @@
 <template>
-  <div class="settings-seed">
-    <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
-    <div class="account-seed__content app__card-content">
-      <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
+  <md-list-item class="account-seed" @click="isDialogOpened = !isDialogOpened">
 
-      <clipboard-field class="account-seed__clipboard"
-        :value="accountSeed"
-      />
-    </div>
-    <md-dialog-actions class="md-layout md-alignment-center-right">
-      <button v-ripple
-              type="button"
-              @click="isDialogOpened = !isDialogOpened"
-              class="app__button-flat">
-        {{ i18n.lbl_cancel() }}
-      </button>
-    </md-dialog-actions>
-  </div>
+    <span class="md-list-item-text">{{ i18n.set_secret_seed() }}</span>
+    <md-icon class="md-icon--half-sized">play_arrow</md-icon>
+
+    <md-dialog class="account-seed__dialog" :md-active.sync="isDialogOpened">
+      <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
+
+      <div class="account-seed__content app__card-content">
+        <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
+
+        <clipboard-field class="account-seed__clipboard"
+          :value="accountSeed"
+        />
+
+      </div>
+
+      <md-dialog-actions class="md-layout md-alignment-center-right">
+        <button v-ripple
+                type="button"
+                @click="isDialogOpened = !isDialogOpened"
+                class="app__button-flat">
+          {{ i18n.lbl_cancel() }}
+        </button>
+      </md-dialog-actions>
+
+    </md-dialog>
+  </md-list-item>
 </template>
 
 <script>
