@@ -12,6 +12,7 @@
                   :activeStep="activeStep"
                   :finalStep="finalStep"
                   :kyc="kyc"
+                  :isRequestPending="isPending"
                   @kyc-update="handleKycUpdate($event, { step, i })"
                   @kyc-edit-end="handleKycEditEnd"
         />
