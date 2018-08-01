@@ -11,7 +11,7 @@
       <loader :message="i18n.tokens_loading()"/>
     </template>
 
-    <div v-else>
+    <div class="" v-else>
       <div class="explore-tokens__inner">
         <div class="explore-tokens__list-wrp">
           <div class="explore-tokens__list">
@@ -232,7 +232,7 @@ export default {
 }
 
 .explore-tokens__list-wrp {
-  max-width: 38 * $point;
+  max-width: 27 * $point;
 
 }
 
