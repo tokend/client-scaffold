@@ -13,6 +13,7 @@
               class="verification__update-btn app__form-submit-btn">
               {{ i18n.lbl_update_information() }}
           </button>
+
         </div>
       </template>
       <template v-if="accountState === ACCOUNT_STATES.pending">
@@ -27,20 +28,29 @@
       </template>
 
       <template v-if="accountState === ACCOUNT_STATES.rejected">
-        <div class="verification__rejected-wrapper
-                    verification__card
-                    verification__card--rejected"
-            v-show="!showForm">
-          <div class="verification__card-message">
-            <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
-            <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
-            <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
+        <div class="verification__card
+                    verification__card--rejected
+                    md-size-55
+                    md-medium-size-75
+                    md-small-size-100
+                    md-layout-item
+                    app__card"
+              v-show="!showForm" >
+          <div class="app__card-content">
+            <div class="verification__card-message">
+              <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
+              <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
+              <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
+            </div>
           </div>
-          <button v-ripple
-              @click="showForm = true"
-              class="app__form-submit-btn verification__update-btn">
-              {{ i18n.lbl_update_information() }}
-          </button>
+
+          <div class="app__card-actions md-layout">
+            <button v-ripple
+                    @click="showForm = true"
+                    class="app__button-flat">
+              {{ i18n.lbl_edit_details() }}
+            </button>
+          </div>
         </div>
 
         <template v-if="showForm">
@@ -191,21 +201,14 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 0 8px;
+
     @include respond-to(medium) {
       padding: 0 .625rem;
     }
   }
 
   .verification__card-message-title {
-    margin-bottom: 0.5rem;
-    color: $col-md-primary;
-  }
-
-  .verification__card-message-text {
-    color: $col-md-primary-inactive;
+    margin-top: 1rem;
   }
 
   .verification__card-action--to-right:first-child {
@@ -244,8 +247,7 @@
   }
 }
 
-.verification__approved-wrapper,
-.verification__rejected-wrapper {
+.verification__approved-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -253,7 +255,5 @@
     margin-top: 1rem;
   }
 }
-
-
 
 </style>
