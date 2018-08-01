@@ -96,7 +96,7 @@
           const blobId = await this.updateKycData({
             details: KycTemplateParser.fromTemplate(this.kyc, userTypes.syndicate),
             documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents),
-            corporateblobType: blobTypes.syndicate_kyc.str
+            blobType: blobTypes.syndicate_kyc.str
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
