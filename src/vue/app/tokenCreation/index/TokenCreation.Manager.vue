@@ -220,7 +220,7 @@ export default {
         termsContainer.setKey(termsKey)
       }
       await tokensService.createTokenCreationRequest({
-        requestID: this.id ? this.id : '0',
+        requestID: this.request.requestID ? this.request.requestID : '0',
         code: this.request.tokenCode,
         preissuedAssetSigner: preissuedAssetSigner,
         maxIssuanceAmount: this.request.maxIssuanceAmount,
