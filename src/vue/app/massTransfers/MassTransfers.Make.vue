@@ -265,10 +265,11 @@
         const parsed = extracted
           .replace(/\r\n/g, '\n')
           .split('\n')
+          .filter(row => row)
           .map(row => row
             .split(',')
             .reduce((transfer, item, i) => ({
-              ...transfer, [objKeys[i]]: item
+              ...transfer, [objKeys[i]]: item.trim()
             }), {})
           )
         await this.loadTransferDetails(parsed)
