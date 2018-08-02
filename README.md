@@ -9,7 +9,7 @@
 3. Clone a repository: ```git clone https://gitlab.com/tokend/client-scaffold.git```
 4. In folder with project, execute: ``` npm install```
 5. Usually, you need to execute ```npm install``` only once
-6. After then, for start project, execute: ```npm run dev```
+6. To start project on local server, execute: ```npm run dev```
 7. Open http://localhost:8095 in browser;
 8. To stop local server, press `Ctrl + C` in terminal. 
 9. To receive an updated version of project (if exist), pull a repository using ```git pull```
