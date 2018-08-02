@@ -73,6 +73,10 @@ html,body {
     -webkit-box-shadow: inset 0 0 0 50px $white !important;
   }
 
+  .md-switch.md-theme-default.md-checked.md-primary .md-switch-thumb {
+    background-color: $col-md-primary;
+  }
+
   p.app__page-explanations {
     max-width: 45 * $point;
     color: $col-md-primary;

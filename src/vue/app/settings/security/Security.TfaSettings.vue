@@ -1,11 +1,33 @@
 <template>
-  <md-list-item class="tfa-settings">
-    <span class="md-list-item-text"> {{ i18n.set_tfa_enable() }}</span>
-    <md-switch class="md-primary" @change="changeState" :value="tfaState"/>
-
-    <md-dialog :md-active.sync="isSettingsOpened">
-      <md-dialog-title>{{ i18n.set_tfa_enable() }}</md-dialog-title>
-
+  <div class="tfa-settings">
+    <div class="tfa-settings__password-checker" v-if="!isSettingsOpened">
+      <h2 class="tfa-settings__title">{{i18n.mod_pwd_required()}}</h2>
+      <div class="tfa-settings__switch-outer">
+        <span class="tfa-settings__switch-text"> {{ i18n.set_tfa_enable() }}</span>
+        <md-switch class="md-primary" @change="changeState" :value="tfaState"/>
+      </div>
+      <p class="state-banner__message" v-if="switchTriggered" >
+        <md-icon class="md-icon-size-065x">verified_user</md-icon>
+        Enter password to apply changes
+      </p>
+      <input-field
+        v-model="form.password"
+        :disabled="!switchTriggered"
+        v-validate="'required'"
+        id="signup-recovery-seed"
+        type="password"
+        name="password"
+        :label="i18n.lbl_pwd()"
+        :togglePassword="true"
+      />
+    <button v-ripple 
+            :disabled="!switchTriggered"
+            @click="save" 
+            class="app__button-flat tfa-settings__submit-btn"> {{ i18n.lbl_ok() }} </button>
+    </div>
+    <div class="tfa-settings__qr-wrapper"
+          v-if="isSettingsOpened">
+      <md-dialog-title class="tfa-settings__qr-title">{{ i18n.set_tfa_enable() }}</md-dialog-title>
       <div class="app__dialog-inner">
         <p class="tfa-settings__explain">{{ i18n.set_tfa_scan_the_qr_code() }}</p>
         <div class="tfa-settings__qr-outer" v-if="inputMode === INPUT_MODES.qr">
@@ -33,17 +55,18 @@
         </button>
       </md-dialog-actions>
 
-    </md-dialog>
-
-  </md-list-item>
+    </div>
+  </div>
 </template>
 
 <script>
+  import FormMixin from '../../../common/mixins/form.mixin'
   import ClipboardField from '../../../common/fields/ClipboardField'
-
+  import InputField from '../../../common/fields/InputField'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { factorsService } from '../../../../js/services/factors.service'
   import { i18n } from '../../../../js/i18n'
+  import { AuthStateHelper } from '../../../../vuex/helpers/auth.helper'
 
   import Qrcode from 'vue-qrcode-component'
 
@@ -59,7 +82,8 @@
 
   export default {
     name: 'tfa-settings',
-    components: { Qrcode, ClipboardField },
+    mixins: [FormMixin],
+    components: { Qrcode, ClipboardField, InputField },
     data: _ => ({
       tfaState: TFA_STATES.off,
       inputMode: INPUT_MODES.qr,
@@ -70,14 +94,28 @@
         qr: null
       },
       i18n,
-      INPUT_MODES
+      INPUT_MODES,
+      form: {
+        password: ''
+      },
+      switchTriggered: false
     }),
     created () {
       this.checkState()
     },
     methods: {
-      async changeState () {
-        switch (this.tfaState) {
+      changeState () {
+        this.tfaState = !this.tfaState
+        this.switchTriggered = !this.switchTriggered
+      },
+
+      async save () {
+        if (!await this.isValid()) return
+        if (!await AuthStateHelper.isPasswordCorrect(this.form.password)) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.mod_pwd_wrond())
+          return
+        }
+        switch (!this.tfaState) {
           case TFA_STATES.off:
             await this.createFactor()
             break
@@ -86,7 +124,10 @@
             break
           }
         }
+        this.inp = !this.inp
+        this.switchTriggered = !this.switchTriggered
       },
+
       async checkState () {
         let factors
         try {
@@ -120,7 +161,7 @@
           if (this.factor.id !== -1) {
             await factorsService.deleteFactor(this.factor.id)
           }
-          const factor = await factorsService.createFactor('totp')
+          const factor = await factorsService.createFactor('totp', this.form.password)
           this.factor.secret = factor.attribute('secret')
           this.factor.qr = factor.attribute('seed')
           this.factor.id = factor.data('id')
@@ -142,6 +183,7 @@
           )
           this.tfaState = TFA_STATES.on
           this.isSettingsOpened = false
+          this.form.password = ''
         } catch (error) {
           if (error.showBanner) {
             error.showBanner(i18n.unexpected_error())
@@ -152,8 +194,9 @@
       },
       async deleteFactor () {
         try {
-          await factorsService.deleteFactor(this.factor.id)
+          await factorsService.deleteFactor(this.factor.id, this.form.password)
           this.tfaState = TFA_STATES.off
+          this.form.password = ''
         } catch (error) {
           if (error.showBanner) {
             error.showBanner(i18n.unexpected_error())
@@ -168,6 +211,8 @@
 
 <style lang="scss" scoped>
   @import './settings.scss';
+  @import "~@scss/variables";
+  @import "~@scss/mixins";
 
   .md-dialog {
     width: 25rem;
@@ -186,4 +231,24 @@
   .tfa-settings__copy-secret {
     margin-bottom: 10px;
   }
+
+  .tfa-settings__switch-outer {
+    display: flex;
+    align-items: center;
+  }
+
+  .tfa-settings__title {
+    margin-bottom: 1rem;
+    color: $col-md-primary;
+  }
+
+  .tfa-settings__switch-text {
+    margin-right: 1rem;
+  }
+
+  .tfa-settings__submit-btn {
+    float: right;
+    margin-right: -1rem;
+  }
+
 </style>

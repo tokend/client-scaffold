@@ -345,7 +345,7 @@ export default {
   .requests__list-body-elem--permanentlyRejected {
     &:before {
       position: absolute;
-      left: -25px;
+      left: 0px;
       margin-top: 22px;
       width: 16px;
       height: 16px;
@@ -395,5 +395,10 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+  }
+
+  .requests__list-header,
+  .requests__list-body {
+    padding: 0 2rem;
   }
 </style>

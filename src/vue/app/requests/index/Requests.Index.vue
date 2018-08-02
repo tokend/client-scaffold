@@ -46,6 +46,7 @@ export default {
   .md-tabs-navigation {
     background-color: transparent !important;
     margin-bottom: 1rem;
+    padding: 0 2rem;
   }
 
   .md-tab {
