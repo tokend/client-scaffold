@@ -2,6 +2,7 @@
   <div class="tx-sale-creation">
     <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
       <select-field-custom
+      class="asset-select"
       :label="i18n.lbl_asset()"
       v-model="tokenCode"
       :values="accountOwnedTokens"/>
@@ -420,7 +421,7 @@ export default {
   .requests__list-body-elem--permanentlyRejected {
     &:before {
       position: absolute;
-      left: -25px;
+      left: 0px;
       margin-top: 22px;
       width: 16px;
       height: 16px;
@@ -447,28 +448,34 @@ export default {
     position: relative;
   }
 
-  // .requests__list-body-elem--canceled:before,
-  // .requests__list-body-elem--rejected:before,
-  // .requests__list-body-elem--permanentlyRejected:before {
-  //   content: '\2715';
-  //   background-color: $col-md-accent;
-  //   padding: 0 4px;
-  // }
+  .requests__list-body-elem--canceled:before,
+  .requests__list-body-elem--rejected:before,
+  .requests__list-body-elem--permanentlyRejected:before {
+    content: '\2715';
+    background-color: $col-md-accent;
+    padding: 0 4px;
+  }
 
-  // .requests__list-body-elem--pending:before {
-  //   background-color: #ffb454;
-  //   content: '';
-  // }
+  .requests__list-body-elem--pending:before {
+    background-color: #ffb454;
+    content: '';
+  }
 
-  // .requests__list-body-elem--approved:before {
-  //   content: '\2713';
-  //   background-color: #51ca90;
-  //   padding: 0 3px;
-  // }
+  .requests__list-body-elem--approved:before {
+    content: '\2713';
+    background-color: #51ca90;
+    padding: 0 3px;
+  }
 
   .requests__btn-outer {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+  }
+
+  .asset-select,
+  .requests__list-header,
+  .requests__list-body {
+    padding: 0 2rem;
   }
 </style>
