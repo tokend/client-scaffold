@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@std/esm": "^0.18.0",
-    "@tokend/wallet.js": "git+ssh://git@gitlab.com/tokend/wallet.js.git",
+    "@tokend/wallet.js": "https://gitlab.com/tokend/wallet.js.git",
     "@vue/test-utils": "^1.0.0-beta.11",
     "accounting": "^0.4.1",
     "axios": "^0.18.0",
@@ -37,7 +37,7 @@
     "moment": "^2.19.1",
     "node-polyglot": "^2.2.2",
     "raven-js": "^3.22.1",
-    "swarm-js-sdk": "git+ssh://git@gitlab.com/swarmfund/js-sdk.git#dev",
+    "swarm-js-sdk": "https://gitlab.com/swarmfund/js-sdk.git",
     "ua-parser-js": "^0.7.17",
     "vee-validate": "^2.0.0-rc.21",
     "vue": "^2.5.2",
