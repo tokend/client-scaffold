@@ -72,7 +72,6 @@
       height: auto !important;
       min-height: 100% !important;
       background-color: transparent !important;
-      // overflow: visible !important;
     }
   }
 
