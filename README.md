@@ -6,15 +6,14 @@
 
 1. Install node.js;
 2. Install git
-3. Clone project: ```git clone https://gitlab.com/tokend/client-scaffold.git```
-4. In folder with project, make: ``` npm install```
-6. After then, for start project, make: ```npm run dev```
-7. For access, go to http://localhost:8095;
-8. For stop project, close console. 
+3. Clone a repository: ```git clone https://gitlab.com/tokend/client-scaffold.git```
+4. In folder with project, execute: ``` npm install```
+6. After then, for start project, execute: ```npm run dev```
+7. Open http://localhost:8095 in browser;
+8. To stop local server, press `Ctrl + C` in terminal. 
 
-Instal node: https://nodejs.org/en/
-Instal git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-How clone repository: https://help.github.com/articles/cloning-a-repository/
+Node.js: https://nodejs.org/en/  
+Git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git  
 Project link: https://gitlab.com/tokend/client-scaffold
 
 
@@ -24,7 +23,7 @@ Project link: https://gitlab.com/tokend/client-scaffold
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8095
 npm run dev
 
 # build for production with minification
@@ -42,5 +41,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
