@@ -12,8 +12,7 @@
 6. To start project on local server, execute: ```npm run dev```
 7. Open http://localhost:8095 in browser;
 8. To stop local server, press `Ctrl + C` in terminal. 
-9. To receive an updated version of project (if exist), pull a repository using ```git pull```
-10. Repeat steps 5,6  
+9. If the remote repository of the project was updated, you need to execute ```git pull``` command on your local machine to get these updates, then repeat steps 5,6  
 
 Node.js: https://nodejs.org/en/  
 Git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git  
