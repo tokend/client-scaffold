@@ -8,14 +8,6 @@
         :value="accountSeed"
       />
     </div>
-    <md-dialog-actions class="md-layout md-alignment-center-right">
-      <button v-ripple
-              type="button"
-              @click="isDialogOpened = !isDialogOpened"
-              class="app__button-flat">
-        {{ i18n.lbl_cancel() }}
-      </button>
-    </md-dialog-actions>
   </div>
 </template>
 

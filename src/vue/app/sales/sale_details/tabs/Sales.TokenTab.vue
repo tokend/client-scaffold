@@ -29,8 +29,6 @@
   import { ASSET_POLICIES } from '../../../../../js/const/xdr.const'
   import { documentTypes } from '../../../../../js/const/documents.const'
   export default {
-    name: 'token-tab',
-
     components: {
       DetailRow
     },
@@ -61,6 +59,10 @@
     display: flex;
     align-items: center;
     margin-bottom: 2.3rem;
+  }
+
+  .crowdfund-token__name-wrapper {
+    color: $col-md-primary;
   }
 
   .crowdfund-token__icon {

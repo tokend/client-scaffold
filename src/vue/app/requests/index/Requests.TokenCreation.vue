@@ -71,12 +71,12 @@
           </div>
         </div>
         <div class="requests__btn-outer" v-if="!isLoaded">
-          <button v-ripple 
-                          @click="more" 
-                          class="app__button-flat" 
-                          :disabled="isLoading"> 
-                    {{ i18n.lbl_view_more() }} 
-          </button> 
+          <button v-ripple
+                          @click="more"
+                          class="app__button-flat"
+                          :disabled="isLoading">
+                    {{ i18n.lbl_view_more() }}
+          </button>
         </div>
       </div>
     </div>
@@ -286,10 +286,6 @@ export default {
     width: 70px;
     flex: none;
     padding: 0;
-
-    @include respond-to(medium) {
-      width: 47px;
-    }
   }
 
   .requests__list-body-item-btn {
@@ -353,18 +349,6 @@ export default {
       color: #fff;
       font-size: 10px;
       line-height: 18px;
-
-      @include respond-to(medium) {
-        left: -25px;
-      }
-
-      @include respond-to-custom(800px) {
-        left: -21px;
-      }
-
-      @include respond-to(xsmall) {
-        left: -17px;
-      }
     }
   }
 

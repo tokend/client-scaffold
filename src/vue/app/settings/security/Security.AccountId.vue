@@ -1,28 +1,19 @@
 <template>
   <div class="settings-account-id">
-    <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title> 
+    <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title>
     <div class="app__dialog-inner">
-        <div class="account-id__wrapper">
-          <qrcode class="qr-code account-id__qr-code"
-                :text="accountId"
-                :size="250"
-                color="#3f4244"
-          />
+      <div class="account-id__wrapper">
+        <qrcode class="qr-code account-id__qr-code"
+              :text="accountId"
+              :size="250"
+              color="#3f4244"
+        />
 
-          <clipboard-field class="account-id__clipboard"
-            :value="accountId"
-          />
-        </div>
+        <clipboard-field class="account-id__clipboard"
+          :value="accountId"
+        />
       </div>
-
-      <md-dialog-actions class="md-layout md-alignment-center-right">
-        <button v-ripple
-                type="button"
-                @click="isDialogOpened = !isDialogOpened"
-                class="app__button-flat">
-          {{ i18n.lbl_cancel() }}
-        </button>
-      </md-dialog-actions>
+    </div>
   </div>
 </template>
 

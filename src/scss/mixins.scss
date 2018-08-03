@@ -149,7 +149,11 @@ $xlarge: 1920px;
 @mixin overwrite-tabs ($width) {
   .md-tabs-navigation {
     border-bottom: 2px solid rgba($col-md-primary-secondary, .1);
-    max-width: $width * $point;
+    @if $width == auto {
+      max-width: inherit;
+    } @else {
+      max-width: $width * $point;
+    }
     margin-bottom: 4 * $point;
 
     a, button {
@@ -158,6 +162,12 @@ $xlarge: 1920px;
 
       .md-button-content {
         color: $col-md-primary;
+      }
+    }
+
+    button[disabled] {
+      .md-button-content {
+        color: $col-md-primary-inactive;
       }
     }
 

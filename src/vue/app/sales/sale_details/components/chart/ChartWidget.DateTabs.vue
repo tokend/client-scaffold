@@ -73,7 +73,7 @@
 
   .date-tabs {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
@@ -83,8 +83,8 @@
     white-space: nowrap;
     display: inline-block;
     margin-right: 1 * $point;
+    color: $col-md-primary;
   }
-
 
   .tab-btn {
     padding: 5px 10px;
@@ -94,13 +94,13 @@
     position: relative;
     border: none;
     font-size: 12px;
-    font-weight: bold;
-    color: #fff;
-    border-radius: 5px;
-    background-color: rgba($col-md-primary, .3);
+    color: rgba($col-md-primary, .6);
+    background-color: transparent;
+    font-weight: 500;
 
     &.selected {
-      background-color: $col-md-primary-secondary;
+      color: $col-md-primary;
+      font-weight: 700;
     }
   }
 </style>

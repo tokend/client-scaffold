@@ -1,12 +1,22 @@
 <template>
   <div class="change-password">
-    <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
-    <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title> 
+    <md-dialog-title>{{ i18n.set_change_password() }}</md-dialog-title>
     <form novalidate
-            class="change-password"
-            @submit.prevent="submit">
+          class="change-password"
+          @submit.prevent="submit">
 
       <div class="app__dialog-inner">
+        <input-field
+          v-model="form.currentPassword"
+          id="settings-current-password"
+          name="current-password"
+          type="password"
+          :togglePassword="true"
+          :label="i18n.lbl_current_password()"
+          :readonly="isPending"
+          :errorMessage="errorMessage('current password')"
+          v-validate="'required|min:6'"
+        />
         <input-field
           v-model="form.password"
           id="settings-password"
@@ -15,6 +25,7 @@
           :togglePassword="true"
           :label="i18n.lbl_new_pwd()"
           :errorMessage="errorMessage('password')"
+          :readonly="isPending"
           v-validate="'required|min:6'"
         />
         <input-field
@@ -24,18 +35,12 @@
           type="password"
           :label="i18n.lbl_pwd_confirm()"
           v-validate="'required'"
+          :readonly="isPending"
           :errorMessage="pwdUnconfirmedMessage"
         />
       </div>
 
       <md-dialog-actions class="md-layout md-alignment-center-right">
-        <button v-ripple
-                type="button"
-                @click="isFormOpened = !isFormOpened"
-                class="app__button-flat"
-                :disabled="isPending">
-          {{ i18n.lbl_cancel() }}
-        </button>
         <button v-ripple
                 type="submit"
                 class="app__button-flat"
@@ -53,6 +58,7 @@
   import { authService } from '../../../../js/services/auth.service'
   import { vuexTypes } from '../../../../vuex/types'
   import { i18n } from '../../../../js/i18n'
+  import { AuthStateHelper } from '@/vuex/helpers/auth.helper'
 
   import Form from '../../../common/mixins/form.mixin'
 
@@ -64,7 +70,8 @@
       i18n,
       form: {
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        currentPassword: ''
       }
     }),
     computed: {
@@ -84,12 +91,17 @@
       }),
       async submit () {
         if (!await this.isValid()) return
+        if (!await AuthStateHelper.isPasswordCorrect(this.form.currentPassword)) {
+          EventDispatcher.dispatchShowErrorEvent(i18n.mod_pwd_wrond())
+          return
+        }
         if (this.pwdUnconfirmedMessage) return
         this.disable()
         try {
           const newKeys = await authService.changePassword({
             email: this.userEmail,
-            newPassword: this.form.password
+            newPassword: this.form.password,
+            currentPassword: this.form.currentPassword
           })
           EventDispatcher.dispatchShowSuccessEvent(i18n.set_pwd_changed())
           this.isFormOpened = false
