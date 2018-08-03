@@ -267,7 +267,9 @@
     color: $col-md-primary;
 
     &:hover {
-      text-decoration: underline;
+      & > span {
+        text-decoration: underline;
+      }
     }
 
     &:focus {
