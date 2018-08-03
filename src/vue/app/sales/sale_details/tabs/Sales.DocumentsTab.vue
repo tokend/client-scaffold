@@ -21,10 +21,10 @@
         <h2>{{i18n.sale_doc_tab_docs_is_my()}}</h2>
       </div>
     </template>
-    
+
     <div class="documents-tab__docs-list" v-if="documents.length">
-      <template v-for="document in documents">
-        <div class="documents-tab__file-download-wrp">
+      <template v-for="(document, d) in documents">
+        <div class="documents-tab__file-download-wrp" :key="`sales-documents-tab-${d}`">
           <h3 class="file-download__file-name" :title="document.name">{{ document.name }}</h3>
           <a :href="getUrl(document)" class="file-view__link" target="_blank" rel="noopener">
             <span>{{i18n.fi_view_file()}}</span>
@@ -53,8 +53,6 @@
   import { vuexTypes } from '../../../../../vuex/types'
 
   export default {
-    name: 'documents-tab',
-
     components: {
       FileField
     },
@@ -204,11 +202,15 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: $col-text-secondary;
+    color: $col-md-primary;
+
+    & > h2 {
+      font-weight: 500;
+    }
   }
 
   .no-data-msg__icon {
     font-size: $material-icon-xx-super-big;
-    color: $col-background;
+    color: rgba($col-md-primary, .7);
   }
 </style>

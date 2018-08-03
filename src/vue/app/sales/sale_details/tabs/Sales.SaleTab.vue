@@ -17,8 +17,6 @@
   import DetailRow from '../../../common/Detail.Row'
   import { i18n } from '../../../../../js/i18n'
   export default {
-    name: 'token-tab',
-
     components: {
       DetailRow
     },

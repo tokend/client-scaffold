@@ -41,8 +41,6 @@
   import config from '../../../../../config'
   import _get from 'lodash/get'
   export default {
-    name: 'description-tab',
-
     components: {
       DetailRow
     },

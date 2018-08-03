@@ -25,8 +25,6 @@
   import { errors } from '../../../../../js/errors/factory'
   import config from '../../../../../config'
   export default {
-    name: 'chart-tab',
-
     components: {
       Chart
     },

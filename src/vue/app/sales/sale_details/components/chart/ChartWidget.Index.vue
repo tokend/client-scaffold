@@ -95,6 +95,7 @@
 
   .chart-container__tabs {
     margin-bottom: 4.5 * $point;
+
     @include respond-to-custom(1000px) {
       flex-direction: column-reverse;
       align-items: flex-start;

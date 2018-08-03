@@ -4,6 +4,7 @@ export default {
   lbl_email: 'Email',
   lbl_pwd: 'Password',
   lbl_new_pwd: 'New password',
+  lbl_current_password: 'Current password',
   lbl_pwd_confirm: 'Confirm password',
   lbl_confirm: 'Confirm',
   lbl_asset: 'Asset',

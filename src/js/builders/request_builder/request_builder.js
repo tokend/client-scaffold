@@ -26,6 +26,12 @@ export class RequestBuilder {
     this.httpClient = Vue.http
     this.query = []
     this.config = {}
+    this.currentPassword = ''
+  }
+
+  trashConfig (currentPassword) {
+    this.currentPassword = currentPassword
+    return this
   }
 
   sign (keypair) {
@@ -106,7 +112,7 @@ export class RequestBuilder {
     this.method = 'put'
     return this.httpClient.put(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
-      .catch(err => this._handleError(err))
+      .catch(err => this._handleError(err, this.currentPassword))
   }
 
   patch () {
