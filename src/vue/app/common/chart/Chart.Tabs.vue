@@ -1,37 +1,37 @@
 <template>
-  <div class="date-tabs">
+  <div class="chart-tabs">
 
-    <span class="date-tabs__prefix">
+    <!-- <span class="chart-tabs__prefix">
       {{ i18n.trd_chart_tabs_prefix() }}
-    </span>
+    </span> -->
 
-    <button class="tab-btn"
+    <button class="chart-tabs__tab"
             @click="$emit(common.inputEvent, tabs.hour)"
-            :class="{ selected: value === tabs.hour }"
+            :class="{ 'chart-tabs__tab--selected': value === tabs.hour }"
             :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_hour() }}</span>
     </button>
 
-    <button class="tab-btn"
+    <button class="chart-tabs__tab"
             @click="$emit(common.inputEvent, tabs.day)"
-            :class="{ selected: value === tabs.day }"
+            :class="{ 'chart-tabs__tab--selected': value === tabs.day }"
             :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_day() }}</span>
     </button>
 
-    <button class="tab-btn"
+    <button class="chart-tabs__tab"
             @click="$emit(common.inputEvent, tabs.month)"
-            :class="{ selected: value === tabs.month }"
+            :class="{ 'chart-tabs__tab--selected': value === tabs.month }"
             :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_month() }}</span>
     </button>
 
-    <button class="tab-btn"
+    <button class="chart-tabs__tab"
             @click="$emit(common.inputEvent, tabs.year)"
-            :class="{ selected: value === tabs.year }"
+            :class="{ 'chart-tabs__tab--selected': value === tabs.year }"
             :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../../../../js/events/common_events'
-  import { i18n } from '../../../../../../js/i18n'
+  import { commonEvents } from '@/js/events/common_events'
+  import { i18n } from '@/js/i18n'
 
   export default {
-    name: 'date-tabs',
+    name: 'chart-tabs',
     props: ['value', 'isPending'],
 
     data () {
@@ -68,39 +68,22 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../../scss/variables";
-  @import "../../../../../../scss/mixins";
+  @import "~@scss/variables";
+  @import "~@scss/mixins";
 
-  .date-tabs {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .date-tabs__prefix {
+  .chart-tabs__prefix {
     white-space: nowrap;
     display: inline-block;
     margin-right: 1 * $point;
   }
 
+  .chart-tabs__tab {
+    @include button();
+    @include button-flat();
+    font-weight: 500;
+  }
 
-  .tab-btn {
-    padding: 5px 10px;
-    margin: 0 3px;
-    cursor: pointer;
-    letter-spacing: 0.005em;
-    position: relative;
-    border: none;
-    font-size: 12px;
-    font-weight: bold;
-    color: #fff;
-    border-radius: 5px;
-    background-color: rgba($col-md-primary, .3);
-
-    &.selected {
-      background-color: $col-md-primary-secondary;
-    }
+  .chart-tabs__tab--selected {
+    font-weight: 700;
   }
 </style>

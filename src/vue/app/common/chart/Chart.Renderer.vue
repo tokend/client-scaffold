@@ -1,17 +1,17 @@
 <template>
-  <div class="chart-root">
-    <div v-if="isLoading" class="chart-root__wrapper">
-      <div class="chart-root__wrapper-message"> {{ i18n.dash_chart_loading() }} </div>
+  <div class="chart-renderer">
+    <div v-if="isLoading" class="chart-renderer__wrapper">
+      <div class="chart-renderer__wrapper-message"> {{ i18n.dash_chart_loading() }} </div>
     </div>
-    <div v-else-if="!hasValue" class="chart-root__wrapper">
-      <div class="chart-root__wrapper-message"> {{ i18n.dash_empty_volume() }} </div>
+    <div v-else-if="!hasValue" class="chart-renderer__wrapper">
+      <div class="chart-renderer__wrapper-message"> {{ i18n.dash_empty_volume() }} </div>
     </div>
-    <div class="chart-root__chart" ref="chart"></div>
+    <div class="chart-renderer__chart" ref="chart"></div>
   </div>
 </template>
 
 <script>
-  import { i18n } from '../../../../js/i18n'
+  import { i18n } from '@/js/i18n'
 
   import * as d3Array from 'd3-array'
   import * as d3Selection from 'd3-selection'
@@ -23,8 +23,8 @@
 
   // import * as d3 from 'd3'
   import moment from 'moment'
+  import config from '@/config'
   import { chunk } from 'lodash'
-  import config from '../../../../config'
   const d3 = Object.assign({}, d3Array, d3Selection, d3Axis, d3Shape, d3Scale, d3Transition, d3Ease)
 
   export default {
@@ -35,7 +35,7 @@
       scale: { type: String, default: 'hour' },
       requiredTicks: { type: Array, default: () => [] },
       precision: { type: Number, default: 0 },
-      hasValue: { type: Boolean, default: false },
+      hasValue: { type: Boolean, default: true },
       isLoading: { type: Boolean, default: false }
     },
 
@@ -94,8 +94,8 @@
         }
       },
 
-      getMaxAndMin (data) {
-        const arr = data.map(item => item.value)
+      getMaxAndMin () {
+        const arr = this.data.map(item => item.value)
         const max = Math.max(...arr, ...this.requiredTicks)
         const min = this.requiredTicks && this.requiredTicks.length ? 0 : Math.min(...arr)
         return { max, min }
@@ -122,7 +122,6 @@
         this.clear()
 
         // Setup the data
-        // const scale = this.scale
         const data = chunk(this.normalizedData, this.barTicks).map(item => {
           const itemLength = item.length
           let defaultDate = 0
@@ -290,7 +289,7 @@
           }, this.chartRenderingTime)
         }
 
-        // Render y-axis
+        // Render x-axis
         const yAxisLine = d3.axisRight(y)
           .tickValues([
             max,
@@ -467,13 +466,12 @@
 
 <style lang="scss">
   @import "~@scss/variables";
-  @import "~@scss/mixins";
 
-  .chart-root {
+   .chart-renderer {
     position: relative;
   }
 
-  .chart-root__wrapper {
+  .chart-renderer__wrapper {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -483,7 +481,7 @@
     justify-content: center;
   }
 
-  .chart-root__wrapper-message {
+  .chart-renderer__wrapper-message {
     background-color: #fff;
     padding: 16px 28px;
     min-width: 20rem;
@@ -496,12 +494,13 @@
     transform: translate(-50%, -50%);
   }
 
-  .chart-root__chart,
-  .chart-root__chart svg {
+  .chart-renderer__chart,
+  .chart-renderer__chart svg {
+    transition: .2s;
+
     @media (min-width: 767px) {
       min-height: 200px;
     }
-    transition: .2s;
   }
 
   svg.chart {
@@ -548,6 +547,7 @@
   .chart__tip {
     transition: opacity .2s;
     opacity: 0;
+
     &--show { opacity: 1; }
     &--hidden { opacity: 0!important; }
   }

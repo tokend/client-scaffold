@@ -2,11 +2,7 @@
   <div class="trade">
     <asset-selector v-if="formattedPairs.length" :pairs="formattedPairs"/>
     <div class="trade-row app__card-wrapper app__card-wrapper--xmedium-breakpoint">
-      <chart class="trade__chart"
-        :data="history"
-        :precision="common.precision"
-        :assets="customAssetPair"
-      />
+      <chart :base-asset="filters.base" :quote-asset="filters.quote"/>
       <trade-history :assets="filters" class="trade__history"/>
     </div>
 
@@ -27,21 +23,21 @@
 
 <script>
   import AssetSelector from './components/asset-selector/Trade.AssetSelector'
-  import Chart from './components/chart/Trade.ChartWidget'
+  import Chart from '@/vue/app/common/chart/Chart'
   import TradeHistory from './components/tradeHistory/Trade.TradeHistory'
   import TradeOrders from './components/tradeOrders/Trade.TradeOrders'
   import Orders from './components/orders/Trade.Orders'
   import ManageOrders from './components/manageOrders/Trade.ManageOrders'
 
-  import { chartsService } from '../../../../js/services/charts.service'
-  import { errors } from '../../../../js/errors/factory'
-  import config from '../../../../config'
+  import { chartsService } from '@/js/services/charts.service'
+  import { errors } from '@/js/errors/factory'
+  import config from '@/config'
 
   import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { attachEventHandler } from '../../../../js/events/helpers'
-  import { commonEvents } from '../../../../js/events/common_events'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
+  import { vuexTypes } from '@/vuex/types'
+  import { attachEventHandler } from '@/js/events/helpers'
+  import { commonEvents } from '@/js/events/common_events'
+  import { ErrorHandler } from '@/js/errors/error_handler'
 
   export default {
     name: 'trade-index',
@@ -104,7 +100,7 @@
       },
       async loadPrices ({base, quote}) {
         try {
-          this.history = (await chartsService.loadChartsForTokenPair(base, quote)).data()
+          this.history = (await chartsService.loadChartsForTokenPair('BTC', 'USD')).data()
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             console.log('error')
@@ -129,8 +125,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
   $large-breakpoint: 1374px;
   $medium-breakpoint: 1374px;
 

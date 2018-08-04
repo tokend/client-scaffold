@@ -39,28 +39,6 @@
           <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
           <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
         </div>
-        <div class="portfolio-widget__select-scale" v-if="showTabls">
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.hour }"
-                  @click="$emit(events.changeDashboardScale, tabs.hour)">
-            Hour
-          </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.day }"
-                  @click="$emit(events.changeDashboardScale, tabs.day)">
-            Day
-          </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.month }"
-                  @click="$emit(events.changeDashboardScale, tabs.month)">
-            Month
-          </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.year }"
-                  @click="$emit(events.changeDashboardScale, tabs.year)">
-            Year
-          </button>
-        </div>
       </div>
     </template>
     <template v-if="!currentAsset">
@@ -91,15 +69,12 @@
       NoDataMessage
     },
     props: {
-      scale: { type: String, required: true },
-      currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET },
-      showTabls: { type: Boolean, default: false }
+      currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET }
     },
     data: _ => ({
       i18n,
       events: {
-        assetChange: commonEvents.assetChangeEvent,
-        changeDashboardScale: commonEvents.changeDashboardScale
+        assetChange: commonEvents.assetChangeEvent
       },
       tabs: {
         hour: 'hour',
@@ -188,12 +163,6 @@
     }
   }
 
-  .portfolio-widget__select-scale {
-    @include respond-to-custom($custom-breakpoint) {
-      margin-top: 16px;
-    }
-  }
-
   .portfolio-widget__select {
     display: flex;
     align-items: center;
@@ -230,16 +199,6 @@
       justify-content: flex-start;
       margin-bottom: 16px;
     }
-  }
-
-  .portfolio-widget__select-scale-btn {
-    @include button();
-    @include button-flat();
-    font-weight: 400;
-  }
-
-  .portfolio-widget__select-scale-btn--selected {
-    font-weight: 700;
   }
 
   .portfolio-widget__asset-btn {
