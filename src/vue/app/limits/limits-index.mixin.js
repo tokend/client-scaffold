@@ -94,7 +94,9 @@ export default {
         })
         this.isDialogOpened = false
         EventDispatcher.dispatchShowSuccessEvent(i18n.lim_requested())
-      } catch (e) { ErrorHandler.processUnexpected(e) }
+      } catch (e) {
+        ErrorHandler.processUnexpected(e)
+      }
       this.enable()
     }
   },

@@ -75,6 +75,9 @@ import PreissuanceUploadIndex from '@/vue/app/preissuanceUpload/index/Preissuanc
 
 import SupportedBrowsers from '@/vue/common/SupportedBrowsers'
 
+import Limits from '../vue/app/limits/Limits.Entry'
+import LimitsIndex from '../vue/app/limits/Limits.Index'
+
 Vue.use(Router)
 
 const router = new Router({
