@@ -16,6 +16,7 @@ export const state = {
     external_system_accounts: []
   },
   balances: [],
+  limits: [],
   keys: {
     accountId: '',
     publicKey: '',
@@ -45,6 +46,10 @@ export const mutations = {
 
   SET_ACCOUNT_BALANCES (state, balances) {
     state.balances = balances
+  },
+
+  SET_ACCOUNT_LIMITS (state, limits) {
+    state.limits = limits
   },
 
   SET_ACCOUNT_KYC_REQUESTS (state, requests) {

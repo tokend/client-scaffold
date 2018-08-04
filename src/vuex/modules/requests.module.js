@@ -20,6 +20,9 @@ const state = {
     recordWrp: RecordFactory.createLimitRequestRecord.bind(RecordFactory)
   }),
   saleCreationRequests: {},
+  limitsRequests: new Paginator({
+    recordWrp: RecordFactory.createLimitRequestRecord.bind(RecordFactory)
+  }),
   isInitialized: false
 }
 
