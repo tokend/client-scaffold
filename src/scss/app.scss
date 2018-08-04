@@ -578,3 +578,61 @@ h4 {
     opacity: 1;
   }
 }
+
+.app__tabs {
+  &.app__tabs--md {
+    @include box-shadow;
+    background-color: #fff;
+  }
+
+  .app-tabs__tabs {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .app-tabs__tab {
+    min-width: 72px;
+    height: 48px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 0;
+    position: relative;
+
+    &.is-active:after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: $col-md-primary-secondary-inactive;
+      height: 2px;
+    }
+  }
+
+  .app-tabs__tab-btn {
+    padding: 0 16px;
+    font-size: 1.4 * $point;
+    text-transform: uppercase;
+    letter-spacing: .08 * $point;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $col-md-primary;
+
+    &:hover {
+      background-color: $col-md-primary-secondary-tabs-hover;
+      text-decoration: none;
+      color: $col-md-primary;
+    }
+
+    @include respond-to-custom(1100px) {
+      font-size: 1.2 * $point;
+    }
+  }
+
+  .tapp-tabs__panel {
+    padding: 16px;
+  }
+}

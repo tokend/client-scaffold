@@ -102,20 +102,13 @@
 </script>
 
 <style lang="scss">
-
   .chart {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     margin-bottom: 24px;
   }
 
   .chart__tabs {
     margin-bottom: 24px;
+    display: flex;
+    justify-content: flex-end;
   }
-
-  .chart__renderer {
-    width: 100%;
-  }
-
 </style>

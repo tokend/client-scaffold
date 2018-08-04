@@ -10,7 +10,7 @@
                         :scale="scale"
       />
       <div class="dashboard__chart" v-if="currentAsset">
-        <chart :base-asset="currentAsset" :quote-asset="'USD'"/>
+        <chart :base-asset="currentAsset" :quote-asset="config.DEFAULT_QUOTE_ASSET"/>
       </div>
       <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
     </template>
@@ -25,6 +25,7 @@
   import { vuexTypes } from '@/vuex/types'
   import { i18n } from '@/js/i18n'
   import Loader from '@/vue/app/common/Loader'
+  import config from '@/config'
 
   export default {
     name: 'dashboard',
@@ -38,7 +39,8 @@
       currentAsset: null,
       isLoading: false,
       scale: 'month',
-      i18n
+      i18n,
+      config
     }),
     async created () {
       this.isLoading = true
