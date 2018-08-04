@@ -1,0 +1,22 @@
+export const PAGES_NAMES = Object.freeze({
+  dashboard: 'Dashboard',
+  deposit: 'Deposit',
+  limits: 'Limits',
+  withdraw: 'Withdraw',
+  send: 'Send',
+  exploreTokens: 'Explore tokens',
+  createToken: 'Create token',
+  createIssuance: 'Create issuance',
+  preIssuance: 'Upload pre-issuance',
+  exploreSales: 'Explore sales',
+  createSale: 'Create sale',
+  requests: 'Requests',
+  history: 'History',
+  trade: 'Trade',
+  verification: 'Verification',
+  settings: 'Settings',
+  help: 'Help',
+  downloads: 'TokenD downloads',
+  terms: 'Terms',
+  massTransfer: 'Mass transfer'
+})

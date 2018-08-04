@@ -1,0 +1,104 @@
+/* eslint-disable */
+
+$sidebar-width: 210px;
+$material-icons-small: 14px;
+$material-icon-size: 18px;
+$material-icon-medium: 24px;
+$material-icon-big: 32px;
+$material-icon-big-but-not-so-big: 48px;
+$material-icon-super-big: 64px;
+$material-icon-xx-super-big: 128px;
+
+$z-status-message: 20;
+$z-dd-menu: 15;
+$z-sidebar: 10;
+$z-open-sidebar-btn: 5;
+$z-secondary-navbar: 3;
+$z-cover: 17;
+$z-sidebar-cover: 9;
+$z-modal-dialog: 20;
+$z-embed-page: 45;
+$z-markdown-editor: 45;
+
+/* colors: */
+/* CAUTION: do not use these colors externally */
+
+$black: #3f4244;
+$gray:#e2e3e3;
+$green: #3fa595;
+$red: #c2243b;
+$md-invalid: #ff1744;
+$blue: #578ebd;
+$orange: #EF6C00;
+$white: #ffffff;
+$lightRed: #ff5b5b;
+$lightGray: #c6c6c6;
+$vividBlue: #03a9f4;
+// Use these ones instead
+
+$col-hover: $black;
+
+$col-primary: $black;
+$col-background: $gray;
+
+$col-text: $black;
+$col-text-secondary: rgba($color: $black, $alpha: 0.5);
+
+$col-content-block: $white;
+
+$col-btn-text: $white;
+$col-msg-text: $white;
+
+$col-success: $green;
+$col-danger: $lightRed;
+$col-info: $blue;
+
+$col-nav-text: $white;
+
+$col-active: $blue;
+$col-inactive: lighten($blue, 35%);
+$col-unfocused: lighten($black, 30%);
+
+$col-pending: $orange;
+$col-approve: $green;
+$col-reject: $red;
+
+$col-btc: #FF9900;
+
+// progress bar
+$col-pb-line: $lightGray;
+$col-pb-fill: $vividBlue;
+
+$col-md-primary: rgb(58, 65, 128);
+$col-md-primary-inactive: rgba($col-md-primary, .7);
+$col-md-primary-flat-hover: rgba($col-md-primary, .2);
+$col-md-primary-secondary: #7b6eff;
+$col-md-background: #f2f2f4;
+$col-md-accent: #ef5350;
+$col-md-accent-flat-hover: rgba($col-md-accent, .2);
+$col-md-primary-txt: #fff;
+$col-md-unfocused: rgba(0, 0, 0, .54);
+$col-md-block: #fff;
+$col-md-pending: $orange;
+
+$col-chart-line: $col-md-primary-secondary;
+$col-chart-fill: $white;
+$col-chart-ticks: $col-md-primary-inactive;
+$col-chart-text: $col-md-primary-inactive;
+$col-chart-tip-text: $white;
+
+/* fonts: */
+$fs-top-heading: 32px;
+$fs-offer-input: 24px;
+
+$fs-big: 2rem;
+$fs-heading: 1.4rem;
+$fs-root: 1rem;
+$fs-tip: .8rem;
+$fs-tip-smaller: .74rem;
+$fs-label: .8rem;
+
+// misc.
+
+// use as multiplier for more convenient way to calculating sizes
+$point: 0.625rem; /* 10px in case of 1rem=16px */
