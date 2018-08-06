@@ -1,7 +1,8 @@
-import InputField from '../fields/InputField.vue'
-import SelectField from '../fields/SelectField.vue'
-import TextareaField from '../fields/TextareaField'
-import DateField from '../fields/DateField'
+import InputField from '@/vue/common/fields/InputField.vue'
+import SelectField from '@/vue/common/fields/SelectField.vue'
+import TextareaField from '@/vue/common/fields/TextareaField'
+import TextareaFieldUnchained from '@/vue/common/fields/TextareaFieldUnchained'
+import DateField from '@/vue/common/fields/DateField'
 import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
@@ -12,8 +13,8 @@ import RadioField from '@/vue/common/fields/RadioField'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
 
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { i18n } from '../../../js/i18n'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { i18n } from '@/js/i18n'
 
 export default {
   mixins: [SubmitterMixin],
@@ -35,7 +36,8 @@ export default {
     ImageInput,
     DateFieldFlatpickr,
     TickField,
-    RadioField
+    RadioField,
+    TextareaFieldUnchained
   },
 
   methods: {

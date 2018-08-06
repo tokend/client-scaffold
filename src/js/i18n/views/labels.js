@@ -58,7 +58,7 @@ export default {
   lbl_receiver: 'Receiver',
   lbl_fixed_fee: 'Fixed fee',
   lbl_percent_fee: 'Percent fee',
-  lbl_add_note: 'Add note (under 250 symbols)',
+  lbl_add_note: 'Add note (under %{length} symbols)',
   lbl_description: 'Description',
   lbl_fund_name: 'Fund name',
   lbl_sale_name: 'Fund name',

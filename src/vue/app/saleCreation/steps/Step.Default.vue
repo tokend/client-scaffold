@@ -5,40 +5,41 @@
     <template v-for="(row, r) in schema.rows">
       <div class="app__form-row" :key="`sale-creation-step-${r}`">
         <div class="app__form-field" v-for="(item, i) in row" :key="i">
-
-          <input-field-unchained v-if="item.field === 'text'"
-
-                       v-model="form[item.model]"
-                       v-validate="item.validate"
-                       :name="item.name"
-                       :id="item.id"
-                       :required="item.required"
-                       :label="item.label"
-                       :type="item.type"
-                       :key='item.id'
-                       :errorMessage="errorMessage(item.name)"
+          <input-field-unchained
+            v-if="item.field === 'text'"
+            v-model="form[item.model]"
+            v-validate="item.validate"
+            :name="item.name"
+            :id="item.id"
+            :required="item.required"
+            :label="item.label"
+            :type="item.type"
+            :key='item.id'
+            :errorMessage="errorMessage(item.name)"
           />
-          <textarea-field v-if="item.field === 'textarea'"
-                          v-model="form[item.model]"
-                          v-validate="item.validate"
-                          :name="item.name"
-                          :id="item.id"
-                          :required="item.required"
-                          :label="item.label"
-                          :type="item.type"
-                          :key='item.id'
-                          :maxlength="item.maxlength"
-                          :errorMessage="errorMessage(item.name)"
+          <textarea-field-unchained
+            v-if="item.field === 'textarea'"
+            v-model="form[item.model]"
+            v-validate="item.validate"
+            :name="item.name"
+            :id="item.id"
+            :required="item.required"
+            :label="item.label"
+            :type="item.type"
+            :key='item.id'
+            :maxlength="item.maxlength"
+            :errorMessage="errorMessage(item.name)"
           />
-          <file-field v-if="item.field === 'file'"
-                      v-model="documents[item.type]"
-                      class="step__file-field"
-                      :fileType="item.fileType"
-                      :private="item.private"
-                      :label="item.label"
-                      :type="item.type"
-                      :id="item.id"
-                      :key='item.id'
+          <file-field
+            v-if="item.field === 'file'"
+            v-model="documents[item.type]"
+            class="step__file-field"
+            :fileType="item.fileType"
+            :private="item.private"
+            :label="item.label"
+            :type="item.type"
+            :id="item.id"
+            :key='item.id'
           />
 
           <select-field-unchained
@@ -47,14 +48,8 @@
             :id="item.id"
             v-model="form[item.model]"
             :key='item.id'
-            :label="item.label"/>
-
-          <select-field-unchained v-if="item.field === 'select'"
-                      :name="item.name"
-                      :id="item.id"
-                      :label="item.label"
-                      v-model="form[item.model]"
-                      :key='item.id'/>
+            :label="item.label"
+          />
 
           <date-field-flatpickr
             v-if="item.field === 'date'"
@@ -66,7 +61,8 @@
             :label="item.label"
             :disableBefore="item.disableBefore"
             :key='item.id'
-            :errorMessage="errorMessage(item.name)"/>
+            :errorMessage="errorMessage(item.name)"
+          />
         </div>
       </div>
     </template>
@@ -85,9 +81,9 @@
 <script>
   import StepMixin from './step.mixin'
   import _pick from 'lodash/pick'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { commonEvents } from '../../../../js/events/common_events'
-  import { documentTypes } from '../../../../js/const/documents.const'
+  import { ErrorHandler } from '@/js/errors/error_handler'
+  import { commonEvents } from '@/js/events/common_events'
+  import { documentTypes } from '@/js/const/documents.const'
   export default {
     name: 'Step-default',
     mixins: [ StepMixin ],
