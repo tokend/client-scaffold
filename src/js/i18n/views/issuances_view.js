@@ -7,6 +7,7 @@ export default {
   iss_no_assets: 'Your wallet doesn\'t contain any issuable assets yet. Please create some and get back',
   iss_no_assets_heading: 'Nothing to issue yet',
   iss_create_assets_btn: 'Create token',
+  iss_available_to_issuance: 'Available to issuance %{value} %{tokenCode}',
   iss_unissued: 'Unissued balance: %{amount} %{asset}',
   iss_issue_btn: 'Issue'
 }

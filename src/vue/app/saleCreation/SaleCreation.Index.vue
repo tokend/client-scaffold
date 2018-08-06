@@ -9,7 +9,7 @@
                             :title="i18n.lbl_not_available()"
                             :descr="i18n.sale_not_available_exp()"/>
       </template>
-      <template v-else-if="!accountOwnedTokens.length">
+      <template v-else-if="!accountOwnedTokenCodes.length">
         <not-available-card icon='work'
                             :title="i18n.lbl_not_available()"
                             :descr="i18n.lbl_token_not_available_yet()"/>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import FormMixin from '../../common/mixins/form.mixin'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import RequestList from './SaleCreation.RequestList'
 import NotAvailableCard from '../common/NotAvailableCard'
 import Loader from '@/vue/app/common/Loader'
@@ -129,7 +129,7 @@ export default {
     ...mapGetters([
       vuexTypes.accountId,
       vuexTypes.accountTypeI,
-      vuexTypes.accountOwnedTokens
+      vuexTypes.accountOwnedTokenCodes
     ])
   },
 

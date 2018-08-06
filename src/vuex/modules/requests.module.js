@@ -42,7 +42,7 @@ const mutations = {
 
 const actions = {
   INIT_SALE_REQUESTS_LIST ({ commit, rootGetters }) {
-    const tokenCodes = Object.keys(rootGetters.accountOwnedTokens)
+    const tokenCodes = Object.keys(rootGetters.accountOwnedTokenCodes)
     commit(vuexTypes.UPDATE_SALE_REQUEST_LIST, tokenCodes)
     commit(vuexTypes.SET_SALE_REQUEST_LIST_INITIALIZED)
   },

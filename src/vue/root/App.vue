@@ -43,13 +43,13 @@
   import FileViewer from '../common/modals/FileViewer'
   import LoaderBar from '../common/messages/LoaderBar'
 
-  import { vueRoutes } from '../../vue-router/const'
+  import { vueRoutes } from '@/vue-router/const'
 
   import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../vuex/types'
+  import { vuexTypes } from '@/vuex/types'
 
-  import { dispatchAppEvent } from '../../js/events/helpers'
-  import { commonEvents } from '../../js/events/common_events'
+  import { dispatchAppEvent } from '@/js/events/helpers'
+  import { commonEvents } from '@/js/events/common_events'
 
   import moment from 'moment'
 
@@ -129,8 +129,8 @@
 </script>
 
 <style lang="scss">
-  @import '../../scss/mixins';
-  @import '../../scss/variables';
+  @import '~@scss/mixins';
+  @import '~@scss/variables';
 
   .md-app {
     // NOTE: temp. disabled

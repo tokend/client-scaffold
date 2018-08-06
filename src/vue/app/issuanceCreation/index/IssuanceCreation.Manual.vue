@@ -10,7 +10,7 @@
         </router-link>
       </template>
 
-      <template v-else-if="!accountOwnedTokens.length">
+      <template v-else-if="!accountOwnedTokenCodes.length">
         <h2 class="app__page-heading">{{ i18n.iss_no_assets_heading() }}</h2>
         <p class="app__page-explanations app__page-explanations--secondary">
           {{ i18n.iss_no_assets() }}
@@ -28,18 +28,28 @@
         </h2>
 
         <div class="app__form-row">
-          <select-field-unchained :values="accountOwnedTokens"
+          <select-field-unchained :values="accountOwnedTokenCodes"
             v-model="request.code"
             :label="i18n.lbl_asset()"/>
         </div>
 
         <div class="app__form-row">
-          <input-field-unchained name="amount"
-            v-model="request.amount"
-            v-validate="'required|amount'"
-            :label="i18n.lbl_amount()"
-            :errorMessage="errorMessage('amount')"
-          />
+          <div class="app__form-field">
+            <input-field-unchained
+              name="amount"
+              v-model="request.amount"
+              type="number"
+              :max="selectedTokenAvailableToIssuance"
+              v-validate="`required|amount|max:${selectedTokenAvailableToIssuance}`"
+              :label="i18n.lbl_amount()"
+              :errorMessage="errorMessage('amount')"
+            />
+            <div class="app__form-field-description">
+              <p>
+                {{ i18n.iss_available_to_issuance({ value: selectedTokenAvailableToIssuance, tokenCode: request.code }) }}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div class="app__form-row">
@@ -75,82 +85,97 @@
 </template>
 
 <script>
-import FormMixin from '../../../common/mixins/form.mixin'
-import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import { i18n } from '../../../../js/i18n'
-import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { issuanceService } from '../../../../js/services/issuances.service'
-import { accountsService } from '../../../../js/services/accounts.service'
-import { ACCOUNT_TYPES } from '../../../../js/const/const'
-import { errors } from '../../../../js/errors/factory'
+  import FormMixin from '@/vue/common/mixins/form.mixin'
+  import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+  import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+  import { i18n } from '@/js/i18n'
+  import { mapGetters } from 'vuex'
+  import { vuexTypes } from '@/vuex/types'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { ErrorHandler } from '@/js/errors/error_handler'
+  import { issuanceService } from '@/js/services/issuances.service'
+  import { accountsService } from '@/js/services/accounts.service'
+  import { ACCOUNT_TYPES } from '@/js/const/const'
+  import { errors } from '@/js/errors/factory'
 
-export default {
-  mixins: [FormMixin],
-  components: { SelectFieldUnchained, InputFieldUnchained },
-  data: _ => ({
-    request: {},
-    formShown: true,
-    unissued: '', // TODO: unissued amount label, exceeding check
-    i18n,
-    ACCOUNT_TYPES
-  }),
+  export default {
+    mixins: [FormMixin],
+    components: { SelectFieldUnchained, InputFieldUnchained },
+    data: _ => ({
+      request: {
+        code: ''
+      },
+      formShown: true,
+      unissued: '', // TODO: unissued amount label, exceeding check
+      selectedTokenAvailableToIssuance: null,
+      i18n,
+      ACCOUNT_TYPES
+    }),
 
-  created () {
-    this.setTokenCode()
-  },
-
-  computed: {
-    ...mapGetters([
-      vuexTypes.accountOwnedTokens,
-      vuexTypes.accountTypeI
-    ])
-  },
-
-  methods: {
-    async submit () {
-      if (!await this.isValid()) return
-      this.disable()
-      try {
-        const receiver = await accountsService.loadBalanceIdByEmail(this.request.receiver, this.request.code)
-        await issuanceService.createIssuanceRequest({
-          token: this.request.code,
-          amount: this.request.amount,
-          receiver: receiver,
-          reference: this.request.reference,
-          externalDetails: {}
-        })
-        EventDispatcher.dispatchShowSuccessEvent(i18n.iss_submit_success())
-        this.rerenderForm()
-      } catch (error) {
-        console.log(error)
-        console.log(error.constructor)
-        console.log(error.constructor === errors.NotFoundError)
-        if (error.constructor === errors.NotFoundError) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.iss_no_balance({ asset: this.request.code }))
-          this.enable()
-          return
-        }
-        ErrorHandler.processUnexpected(error)
-      }
-      this.enable()
-    },
-
-    setTokenCode () {
-      this.request.code = this.accountOwnedTokens[0] || null
-    },
-
-    rerenderForm () {
-      this.formShown = false
-      this.request = {}
+    created () {
       this.setTokenCode()
-      setTimeout(() => (this.formShown = true), 1)
+      this.getAvailableToIssuance(this.request.code)
+    },
+
+    computed: {
+      ...mapGetters([
+        vuexTypes.accountOwnedTokens,
+        vuexTypes.accountTypeI
+      ]),
+      accountOwnedTokenCodes () {
+        return this.accountOwnedTokens.map(item => item.asset)
+      }
+    },
+
+    methods: {
+      async submit () {
+        if (!await this.isValid()) return
+        this.disable()
+        try {
+          const receiver = await accountsService.loadBalanceIdByEmail(this.request.receiver, this.request.code)
+          await issuanceService.createIssuanceRequest({
+            token: this.request.code,
+            amount: this.request.amount,
+            receiver: receiver,
+            reference: this.request.reference,
+            externalDetails: {}
+          })
+          EventDispatcher.dispatchShowSuccessEvent(i18n.iss_submit_success())
+          this.rerenderForm()
+        } catch (error) {
+          if (error.constructor === errors.NotFoundError) {
+            EventDispatcher.dispatchShowErrorEvent(i18n.iss_no_balance({ asset: this.request.code }))
+            this.enable()
+            return
+          }
+          ErrorHandler.processUnexpected(error)
+        }
+        this.enable()
+      },
+
+      setTokenCode () {
+        this.request.code = this.accountOwnedTokenCodes[0] || null
+      },
+
+      getAvailableToIssuance (tokenCode) {
+        this.selectedTokenAvailableToIssuance = this.accountOwnedTokens
+                                                  .filter(item => item.asset === tokenCode)[0]
+                                                  .asset_details.available_for_issuance
+      },
+
+      rerenderForm () {
+        this.formShown = false
+        this.request = {}
+        this.setTokenCode()
+        setTimeout(() => (this.formShown = true), 1)
+      }
+    },
+    watch: {
+      'request.code' (value) {
+        this.getAvailableToIssuance(value)
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>

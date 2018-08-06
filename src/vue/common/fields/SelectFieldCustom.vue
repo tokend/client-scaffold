@@ -9,7 +9,7 @@
         keyboard_arrow_down
       </md-icon>
     </div>
-    <div class="select__list" :class="{ 'select__list--active': showList }">
+    <div class="select__list" ref="list" :class="{ 'select__list--active': showList }">
       <template v-for="(value, i) in values">
         <div class="select__list-item"
              :key="i"
@@ -23,7 +23,9 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../js/events/common_events'
+  import { commonEvents } from '@/js/events/common_events'
+  import { onKeyDown } from '@/js/helpers/onKeyDown'
+  import { KEY_CODES } from '@/js/const/const'
 
   export default {
     name: 'select-field-custom',
@@ -34,7 +36,8 @@
     },
     data: _ => ({
       selected: '',
-      showList: false
+      showList: false,
+      KEY_CODES
     }),
     created () {
       this.selected = this.value
@@ -47,13 +50,42 @@
       },
       toggleListVisibility () {
         this.showList = !this.showList
+        onKeyDown(this.showList, this.keyDownEvents)
+      },
+      keyDownEvents (event) {
+        event.preventDefault()
+
+        let index = this.values.indexOf(this.selected)
+        const valuesList = this.values
+        const childrenList = Array.prototype.slice.call(this.$refs.list.childNodes)
+
+        switch (event.which) {
+          case KEY_CODES.enter:
+            this.selectItem(valuesList[index])
+            break
+          case KEY_CODES.up:
+            index === 0 ? index += valuesList.length - 1 : index -= 1
+            this.selected = valuesList[index]
+            break
+          case KEY_CODES.right:
+            this.selectItem(valuesList[index])
+            break
+          case KEY_CODES.down:
+            index === valuesList.length - 1 ? index = 0 : index += 1
+            this.selected = valuesList[index]
+            break
+          default:
+            return false
+        }
+
+        this.$refs.list.scrollTop = childrenList[index].offsetTop - (this.$refs.list.offsetHeight / 2) + 18
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
-  @import '../../../scss/variables';
+  @import '~@scss/variables';
 
   .select {
     position: relative;

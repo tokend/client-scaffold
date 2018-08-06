@@ -3,11 +3,11 @@
     <md-table md-card class="tx-sale-creation__table">
       <md-table-toolbar class="tx-sale-creation__table-toolbar">
         <!-- <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1> -->
-        <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
+        <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokenCodes.length">
            <select-field-custom
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
-            :values="accountOwnedTokens"/>
+            :values="accountOwnedTokenCodes"/>
         </div>
       </md-table-toolbar>
       <template v-if="tokenCode && list.length">
@@ -111,14 +111,14 @@ import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
-import { i18n } from '../../../../js/i18n'
-import { REQUEST_STATES_STR, documentTypes } from '../../../../js/const/const'
-import { vuexTypes } from '../../../../vuex/types'
-import { vueRoutes } from '../../../../vue-router/const'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+import { i18n } from '@/js/i18n'
+import { REQUEST_STATES_STR, documentTypes } from '@/js/const/const'
+import { vuexTypes } from '@/vuex/types'
+import { vueRoutes } from '@/vue-router/const'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
-import { salesService } from '../../../../js/services/sales.service'
+import { salesService } from '@/js/services/sales.service'
 
 export default {
   mixins: [FormMixin],
@@ -133,7 +133,7 @@ export default {
   }),
 
   async created () {
-    this.tokenCode = this.accountOwnedTokens[0] || null
+    this.tokenCode = this.accountOwnedTokenCodes[0] || null
     if (this.tokenCode) {
       await this.loadList(this.tokenCode)
     }
@@ -142,7 +142,7 @@ export default {
   computed: {
     ...mapGetters([
       vuexTypes.saleCreationRequests,
-      vuexTypes.accountOwnedTokens
+      vuexTypes.accountOwnedTokenCodes
     ]),
     list () {
       return _get(this.saleCreationRequests, `${this.tokenCode}.records`, [])
@@ -196,8 +196,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/mixins";
-  @import "../../../../scss/variables";
+  @import "~@scss/mixins";
+  @import "~@scss/variables";
 
   $padding-vertical: 20px;
   $padding-horizontal: 25px;

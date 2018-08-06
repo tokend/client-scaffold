@@ -81,8 +81,6 @@
         }
         return this.loadSales(this.filters)
       }
-    },
-    watch: {
     }
   }
 </script>

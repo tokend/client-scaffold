@@ -114,15 +114,15 @@
 
 <script>
   import StepMixin from './step.mixin'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-  import { commonEvents } from '../../../../js/events/common_events'
-  import { ASSET_POLICIES, documentTypes } from '../../../../js/const/const'
-  import { i18n } from '../../../../js/i18n'
-  import { vuexTypes } from '../../../../vuex/types'
+  import { ErrorHandler } from '@/js/errors/error_handler'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { commonEvents } from '@/js/events/common_events'
+  import { ASSET_POLICIES, documentTypes } from '@/js/const/const'
+  import { i18n } from '@/js/i18n'
+  import { vuexTypes } from '@/vuex/types'
   import { mapGetters } from 'vuex'
   import _pick from 'lodash/pick'
-  import config from '../../../../config'
+  import config from '@/config'
   import moment from 'moment'
 
   export default {
@@ -150,7 +150,7 @@
     }),
 
     created () {
-      this.values.tokens = this.accountOwnedTokens
+      this.values.tokens = this.accountOwnedTokenCodes
       this.form = _pick(this.sale, Object.keys(this.form))
       if (!this.form.baseAsset) {
         this.setTokenCode()
@@ -159,7 +159,7 @@
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountOwnedTokens,
+        vuexTypes.accountOwnedTokenCodes,
         vuexTypes.walletTokens,
         vuexTypes.userAcquiredTokens
       ]),

@@ -32,7 +32,7 @@
 
     <transition name="input-field__err-transition">
       <p class="input-field__err-mes" v-if="errorMessage">
-        {{errorMessage}}
+        {{ errorMessage }}
       </p>
     </transition>
   </div>
@@ -142,6 +142,14 @@ export default {
           target.value = value.replace(replaceRe, '$1')
         }
       }
+    }
+  },
+  watch: {
+    max (value) {
+      if (+this.value && (+value < +this.value)) this.$emit('input', value)
+    },
+    min (value) {
+      if (+this.value && (+value > +this.value)) this.$emit('input', value)
     }
   }
 }

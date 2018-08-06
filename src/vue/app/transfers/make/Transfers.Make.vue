@@ -159,23 +159,23 @@
 <script>
 import get from 'lodash/get'
 
-import FormMixin from '../../../common/mixins/form.mixin'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
 import TickField from '@/vue/common/fields/TickField'
 import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
 
-import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { ErrorHandler } from '@/js/errors/error_handler'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 import { Keypair } from 'swarm-js-sdk'
-import { errors } from '../../../../js/errors/factory'
-import { i18n } from '../../../../js/i18n'
+import { errors } from '@/js/errors/factory'
+import { i18n } from '@/js/i18n'
 import { EventDispatcher } from '@/js/events/event_dispatcher'
 
-import { accountsService } from '../../../../js/services/accounts.service'
-import { feeService } from '../../../../js/services/fees.service'
-import { transferService } from '../../../../js/services/transfers.service'
+import { accountsService } from '@/js/services/accounts.service'
+import { feeService } from '@/js/services/fees.service'
+import { transferService } from '@/js/services/transfers.service'
 
 const VIEW_MODES = {
   submit: 'submit',
