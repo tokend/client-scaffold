@@ -350,23 +350,26 @@ const router = new Router({
           name: 'app.requests',
           path: '/requests',
           component: Requests,
-          redirect: { path: '/requests/index' },
+          redirect: { path: '/requests', hash: '#token-creation' },
           children: [
             {
-              path: '/requests/index',
-              name: 'requests.index',
-              meta: { pageName: PAGES_NAMES.requests },
-              component: RequestsIndex
-            },
-            {
-              path: '/requests/token-creation',
+              path: '/requests',
               name: 'requests.token-creation',
+              hash: '#token-creation',
               meta: { pageName: PAGES_NAMES.requests },
               component: RequestsIndex
             },
             {
-              path: '/requests/sale-creation',
+              path: '/requests',
               name: 'requests.sale-creation',
+              hash: '#sale-creation',
+              meta: { pageName: PAGES_NAMES.requests },
+              component: RequestsIndex
+            },
+            {
+              path: '/requests',
+              name: 'requests.pre-issuance-upload',
+              hash: '#pre-issuance-upload',
               meta: { pageName: PAGES_NAMES.requests },
               component: RequestsIndex
             }

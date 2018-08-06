@@ -192,7 +192,7 @@ export default {
         this.listManager.drop(this.sale)
         await this.listManager.fetch()
         this.view.mode = VIEW_MODES.list
-        this.$router.push({ path: '/requests/sale-creation' })
+        this.$router.push({ path: '/requests', hash: '#sale-creation' })
         EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
       } catch (error) {
         console.error(error)
