@@ -14,7 +14,12 @@
                      accept=".csv"
                      id="preissuance-field"
          />
-
+         <template v-if="recipientNotFound">
+            <p class="mass-transfer__errors">
+             {{ i18n.tr_found_errors() }}:
+             <span>{{ i18n.tr_current_recipient_not_found({recipient: recipientNotFound}) }}</span>
+             </p>
+         </template>
          <template v-if="transfers.length">
            <p class="mass-transfer__total">
              {{ i18n.tr_total_amount() }}:
@@ -175,6 +180,7 @@
         transfers: null
       },
       transfers: [],
+      recipientNotFound: '',
       i18n,
       isHowToOpened: false
     }),
@@ -276,6 +282,8 @@
       },
       async loadTransferDetails (transfers) {
         this.disable()
+        this.transfers = []
+        this.recipientNotFound = ''
         try {
           for (const transfer of transfers) {
             if (Keypair.isValidPublicKey(transfer.recipient)) {
@@ -285,6 +293,11 @@
               transfer.accountId = await accountsService.loadAccountIdByEmail(transfer.recipient)
               transfer.email = transfer.recipient
             }
+            if (!transfer.email || !transfer.accountId) {
+              this.recipientNotFound = transfer.recipient
+              ErrorFactory.throwError(errorTypes.NotFoundError, { email: transfer.recipient })
+            }
+
             transfer.sourceFees = await feeService.loadPaymentFeeByAmount(
               transfer.asset,
               transfer.amount
@@ -298,7 +311,15 @@
             transfer.sourcePaysForDest = false
           }
           this.transfers = transfers
-        } catch (e) { ErrorHandler.processUnexpected(e) }
+        } catch (e) {
+          console.error(e)
+          if (e instanceof errors.NotFoundError) {
+            e.showBanner(i18n.tr_not_valid_file())
+            this.enable()
+            return
+          }
+          ErrorHandler.processUnexpected(e)
+        }
         this.enable()
       }
     },
@@ -370,5 +391,9 @@
 
   .mass-transfer__asset {
     font-weight: bold;
+  }
+
+  .mass-transfer__errors {
+
   }
 </style>
