@@ -22,9 +22,9 @@
 
 <script>
   import form from '../common/mixins/form.mixin'
-  import { EventDispatcher } from '../../js/events/event_dispatcher'
-  import { emailService } from '../../js/services/email.service'
-  import { i18n } from '../../js/i18n'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { emailService } from '@/js/services/email.service'
+  import { i18n } from '@/js/i18n'
 
   export default {
     name: 'email-resend',
@@ -40,14 +40,14 @@
     },
 
     beforeCreate () {
-      if (!this.$route.query.walletId || !this.$route.query.email) {
+      if (!this.$route.params.walletId || !this.$route.params.email) {
         this.$router.push('/login')
       }
     },
 
     created () {
-      this.walletId = this.$route.query.walletId
-      this.email = this.$route.query.email
+      this.walletId = this.$route.params.walletId
+      this.email = this.$route.params.email
     },
 
     methods: {

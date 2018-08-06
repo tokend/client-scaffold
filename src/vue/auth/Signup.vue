@@ -72,16 +72,16 @@
 <script>
   import formMixin from '../common/mixins/form.mixin'
 
-  import { ErrorFactory, errorTypes, errors } from '../../js/errors/factory'
-  import { ErrorHandler } from '../../js/errors/error_handler'
-  import { vueRoutes } from '../../vue-router/const'
+  import { ErrorFactory, errorTypes, errors } from '@/js/errors/factory'
+  import { ErrorHandler } from '@/js/errors/error_handler'
+  import { vueRoutes } from '@/vue-router/const'
   import { Keypair } from 'swarm-js-sdk'
-  import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
-  import config from '../../config'
+  import { showRememberSeedMessage } from '@/js/modals/remember_seed.modal'
+  import config from '@/config'
 
-  import { emailService } from '../../js/services/email.service'
-  import { authService } from '../../js/services/auth.service'
-  import { i18n } from '../../js/i18n'
+  import { emailService } from '@/js/services/email.service'
+  import { authService } from '@/js/services/auth.service'
+  import { i18n } from '@/js/i18n'
 
   export default {
     mixins: [formMixin],
@@ -140,7 +140,7 @@
       },
 
       goShowEmail (walletId) {
-        const route = { ...vueRoutes.email, query: { walletId, email: this.form.email } }
+        const route = { ...vueRoutes.email, params: { walletId, email: this.form.email } }
         this.$router.push(route)
       }
     }
