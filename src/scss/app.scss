@@ -543,17 +543,6 @@ h4 {
   max-width: 100%;
 }
 
-.trade-history .md-table-cell-container {
-  padding: 0 0 0 24px;
-  white-space: nowrap;
-}
-
-.trade-history .md-table-head-label {
-  @include respond-to-custom(1340px) {
-    padding-left: 24px;
-  }
-}
-
 .manage-orders .md-card-header + .md-card-content {
   @include respond-to-custom(520px) {
     padding: 0;
