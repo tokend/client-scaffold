@@ -3,11 +3,20 @@ import { AppEvent } from './event_types'
 
 export function dispatchAppEvent (event, payload) {
   validateEvent(event)
-  Bus.$emit(event.type, payload || event.payload || event.message || '')
+  event.payload = payload
+  if (Bus.handlerExists(event)) {
+    Bus.$emit(event.type, event.payload)
+  } else {
+    Bus.backlog(event)
+  }
 }
 
 export function attachEventHandler (event, handler) {
   validateEvent(event)
+  const backloggedEvent = Bus.getBacklogged(event.type)
+  if (backloggedEvent) {
+    handler(backloggedEvent.payload)
+  }
   Bus.$on(event.type, handler)
 }
 

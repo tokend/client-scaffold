@@ -60,7 +60,6 @@
         base: '',
         quote: ''
       },
-      customAssetPair: '',
       common: {
         precision: config.DECIMAL_POINTS
       }
@@ -71,9 +70,6 @@
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-      this.filters.base = this.formattedPairs[0].split('/')[0]
-      this.filters.quote = this.formattedPairs[0].split('/')[1]
-      this.customAssetPair = this.formattedPairs[0]
     },
     computed: {
       ...mapGetters([
@@ -115,7 +111,6 @@
       handleAssetChange (payload) {
         this.filters.base = payload.split('/')[0]
         this.filters.quote = payload.split('/')[1]
-        this.customAssetPair = payload
         this.loadData(this.filters)
       },
       handleCancelOrder () {
