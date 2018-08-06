@@ -15,13 +15,9 @@
 9. If the remote repository of the project was updated, you need to execute ```git pull``` command on your local machine to get these updates
 10. After updating your repository (step 9), you need to execute steps 5 and 6 one more time to launch the updated project.
 
-Node.js: https://nodejs.org/en/
-  
+Node.js: https://nodejs.org/en/  
 Git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-  
-Project link: https://gitlab.com/tokend/client-scaffold
-  
-
+   
 
 ## Build Setup
 
