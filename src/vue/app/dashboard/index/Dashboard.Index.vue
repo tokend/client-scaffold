@@ -47,7 +47,6 @@
       await this.loadBalances()
       this.setCurrentAsset()
       this.isLoading = false
-      this.$router.push({ path: '/requests', hash: '#pre-issuance-upload' })
     },
     computed: {
       ...mapGetters([
