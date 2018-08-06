@@ -1,9 +1,9 @@
 <template>
-  <md-card class="limits">
-    <md-card-header>
+  <div class="limits">
+    <div class="limits__header">
       <h2 class="app__page-heading">{{ i18n.lim_heading() }}</h2>
-    </md-card-header>
-    <md-card-content>
+    </div>
+    <div class="limits__content">
       <div class="limits__select-wrp">
         <select-field v-model="filters.tokenCode"
                       :values="Object.keys(accountBalances)"
@@ -68,24 +68,37 @@
           </template>
         </div>
       </template>
-    </md-card-content>
-  </md-card>
+    </div>
+  </div>
 </template>
 
 <script>
-  import LimitsRequestsList from './Limits.List'
   import FormMixin from '../../common/mixins/form.mixin'
   import LimitsIndexMixin from './limits-index.mixin'
 
   export default {
     name: 'LimitsIndex',
     mixins: [LimitsIndexMixin, FormMixin],
-    components: { LimitsRequestsList }
+    components: { }
   }
 </script>
 
 <style lang="scss">
   @import '../../../scss/variables';
+
+  // md-card alternative
+  .limits {
+    flex: 1;
+    width: 100%;
+    background-color: $col-content-block;
+    max-width: calc(65 * 0.625rem);
+    margin: auto;
+    border-radius: 2px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  }
+
+  .limits__header,
+  .limits__content { padding: 1.5rem; }
 
   .limits__select-wrp {
     margin-bottom: 1rem;
@@ -97,7 +110,7 @@
   .limits__list-item-label {
     display: inline-block;
     margin-right: 1rem;
-    width: 10rem;
+    width: 8rem;
     /*width: 100%;*/
   }
 
