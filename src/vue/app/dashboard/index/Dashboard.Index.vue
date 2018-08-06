@@ -86,6 +86,10 @@
     padding: 0 0;
   }
 
+  .dashboard__chart {
+    margin-bottom: 24px;
+  }
+
   .dashboard__portfolio {
     margin-bottom: -40px;
   }

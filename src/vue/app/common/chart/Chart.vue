@@ -103,7 +103,7 @@
 
 <style lang="scss">
   .chart {
-    margin-bottom: 24px;
+    flex: 1;
   }
 
   .chart__tabs {
