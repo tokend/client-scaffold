@@ -29,6 +29,7 @@ import tableScrollShadow from './directives/tableScrollShadow'
 // ripple effect:
 import Ripple from 'vue-ripple-directive'
 Ripple.color = 'rgba(58, 65, 128, .2)'
+Ripple.zIndex = -1
 
 Vue.directive('table-scroll-shadow', tableScrollShadow)
 Vue.directive('ripple', Ripple)

@@ -64,14 +64,14 @@
 
 <script>
   import FieldMixin from './field.mixin'
-  import { DocumentContainer } from '../../../js/helpers/DocumentContainer'
-  import { MAX_FILE_MEGABYTES } from '../../../js/const/documents.const'
-  import { EventDispatcher } from '../../../js/events/event_dispatcher'
-  import { dispatchAppEvent } from '../../../js/events/helpers'
-  import { commonEvents } from '../../../js/events/common_events'
-  import { i18n } from '../../../js/i18n'
-  import { FileHelper } from '../../../js/helpers/file.helper'
-  import config from '../../../config'
+  import { DocumentContainer } from '@/js/helpers/DocumentContainer'
+  import { MAX_FILE_MEGABYTES } from '@/js/const/documents.const'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { dispatchAppEvent } from '@/js/events/helpers'
+  import { commonEvents } from '@/js/events/common_events'
+  import { i18n } from '@/js/i18n'
+  import { FileHelper } from '@/js/helpers/file.helper'
+  import config from '@/config'
 
   export default {
     name: 'file-field',
