@@ -84,7 +84,7 @@
                   {{ i18n.lbl_type_corporate() }}
                 </template>
               </div>
-              <button v-ripple="'rgba(255, 255, 255, .2)'"
+              <button v-ripple="{ color: 'rgba(255, 255, 255, .2)' }"
                       @click="goKyc"
                       class="navbar__user-card-account-btn">
                 {{ i18n.lbl_my_account() }}

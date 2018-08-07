@@ -24,7 +24,7 @@
 
         <template v-for="(tx, i) in list">
 
-          <md-table-row class="tx-history__row" @click="toggleDetails(i)">
+          <md-table-row class="tx-history__row" :key="`history-index-${i}`" @click="toggleDetails(i)">
             <md-table-cell class="tx-history__table-cell">{{ tx.date }}</md-table-cell>
             <md-table-cell class="tx-history__table-cell">{{ tx.name }}</md-table-cell>
             <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
@@ -43,7 +43,9 @@
 
           </md-table-row>
 
-          <md-table-row class="th-history__expandable-row" v-if="isSelected(i)">
+          <md-table-row class="th-history__expandable-row"
+                        v-if="isSelected(i)"
+                        :key="`history-index-${i}-${i}`">
             <md-table-cell colspan="7">
               <tx-details class="tx-history__details" :tx="tx"/>
             </md-table-cell>

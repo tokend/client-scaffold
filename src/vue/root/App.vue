@@ -132,11 +132,6 @@
   @import '~@scss/mixins';
   @import '~@scss/variables';
 
-  .md-app {
-    // NOTE: temp. disabled
-    // height: 100%;
-  }
-
   .md-app-content {
     padding-top: 40px;
   }

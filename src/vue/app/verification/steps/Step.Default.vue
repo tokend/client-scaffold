@@ -2,8 +2,8 @@
   <form class="step"
         novalidate
         @submit.prevent="submit">
-    <template v-for="row in schema.rows">
-      <div class="app__form-row">
+    <template v-for="(row, r) in schema.rows">
+      <div class="app__form-row" :key="`kyc-step-default-${r}`">
         <div class="app__form-field" v-for="(item, i) in row" :key="i">
           <h3 v-if="item.heading">{{ item.heading }}</h3>
 
