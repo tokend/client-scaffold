@@ -6,19 +6,19 @@
     <div class="select__selected"
          :class="{ 'select__selected--readonly': readonly }"
          @click="toggleListVisibility()">
-      <div class="select__selected-value">{{ currentValue }}</div>
+      <button class="select__selected-value">{{ currentValue }}</button>
       <md-icon class="select__selected-icon" :class="{ 'select__selected-icon--active': showList }">
         keyboard_arrow_down
       </md-icon>
     </div>
     <div class="select__list" ref="list" :class="{ 'select__list--active': showList }">
       <template v-for="(value, i) in values">
-        <div class="select__list-item"
-             :key="i"
-             :class="{ 'select__list-item--selected': selected === value }"
-             @click="selectItem(value)">
+        <button class="select__list-item"
+                :key="i"
+                :class="{ 'select__list-item--selected': selected === value }"
+                @click="selectItem(value)">
           {{ value }}
-        </div>
+        </button>
       </template>
     </div>
   </div>
@@ -78,29 +78,33 @@
         const valuesList = this.values
         const childrenList = this.$refs.list
 
-        switch (event.which) {
-          case KEY_CODES.enter:
-            this.selectItem(valuesList[index])
-            break
-          case KEY_CODES.up:
-            index === 0 ? index += valuesList.length - 1 : index -= 1
-            this.selected = valuesList[index]
-            break
-          case KEY_CODES.right:
-            this.selectItem(valuesList[index])
-            break
-          case KEY_CODES.down:
-            index === valuesList.length - 1 ? index = 0 : index += 1
-            this.selected = valuesList[index]
-            break
-          case KEY_CODES.escape:
-            this.toggleListVisibility()
-            break
-          default:
-            return false
+        if (event.which === KEY_CODES.enter) {
+          this.selectItem(valuesList[index])
+        } else if (event.which === KEY_CODES.up) {
+          index = this.selectPrevItem(index, valuesList)
+        } else if (event.which === KEY_CODES.right) {
+          this.selectItem(valuesList[index])
+        } else if (event.which === KEY_CODES.down) {
+          index = this.selectNextItem(index, valuesList)
+        } else if (event.which === KEY_CODES.escape) {
+          this.toggleListVisibility()
+        } else if (event.shiftKey && event.which === KEY_CODES.tab) {
+          index = this.selectPrevItem(index, valuesList)
+        } else if (event.which === KEY_CODES.tab) {
+          index = this.selectNextItem(index, valuesList)
         }
 
         childrenList.scrollTop = childrenList.childNodes[index].offsetTop - (childrenList.offsetHeight / 2) + 18
+      },
+      selectNextItem (index, valuesList) {
+        index === valuesList.length - 1 ? index = 0 : index += 1
+        this.selected = valuesList[index]
+        return index
+      },
+      selectPrevItem (index, valuesList) {
+        index === 0 ? index += valuesList.length - 1 : index -= 1
+        this.selected = valuesList[index]
+        return index
       }
     },
     watch: {
@@ -170,10 +174,23 @@
     transition: .15s ease-out;
     cursor: pointer;
     white-space: nowrap;
+    border: none;
+    display: block;
+    width: 100%;
+    text-align: left;
 
     &:not(.select__list-item--selected):hover {
       background-color: rgba(58, 65, 128, .05);
     }
+  }
+
+  .select__selected-value {
+    background-color: transparent;
+    border: none;
+    color: $col-md-primary;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
   }
 
   .select__label {
