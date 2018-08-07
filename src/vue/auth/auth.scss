@@ -1,9 +1,9 @@
-@import '../../scss/variables';
-@import '../../scss/mixins';
+@import '~@scss/variables';
+@import '~@scss/mixins';
 
 .auth-page {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
@@ -31,6 +31,7 @@
 
 .auth-page__form {
   padding: 80px 110px;
+  background-color: $col-md-background;
 
   @include respond-to(large) {
     padding: 60px 70px;

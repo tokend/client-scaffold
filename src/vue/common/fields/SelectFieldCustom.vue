@@ -72,8 +72,6 @@
         this.showList = false
       },
       keyDownEvents (event) {
-        event.preventDefault()
-
         let index = this.values.indexOf(this.selected)
         const valuesList = this.values
         const childrenList = this.$refs.list
@@ -178,6 +176,7 @@
     display: block;
     width: 100%;
     text-align: left;
+    background-color: transparent;
 
     &:not(.select__list-item--selected):hover {
       background-color: rgba(58, 65, 128, .05);

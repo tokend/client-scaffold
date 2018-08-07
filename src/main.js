@@ -25,11 +25,12 @@ import { extendValidator } from './validator/validator'
 
 // directives
 import tableScrollShadow from './directives/tableScrollShadow'
+// import rippleEffect from './directives/rippleEffect' // TODO: hardcode
 
 // ripple effect:
 import Ripple from 'vue-ripple-directive'
 Ripple.color = 'rgba(58, 65, 128, .2)'
-Ripple.zIndex = -1
+Ripple.zIndex = 1
 
 Vue.directive('table-scroll-shadow', tableScrollShadow)
 Vue.directive('ripple', Ripple)

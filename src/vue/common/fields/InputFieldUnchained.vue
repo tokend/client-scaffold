@@ -27,7 +27,7 @@
     >
 
     <span class="input-field__label">
-      {{label}}
+      {{ label }}
     </span>
 
     <transition name="input-field__err-transition">

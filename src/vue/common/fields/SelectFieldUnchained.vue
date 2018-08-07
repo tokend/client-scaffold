@@ -79,8 +79,6 @@
         this.showList = false
       },
       keyDownEvents (event) {
-        event.preventDefault()
-
         let index = this.values.indexOf(this.selected)
         const valuesList = this.values
         const childrenList = this.$refs.list
@@ -224,12 +222,13 @@
 .select-field__list-item {
   padding: 8px 16px;
   font-size: 16px;
-  transition: 0.15s ease-out;
+  transition: background-color .15s ease-out;
   cursor: pointer;
   border: none;
   display: block;
   width: 100%;
   text-align: left;
+  background-color: transparent;
 
   &:not(.select-field__list-item--selected):hover {
     background-color: rgba(58, 65, 128, 0.05);
@@ -237,7 +236,6 @@
 }
 
 .select-field__list-item--selected {
-  top: $field-input-padding-top;
   background-color: rgba(58, 65, 128, 0.1);
   @include text-font-sizes;
 }
