@@ -31,7 +31,7 @@ export default {
       tokenCode: null
     },
     documents: {
-      [documentTypes.limitsProofOfIncome]: null
+      [documentTypes.limitsProofOfIncome]: null // docs from request list of required docs
     },
     isDialogOpened: false,
     i18n,

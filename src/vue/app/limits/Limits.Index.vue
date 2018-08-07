@@ -64,6 +64,15 @@
                 </p>
 
               </div>
+              <md-button class="md-primary" @click="showForm(op)">{{i18n.lim_change_limits()}}</md-button>
+              <modal v-if="showDialog"
+                  @close-request="showDialog = false"
+                  maxWidth="30rem">
+                <limits-manager :limits="limits[limitOp]"
+                                :op="limitOp" 
+                                :asset="filters.tokenCode"
+                                @close-request="showDialog = false"/>
+              </modal>
             </div>
           </template>
         </div>
@@ -75,11 +84,22 @@
 <script>
   import FormMixin from '../../common/mixins/form.mixin'
   import LimitsIndexMixin from './limits-index.mixin'
-
+  import LimitsManager from './Limits.Manager'
+  import Modal from '../common/Modal'
   export default {
     name: 'LimitsIndex',
     mixins: [LimitsIndexMixin, FormMixin],
-    components: { }
+    components: { LimitsManager, Modal },
+    data: _ => ({
+      showDialog: false,
+      limitOp: ''
+    }),
+    methods: {
+      showForm (op) {
+        this.limitOp = op
+        this.showDialog = true
+      }
+    }
   }
 </script>
 
