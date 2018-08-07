@@ -43,4 +43,13 @@ export class LimitRecord {
   get annualLeft () {
     return subtract(this.annualLimit, this.annualSpent || 0)
   }
+
+  get limitOuts () {
+    return {
+      dailyLimit: this.dailyLimit,
+      weeklyLimit: this.weeklyLimit,
+      monthlyLimit: this.monthlyLimit,
+      annualLimit: this.annualLimit
+    }
+  }
 }
