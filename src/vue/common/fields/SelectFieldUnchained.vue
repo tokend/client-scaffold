@@ -11,14 +11,14 @@
         'select-field__selected--focused': showList
       }"
       @click="toggleListVisibility()">
-      <div class="select-field__selected-value">{{ selected || '&nbsp;' }}</div>
+      <div class="select-field__selected-value">{{ currentValue || '&nbsp;' }}</div>
       <div>
         <md-icon class="select-field__selected-icon" :class="{ 'select-field__selected-icon--active': showList }">
           keyboard_arrow_down
         </md-icon>
       </div>
     </div>
-    <div class="select-field__list" :class="{ 'select-field__list--active': showList }">
+    <div class="select-field__list" ref="list" :class="{ 'select-field__list--active': showList }">
       <template v-for="(value, i) in values">
         <div class="select-field__list-item"
              :key="i"
@@ -32,40 +32,90 @@
 </template>
 
 <script>
-import { commonEvents } from '../../../js/events/common_events'
+  import { commonEvents } from '@/js/events/common_events'
+  import { onKeyDown } from '@/js/helpers/onKeyDown'
+  import { closeElement } from '@/js/helpers/closeElement'
+  import { KEY_CODES } from '@/js/const/const'
 
-export default {
-  name: 'select-field-unchained',
-  props: {
-    value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
-    values: { type: Array, default: _ => [] },
-    label: { type: String, default: '' },
-    readonly: { type: Boolean, default: false }
-  },
-  data: _ => ({
-    selected: '',
-    showList: false
-  }),
-  created () {
-    this.selected = this.value
-  },
-  methods: {
-    selectItem (item) {
-      if (this.readonly) {
-        return null
-      }
-      this.selected = item
-      this.$emit(commonEvents.inputEvent, item)
-      this.toggleListVisibility()
+  export default {
+    name: 'select-field-unchained',
+    props: {
+      value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
+      values: { type: Array, default: _ => [] },
+      label: { type: String, default: '' },
+      readonly: { type: Boolean, default: false }
     },
-    toggleListVisibility () {
-      if (this.readonly) {
-        return null
+    data: _ => ({
+      currentValue: '', // selected item in the list
+      selected: '', // active element but not selected (for support arrow navigation)
+      showList: false,
+      KEY_CODES
+    }),
+    created () {
+      this.selected = this.value
+      this.currentValue = this.value
+    },
+    methods: {
+      selectItem (item) {
+        if (this.readonly) return null
+        this.selected = item
+        this.currentValue = item
+        this.$emit(commonEvents.inputEvent, item)
+        this.toggleListVisibility()
+      },
+      toggleListVisibility () {
+        if (this.readonly) return null
+        this.showList ? this.closelist() : this.openList()
+        onKeyDown(this.showList, this.keyDownEvents)
+      },
+      openList () {
+        const list = this.$refs.list
+        const index = this.values.indexOf(this.currentValue)
+        list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
+        this.showList = true
+      },
+      closelist () {
+        this.selected = this.currentValue // set active element as selected
+        this.showList = false
+      },
+      keyDownEvents (event) {
+        event.preventDefault()
+
+        let index = this.values.indexOf(this.selected)
+        const valuesList = this.values
+        const childrenList = this.$refs.list
+
+        switch (event.which) {
+          case KEY_CODES.enter:
+            this.selectItem(valuesList[index])
+            break
+          case KEY_CODES.up:
+            index === 0 ? index += valuesList.length - 1 : index -= 1
+            this.selected = valuesList[index]
+            break
+          case KEY_CODES.right:
+            this.selectItem(valuesList[index])
+            break
+          case KEY_CODES.down:
+            index === valuesList.length - 1 ? index = 0 : index += 1
+            this.selected = valuesList[index]
+            break
+          case KEY_CODES.escape:
+            this.toggleListVisibility()
+            break
+          default:
+            return false
+        }
+
+        childrenList.scrollTop = childrenList.childNodes[index].offsetTop - (childrenList.offsetHeight / 2) + 18
       }
-      this.showList = !this.showList
+    },
+    watch: {
+      showList (value) {
+        closeElement('select__list', value, this.closelist)
+      }
     }
   }
-}
 </script>
 
 <style scoped lang="scss">
@@ -167,13 +217,14 @@ export default {
   transition: 0.15s ease-out;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba(58, 65, 128, 0.1);
+  &:not(.select-field__list-item--selected):hover {
+    background-color: rgba(58, 65, 128, 0.05);
   }
 }
 
 .select-field__list-item--selected {
   top: $field-input-padding-top;
+  background-color: rgba(58, 65, 128, 0.1);
   @include text-font-sizes;
 }
 </style>

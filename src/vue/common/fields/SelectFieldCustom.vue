@@ -3,8 +3,10 @@
     <div v-if="label" class="select__label">
       {{ label }}
     </div>
-    <div class="select__selected" @click="toggleListVisibility()">
-      <div class="select__selected-value">{{ selected }}</div>
+    <div class="select__selected"
+         :class="{ 'select__selected--readonly': readonly }"
+         @click="toggleListVisibility()">
+      <div class="select__selected-value">{{ currentValue }}</div>
       <md-icon class="select__selected-icon" :class="{ 'select__selected-icon--active': showList }">
         keyboard_arrow_down
       </md-icon>
@@ -25,6 +27,7 @@
 <script>
   import { commonEvents } from '@/js/events/common_events'
   import { onKeyDown } from '@/js/helpers/onKeyDown'
+  import { closeElement } from '@/js/helpers/closeElement'
   import { KEY_CODES } from '@/js/const/const'
 
   export default {
@@ -32,32 +35,48 @@
     props: {
       value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
       values: { type: Array, default: _ => [] },
-      label: { type: String, default: '' }
+      label: { type: String, default: '' },
+      readonly: { type: Boolean, default: false }
     },
     data: _ => ({
-      selected: '',
+      currentValue: '', // selected item in the list
+      selected: '', // active element but not selected (for support arrow navigation)
       showList: false,
       KEY_CODES
     }),
     created () {
       this.selected = this.value
+      this.currentValue = this.value
     },
     methods: {
       selectItem (item) {
+        if (this.readonly) return false
         this.selected = item
+        this.currentValue = item
         this.$emit(commonEvents.inputEvent, item)
         this.toggleListVisibility()
       },
       toggleListVisibility () {
-        this.showList = !this.showList
+        if (this.readonly) return false
+        this.showList ? this.closelist() : this.openList()
         onKeyDown(this.showList, this.keyDownEvents)
+      },
+      openList () {
+        const list = this.$refs.list
+        const index = this.values.indexOf(this.currentValue)
+        list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
+        this.showList = true
+      },
+      closelist () {
+        this.selected = this.currentValue // set active element as selected
+        this.showList = false
       },
       keyDownEvents (event) {
         event.preventDefault()
 
         let index = this.values.indexOf(this.selected)
         const valuesList = this.values
-        const childrenList = Array.prototype.slice.call(this.$refs.list.childNodes)
+        const childrenList = this.$refs.list
 
         switch (event.which) {
           case KEY_CODES.enter:
@@ -74,11 +93,19 @@
             index === valuesList.length - 1 ? index = 0 : index += 1
             this.selected = valuesList[index]
             break
+          case KEY_CODES.escape:
+            this.toggleListVisibility()
+            break
           default:
             return false
         }
 
-        this.$refs.list.scrollTop = childrenList[index].offsetTop - (this.$refs.list.offsetHeight / 2) + 18
+        childrenList.scrollTop = childrenList.childNodes[index].offsetTop - (childrenList.offsetHeight / 2) + 18
+      }
+    },
+    watch: {
+      showList (value) {
+        closeElement('select__list', value, this.closelist)
       }
     }
   }
@@ -98,6 +125,8 @@
     display: flex;
     cursor: pointer;
   }
+
+  .select__selected--readonly { opacity: .5; }
 
   .select__selected-icon {
     margin: 0;
@@ -140,9 +169,10 @@
     font-size: 16px;
     transition: .15s ease-out;
     cursor: pointer;
+    white-space: nowrap;
 
-    &:hover {
-      background-color: rgba(58, 65, 128, .1);
+    &:not(.select__list-item--selected):hover {
+      background-color: rgba(58, 65, 128, .05);
     }
   }
 
@@ -153,5 +183,6 @@
 
   .select__list-item--selected {
     color: $col-md-primary;
+    background-color: rgba(58, 65, 128, .1);
   }
 </style>
