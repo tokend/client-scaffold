@@ -17,5 +17,8 @@ export default {
   lim_proof: 'Proof of income',
   lim_heading: 'Limits imposed on account',
   lim_left: 'left',
-  lim_total: 'total'
+  lim_total: 'total',
+  lim_spent: 'spent',
+  lim_change_limits: 'Change limits',
+  lim_change_limits_title: 'Change limits - %{assetName} (%{asset})'
 }

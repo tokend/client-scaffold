@@ -200,5 +200,10 @@ export default {
   lbl_upload_docs: 'Please, upload the following documents',
   lbl_upload_doc: 'Please, upload the following document',
   lbl_agree_submit: 'Agree & submit information',
-  lbl_pay_all_fees: 'Pay fees'
+  lbl_pay_all_fees: 'Pay fees',
+  lbl_residence_country: 'Residence country',
+  lbl_zip_code: 'Zip code',
+  lbl_note: 'Note',
+  lbl_send_request: 'Send request',
+  lbl_to: 'To'
 }
