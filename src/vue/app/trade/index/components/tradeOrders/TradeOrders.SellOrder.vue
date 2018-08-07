@@ -15,6 +15,7 @@
             v-validate="'required'"
             :whiteAutofill="true"
             type="number"
+            :step="0.000001"
             :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
                           Number(form.price) < 0) ? i18n.trd_validate_minimal_price() : '')"
           />
@@ -29,6 +30,7 @@
             v-validate="'required'"
             :whiteAutofill="true"
             type="number"
+            :step="0.000001"
             :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount() : ''"
           />
         </div>
