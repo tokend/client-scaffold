@@ -66,7 +66,7 @@ export default {
         for (const re of priorityRexes) {
           if (re.test(pair)) {
             prioritized.push(pair)
-            pairsTmp.filter(item => item !== pair)
+            pairsTmp = pairsTmp.filter(item => item !== pair)
             break
           }
         }
