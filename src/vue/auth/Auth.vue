@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import { i18n } from '../../js/i18n'
+  import { i18n } from '@/js/i18n'
   import Logotype from '../app/common/Logotype'
 
   export default {
@@ -26,6 +26,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import 'auth';
 </style>

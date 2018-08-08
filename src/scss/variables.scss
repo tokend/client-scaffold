@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 $sidebar-width: 210px;
+$warning-banner-height: 80px;
 $material-icons-small: 14px;
 $material-icon-size: 18px;
 $material-icon-medium: 24px;
@@ -78,6 +79,7 @@ $col-md-primary-secondary-hover: rgba($col-md-primary-secondary, .2);
 $col-md-primary-secondary-tabs-hover: rgba($col-md-primary-secondary, .05);
 $col-md-background: #f2f2f4;
 $col-md-accent: #ef5350;
+$col-md-warning: #f2a100;
 $col-md-accent-flat-hover: rgba($col-md-accent, .2);
 $col-md-primary-txt: #fff;
 $col-md-unfocused: rgba(0, 0, 0, .54);

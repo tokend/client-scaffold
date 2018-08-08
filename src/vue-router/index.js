@@ -1,72 +1,74 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import store from '../vuex'
-import config from '../config'
-import { PAGES_NAMES } from '../js/const/const'
+import store from '@/vuex'
+import config from '@/config'
+import { PAGES_NAMES } from '@/js/const/const'
 
 import { resolveRedirect } from './redirect'
 
 // route components:
-import Auth from '../vue/auth/Auth'
-import Login from '../vue/auth/Login'
-import Signup from '../vue/auth/Signup'
-import Recovery from '../vue/auth/Recovery'
-import EmailResend from '../vue/auth/ConfirmEmail'
+import Auth from '@/vue/auth/Auth'
+import Login from '@/vue/auth/Login'
+import Signup from '@/vue/auth/Signup'
+import Recovery from '@/vue/auth/Recovery'
+import EmailResend from '@/vue/auth/ConfirmEmail'
 
-import AppContent from '../vue/root/AppContent'
+import AppContent from '@/vue/root/AppContent'
 
-import Dashboard from '../vue/app/dashboard/Dashboard.Entry'
-import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
+import Dashboard from '@/vue/app/dashboard/Dashboard.Entry'
+import DashboardIndex from '@/vue/app/dashboard/index/Dashboard.Index'
 
-import Deposit from '../vue/app/deposit/Deposit.Entry'
-import DepositMake from '../vue/app/deposit/make/Deposit.Make'
+import Deposit from '@/vue/app/deposit/Deposit.Entry'
+import DepositMake from '@/vue/app/deposit/make/Deposit.Make'
 
-import Transfers from '../vue/app/transfers/Transfers.Entry'
-import TransfersMake from '../vue/app/transfers/make/Transfers.Make'
+import Transfers from '@/vue/app/transfers/Transfers.Entry'
+import TransfersMake from '@/vue/app/transfers/make/Transfers.Make'
 
-import MassTransfers from '../vue/app/massTransfers/MassTransfers.Entry'
-import MassTransfersMake from '../vue/app/massTransfers/MassTransfers.Make'
+import MassTransfers from '@/vue/app/massTransfers/MassTransfers.Entry'
+import MassTransfersMake from '@/vue/app/massTransfers/MassTransfers.Make'
 
-import Withdrawal from '../vue/app/withdrawal/Withdrawal.Entry'
-import WithdrawalMake from '../vue/app/withdrawal/make/Withdrawal.Make'
+import Withdrawal from '@/vue/app/withdrawal/Withdrawal.Entry'
+import WithdrawalMake from '@/vue/app/withdrawal/make/Withdrawal.Make'
 
-import Tokens from '../vue/app/tokens/Tokens.Entry'
-import TokensExplore from '../vue/app/tokens/Tokens.Explore'
+import Tokens from '@/vue/app/tokens/Tokens.Entry'
+import TokensExplore from '@/vue/app/tokens/Tokens.Explore'
 
-import History from '../vue/app/history/History.Entry'
-import HistoryIndex from '../vue/app/history/index/History.Index'
+import History from '@/vue/app/history/History.Entry'
+import HistoryIndex from '@/vue/app/history/index/History.Index'
 
-import Trade from '../vue/app/trade/Trade.Entry'
-import TradeIndex from '../vue/app/trade/index/Trade.Index'
+import Trade from '@/vue/app/trade/Trade.Entry'
+import TradeIndex from '@/vue/app/trade/index/Trade.Index'
 
-import Settings from '../vue/app/settings/Settings.Entry'
-import SettingsSecurity from '../vue/app/settings/security/Settings.Security'
+import Settings from '@/vue/app/settings/Settings.Entry'
+import SettingsSecurity from '@/vue/app/settings/security/Settings.Security'
 
-import Verification from '../vue/app/verification/Verification.Entry'
-import VerificationMake from '../vue/app/verification/make/Verification.Make'
+import Verification from '@/vue/app/verification/Verification.Entry'
+import VerificationMake from '@/vue/app/verification/make/Verification.Make'
 
-import TokenCreation from '../vue/app/tokenCreation/TokenCreation.Entry'
-import TokenCreationIndex from '../vue/app/tokenCreation/index/TokenCreation.Index'
+import TokenCreation from '@/vue/app/tokenCreation/TokenCreation.Entry'
+import TokenCreationIndex from '@/vue/app/tokenCreation/index/TokenCreation.Index'
 
-import IssuanceCreation from '../vue/app/issuanceCreation/IssuanceCreation.Entry'
-import IssuanceCreationIndex from '../vue/app/issuanceCreation/index/IssuanceCreation.Index'
+import IssuanceCreation from '@/vue/app/issuanceCreation/IssuanceCreation.Entry'
+import IssuanceCreationIndex from '@/vue/app/issuanceCreation/index/IssuanceCreation.Index'
 
-import SaleCreation from '../vue/app/saleCreation/SaleCreation.Entry'
-import SaleCreationIndex from '../vue/app/saleCreation/SaleCreation.Index'
+import SaleCreation from '@/vue/app/saleCreation/SaleCreation.Entry'
+import SaleCreationIndex from '@/vue/app/saleCreation/SaleCreation.Index'
 
-import Requests from '../vue/app/requests/Requests.Entry'
-import RequestsIndex from '../vue/app/requests/index/Requests.Index'
+import Requests from '@/vue/app/requests/Requests.Entry'
+import RequestsIndex from '@/vue/app/requests/index/Requests.Index'
 
-import Sales from '../vue/app/sales/Sales.Entry'
-import SalesDetails from '../vue/app/sales/sale_details/Sales.Details'
-import SalesExplore from '../vue/app/sales/overview/Sales.Explore'
+import Sales from '@/vue/app/sales/Sales.Entry'
+import SalesDetails from '@/vue/app/sales/sale_details/Sales.Details'
+import SalesExplore from '@/vue/app/sales/overview/Sales.Explore'
 
-import SalesOwned from '../vue/app/salesOwned/SalesOwned.Entry'
-import SalesOwnedIndex from '../vue/app/salesOwned/SalesOwned.Index'
+import SalesOwned from '@/vue/app/salesOwned/SalesOwned.Entry'
+import SalesOwnedIndex from '@/vue/app/salesOwned/SalesOwned.Index'
 
-import PreissuanceUpload from '../vue/app/preissuanceUpload/PreissuanceUpload.Entry'
-import PreissuanceUploadIndex from '../vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
+import PreissuanceUpload from '@/vue/app/preissuanceUpload/PreissuanceUpload.Entry'
+import PreissuanceUploadIndex from '@/vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
+
+import SupportedBrowsers from '@/vue/common/SupportedBrowsers'
 
 Vue.use(Router)
 
@@ -83,16 +85,21 @@ const router = new Router({
       beforeEnter: resolveRedirect
     },
     {
+      path: '/supported-browsers',
+      name: 'supported-browsers',
+      component: SupportedBrowsers
+    },
+    {
       path: '/auth',
       name: 'auth',
       component: Auth,
+      meta: { routeWithAuth: true },
       redirect: { name: 'login' },
       children: [
         {
           path: '/sign-in',
           name: 'login',
           component: Login,
-          meta: { some: 'alalal' },
           beforeEnter: authPageGuard
         },
         {
@@ -119,6 +126,7 @@ const router = new Router({
       path: '/',
       name: 'app',
       component: AppContent,
+      meta: { routeWithFeatures: true },
       beforeEnter: inAppRouteGuard,
       redirect: { name: 'app.dashboard' },
       children: [
@@ -445,3 +453,9 @@ function inAppRouteGuard (to, from, next) {
   const isLoggedIn = store.getters.isLoggedIn
   isLoggedIn ? next() : next({ name: 'login' })
 }
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.routeWithFeatures)) to.meta.routeWithFeatures = true
+  if (to.matched.some(record => record.meta.routeWithAuth)) to.meta.routeWithAuth = true
+  next()
+})
