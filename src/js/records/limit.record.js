@@ -46,10 +46,10 @@ export class LimitRecord {
 
   get limitOuts () {
     return {
-      dailyLimit: this.dailyLimit,
-      weeklyLimit: this.weeklyLimit,
-      monthlyLimit: this.monthlyLimit,
-      annualLimit: this.annualLimit
+      dailyOut: this.dailyLimit,
+      weeklyOut: this.weeklyLimit,
+      monthlyOut: this.monthlyLimit,
+      annualOut: this.annualLimit
     }
   }
 }
