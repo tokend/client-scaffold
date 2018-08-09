@@ -65,18 +65,18 @@
 
               </div>
               <md-button class="md-primary" @click="showForm(op)">{{i18n.lim_change_limits()}}</md-button>
-              <modal v-if="showDialog"
-                  @close-request="showDialog = false"
-                  maxWidth="30rem">
-                <limits-manager :limits="limits[limitOp]"
-                                :op="limitOp" 
-                                :asset="filters.tokenCode"
-                                @close-request="showDialog = false"/>
-              </modal>
             </div>
           </template>
         </div>
       </template>
+      <modal v-if="showDialog"
+              @close-request="showDialog = false"
+              maxWidth="30rem">
+        <limits-manager :limits="limits[limitOp]"
+                        :op="limitOp" 
+                        :asset="filters.tokenCode"
+                        @close-request="showDialog = false"/>
+      </modal>
     </div>
   </div>
 </template>
