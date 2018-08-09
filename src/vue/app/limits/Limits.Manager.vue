@@ -66,8 +66,8 @@
   import { vuexTypes } from '../../../vuex/types'
   import _get from 'lodash/get'
   const limitsRequestType = Object.freeze({
-    initial: '0',
-    docsUploading: '1'
+    initial: 'initial',
+    docsUploading: 'docsUploading'
   })
   export default {
     name: 'LimitsManager',
@@ -90,7 +90,8 @@
 
     computed: {
       ...mapGetters([
-        vuexTypes.accountBalances
+        vuexTypes.accountBalances,
+        vuexTypes.accountType
       ]),
       limitOuts () {
         return this.limits.limitOuts
@@ -103,15 +104,17 @@
       async submit () {
         this.disable()
         try {
-          const asset = this.asset
+          const assetCode = this.asset
           const limits = this.form.limits
-          const note = this.form.initialnote
-          const stage = limitsRequestType.initial
+          const note = this.form.note
+          const requestType = limitsRequestType.initial
+          const operationType = this.op
           await accountsService.createLimitRequest({
             details: JSON.stringify({
-              asset,
+              operationType,
+              assetCode,
               limits,
-              stage,
+              requestType,
               note
             })
           })
