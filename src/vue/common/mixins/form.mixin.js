@@ -12,8 +12,8 @@ import RadioField from '@/vue/common/fields/RadioField'
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
 
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { i18n } from '../../../js/i18n'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { i18n } from '@/js/i18n'
 
 export default {
   mixins: [SubmitterMixin],
@@ -58,7 +58,7 @@ export default {
       return true
     },
     clear (exeptions = []) {
-      this.errors.clear()
+      this.$validator.reset()
       for (const key in this.form) {
         if (!exeptions.includes(key)) {
           this.form[key] = ''

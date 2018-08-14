@@ -27,7 +27,7 @@
             <div class="app__form-field">
               <input-field-unchained
                 v-model.trim="form.amount"
-                step="0.000001"
+                :step="config.MINIMAL_NUMBER_INPUT_STEP"
                 :label="i18n.lbl_amount()"
                 name="amount"
                 type="number"
@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import formMixin from '../../../common/mixins/form.mixin'
+import formMixin from '@/vue/common/mixins/form.mixin'
 import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 
@@ -124,14 +124,15 @@ import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
 import InputFieldUnchained from '../../../common/fields/InputFieldUnchained'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 
-import { i18n } from '../../../../js/i18n'
-import { feeService } from '../../../../js/services/fees.service'
-import { withdrawService } from '../../../../js/services/withdraw.service'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { errors } from '../../../../js/errors/factory'
+import { i18n } from '@/js/i18n'
+import { feeService } from '@/js/services/fees.service'
+import { withdrawService } from '@/js/services/withdraw.service'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { errors } from '@/js/errors/factory'
+import config from '@/config'
 
 const VIEW_MODES = {
   submit: 'submit',
@@ -168,6 +169,7 @@ export default {
     isFeesLoadFailed: false,
     feesDebouncedRequest: null,
     i18n,
+    config,
     VIEW_MODES
   }),
   created () {

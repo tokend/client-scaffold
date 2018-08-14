@@ -20,7 +20,7 @@ export default {
   trd_here_will_be_the_order_ask_list: 'Here will be the list of current asks',
   trd_here_will_be_the_order_bid_list: 'Here will be the list of current bids',
   trd_validate_minimal_price: 'Price must be more than 0',
-  trd_validate_minimal_amount: 'Minimal amount is 0.000001',
+  trd_validate_minimal_amount: 'Minimal amount is %{value}',
   trd_price_per: 'Price per %{asset}',
   trd_amount_for: 'Amount %{asset}',
   trd_total_value: 'Total %{value}',

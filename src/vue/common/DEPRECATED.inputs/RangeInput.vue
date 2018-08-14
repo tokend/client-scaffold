@@ -24,7 +24,8 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../js/events/common_events'
+  import { commonEvents } from '@/js/events/common_events'
+  import config from '@/config'
 
   export default {
     name: 'range-input',
@@ -44,7 +45,7 @@
       },
       step: {
         type: [ String, Number ],
-        default: 0.000001
+        default: config.MINIMAL_NUMBER_INPUT_STEP
       },
       value: {
         type: [ String, Number ],
