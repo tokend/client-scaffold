@@ -28,6 +28,7 @@
 
 <script>
   import FieldMixin from './field.mixin'
+  import config from '@/config'
 
   export default {
     name: 'input-field',
@@ -38,7 +39,7 @@
       counter: { type: [Number, null], default: null },
       readonly: { type: Boolean, default: false },
       align: { type: String, default: 'left' },
-      step: { type: Number, default: 0.000001 },
+      step: { type: Number, default: config.MINIMAL_NUMBER_INPUT_STEP },
       disabled: { type: Boolean, default: false }
       // TODO: need handle number properties:
       // min: { type: Number, default: 0 },
