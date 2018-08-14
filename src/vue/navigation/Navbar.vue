@@ -487,6 +487,7 @@
     color: $col-md-primary;
     margin-top: 4px;
     margin-bottom: 4px;
+    white-space: nowrap;
 
     @include respond-to-custom($custom-breakpoint) {
       word-break: break-word;
@@ -506,6 +507,8 @@
 
   .navbar__user-card-account-btn {
     margin: 26px 0 0 0;
+    white-space: nowrap;
+
     @include button-raised();
 
     @include respond-to(small) {
