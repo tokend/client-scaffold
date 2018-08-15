@@ -1,6 +1,10 @@
 <template>
   <div class="date-tabs">
 
+    <span class="date-tabs__prefix">
+      {{ i18n.trd_chart_tabs_prefix() }}
+    </span>
+
     <button class="tab-btn"
             @click="$emit(common.inputEvent, tabs.hour)"
             :class="{ selected: value === tabs.hour }"
@@ -68,45 +72,35 @@
   @import "../../../../../../scss/mixins";
 
   .date-tabs {
-    border-bottom: 1px solid lighten($col-unfocused, 40%);
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
     width: 100%;
+  }
 
-    @include respond-to-custom(1220px) {
-      margin-bottom: 16px;
-    }
+  .date-tabs__prefix {
+    white-space: nowrap;
+    display: inline-block;
+    margin-right: 1 * $point;
+    color: $col-md-primary;
   }
 
   .tab-btn {
-    padding: 8px;
-    margin: 0 5px;
+    padding: 5px 10px;
+    margin: 0 3px;
     cursor: pointer;
     letter-spacing: 0.005em;
     position: relative;
-    text-transform: uppercase;
-    background-color: transparent;
     border: none;
-    font-size: 14px;
-
-    &:after {
-      @include center-horizontally;
-
-      background: transparent;
-      bottom: -1px;
-      content: '';
-      display: block;
-      height: 1px;
-      position: absolute;
-      transition: width .25s ease, background-color .25s ease;
-      width: 0;    }
+    font-size: 12px;
+    color: rgba($col-md-primary, .6);
+    background-color: transparent;
+    font-weight: 500;
 
     &.selected {
-
-      &:after {
-        background: $col-active;
-        width: 100%;
-      }
+      color: $col-md-primary;
+      font-weight: 700;
     }
   }
 </style>

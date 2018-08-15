@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <input type="file" 
+        <input type="file"
                accept="image/*"
                @change="onChange">
       </div>
@@ -211,8 +211,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .file-field__outer {
     display: flex;
@@ -228,28 +228,17 @@
 
   .file-field__label {
     font-size: $fs-tip;
-    color: $col-unfocused;
+    color: $col-md-primary-inactive;
+    margin-bottom: 8px;
   }
 
   .file-field__uploader {
-    background: $col-md-primary;
-    border-radius: 3px;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-    color: $col-md-primary-txt;
-    display: block;
-    cursor: pointer;
-    margin-right: .5rem;
-    padding: .75rem 1rem;
-    // width: 12.5rem;
-    transition: .4s cubic-bezier(.4,0,.2,1);
-
-    &:hover {
-      background: lighten($col-md-primary, 3.5%);
-    }
+    @include button();
+    @include button-raised();
   }
 
   .file-field__icon {
-    color: $col-md-primary-txt!important;
+    color: $col-md-primary-txt !important;
     margin-right: .5rem;
     position: relative;
     bottom: .05rem;
@@ -266,7 +255,9 @@
 
   .file-field__file-name {
     position: relative;
-    top: .55rem;
+    left: 1rem;
+    top: .85rem;
+    color: $col-md-primary-inactive
   }
 
   .link-btn {
@@ -276,7 +267,9 @@
     color: $col-md-primary;
 
     &:hover {
-      text-decoration: underline;
+      & > span {
+        text-decoration: underline;
+      }
     }
 
     &:focus {
@@ -291,7 +284,7 @@
     width: 100%;
 
     &:hover {
-      border-color: $col-active;
+      border-color: $col-md-primary;
     }
   }
 
@@ -301,7 +294,7 @@
     overflow: hidden;
     width: 100%;
 
-    input[type="file"] {
+    input[type='file'] {
       cursor: pointer;
       opacity: 0;
       height: 100%;
@@ -318,7 +311,7 @@
     width: 100%;
 
     .title {
-      color: $col-active;
+      color: $col-md-primary;
       margin-bottom: 10px;
     }
   }
@@ -329,7 +322,6 @@
     line-height: 160%;
   }
 
-  $ratio_16: 448px;
   $ratio_9: 153px;
 
   .image-input__image-preview {

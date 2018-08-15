@@ -1,7 +1,7 @@
 <template>
-  <div class="trade-history">
+  <div class="app__card trade-history">
     <template v-if="validatedTrades.length">
-      <md-table md-card class="trade-history__table">
+      <md-table class="trade-history__table">
         <md-table-toolbar>
           <h2 class="md-title">{{ i18n.trd_history() }}</h2>
         </md-table-toolbar>
@@ -34,13 +34,13 @@
       </md-table>
     </template>
     <template v-else>
-      <md-card class="trade-history--empty">
+      <div class="trade-history--empty">
         <div class="trade-history__no-transactions">
           <md-icon class="md-size-4x">trending_up</md-icon>
           <h2>{{ i18n.trd_no_trade_history() }}</h2>
           <p>{{ i18n.trd_here_will_be_the_list() }}</p>
         </div>
-      </md-card>
+      </div>
     </template>
   </div>
 </template>
@@ -127,9 +127,6 @@
   }
   .md-table-cell-container {
     padding: 0 12px;
-  }
-  .md-card {
-    height: 100%;
   }
 
   .trade-history {

@@ -5,15 +5,15 @@ import { i18n } from '../i18n'
 const template = `
 <form novalidate>
   <md-dialog class="app__dialog"
-            :md-active="opened" 
+            :md-active="opened"
             :md-close-on-esc="false"
             :md-click-outside-to-close="false">
 
      <md-dialog-title>{{ i18n.mod_save_seed() }}</md-dialog-title>
-     
+
      <div class="app__dialog-inner">
        <p>{{ i18n.mod_why_save_seed() }}</p>
-     
+
        <input-field id="signup-recovery-seed"
                     type="password"
                     name="recovery-seed"
@@ -22,21 +22,21 @@ const template = `
                    :togglePassword="true"
                    :value="form.seed"
        />
-       
+
        <p>{{ i18n.mod_validate_seed_how() }}</p>
-       
+
        <input-field id="signup-provide-seed"
                     type="password"
                     name="recovery-seed"
                    :label="i18n.lbl_validate_seed()"
                    :togglePassword="true"
                    :errorMessage="isSeedValid ? '' : 'Provided seed does not match with generated one'"
-                  v-model.trim="form.provideSeed" 
+                  v-model.trim="form.provideSeed"
        />
      </div>
-       
+
      <md-dialog-actions>
-       <md-button class="md-primary" @click="submit">{{i18n.lbl_ok() }}</md-button>
+      <button v-ripple @click="submit" class="app__button-flat"> {{ i18n.lbl_ok() }} </button>
      </md-dialog-actions>
    </md-dialog>
  </form>

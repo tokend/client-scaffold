@@ -1,27 +1,14 @@
 <template>
-  <md-list-item class="account-seed" @click="isDialogOpened = !isDialogOpened">
+  <div class="settings-seed">
+    <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
+    <div class="account-seed__content app__card-content">
+      <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
 
-    <span class="md-list-item-text">{{ i18n.set_secret_seed() }}</span>
-    <md-icon class="md-icon--half-sized">play_arrow</md-icon>
-
-    <md-dialog class="account-seed__dialog" :md-active.sync="isDialogOpened">
-      <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
-
-      <md-card-content class="account-seed__content">
-        <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
-
-        <clipboard-field class="account-seed__clipboard"
-          :value="accountSeed"
-        />
-
-      </md-card-content>
-
-      <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button type="button" class="md-primary" @click="isDialogOpened = !isDialogOpened">Cancel</md-button>
-      </md-dialog-actions>
-
-    </md-dialog>
-  </md-list-item>
+      <clipboard-field class="account-seed__clipboard"
+        :value="accountSeed"
+      />
+    </div>
+  </div>
 </template>
 
 <script>

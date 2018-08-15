@@ -56,14 +56,24 @@
     justify-content: space-between;
     line-height: 1.6rem;
     width: 100%;
+
+    .sales-tabs__tab-inner & {
+      justify-content: flex-start;
+    }
   }
 
   .detail-row__key {
-    color: $col-md-unfocused;
+    color: #837fa1;
+
+    .sales-tabs__tab-inner & {
+      width: calc(100% - 170px);
+    }
   }
 
   .detail-row__value {
     position: relative;
+    color: #3a4180;
+    // font-size: 12px;
 
     .detail-row__clipboard-btn {
       @include center-vertically;

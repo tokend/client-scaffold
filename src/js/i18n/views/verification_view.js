@@ -24,5 +24,9 @@ export default {
   kyc_rejected_title: 'Your verification request is rejected',
   kyc_rejected_msg_html: 'Unfortunately, your account was rejected with reason: <span class="reject-message">%{reason}</span>',
   kyc_not_privacy_policy: 'Please accept the Privacy policy before submit',
-  kyc_form_submit: 'KYC form submission'
+  kyc_form_submit: 'KYC form submission',
+  kyc_submit: 'Submit KYC',
+  kyc_loading: 'Fetching the KYC data...',
+  kyc_apply_general: 'Apply to General',
+  kyc_apply_corporate: 'Apply to Corporate'
 }

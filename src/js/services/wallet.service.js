@@ -52,6 +52,7 @@ export class WalletService extends Service {
     const recoverySeed = opts.recoverySeed
     const transactionAttributes = opts.transactionAttributes
     const walletAttributes = opts.walletAttributes
+    const currentPassword = opts.currentPassword
     const factorAttributes = opts.factorAttributes
     const kdfAttributes = opts.kdfAttributes
     const kdf = { data: { type: kdfAttributes.type, id: kdfAttributes.id } }
@@ -63,6 +64,7 @@ export class WalletService extends Service {
       .wallets()
       .walletId(walletId)
       .data(walletAttributes)
+      .trashConfig(currentPassword)
       .type('wallet')
       .relationship('transaction', transactionAttributes)
       .relationship('kdf', kdf)

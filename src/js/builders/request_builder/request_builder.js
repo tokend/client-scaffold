@@ -10,6 +10,10 @@ import { vuexTypes } from '../../../vuex/types'
 import response from '../response_builder/index'
 import common from '../../services/common/common'
 
+import { i18n } from '../../i18n'
+import { EventDispatcher } from '../../events/event_dispatcher'
+import { factorsService } from '../../services/factors.service'
+import { WalletHelper } from '../../helpers/wallet.helper'
 import set from 'lodash/set'
 
 export class RequestBuilder {
@@ -22,6 +26,12 @@ export class RequestBuilder {
     this.httpClient = Vue.http
     this.query = []
     this.config = {}
+    this.currentPassword = ''
+  }
+
+  trashConfig (currentPassword) {
+    this.currentPassword = currentPassword
+    return this
   }
 
   sign (keypair) {
@@ -92,30 +102,33 @@ export class RequestBuilder {
 
   post () {
     this.method = 'post'
+    const password = this.params.data.password
     return this.httpClient.post(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
-      .catch(err => this._handleError(err))
+      .catch(err => this._handleError(err, password))
   }
 
   put () {
     this.method = 'put'
     return this.httpClient.put(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
-      .catch(err => this._handleError(err))
+      .catch(err => this._handleError(err, this.currentPassword))
   }
 
   patch () {
     this.method = 'patch'
+    const password = this.params.data.password
     return this.httpClient.patch(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
-      .catch(err => this._handleError(err))
+      .catch(err => this._handleError(err, password))
   }
 
   delete () {
     this.method = 'delete'
+    const password = this.params.data.password
     return this.httpClient.delete(this._composeURL(), this.config)
       .then(response => this._parseResponse(response))
-      .catch(err => this._handleError(err))
+      .catch(err => this._handleError(err, password))
   }
 
   addQuery (key, value) {
@@ -136,9 +149,8 @@ export class RequestBuilder {
     return `/${this.filters.reduce((url, filter) => url.concat(`/${filter}`), this.segment)}${this._getQuery()}`
   }
 
-  async _handleError (error) {
+  async _handleError (error, password) {
     const parsedError = parseError(error)
-
     switch (parsedError.constructor) {
       case errors.OtpError:
         return createTfaDialog(this.repeat.bind(this), parsedError.meta)
@@ -146,13 +158,34 @@ export class RequestBuilder {
       case errors.PasswordFactorError:
         const email = store.getters[vuexTypes.userEmail]
         const kdf = await common.getWalletKDF(email)
-        return createPasswordDialog(
-          this.repeat.bind(this), {
-            ...parsedError.meta,
-            kdf: kdf.attributes(),
-            email
-          })
+        if (password) {
+          const opts = {
+            ...parsedError.meta
+          }
+          const keychainData = opts.keychainData
+          const factorId = opts.factorId
+          const token = opts.token
+          const salt = opts.salt
+          const kdfAttr = kdf.attributes()
 
+          const { walletKey } = WalletHelper.calculateWalletParams(password, email, salt, kdfAttr)
+          const signedToken = WalletHelper.signToken(token, keychainData, walletKey)
+          try {
+            await factorsService.verifyFactor(factorId, token, signedToken)
+            return this.repeat()
+          } catch (error) {
+            console.error(error)
+            EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
+          }
+        } else {
+          return createPasswordDialog(
+            this.repeat.bind(this), {
+              ...parsedError.meta,
+              kdf: kdf.attributes(),
+              email
+            })
+        }
+        break
       default:
         return Promise.reject(parsedError)
     }

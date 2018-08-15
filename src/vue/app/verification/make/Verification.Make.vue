@@ -1,9 +1,19 @@
 <template>
-  <div class="verification md-layout">
-    <user-type-selector v-if="!selectedUserType" @select-user-type="handleUserType"/>
-    <template v-if="selectedUserType">
+  <div class="verification">
+    <template v-if="isLoading">
+      <loader :message="i18n.kyc_loading()"/>
+    </template>
+    <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
+    <template v-else>
       <template v-if="accountState === ACCOUNT_STATES.approved">
-        <syndicate-banner/>
+        <div class="verification__approved-wrapper" v-if="!requestedToUpdate">
+          <syndicate-banner/>
+          <button v-ripple
+              @click="requestedToUpdate = true"
+              class="verification__update-btn app__form-submit-btn">
+              {{ i18n.lbl_update_information() }}
+          </button>
+        </div>
       </template>
       <template v-if="accountState === ACCOUNT_STATES.pending">
         <state-banner/>
@@ -14,32 +24,25 @@
         <template v-if="selectedUserType === userTypes.syndicate">
           <syndicate-form />
         </template>
-
       </template>
+
       <template v-if="accountState === ACCOUNT_STATES.rejected">
-        <md-card class="verification__card
-                        verification__card--rejected
-                        md-size-55
-                        md-medium-size-75
-                        md-small-size-100
-                        md-layout-item"
-                 v-show="!showForm" >
-          <md-card-content>
-            <div class="verification__card-message">
-              <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
-              <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
-              <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
-            </div>
-          </md-card-content>
+        <div class="verification__rejected-wrapper
+                    verification__card
+                    verification__card--rejected"
+            v-show="!showForm">
+          <div class="verification__card-message">
+            <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
+            <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
+            <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
+          </div>
+          <button v-ripple
+              @click="showForm = true"
+              class="app__form-submit-btn verification__update-btn">
+              {{ i18n.lbl_update_information() }}
+          </button>
+        </div>
 
-          <md-card-actions class="md-layout">
-            <md-button  @click="showForm = true"
-                        class="md-primary">
-            {{ i18n.lbl_edit_details() }}
-            </md-button>
-          </md-card-actions>
-
-        </md-card>
         <template v-if="showForm">
           <template v-if="selectedUserType === userTypes.general">
             <individual-form />
@@ -61,6 +64,17 @@
         </template>
 
       </template>
+
+      <template v-if="requestedToUpdate && accountState === ACCOUNT_STATES.approved" >
+        <state-banner/>
+        <template v-if="selectedUserType === userTypes.general">
+          <individual-form />
+        </template>
+
+        <template v-if="selectedUserType === userTypes.syndicate">
+          <syndicate-form />
+        </template>
+      </template>
     </template>
   </div>
 </template>
@@ -71,6 +85,7 @@
   import StateBanner from './Verification.StateBanner'
   import SyndicateBanner from './Verification.SyndicateBanner'
   import UserTypeSelector from './Verification.Selector'
+  import Loader from '@/vue/app/common/Loader'
 
   import { i18n } from '../../../../js/i18n'
   import { mapGetters, mapActions } from 'vuex'
@@ -84,7 +99,8 @@
       SyndicateForm,
       SyndicateBanner,
       StateBanner,
-      UserTypeSelector
+      UserTypeSelector,
+      Loader
     },
     data: _ => ({
       selectedUserType: '',
@@ -92,7 +108,9 @@
       ACCOUNT_STATES,
       userTypes,
       showForm: false,
-      i18n
+      isLoading: false,
+      i18n,
+      requestedToUpdate: false
     }),
     async created () {
       await this.reset()
@@ -116,11 +134,13 @@
         loadKycData: vuexTypes.GET_ACCOUNT_KYC_DATA
       }),
       async reset () {
+        this.isLoading = true
         await Promise.all([
           this.loadKycRequests(),
           this.loadAccount()
         ])
         if (!this.accountLatestBlobId) {
+          this.isLoading = false
           return
         }
         switch (this.accountLatestKycLevel) {
@@ -149,15 +169,17 @@
           default:
             this.selectedUserType = ''
         }
+        this.isLoading = false
       },
       handleUserType (type) {
+        console.log(type)
         this.selectedUserType = type
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../../../../scss/variables';
   @import '../../../../scss/mixins';
 
@@ -169,14 +191,21 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 8px;
     @include respond-to(medium) {
       padding: 0 .625rem;
     }
   }
 
   .verification__card-message-title {
-    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: $col-md-primary;
+  }
+
+  .verification__card-message-text {
+    color: $col-md-primary-inactive;
   }
 
   .verification__card-action--to-right:first-child {
@@ -200,4 +229,31 @@
   .verification__card--rejected {
     align-self: center;
   }
+
+// overwrite styles of md
+.verification {
+  .md-steppers {
+    margin-left: -23px;
+    max-width: 560px;
+    background-color: transparent;
+
+    .md-stepper-content.md-active {
+      padding-top: 20px;
+      padding-left: 80px;
+    }
+  }
+}
+
+.verification__approved-wrapper,
+.verification__rejected-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .verification__update-btn {
+    margin-top: 1rem;
+  }
+}
+
+
+
 </style>

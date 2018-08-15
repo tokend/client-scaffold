@@ -9,7 +9,7 @@ export class InvalidEmailError extends ExtendableError {
   }
 
   showBanner () {
-    EventDispatcher.dispatchShowErrorEvent(i18n.invalid_email_error())
+    EventDispatcher.dispatchShowErrorEvent(i18n.auth_invalid_email_error())
   }
 }
 
@@ -20,7 +20,7 @@ export class RoleEmailError extends ExtendableError {
   }
 
   showBanner () {
-    EventDispatcher.dispatchShowErrorEvent(i18n.role_mail_error())
+    EventDispatcher.dispatchShowErrorEvent(i18n.auth_role_mail_error())
   }
 }
 
@@ -31,6 +31,6 @@ export class DisposableEmailError extends ExtendableError {
   }
 
   showBanner () {
-    EventDispatcher.dispatchShowErrorEvent(i18n.disposable_mail_error())
+    EventDispatcher.dispatchShowErrorEvent(i18n.auth_disposable_mail_error())
   }
 }

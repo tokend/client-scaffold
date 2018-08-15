@@ -25,14 +25,14 @@ const template = `
         :togglePassword="true"
       />
     </div>
-      
+
     <md-dialog-actions>
-     <md-button class="md-primary" @click="close">{{ i18n.lbl_cancel() }}</md-button>
-     <md-button class="md-primary" @click="submit">{{ i18n.lbl_ok() }}</md-button>
+      <button v-ripple @click="close" class="app__button-flat"> {{ i18n.lbl_cancel() }} </button>
+      <button v-ripple @click="submit" class="app__button-flat"> {{ i18n.lbl_ok() }} </button>
     </md-dialog-actions>
-    
+
    </md-dialog>
-  </form>   
+  </form>
  `
 
 /**

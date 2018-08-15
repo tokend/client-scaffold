@@ -23,6 +23,16 @@ import 'vue-material/dist/vue-material.min.css'
 import VeeValidate from 'vee-validate'
 import { extendValidator } from './validator/validator'
 
+// directives
+import tableScrollShadow from './directives/tableScrollShadow'
+
+// ripple effect:
+import Ripple from 'vue-ripple-directive'
+Ripple.color = 'rgba(58, 65, 128, .2)'
+
+Vue.directive('table-scroll-shadow', tableScrollShadow)
+Vue.directive('ripple', Ripple)
+
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(VeeValidate)

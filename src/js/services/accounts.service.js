@@ -1,4 +1,9 @@
-import { xdr, Operation, CreateUpdateKYCRequestBuilder } from 'swarm-js-sdk'
+import {
+  xdr,
+  Operation,
+  CreateUpdateKYCRequestBuilder,
+  CreateManageLimitsRequestBuilder
+} from 'swarm-js-sdk'
 import { ErrorFactory, errorTypes } from '../errors/factory'
 import { Service } from './service'
 import get from 'lodash/get'
@@ -19,6 +24,19 @@ export class AccountsService extends Service {
   }
 
   /**
+   * Loads account limits
+   * @param {int} type - operation type limits imposed on
+   * @param {asset} asset - asset type limits imposed on
+   * @return {Promise<object>} - promise object representing account limits
+   */
+
+  loadAccountLimits () {
+    return this._horizonRequestBuilder.accounts()
+      .limits(this._accountId)
+      .callWithSignature(this._keypair)
+  }
+
+  /**
    * Creates operation to create KYC request
    * @param {object} opts
    * @param {number|string} opts.requestID - set to zero to create new request
@@ -31,6 +49,22 @@ export class AccountsService extends Service {
    */
   createKycRequest (opts) {
     const operation = CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
+    return this._operationBuilder
+      .operation()
+      .add(operation)
+      .submit(this._accountId, this._keypair)
+  }
+
+  /**
+   * Creates limits update request
+   * @param {object} opts
+   * @param {string} opts.details - JSON string about proof document
+   * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
+   * @returns {TransactionBuilder}
+   */
+  createLimitRequest (opts) {
+    const operation = CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
+
     return this._operationBuilder
       .operation()
       .add(operation)

@@ -1,31 +1,39 @@
 <template>
-  <md-app id="app" md-waterfall md-mode="fixed">
+  <div id="app">
+    <template v-if="isLoggedIn">
+      <md-app md-waterfall md-mode="fixed">
 
-    <md-app-toolbar class="md-primary toolbar__ctn">
-      <div class="md-toolbar-row">
-        <md-button class="md-icon-button app__sidebar-icon"
-                 v-if="isLoggedIn"
-                  @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <navbar/>
-      </div>
-    </md-app-toolbar>
+        <md-app-toolbar class="md-primary app__sidebar" v-if="isLoggedIn">
+          <div class="md-toolbar-row">
+            <md-button class="md-icon-button app__sidebar-icon"
+                      @click="menuVisible = !menuVisible">
+              <md-icon>menu</md-icon>
+            </md-button>
+            <navbar/>
+          </div>
+        </md-app-toolbar>
 
-    <md-app-drawer md-permanent="clipped"
-                  :md-active.sync="menuVisible"
-                   v-if="isLoggedIn">
-      <sidebar v-on:hide-sidebar="hideSidebar"/>
-    </md-app-drawer>
+        <md-app-drawer md-permanent="full"
+                      :md-active.sync="menuVisible"
+                      v-if="isLoggedIn">
+          <sidebar @hide-sidebar="hideSidebar"/>
+        </md-app-drawer>
 
-    <md-app-content>
+        <md-app-content>
+          <router-view/>
+          <snackbar/>
+          <file-viewer/>
+          <loader-bar/>
+        </md-app-content>
+
+      </md-app>
+    </template>
+    <template v-else>
       <router-view/>
-      <snackbar/>
-      <file-viewer/>
       <loader-bar/>
-    </md-app-content>
-
-  </md-app>
+      <snackbar/>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -122,13 +130,11 @@
 
 <style lang="scss">
   @import '../../scss/mixins';
-
-  .toolbar__ctn {
-    box-shadow: 0 2px 4px 0px rgba(0,0,0,0.5) !important
-  }
+  @import '../../scss/variables';
 
   .md-app {
-    height: 100%;
+    // NOTE: temp. disabled
+    // height: 100%;
   }
 
   .md-app-content {
@@ -148,4 +154,19 @@
     }
   }
 
+  .app__sidebar {
+    z-index: 10;
+
+    @include respond-to(small) {
+      background-color: $col-md-background !important;
+    }
+  }
+
+  .app__sidebar-icon {
+    @include respond-to(small) {
+      background-color: $col-md-primary;
+      margin-right: 0;
+      margin-left: 8px !important;
+    }
+  }
 </style>

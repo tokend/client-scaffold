@@ -16,14 +16,17 @@
     />
 
     <template v-if="updates.length === 0 && !isAddFormOpened && updatesLoaded">
-      <div class="empty-timeline-message">
-        <i class="empty-timeline-message__icon material-icons">search</i>
-        <p v-if="isMy">{{i18n.sale_upd_tab_share_updates()}}</p>
-        <p v-else>{{i18n.sale_upd_tab_important_updated()}}</p>
+      <div class="no-data-msg__wrapper">
+        <i class="no-data-msg__icon material-icons">search</i>
+        <h2 v-if="isMy">{{ i18n.sale_upd_tab_share_updates() }}</h2>
+        <h2 v-else>{{ i18n.sale_upd_tab_important_updated() }}</h2>
 
-        <md-button class="md-primary md-raised"
-                v-if="isMy"
-                @click="openForm">{{i18n.sale_upd_tab_add_timeline()}}</md-button>
+        <md-button
+          class="md-primary md-flat"
+          v-if="isMy"
+          @click="openForm">
+          {{ i18n.sale_upd_tab_add_timeline() }}
+        </md-button>
       </div>
     </template>
   </div>
@@ -40,8 +43,6 @@
   import { vuexTypes } from '../../../../../vuex/types'
 
   export default {
-    name: 'updates-tab',
-
     components: {
       Timeline,
       AddUpdateForm
@@ -107,6 +108,22 @@
 
   .empty-timeline-message__icon {
     font-size: $material-icon-xx-super-big;
+  }
+
+  .no-data-msg__wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: $col-md-primary;
+
+    & > h2 {
+      font-weight: 500;
+    }
+  }
+
+  .no-data-msg__icon {
+    font-size: $material-icon-xx-super-big;
+    color: rgba($col-md-primary, .7);
   }
 
 </style>

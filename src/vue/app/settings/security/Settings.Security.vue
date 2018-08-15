@@ -1,37 +1,18 @@
 <template>
-  <div class="security-settings md-layout">
-
-    <div class="security-settings__inner md-size-80 md-layout-item" >
-      <md-subheader class="security-settings__header" v-if="config.FEATURE_FLAGS.verification">{{ i18n.set_account() }}</md-subheader>
-      <md-card class="security-settings__section" v-if="config.FEATURE_FLAGS.verification">
-        <md-list class="security-settings__list md-dense">
-          <md-list-item to="/verification">
-            <span class="md-list-item-text">{{ i18n.set_verify_account() }}</span>
-            <md-icon class="md-icon--half-sized">play_arrow</md-icon>
-          </md-list-item>
-        </md-list>
-      </md-card>
-
-      <md-subheader class="security-settings__header">{{ i18n.set_security() }}</md-subheader>
-      <md-card class="security-settings__section">
-        <md-list class="security-settings__list md-dense">
-          <change-password class="security-settings__change-password"/>
-          <md-divider class="md-dense"/>
-          <tfa-settings class="security-settings__tfa-settings" v-if="config.FEATURE_FLAGS.tfa"/>
-        </md-list>
-      </md-card>
-
-      <md-subheader class="security-settings__header">{{ i18n.set_keys() }}</md-subheader>
-      <md-card class="security-settings__section">
-        <md-list class="security-settings__list md-dense">
-          <account-id class="security-settings__account-id"/>
-          <md-divider class="md-dense"/>
-          <seed class="security-settings__seed"/>
-        </md-list>
-      </md-card>
-    </div>
-
-  </div>
+  <md-tabs md-card class="security-settings-tabs">
+    <md-tab :md-label="`${ i18n.set_change_password()}`">
+      <change-password class="security-settings__change-password"/>
+    </md-tab>
+    <md-tab :md-label="`${ i18n.set_tfa_enable()}`" v-if="config.FEATURE_FLAGS.tfa">
+      <tfa-settings class="security-settings__tfa-settings"/>
+    </md-tab>
+    <md-tab :md-label="`${ i18n.set_account_id()}`">
+      <account-id class="security-settings__account-id"/>
+    </md-tab>
+    <md-tab :md-label="`${ i18n.set_secret_seed()}`">
+      <seed class="security-settings__seed"/>
+    </md-tab>
+  </md-tabs>
 </template>
 
 <script>
@@ -39,9 +20,9 @@
   import TfaSettings from './Security.TfaSettings'
   import AccountId from './Security.AccountId'
   import Seed from './Security.Seed'
-  import { i18n } from '../../../../js/i18n'
+  import { i18n } from '@/js/i18n'
 
-  import config from '../../../../config'
+  import config from '@/config'
 
   export default {
     name: 'settings-security',
@@ -58,6 +39,50 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import './settings.scss';
+  @import "~@scss/variables";
+  @import "~@scss/mixins";
+
+  .security-settings-tabs {
+    min-width: 48rem;
+    .md-title,
+    .md-table-cell-container {
+      color: $col-md-primary !important;
+    }
+
+    .md-tabs-navigation {
+      background-color: transparent !important;
+      margin-bottom: 1rem;
+    }
+
+    .md-tab {
+      padding: 0;
+      background-color: transparent !important;
+    }
+
+    .md-card {
+      box-shadow: none;
+    }
+
+    .md-content {
+      background-color: transparent !important;
+    }
+
+    .md-tabs-content {
+      height: auto !important;
+      min-height: 100% !important;
+      background-color: transparent !important;
+    }
+
+    @include overwrite-tabs(57);
+  }
+
+  .security-settings__change-password,
+  .security-settings__tfa-settings,
+  .security-settings__account-id,
+  .security-settings__seed {
+    margin: 3rem auto 0;
+    max-width: 40rem;
+  }
 </style>

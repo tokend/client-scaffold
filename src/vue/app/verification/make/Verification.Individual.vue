@@ -1,39 +1,25 @@
 <template>
-  <div class="kyc-form md-layout md-alignment-center-center">
-    <form novalidate @submit.prevent="submit"
-          class="md-layout-item
-                  md-size-50
-                  md-medium-size-65
-                  md-small-size-95
-                  md-xsmall-size-100"
-    >
-      <md-card>
-        <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
+  <div class="kyc-form app__page-content-wrp">
+    <form novalidate @submit.prevent="submit">
+      <md-progress-bar md-mode="indeterminate" v-if="isPending"/>
 
-        <md-card-header>
-          <div class="md-title">{{ i18n.kyc_account_verification() }}</div>
-        </md-card-header>
-
-        <md-card-content>
-          <md-steppers md-vertical :md-active-step.sync="activeStep">
-            <md-step v-for="(step, i) in steps"
-                    :key="i"
-                    :id="step.name"
-                    :md-label="step.label"
-                    :md-done.sync="step.done"
-            >
-              <component :is="step.component"
-                        :schema="step.schema"
-                        :activeStep="activeStep"
-                        :finalStep="finalStep"
-                        :kyc="kyc"
-                        @kyc-update="handleKycUpdate($event, { step, i })"
-                        @kyc-edit-end="handleKycEditEnd"
-              />
-            </md-step>
-          </md-steppers>
-        </md-card-content>
-      </md-card>
+      <md-steppers md-vertical :md-active-step.sync="activeStep">
+        <md-step v-for="(step, i) in steps"
+                :key="i"
+                :id="step.name"
+                :md-label="step.label"
+                :md-done.sync="step.done"
+        >
+          <component :is="step.component"
+                    :schema="step.schema"
+                    :activeStep="activeStep"
+                    :finalStep="finalStep"
+                    :kyc="kyc"
+                    @kyc-update="handleKycUpdate($event, { step, i })"
+                    @kyc-edit-end="handleKycEditEnd"
+          />
+        </md-step>
+      </md-steppers>
     </form>
   </div>
 </template>
@@ -52,7 +38,7 @@
   import { KycTemplateParser } from '../spec/kyc-template-parser'
   import { accountsService } from '../../../../js/services/accounts.service'
 
-  import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+  import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
   import { confirmAction } from '../../../../js/modals/confirmation_message'
 
   const KYC_LEVEL_TO_SET = 0
@@ -116,7 +102,8 @@
           await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
             details: KycTemplateParser.toTemplate(this.kyc, userTypes.general),
-            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
+            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents),
+            blobType: blobTypes.kycForm.str
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()

@@ -1,15 +1,13 @@
 <template>
   <div class="tx-history">
 
-    <md-table md-card class="tx-history__table">
+    <md-table class="tx-history__table app__card">
       <md-table-toolbar class="tx-history__table-toolbar">
-        <h1 class="tx-history__table-title md-title">{{ i18n.th_transaction_history() }}</h1>
         <div class="tx-history__select-outer">
-          <select-field
+          <select-field-custom
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
-            :values="tokens"
-          />
+            :values="tokens"/>
         </div>
       </md-table-toolbar>
 
@@ -56,7 +54,12 @@
         <md-table-row v-if="!isLoaded">
           <md-table-cell colspan="7">
             <div class="tx-history__btn-outer">
-              <md-button @click="more" :disabled="isLoading">More</md-button>
+              <button v-ripple
+                      @click="more"
+                      class="app__button-flat"
+                      :disabled="isLoading">
+                {{ i18n.lbl_more() }}
+              </button>
             </div>
           </md-table-cell>
         </md-table-row>
@@ -77,7 +80,7 @@
 
 <script>
   import TxDetails from './History.TxDetails'
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 
   import { mapGetters, mapActions } from 'vuex'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
@@ -88,7 +91,7 @@
 
   export default {
     name: 'history-index',
-    components: { TxDetails, SelectField },
+    components: { TxDetails, SelectFieldCustom },
     data: _ => ({
       isLoading: false,
       tokenCode: null,
@@ -173,7 +176,7 @@
   .tx-history__table-toolbar {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     @media (max-width: 840px) {
       flex-direction: column;

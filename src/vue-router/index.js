@@ -3,16 +3,20 @@ import Router from 'vue-router'
 
 import store from '../vuex'
 import config from '../config'
+import { PAGES_NAMES } from '../js/const/const'
 
 import { resolveRedirect } from './redirect'
 
 // route components:
-import Login from '../vue/auth/Login.vue'
-import Signup from '../vue/auth/Signup.vue'
-import Recovery from '../vue/auth/Recovery.vue'
-import EmailResend from '../vue/auth/ConfirmEmail.vue'
+import Auth from '../vue/auth/Auth'
+import Login from '../vue/auth/Login'
+import Signup from '../vue/auth/Signup'
+import Recovery from '../vue/auth/Recovery'
+import EmailResend from '../vue/auth/ConfirmEmail'
+import Terms from '../vue/public/legals/Legal.Terms'
+import Downloads from '../vue/public/Public.Downloads'
 
-import AppContent from '../vue/root/AppContent.vue'
+import AppContent from '../vue/root/AppContent'
 
 import Dashboard from '../vue/app/dashboard/Dashboard.Entry'
 import DashboardIndex from '../vue/app/dashboard/index/Dashboard.Index'
@@ -34,6 +38,9 @@ import TokensExplore from '../vue/app/tokens/Tokens.Explore'
 
 import History from '../vue/app/history/History.Entry'
 import HistoryIndex from '../vue/app/history/index/History.Index'
+
+import Limits from '../vue/app/limits/Limits.Entry'
+import LimitsIndex from '../vue/app/limits/Limits.Index'
 
 import Trade from '../vue/app/trade/Trade.Entry'
 import TradeIndex from '../vue/app/trade/index/Trade.Index'
@@ -81,28 +88,49 @@ const router = new Router({
       beforeEnter: resolveRedirect
     },
     {
-      path: '/sign-in',
-      name: 'login',
-      component: Login,
-      beforeEnter: authPageGuard
+      path: '/terms',
+      name: 'terms',
+      component: Terms,
+      meta: { pageName: PAGES_NAMES.terms }
     },
     {
-      path: '/sign-up',
-      name: 'signup',
-      component: Signup,
-      beforeEnter: authPageGuard
+      path: '/downloads',
+      name: 'downloads',
+      component: Downloads,
+      meta: { pageName: PAGES_NAMES.downloads }
     },
     {
-      path: '/verify-email',
-      name: 'email',
-      component: EmailResend,
-      beforeEnter: authPageGuard
-    },
-    {
-      path: '/recovery',
-      name: 'recovery',
-      component: Recovery,
-      beforeEnter: authPageGuard
+      path: '/auth',
+      name: 'auth',
+      component: Auth,
+      redirect: { name: 'login' },
+      children: [
+        {
+          path: '/sign-in',
+          name: 'login',
+          component: Login,
+          meta: { some: 'alalal' },
+          beforeEnter: authPageGuard
+        },
+        {
+          path: '/sign-up',
+          name: 'signup',
+          component: Signup,
+          beforeEnter: authPageGuard
+        },
+        {
+          path: '/verify-email',
+          name: 'email',
+          component: EmailResend,
+          beforeEnter: authPageGuard
+        },
+        {
+          path: '/recovery',
+          name: 'recovery',
+          component: Recovery,
+          beforeEnter: authPageGuard
+        }
+      ]
     },
     {
       path: '/',
@@ -121,6 +149,7 @@ const router = new Router({
             {
               path: '/dashboard/index',
               name: 'dashboard.index',
+              meta: { pageName: PAGES_NAMES.dashboard },
               component: DashboardIndex
             }
           ]
@@ -135,7 +164,23 @@ const router = new Router({
             {
               path: '/deposit/make',
               name: 'deposit.make',
+              meta: { pageName: PAGES_NAMES.deposit },
               component: DepositMake
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.limits,
+          name: 'app.limits',
+          path: '/limits',
+          component: Limits,
+          redirect: {path: '/limits/index'},
+          children: [
+            {
+              path: '/limits/index',
+              name: 'limits.index',
+              meta: { pageName: PAGES_NAMES.limits },
+              component: LimitsIndex
             }
           ]
         },
@@ -149,11 +194,13 @@ const router = new Router({
             {
               path: '/transfers/make',
               name: 'transfers.make',
+              meta: { pageName: PAGES_NAMES.send },
               component: TransfersMake
             },
             {
               path: '/transfers/make/:tokenCode',
               name: 'transfers.make:tokenCode',
+              meta: { pageName: PAGES_NAMES.send },
               component: TransfersMake
             }
           ]
@@ -168,6 +215,7 @@ const router = new Router({
             {
               path: '/mass-transfers/make',
               name: 'mass-transfers.make',
+              meta: { pageName: PAGES_NAMES.massTransfer },
               component: MassTransfersMake
             }
           ]
@@ -182,6 +230,7 @@ const router = new Router({
             {
               path: '/withdrawal/make',
               name: 'withdrawal.make',
+              meta: { pageName: PAGES_NAMES.withdraw },
               component: WithdrawalMake
             }
           ]
@@ -196,6 +245,7 @@ const router = new Router({
             {
               path: '/tokens/explore',
               name: 'tokens.explore',
+              meta: { pageName: PAGES_NAMES.exploreTokens },
               component: TokensExplore
             }
           ]
@@ -210,11 +260,13 @@ const router = new Router({
             {
               path: '/history/index',
               name: 'history.index',
+              meta: { pageName: PAGES_NAMES.history },
               component: HistoryIndex
             },
             {
               path: '/history/index/:tokenCode',
               name: 'history.index:tokenCode',
+              meta: { pageName: PAGES_NAMES.history },
               component: HistoryIndex
             }
           ]
@@ -229,6 +281,7 @@ const router = new Router({
             {
               path: '/trade/index',
               name: 'trade.index',
+              meta: { pageName: PAGES_NAMES.trade },
               component: TradeIndex
             }
           ]
@@ -243,6 +296,7 @@ const router = new Router({
             {
               path: '/settings/security',
               name: 'settings.security',
+              meta: { pageName: PAGES_NAMES.settings },
               component: SettingsSecurity
             }
           ]
@@ -257,6 +311,7 @@ const router = new Router({
             {
               path: '/verification/make',
               name: 'verification.make',
+              meta: { pageName: PAGES_NAMES.verification },
               component: VerificationMake
             }
           ]
@@ -271,12 +326,14 @@ const router = new Router({
             {
               path: '/token-creation/index',
               name: 'token-creation.index',
+              meta: { pageName: PAGES_NAMES.createToken },
               component: TokenCreationIndex,
               props: true
             },
             {
               path: '/token-creation/index/:id',
               name: 'token-creation.index:id',
+              meta: { pageName: PAGES_NAMES.createToken },
               component: TokenCreationIndex,
               props: true
             }
@@ -292,12 +349,14 @@ const router = new Router({
             {
               path: '/sale-creation/index',
               name: 'sale-creation.index',
+              meta: { pageName: PAGES_NAMES.createSale },
               component: SaleCreationIndex,
               props: true
             },
             {
               path: '/sale-creation/index/:id',
               name: 'sale-creation.index:id',
+              meta: { pageName: PAGES_NAMES.createSale },
               component: SaleCreationIndex,
               props: true
             }
@@ -313,6 +372,7 @@ const router = new Router({
             {
               path: '/issuance-creation/index',
               name: 'issuance-creation.index',
+              meta: { pageName: PAGES_NAMES.createIssuance },
               component: IssuanceCreationIndex,
               props: true
             }
@@ -328,16 +388,19 @@ const router = new Router({
             {
               path: '/requests/index',
               name: 'requests.index',
+              meta: { pageName: PAGES_NAMES.requests },
               component: RequestsIndex
             },
             {
               path: '/requests/token-creation',
               name: 'requests.token-creation',
+              meta: { pageName: PAGES_NAMES.requests },
               component: RequestsIndex
             },
             {
               path: '/requests/sale-creation',
               name: 'requests.sale-creation',
+              meta: { pageName: PAGES_NAMES.requests },
               component: RequestsIndex
             }
           ]
@@ -352,11 +415,13 @@ const router = new Router({
             {
               path: '/sales/explore',
               name: 'sales.explore',
+              meta: { pageName: PAGES_NAMES.exploreSales },
               component: SalesExplore
             },
             {
               path: '/sales/details/:id',
               name: 'sales.sale-details',
+              meta: { pageName: PAGES_NAMES.exploreSales },
               component: SalesDetails,
               props: true
             }
@@ -386,6 +451,7 @@ const router = new Router({
             {
               path: '/preissuance-upload/index',
               name: 'preissuance-upload.index',
+              meta: { pageName: PAGES_NAMES.preIssuance },
               component: PreissuanceUploadIndex,
               props: true
             }
@@ -407,5 +473,14 @@ function authPageGuard (to, from, next) {
 // doesn't allow to visit in-app page if user is not already logged in
 function inAppRouteGuard (to, from, next) {
   const isLoggedIn = store.getters.isLoggedIn
-  isLoggedIn ? next() : next({ name: 'login' })
+  isLoggedIn
+    ? next()
+    : next({
+      name: 'login',
+      params: {
+        redirect: {
+          name: to.name || 'app'
+        }
+      }
+    })
 }

@@ -1,4 +1,5 @@
-import { commonEvents } from '../../../js/events/common_events'
+import { commonEvents } from '@/js/events/common_events'
+import config from '@/config'
 
 export default {
   props: {
@@ -9,7 +10,7 @@ export default {
     title: { type: String, default: '' },
     type: { type: String, default: 'text' },
     required: { type: Boolean, default: false },
-    step: { type: Number, default: 0.000001 },
+    step: { type: Number, default: config.MINIMAL_NUMBER_INPUT_STEP },
     min: { type: Number, default: 0 },
     value: { type: String, default: '' }
   },

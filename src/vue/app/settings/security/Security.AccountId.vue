@@ -1,32 +1,20 @@
 <template>
-  <md-list-item class="account-id" @click="isDialogOpened = !isDialogOpened">
+  <div class="settings-account-id">
+    <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title>
+    <div class="app__dialog-inner">
+      <div class="account-id__wrapper">
+        <qrcode class="qr-code account-id__qr-code"
+              :text="accountId"
+              :size="250"
+              color="#3f4244"
+        />
 
-    <span class="md-list-item-text">{{ i18n.set_account_id() }}</span>
-    <md-icon class="md-icon--half-sized">play_arrow</md-icon>
-
-    <md-dialog class="account-id__dialog" :md-active.sync="isDialogOpened">
-      <md-dialog-title>{{ i18n.set_your_account_id() }}</md-dialog-title>
-
-      <div class="app__dialog-inner">
-        <div class="account-id__wrapper">
-          <qrcode class="qr-code account-id__qr-code"
-                :text="accountId"
-                :size="250"
-                color="#3f4244"
-          />
-
-          <clipboard-field class="account-id__clipboard"
-            :value="accountId"
-          />
-        </div>
+        <clipboard-field class="account-id__clipboard"
+          :value="accountId"
+        />
       </div>
-
-      <md-dialog-actions class="md-layout md-alignment-center-right">
-        <md-button type="button" class="md-primary" @click="isDialogOpened = !isDialogOpened">{{ i18n.lbl_cancel() }}</md-button>
-      </md-dialog-actions>
-
-    </md-dialog>
-  </md-list-item>
+    </div>
+  </div>
 </template>
 
 <script>

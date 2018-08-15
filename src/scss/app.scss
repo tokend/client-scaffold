@@ -2,7 +2,9 @@
 @import 'mixins';
 @import '../../static/fonts/index.css';
 @import '../../node_modules/mdi/css/materialdesignicons.min.css';
-@import "../../node_modules/vue-material/dist/theme/engine";
+@import '../../node_modules/vue-material/dist/theme/engine';
+@import '../../node_modules/flatpickr/dist/flatpickr.css';
+@import 'forms';
 
 @include md-register-theme("default", (
   primary: $col-md-primary,
@@ -28,7 +30,7 @@ body,
 input, select,
 textarea {
   background: $col-background;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Circular', 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif !important;
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.005em;
@@ -57,12 +59,33 @@ html,body {
   & .md-app-content {
     padding-bottom: 30px;
     height: auto;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-left: 0;
 
     & .md-card {
       margin-left: 12px;
       margin-right: 12px;
+    }
+  }
+
+  .app__input-autofill--white {
+    -webkit-box-shadow: inset 0 0 0 50px $white !important;
+  }
+
+  .md-switch.md-theme-default.md-checked.md-primary .md-switch-thumb {
+    background-color: $col-md-primary;
+  }
+
+  p.app__page-explanations {
+    max-width: 45 * $point;
+    color: $col-md-primary;
+    font-size: 1.6 * $point;
+    margin-top: 2.5 * $point;
+    margin-bottom: 4 * $point;
+
+    &--secondary {
+      color: $col-md-primary-inactive;
     }
   }
 
@@ -97,6 +120,7 @@ html,body {
 
   & .md-toolbar {
     padding: 0;
+
     & .md-title {
       margin-left: 0;
     }
@@ -104,13 +128,48 @@ html,body {
 
   & .md-table-toolbar {
     padding-left: 0;
+
     & .md-title {
       padding: 24px;
     }
   }
 
-  & .md-tabs-content {
-    height: 100% !important;
+  & .app__table-details {
+    font-size: 1.6 * $point;
+    line-height: 1.5;
+
+    & > tr > td:first-child {
+      color: $col-md-primary-inactive;
+    }
+
+    & > tr > td:last-child {
+      color: $col-md-primary;
+      padding-left: 3 * $point;
+    }
+
+    & .app__table-details-counterparty {
+      max-width: 25 * $point;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.app__table-details-copyable {
+        padding-right: 25px;
+        position: relative;
+      }
+    }
+
+    & .app__table-details-copyable {
+      & > span {
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+      }
+    }
+  }
+
+  & ul, li {
+    @include list-reset()
   }
 
   & .markdown-formatter,
@@ -193,6 +252,13 @@ html,body {
   }
 }
 
+.app__page-content-wrp {
+  flex: 1;
+  width: 100%;
+  max-width: 45 * $point;
+  margin: auto;
+}
+
 #app,
 .md-dialog {
   @mixin resize-icon ($size) {
@@ -215,6 +281,54 @@ html,body {
   }
 }
 
+h1.app__page-heading,
+h2.app__page-heading,
+h3.app__page-heading,
+h4.app__page-heading,
+h5.app__page-heading,
+h6.app__page-heading {
+  display: block;
+  color: $col-md-primary;
+  padding: 0;
+}
+
+h1.app__page-heading {
+  font-size: 2em;
+  margin: 0 0 0.67em 0;
+  font-weight: 300;
+}
+
+h2.app__page-heading {
+  font-size: 1.5em;
+  margin:0 0  1.5em 0;
+  font-weight: 300;
+}
+
+h3.app__page-heading {
+  font-size: 1.17em;
+  margin: 0 0 1em 0;
+  font-weight: bold;
+}
+
+h4.app__page-heading {
+  font-size: 1em;
+  margin: 0 0 1.33em 0;
+  font-weight: bold;
+}
+
+h5.app__page-heading {
+  font-size: .83em;
+  margin: 0 0 1.67em 0;
+  font-weight: bold;
+}
+
+h6.app__page-heading {
+  font-size: .67em;
+  margin: 0 0 2.33em 0;
+  font-weight: bold;
+}
+
+
 h4 {
   font-size: $fs-tip;
   font-weight: bold;
@@ -222,8 +336,133 @@ h4 {
   padding: .75rem 0 .3rem;
 }
 
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset;
+.app__button {
+  @include button();
+}
+
+.app__button-icon {
+  @include button-icon();
+}
+
+.app__button-flat {
+  @include button-flat();
+}
+
+.app__button-raised {
+  @include button-raised();
+}
+
+.app__card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include respond-to(medium) {
+    flex-direction: column;
+  }
+
+  & > .app__card:first-child {
+    margin-right: 8px;
+    width: calc(50% - 8px);
+
+    @include respond-to(medium) {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  & > .app__card:last-child {
+    margin-left: 8px;
+    width: calc(50% - 8px);
+
+    @include respond-to(medium) {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 16px;
+    }
+  }
+
+  &.app__card-wrapper--xmedium-breakpoint {
+    @include respond-to(xmedium) {
+      flex-direction: column;
+    }
+
+    & > .app__card:first-child {
+      @include respond-to(xmedium) {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    & > .app__card:last-child {
+      @include respond-to(xmedium) {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
+.app__card {
+  background-color: #fff;
+
+  &:not(.app__card--shadow-none) {
+    @include box-shadow();
+  }
+}
+
+.app__card-content,
+.app__card-header {
+  padding: 32px;
+
+  @include respond-to(medium) {
+    padding: 24px;
+  }
+
+  @include respond-to(small) {
+    padding: 12px 16px;
+  }
+}
+
+.app__card-actions {
+  padding: 12px 32px 32px;
+  display: flex;
+  justify-content: flex-end;
+
+  @include respond-to(medium) {
+    padding: 8px 24px 24px;
+  }
+
+  @include respond-to(small) {
+    padding: 8px 16px 16px;
+  }
+}
+
+.app__table-left-shadow {
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: 0;
+    width: 8px;
+    box-shadow: inset 5px -6px 6px 0 rgba(0, 0, 0, .2);
+  }
+}
+
+.app__table-right-shadow {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    right: 0;
+    width: 8px;
+    box-shadow: inset -5px -6px 6px 0 rgba(0, 0, 0, .2);
+  }
 }
 
 .container {
@@ -281,8 +520,8 @@ input:-webkit-autofill {
 .md-list-item-content {
   .portfolio-widget__asset-item & {
     padding: 9px 24px;
-
   }
+
   .info-widget__asset-item & {
     @include respond-to(xsmall) {
       padding: 4px 8px;
@@ -324,5 +563,23 @@ input:-webkit-autofill {
   @include respond-to-custom(520px) {
     padding: 0;
     padding-bottom: 8px;
+  }
+}
+
+.app__fade-in-enter-active {
+  animation: app__fade-in-keyframes 0.2s ease-in-out;
+}
+
+.app__fade-in-leave-active {
+  display: none;
+  animation: app__fade-in-keyframes 0s ease-in-out reverse;
+}
+
+@keyframes app__fade-in-keyframes {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

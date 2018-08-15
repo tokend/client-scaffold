@@ -25,8 +25,6 @@
   import { errors } from '../../../../../js/errors/factory'
   import config from '../../../../../config'
   export default {
-    name: 'chart-tab',
-
     components: {
       Chart
     },
@@ -59,12 +57,4 @@
 <style lang="scss" scoped>
   @import '../../../../../scss/variables';
   @import '../../../../../scss/mixins';
-
-  .sale-chart {
-    margin-top: 1.2rem;
-    border: 1px solid rgba(0, 0, 0, .26);
-    @include respond-to(medium) {
-      margin-top: 0;
-    }
-  }
 </style>

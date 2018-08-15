@@ -10,8 +10,8 @@ export const factorsService = {
       .get()
   },
 
-  createFactor (type = 'totp') {
-    const data = { type }
+  createFactor (type = 'totp', password) {
+    const data = { type, password }
 
     return request.wallets()
       .walletId(store.getters.walletId)
@@ -46,10 +46,12 @@ export const factorsService = {
       .patch()
   },
 
-  deleteFactor (id) {
+  deleteFactor (id, password) {
+    const data = { password }
     return request.wallets()
       .walletId(store.getters.walletId)
       .factorId(id)
+      .data(data)
       .sign(store.getters.accountKeypair)
       .delete()
   }

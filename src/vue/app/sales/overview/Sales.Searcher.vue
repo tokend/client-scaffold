@@ -1,14 +1,14 @@
 <template>
-  <div class="searcher-wrapper md-layout md-layout-item md-size-95 md-alignment-center-center">
+  <div class="searcher-wrapper">
 
     <div class="searcher-header">
-      <h2 class="searcher-title"> Search crowdfunding campaign </h2>
+      <h4 class="searcher-title"> Search filters </h4>
     </div>
 
-    <div class="searcher__inner md-layout md-gutter md-layout-item md-size-95 md-alignment-top-space-between">
+    <div class="searcher__inner">
 
-      <div class="searcher__filters md-layout-item">
-        <input-field
+      <div class="searcher__filters">
+        <input-field-unchained
           v-model="filters.token"
           class="searcher__filter"
           name="token-name"
@@ -16,23 +16,21 @@
           :label="i18n.lbl_token_code()"
         />
       </div>
-      <div class="searcher__filters md-layout-item">
-        <select-field
-          v-model="filters.state"
-          class="searcher__filter"
-          title="Status"
-          :label="i18n.lbl_state()"
+      <div class="searcher__filters">
+        <select-field-unchained
           :values="states"
-        />
-      </div>
-      <div class="searcher__filters md-layout-item">
-        <select-field
-          v-model="filters.sortBy"
           class="searcher__filter"
-          title="Sort by"
-          :label="i18n.lbl_sort_by()"
+          :title="i18n.lbl_state"
+          v-model="filters.state"
+          :label="i18n.lbl_state()"/>
+      </div>
+      <div class="searcher__filters">
+        <select-field-unchained
           :values="sortTypes"
-        />
+          class="searcher__filter"
+          :title="i18n.lbl_sort_by"
+          v-model="filters.sortBy"
+          :label="i18n.lbl_state()"/>
       </div>
     </div>
 
@@ -41,7 +39,8 @@
 
 <script>
   import InputField from '../../../common/fields/InputField'
-  import SelectField from '../../../common/fields/SelectField'
+  import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+  import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
   import { i18n } from '../../../../js/i18n'
   import { commonEvents } from '../../../../js/events/common_events'
   import debounce from 'lodash/debounce'
@@ -52,7 +51,8 @@
 
     components: {
       InputField,
-      SelectField
+      SelectFieldUnchained,
+      InputFieldUnchained
     },
 
     props: [],
@@ -100,25 +100,36 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .searcher-header {
     width: 100%;
   }
 
+  .searcher__inner {
+    display: flex;
+  }
+
   .searcher-title {
-    font-weight: 400;
-    font-size: 1.5rem;
-    font-family: inherit;
-    padding: 1.5rem;
+    font-weight: bold;
+    font-size: 1.4 * $point;
+    color: $col-md-primary;
+    padding: 0;
+    opacity: 1;
+    margin-bottom: 1 * $point;
   }
 
   .searcher-wrapper {
-    background: $col-content-block;
-    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
-    border-radius: 2px;
-    margin: 0 auto 1.5rem;
+    margin: 0 0 1.5rem;
   }
 
+  .searcher__filters {
+    width: 100%;
+    flex: 1;
+
+    &:not(:first-child) {
+      margin-left: 1.5 * $point;
+    }
+  }
 </style>

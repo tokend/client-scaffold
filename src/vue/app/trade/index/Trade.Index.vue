@@ -1,19 +1,17 @@
 <template>
   <div class="trade">
-    <div class="trade-row">
+    <asset-selector v-if="formattedPairs.length" :pairs="formattedPairs"/>
+    <div class="trade-row app__card-wrapper app__card-wrapper--xmedium-breakpoint">
       <chart class="trade__chart"
         :data="history"
-        :pairs="formattedPairs"
         :precision="common.precision"
         :assets="customAssetPair"
-        v-on:assets-base-changed="handleAssetChange"
-        v-on:assets-quote-changed="handleAssetChange"
       />
       <trade-history :assets="filters" class="trade__history"/>
     </div>
 
     <div class="md-layout">
-      <orders :assets="filters" class="md-layout-item md-size-100"/>
+      <orders class="md-layout-item md-size-100"/>
     </div>
 
     <div class="md-layout">
@@ -28,6 +26,7 @@
 </template>
 
 <script>
+  import AssetSelector from './components/asset-selector/Trade.AssetSelector'
   import Chart from './components/chart/Trade.ChartWidget'
   import TradeHistory from './components/tradeHistory/Trade.TradeHistory'
   import TradeOrders from './components/tradeOrders/Trade.TradeOrders'
@@ -51,7 +50,8 @@
       TradeHistory,
       TradeOrders,
       Orders,
-      ManageOrders
+      ManageOrders,
+      AssetSelector
     },
     data: _ => ({
       history: {},
@@ -68,12 +68,9 @@
     async created () {
       await this.loadPairs()
       await this.loadData(this.tradablePairs[0])
-      console.log(this.tradablePairs[0])
       attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
       attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
       attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-      this.filters.base = this.formattedPairs[0].split('/')[0]
-      this.filters.quote = this.formattedPairs[0].split('/')[1]
       this.customAssetPair = this.formattedPairs[0]
     },
     computed: {
@@ -154,19 +151,8 @@
   .trade-row {
     display: flex;
     margin-bottom: 1.5rem;
-    .trade__history,
-    .trade__chart {
-      width: 50%;
-    }
-    @include respond-to-custom($large-breakpoint) {
-      flex-direction: column;
-
-      .trade__history,
-      .trade__chart {
-        width: 100%;
-      }
-    }
   }
+
   .trade__chart {
     @include respond-to-custom($large-breakpoint) {
       margin-bottom: 1.5rem;

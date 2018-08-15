@@ -7,6 +7,7 @@ export default {
   trd_created: 'Created',
   trd_ask: 'Ask',
   trd_bid: 'Bid',
+  trd_cancel_order: 'Cancel order',
   trd_offer_canceled: 'Offer successfully cancelled',
   trd_offer_created: 'Offer successfully created',
   trd_offer_failed_to_cancel: 'Failed to cancel offer',
@@ -19,7 +20,7 @@ export default {
   trd_here_will_be_the_order_ask_list: 'Here will be the list of current asks',
   trd_here_will_be_the_order_bid_list: 'Here will be the list of current bids',
   trd_validate_minimal_price: 'Price must be more than 0',
-  trd_validate_minimal_amount: 'Minimal amount is 0.000001',
+  trd_validate_minimal_amount: 'Minimal amount is %{value}',
   trd_price_per: 'Price per %{asset}',
   trd_amount_for: 'Amount %{asset}',
   trd_total_value: 'Total %{value}',
@@ -43,10 +44,12 @@ export default {
   trd_chart_hour: 'Hour',
   trd_chart_day: 'Day',
   trd_chart_month: 'Month',
+  trd_chart_tabs_prefix: 'Scale the chart by:',
   trd_chart_year: 'Year',
   trd_orders: 'Open orders',
   trd_confirm_match: 'By pressing confirm, you will сreate the opposite to selected order',
   trd_no_pairs: 'No tradable pairs',
   trd_no_pairs_exp: 'This feature will be available once any tradable pair appears',
-  trd_balance: 'Your balance is %{base}/%{quote}'
+  trd_balance_label: 'Balances',
+  trd_balance: '%{base} / %{quote}'
 }

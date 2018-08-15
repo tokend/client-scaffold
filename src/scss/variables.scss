@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 $sidebar-width: 210px;
 $material-icons-small: 14px;
 $material-icon-size: 18px;
@@ -18,8 +20,8 @@ $z-modal-dialog: 20;
 $z-embed-page: 45;
 $z-markdown-editor: 45;
 
-// colors:
-// CAUTION: do not use these colors externally
+/* colors: */
+/* CAUTION: do not use these colors externally */
 
 $black: #3f4244;
 $gray:#e2e3e3;
@@ -61,27 +63,31 @@ $col-pending: $orange;
 $col-approve: $green;
 $col-reject: $red;
 
-$col-chart-line: $blue;
-$col-chart-fill: $col-inactive;
-$col-chart-ticks: $black;
-$col-chart-text: $col-text;
-$col-chart-tip-text: $white;
-
 $col-btc: #FF9900;
 
 // progress bar
 $col-pb-line: $lightGray;
 $col-pb-fill: $vividBlue;
 
-$col-md-primary: #0066cc;
-$col-md-background: #e8e8e8;
+$col-md-primary: rgb(58, 65, 128);
+$col-md-primary-inactive: rgba($col-md-primary, .7);
+$col-md-primary-flat-hover: rgba($col-md-primary, .2);
+$col-md-primary-secondary: #7b6eff;
+$col-md-background: #f2f2f4;
 $col-md-accent: #ef5350;
+$col-md-accent-flat-hover: rgba($col-md-accent, .2);
 $col-md-primary-txt: #fff;
-$col-md-unfocused: rgba(0, 0, 0, 0.54);
+$col-md-unfocused: rgba(0, 0, 0, .54);
 $col-md-block: #fff;
 $col-md-pending: $orange;
 
-// fonts:
+$col-chart-line: $col-md-primary-secondary;
+$col-chart-fill: $white;
+$col-chart-ticks: $col-md-primary-inactive;
+$col-chart-text: $col-md-primary-inactive;
+$col-chart-tip-text: $white;
+
+/* fonts: */
 $fs-top-heading: 32px;
 $fs-offer-input: 24px;
 
@@ -91,3 +97,8 @@ $fs-root: 1rem;
 $fs-tip: .8rem;
 $fs-tip-smaller: .74rem;
 $fs-label: .8rem;
+
+// misc.
+
+// use as multiplier for more convenient way to calculating sizes
+$point: 0.625rem; /* 10px in case of 1rem=16px */

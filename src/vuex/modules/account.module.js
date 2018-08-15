@@ -1,4 +1,3 @@
-import { blobTypes } from '../../js/const/documents.const'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import { usersService } from '../../js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
@@ -22,6 +21,7 @@ export const state = {
     publicKey: '',
     seed: ''
   },
+  limits: [],
   // kyc:
   kycRequests: [],
   kycData: {
@@ -38,6 +38,10 @@ export const mutations = {
 
   SET_ACCOUNT_DETAILS (state, account) {
     state.account = account
+  },
+
+  SET_ACCOUNT_LIMITS (state, limits) {
+    state.limits = limits
   },
 
   SET_ACCOUNT_BALANCES (state, balances) {
@@ -76,6 +80,11 @@ export const actions = {
   async GET_ACCOUNT_KYC_REQUESTS ({ commit }) {
     const requests = await reviewableRequestsService.loadKycReviewableRequests()
     commit(vuexTypes.SET_ACCOUNT_KYC_REQUESTS, requests.records.map(record => RecordFactory.createKycRequestRecord(record)))
+  },
+
+  async GET_ACCOUNT_LIMITS ({ commit }) {
+    const limits = await accountsService.loadAccountLimits()
+    commit(vuexTypes.SET_ACCOUNT_LIMITS, (limits.limits || []).map(limit => RecordFactory.createLimitRecord(limit)))
   },
 
   async GET_ACCOUNT_KYC_DATA ({ commit }, opts) {
@@ -117,7 +126,7 @@ export const actions = {
       documents: opts.documents
     }
     return (await usersService.blobsOf()
-      .create(blobTypes.kycForm.str, data))
+    .create(opts.blobType, data))
       .data('id')
   }
 }
@@ -143,6 +152,7 @@ export const getters = {
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
       .reduce((accounts, account) => { accounts[account.type] = account.address; return accounts }, {}),
+  accountLimits: state => state.limits,
   // kyc:
   accountKycRequests: state => state.kycRequests,
   accountKycLatestRequest: state => StateHelper.defineLatestKycRequest(state),

@@ -1,27 +1,21 @@
 <template>
   <div class="chart-container">
-    <md-card-header class="chart-container__header">
-      <div class="md-title chart-container__title">{{ i18n.sale_investments() }}</div>
-    </md-card-header>
+    <div class="chart-container__main">
 
-    <md-card-content>
-      <div class="chart-container__main">
-
-        <div class="md-layout md-alignment-center-space-between chart-container__labels">
-          <scale-tabs
-            :asset="asset"
-            v-model="scale"
-            :isPending="isPending"
-          />
-        </div>
-
-        <d3-chart :data="history" :currency="asset" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
-        <div class="chart-container__loader" v-else>Loading...</div>
-
+      <div class="chart-container__tabs">
+        <scale-tabs
+          :asset="asset"
+          v-model="scale"
+          :isPending="isPending"
+        />
       </div>
-    </md-card-content>
-  </div>
 
+      <d3-chart :data="history" :currency="asset" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
+      <p class="app__page-explanations app__page-explanations--secondary chart-container__loader" v-else>
+        {{ i18n.market_price_chart_loading() }}
+      </p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -90,12 +84,18 @@
   @import "../../../../../../scss/mixins";
   @import "../../../../../../scss/variables";
 
-  .chart-container__loader {
+  p.chart-container__loader.app__page-explanations {
+    display: flex;
     text-align: center;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    min-width: 100%;
   }
 
-  .chart-container__labels {
-    margin-bottom: 1rem;
+  .chart-container__tabs {
+    margin-bottom: 4.5 * $point;
+
     @include respond-to-custom(1000px) {
       flex-direction: column-reverse;
       align-items: flex-start;
@@ -115,9 +115,17 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding: 0;
   }
 
   .chart-container__title {
+    font-weight: bold;
+    font-size: 1.6 * $point;
+    color: $col-md-primary;
+    opacity: 1;
+    padding: 0;
+    margin: 0 0 1 * $point 0;
+
     .chart-container__header &:first-child {
       margin-top: 0;
     }

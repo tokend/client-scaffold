@@ -1,4 +1,3 @@
-import auth from './to_replace/auth'
 import documents from './to_replace/documens'
 import offers from './to_replace/offers'
 import sales from './to_replace/sales'
@@ -18,6 +17,7 @@ import issuancesView from './views/issuances_view'
 import settingsView from './views/settings_view'
 import dashboardView from './views/dashboard_view'
 import transfersView from './views/transfers_view'
+import tokensView from './views/tokens_view'
 import modals from './views/modals'
 import verification from './views/verification_view'
 import fileUpload from './views/file-upload'
@@ -25,10 +25,16 @@ import trade from './views/trade_view'
 import companyView from './views/company_view'
 import preissuanceView from './views/preissuance_view'
 import common from './views/common'
+import auth from './views/auth_view'
+import formConfirmation from './views/form_confirmation_view'
+import saleInvest from './views/sale_invest_view'
+import marketPriceChartView from './views/market_price_chart_view'
+import sidebarView from './views/sidebar_view'
+import downloadsView from './views/downloads_view'
+import limitsView from './views/limits_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
-import { humanizePastDate } from '../utils/dates.util'
-
+import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
 import Polyglot from 'node-polyglot'
 
 const polyglot = new Polyglot()
@@ -60,7 +66,14 @@ const dictionary = {
   ...trade,
   ...companyView,
   ...preissuanceView,
-  ...common
+  ...common,
+  ...formConfirmation,
+  ...tokensView,
+  ...saleInvest,
+  ...marketPriceChartView,
+  ...sidebarView,
+  ...downloadsView,
+  ...limitsView
 }
 
 polyglot.extend(dictionary)
@@ -74,5 +87,6 @@ export const i18n = {
   n: formatNumber(),
   c: formatCurrency(),
   cc: formatConvertedCurrency(),
-  d: humanizePastDate
+  d: humanizePastDate,
+  dmy: getDateByDMY
 }

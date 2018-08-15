@@ -3,13 +3,13 @@
         novalidate
         @submit.prevent="submit">
     <template v-for="row in schema.rows">
-      <div class="step__row">
-        <template v-for="item in row">
+      <div class="app__form-row">
+        <div class="app__form-field" v-for="(item, i) in row" :key="i">
           <h3 v-if="item.heading">{{ item.heading }}</h3>
 
           <p v-if="item.subheading">{{ item.subheading }}</p>
 
-          <input-field v-if="item.field === 'text'"
+          <input-field-unchained v-if="item.field === 'text'"
 
                        v-model="form[item.model]"
                        v-validate="item.validate"
@@ -49,17 +49,17 @@
                       :disabled="accountState === ACCOUNT_STATES.pending"
           />
 
-          <select-field v-if="item.field === 'select' && values[item.values].length"
+          <select-field-unchained v-if="item.field === 'select' && values[item.values].length"
                       :name="item.name"
                       :id="item.id"
                       :label="item.label"
                       v-model="form[item.model]"
                       :values="values[item.values]"
                       :key='item.id'
-                    
+
                       :disabled="accountState === ACCOUNT_STATES.pending"/>
 
-          <date-field v-if="item.field === 'date'"
+          <date-field-flatpickr v-if="item.field === 'date'"
                          v-model="form[item.model]"
                          v-validate="'required'"
                          :name="item.name"
@@ -71,23 +71,25 @@
                          :key='item.id'
                          :errorMessage="errorMessage(item.name)"
                          :disabled="accountState === ACCOUNT_STATES.pending"
+                         :enable-time="item.enableTime"
           />
 
-        </template>
+        </div>
       </div>
     </template>
-    <md-card-actions class="step__action">
-      <md-button type="submit" class="md-primary md-flat step__submit-btn"
-              :disabled="isPending || accountState === ACCOUNT_STATES.pending"
-              v-if="finished">
+    <div class="app__form-actions">
+      <button v-ripple
+        class="app__form-submit-btn"
+        :disabled="isPending || accountState === ACCOUNT_STATES.pending || isRequestPending"
+        v-if="finished">
         {{ i18n.lbl_submit() }}
-      </md-button>
-      <md-button type="submit" class="md-primary md-flat step__submit-btn"
-              :disabled="isPending"
-              v-else>
+      </button>
+      <button class="app__form-submit-btn"
+        :disabled="isPending"
+        v-else>
         {{ i18n.sale_next_step() }}
-      </md-button>
-    </md-card-actions>
+      </button>
+    </div>
   </form>
 </template>
 
@@ -125,14 +127,15 @@
         this.disable()
         try {
           await this.uploadDocuments()
+          this.enable()
           this.$emit(commonEvents.kycUpdateEvent, {
             form: this.form,
             documents: this.documents
           })
         } catch (error) {
+          this.enable()
           ErrorHandler.processUnexpected(error)
         }
-        this.enable()
       },
 
       stubData () {

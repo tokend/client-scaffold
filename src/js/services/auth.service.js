@@ -62,6 +62,7 @@ export class AuthService extends WalletService {
     const email = opts.email
     const newPassword = opts.newPassword
     const newKeypair = Keypair.random()
+    const currentPassword = opts.currentPassword
     const envelope = await TxHelper.createChangePasswordTx({
       signerPublicKey: this._publicKey,
       accountId: this._accountId,
@@ -75,7 +76,8 @@ export class AuthService extends WalletService {
       envelope,
       newKeypair,
       newPassword,
-      email
+      email,
+      currentPassword
     })
     await this.updateWallet(options)
 
@@ -147,6 +149,7 @@ export class AuthService extends WalletService {
     const keypair = opts.newKeypair
     const newPassword = opts.newPassword
     const email = opts.email
+    const currentPassword = opts.currentPassword
 
     const keychainData = { seed: keypair.secret(), accountId: keypair.accountId() }
     const transactionAttributes = { data: { attributes: { envelope } } }
@@ -170,7 +173,8 @@ export class AuthService extends WalletService {
       factorAttributes,
       kdfAttributes,
       transactionAttributes,
-      walletAttributes
+      walletAttributes,
+      currentPassword
     }
   }
 }

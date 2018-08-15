@@ -2,12 +2,18 @@ import InputField from '../fields/InputField.vue'
 import SelectField from '../fields/SelectField.vue'
 import TextareaField from '../fields/TextareaField'
 import DateField from '../fields/DateField'
+import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+import DateFieldFlatpickr from '@/vue/common/fields/DateFieldFlatpickr'
+import TickField from '@/vue/common/fields/TickField'
+import RadioField from '@/vue/common/fields/RadioField'
 
 import ImageInput from '../DEPRECATED.inputs/ImageInput.vue'
 import SubmitterMixin from './submitter.mixin'
 
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { i18n } from '../../../js/i18n'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { i18n } from '@/js/i18n'
 
 export default {
   mixins: [SubmitterMixin],
@@ -21,9 +27,15 @@ export default {
   components: {
     InputField,
     SelectField,
+    SelectFieldCustom,
+    InputFieldUnchained,
+    SelectFieldUnchained,
     TextareaField,
     DateField,
-    ImageInput
+    ImageInput,
+    DateFieldFlatpickr,
+    TickField,
+    RadioField
   },
 
   methods: {
@@ -46,7 +58,7 @@ export default {
       return true
     },
     clear (exeptions = []) {
-      this.errors.clear()
+      this.$validator.reset()
       for (const key in this.form) {
         if (!exeptions.includes(key)) {
           this.form[key] = ''

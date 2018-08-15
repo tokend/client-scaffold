@@ -1,25 +1,22 @@
 <template>
-  <div class="auth-page md-layout md-alignment-center-center">
-    <md-card>
+  <div>
+    <h2 class="auth-page__form-title">{{ i18n.lbl_almost_done() }}</h2>
 
-      <md-card-header>
-        <div class="md-title">Almost done</div>
-      </md-card-header>
+    <p class="auth-page__form-descr">
+      {{ i18n.auth_confirmation_email_path_1() }}
+      <span class="auth-page__form-descr-info">{{ email }}</span>
+      {{ i18n.auth_confirmation_email_path_2() }}
+    </p>
+    <p class="auth-page__form-descr">{{ i18n.auth_check_span_folder() }}</p>
 
-      <md-card-content>
-
-        <p>A confirmation email was sent to <span class="info">{{ email }}</span>. Please check your inbox to verify your account</p>
-        <p>If you didn't receive a confirmation email, check your spam folder.</p>
-
-        <div class="md-layout md-alignment-center-right">
-          <md-button @click="requestNew"
-                    :disabled="isButtonDisabled">
-            Request new email
-          </md-button>
-        </div>
-
-      </md-card-content>
-    </md-card>
+    <div class="auth-page__submit">
+      <button @click="requestNew"
+              class="auth-page__submit-btn"
+              :disabled="isButtonDisabled"
+              v-ripple>
+        {{ i18n.lbl_request_new_email() }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -27,6 +24,7 @@
   import form from '../common/mixins/form.mixin'
   import { EventDispatcher } from '../../js/events/event_dispatcher'
   import { emailService } from '../../js/services/email.service'
+  import { i18n } from '../../js/i18n'
 
   export default {
     name: 'email-resend',
@@ -35,8 +33,15 @@
 
     data () {
       return {
+        i18n,
         walletId: '',
         email: ''
+      }
+    },
+
+    beforeCreate () {
+      if (!this.$route.query.walletId || !this.$route.query.email) {
+        this.$router.push('/login')
       }
     },
 
@@ -50,10 +55,10 @@
         this.disable()
         try {
           await emailService.sendResendEmailRequest(this.walletId)
-          EventDispatcher.dispatchShowSuccessEvent('Request successfully sent. Please check your inbox')
+          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_request_sent())
         } catch (error) {
           console.error(error)
-          EventDispatcher.dispatchShowErrorEvent('Email already confirmed')
+          EventDispatcher.dispatchShowErrorEvent(i18n.auth_email_confirmed())
         }
         this.enable()
       }

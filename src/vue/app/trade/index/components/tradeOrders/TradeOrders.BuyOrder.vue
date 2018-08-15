@@ -1,68 +1,72 @@
 <template>
-  <form class="md-layout" @submit.prevent="submit">
-    <md-card class="md-layout-item md-size-100 md-small-size-100 md-elevation-0">
-      <md-card-header>
+  <div class="buy-order__card app__card">
+    <form @submit.prevent="submit">
+      <div class="app__card-header">
         <div class="md-title">{{ i18n.trd_create_buy_order() }}</div>
-      </md-card-header>
+      </div>
 
-      <md-card-content>
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field
-              class="md-layout-item"
-              v-model.trim="form.price"
-              :label="i18n.trd_price_per({ asset: assets.base })"
-              name="order-buy-price"
-              v-validate="'required'"
-              type="number"
-              :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
-                            Number(form.price) < 0)  ? i18n.trd_validate_minimal_price() : '')"
-            />
-          </div>
+      <div class="app__card-content">
+        <div class="app__form-row">
+          <input-field-unchained
+            class="md-layout-item"
+            v-model.trim="form.price"
+            :label="i18n.trd_price_per({ asset: assets.base })"
+            name="order-buy-price"
+            v-validate="'required'"
+            :whiteAutofill="true"
+            type="number"
+            :step="config.MINIMAL_NUMBER_INPUT_STEP"
+            :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
+                          Number(form.price) < 0)  ? i18n.trd_validate_minimal_price() : '')"
+          />
         </div>
 
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field
-              class="md-layout-item"
-              v-model.trim="form.amount"
-              :label="i18n.trd_amount_for({ asset: assets.base })"
-              name="order-buy-amount"
-              v-validate="'required'"
-              type="number"
-              :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount() : ''"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            class="md-layout-item"
+            v-model.trim="form.amount"
+            :label="i18n.trd_amount_for({ asset: assets.base })"
+            name="order-buy-amount"
+            v-validate="'required'"
+            :whiteAutofill="true"
+            type="number"
+            :step="config.MINIMAL_NUMBER_INPUT_STEP"
+            :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount({ value: config.MINIMAL_NUMBER_INPUT_STEP }) : ''"
+          />
         </div>
 
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <input-field
-              class="md-layout-item"
-              :value="i18n.c(form.quoteAmount)"
-              :label="i18n.trd_total_value({ value: assets.quote })"
-              name="order-buy-total"
-              :disabled="true"
-            />
-          </div>
+        <div class="app__form-row">
+          <input-field-unchained
+            class="md-layout-item"
+            :value="i18n.c(form.quoteAmount)"
+            :label="i18n.trd_total_value({ value: assets.quote })"
+            name="order-buy-total"
+            :readonly="true"
+          />
         </div>
-      </md-card-content>
+      </div>
 
-      <md-card-actions>
-        <md-button type="submit" class="md-primary" :disabled="isPending">Buy</md-button>
-      </md-card-actions>
-    </md-card>
-  </form>
+      <div class="app__card-actions">
+        <button v-ripple
+                type="submit"
+                class="app__form-submit-btn"
+                :disabled="!+form.quoteAmount || isPending">
+          {{ i18n.lbl_buy() }}
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
-  import InputField from '../../../../../common/fields/InputField'
-  import FormMixin from '../../../../../common/mixins/form.mixin'
+  import InputField from '@/vue/common/fields/InputField'
+  import FormMixin from '@/vue/common/mixins/form.mixin'
   import OrderMakerMixin from '../order-maker.mixin'
 
-  import { confirmAction } from '../../../../../../js/modals/confirmation_message'
-  import { multiply } from '../../../../../../js/utils/math.util'
-  import { i18n } from '../../../../../../js/i18n'
+  import { confirmAction } from '@/js/modals/confirmation_message'
+  import { multiply } from '@/js/utils/math.util'
+  import { i18n } from '@/js/i18n'
+  import config from '@/config'
 
   export default {
     name: 'trade-orders-buy',
@@ -80,14 +84,15 @@
         },
         allowToValidPrice: false,
         allowToValidAmount: false,
-        i18n
+        i18n,
+        config
       }
     },
     created () {
     },
     computed: {
       lessThanMinimumAmount () {
-        return Number(this.form.amount) < 0.000001
+        return Number(this.form.amount) < config.MINIMAL_NUMBER_INPUT_STEP
       }
     },
     methods: {
@@ -139,4 +144,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .buy-order__card {
+    .app__card-actions {
+      justify-content: flex-start;
+    }
+  }
 </style>

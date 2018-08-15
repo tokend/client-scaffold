@@ -1,103 +1,107 @@
 <template>
   <div class="mass-transfer">
-     <md-card class="mass-transfer__card">
-       <md-card-header>
-         <div class="md-title">{{ i18n.tr_create_mass() }}</div>
-       </md-card-header>
+      <!-- <md-card-header>
+        <div class="md-title">{{ i18n.tr_create_mass() }}</div>
+      </md-card-header> -->
+      <div class="mass-transfer__desc app__page-content-wrp">
+        <h2 class="app__page-heading mass-transfers__page-heading">{{ i18n.tr_create_mass() }}</h2>
 
-       <md-card-content>
-         <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about() }}</p>
+        <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about() }}</p>
 
-         <file-field class="mass-transfer__upload-input"
-                     v-model="documents.transfers"
-                     label="Select File(s)"
-                     accept=".csv"
-                     id="preissuance-field"
-         />
+        <file-field class="mass-transfer__upload-input"
+                    v-model="documents.transfers"
+                    label="Select File(s)"
+                    accept=".csv"
+                    id="preissuance-field"
+        />
+        <template v-if="transfers.length">
+          <p class="mass-transfer__total">
+            {{ i18n.tr_total_amount() }}:
+            <template v-for="(amount, asset, i) in totals.amounts">
+              <template v-if="Object.keys(totals.amounts).length > 1"><br>{{ i+1 }}.</template>
+              <span class="mass-transfer__amount">{{ amount }}</span>
+              <span class="mass-transfer__asset">{{ asset }}</span>
+            </template>
+          </p>
 
-         <template v-if="transfers.length">
-           <p class="mass-transfer__total">
-             {{ i18n.tr_total_amount() }}:
-             <template v-for="(amount, asset, i) in totals.amounts">
-               <template v-if="Object.keys(totals.amounts).length > 1"><br>{{ i+1 }}.</template>
-               <span class="mass-transfer__amount">{{ amount }}</span>
-               <span class="mass-transfer__asset">{{ asset }}</span>
-             </template>
-           </p>
+          <p class="mass-transfer__total">
+            {{ i18n.tr_total_source_fee() }}:
+            <template v-for="(amount, asset, i) in totals.sourceFees">
+              <template v-if="Object.keys(totals.sourceFees).length > 1"><br>{{ i+1 }}.</template>
+              <span class="mass-transfer__amount">{{ amount }}</span>
+              <span class="mass-transfer__asset">{{ asset }}</span>
+            </template>
+          </p>
 
-           <p class="mass-transfer__total">
-             {{ i18n.tr_total_source_fee() }}:
-             <template v-for="(amount, asset, i) in totals.sourceFees">
-               <template v-if="Object.keys(totals.sourceFees).length > 1"><br>{{ i+1 }}.</template>
-               <span class="mass-transfer__amount">{{ amount }}</span>
-               <span class="mass-transfer__asset">{{ asset }}</span>
-             </template>
-           </p>
-
-           <p class="mass-transfer__total">
-             {{ i18n.tr_total_recipient_fee() }}:
-             <template v-for="(amount, asset, i) in totals.destinationFees">
-               <template v-if="Object.keys(totals.destinationFees).length > 1"><br>{{ i+1 }}.</template>
-               <span class="mass-transfer__amount">{{ amount }}</span>
-               <span class="mass-transfer__asset">{{ asset }}</span>
-             </template>
-           </p>
-         </template>
-       </md-card-content>
-       <md-card-actions md-alignment="space-between">
-         <md-button class="md-primary"
+          <p class="mass-transfer__total">
+            {{ i18n.tr_total_recipient_fee() }}:
+            <template v-for="(amount, asset, i) in totals.destinationFees">
+              <template v-if="Object.keys(totals.destinationFees).length > 1"><br>{{ i+1 }}.</template>
+              <span class="mass-transfer__amount">{{ amount }}</span>
+              <span class="mass-transfer__asset">{{ asset }}</span>
+            </template>
+          </p>
+        </template>
+        <md-card-actions md-alignment="space-between" class="mass-transfer__actions">
+          <md-button class="md-primary mass-transfer__confirm-btn"
                     :disabled="!transfers.length || isPending"
                     @click="submit"
-         >
-           {{ i18n.lbl_confirm() }}
-         </md-button>
-         <md-button class="md-primary" @click="isHowToOpened = true">
-           {{ i18n.tr_about_csv() }}
-         </md-button>
-       </md-card-actions>
+          >
+            {{ i18n.lbl_confirm() }}
+          </md-button>
+          <md-button class="md-primary" @click="isHowToOpened = true">
+            {{ i18n.tr_about_csv() }}
+          </md-button>
+        </md-card-actions>
+      </div>
 
-       <template v-if="transfers.length">
-         <md-table>
-           <md-table-row>
-             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_status() }}</md-table-head>
-             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
-             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_email() }}</md-table-head>
-             <md-table-head class="mass-transfer__table-cell">
-               {{ i18n.lbl_source_fees() }}
-               {{ i18n.lbl_fixed_percent() }}
-             </md-table-head>
-             <md-table-head class="mass-transfer__table-cell">
-               {{ i18n.lbl_destination_fees() }}
-               {{ i18n.lbl_fixed_percent() }}
-             </md-table-head>
-           </md-table-row>
-           <template v-for="transfer in transfers">
-             <md-table-row>
-               <md-table-cell class="mass-transfer__table-cell"
-                             :class="{ 'mass-transfer__table-cell--error':
-                                        transfer.status && transfer.status !== 'Success'
-                                     }"
-               >
-                 {{ transfer.status || '--' }}
-               </md-table-cell>
-               <md-table-cell class="mass-transfer__table-cell">
-                 {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
-               </md-table-cell>
-               <md-table-cell class="mass-transfer__table-cell">{{ transfer.email }}</md-table-cell>
-               <md-table-cell class="mass-transfer__table-cell">
-                 {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
-                 {{ transfer.sourceFees.feeAsset }}
-               </md-table-cell>
-               <md-table-cell class="mass-transfer__table-cell">
-                 {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
-                 {{ transfer.destinationFees.feeAsset }}
-               </md-table-cell>
-             </md-table-row>
-           </template>
-         </md-table>
+      <div class="mass-transfer__list-wrapper" v-if="transfers.length">
+        <div class="mass-transfer__list" v-table-scroll-shadow>
+          <div class="mass-transfer__list-header">
+            <div class="mass-transfer__list-header-item mass-transfer__list-header-item--status">{{ i18n.lbl_status() }}</div>
+            <div class="mass-transfer__list-header-item mass-transfer__list-header-item--amount">{{ i18n.lbl_amount() }}</div>
+            <div class="mass-transfer__list-header-item mass-transfer__list-header-item--email">{{ i18n.lbl_email() }}</div>
+            <div class="mass-transfer__list-header-item mass-transfer__list-header-item--source-fees">
+              {{ i18n.lbl_source_fees() }}
+              {{ i18n.lbl_fixed_percent() }}</div>
+            <div class="mass-transfer__list-header-item mass-transfer__list-header-item--destination-fees">
+              {{ i18n.lbl_destination_fees() }}
+              {{ i18n.lbl_fixed_percent() }}
+            </div>
+          </div>
+          <div class="mass-transfer__list-body">
+            <div class="mass-transfer__list-body-elem"
+                v-for="(transfer, i) in transfers"
+                :key="`activity-item-${i}`">
+              <div class="mass-transfer__list-body-row">
+                <div :title="transfer.status"
+                     class="mass-transfer__list-body-item mass-transfer__list-body-item--status"
+                     :class="{ 'mass-transfer__table-cell--error':
+                                      transfer.status && transfer.status !== 'Success'
+                                    }"
+                     >
+                  {{ transfer.status || '--' }}
+                </div>
+                <div :title="transfer.amount + transfer.asset" class="mass-transfer__list-body-item mass-transfer__list-body-item--amount">
+                  {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
+                </div>
+                <div :title="transfer.email" class="mass-transfer__list-body-item mass-transfer__list-body-item--email">
+                  {{ transfer.email }}
+                </div>
+                <div :title="transfer.sourceFees.feeAsset" class="mass-transfer__list-body-item mass-transfer__list-body-item--source-fees">
+                  {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
+                  {{ transfer.sourceFees.feeAsset }}
+                </div>
 
-       </template>
-     </md-card>
+                <div :title="transfer.destinationFees.feeAsset" class="mass-transfer__list-body-item mass-transfer__list-body-item--destination-fees">
+                  {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
+                  {{ transfer.destinationFees.feeAsset }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <md-dialog :md-active.sync="isHowToOpened">
       <md-dialog-title>{{ i18n.tr_about_csv() }}</md-dialog-title>
       <div class="app__dialog-inner">
@@ -243,7 +247,7 @@
             sourcePaysForDest: false,
             subject: ''
           })))
-          EventDispatcher.dispatchShowSuccessEvent(i18n.tr_successful())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.transfer_successful())
         } catch (e) {
           const messages = ErrorHandler.deriveTxErrorMessages(e)
           if (!messages || !messages.length) {
@@ -306,21 +310,12 @@
 </script>
 
 <style lang="scss">
-  @import '../../../scss/variables';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .mass-transfer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    flex-direction: column;
   }
-
-
-  .mass-transfer__card {
-    max-width: 1200px;
-    margin: auto;
-    width: 100%;
-  }
-
 
   .mass-transfer__table-cell {
     white-space: nowrap;
@@ -352,6 +347,10 @@
     margin-bottom: 1rem;
   }
 
+  .mass-transfer__confirm-btn {
+    margin-left: -23px;
+  }
+
   .mass-transfer__total {
     margin-bottom: 1rem;
   }
@@ -366,5 +365,64 @@
 
   .mass-transfer__asset {
     font-weight: bold;
+  }
+
+  .mass-transfer__list-body-elem {
+    @include box-shadow();
+    background-color: #fff;
+    &:not(:last-child) {
+      margin-bottom: 6px;
+    }
+  }
+
+  .mass-transfers__page-heading,
+  .mass-transfer__text-paragraph{
+    margin-bottom: 5.5 * $point;
+  }
+
+  .mass-transfer__actions {
+    margin-top: 5.5 * $point;
+  }
+
+  .mass-transfer__list-header,
+  .mass-transfer__list-body-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .mass-transfer__list-header-item,
+  .mass-transfer__list-body-item {
+    padding: 6px 32px 6px 24px;
+  }
+
+  .mass-transfer__list-header-item--status,
+  .mass-transfer__list-body-item--status {
+    width: 13%;
+  }
+
+  .mass-transfer__list-body-item--amount,
+  .mass-transfer__list-header-item--amount {
+    width: 13%;
+  }
+
+  .mass-transfer__list-body-item--asset,
+  .mass-transfer__list-header-item--asset {
+    width: 27%;
+  }
+
+  .mass-transfer__list-body-item--email,
+  .mass-transfer__list-header-item--email {
+    width: 25%;
+  }
+
+  .mass-transfer__list-body-item--source-fees,
+  .mass-transfer__list-header-item--source-fees {
+    width: 30%;
+  }
+
+  .mass-transfer__list-body-item--destination-fees,
+  .mass-transfer__list-header-item--destination-fees {
+    width: 30%;
   }
 </style>

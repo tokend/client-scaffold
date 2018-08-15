@@ -45,7 +45,8 @@ export default {
         "required": true,
         "validate": "required",
         "disableAfter": new Date().toString(),
-        "disableBefore": ""
+        "disableBefore": "",
+        "enableTime": false
       }
     ],
     [
@@ -58,7 +59,8 @@ export default {
         "required": true,
         "disableAfter": "",
         "disableBefore": new Date().toString(),
-        "validate": "required"
+        "validate": "required",
+        "enableTime": false
       }
     ],
     [
