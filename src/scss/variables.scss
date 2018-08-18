@@ -93,6 +93,7 @@ $col-field-text-unfocused: $col-primary-inactive;
 $col-field-icon: $col-primary;
 $col-field-autofill: $_white;
 $col-field-group-label: $col-primary;
+$col-field-background: $_thinGray;
 $col-select-field-hover: rgba($col-primary, .1);
 $col-file-field-icon-text: $_white;
 $col-radio-field-border: $col-primary;
@@ -153,8 +154,8 @@ $col-loader-text: $col-primary;
 $col-loader-icon: $col-primary-inactive;
 
 // snackbar colors:
-$col-snackbar-color: $col-primary-txt;
-$col-snackbar-color-hover: rgba($col-primary, .2);
+$col-snackbar-text: $col-primary-txt;
+$col-snackbar-text-hover: rgba($col-primary, .2);
 
 // use as multiplier for more convenient way to calculating sizes
 $point: 0.625rem; /* 10px in case of 1rem=16px */
