@@ -36,11 +36,11 @@ export default {
 .requests__tabs {
   .md-title,
   .md-table-cell-container {
-    color: $col-md-primary !important;
+    color: $col-tabs-txt !important;
   }
 
   .md-table-head-label {
-    color: $col-md-primary-inactive !important;
+    color: rgba($col-tabs-txt, .7) !important;
   }
 
   .md-tabs-navigation {

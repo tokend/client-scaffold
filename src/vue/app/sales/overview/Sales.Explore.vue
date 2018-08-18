@@ -131,7 +131,7 @@
 
   .sales-overview__card-wrapper {
     display: block;
-    background: $col-content-block;
+    background: $col-block;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
     border: none;
     flex: 1;
@@ -142,17 +142,19 @@
   }
 
   .sales-overview__btn {
-    color: $col-active;
+    color: $col-text-accented;
   }
 
   .sales-overview__no-sales-found-msg {
     padding: 10px 40px;
     text-align: center;
     margin: 0 auto;
+
     .icon {
       margin-bottom: 20px;
+
       i {
-        font-size: $material-icon-xx-super-big;
+        font-size: $size-icon-super-big;
         line-height: 1;
       }
     }

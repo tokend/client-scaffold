@@ -53,18 +53,18 @@
   @import '../../../../scss/mixins';
 
   .invest-progress-bar {
-    color: $col-md-primary;
+    color: $col-fund-card-text;
   }
 
   .invest-progress-bar__container {
-    background: $col-pb-line;
+    background: $col-fund-card-progress-background;
     height: 0.2rem;
     margin: .5rem 0;
     width: 100%;
   }
 
   .invest-progress-bar__progress {
-    background: $col-md-primary-secondary;
+    background: $col-fund-card-progress-color;
     height: 100%;
   }
 
@@ -74,9 +74,10 @@
   }
 
   .invest-progress-bar__detail {
-    font-size: $fs-tip;
+    font-size: .8rem;
+
     .invest-progress-bar__detail-value {
-      color: $col-md-primary-secondary;
+      color: $col-text-accented;
     }
   }
 </style>

@@ -6,7 +6,7 @@
         <span class="tfa-settings__switch-text"> {{ i18n.set_tfa_enable() }}</span>
         <md-switch class="md-primary" @change="changeState" :value="tfaState"/>
       </div>
-      <p class="state-banner__message" v-if="switchTriggered" >
+      <p class="tfa-settings__password-message" v-if="switchTriggered">
         <md-icon class="md-icon-size-065x">verified_user</md-icon>
         Enter password to apply changes
       </p>
@@ -20,9 +20,9 @@
         :label="i18n.lbl_pwd()"
         :togglePassword="true"
       />
-    <button v-ripple 
+    <button v-ripple
             :disabled="!switchTriggered"
-            @click="save" 
+            @click="save"
             class="app__button-flat tfa-settings__submit-btn"> {{ i18n.lbl_ok() }} </button>
     </div>
     <div class="tfa-settings__qr-wrapper"
@@ -237,9 +237,21 @@
     align-items: center;
   }
 
+  .tfa-settings__password-message {
+    color: $col-text-page-explanations;
+    margin-bottom: 16px;
+
+    i {
+      font-size: 18px !important;
+      margin-top: -2px;
+      margin-right: 5px;
+      color: $col-text-page-explanations !important;
+    }
+  }
+
   .tfa-settings__title {
     margin-bottom: 1rem;
-    color: $col-md-primary;
+    color: $col-text-page-heading;
   }
 
   .tfa-settings__switch-text {

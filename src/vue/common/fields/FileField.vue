@@ -211,7 +211,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
+  @import "./scss/fields-variables";
   @import '~@scss/mixins';
 
   .file-field__outer {
@@ -227,8 +227,8 @@
   }
 
   .file-field__label {
-    font-size: $fs-tip;
-    color: $col-md-primary-inactive;
+    font-size: .8rem;
+    color: $field-color-unfocused;
     margin-bottom: 8px;
   }
 
@@ -238,7 +238,7 @@
   }
 
   .file-field__icon {
-    color: $col-md-primary-txt !important;
+    color: $col-button-raised-txt !important;
     margin-right: .5rem;
     position: relative;
     bottom: .05rem;
@@ -257,14 +257,14 @@
     position: relative;
     left: 1rem;
     top: .85rem;
-    color: $col-md-primary-inactive
+    color: $field-color-unfocused
   }
 
   .link-btn {
     border: none;
     background: none;
     cursor: pointer;
-    color: $col-md-primary;
+    color: $field-color-text;
 
     &:hover {
       & > span {
@@ -284,7 +284,7 @@
     width: 100%;
 
     &:hover {
-      border-color: $col-md-primary;
+      border-color: $field-color-text;
     }
   }
 
@@ -311,14 +311,14 @@
     width: 100%;
 
     .title {
-      color: $col-md-primary;
+      color: $field-color-text;
       margin-bottom: 10px;
     }
   }
 
   .image-input__note {
     color: $col-unfocused;
-    font-size: $fs-tip;
+    font-size: .8rem;
     line-height: 160%;
   }
 

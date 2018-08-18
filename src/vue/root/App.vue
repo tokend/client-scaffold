@@ -132,11 +132,6 @@
   @import '../../scss/mixins';
   @import '../../scss/variables';
 
-  .md-app {
-    // NOTE: temp. disabled
-    // height: 100%;
-  }
-
   .md-app-content {
     padding-top: 40px;
   }
@@ -158,13 +153,13 @@
     z-index: 10;
 
     @include respond-to(small) {
-      background-color: $col-md-background !important;
+      background-color: $col-sidebar-background-media-small !important;
     }
   }
 
   .app__sidebar-icon {
     @include respond-to(small) {
-      background-color: $col-md-primary;
+      background-color: $col-sidebar-icon;
       margin-right: 0;
       margin-left: 8px !important;
     }

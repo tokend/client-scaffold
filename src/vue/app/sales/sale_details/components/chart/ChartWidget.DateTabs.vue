@@ -83,7 +83,7 @@
     white-space: nowrap;
     display: inline-block;
     margin-right: 1 * $point;
-    color: $col-md-primary;
+    color: $col-text-field-hint;
   }
 
   .tab-btn {
@@ -94,12 +94,12 @@
     position: relative;
     border: none;
     font-size: 12px;
-    color: rgba($col-md-primary, .6);
+    color: rgba($col-text-field-hint, .6);
     background-color: transparent;
     font-weight: 500;
 
     &.selected {
-      color: $col-md-primary;
+      color: $col-text-field-hint;
       font-weight: 700;
     }
   }

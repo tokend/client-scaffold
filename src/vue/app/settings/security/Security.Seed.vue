@@ -2,7 +2,7 @@
   <div class="settings-seed">
     <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
     <div class="account-seed__content app__card-content">
-      <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
+      <p class="app__page-explanations">{{ i18n.set_seed_description() }}</p>
 
       <clipboard-field class="account-seed__clipboard"
         :value="accountSeed"

@@ -211,25 +211,6 @@ export default {
     }
   }
 
-  .token-icon {
-    width: 142px;
-    height: 142px;
-    border-radius: 50%;
-    font-size: 48px;
-    color: #fff;
-    background-color: #ccc;
-    margin-right: 27px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-
-    @include respond-to(small) {
-      margin-right: 0;
-      margin-bottom: 12px;
-    }
-  }
-
   .details-column {
     margin-right: .2rem;
   }
@@ -288,7 +269,8 @@ export default {
     @include button();
     @include button-flat();
 
-    background: rgba($col-md-primary, .1);
+    color: $col-list-btn-details-text;
+    background: $col-list-btn-details-background;
     font-size: 10px;
     border-radius: 4px;
     padding: 8px;
@@ -297,7 +279,7 @@ export default {
   .requests__list-body-elem {
     @include box-shadow();
 
-    background-color: #fff;
+    background-color: $col-list-block-background;
 
     @include respond-to(medium) {
       min-width: 670px;
@@ -314,7 +296,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: $col-md-primary;
+    color: $col-list-text;
     display: flex;
     align-items: center;
   }
@@ -342,7 +324,7 @@ export default {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      color: #fff;
+      color: $col-list-status-label-color;
       font-size: 10px;
       line-height: 18px;
     }
@@ -356,18 +338,18 @@ export default {
   .requests__list-body-elem--rejected:before,
   .requests__list-body-elem--permanentlyRejected:before {
     content: '\2715';
-    background-color: $col-md-accent;
+    background-color: $col-list-status-label-color-rejected;
     padding: 0 4px;
   }
 
   .requests__list-body-elem--pending:before {
-    background-color: #ffb454;
+    background-color: $col-list-status-label-color-pending;
     content: '';
   }
 
   .requests__list-body-elem--approved:before {
     content: '\2713';
-    background-color: #51ca90;
+    background-color: $col-list-status-label-color-success;
     padding: 0 3px;
   }
 

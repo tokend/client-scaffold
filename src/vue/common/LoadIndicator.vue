@@ -53,7 +53,7 @@
   }
 
   .load-indicator__runner {
-    background: $col-active;
+    background: $col-text-accented;
     animation: run 3s linear infinite;
     border-radius: 3%;
     height: 3px;

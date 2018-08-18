@@ -53,14 +53,14 @@
 </script>
 
 <style scoped lang="scss">
-  @import '../../../scss/variables';
+  @import "./scss/fields-variables";
 
   .select {
     position: relative;
   }
 
   .select__selected {
-    color: $col-md-primary;
+    color: $field-color-text;
     white-space: nowrap;
     font-size: 18px;
     display: flex;
@@ -70,7 +70,7 @@
   .select__selected-icon {
     margin: 0;
     will-change: transform;
-    color: $col-md-primary !important;
+    color: $field-color-text !important;
     transition: .2s ease-out;
     margin-top: -2px;
 
@@ -88,7 +88,7 @@
     left: 0;
     min-width: 170px;
     top: calc(100% + 4px);
-    background-color: #fff;
+    background-color: $col-block;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     border-radius: 3px;
     z-index: 5;
@@ -110,16 +110,16 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(58, 65, 128, .1);
+      background-color: $col-select-field-hover;
     }
   }
 
   .select__label {
-    color: $col-md-primary-inactive;
+    color: $field-color-unfocused;
     font-size: 12px;
   }
 
   .select__list-item--selected {
-    color: $col-md-primary;
+    color: $field-color-text;
   }
 </style>

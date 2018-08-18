@@ -121,7 +121,7 @@
   .chart-container__title {
     font-weight: bold;
     font-size: 1.6 * $point;
-    color: $col-md-primary;
+    color: $col-chart-tabs-title;
     opacity: 1;
     padding: 0;
     margin: 0 0 1 * $point 0;
@@ -129,9 +129,5 @@
     .chart-container__header &:first-child {
       margin-top: 0;
     }
-  }
-
-  .chart-container__user-balance {
-    color: $col-text-secondary;
   }
 </style>

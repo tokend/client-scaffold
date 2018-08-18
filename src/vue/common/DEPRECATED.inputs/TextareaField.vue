@@ -39,7 +39,7 @@
   .textarea-field {
     label {
       // color: $col-unfocused;
-      font-size: $fs-root;
+      font-size: 1rem;
       display: block;
       margin-bottom: 5px;
     }
@@ -47,18 +47,18 @@
     textarea {
       background: transparent;
       border-radius: 3px;
-      caret-color: $col-active;
+      caret-color: $col-text-accented;
       resize: vertical;
       padding: 5px;
       width: 100%;
 
       &:focus {
-        border-color: $col-active;
+        border-color: $col-text-accented;
       }
 
       &.danger,
       &.danger:focus {
-        border-color: $col-danger;
+        border-color: $col-accent;
       }
     }
   }
