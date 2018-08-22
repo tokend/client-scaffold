@@ -16,7 +16,7 @@
               v-ripple>
         {{ i18n.lbl_request_new_email() }}
       </button>
-      <router-link class="auth-page__submit-btn"
+      <router-link class="auth-page__submit-btn button-flat"
                    :to="vueRoutes.login"
                    tag="button">
         {{ i18n.lbl_continue() }}
