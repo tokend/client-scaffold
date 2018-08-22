@@ -69,15 +69,23 @@
 
 .auth-page__submit {
   width: 100%;
+  margin-top: 48px;
+  margin-bottom: 55px;
 }
 
 .auth-page__submit-btn {
   @include button-raised();
 
   width: 200px;
-  margin-top: 48px;
   margin-right: auto;
-  margin-bottom: 75px;
+  margin-bottom: 20px;
+}
+
+.auth-page__submit-btn-secondary {
+  @include button-flat();
+
+  width: 150px;
+  margin-left: 20px;
 }
 
 .auth-page__tips {
@@ -116,8 +124,4 @@
 
 .auth-page__form-descr-info {
   color: $col-text-accented;
-}
-
-.button-flat {
-  @include button-flat();
 }
