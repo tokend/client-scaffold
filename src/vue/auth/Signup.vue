@@ -83,8 +83,6 @@
   import { authService } from '../../js/services/auth.service'
   import { i18n } from '../../js/i18n'
 
-  // import { store } from '../../vuex/index'
-
   export default {
     mixins: [formMixin],
 
