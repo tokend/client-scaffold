@@ -34,6 +34,7 @@ $col-unfocused: rgba(0, 0, 0, .54);
 $col-block: $_white;
 
 $col-app-background: $_gray;
+$col-app-content-background: $col-background;
 $col-sidebar-background: $_athensGray;
 $col-sidebar-background-media-small: $_thinGray;
 $col-sidebar-icon: $col-primary;
@@ -98,6 +99,7 @@ $col-select-field-hover: rgba($col-primary, .1);
 $col-file-field-icon-text: $_white;
 $col-radio-field-border: $col-primary;
 $col-radio-field-background: $_white;
+$col-checkbox-field-background: $col-primary;
 $col-text-field-hint: $col-primary;
 $col-text-field-hint-inactive: $col-primary-inactive;
 

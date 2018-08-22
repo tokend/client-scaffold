@@ -53,7 +53,7 @@ html,body {
   &,
   & main,
   & .md-app-content {
-    background-color: $col-background;
+    background-color: $col-app-content-background;
   }
 
   & .md-app-content {
@@ -74,7 +74,7 @@ html,body {
   }
 
   .md-switch.md-theme-default.md-checked.md-primary .md-switch-thumb {
-    background-color: $col-text-field-hint;
+    background-color: $col-checkbox-field-background;
   }
 
   p.app__page-explanations {
