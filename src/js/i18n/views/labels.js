@@ -36,6 +36,7 @@ export default {
   lbl_almost_done: 'Almost done',
   lbl_account_recovery: 'Account recovery',
   lbl_request_new_email: 'Request new email',
+  lbl_continue: 'Continue',
   lbl_get_started: 'Get started',
   lbl_trade: PAGES_NAMES.trade,
   lbl_create_token: 'Create token',

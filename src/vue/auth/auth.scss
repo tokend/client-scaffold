@@ -117,3 +117,7 @@
 .auth-page__form-descr-info {
   color: $col-md-primary-secondary;
 }
+
+.button-flat {
+  @include button-flat();
+}
