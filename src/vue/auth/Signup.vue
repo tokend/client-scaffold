@@ -83,6 +83,8 @@
   import { authService } from '../../js/services/auth.service'
   import { i18n } from '../../js/i18n'
 
+  // import { store } from '../../vuex/index'
+
   export default {
     mixins: [formMixin],
 
@@ -109,7 +111,8 @@
           const walletId = await authService.signup(this.form, recoveryKeypair)
           this.enable()
           await showRememberSeedMessage(recoveryKeypair.secret())
-          this.goShowEmail(walletId)
+          this.goShowEmail()
+          this.setWalledId(walletId)
         } catch (error) {
           switch (error.constructor) {
             case errors.ConflictError:
@@ -139,9 +142,13 @@
         return Promise.resolve(true)
       },
 
-      goShowEmail (walletId) {
-        const route = { ...vueRoutes.email, query: { walletId, email: this.form.email } }
+      goShowEmail () {
+        const route = { ...vueRoutes.email, query: { email: this.form.email } }
         this.$router.push(route)
+      },
+
+      setWalledId (wallet) {
+        this.$store.dispatch('SET_WALLET_ID', wallet)
       }
     }
   }
