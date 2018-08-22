@@ -330,7 +330,7 @@
 
   .chart__x-axis {
     text {
-      font-size: $fs-root;
+      font-size: 1rem;
       fill: $col-chart-text;
     }
     .domain { display: none; }
@@ -338,7 +338,7 @@
 
   .chart__y-axis {
     text {
-      font-size: $fs-root;
+      font-size: 1rem;
       fill: $col-chart-text;
     }
     line {
@@ -373,13 +373,13 @@
   }
 
   .chart__tip-text-price {
-    font-size: $fs-root;
+    font-size: 1rem;
     fill: $col-chart-line;
     font-weight: 800;
   }
 
   .chart__tip-text-time {
-    font-size: $fs-tip;
+    font-size: .8rem;
     fill: $col-chart-line;
   }
 

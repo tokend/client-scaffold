@@ -48,7 +48,7 @@
     min-width: 48rem;
     .md-title,
     .md-table-cell-container {
-      color: $col-md-primary !important;
+      color: $col-text-page-heading !important;
     }
 
     .md-tabs-navigation {

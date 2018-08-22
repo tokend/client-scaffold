@@ -124,9 +124,4 @@
       margin-top: 0;
     }
   }
-
-  .chart-container__user-balance {
-    font-size: 0.75rem;
-    color: $col-text-secondary;
-  }
 </style>

@@ -62,7 +62,7 @@
   }
 
   .crowdfund-token__name-wrapper {
-    color: $col-md-primary;
+    color: $col-token-code;
   }
 
   .crowdfund-token__icon {
@@ -70,7 +70,7 @@
     height: 6rem;
     margin-right: 2rem;
     border-radius: 50%;
-    border: 1px solid $col-primary;
+    border: 1px solid $col-token-code-border;
   }
 
   .crowdfund-token__name {

@@ -96,6 +96,6 @@
     text-align: center;
     font-size: 24px;
     margin: 24px 0;
-    color: $col-md-primary;
+    color: $col-no-data-message-text;
   }
 </style>

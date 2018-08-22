@@ -49,7 +49,7 @@
   font-size: 32px;
   font-weight: 400;
   margin-bottom: 24px;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
 }
 
 .auth-page__form-title--center { text-align: center; }
@@ -82,16 +82,16 @@
 
 .auth-page__tips {
   margin-right: auto;
-  color: $col-md-primary;
+  color: $col-text-field-hint;
 }
 
 .auth-page .auth-page__tip-link { // WARN: icreased weight for break vue-material styles
-  color: $col-md-primary-secondary !important;
+  color: $col-text-accented !important;
   text-decoration: underline;
 }
 
 .auth-page__title {
-  color: $white;
+  color: $col-auth-page-title;
   font-size: 56px;
   line-height: 1.2;
 
@@ -103,7 +103,7 @@
 .auth-page__title-small {
   font-size: 24px;
   margin-bottom: 56px;
-  color: $col-md-primary-secondary;
+  color: $col-text-accented;
 
   @include respond-to(large) {
     font-size: 20px;
@@ -115,5 +115,9 @@
 }
 
 .auth-page__form-descr-info {
-  color: $col-md-primary-secondary;
+  color: $col-text-accented;
+}
+
+.button-flat {
+  @include button-flat();
 }

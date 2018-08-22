@@ -47,13 +47,15 @@
   @import '../../../scss/variables';
   @import '../../../scss/mixins';
 
+  $custom-z-index: 45;
+
   .file-viewer {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
-    z-index: $z-embed-page;
+    z-index: $custom-z-index;
 
 
     .file-viewer__embed {
@@ -61,7 +63,7 @@
 
       max-width: 60%;
       position: absolute;
-      z-index: $z-embed-page;
+      z-index: $custom-z-index;
     }
   }
 </style>

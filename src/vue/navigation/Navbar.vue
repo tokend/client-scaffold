@@ -13,7 +13,7 @@
             <div class="navbar__notif-card-content">
               <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">
                 Your account functionality is restricted. To get advanced functionality go to
-                <a class="notif-link" @click="goKyc">KYC</a>.
+                <a class="navbar__notif-link" @click="goKyc">KYC</a>.
               </p>
               <p v-else class="navbar__notif-status">No new notifications!</p>
             </div>
@@ -53,7 +53,7 @@
               <div class="navbar__notif-card-content">
                 <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">
                   Your account functionality is restricted. To get advanced functionality go to
-                  <a class="notif-link" @click="goKyc">KYC</a>.
+                  <a class="navbar__notif-link" @click="goKyc">KYC</a>.
                 </p>
                 <p v-else class="navbar__notif-status">No new notifications!</p>
               </div>
@@ -197,7 +197,7 @@
   .navbar {
     width: 100%;
     min-height: 121px;
-    background-color: $col-md-background;
+    background-color: $col-navbar-background;
     padding: 0 40px;
     display: flex;
     align-items: center;
@@ -215,7 +215,7 @@
   }
 
   .navbar__title {
-    color: $col-md-primary;
+    color: $col-text-page-heading;
   }
 
   .navbar__user {
@@ -228,13 +228,13 @@
     width: 55px;
     height: 55px;
     font-size: 24px;
-    box-shadow: 0 4px 10px 0 rgba($col-md-primary, .15);
+    box-shadow: 0 4px 10px 0 rgba($col-text-field-hint, .15);
     margin-right: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background: rgba($col-md-primary, .15);
+    background: rgba($col-text-field-hint, .15);
 
     @include respond-to-custom($custom-breakpoint) {
       margin-right: 0;
@@ -249,7 +249,7 @@
   .navbar__user-name-icon {
     font-size: 18px;
     cursor: pointer;
-    color: $col-md-primary !important; // TODO: remove important rule when possible
+    color: $col-text-field-hint !important; // TODO: remove important rule when possible
   }
 
   .navbar__user-name:hover > .navbar__user-email {
@@ -257,12 +257,12 @@
   }
 
   .navbar__account-type {
-    color: $col-md-primary;
+    color: $col-text-field-hint;
     font-size: 12px;
   }
 
   .navbar__user-notif {
-    color: $col-md-primary;
+    color: $col-text-field-hint;
     padding-left: 12px;
     font-size: 12px;
     cursor: pointer;
@@ -282,7 +282,7 @@
       display: flex;
 
       i {
-        color: rgba($col-md-primary, .8) !important;
+        color: rgba($col-text-field-hint, .8) !important;
         font-size: 28px !important;
       }
     }
@@ -303,7 +303,7 @@
       height: 4px;
       width: 4px;
       border-radius: 50%;
-      background-color: #f5645b;
+      background-color: $col-accent;
     }
   }
 
@@ -396,9 +396,9 @@
       right: 0;
       width: 15px;
       height: 15px;
-      background-color: #ffa000;
+      background-color: $col-pending;
       border-radius: 50%;
-      color: #ffffff;
+      color: $col-primary-txt; // TODO: fix it after the notification function returns
     }
   }
 
@@ -455,7 +455,7 @@
       position: absolute;
       height: 1px;
       width: calc(100% + 48px);
-      background-color: #e8e8e8;
+      background-color: $col-navbar-background;
       left: -24px;
       top: 0;
     }
@@ -466,8 +466,8 @@
     height: 102px;
     border-radius: 50%;
     font-size: 48px;
-    color: #fff;
-    background-color: #ccc;
+    color: $col-navbar-avatar-color;
+    background-color: $col-navbar-avatar-background;
     margin-right: 27px;
     display: flex;
     align-items: center;
@@ -484,9 +484,10 @@
     font-size: 16px;
     line-height: 1;
     text-align: left;
-    color: $col-md-primary;
+    color: $col-text-field-hint;
     margin-top: 4px;
     margin-bottom: 4px;
+    white-space: nowrap;
 
     @include respond-to-custom($custom-breakpoint) {
       word-break: break-word;
@@ -497,7 +498,7 @@
     font-size: 12px;
     line-height: 1;
     text-align: left;
-    color: $col-md-primary;
+    color: $col-text-field-hint;
 
     @include respond-to(small) {
       text-align: center;
@@ -506,6 +507,8 @@
 
   .navbar__user-card-account-btn {
     margin: 26px 0 0 0;
+    white-space: nowrap;
+
     @include button-raised();
 
     @include respond-to(small) {
@@ -524,10 +527,10 @@
     color: rgba(0, 0, 0, .75) !important;
   }
 
-  .notif-link {
+  .navbar__notif-link {
     cursor: pointer;
     text-decoration: underline;
-    color: #03a9f4;
+    color: $col-text-accented;
   }
 
   .navbar__user-card-ctn {

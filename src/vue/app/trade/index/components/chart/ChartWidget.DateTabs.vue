@@ -95,12 +95,12 @@
     border: none;
     font-size: 12px;
     font-weight: bold;
-    color: #fff;
+    color: $col-primary-txt;
     border-radius: 5px;
-    background-color: rgba($col-md-primary, .3);
+    background-color: rgba($col-primary, .3);
 
     &.selected {
-      background-color: $col-md-primary-secondary;
+      background-color: $col-primary-secondary;
     }
   }
 </style>

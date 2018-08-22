@@ -107,14 +107,14 @@
   }
 
   .empty-timeline-message__icon {
-    font-size: $material-icon-xx-super-big;
+    font-size: $size-icon-super-big;
   }
 
   .no-data-msg__wrapper {
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: $col-md-primary;
+    color: $col-no-data-message-text;
 
     & > h2 {
       font-weight: 500;
@@ -122,8 +122,8 @@
   }
 
   .no-data-msg__icon {
-    font-size: $material-icon-xx-super-big;
-    color: rgba($col-md-primary, .7);
+    font-size: $size-icon-super-big;
+    color: $col-no-data-message-icon-color;
   }
 
 </style>

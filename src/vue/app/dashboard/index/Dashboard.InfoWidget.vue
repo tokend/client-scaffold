@@ -148,7 +148,7 @@
   }
 
   .info-widget__title {
-    color: $col-md-primary;
+    color: $col-text-page-heading;
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 16px;
@@ -174,7 +174,7 @@
       left: 16px;
       right: 30px;
       height: 1px;
-      background-color: rgba($col-md-primary, .2);
+      background-color: $col-details-border;
 
       @include respond-to(medium) {
         right: 10px;
@@ -202,7 +202,7 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      color: #fff;
+      color: $col-block;
       font-size: 10px;
       line-height: 18px;
 
@@ -222,25 +222,25 @@
 
   .info-widget__list-body-elem--failed:before {
     content: '\2715';
-    background-color: $col-md-accent;
+    background-color: $col-accent;
     padding: 0 4px;
   }
 
   .info-widget__list-body-elem--pending:before {
-    background-color: #ffb454;
+    background-color: $col-pending;
     content: '';
   }
 
   .info-widget__list-body-elem--success:before {
     content: '\2713';
-    background-color: #51ca90;
+    background-color: $col-success;
     padding: 0 3px;
   }
 
   .info-widget__list-body-elem {
     @include box-shadow();
 
-    background-color: #fff;
+    background-color: $col-list-block-background;
 
     @include respond-to(medium) {
       min-width: 670px;
@@ -257,7 +257,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: $col-md-primary;
+    color: $col-list-text;
   }
 
   .info-widget__list-body-row-details {
@@ -291,14 +291,15 @@
     @include button();
     @include button-flat();
 
-    background: rgba($col-md-primary, .1);
+    color: $col-list-btn-details-text;
+    background: $col-list-btn-details-background;
     font-size: 10px;
     border-radius: 4px;
     padding: 8px;
   }
 
   .info-widget__list-body-item-icon {
-    color: $col-md-primary !important;
+    color: $col-list-text !important;
     font-size: 20px !important;
     font-weight: 400;
     transition: transform .15s ease-out;
@@ -365,19 +366,6 @@
       width: 15%;
       min-width: 97px;
     }
-  }
-
-  .info-widget__list-body-row-detail {
-    display: flex;
-    font-size: 12px;
-
-    label {
-      width: 65px;
-      margin-right: 16px;
-      color: #837fa1;
-    }
-
-    p { color: #3a4180; }
   }
 
 </style>

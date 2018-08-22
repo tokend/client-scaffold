@@ -7,7 +7,7 @@
 @import 'forms';
 
 @include md-register-theme("default", (
-  primary: $col-md-primary,
+  primary: $col-primary,
   accent: md-get-palette-color(red, A200),
   theme: light
 ));
@@ -29,7 +29,7 @@
 body,
 input, select,
 textarea {
-  background: $col-background;
+  background: $col-app-background;
   font-family: 'Circular', 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif !important;
   font-size: 10px;
   font-weight: 400;
@@ -53,7 +53,7 @@ html,body {
   &,
   & main,
   & .md-app-content {
-    background-color: $col-md-background;
+    background-color: $col-app-content-background;
   }
 
   & .md-app-content {
@@ -70,30 +70,22 @@ html,body {
   }
 
   .app__input-autofill--white {
-    -webkit-box-shadow: inset 0 0 0 50px $white !important;
+    -webkit-box-shadow: inset 0 0 0 50px $col-field-autofill !important;
   }
 
   .md-switch.md-theme-default.md-checked.md-primary .md-switch-thumb {
-    background-color: $col-md-primary;
+    background-color: $col-checkbox-field-background;
   }
 
   p.app__page-explanations {
     max-width: 45 * $point;
-    color: $col-md-primary;
+    color: $col-text-page-explanations;
     font-size: 1.6 * $point;
     margin-top: 2.5 * $point;
     margin-bottom: 4 * $point;
 
     &--secondary {
-      color: $col-md-primary-inactive;
-    }
-  }
-
-  & .sidebar .router-link-active {
-    color: $col-md-primary;
-
-    .md-icon  {
-      color: $col-md-primary;
+      color: $col-text-page-explanations-inactive;
     }
   }
 
@@ -139,11 +131,11 @@ html,body {
     line-height: 1.5;
 
     & > tr > td:first-child {
-      color: $col-md-primary-inactive;
+      color: $col-details-label;
     }
 
     & > tr > td:last-child {
-      color: $col-md-primary;
+      color: $col-details-value;
       padding-left: 3 * $point;
     }
 
@@ -288,7 +280,7 @@ h4.app__page-heading,
 h5.app__page-heading,
 h6.app__page-heading {
   display: block;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
   padding: 0;
 }
 
@@ -330,7 +322,7 @@ h6.app__page-heading {
 
 
 h4 {
-  font-size: $fs-tip;
+  font-size: .8rem;
   font-weight: bold;
   opacity: .65;
   padding: .75rem 0 .3rem;
@@ -403,7 +395,7 @@ h4 {
 }
 
 .app__card {
-  background-color: #fff;
+  background-color: $col-block;
 
   &:not(.app__card--shadow-none) {
     @include box-shadow();
@@ -510,11 +502,11 @@ h4 {
 
 .md-field.md-theme-default.md-invalid.md-focused label,
 .md-field.md-theme-default.md-focused.md-invalid .md-input {
-  color: $md-invalid;
+  color: $col-invalid;
 }
 
 .md-field.md-theme-default.md-invalid:before {
-  background-color: $md-invalid;
+  background-color: $col-invalid;
 }
 
 .md-list-item-content {

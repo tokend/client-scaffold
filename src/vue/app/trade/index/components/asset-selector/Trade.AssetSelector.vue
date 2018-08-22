@@ -121,12 +121,12 @@ export default {
 
   .asset-select__balances-label {
     font-size: 1.2 * $point;
-    color: $col-md-primary-inactive;
+    color: $col-details-label;
   }
 
   .asset-select__balances-value {
     font-size: 1.8 * $point;
-    color: $col-md-primary;
+    color: $col-details-value;
   }
 }
 </style>

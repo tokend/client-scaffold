@@ -90,7 +90,7 @@
 
   .CodeMirror-fullscreen,
   .editor-toolbar.fullscreen {
-    z-index: $z-markdown-editor !important;
+    z-index: 45 !important;
   }
 
 

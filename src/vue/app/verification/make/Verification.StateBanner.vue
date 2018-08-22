@@ -44,7 +44,7 @@
   @import '../../../../scss/variables';
 
   .state-banner {
-    font-size: $fs-tip;
+    font-size: .8rem;
     margin-bottom: .8rem;
     text-align: center;
 
@@ -58,21 +58,21 @@
     &--pending {
       .state-banner__message,
       .md-icon {
-        color: $col-md-pending;
+        color: $col-pending;
       }
     }
 
     &--approved {
       .state-banner__message,
       .md-icon {
-        color: $col-md-primary;
+        color: $col-text-page-explanations;
       }
     }
 
     &--rejected {
       .state-banner__message,
       .md-icon {
-        color: $col-md-accent;
+        color: $col-accent;
       }
     }
   }

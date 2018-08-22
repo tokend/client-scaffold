@@ -168,11 +168,11 @@ export default {
   @include text-font-sizes;
 
   &:not([readonly]) {
-    -webkit-box-shadow: inset 0 0 0 50px $col-md-background; // autofill hack
+    -webkit-box-shadow: inset 0 0 0 50px $col-field-background; // autofill hack
   }
 
   &--autofill-white:not([readonly]) {
-    -webkit-box-shadow: inset 0 0 0 50px $white !important;
+    -webkit-box-shadow: inset 0 0 0 50px $col-field-background !important;
   }
 }
 
@@ -231,12 +231,12 @@ export default {
   top: 0;
   transition: all $field-transition-duration;
   pointer-events: none;
-  color: $field-color-unfocused;
+  color: $field-color-focused;
   @include label-font-sizes;
 }
 
 .input-field__input:focus ~ .input-field__label {
-  color: $field-color-focused;
+  color: $field-color-unfocused;
 }
 
 .input-field__input:not(:focus):placeholder-shown ~ .input-field__label {

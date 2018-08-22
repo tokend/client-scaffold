@@ -150,7 +150,7 @@
     padding: 30px 40px;
     position: fixed;
     width: 100%;
-    z-index: $z-modal-dialog;
+    z-index: 20;
   }
 
   .inactivity-message__buttons {

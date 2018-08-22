@@ -143,8 +143,8 @@
   }
 
   .transfer__success-amount {
-    color: $col-md-primary;
-    font-size: $fs-heading;
+    color: $col-text-page-heading;
+    font-size: 1.4rem;
     margin: 1rem 0 .5rem;
   }
 

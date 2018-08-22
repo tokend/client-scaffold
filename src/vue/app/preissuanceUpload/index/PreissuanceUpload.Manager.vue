@@ -164,6 +164,6 @@ export default {
   .preissuance-form__list {
     margin-top: 2rem;
     list-style-type: none;
-    color: $col-md-primary;
+    color: $col-list-text;
   }
 </style>

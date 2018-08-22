@@ -33,6 +33,6 @@
 
   .description__markdown-formatter {
     text-align: justify;
-    color: $col-md-primary;
+    color: $col-text-page-explanations;
   }
 </style>

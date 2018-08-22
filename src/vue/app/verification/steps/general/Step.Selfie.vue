@@ -114,7 +114,7 @@
   }
 
   .kyc-form__verification-key {
-    font-size: $fs-big;
+    font-size: 2rem;
     font-weight: bold;
     margin: 2rem 0;
     text-align: center;
