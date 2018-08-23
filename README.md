@@ -1,15 +1,80 @@
-# Instructions for working with the project
+# Introduction
 
-1. Install node.js;
-2. Install git
-3. Clone a repository: ```git clone https://github.com/tokend/client-scaffold.git```
-4. In folder with project, execute: ``` npm install```
-5. Usually, you need to execute ```npm install``` only once
-6. To start project on local server, execute: ```npm run dev```
-7. Open http://localhost:8095 in browser;
-8. To stop local server, press `Ctrl + C` in terminal.
-9. If the remote repository of the project was updated, you need to execute ```git pull``` command on your local machine to get these updates
-10. After updating your repository (step 9), you need to execute steps 4 and 6 one more time to launch the updated project.
+The TokenD web-client is written on [Vue v2](https://vuejs.org/v2/guide/)
 
-Node.js: https://nodejs.org/en/  
-Git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+# How to
+## Run the project
+
+1. Install node.js (Go to [official website](https://nodejs.org/en/) for the help)
+2. Install git (Go to [git install instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for the help)
+3. Clone the repository: `git clone https://github.com/tokend/client-scaffold.git`
+4. In project folder, execute: `npm install`
+5. To start project on local server in development mode, execute: `npm run dev`
+6. Open http://localhost:8095 in browser.
+
+To stop local server, press `Ctrl + C` in terminal.
+
+If the remote repository was updated, you need to execute `git pull` command on your local machine to get the updates. To restart the project, repeat step 4 and 5 of this instruction.
+
+## Customize the Sales
+
+### Changes to the model
+
+Navigate to `/src/vue/app/saleCreation/`. Your journey starts from `SaleCreation.Index.vue`.
+
+To update the sale model, you can modify the object passed to `salesService.createSaleCreationRequest` call. You cannot change anything but `details` property, otherwise back-end will reject your request.
+
+### Changes to views
+
+Sale is shown on following pages:
+- Sale creation page (`src/vue/app/saleCreation`)
+- Sale creation requests page
+(`src/vue/app/requests/index/Requests.SaleCreation.vue`)
+- Sale list page
+(`src/vue/app/sales`)
+- Sale details page(`src/vue/app/sales/sale_details/Sales.Details.vue`)
+
+Also on admin panel:
+- Sale list page (`src/components/User/Sales/Sales.Index.vue`)
+- Sale details page(`src/components/User/Sales/Sales.Show.vue`)
+- Sale requests page
+(`src/components/User/Sales/SaleRequests`)
+
+Any changes to sale model should be done alongside with changes to the views mentioned above. The most trickiest part is adding fields to sale creation page.
+
+In `SaleCreation.Index.vue` file you can see usage of `md-steppers` of [Vue material framework](https://vuematerial.io/) in combination with so-called schemas. To modify set of fields on a step you can edit the appropriate `.schema.js` file located in `/src/vue/app/saleCreation/specs/` directory.
+
+Currently there are three steps:
+- General info
+- Image and short description
+- Video and long description
+
+Schema defines the set of fields only. Actual component markup is taken from `/src/vue/app/saleCreation/steps/` directory. Schema files contain references to the component used on each step.
+
+How are schemas work with the components (`SaleCreation.Index`):
+```
+  <template v-else-if="view.mode === VIEW_MODES.edit">
+    <md-steppers class="create-sale__steppers"
+                  md-vertical
+                  md-linear
+                  :md-active-step.sync="activeStep">
+      <md-step v-for="(step, i) in steps"
+              :key="i"
+              :id="step.name"
+              :md-label="step.label"
+              :md-done.sync="step.done"
+      >
+        <component :is="step.component"
+                  :schema="step.schema"
+                  :sale="sale"
+                  @sale-update="handleSaleUpdate($event, { step, i })"
+                  @sale-edit-end="handleSaleEditEnd"
+        />
+      </md-step>
+    </md-steppers>
+  </template>
+```
+
+Component applied with `:is` attribute in the `<component>`. Component from `step.component` will take `:schema` as the prop. Implementations of all used components are located in `/src/vue/app/saleCreation/steps/`.
+
+All the other actions should be familiar to developers who had experience with Vue before.
