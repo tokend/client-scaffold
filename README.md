@@ -16,31 +16,31 @@ To stop local server, press `Ctrl + C` in terminal.
 
 If the remote repository was updated, you need to execute `git pull` command on your local machine to get the updates. To restart the project, repeat step 4 and 5 of this instruction.
 
-## Customize the Sales
+## Customize Crowdsale
 
 ### Changes to the model
 
 Navigate to `/src/vue/app/saleCreation/`. Your journey starts from `SaleCreation.Index.vue`.
 
-To update the sale model, you can modify the object passed to `salesService.createSaleCreationRequest` call. You cannot change anything but `details` property, otherwise back-end will reject your request.
+To update the crowdsale model, you can modify the object passed to `salesService.createSaleCreationRequest` call. You cannot change anything but `details` property, otherwise back-end will reject your request.
 
 ### Changes to views
 
-Sale is shown on following pages:
-- Sale creation page (`src/vue/app/saleCreation`)
-- Sale creation requests page
+Crowdsale is shown on following pages:
+- Crowdsale creation page (`src/vue/app/saleCreation`)
+- Crowdsale creation requests page
 (`src/vue/app/requests/index/Requests.SaleCreation.vue`)
-- Sale list page
+- Crowdsale list page
 (`src/vue/app/sales`)
-- Sale details page(`src/vue/app/sales/sale_details/Sales.Details.vue`)
+- Crowdsale details page(`src/vue/app/sales/sale_details/Sales.Details.vue`)
 
 Also on admin panel:
-- Sale list page (`src/components/User/Sales/Sales.Index.vue`)
-- Sale details page(`src/components/User/Sales/Sales.Show.vue`)
-- Sale requests page
+- Crowdsale list page (`src/components/User/Sales/Sales.Index.vue`)
+- Crowdsale details page(`src/components/User/Sales/Sales.Show.vue`)
+- Crowdsale requests page
 (`src/components/User/Sales/SaleRequests`)
 
-Any changes to sale model should be done alongside with changes to the views mentioned above. The most trickiest part is adding fields to sale creation page.
+Any changes to crowdsale model should be done alongside with changes to the views mentioned above. The most trickiest part is adding fields to crowdsale creation page.
 
 In `SaleCreation.Index.vue` file you can see usage of `md-steppers` of [Vue material framework](https://vuematerial.io/) in combination with so-called schemas. To modify set of fields on a step you can edit the appropriate `.schema.js` file located in `/src/vue/app/saleCreation/specs/` directory.
 
