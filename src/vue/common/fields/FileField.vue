@@ -30,7 +30,7 @@
         {{ label }}
       </div>
 
-      <label :for="id" class="file-field__uploader">
+      <label :for="id" class="file-field__uploader" :disabled="isDisabled">
         <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>
         {{ acceptLabel }}
       </label>
@@ -40,7 +40,7 @@
             :id="id"
             :name="name"
             :required="required"
-            :disabled="disabled"
+            :disabled="isDisabled"
             :placeholder="placeholder"
             :accept="accept"
             @change="onChange"
@@ -77,6 +77,7 @@
     name: 'file-field',
     mixins: [FieldMixin],
     props: {
+      isDisabled: Boolean,
       type: { type: String, default: 'default' },
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },
