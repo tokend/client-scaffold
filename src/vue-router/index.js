@@ -63,6 +63,9 @@ import SaleCreationIndex from '@/vue/app/saleCreation/SaleCreation.Index'
 import Requests from '@/vue/app/requests/Requests.Entry'
 import RequestsIndex from '@/vue/app/requests/index/Requests.Index'
 
+import Fee from '@/vue/app/fee/Fee.Entry'
+import FeeIndex from '@/vue/app/fee/index/Fee.Index'
+
 import Sales from '@/vue/app/sales/Sales.Entry'
 import SalesDetails from '@/vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '@/vue/app/sales/overview/Sales.Explore'
@@ -412,6 +415,20 @@ const router = new Router({
               hash: '#pre-issuance-upload',
               meta: { pageName: PAGES_NAMES.requests },
               component: RequestsIndex
+            }
+          ]
+        },
+        {
+          feature_flag: config.FEATURE_FLAGS.requests,
+          name: 'app.requests',
+          path: '/fee',
+          component: Fee,
+          redirect: { path: '/fee/index' },
+          children: [
+            {
+              path: '/fee/index',
+              name: 'fee.index',
+              component: FeeIndex
             }
           ]
         },
