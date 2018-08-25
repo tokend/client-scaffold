@@ -1,7 +1,8 @@
 <template>
   <div class="date-field-flatpickr">
     <label class="date-field-flatpickr__label"
-          :class="{ 'date-field-flatpickr__label--unfocus': !value }"> {{ label }}</label>
+           :disabled="disabled"
+           :class="{ 'date-field-flatpickr__label--unfocus': !value }"> {{ label }}</label>
 
     <div class="date-field-flatpickr__field">
       <flat-pickr :id="id"
@@ -10,6 +11,7 @@
                   :config="config"
                   :value="value"
                   :disabled="disabled"
+                  :readonly="readonly"
                   @input.native="dateFieldUpdated"/>
     </div>
 
@@ -35,6 +37,8 @@
     mixins: [field],
 
     props: {
+      disabled: { type: Boolean, default: false },
+      readonly: { type: Boolean, default: false },
       enableTime: { type: Boolean, default: true },
       disableBefore: { type: String, default: '' },
       disableAfter: { type: String, default: '' },
