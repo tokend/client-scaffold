@@ -198,10 +198,7 @@
     computed: {
       ...mapGetters([
         vuexTypes.accountTypeI
-      ]),
-      discourseURL () {
-        return `${config.DISCOURSE_CLIENT}`
-      }
+      ])
     },
 
     methods: {
