@@ -78,7 +78,6 @@
                       :label="i18n.lbl_token_terms()"
                       id="document.id"
                       :type="documentTypes.tokenTerms"
-                      :disabled="false"
           />
         </div>
       </div>
