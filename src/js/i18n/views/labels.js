@@ -111,7 +111,7 @@ export default {
   lbl_requires_kyc: 'Requires KYC',
   lbl_is_additional_issuance_allowed: 'Is additional issuance allowed',
   lbl_is_tradable: 'Is tradable',
-  lbl_fees: 'Fees',
+  lbl_fees: 'Fee',
   lbl_sender_fees: 'Sender fees',
   lbl_recipient_fees: 'Recipient fees',
   lbl_go_back: 'Go back',

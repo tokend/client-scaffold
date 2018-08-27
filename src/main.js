@@ -27,6 +27,9 @@ import { extendValidator } from './validator/validator'
 import tableScrollShadow from './directives/tableScrollShadow'
 import rippleEffect from './directives/rippleEffect'
 
+// filters
+import { filterFeeType, filterSubtype } from './js/filters/filters'
+
 // ripple effects:
 rippleEffect.color = 'rgba(58, 65, 128, .2)'
 
@@ -49,3 +52,7 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+/* Vue filters */
+Vue.filter('filterFeeType', filterFeeType)
+Vue.filter('filterSubtype', filterSubtype)
