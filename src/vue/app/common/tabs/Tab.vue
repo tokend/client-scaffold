@@ -3,6 +3,7 @@
           :aria-hidden="! isActive"
           class="app-tabs__panel"
           :id="hash"
+          :disabled="disabled"
           role="tabpanel"
   >
     <slot />
@@ -12,6 +13,7 @@
 <script>
   export default {
     props: {
+      disabled: { type: Boolean, default: false },
       id: { default: null },
       name: { required: true },
       prefix: { default: '' },
