@@ -74,6 +74,8 @@
 
   import { ErrorFactory, errorTypes, errors } from '../../js/errors/factory'
   import { ErrorHandler } from '../../js/errors/error_handler'
+  import { mapGetters, mapActions } from 'vuex'
+  import { vuexTypes } from '../../vuex/types'
   import { vueRoutes } from '../../vue-router/const'
   import { Keypair } from 'swarm-js-sdk'
   import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
@@ -96,6 +98,12 @@
         routes: vueRoutes,
         i18n
       }
+    },
+
+    computed: {
+      ...mapGetters([
+        vuexTypes.walletId
+      ])
     },
 
     methods: {
@@ -145,9 +153,9 @@
         this.$router.push(route)
       },
 
-      setWalledId (wallet) {
-        this.$store.dispatch('SET_WALLET_ID', wallet)
-      }
+      ...mapActions({
+        setWalledId: vuexTypes.SET_WALLET_ID
+      })
     }
   }
 </script>
