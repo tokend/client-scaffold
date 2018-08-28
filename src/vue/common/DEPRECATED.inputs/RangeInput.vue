@@ -24,7 +24,8 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../js/events/common_events'
+  import { commonEvents } from '@/js/events/common_events'
+  import config from '@/config'
 
   export default {
     name: 'range-input',
@@ -44,7 +45,7 @@
       },
       step: {
         type: [ String, Number ],
-        default: 0.000001
+        default: config.MINIMAL_NUMBER_INPUT_STEP
       },
       value: {
         type: [ String, Number ],
@@ -99,12 +100,12 @@
   $slider-width: #{$slider-width-number}px;
   $slider-height: 2px;
   $background-slider: #c7c7c7;
-  $background-filled-slider: $col-active;
+  $background-filled-slider: $col-text-accented;
   $thumb-width: 18px;
   $thumb-height: 18px;
   $thumb-radius: 8px;
-  $thumb-background: $col-active;
-  $thumb-border: 1px solid $col-active;
+  $thumb-background: $col-text-accented;
+  $thumb-border: 1px solid $col-text-accented;
   $shadow-size: -8px;
   $fit-thumb-in-slider: -8px;
 
@@ -199,23 +200,23 @@
       color: transparent;
     }
     &::-ms-fill-lower {
-      background: $col-active;
+      background: $col-text-accented;
     }
     &::-ms-fill-upper {
-      background: $col-active;
+      background: $col-text-accented;
     }
     &::-ms-thumb {
       height: 36px;
       width: 16px;
       border-radius: 3px;
-      background: $col-active;
+      background: $col-text-accented;
       cursor: pointer;
     }
     &:focus::-ms-fill-lower {
-      background: $col-active;
+      background: $col-text-accented;
     }
     &:focus::-ms-fill-upper {
-      background: $col-active;
+      background: $col-text-accented;
     }
 
 

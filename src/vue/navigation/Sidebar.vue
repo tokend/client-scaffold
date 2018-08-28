@@ -42,6 +42,15 @@
 
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
+                     to="/limits"
+                     tag="li" v-if="config.FEATURE_FLAGS.limits">
+          <md-icon class="sidebar__list-item-icon">insert_chart</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_limits() }}</span>
+        </router-link>
+
+
+        <router-link v-ripple class="sidebar__list-item"
+                     @click.native="closeSidebar"
                      to="/mass-transfers"
                      tag="li" v-if="config.FEATURE_FLAGS.massTransfers">
           <md-icon class="sidebar__list-item-icon">people</md-icon>
@@ -169,6 +178,8 @@
         </router-link>
       </ul>
     </section>
+
+    <app-footer/>
   </div>
 </template>
 
@@ -179,12 +190,16 @@
   import { vuexTypes } from '../../vuex/types'
   import { i18n } from '@/js/i18n'
   import Logotype from '../app/common/Logotype'
+  import AppFooter from '../navigation/Footer'
   import { ACCOUNT_TYPES } from '@/js/const/const'
 
   export default {
     name: 'sidebar',
 
-    components: { Logotype },
+    components: {
+      Logotype,
+      AppFooter
+    },
 
     data () {
       return {
@@ -217,9 +232,10 @@
   @import '../../scss/variables';
 
   .sidebar {
-    background-color: #e9eaed !important;
+    background-color: $col-sidebar-background !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
     min-height: 100vh;
+    padding-bottom: 10 * $point;
     height: 100%;
   }
 
@@ -228,11 +244,11 @@
     align-items: center;
     min-height: 48px;
     cursor: pointer;
-    color: $col-md-primary-inactive;
+    color: $col-sidebar-text;
 
     &.router-link-active {
-      background-color: #f0f1f4;
-      color: $col-md-primary;
+      background-color: $col-sidebar-active-elem-background;
+      color: $col-sidebar-active-elem-text;
     }
   }
 
@@ -256,9 +272,10 @@
 
   .sidebar__list-item-icon {
     margin-right: 16px;
-    color: $col-md-primary-inactive !important; // TODO: remove important rule when possible
+    color: $col-sidebar-text !important; // TODO: remove important rule when possible
+
     .router-link-active & {
-      color: $col-md-primary !important;
+      color: $col-sidebar-active-elem-text !important;
     }
   }
 
@@ -267,8 +284,9 @@
   }
 
   .sidebar__list-title {
-    color: $col-md-primary;
+    color: $col-sidebar-active-elem-text;
     font-size: 16px;
     margin-bottom: 8px;
   }
+
 </style>

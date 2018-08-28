@@ -38,7 +38,7 @@
   import { KycTemplateParser } from '../spec/kyc-template-parser'
   import { accountsService } from '../../../../js/services/accounts.service'
 
-  import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+  import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
   import { confirmAction } from '../../../../js/modals/confirmation_message'
 
   const KYC_LEVEL_TO_SET = 0
@@ -102,7 +102,8 @@
           await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
             details: KycTemplateParser.toTemplate(this.kyc, userTypes.general),
-            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
+            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents),
+            blobType: blobTypes.kycForm.str
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()
@@ -130,7 +131,7 @@
   @import '../../../../scss/variables';
 
   .kyc-form__verification-key {
-    font-size: $fs-big;
+    font-size: 2rem;
     font-weight: bold;
     margin: 2rem 0;
     text-align: center;

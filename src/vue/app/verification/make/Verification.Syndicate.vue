@@ -12,6 +12,7 @@
                   :activeStep="activeStep"
                   :finalStep="finalStep"
                   :kyc="kyc"
+                  :isRequestPending="isPending"
                   @kyc-update="handleKycUpdate($event, { step, i })"
                   @kyc-edit-end="handleKycEditEnd"
         />
@@ -27,7 +28,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '../../../../vuex/types'
   import { accountsService } from '../../../../js/services/accounts.service'
-  import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+  import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
   import { confirmAction } from '../../../../js/modals/confirmation_message'
   import { EventDispatcher } from '../../../../js/events/event_dispatcher'
   import { ErrorHandler } from '../../../../js/errors/error_handler'
@@ -95,7 +96,8 @@
           await this.updateDocuments(this.kyc.documents)
           const blobId = await this.updateKycData({
             details: KycTemplateParser.fromTemplate(this.kyc, userTypes.syndicate),
-            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents)
+            documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents),
+            blobType: blobTypes.syndicate_kyc.str
           })
           await this.submitRequest(blobId)
           await this.loadKycRequests()

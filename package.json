@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@std/esm": "^0.18.0",
-    "@tokend/wallet.js": "git+ssh://git@gitlab.com/tokend/wallet.js.git",
+    "@tokend/wallet.js": "git+https://gitlab.com/tokend/wallet.js.git",
     "@vue/test-utils": "^1.0.0-beta.11",
     "accounting": "^0.4.1",
     "axios": "^0.18.0",
@@ -45,6 +45,7 @@
     "vue-flatpickr-component": "^4.0.0",
     "vue-markdown": "2.2.4",
     "vue-material": "1.0.0-beta-7",
+    "vue-qr": "^1.3.8",
     "vue-qrcode-component": "^2.1.1",
     "vue-quill-editor": "^3.0.4",
     "vue-resource": "^1.3.4",

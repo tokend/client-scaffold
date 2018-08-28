@@ -188,7 +188,12 @@
   }
 
   .verification__card-message-title {
-    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: $col-text-page-heading;
+  }
+
+  .verification__card-message-text {
+    color: $col-text-page-explanations-inactive;
   }
 
   .verification__card-action--to-right:first-child {
@@ -197,15 +202,15 @@
 
   .verification__card-message-icon {
     .verification__card--pending & {
-      color: $orange;
+      color: $col-pending;
     }
 
     .verification__card--rejected & {
-      color: $red;
+      color: $col-reject;
     }
 
     .verification__card--approved & {
-      color: $green;
+      color: $col-success;
     }
   }
 

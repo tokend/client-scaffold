@@ -16,7 +16,7 @@
     </div>
     <div class="app__form-actions">
       <button class="app__form-submit-btn"
-        :disabled="isPending || accountState === ACCOUNT_STATES.pending">
+        :disabled="isPending || isRequestPending || accountState === ACCOUNT_STATES.pending">
         {{ i18n.lbl_agree_submit() }}
       </button>
     </div>
@@ -114,7 +114,7 @@
   }
 
   .kyc-form__verification-key {
-    font-size: $fs-big;
+    font-size: 2rem;
     font-weight: bold;
     margin: 2rem 0;
     text-align: center;

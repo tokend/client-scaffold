@@ -83,7 +83,7 @@
     <div class="app__form-actions">
       <button v-ripple
         class="app__form-submit-btn"
-        :disabled="isPending || accountState === ACCOUNT_STATES.pending"
+        :disabled="isPending || accountState === ACCOUNT_STATES.pending || isRequestPending"
         v-if="finished">
         {{ i18n.lbl_submit() }}
       </button>
@@ -130,14 +130,15 @@
         this.disable()
         try {
           await this.uploadDocuments()
+          this.enable()
           this.$emit(commonEvents.kycUpdateEvent, {
             form: this.form,
             documents: this.documents
           })
         } catch (error) {
+          this.enable()
           ErrorHandler.processUnexpected(error)
         }
-        this.enable()
       },
 
       stubData () {

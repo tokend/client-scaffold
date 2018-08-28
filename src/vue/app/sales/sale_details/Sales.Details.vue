@@ -94,6 +94,20 @@ export default {
 $ratio_16: 370px;
 $ratio_9: $ratio_16 * (9/16);
 
+.sale-details__tabs {
+  @include overwrite-tabs(auto);
+  align-items: flex-start;
+  box-shadow: none !important;
+
+  .md-tabs-navigation {
+    background-color: transparent !important;
+  }
+  .md-content.md-tabs-content.md-theme-default {
+    background-color: transparent;
+    max-width: 725px;
+  }
+}
+
 .sale-details__content {
   display: flex;
   justify-content: space-between;
@@ -103,6 +117,7 @@ $ratio_9: $ratio_16 * (9/16);
   }
   .sale-details__banner {
     width: 50%;
+
     @media (max-width: 1000px) {
       width: 100%;
     }
@@ -155,7 +170,7 @@ $ratio_9: $ratio_16 * (9/16);
   line-height: 1.5;
   margin: 0.8 * $point 0;
   vertical-align: middle;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
   opacity: 1;
 }
 .sale-details__owner {
@@ -169,7 +184,7 @@ $ratio_9: $ratio_16 * (9/16);
 
 .sale-details__description {
   font-size: 1.6 * $point;
-  color: $col-md-primary-inactive;
+  color: $col-text-page-explanations-inactive;
 }
 
 .sale-details__back-btn {

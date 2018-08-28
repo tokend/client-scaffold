@@ -273,8 +273,7 @@ export default {
     height: 142px;
     border-radius: 50%;
     font-size: 48px;
-    color: #fff;
-    background-color: #ccc;
+    background-color: $col-app-background;
     margin-right: 27px;
     display: flex;
     align-items: center;

@@ -60,7 +60,7 @@ export default {
       return true
     },
     clear (exeptions = []) {
-      this.errors.clear()
+      this.$validator.reset()
       for (const key in this.form) {
         if (!exeptions.includes(key)) {
           this.form[key] = ''

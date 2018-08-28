@@ -17,8 +17,6 @@
   import MarkdownFormatter from '../components/DescriptionTab.MarkDownFormatter'
   import { i18n } from '../../../../../js/i18n'
   export default {
-    name: 'description-tab',
-
     components: {
       MarkdownFormatter
     },
@@ -35,5 +33,6 @@
 
   .description__markdown-formatter {
     text-align: justify;
+    color: $col-text-page-explanations;
   }
 </style>

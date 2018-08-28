@@ -32,6 +32,16 @@ export class ReviewableRequestsService extends Service {
       .callWithSignature(this._keypair)
   }
 
+  loadLimitsUpdateReviewableRequests () {
+    return this._horizonRequestBuilder
+      .reviewableRequestsHelper()
+      .limits_updates()
+      .forRequestor(this._accountId)
+      .order('desc')
+      .limit(config.TRANSACTIONS_PER_PAGE)
+      .callWithSignature(this._keypair)
+  }
+
  /**
    * Loads all update kyc reviewable requests for current user
    *

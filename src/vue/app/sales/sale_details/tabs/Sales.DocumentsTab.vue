@@ -53,8 +53,6 @@
   import { vuexTypes } from '../../../../../vuex/types'
 
   export default {
-    name: 'documents-tab',
-
     components: {
       FileField
     },
@@ -145,8 +143,9 @@
 
   .documents-tab__no-docs-message {
     text-align: center;
+
     i {
-      font-size: $material-icon-xx-super-big;
+      font-size: $size-icon-super-big;
     }
   }
 
@@ -156,8 +155,8 @@
   }
 
   .documents-tab__explain {
-    color: $col-info;
-    font-size: $fs-tip;
+    color: $col-text-accented;
+    font-size: .8rem;
     text-align: center;
   }
 
@@ -181,14 +180,14 @@
   }
 
   .file-view__link {
-    color: $col-active;
+    color: $col-text-accented;
     cursor: pointer;
     display: flex;
-    font-size: $fs-tip;
+    font-size: .8rem;
     text-decoration: underline;
     i {
-      font-size: $fs-tip;
-      color: $col-active;
+      font-size: .8rem;
+      color: $col-text-accented;
       margin-left: 5px;
     }
   }
@@ -204,11 +203,15 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: $col-text-secondary;
+    color: $col-no-data-message-text;
+
+    & > h2 {
+      font-weight: 500;
+    }
   }
 
   .no-data-msg__icon {
-    font-size: $material-icon-xx-super-big;
-    color: $col-background;
+    font-size: $size-icon-super-big;
+    color: $col-no-data-message-icon-color;
   }
 </style>

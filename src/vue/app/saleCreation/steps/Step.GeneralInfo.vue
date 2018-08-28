@@ -210,7 +210,7 @@
   .step__quote-assets-label {
     font-weight: bold;
     font-size: 1.4 * $point;
-    color: $col-md-primary;
+    color: $col-fund-card-text;
   }
 
   .step__quote-assets-checkboxes {

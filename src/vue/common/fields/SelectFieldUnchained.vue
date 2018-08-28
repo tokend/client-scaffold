@@ -184,7 +184,7 @@
 .select-field__selected-icon {
   margin: 0;
   will-change: transform;
-  color: $col-md-primary !important;
+  color: $col-field-icon !important;
   transition: 0.2s ease-out;
   margin-top: -2px;
   width: 20px;
@@ -204,7 +204,7 @@
   left: 0;
   min-width: 170px;
   top: calc(100% + 4px);
-  background-color: #fff;
+  background-color: $col-block;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
   border-radius: 3px;
   z-index: 5;

@@ -36,15 +36,16 @@ export default {
 
 <style lang="scss">
 @import "~@scss/variables";
+@import "~@scss/mixins";
 
 .requests__tabs {
   .md-title,
   .md-table-cell-container {
-    color: $col-md-primary !important;
+    color: $col-tabs-txt !important;
   }
 
   .md-table-head-label {
-    color: $col-md-primary-inactive !important;
+    color: rgba($col-tabs-txt, .7) !important;
   }
 
   .md-tab {
@@ -60,5 +61,7 @@ export default {
     min-height: 100% !important;
     background-color: transparent;
   }
+
+  @include overwrite-tabs(50);
 }
 </style>

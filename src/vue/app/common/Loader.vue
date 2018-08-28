@@ -23,7 +23,7 @@
   }
 
   .loader__message {
-    color: $col-md-primary;
+    color: $col-loader-text;
   }
 
   .loader__animation {
@@ -44,7 +44,7 @@
       width: 30px;
       height: 30px;
       border: 5px solid transparent;
-      border-bottom: 5px solid $col-md-primary-inactive;
+      border-bottom: 5px solid $col-loader-icon;
       border-radius: 50%;
       animation: rotate 1s linear infinite;
     }

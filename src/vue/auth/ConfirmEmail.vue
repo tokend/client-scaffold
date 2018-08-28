@@ -16,6 +16,11 @@
               v-ripple>
         {{ i18n.lbl_request_new_email() }}
       </button>
+      <router-link class="auth-page__submit-btn-secondary"
+                   :to="vueRoutes.login"
+                   tag="button">
+        {{ i18n.lbl_continue() }}
+      </router-link>
     </div>
   </div>
 </template>
@@ -25,6 +30,7 @@
   import { EventDispatcher } from '@/js/events/event_dispatcher'
   import { emailService } from '@/js/services/email.service'
   import { i18n } from '@/js/i18n'
+  import { vueRoutes } from '@/vue-router/const'
 
   export default {
     name: 'email-resend',
@@ -34,6 +40,7 @@
     data () {
       return {
         i18n,
+        vueRoutes,
         walletId: '',
         email: ''
       }

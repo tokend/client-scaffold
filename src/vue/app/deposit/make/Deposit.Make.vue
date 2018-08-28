@@ -31,6 +31,7 @@
 
         <div class="deposit__qr-outer">
           <span class="deposit__qr-code-hint">{{ i18n.deposit_qr_code_hint() }}</span>
+          <!--TODO: use vue-qr instead for consistency-->
           <qrcode class="deposit__qr-code"
                   :text="address"
                   :size="225"
@@ -68,14 +69,14 @@
 <script>
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import Qrcode from 'vue-qrcode-component'
-import ClipboardField from '../../../common/fields/ClipboardField'
+import ClipboardField from '@/vue/common/fields/ClipboardField'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
-import { i18n } from '../../../../js/i18n'
-import { ACCOUNT_TYPES } from '../../../../js/const/xdr.const'
+import { vuexTypes } from '@/vuex/types'
+import { i18n } from '@/js/i18n'
+import { ACCOUNT_TYPES } from '@/js/const/xdr.const'
 
-import { issuanceService } from '../../../../js/services/issuances.service'
+import { issuanceService } from '@/js/services/issuances.service'
 
 export default {
   name: 'deposit-make',
@@ -173,7 +174,7 @@ export default {
 }
 
 .deposit__qr-code-hint {
-  color: $col-md-primary-inactive;
+  color: rgba($col-text-field-hint, .7);
   text-align: center;
   font-size: 1.4 * $point;
   margin-bottom: 1 * $point;

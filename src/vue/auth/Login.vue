@@ -157,7 +157,7 @@
       enterApplication () {
         this.setUserLoggedIn()
         dispatchAppEvent(commonEvents.enterAppEvent)
-        this.$router.push(vueRoutes.app)
+        this.$router.push(this.$route.params.redirect || vueRoutes.app)
         if (this.accountBlocked) {
           if (!this.hasSeenWarning) {
             localStorage.setItem('seenBlockWarning', 'User acknowledged about block')

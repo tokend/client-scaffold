@@ -232,8 +232,8 @@ export default {
 }
 
 .explore-tokens__list-wrp {
-  max-width: 27 * $point;
-
+  width: 100%;
+  max-width: 55 * $point;
 }
 
 .explore-tokens__list {
@@ -257,7 +257,7 @@ export default {
 }
 
 .explore-tokens__token-name {
-  color: $col-md-primary-inactive;
+  color: $col-token-name;
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
@@ -275,8 +275,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: $col-token-code;
   font-size: 24px;
+
   @include respond-to(small) {
     margin: 0;
   }
@@ -308,30 +309,30 @@ export default {
   background-color: transparent;
 }
 .tokens__md-scrollbar.md-scrollbar {
-  background-color: #E9EAED;
+  background-color: $col-token-list-background;
   box-shadow: inset 0px 0px 20px 0 rgba(0, 0, 0, 0.03)
 }
 
 .explore-tokens__token-code {
-  color: $col-md-primary;
+  color: $col-token-code;
 }
 
 .tokens__md-list-item {
   &--selected {
-    background-color: #f0f1f4;
+    background-color: $col-token-item-selected-background;
   }
 }
 
 .tokens__details-heading {
   padding-left: 1.6 * $point;
   font-size: 2 * $point;
-  color: $col-md-primary;
+  color: $col-token-code;
 }
 
 .tokens__details-subheading {
   padding-left: 1.6 * $point;
   font-size: 1.4 * $point;
-  color: $col-md-primary-inactive;
+  color: $col-token-name;
 }
 
 .explore-tokens__balance-exists-msg {
@@ -360,7 +361,7 @@ export default {
 }
 
 .tokens__props-heading {
-  color: $col-md-primary;
+  color: $col-text-page-heading;
   font-size: 1.4 * $point;
   padding: 0;
   margin: 3 * $point 0 1 * $point 0;

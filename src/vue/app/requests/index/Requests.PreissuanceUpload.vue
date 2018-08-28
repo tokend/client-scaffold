@@ -203,25 +203,6 @@ export default {
     }
   }
 
-  .token-icon {
-    width: 142px;
-    height: 142px;
-    border-radius: 50%;
-    font-size: 48px;
-    color: #fff;
-    background-color: #ccc;
-    margin-right: 27px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-
-    @include respond-to(small) {
-      margin-right: 0;
-      margin-bottom: 12px;
-    }
-  }
-
   .details-column {
     margin-right: .2rem;
   }

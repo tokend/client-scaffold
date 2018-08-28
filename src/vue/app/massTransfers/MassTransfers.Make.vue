@@ -101,7 +101,7 @@
     <md-dialog :md-active.sync="isHowToOpened">
       <md-dialog-title>{{ i18n.tr_about_csv() }}</md-dialog-title>
       <div class="app__dialog-inner">
-        <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about_detailed() }}</p>
+        <p class="app__page-explanations">{{ i18n.tr_mass_about_detailed() }}</p>
         <md-table class="mass-transfer__text-paragraph">
           <md-table-row>
             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_recipient_email_or_account() }}</md-table-head>
@@ -243,7 +243,7 @@
             sourcePaysForDest: false,
             subject: ''
           })))
-          EventDispatcher.dispatchShowSuccessEvent(i18n.tr_successful())
+          EventDispatcher.dispatchShowSuccessEvent(i18n.transfer_successful())
         } catch (e) {
           const messages = ErrorHandler.deriveTxErrorMessages(e)
           if (!messages || !messages.length) {
@@ -330,7 +330,7 @@
     }
 
     &--error {
-      color: $col-md-accent;
+      color: $col-accent;
     }
   }
 
@@ -344,12 +344,16 @@
 
   .mass-transfer__csv-example {
     border: 1px solid rgba($col-unfocused, .5);
-    background: rgba($col-md-primary, .05);
-    color: $col-md-accent;
+    background: rgba($col-primary, .05);
+    color: $col-accent;
     /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
     border-radius: 5px;
     padding: .5rem 1rem;
     margin-bottom: 1rem;
+  }
+
+  .mass-transfer__confirm-btn {
+    margin-left: -23px;
   }
 
   .mass-transfer__total {
@@ -361,7 +365,7 @@
   }
 
   .mass-transfer__amount {
-    color: $col-primary;
+    color: $col-text-field-hint;
   }
 
   .mass-transfer__asset {

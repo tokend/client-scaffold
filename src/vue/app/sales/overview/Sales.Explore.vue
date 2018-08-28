@@ -18,7 +18,7 @@
       </div>
     </template>
     <template v-if="sales.length === 0 && isLoaded">
-      <div class="sales-overview__no-sales-found-msg md-layout-item md-alignment-center-center1">
+      <div class="sales-overview__no-sales-found-msg">
         <div class="icon">
           <i class="mdi mdi-inbox"></i>
         </div>
@@ -129,28 +129,30 @@
 
   .sales-overview__card-wrapper {
     display: block;
-    background: $col-content-block;
+    background: $col-block;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
     border: none;
     flex: 1;
     cursor: pointer;
     font-size: initial;
     text-align: initial;
+    width: 100%;
   }
 
   .sales-overview__btn {
-    color: $col-active;
+    color: $col-text-accented;
   }
 
   .sales-overview__no-sales-found-msg {
     padding: 10px 40px;
     text-align: center;
-    background-color: $col-content-block;
     margin: 0 auto;
+
     .icon {
       margin-bottom: 20px;
+
       i {
-        font-size: $material-icon-xx-super-big;
+        font-size: $size-icon-super-big;
         line-height: 1;
       }
     }

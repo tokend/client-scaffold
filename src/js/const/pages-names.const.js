@@ -1,6 +1,7 @@
 export const PAGES_NAMES = Object.freeze({
   dashboard: 'Dashboard',
   deposit: 'Deposit',
+  limits: 'Limits',
   withdraw: 'Withdraw',
   send: 'Send',
   exploreTokens: 'Explore tokens',
@@ -14,5 +15,8 @@ export const PAGES_NAMES = Object.freeze({
   trade: 'Trade',
   verification: 'Verification',
   settings: 'Settings',
-  help: 'Help'
+  help: 'Help',
+  downloads: 'TokenD downloads',
+  terms: 'Terms',
+  massTransfer: 'Mass transfer'
 })

@@ -67,7 +67,7 @@
     overflow: hidden;
     position: relative;
     width: $ratio_16;
-    color: $col-md-primary;
+    color: $col-text-page-heading;
 
     &:before {
       bottom: 0;
@@ -109,14 +109,13 @@
   }
 
   .card__syndicate {
-    color: $col-active;
+    color: $col-text-accented;
     font-style: italic;
   }
 
-
   .card__syndicate,
   .card__description {
-    font-size: $fs-tip;
+    font-size: .8rem;
   }
 
   .card__description {
@@ -139,11 +138,11 @@
     right: 0;
     padding: .5rem 3rem;
     transform: translate(32%,33%) rotate(45deg);
-    color: $col-msg-text;
+    color: $col-fund-card-state-tip;
 
     &--upcoming { background: $col-pending }
     &--finished { background: $col-success }
-    &--cancelled { background: $col-danger }
+    &--cancelled { background: $col-accent }
   }
 
 </style>

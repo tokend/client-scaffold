@@ -98,8 +98,8 @@
   }
 
   .file-input__attachment-icon {
-    color: $col-btn-text;
-    font-size: $fs-root;
+    color: $col-file-field-icon-text;
+    font-size: 1rem;
 
   }
   .file-input__upload-input {
@@ -112,14 +112,14 @@
   }
 
   .file-input__name {
-    font-size: $fs-tip;
+    font-size: .8rem;
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .file-input__view-btn {
-    color: $col-active;
+    color: $col-text-accented;
     text-decoration: underline;
   }
 

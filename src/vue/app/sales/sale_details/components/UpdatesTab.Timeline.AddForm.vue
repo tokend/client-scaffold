@@ -91,9 +91,9 @@
   }
 
   .add-update-form__cancel-btn {
-    color: $col-active;
+    color: $col-text-accented;
     cursor: pointer;
-    font-size: $fs-tip;
+    font-size: .8rem;
     text-decoration: underline;
   }
 

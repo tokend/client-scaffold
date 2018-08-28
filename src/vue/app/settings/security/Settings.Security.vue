@@ -39,9 +39,9 @@
   import TfaSettings from './Security.TfaSettings'
   import AccountId from './Security.AccountId'
   import Seed from './Security.Seed'
-  import { i18n } from '../../../../js/i18n'
+  import { i18n } from '@/js/i18n'
 
-  import config from '../../../../config'
+  import config from '@/config'
 
   export default {
     name: 'settings-security',

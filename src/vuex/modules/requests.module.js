@@ -16,6 +16,9 @@ const state = {
     txPerPage: config.REQUESTS_PER_PAGE,
     recordWrp: RecordFactory.createPreIssuanceRequestRecord.bind(RecordFactory)
   }),
+  limitsRequests: new Paginator({
+    recordWrp: RecordFactory.createLimitRequestRecord.bind(RecordFactory)
+  }),
   saleCreationRequests: {},
   isInitialized: false
 }
@@ -87,13 +90,25 @@ const actions = {
     const paginator = state.saleCreationRequests[tokenCode]
     await paginator.next()
     commit(vuexTypes.UPDATE_SALE_REQUEST_LIST_ITEM, paginator)
+  },
+
+  async GET_LIMITS_REQUESTS ({ state }) {
+    const limitsRequests = state.limitsRequests
+    limitsRequests.attachInitLoader(reviewableRequestsService.loadLimitsUpdateReviewableRequests.bind(reviewableRequestsService))
+    await limitsRequests.init()
+  },
+
+  async NEXT_LIMITS_REQUESTS ({ state }) {
+    await state.limitsRequests.next()
   }
 }
 
 const getters = {
   tokenCreationRequests: state => state.tokenCreationRequests,
   preIssuanceUploadRequests: state => state.preIssuanceUploadRequests,
-  saleCreationRequests: state => state.saleCreationRequests
+  saleCreationRequests: state => state.saleCreationRequests,
+  limitsRequests: state => state.limitsRequests.records,
+  isLimitsRequestsLoaded: state => state.limitsRequests.isLoaded
 }
 
 export default {

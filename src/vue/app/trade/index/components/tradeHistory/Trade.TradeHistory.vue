@@ -147,10 +147,10 @@
   .trade-history__item-price .md-icon,
   .trade-history__item-total .md-icon {
     .trade-history__item-status--1 & {
-      color: $green;
+      color: $col-success;
     }
     .trade-history__item-status--0 & {
-      color: $red;
+      color: $col-reject;
     }
   }
   .trade-history__item-date {

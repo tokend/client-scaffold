@@ -41,7 +41,7 @@ $xlarge: 1920px;
   transition: .3s ease-out;
 
   &:hover {
-    background-color: $col-md-primary-flat-hover;
+    background-color: $col-button-flat-hover;
   }
 }
 
@@ -49,9 +49,9 @@ $xlarge: 1920px;
   @include button();
 
   border-radius: 2px;
-  background-color: $col-md-primary-secondary;
+  background-color: $col-button-raised;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .15);
-  color: #fff;
+  color: $col-button-raised-txt;
 
   &[disabled] {
     box-shadow: none;
@@ -62,29 +62,29 @@ $xlarge: 1920px;
 @mixin button-accent () {
   @include button();
   transition: .3s ease-out;
-  color: $col-md-accent;
+  color: $col-button-flat-accent-txt;
 
   &[disabled] {
-    color: $lightGray;
+    color: $col-button-flat-accent-disabled-txt;
   }
 
   &:not([disabled]):hover {
-    background-color: $col-md-accent-flat-hover;
+    background-color: $col-button-flat-accent-hover;
   }
 }
 
 @mixin button-flat () {
   @include button();
 
-  color: $col-md-primary;
+  color: $col-button-flat-txt;
   transition: .3s ease-out;
 
   &[disabled] {
-    color: $lightGray;
+    color: $col-button-flat-disabled-txt;
   }
 
   &:not([disabled]):hover {
-    background-color: $gray;
+    background-color: $col-button-flat-hover;
   }
 }
 
@@ -143,5 +143,38 @@ $xlarge: 1920px;
 @mixin respond-to-width-height($width, $height) {
   @media only screen and (max-width: $width) and (max-width: $height) {
     @content;
+  }
+}
+
+@mixin overwrite-tabs ($width) {
+  .md-tabs-navigation {
+    border-bottom: 2px solid $col-tabs-default-border-bottom;
+
+    @if $width == auto {
+      max-width: inherit;
+    } @else {
+      max-width: $width * $point;
+    }
+    margin-bottom: 4 * $point;
+
+    a, button {
+      font-size: 1.8 * $point;
+      text-transform: none !important;
+
+      .md-button-content {
+        color: $col-tabs-txt;
+      }
+    }
+
+    button[disabled] {
+      .md-button-content {
+        color: $col-tabs-disabled-txt;
+      }
+    }
+
+    .md-tabs-indicator {
+      background: $col-tabs-indicator;
+      bottom: -2px
+    }
   }
 }

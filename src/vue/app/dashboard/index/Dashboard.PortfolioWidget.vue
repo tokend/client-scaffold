@@ -174,7 +174,7 @@
     height: 55px;
     padding: 4px;
     border-radius: 2px;
-    background-color: #fff;
+    background-color: $col-block;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
     display: flex;
@@ -210,8 +210,8 @@
   .portfolio-widget__asset-btn {
     @include button();
     @include button-raised();
-    margin: 4px;
 
+    margin: 4px;
     width: 180px;
     position: relative;
     height: 36px;
@@ -229,17 +229,17 @@
 
   .portfolio-widget__asset-value {
     font-size: 30px;
-    color: $col-md-primary;
+    color: $col-details-value;
   }
 
   .portfolio-widget__asset-usd {
     margin-top: 8px;
     font-size: 16px;
-    color: rgba($col-md-primary, .5);
+    color: $col-details-label;
   }
 
   .portfolio-widget__asset-btn-icon {
-    color: $white !important;
+    color: $col-file-field-icon-text !important;
     transform: scale(.8);
     position: absolute;
     left: 5px;

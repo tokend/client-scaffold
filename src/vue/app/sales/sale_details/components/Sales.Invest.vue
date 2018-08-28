@@ -26,7 +26,7 @@
           :errorMessage="errorMessage('investment')"
           v-validate="'amount'"
           data-vv-validate-on="input"
-          step="0.000001"
+          :step="config.MINIMAL_NUMBER_INPUT_STEP"
           :label="i18n.sale_invest_asset({ asset: form.quoteAsset })"
         />
 
@@ -81,20 +81,21 @@
 </template>
 
 <script>
-import FormMixin from '../../../../common/mixins/form.mixin'
-import { i18n } from '../../../../../js/i18n'
+import FormMixin from '@/vue/common/mixins/form.mixin'
+import { i18n } from '@/js/i18n'
+import config from '@/config'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 import _get from 'lodash/get'
-import { offersService } from '../../../../../js/services/offer.service'
-import { accountsService } from '../../../../../js/services/accounts.service'
-import { pairsService } from '../../../../../js/services/pairs.service'
-import { feeService } from '../../../../../js/services/fees.service'
-import { ErrorHandler } from '../../../../../js/errors/error_handler'
-import { EventDispatcher } from '../../../../../js/events/event_dispatcher'
-import { add, subtract, multiply } from '../../../../../js/utils/math.util'
-import { RecordFactory } from '../../../../../js/records/factory'
-import { commonEvents } from '../../../../../js/events/common_events'
+import { offersService } from '@/js/services/offer.service'
+import { accountsService } from '@/js/services/accounts.service'
+import { pairsService } from '@/js/services/pairs.service'
+import { feeService } from '@/js/services/fees.service'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { add, subtract, multiply } from '@/js/utils/math.util'
+import { RecordFactory } from '@/js/records/factory'
+import { commonEvents } from '@/js/events/common_events'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import HintWrapper from '@/vue/common/hint-wrapper/HintWrapper'
@@ -112,7 +113,8 @@ export default {
     },
     investedAmount: 0,
     offers: [],
-    i18n
+    i18n,
+    config
   }),
   created () {
     this.setTokenCode()
@@ -259,8 +261,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../../../scss/variables";
-@import "../../../../../scss/mixins";
+@import "~@scss/variables";
+@import "~@scss/mixins";
 
 .invest__header {
   font-weight: bold;
@@ -345,20 +347,20 @@ export default {
 
 .invest__available-amount,
 .invest__available-asset {
-  color: $col-md-primary-secondary;
+  color: $col-text-accented;
 }
 
 .invest__input-hint {
   font-size: 1.4 * $point;
-  color: $col-md-primary;
+  color: $col-text-field-hint;
   margin-top: 0.3 * $point;
 
   &--error {
-    color: $col-md-accent;
+    color: $col-accent;
     font-weight: bold;
     .invest__available-asset,
     .invest__available-amount {
-      color: $col-md-accent;
+      color: $col-accent;
     }
   }
 }
@@ -373,7 +375,7 @@ export default {
 }
 
 .invest__tip {
-  font-size: $fs-tip;
+  font-size: .8rem;
 }
 
 .invest__actions {
@@ -397,15 +399,14 @@ export default {
 .invest__max-value-btn {
   border: none;
   background: none;
-  // align-self: top;
   width: 4.4 * $point;
   height: 4.4 * $point;
   padding: 0;
-  color: $col-md-primary-inactive;
+  color: $col-button-flat-txt-inactive;
   cursor: pointer;
 
   &:hover {
-    color: $col-md-primary-secondary;
+    color: $col-button-flat-txt;
   }
 }
 

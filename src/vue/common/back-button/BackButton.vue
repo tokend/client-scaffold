@@ -30,11 +30,11 @@ export default {
 .back-button__icon {
   width: 3.2 * $point;
   height: 3.2 * $point;
-  color: $col-md-primary-inactive !important;
+  color: $col-button-back-icon !important;
   transition: color ease-in-out 0.2s;
 }
 
 .back-button:hover > .back-button__icon {
-  color: $col-md-primary-secondary !important;
+  color: $col-button-back-icon-hover !important;
 }
 </style>

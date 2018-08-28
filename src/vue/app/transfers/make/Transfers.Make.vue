@@ -32,9 +32,10 @@
         <div class="app__form-row">
           <div class="app__form-field">
             <input-field-unchained name="amount"
-              step="0.000001"
+              :step="config.MINIMAL_NUMBER_INPUT_STEP"
               type="number"
               v-model.trim="form.amount"
+              autocomplete="off"
               v-validate="'required|amount'"
               :label="i18n.lbl_amount()"
               :readonly="view.mode === VIEW_MODES.confirm"
@@ -171,6 +172,7 @@ import { vuexTypes } from '@/vuex/types'
 import { Keypair } from 'swarm-js-sdk'
 import { errors } from '@/js/errors/factory'
 import { i18n } from '@/js/i18n'
+import config from '@/config'
 import { EventDispatcher } from '@/js/events/event_dispatcher'
 
 import { accountsService } from '@/js/services/accounts.service'
@@ -218,7 +220,8 @@ export default {
       }
     },
     isFeesLoaded: false,
-    VIEW_MODES
+    VIEW_MODES,
+    config
   }),
   created () {
     this.setTokenCode()
@@ -347,7 +350,7 @@ export default {
 .transfer__fee-box {
   margin-top: 4 * $point;
   padding-top: 4 * $point;
-  border-top: 0.1 * $point dashed $col-md-primary-inactive;
+  border-top: 0.1 * $point dashed $col-text-field-hint-inactive;
 }
 
 .transfer__fee-box-heading {
@@ -356,7 +359,7 @@ export default {
   font-weight: normal;
   display: block;
   font-size: 1.6 * $point;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
 }
 
 .transfer__fee-box-heading:not(:first-child) {
@@ -364,20 +367,20 @@ export default {
 }
 
 .transfer__fee {
-  color: $col-md-primary;
+  color: $col-details-value;
   font-size: 1.6 * $point;
   line-height: 1.5;
   margin: 0;
 }
 
 .transfer__no-fee-msg {
-  color: $col-md-primary-inactive;
+  color: $col-details-label;
   font-size: 1.6 * $point;
   line-height: 1.5;
   margin: 1 * $point 0;
 }
 
 .transfer__fee-type {
-  color: $col-md-primary-secondary;
+  color: $col-details-label;
 }
 </style>

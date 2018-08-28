@@ -83,10 +83,10 @@
   @import '~@scss/variables';
 
   .snackbar__btn {
-    color: #fff;
+    color: $col-snackbar-text;
 
     &:hover {
-      background-color: $col-md-primary-flat-hover;
+      background-color: $col-snackbar-text-hover;
     }
   }
 </style>
