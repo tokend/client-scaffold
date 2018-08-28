@@ -14,10 +14,10 @@ const SUBTYPE_TYPE = {
   2: i18n.fees_incoming()
 }
 
-export function filterFeeType (type) {
+export function localizeFeeType (type) {
   return FEE_TYPE[type + '']
 }
 
-export function filterSubtype (type) {
+export function localizeSubtype (type) {
   return SUBTYPE_TYPE[type + '']
 }

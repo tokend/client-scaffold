@@ -1,6 +1,5 @@
 export default {
-  fees_your: 'Your',
-  fees_fees: 'fees',
+  fees_your_fees: 'Your %{asset} fees',
   fees_asset: 'Asset',
   fees_payment_fee: 'Payment fee',
   fees_offer_fee: 'Offer fee',
