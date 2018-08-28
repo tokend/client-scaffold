@@ -36,7 +36,7 @@
     mixins: [field],
 
     props: {
-      disabled: { type: Boolean, default: true },
+      disabled: { type: Boolean, default: false },
       enableTime: { type: Boolean, default: true },
       disableBefore: { type: String, default: '' },
       disableAfter: { type: String, default: '' },
