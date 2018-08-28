@@ -152,7 +152,7 @@
     left: 0;
     min-width: 170px;
     top: calc(100% + 4px);
-    background-color: $col-block;
+    background-color: $col-dropdown-bg;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     border-radius: 3px;
     z-index: 5;
@@ -187,7 +187,7 @@
   .select__selected-value {
     background-color: transparent;
     border: none;
-    color: $col-md-primary;
+    color: $field-color-text;
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;

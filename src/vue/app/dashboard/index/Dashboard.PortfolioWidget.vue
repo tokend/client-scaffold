@@ -174,7 +174,7 @@
     height: 55px;
     padding: 4px;
     border-radius: 2px;
-    background-color: $col-block;
+    background-color: $col-block-bg;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
     display: flex;

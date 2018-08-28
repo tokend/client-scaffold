@@ -122,7 +122,7 @@
   }
 
   .searcher-wrapper {
-    background: $col-content-block;
+    background: $col-block-bg;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
     margin: 0 0 1.5rem;
     padding: 2.4 * $point 2.4 * $point;

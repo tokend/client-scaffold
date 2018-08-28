@@ -146,7 +146,7 @@
 
   .supported-browsers__title {
     text-align: center;
-    color: $col-md-primary;
+    color: $col-heading;
     margin-bottom: 24px;
     line-height: 1.5;
 
@@ -171,6 +171,7 @@
     line-height: 1.5;
     font-weight: 500;
     padding: 0 42px;
+    color: $col-text;
 
     @include respond-to-custom($custom-medium-breakpoint) {
       font-size: 16px;
@@ -221,7 +222,7 @@
   }
 
   .supported-browsers__browser-name {
-    color: $col-md-primary;
+    color: $col-text;
     margin-bottom: 8px;
   }
 
@@ -236,7 +237,7 @@
         top: -2px;
         right: -22px;;
         font-size: 16px !important;
-        color: $col-md-primary !important;
+        color: $col-text !important;
         text-decoration: none !important;
       }
     }

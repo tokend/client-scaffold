@@ -22,7 +22,7 @@
   .warning-banner {
     height: $warning-banner-height;
     padding: 16px 48px;
-    background-color: $col-md-warning;
+    background-color: $col-warning;
     font-size: 20px;
     color: #fff;
     display: flex;

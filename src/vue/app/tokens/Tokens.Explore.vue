@@ -275,7 +275,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $col-token-code;
+  color: $col-token-instead-icon-abbreviation;
   font-size: 24px;
 
   @include respond-to(small) {

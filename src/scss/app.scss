@@ -27,7 +27,9 @@
 }
 
 body,
-input, select,
+input,
+select,
+button,
 textarea {
   background: $col-app-background;
   font-family: 'Circular', 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif !important;
@@ -394,7 +396,7 @@ h4 {
 }
 
 .app__card {
-  background-color: $col-block;
+  background-color: $col-block-bg;
 
   &:not(.app__card--shadow-none) {
     @include box-shadow();
@@ -590,7 +592,7 @@ h4 {
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: $col-md-primary-secondary-inactive;
+      background-color: $col-tabs-indicator;
       height: 2px;
     }
   }
@@ -604,12 +606,12 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $col-md-primary;
+    color: $col-tabs-txt;
 
     &:hover {
-      background-color: $col-md-primary-secondary-tabs-hover;
+      background-color: $col-tabs-hover-bg;
       text-decoration: none;
-      color: $col-md-primary;
+      color: $col-tabs-txt;
     }
 
     @include respond-to-custom(1100px) {
