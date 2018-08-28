@@ -38,7 +38,6 @@
   import { feeService } from '../../../../js/services/fees.service'
 
   export default {
-    components: {},
     data: _ => ({
       i18n,
       overviewFees: null
