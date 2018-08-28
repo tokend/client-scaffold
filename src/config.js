@@ -17,7 +17,7 @@ const featureFlags = {
   limits: true,
   requests: true,
   massTransfers: true,
-  fee: true
+  myFees: true
 }
 
 export default Object.assign({

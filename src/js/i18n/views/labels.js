@@ -153,7 +153,7 @@ export default {
   lbl_view: 'View',
   lbl_userBlocked: 'User is blocked',
   lbl_requests: PAGES_NAMES.requests,
-  lbl_fee: 'Fee',
+  lbl_fee: 'My Fees',
   lbl_request_state: 'Request state',
   lbl_token_creation: 'Token creation',
   lbl_sale_creation: 'Fund creation',
