@@ -4,7 +4,7 @@
       <input-field-unchained
         class="input-field"
         :label="i18n.lbl_token_input_value()"
-        v-model="inputValue"
+        v-model="filtrationIndex"
       />
     </div>
 
@@ -167,7 +167,7 @@ export default {
   data: _ => ({
     selected: null,
     isLoading: false,
-    inputValue: '',
+    filtrationIndex: '',
     i18n
   }),
   async created () {
@@ -185,8 +185,15 @@ export default {
       vuexTypes.tokens
     ]),
     filteredTokens () {
-      return this.inputValue
-        ? this.tokens.filter(this.searchToken)
+      return this.filtrationIndex
+        ? this.tokens.filter((token) => {
+          const value = this.filtrationIndex.toLowerCase()
+          const name = token.name.toLowerCase()
+          const code = token.code.toLowerCase()
+          if (code.indexOf(value) !== -1 || name.indexOf(value) !== -1) {
+            return token
+          }
+        })
         : this.tokens || []
     }
   },
@@ -220,12 +227,6 @@ export default {
     },
     goHistory () {
       this.$router.push({ name: 'history.index', params: { tokenCode: this.selected.code } })
-    },
-    searchToken (token) {
-      let value = this.inputValue.toLowerCase()
-      if (token.code.toLowerCase().indexOf(value) !== -1 || token.name.toLowerCase().indexOf(value) !== -1) {
-        return token
-      }
     }
   },
   watch: {
@@ -241,7 +242,7 @@ export default {
 @import "../../../scss/mixins";
 
 .token-search-form {
-  width: 260px;
+  max-width: 260px;
   margin-bottom: 40px;
 }
 
