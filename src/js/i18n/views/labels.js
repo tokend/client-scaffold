@@ -53,6 +53,7 @@ export default {
   lbl_date: 'Date',
   lbl_buy: 'Buy',
   lbl_sell: 'Sell',
+  lbl_go_to_website: 'Go to website',
   lbl_tx_type: 'Transaction type',
   lbl_status: 'Status',
   lbl_counterparty: 'Counterparty',
@@ -60,7 +61,7 @@ export default {
   lbl_receiver: 'Receiver',
   lbl_fixed_fee: 'Fixed fee',
   lbl_percent_fee: 'Percent fee',
-  lbl_add_note: 'Add note (under 250 symbols)',
+  lbl_add_note: 'Add note (under %{length} symbols)',
   lbl_description: 'Description',
   lbl_fund_name: 'Fund name',
   lbl_sale_name: 'Fund name',
@@ -104,6 +105,7 @@ export default {
   lbl_token_max_issuance_amount: 'Max issuance amount',
   lbl_token_policies: 'Policies',
   lbl_token_initial_preissued_amount: 'Initial preissued amount',
+  lbl_token_input_value: 'Token code or name',
   lbl_is_transferable: 'Is transferable',
   lbl_transferable: 'Transferable',
   lbl_requires_kyc: 'Requires KYC',
@@ -198,6 +200,5 @@ export default {
   lbl_upload_docs: 'Please, upload the following documents',
   lbl_upload_doc: 'Please, upload the following document',
   lbl_agree_submit: 'Agree & submit information',
-  lbl_pay_all_fees: 'Pay fees',
-  lbl_update_information: 'Update information'
+  lbl_pay_all_fees: 'Pay fees'
 }

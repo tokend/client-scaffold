@@ -1,37 +1,45 @@
 <template>
   <div id="app">
-    <template v-if="isLoggedIn">
-      <md-app md-waterfall md-mode="fixed">
+    <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
+      <warning-banner v-if="isNotSupportedBworser" :message="i18n.cm_edge_warning()"/>
+      <div :class="{ 'app__warning': isNotSupportedBworser }">
+        <md-app md-waterfall md-mode="fixed">
 
-        <md-app-toolbar class="md-primary app__sidebar" v-if="isLoggedIn">
-          <div class="md-toolbar-row">
-            <md-button class="md-icon-button app__sidebar-icon"
-                      @click="menuVisible = !menuVisible">
-              <md-icon>menu</md-icon>
-            </md-button>
-            <navbar/>
-          </div>
-        </md-app-toolbar>
+          <md-app-toolbar class="md-primary app__sidebar" v-if="isLoggedIn">
+            <div class="md-toolbar-row">
+              <md-button class="md-icon-button app__sidebar-icon"
+                        @click="menuVisible = !menuVisible">
+                <md-icon>menu</md-icon>
+              </md-button>
+              <navbar/>
+            </div>
+          </md-app-toolbar>
 
-        <md-app-drawer md-permanent="full"
-                      :md-active.sync="menuVisible"
-                      v-if="isLoggedIn">
-          <sidebar @hide-sidebar="hideSidebar"/>
-        </md-app-drawer>
+          <md-app-drawer md-permanent="full"
+                        :md-active.sync="menuVisible"
+                        v-if="isLoggedIn">
+            <sidebar @hide-sidebar="hideSidebar"/>
+          </md-app-drawer>
 
-        <md-app-content>
-          <router-view/>
-          <snackbar/>
-          <file-viewer/>
-          <loader-bar/>
-        </md-app-content>
-
-      </md-app>
+          <md-app-content>
+            <router-view/>
+            <snackbar/>
+            <file-viewer/>
+            <loader-bar/>
+          </md-app-content>
+        </md-app>
+      </div>
+    </template>
+    <template v-else-if="!isLoggedIn && $route.meta.routeWithAuth">
+      <warning-banner v-if="isNotSupportedBworser" :message="i18n.cm_edge_warning()"/>
+      <div :class="{ 'app__warning': isNotSupportedBworser }">
+        <router-view/>
+        <loader-bar/>
+        <snackbar/>
+      </div>
     </template>
     <template v-else>
       <router-view/>
-      <loader-bar/>
-      <snackbar/>
     </template>
   </div>
 </template>
@@ -42,14 +50,16 @@
   import Snackbar from '../common/messages/Snackbar'
   import FileViewer from '../common/modals/FileViewer'
   import LoaderBar from '../common/messages/LoaderBar'
+  import WarningBanner from '@/vue/app/common/WarningBanner'
 
-  import { vueRoutes } from '../../vue-router/const'
+  import { vueRoutes } from '@/vue-router/const'
 
   import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../vuex/types'
+  import { vuexTypes } from '@/vuex/types'
 
-  import { dispatchAppEvent } from '../../js/events/helpers'
-  import { commonEvents } from '../../js/events/common_events'
+  import { dispatchAppEvent } from '@/js/events/helpers'
+  import { commonEvents } from '@/js/events/common_events'
+  import { i18n } from '@/js/i18n'
 
   import moment from 'moment'
 
@@ -61,11 +71,14 @@
       Sidebar,
       Snackbar,
       FileViewer,
-      LoaderBar
+      LoaderBar,
+      WarningBanner
     },
 
     data: () => ({
-      menuVisible: false
+      menuVisible: false,
+      isNotSupportedBworser: false,
+      i18n
     }),
 
     computed: {
@@ -92,6 +105,7 @@
         this.$store.commit(vuexTypes.KEEP_SESSION)
       }, 1000)
       this.subscribeToUserLogout()
+      this.detectIE()
     },
 
     methods: {
@@ -99,6 +113,11 @@
         loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
         loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
       }),
+      detectIE () {
+        const edge = window.navigator.userAgent.indexOf('Edge/')
+
+        if (edge > 0) this.isNotSupportedBworser = true
+      },
       performLoggedInActions () {
         dispatchAppEvent(commonEvents.enterAppEvent)
         this.loadUserData()
@@ -129,8 +148,8 @@
 </script>
 
 <style lang="scss">
-  @import '../../scss/mixins';
-  @import '../../scss/variables';
+  @import '~@scss/mixins';
+  @import '~@scss/variables';
 
   .md-app-content {
     padding-top: 40px;
@@ -139,6 +158,11 @@
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
+  }
+
+  .app__warning {
+    max-height: calc(100vh - #{$warning-banner-height}) !important;
+    overflow-y: auto;
   }
 
   .app__sidebar-icon {

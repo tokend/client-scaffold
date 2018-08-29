@@ -27,12 +27,12 @@
     >
 
     <span class="input-field__label">
-      {{label}}
+      {{ label }}
     </span>
 
     <transition name="input-field__err-transition">
       <p class="input-field__err-mes" v-if="errorMessage">
-        {{errorMessage}}
+        {{ errorMessage }}
       </p>
     </transition>
   </div>
@@ -143,6 +143,14 @@ export default {
         }
       }
     }
+  },
+  watch: {
+    max (value) {
+      if (+this.value && (+value < +this.value)) this.$emit('input', value)
+    },
+    min (value) {
+      if (+this.value && (+value > +this.value)) this.$emit('input', value)
+    }
   }
 }
 </script>
@@ -172,7 +180,7 @@ export default {
   }
 
   &--autofill-white:not([readonly]) {
-    -webkit-box-shadow: inset 0 0 0 50px $col-field-background !important;
+    -webkit-box-shadow: inset 0 0 0 50px $col-block-bg !important;
   }
 }
 
@@ -231,12 +239,12 @@ export default {
   top: 0;
   transition: all $field-transition-duration;
   pointer-events: none;
-  color: $field-color-focused;
+  color: $field-color-unfocused;
   @include label-font-sizes;
 }
 
 .input-field__input:focus ~ .input-field__label {
-  color: $field-color-unfocused;
+  color: $field-color-focused;
 }
 
 .input-field__input:not(:focus):placeholder-shown ~ .input-field__label {

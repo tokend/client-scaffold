@@ -8,6 +8,7 @@ import { OperationBuilder } from '../operation_builder/operation_builder'
 import { ChartsRequestBuilder } from './modules/charts_request_builder'
 import { IntegrationsRequestBuilder } from './modules/integrations_request_builder'
 import { DataRequestBuider } from './modules/data_request_builder'
+import { PublicRequestBuilder } from './modules/public_request_builder'
 
 export class Request {
   operation () {
@@ -44,6 +45,10 @@ export class Request {
 
   wallets () {
     return new WalletRequestBuilder(config.HORIZON_SERVER)
+  }
+
+  public () {
+    return new PublicRequestBuilder(config.HORIZON_SERVER)
   }
 }
 

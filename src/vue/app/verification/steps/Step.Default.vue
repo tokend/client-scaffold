@@ -2,76 +2,79 @@
   <form class="step"
         novalidate
         @submit.prevent="submit">
-    <template v-for="row in schema.rows">
-      <div class="app__form-row">
+    <template v-for="(row, r) in schema.rows">
+      <div class="app__form-row" :key="`kyc-step-default-${r}`">
         <div class="app__form-field" v-for="(item, i) in row" :key="i">
           <h3 v-if="item.heading">{{ item.heading }}</h3>
 
           <p v-if="item.subheading">{{ item.subheading }}</p>
 
-          <input-field-unchained v-if="item.field === 'text'"
-
-                       v-model="form[item.model]"
-                       v-validate="item.validate"
-                       class="step__input-field"
-                       :name="item.name"
-                       :id="item.id"
-                       :required="item.required"
-                       :label="item.label"
-                       :type="item.type"
-                       :key='item.id'
-                       :errorMessage="errorMessage(item.name)"
-                       :disabled="accountState === ACCOUNT_STATES.pending"
+          <input-field-unchained
+            v-if="item.field === 'text'"
+            v-model="form[item.model]"
+            v-validate="item.validate"
+            class="step__input-field"
+            :name="item.name"
+            :id="item.id"
+            :required="item.required"
+            :label="item.label"
+            :type="item.type"
+            :key='item.id'
+            :errorMessage="errorMessage(item.name)"
+            :disabled="accountState === ACCOUNT_STATES.pending"
           />
-          <textarea-field v-if="item.field === 'textarea'"
-                          v-model="form[item.model]"
-                          v-validate="item.validate"
-                          class="step__input-field"
-                          :name="item.name"
-                          :id="item.id"
-                          :required="item.required"
-                          :label="item.label"
-                          :type="item.type"
-                          :key='item.id'
-                          :maxlength="item.maxlength"
-                          :errorMessage="errorMessage(item.name)"
-                          :disabled="accountState === ACCOUNT_STATES.pending"
+          <textarea-field-unchained
+            v-if="item.field === 'textarea'"
+            v-model="form[item.model]"
+            v-validate="item.validate"
+            class="step__input-field"
+            :name="item.name"
+            :id="item.id"
+            :required="item.required"
+            :label="item.label"
+            :type="item.type"
+            :key='item.id'
+            :maxlength="item.maxlength"
+            :errorMessage="errorMessage(item.name)"
+            :disabled="accountState === ACCOUNT_STATES.pending"
           />
-          <file-field v-if="item.field === 'file'"
-                      v-model="documents[item.type]"
-                      class="step__file-field"
-                      :fileType="item.fileType"
-                      :private="item.private"
-                      :label="item.label"
-                      :type="item.type"
-                      :id="item.id"
-                      :key='item.id'
-                      :disabled="accountState === ACCOUNT_STATES.pending"
+          <file-field
+            v-if="item.field === 'file'"
+            v-model="documents[item.type]"
+            class="step__file-field"
+            :fileType="item.fileType"
+            :private="item.private"
+            :label="item.label"
+            :type="item.type"
+            :id="item.id"
+            :key='item.id'
+            :disabled="accountState === ACCOUNT_STATES.pending"
           />
 
-          <select-field-unchained v-if="item.field === 'select' && values[item.values].length"
-                      :name="item.name"
-                      :id="item.id"
-                      :label="item.label"
-                      v-model="form[item.model]"
-                      :values="values[item.values]"
-                      :key='item.id'
+          <select-field-unchained
+            v-if="item.field === 'select' && values[item.values].length"
+            :name="item.name"
+            :id="item.id"
+            :label="item.label"
+            v-model="form[item.model]"
+            :values="values[item.values]"
+            :key='item.id'
+            :disabled="accountState === ACCOUNT_STATES.pending"/>
 
-                      :disabled="accountState === ACCOUNT_STATES.pending"/>
-
-          <date-field-flatpickr v-if="item.field === 'date'"
-                         v-model="form[item.model]"
-                         v-validate="'required'"
-                         :name="item.name"
-                         :id="item.id"
-                         :required="item.required"
-                         :label="item.label"
-                         :disableAfter="item.disableAfter"
-                         :disableBefore="item.disableBefore"
-                         :key='item.id'
-                         :errorMessage="errorMessage(item.name)"
-                         :disabled="accountState === ACCOUNT_STATES.pending"
-                         :enable-time="item.enableTime"
+          <date-field-flatpickr
+            v-if="item.field === 'date'"
+            v-model="form[item.model]"
+            v-validate="'required'"
+            :name="item.name"
+            :id="item.id"
+            :required="item.required"
+            :label="item.label"
+            :disableAfter="item.disableAfter"
+            :disableBefore="item.disableBefore"
+            :key='item.id'
+            :errorMessage="errorMessage(item.name)"
+            :disabled="accountState === ACCOUNT_STATES.pending"
+            :enable-time="item.enableTime"
           />
 
         </div>

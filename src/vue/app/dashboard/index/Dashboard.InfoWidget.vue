@@ -152,7 +152,6 @@
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 16px;
-    margin-top: 72px;
 
     @include respond-to(medium) { margin-top: 24px }
   }
@@ -202,7 +201,7 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      color: $col-block;
+      color: $col-block-bg;
       font-size: 10px;
       line-height: 18px;
 

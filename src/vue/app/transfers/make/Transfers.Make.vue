@@ -56,11 +56,12 @@
         </div>
 
         <div class="app__form-row">
-          <textarea-field id="transfer-description"
+          <textarea-field-unchained
+            id="transfer-description"
             name="description"
             v-model="form.subject"
             v-validate="'max:250'"
-            :label="i18n.lbl_add_note()"
+            :label="i18n.lbl_add_note({ length: 250 })"
             :maxlength="250"
             :errorMessage="errorMessage('recipient')"
             :readonly="view.mode === VIEW_MODES.confirm"

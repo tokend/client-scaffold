@@ -31,7 +31,10 @@
             :whiteAutofill="true"
             type="number"
             :step="config.MINIMAL_NUMBER_INPUT_STEP"
-            :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount({ value: config.MINIMAL_NUMBER_INPUT_STEP }) : ''"
+            :errorMessage="(allowToValidAmount && lessThanMinimumAmount)
+              ? i18n.trd_validate_minimal_amount({ value: config.MINIMAL_NUMBER_INPUT_STEP })
+              : ''
+            "
           />
         </div>
 

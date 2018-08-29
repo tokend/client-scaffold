@@ -12,10 +12,11 @@
       title="Title"
     />
 
-    <textarea-field v-model="form.message"
-                    v-validate="'required'"
-                    class="step__input-field"
-                    :maxlength="250"
+    <textarea-field-unchained
+      v-model="form.message"
+      v-validate="'required'"
+      class="step__input-field"
+      :maxlength="250"
     />
     <md-card-actions>
       <md-button class="btn" :disabled="isPending" @click="createUpdate">{{i18n.lbl_submit()}}</md-button>
@@ -24,14 +25,14 @@
 </template>
 
 <script>
-  import InputField from '../../../../common/fields/InputField'
-  import FormMixin from '../../../../common/mixins/form.mixin'
-  import { i18n } from '../../../../../js/i18n'
+  import InputField from '@/vue/common/fields/InputField'
+  import FormMixin from '@/vue/common/mixins/form.mixin'
+  import { i18n } from '@/js/i18n'
   import moment from 'moment'
-  import { commonEvents } from '../../../../../js/events/common_events'
-  import { confirmAction } from '../../../../../js/modals/confirmation_message'
-  import { blobTypes, blobFilters } from '../../../../../js/const/const'
-  import { usersService } from '../../../../../js/services/users.service'
+  import { commonEvents } from '@/js/events/common_events'
+  import { confirmAction } from '@/js/modals/confirmation_message'
+  import { blobTypes, blobFilters } from '@/js/const/const'
+  import { usersService } from '@/js/services/users.service'
   export default {
     name: 'add-update-form',
 
@@ -82,7 +83,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../scss/variables";
+  @import "~@scss/variables";
 
   .add-update-form__heading {
     display: inline-block;

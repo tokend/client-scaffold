@@ -34,7 +34,7 @@
           <template v-if="accountTypeI === ACCOUNT_TYPES.notVerified">
             {{ i18n.lbl_type_unverified() }}
           </template>
-          <template v-else-if="accountTypeI === ACCOUNT_TYPES.general">
+          <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
             {{ i18n.lbl_type_general() }}
           </template>
           <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
@@ -84,7 +84,7 @@
                   {{ i18n.lbl_type_corporate() }}
                 </template>
               </div>
-              <button v-ripple="'rgba(255, 255, 255, .2)'"
+              <button v-ripple="{ color: 'rgba(255, 255, 255, .2)' }"
                       @click="goKyc"
                       class="navbar__user-card-account-btn">
                 {{ i18n.lbl_my_account() }}
@@ -106,13 +106,13 @@
 </template>
 
 <script>
-  import { vuexTypes } from '../../vuex/types'
-  import { i18n } from '../../js/i18n'
+  import { vuexTypes } from '@/vuex/types'
+  import { i18n } from '@/js/i18n'
   import { mapActions, mapGetters } from 'vuex'
-  import { commonEvents } from '../../js/events/common_events'
-  import { attachEventHandler } from '../../js/events/helpers'
-  import { vueRoutes } from '../../vue-router/const'
-  import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
+  import { commonEvents } from '@/js/events/common_events'
+  import { attachEventHandler } from '@/js/events/helpers'
+  import { vueRoutes } from '@/vue-router/const'
+  import { ACCOUNT_TYPES } from '@/js/const/xdr.const'
   import { closeElement } from '@/js/helpers/closeElement'
 
   export default {
@@ -189,8 +189,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../../scss/mixins";
-  @import "../../scss/variables";
+  @import "~@scss/mixins";
+  @import "~@scss/variables";
 
   $custom-breakpoint: 800px;
 

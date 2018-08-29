@@ -1,67 +1,59 @@
 <template>
   <div class="tx-preissuance-upload">
-    <div class="requests__list-wrapper" v-if="list.length">
-      <div class="requests__list" v-table-scroll-shadow>
-        <div class="requests__list-header">
-          <div class="requests__list-header-item requests__list-header-item--token-code">{{ i18n.lbl_token_code() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--amount">{{ i18n.preis_amount() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--btn"></div>
-        </div>
-        <div class="requests__list-body">
-          <div class="requests__list-body-elem"
-              v-for="(tx, i) in list"
-              :key="`activity-item-${i}`"
-              :class="`requests__list-body-elem--${tx.state}`">
-            <div class="requests__list-body-row">
-              <div :title="tx.asset" class="requests__list-body-item requests__list-body-item--token-code">
-                {{ tx.asset }}
-              </div>
-              <div :title="tx.amount" class="requests__list-body-item requests__list-body-item--amount">
-                {{ i18n.c(tx.amount) }}
-              </div>
-              <div :title="tx.state" class="requests__list-body-item requests__list-body-item--state">
-                {{ tx.state }}
-              </div>
-              <div :title="tx.createdAt" class="requests__list-body-item requests__list-body-item--created">
-                {{ i18n.dmy(tx.createdAt) }}
-              </div>
-              <div class="requests__list-body-item requests__list-body-item--btn">
-                <button class="requests__list-body-item-btn" @click="toggleDetails(i)">
-                  <md-icon class="requests__list-body-item-icon"
-                          :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
-                    keyboard_arrow_down
-                  </md-icon>
-                </button>
-              </div>
-            </div>
-            <div class="requests__list-body-row requests__list-body-row--details" v-if="isSelected(i)">
-                <md-card-content class="md-layout md-gutter">
+    <md-table md-card class="tx-preissuance-upload__table">
+      <template v-if="list.length">
+        <md-table-row class="tx-preissuance-upload__row">
+          <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
+          <md-table-head>{{ i18n.preis_amount() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
+          <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
+          <md-table-head><!--Button--></md-table-head>
+        </md-table-row>
+        <template v-for="(item, i) in list">
+          <md-table-row class="tx-preissuance-upload__row" :key="i">
+            <md-table-cell class="tx-preissuance-upload__table-cell">{{ item.asset }}</md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">{{ i18n.c(item.amount) }}</md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">{{ item.state }}</md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">
+              <md-button class="tx-token-creation__open-details-btn md-icon-button"
+                         v-if="item.rejectReason">
+                <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
+                <md-icon v-else>keyboard_arrow_down</md-icon>
+              </md-button>
+          </md-table-cell>
+          </md-table-row>
+          <md-table-row class="th-preissuance-upload__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
+            <md-table-cell colspan="7">
+              <md-card-content class="md-layout md-gutter">
                 <div class="details-column md-layout-item">
-                  <detail prop="Reject reason" :value="`${tx.rejectReason}`"/>
+                  <detail prop="Reject reason" :value="`${item.rejectReason}`"/>
                 </div>
               </md-card-content>
-            </div>
-          </div>
-        </div>
-        <div class="requests__btn-outer" v-if="!isLoaded">
-          <button v-ripple
+            </md-table-cell>
+          </md-table-row>
+        </template>
+         <md-table-row v-if="!isLoaded">
+            <md-table-cell colspan="7">
+                <div class="tx-history__btn-outer">
+                  <button v-ripple
                           @click="more"
                           class="app__button-flat"
                           :disabled="isLoading">
                     {{ i18n.lbl_view_more() }}
-          </button>
+                  </button>
+                </div>
+            </md-table-cell>
+         </md-table-row>
+      </template>
+      <template v-else>
+        <div class="tx-preissuance-upload__no-requests">
+          <no-data-message icon-name="trending_up"
+            :msg-title="i18n.preis_no_token_creation_requests()"
+            :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
         </div>
-      </div>
-    </div>
-    <template v-else>
-      <div class="tx-token-creation__no-requests">
-        <no-data-message icon-name="trending_up"
-          :msg-title="i18n.preis_no_token_creation_requests()"
-          :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
-      </div>
-    </template>
+      </template>
+    </md-table>
   </div>
 </template>
 
@@ -213,154 +205,5 @@ export default {
 
   .details-column {
     margin-right: .2rem;
-  }
-
-  .requests__list-wrapper {
-    position: relative;
-  }
-
-  .requests__list {
-    padding: 0 4px 6px 4px;
-
-    @include respond-to-custom(1300px) {
-      overflow-x: auto;
-    }
-  }
-
-  .requests__list-header,
-  .requests__list-body-row {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .requests__list-header-item--token-code,
-  .requests__list-body-item--token-code {
-    width: 20%;
-  }
-
-  .requests__list-header-item--amount,
-  .requests__list-body-item--amount {
-    width: 15%;
-  }
-
-  .requests__list-body-item--state,
-  .requests__list-header-item--state {
-    width: 20%;
-  }
-
-  .requests__list-body-item--created,
-  .requests__list-header-item--created {
-    width: 20%;
-  }
-
-  .requests__list-body-item--updated,
-  .requests__list-header-item--updated {
-    width: 20%;
-  }
-
-  .requests__list-body-item--btn,
-  .requests__list-header-item--btn {
-    width: 70px;
-    flex: none;
-    padding: 0;
-  }
-
-  .requests__list-body-item-btn {
-    @include button();
-    @include button-flat();
-
-    color: $col-list-btn-details-text;
-    background: $col-list-btn-details-background;
-    font-size: 10px;
-    border-radius: 4px;
-    padding: 8px;
-  }
-
-  .requests__list-body-elem {
-    @include box-shadow();
-
-    background-color: $col-list-block-background;
-
-    @include respond-to(medium) {
-      min-width: 670px;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 6px;
-    }
-  }
-
-  .requests__list-body-item,
-  .requests__list-header-item {
-    padding: 8px 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: $col-list-text;
-    display: flex;
-    align-items: center;
-  }
-
-  .requests__list-body-row--details {
-    padding-top: 17px;
-    padding-bottom: 17px;
-    margin: 0 20px;
-    min-width: 25rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .requests__list-body-item-icon--active { transform: rotate(-180deg) }
-
-  .requests__list-body-elem--canceled,
-  .requests__list-body-elem--pending,
-  .requests__list-body-elem--approved,
-  .requests__list-body-elem--rejected,
-  .requests__list-body-elem--permanentlyRejected {
-    &:before {
-      position: absolute;
-      left: 0px;
-      margin-top: 22px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      color: $col-list-status-label-color;
-      font-size: 10px;
-      line-height: 18px;
-    }
-  }
-
-  .requests__list-wrapper {
-    position: relative;
-  }
-
-  .requests__list-body-elem--canceled:before,
-  .requests__list-body-elem--rejected:before,
-  .requests__list-body-elem--permanentlyRejected:before {
-    content: '\2715';
-    background-color: $col-list-status-label-color-rejected;
-    padding: 0 4px;
-  }
-
-  .requests__list-body-elem--pending:before {
-    background-color: $col-list-status-label-color-pending;
-    content: '';
-  }
-
-  .requests__list-body-elem--approved:before {
-    content: '\2713';
-    background-color: $col-list-status-label-color-success;
-    padding: 0 3px;
-  }
-
-  .requests__btn-outer {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-
-  .requests__list-header,
-  .requests__list-body {
-    padding: 0 2rem;
   }
 </style>

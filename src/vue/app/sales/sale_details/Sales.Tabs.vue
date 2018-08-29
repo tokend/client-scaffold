@@ -1,46 +1,30 @@
 <template>
-  <md-tabs class="sales-tabs" v-if="isReadyToShowTabs">
-    <md-tab name="Chart"  md-label="Market price">
-      <div class="sales-tabs__tab-inner">
-        <sale-chart :sale="sale"/>
-      </div>
-    </md-tab>
-    <md-tab name="Overview"  md-label="Overview">
-      <div class="sales-tabs__tab-inner">
-        <description-tab :description="description" />
-      </div>
-    </md-tab>
-    <md-tab name="Details"  md-label="Details">
-      <div class="sales-tabs__tab-inner">
-        <sale-tab :sale="sale" />
-      </div>
-    </md-tab>
-    <md-tab name="Token"  md-label="Token">
-      <div class="sales-tabs__tab-inner">
-        <token-tab :token="token" />
-      </div>
-    </md-tab>
-    <!-- <md-tab name="crowdfund"  md-label="Crowdfund">
-      <div class="sales-tabs__tab-inner">
-        <crowdfund-tab :syndicate="syndicate" />
-      </div>
-    </md-tab> -->
-    <md-tab name="Banner"  md-label="Video" :md-disabled="!sale.youTubeVideoId">
-      <div class="sales-tabs__tab-inner">
-        <sale-banner :sale="sale" />
-      </div>
-    </md-tab>
-    <md-tab name="Updates"  md-label="Updates">
-      <div class="tabs__tab-inner">
-        <updates-tab :sale="sale" />
-      </div>
-    </md-tab>
-    <md-tab name="Documents"  md-label="Documents">
-      <div class="tabs__tab-inner">
-        <documents-tab :sale="sale"/>
-      </div>
-    </md-tab>
-  </md-tabs>
+  <tabs
+    class="app__tabs"
+    v-if="isReadyToShowTabs"
+    :options="{ useUrlFragment: false }">
+    <tab :name="i18n.sale_tabs_market_price()">
+      <sale-chart :sale="sale"/>
+    </tab>
+    <tab :name="i18n.sale_tabs_overwiev()">
+      <description-tab :description="description" />
+    </tab>
+    <tab :name="i18n.sale_tabs_details()">
+      <sale-tab :sale="sale" />
+    </tab>
+    <tab :name="i18n.sale_tabs_token()">
+      <token-tab :token="token" />
+    </tab>
+    <tab :name="i18n.sale_tabs_video()">
+      <sale-banner :sale="sale" />
+    </tab>
+    <tab :name="i18n.sale_tabs_updates()">
+      <updates-tab :sale="sale" />
+    </tab>
+    <tab :name="i18n.sale_tabs_documents()">
+      <documents-tab :sale="sale"/>
+    </tab>
+  </tabs>
 </template>
 
 <script>
@@ -52,6 +36,10 @@
   import UpdatesTab from './tabs/Sales.UpdatesTab'
   import SaleTab from './tabs/Sales.SaleTab'
   import SaleChart from './components/Sales.Chart'
+  import Tabs from '@/vue/app/common/tabs/Tabs'
+  import Tab from '@/vue/app/common/tabs/Tab'
+
+  import { i18n } from '@/js/i18n'
   export default {
     name: 'sale-details-tabs',
     props: ['sale', 'description', 'syndicate', 'token'],
@@ -63,7 +51,14 @@
       TokenTab,
       SaleTab,
       UpdatesTab,
-      SaleChart
+      SaleChart,
+      Tab,
+      Tabs
+    },
+    data () {
+      return {
+        i18n
+      }
     },
     computed: {
       isReadyToShowTabs () { return !!this.sale.id }
@@ -71,9 +66,9 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+<style lang="scss">
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .sales-tabs {
     @include box-shadow;

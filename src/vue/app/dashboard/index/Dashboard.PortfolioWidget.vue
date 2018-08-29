@@ -14,8 +14,7 @@
           />
         </div>
       </div>
-      <!-- Hided as requested in "Redesign fixes" -->
-      <!-- <div class="portfolio-widget__asset-btns">
+      <div class="portfolio-widget__asset-btns">
         <router-link tag="button"
                       to="/issuance-creation"
                       :disabled="checkTransferable"
@@ -32,35 +31,13 @@
           <md-icon class="portfolio-widget__asset-btn-icon portfolio-widget__asset-btn-icon--rotate">send</md-icon>
           {{ i18n.lbl_send() }} {{ currentAsset }}
         </router-link>
-      </div> -->
+      </div>
     </div>
     <template v-if="currentAsset">
       <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
         <div class="portfolio-widget__asset-available">
           <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
           <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
-        </div>
-        <div class="portfolio-widget__select-scale" v-if="showTabls">
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.hour }"
-                  @click="$emit(events.changeDashboardScale, tabs.hour)">
-            Hour
-          </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.day }"
-                  @click="$emit(events.changeDashboardScale, tabs.day)">
-            Day
-          </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.month }"
-                  @click="$emit(events.changeDashboardScale, tabs.month)">
-            Month
-          </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.year }"
-                  @click="$emit(events.changeDashboardScale, tabs.year)">
-            Year
-          </button>
         </div>
       </div>
     </template>
@@ -92,15 +69,12 @@
       NoDataMessage
     },
     props: {
-      scale: { type: String, required: true },
-      currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET },
-      showTabls: { type: Boolean, default: false }
+      currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET }
     },
     data: _ => ({
       i18n,
       events: {
-        assetChange: commonEvents.assetChangeEvent,
-        changeDashboardScale: commonEvents.changeDashboardScale
+        assetChange: commonEvents.assetChangeEvent
       },
       tabs: {
         hour: 'hour',
@@ -189,12 +163,6 @@
     }
   }
 
-  .portfolio-widget__select-scale {
-    @include respond-to-custom($custom-breakpoint) {
-      margin-top: 16px;
-    }
-  }
-
   .portfolio-widget__select {
     display: flex;
     align-items: center;
@@ -206,7 +174,7 @@
     height: 55px;
     padding: 4px;
     border-radius: 2px;
-    background-color: $col-block;
+    background-color: $col-block-bg;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
     display: flex;
@@ -217,6 +185,12 @@
     @include respond-to(small) {
       width: 40px;
       height: 40px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -231,16 +205,6 @@
       justify-content: flex-start;
       margin-bottom: 16px;
     }
-  }
-
-  .portfolio-widget__select-scale-btn {
-    @include button();
-    @include button-flat();
-    font-weight: 400;
-  }
-
-  .portfolio-widget__select-scale-btn--selected {
-    font-weight: 700;
   }
 
   .portfolio-widget__asset-btn {
