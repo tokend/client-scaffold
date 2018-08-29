@@ -1,10 +1,5 @@
 <template>
   <div class="chart-tabs">
-
-    <!-- <span class="chart-tabs__prefix">
-      {{ i18n.trd_chart_tabs_prefix() }}
-    </span> -->
-
     <button class="chart-tabs__tab"
             @click="$emit(common.inputEvent, tabs.hour)"
             :class="{ 'chart-tabs__tab--selected': value === tabs.hour }"

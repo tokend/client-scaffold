@@ -1,12 +1,6 @@
 <template>
   <div class="tx-token-creation">
     <md-table md-card class="tx-token-creation__table">
-      <!-- <md-table-toolbar class="tx-token-creation__table-toolbar">
-        <h1 class="tx-token-creation__table-title md-title">{{ i18n.lbl_token_creation_requests() }}</h1>
-        <div class="tx-token-creation__select-outer">
-        </div>
-      </md-table-toolbar> -->
-
       <template v-if="list.length">
         <md-table-row class="tx-token-creation__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
