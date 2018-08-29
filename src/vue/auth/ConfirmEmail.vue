@@ -47,14 +47,14 @@
     },
 
     beforeCreate () {
-      if (!this.$route.params.walletId || !this.$route.params.email) {
+      if (!this.$store.state.wallet || !this.$route.query.email) {
         this.$router.push('/login')
       }
     },
 
     created () {
-      this.walletId = this.$route.params.walletId
-      this.email = this.$route.params.email
+      this.walletId = this.$store.state.wallet
+      this.email = this.$route.query.email
     },
 
     methods: {

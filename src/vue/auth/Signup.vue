@@ -74,6 +74,8 @@
 
   import { ErrorFactory, errorTypes, errors } from '@/js/errors/factory'
   import { ErrorHandler } from '@/js/errors/error_handler'
+  import { mapGetters, mapActions } from 'vuex'
+  import { vuexTypes } from '@/vuex/types'
   import { vueRoutes } from '@/vue-router/const'
   import { Keypair } from 'swarm-js-sdk'
   import { showRememberSeedMessage } from '@/js/modals/remember_seed.modal'
@@ -98,6 +100,12 @@
       }
     },
 
+    computed: {
+      ...mapGetters([
+        vuexTypes.walletId
+      ])
+    },
+
     methods: {
       async submit () {
         if (!await this.isValid()) return
@@ -109,7 +117,8 @@
           const walletId = await authService.signup(this.form, recoveryKeypair)
           this.enable()
           await showRememberSeedMessage(recoveryKeypair.secret())
-          this.goShowEmail(walletId)
+          this.goShowEmail()
+          this.setWalledId(walletId)
         } catch (error) {
           switch (error.constructor) {
             case errors.ConflictError:
@@ -139,10 +148,14 @@
         return Promise.resolve(true)
       },
 
-      goShowEmail (walletId) {
-        const route = { ...vueRoutes.email, params: { walletId, email: this.form.email } }
+      goShowEmail () {
+        const route = { ...vueRoutes.email, query: { email: this.form.email } }
         this.$router.push(route)
-      }
+      },
+
+      ...mapActions({
+        setWalledId: vuexTypes.SET_WALLET_ID
+      })
     }
   }
 </script>

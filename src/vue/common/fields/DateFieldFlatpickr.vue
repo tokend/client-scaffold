@@ -9,6 +9,7 @@
                   :class="{ 'date-field-flatpickr__input--disabled': disabled }"
                   :config="config"
                   :value="value"
+                  :key="value + disabled"
                   :disabled="disabled"
                   @input.native="dateFieldUpdated"/>
     </div>
@@ -35,6 +36,7 @@
     mixins: [field],
 
     props: {
+      disabled: { type: Boolean, default: false },
       enableTime: { type: Boolean, default: true },
       disableBefore: { type: String, default: '' },
       disableAfter: { type: String, default: '' },
@@ -107,16 +109,6 @@
     & ~ .input-field__label {
       filter: grayscale(100%);
     }
-  }
-
-  .date-field-flatpickr__label {
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: all $field-transition-duration;
-    pointer-events: none;
-    color: $field-color-unfocused;
-    @include label-font-sizes;
   }
 
   .date-field-flatpickr__label {
