@@ -105,6 +105,7 @@ export default {
   lbl_token_max_issuance_amount: 'Max issuance amount',
   lbl_token_policies: 'Policies',
   lbl_token_initial_preissued_amount: 'Initial preissued amount',
+  lbl_token_input_value: 'Token code or name',
   lbl_is_transferable: 'Is transferable',
   lbl_transferable: 'Transferable',
   lbl_requires_kyc: 'Requires KYC',
