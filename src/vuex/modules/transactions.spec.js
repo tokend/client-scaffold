@@ -37,20 +37,6 @@ describe('module.transactions', () => {
     expect(state.lists).to.have.property('ETH')
   })
 
-  // it('UPDATE_TX_LIST_ITEM', () => {
-  //   const state = {
-  //     lists: {
-  //       BTC: [],
-  //       QTK: [],
-  //       ETH: []
-  //     }
-  //   }
-  //   const tokenCode = 'BTC'
-  //   const paginator = new Paginator()
-  //   UPDATE_TX_LIST_ITEM(state, { tokenCode, paginator })
-  //   expect(state.lists.BTC).to.deep.equal(paginator)
-  // })
-
   it('SET_TX_LIST_INITIALIZED', () => {
     const state = { isInitialized: false }
     SET_TX_LIST_INITIALIZED(state)
@@ -78,37 +64,4 @@ describe('module.transactions', () => {
       },
     }, done)
   })
-
-  // it ('GET_TX_LIST commits properly all mutations and dispatches INIT_TX_LIST because state is not initialized', (done) => {
-  //   // const recordWrp = (record) => parseTransaction(record, code)
-  //   const mockPaginator =  new Paginator()
-  //   // mockPaginator._recordWrp = recordWrp
-  //   mockPaginator.records = transactionsResponse.records
-  //   mockPaginator._initLoader = () => loadTransactionHistory('BTC')
-  //   mockPaginator._nextPageLoader = transactionsResponse.next
-  //   mockPaginator.isLoaded = true
-  //
-  //   testAction({
-  //     action: module.actions.GET_TX_LIST,
-  //     actionPayload: 'BTC',
-  //     expectedMutations: [
-  //       { type: 'UPDATE_TX_LIST_ITEM' }
-  //     ],
-  //     expectedMutationPayloads: [
-  //       { tokenCode: 'BTC',
-  //         paginator: mockPaginator
-  //       }
-  //     ],
-  //     expectedActions: [
-  //       { type: 'INIT_TX_LIST' }
-  //     ],
-  //     state: {
-  //       lists: {
-  //         BTC: new Paginator()
-  //       },
-  //       isInitialized: false
-  //     }
-  //   }, done)
-  // })
-  //
 })

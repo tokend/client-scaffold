@@ -80,9 +80,6 @@ export default {
         this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset)),
         this.description = await salesService.loadSaleDescription(this.sale.owner, this.sale.descriptionID)
       ])
-      // const syndicateDetails = await salesService.loadSaleOwner(this.sale.owner)
-      // this.syndicate = syndicateDetails.syndicateDetails
-      // this.syndicate.email = syndicateDetails.syndicateEmail
     }
   }
 }

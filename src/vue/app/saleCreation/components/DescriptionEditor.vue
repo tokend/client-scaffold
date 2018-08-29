@@ -77,7 +77,6 @@
 <style lang="scss">
   @import '~simplemde/dist/simplemde.min.css';
   @import '../../../../scss/variables';
-  // @import '../../../../../assets/style/md';
 
   .description-editor {
     width: 100%;

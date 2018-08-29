@@ -29,6 +29,6 @@ export function humanizePastDate (date) {
   })
 }
 
-export function getDateByDMY (date) { // Day, Month, Year
+export function getDateByDMY (date) {
   return moment(date).format('DD MMM YYYY')
 }
