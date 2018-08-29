@@ -4,7 +4,7 @@
       <input-field-unchained
         class="input-field"
         :label="i18n.lbl_token_input_value()"
-        v-model="filtrationIndex"
+        v-model="filtrationCriteria"
       />
     </div>
 
@@ -167,7 +167,7 @@ export default {
   data: _ => ({
     selected: null,
     isLoading: false,
-    filtrationIndex: '',
+    filtrationCriteria: '',
     i18n
   }),
   async created () {
@@ -185,9 +185,9 @@ export default {
       vuexTypes.tokens
     ]),
     filteredTokens () {
-      return this.filtrationIndex
+      return this.filtrationCriteria
         ? this.tokens.filter((token) => {
-          const value = this.filtrationIndex.toLowerCase()
+          const value = this.filtrationCriteria.toLowerCase()
           const name = token.name.toLowerCase()
           const code = token.code.toLowerCase()
           if (code.indexOf(value) !== -1 || name.indexOf(value) !== -1) {
