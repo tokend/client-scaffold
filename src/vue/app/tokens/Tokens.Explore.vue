@@ -242,6 +242,7 @@ export default {
 @import "../../../scss/mixins";
 
 .token-search-form {
+  width: 100%;
   max-width: 260px;
   margin-bottom: 40px;
 }
