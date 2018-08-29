@@ -39,3 +39,9 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .app-tabs__panel {
+    padding: 16px;
+  }
+</style>
