@@ -595,10 +595,10 @@ h4 {
       background-color: $col-tabs-indicator;
       height: 2px;
     }
-    
+
     &.is-disabled {
       cursor: default;
-      
+
       .app-tabs__tab-btn {
         pointer-events: none;
         opacity: 0.5;
@@ -630,8 +630,7 @@ h4 {
   }
 
   .app-tabs__tab--disabled .app-tabs__tab-btn:hover {
-    background-color: $col-md-primary-secondary-inactive;
-    color: $col-md-primary;
+    color: $col-tabs-txt;
   }
 
   .tapp-tabs__panel {
