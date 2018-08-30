@@ -1,9 +1,17 @@
 <template>
-  <md-tabs md-card class="requests__tabs" md-sync-route :md-dynamic-height="true">
-    <md-tab :md-label="`${ i18n.lbl_token_creation()}`" to="/requests/token-creation">
+  <md-tabs
+    md-card
+    class="requests__tabs"
+    md-sync-route
+    :md-dynamic-height="true">
+    <md-tab
+      :md-label="`${ i18n.lbl_token_creation()}`"
+      to="/requests/token-creation">
       <token-creation />
     </md-tab>
-    <md-tab :md-label="`${ i18n.lbl_sale_creation()}`" to="/requests/sale-creation">
+    <md-tab
+      :md-label="`${ i18n.lbl_sale_creation()}`"
+      to="/requests/sale-creation">
       <sale-creation />
     </md-tab>
     <md-tab :md-label="`${ i18n.preis_upload()}`">

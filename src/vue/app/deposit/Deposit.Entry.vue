@@ -1,19 +1,19 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
-  import RouteEntryMixin from '../../common/mixins/route-entry'
+import RouteEntryMixin from '../../common/mixins/route-entry'
 
-  export default {
-    name: 'deposit',
-    mixins: [RouteEntryMixin],
-    data: _ => ({
-      routes: [
-        { path: '/deposit/make', label: 'Deposit' }
-      ]
-    })
-  }
+export default {
+  name: 'deposit',
+  mixins: [RouteEntryMixin],
+  data: _ => ({
+    routes: [
+      { path: '/deposit/make', label: 'Deposit' }
+    ]
+  })
+}
 </script>
 
 <style scoped>

@@ -1,7 +1,9 @@
 <template>
-  <span class="hint-wrapper" :class="{'hint-wrapper--decorated': decorated}">
+  <span
+    class="hint-wrapper"
+    :class="{'hint-wrapper--decorated': decorated}">
     <span class="hint-wrapper__target">
-      <slot></slot>
+      <slot />
     </span>
 
     <div class="hint-wrapper__hint-box">

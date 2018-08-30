@@ -1,18 +1,19 @@
 <template>
-  <no-data-message icon-name="check"
-                  :msg-title="i18n.kyc_approved_title()"
-                  :msg-message="i18n.kyc_approved_msg()"/>
+  <no-data-message
+    icon-name="check"
+    :msg-title="i18n.kyc_approved_title()"
+    :msg-message="i18n.kyc_approved_msg()" />
 </template>
 
 <script>
-  import { i18n } from '../../../../js/i18n'
-  import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import { i18n } from '../../../../js/i18n'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
-  export default {
-    name: 'VerificationSyndicateBanner',
-    components: { NoDataMessage },
-    data: _ => ({
-      i18n
-    })
-  }
+export default {
+  name: 'verification-syndicate-banner',
+  components: { NoDataMessage },
+  data: _ => ({
+    i18n
+  })
+}
 </script>

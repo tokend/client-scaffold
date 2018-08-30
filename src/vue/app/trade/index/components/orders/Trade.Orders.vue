@@ -7,8 +7,14 @@
 
       <div class="app__card-content orders__list-container">
         <div class="orders__list-wrp">
-          <order-list class="orders__list" :type="ORDER_TYPES.buy" :list="formattedBuyOffers"/>
-          <order-list class="orders__list" :type="ORDER_TYPES.sell" :list="formattedSellOffers"/>
+          <order-list
+            class="orders__list"
+            :type="ORDER_TYPES.buy"
+            :list="formattedBuyOffers" />
+          <order-list
+            class="orders__list"
+            :type="ORDER_TYPES.sell"
+            :list="formattedSellOffers" />
         </div>
       </div>
     </div>
@@ -16,33 +22,33 @@
 </template>
 
 <script>
-  import OrderList from './Orders.List'
+import OrderList from './Orders.List'
 
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../../../vuex/types'
-  import { ORDER_TYPES } from '../../../../../../js/const/order-types'
-  import { i18n } from '../../../../../../js/i18n'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../../../../../vuex/types'
+import { ORDER_TYPES } from '../../../../../../js/const/order-types'
+import { i18n } from '../../../../../../js/i18n'
 
-  export default {
-    name: 'orders',
-    components: { OrderList },
-    data: _ => ({
-      ORDER_TYPES,
-      i18n
-    }),
-    computed: {
-      ...mapGetters([
-        vuexTypes.buyOffers,
-        vuexTypes.sellOffers
-      ]),
-      formattedBuyOffers () {
-        return this.buyOffers.sort((a, b) => { return b.price - a.price })
-      },
-      formattedSellOffers () {
-        return this.sellOffers.sort((a, b) => { return a.price - b.price })
-      }
+export default {
+  name: 'orders',
+  components: { OrderList },
+  data: _ => ({
+    ORDER_TYPES,
+    i18n
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.buyOffers,
+      vuexTypes.sellOffers
+    ]),
+    formattedBuyOffers () {
+      return this.buyOffers.sort((a, b) => { return b.price - a.price })
+    },
+    formattedSellOffers () {
+      return this.sellOffers.sort((a, b) => { return a.price - b.price })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

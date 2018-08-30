@@ -19,15 +19,25 @@
         <div class="chart-container">
 
           <div class="md-layout md-alignment-center-space-between chart-container__tabs">
-            <scale-tabs class="md-layout-item md-size-70 md-small-size-100"
+            <scale-tabs
+              class="md-layout-item md-size-70 md-small-size-100"
               :asset="assets"
               v-model="scale"
-              :isPending="isPending"
+              :is-pending="isPending"
             />
           </div>
 
-          <d3-chart :data="history" :currency="assets.split('/')[1]" :scale="scale" :isPending="isPending" :precision="precision" v-if="history.length" :requiredTicks="requiredTicks"/>
-          <div class="chart-container__loader" v-else>Loading...</div>
+          <d3-chart
+            :data="history"
+            :currency="assets.split('/')[1]"
+            :scale="scale"
+            :is-pending="isPending"
+            :precision="precision"
+            v-if="history.length"
+            :required-ticks="requiredTicks" />
+          <div
+            class="chart-container__loader"
+            v-else>Loading...</div>
 
         </div>
       </div>
@@ -37,62 +47,62 @@
 </template>
 
 <script>
-  import D3Chart from './ChartWidget.ChartRenderer'
-  import ScaleTabs from './ChartWidget.DateTabs'
-  import { i18n } from '../../../../../../js/i18n'
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../../../vuex/types'
+import D3Chart from './ChartWidget.ChartRenderer'
+import ScaleTabs from './ChartWidget.DateTabs'
+import { i18n } from '../../../../../../js/i18n'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../../../../../vuex/types'
 
-  export default {
-    name: 'chart',
+export default {
+  name: 'chart',
 
-    components: {
-      ScaleTabs,
-      D3Chart
+  components: {
+    ScaleTabs,
+    D3Chart
+  },
+
+  props: {
+    data: { type: Object, required: true },
+    assets: { type: String, required: false },
+    action: { type: String, default: 'issued' },
+    currentCap: { type: [String, Number], required: false },
+    hardCap: { type: [String, Number], required: false },
+    softCap: { typ: [String, Number], required: false },
+    precision: { type: Number, default: 0 }
+  },
+
+  data () {
+    return {
+      scale: 'month',
+      isPending: false,
+      i18n,
+      tokenCode: null,
+      baseAmount: '',
+      quoteAmount: ''
+    }
+  },
+
+  created () {
+    this.tokenCode = this.tokenCodes[0] || null
+  },
+
+  computed: {
+    ...mapGetters([
+      vuexTypes.userWithdrawableTokens,
+      vuexTypes.accountBalances
+    ]),
+    tokenCodes () {
+      return this.userWithdrawableTokens.map(token => token.code)
     },
-
-    props: {
-      data: { type: Object, required: true },
-      assets: { type: String, required: false },
-      action: { type: String, default: 'issued' },
-      currentCap: { type: [String, Number], required: false },
-      hardCap: { type: [String, Number], required: false },
-      softCap: { typ: [String, Number], required: false },
-      precision: { type: Number, default: 0 }
+    history () {
+      if (!this.data[this.scale]) return []
+      return this.data[this.scale]
     },
-
-    data () {
-      return {
-        scale: 'month',
-        isPending: false,
-        i18n,
-        tokenCode: null,
-        baseAmount: '',
-        quoteAmount: ''
-      }
-    },
-
-    created () {
-      this.tokenCode = this.tokenCodes[0] || null
-    },
-
-    computed: {
-      ...mapGetters([
-        vuexTypes.userWithdrawableTokens,
-        vuexTypes.accountBalances
-      ]),
-      tokenCodes () {
-        return this.userWithdrawableTokens.map(token => token.code)
-      },
-      history () {
-        if (!this.data[this.scale]) return []
-        return this.data[this.scale]
-      },
-      requiredTicks () {
-        return [this.softCap, this.hardCap].filter(value => value)
-      }
+    requiredTicks () {
+      return [this.softCap, this.hardCap].filter(value => value)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

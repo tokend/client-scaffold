@@ -1,20 +1,29 @@
 <template>
   <div class="select">
-    <div v-if="label" class="select__label">
+    <div
+      v-if="label"
+      class="select__label">
       {{ label }}
     </div>
-    <div class="select__selected" @click="toggleListVisibility()">
+    <div
+      class="select__selected"
+      @click="toggleListVisibility()">
       <div class="select__selected-value">{{ selected }}</div>
-      <md-icon class="select__selected-icon" :class="{ 'select__selected-icon--active': showList }">
+      <md-icon
+        class="select__selected-icon"
+        :class="{ 'select__selected-icon--active': showList }">
         keyboard_arrow_down
       </md-icon>
     </div>
-    <div class="select__list" :class="{ 'select__list--active': showList }">
+    <div
+      class="select__list"
+      :class="{ 'select__list--active': showList }">
       <template v-for="(value, i) in values">
-        <div class="select__list-item"
-             :key="i"
-             :class="{ 'select__list-item--selected': selected === value }"
-             @click="selectItem(value)">
+        <div
+          class="select__list-item"
+          :key="i"
+          :class="{ 'select__list-item--selected': selected === value }"
+          @click="selectItem(value)">
           {{ value }}
         </div>
       </template>
@@ -23,33 +32,33 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../js/events/common_events'
+import { commonEvents } from '../../../js/events/common_events'
 
-  export default {
-    name: 'select-field-custom',
-    props: {
-      value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
-      values: { type: Array, default: _ => [] },
-      label: { type: String, default: '' }
+export default {
+  name: 'select-field-custom',
+  props: {
+    value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
+    values: { type: Array, default: _ => [] },
+    label: { type: String, default: '' }
+  },
+  data: _ => ({
+    selected: '',
+    showList: false
+  }),
+  created () {
+    this.selected = this.value
+  },
+  methods: {
+    selectItem (item) {
+      this.selected = item
+      this.$emit(commonEvents.inputEvent, item)
+      this.toggleListVisibility()
     },
-    data: _ => ({
-      selected: '',
-      showList: false
-    }),
-    created () {
-      this.selected = this.value
-    },
-    methods: {
-      selectItem (item) {
-        this.selected = item
-        this.$emit(commonEvents.inputEvent, item)
-        this.toggleListVisibility()
-      },
-      toggleListVisibility () {
-        this.showList = !this.showList
-      }
+    toggleListVisibility () {
+      this.showList = !this.showList
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

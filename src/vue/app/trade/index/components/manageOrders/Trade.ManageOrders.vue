@@ -16,7 +16,10 @@
             </md-table-row>
 
             <template v-for="(order, i) in offers">
-              <md-table-row class="manage-orders__row" @click.native="toggleDetails(i)" :key="`${i}-row`">
+              <md-table-row
+                class="manage-orders__row"
+                @click.native="toggleDetails(i)"
+                :key="`${i}-row`">
                 <md-table-cell class="manage-orders__table-cell">{{ i18n.dmy(order.createdAt) }}</md-table-cell>
                 <!-- <md-table-cell class="manage-orders__table-cell">{{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}</md-table-cell> -->
                 <md-table-cell class="manage-orders__table-cell">
@@ -33,9 +36,14 @@
 
               </md-table-row>
 
-              <md-table-row class="manage-orders__expandable-row" v-if="isSelected(i)" :key="`${i}-expand`">
+              <md-table-row
+                class="manage-orders__expandable-row"
+                v-if="isSelected(i)"
+                :key="`${i}-expand`">
                 <md-table-cell colspan="7">
-                  <order-details class="manage-orders__details" :tx="order"/>
+                  <order-details
+                    class="manage-orders__details"
+                    :tx="order" />
                 </md-table-cell>
               </md-table-row>
 
@@ -56,34 +64,34 @@
 </template>
 
 <script>
-  import OrderDetails from './ManageOrders.OrderDetails'
-  import { i18n } from '../../../../../../js/i18n'
+import OrderDetails from './ManageOrders.OrderDetails'
+import { i18n } from '../../../../../../js/i18n'
 
-  export default {
-    name: 'manage-orders',
-    components: { OrderDetails },
-    props: {
-      offers: { type: Array, require: true },
-      assets: { type: Object, retuqire: true }
-    },
-    data () {
-      return {
-        index: -1,
-        i18n
-      }
-    },
-    methods: {
-      toggleDetails (index) {
-        this.index = this.index === index ? -1 : index
-      },
-      isSelected (i) {
-        return this.index === i
-      }
-    },
-    watch: {
+export default {
+  name: 'manage-orders',
+  components: { OrderDetails },
+  props: {
+    offers: { type: Array, require: true },
+    assets: { type: Object, retuqire: true }
+  },
+  data () {
+    return {
+      index: -1,
+      i18n
+    }
+  },
+  watch: {
 
+  },
+  methods: {
+    toggleDetails (index) {
+      this.index = this.index === index ? -1 : index
+    },
+    isSelected (i) {
+      return this.index === i
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

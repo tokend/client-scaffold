@@ -5,34 +5,38 @@
       {{ i18n.trd_chart_tabs_prefix() }}
     </span>
 
-    <button class="tab-btn"
-            @click="$emit(common.inputEvent, tabs.hour)"
-            :class="{ selected: value === tabs.hour }"
-            :disabled="isPending"
+    <button
+      class="tab-btn"
+      @click="$emit(common.inputEvent, tabs.hour)"
+      :class="{ selected: value === tabs.hour }"
+      :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_hour() }}</span>
     </button>
 
-    <button class="tab-btn"
-            @click="$emit(common.inputEvent, tabs.day)"
-            :class="{ selected: value === tabs.day }"
-            :disabled="isPending"
+    <button
+      class="tab-btn"
+      @click="$emit(common.inputEvent, tabs.day)"
+      :class="{ selected: value === tabs.day }"
+      :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_day() }}</span>
     </button>
 
-    <button class="tab-btn"
-            @click="$emit(common.inputEvent, tabs.month)"
-            :class="{ selected: value === tabs.month }"
-            :disabled="isPending"
+    <button
+      class="tab-btn"
+      @click="$emit(common.inputEvent, tabs.month)"
+      :class="{ selected: value === tabs.month }"
+      :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_month() }}</span>
     </button>
 
-    <button class="tab-btn"
-            @click="$emit(common.inputEvent, tabs.year)"
-            :class="{ selected: value === tabs.year }"
-            :disabled="isPending"
+    <button
+      class="tab-btn"
+      @click="$emit(common.inputEvent, tabs.year)"
+      :class="{ selected: value === tabs.year }"
+      :disabled="isPending"
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
     </button>
@@ -41,30 +45,30 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../../../../js/events/common_events'
-  import { i18n } from '../../../../../../js/i18n'
+import { commonEvents } from '../../../../../../js/events/common_events'
+import { i18n } from '../../../../../../js/i18n'
 
-  export default {
-    name: 'date-tabs',
-    props: ['value', 'isPending'],
+export default {
+  name: 'date-tabs',
+  props: ['value', 'isPending'],
 
-    data () {
-      return {
-        common: {
-          inputEvent: commonEvents.inputEvent
-        },
-        tabs: {
-          hour: 'hour',
-          day: 'day',
-          week: 'week',
-          month: 'month',
-          year: 'year',
-          all: 'all'
-        },
-        i18n
-      }
+  data () {
+    return {
+      common: {
+        inputEvent: commonEvents.inputEvent
+      },
+      tabs: {
+        hour: 'hour',
+        day: 'day',
+        week: 'week',
+        month: 'month',
+        year: 'year',
+        all: 'all'
+      },
+      i18n
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +88,6 @@
     display: inline-block;
     margin-right: 1 * $point;
   }
-
 
   .tab-btn {
     padding: 5px 10px;

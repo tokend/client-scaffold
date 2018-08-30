@@ -1,16 +1,19 @@
 <template>
-   <div class="kyc-form">
-     <h2 class="app__page-heading">{{ i18n.tokens_form_creation() }}</h2>
-    <form novalidate @submit.prevent="submit">
+  <div class="kyc-form">
+    <h2 class="app__page-heading">{{ i18n.tokens_form_creation() }}</h2>
+    <form
+      novalidate
+      @submit.prevent="submit">
       <div class="kyc-form__content-item">
         <div class="md-layout-item">
-          <file-field fileType="image"
-                      v-model="documents[documentTypes.tokenIcon]"
-                      :label="i18n.lbl_token_icon()"
-                      :minWidth='120'
-                      :minHeight='120'
-                      :accept="'image/*'"
-                      :type="documentTypes.tokenIcon"/>
+          <file-field
+            file-type="image"
+            v-model="documents[documentTypes.tokenIcon]"
+            :label="i18n.lbl_token_icon()"
+            :min-width="120"
+            :min-height="120"
+            :accept="'image/*'"
+            :type="documentTypes.tokenIcon" />
         </div>
       </div>
       <div class="kyc-form__content-item">
@@ -22,7 +25,7 @@
               v-validate="'required'"
               :label="i18n.lbl_token_name()"
               name="token name"
-              :errorMessage="errorMessage('token name')"
+              :error-message="errorMessage('token name')"
             />
           </div>
           <div class="app__form-field">
@@ -32,7 +35,7 @@
               v-validate="'required'"
               :label="i18n.lbl_token_code()"
               name="token code"
-              :errorMessage="errorMessage('token code')"
+              :error-message="errorMessage('token code')"
             />
           </div>
         </div>
@@ -44,27 +47,29 @@
             v-validate="'required|amount'"
             :label="i18n.lbl_token_max_issuance_amount()"
             name="max issuance amount"
-            :errorMessage="errorMessage('max issuance amount')"
+            :error-message="errorMessage('max issuance amount')"
           />
         </div>
       </div>
       <div class="kyc-form__content-item">
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-50">
-            <tick-field v-model="request.policies"
-                        :cbValue="ASSET_POLICIES.transferable"
-                        name="policy-transferable"
-                        id="policy-transferable"
-                        class="md-primary">
+            <tick-field
+              v-model="request.policies"
+              :cb-value="ASSET_POLICIES.transferable"
+              name="policy-transferable"
+              id="policy-transferable"
+              class="md-primary">
               {{ i18n.lbl_transferable() }}
             </tick-field>
           </div>
           <div class="md-layout-item md-size-50">
-            <tick-field v-model="request.policies"
-                        :cbValue="ASSET_POLICIES.requiresKyc"
-                        name="policy-requiresKyc"
-                        id="policy-requiresKyc"
-                        class="md-primary">
+            <tick-field
+              v-model="request.policies"
+              :cb-value="ASSET_POLICIES.requiresKyc"
+              name="policy-requiresKyc"
+              id="policy-requiresKyc"
+              class="md-primary">
               {{ i18n.lbl_requires_kyc() }}
             </tick-field>
           </div>
@@ -72,30 +77,34 @@
       </div>
       <div class="kyc-form__content-item">
         <div class="md-layout-item">
-          <file-field class="token_terms__file-field"
-                      name="token terms document"
-                      v-model="documents[documentTypes.tokenTerms]"
-                      :label="i18n.lbl_token_terms()"
-                      id="document.id"
-                      :type="documentTypes.tokenTerms"
+          <file-field
+            class="token_terms__file-field"
+            name="token terms document"
+            v-model="documents[documentTypes.tokenTerms]"
+            :label="i18n.lbl_token_terms()"
+            id="document.id"
+            :type="documentTypes.tokenTerms"
           />
         </div>
       </div>
       <div class="kyc-form__content-item">
-        <tick-field v-model="makeAdditional"
-                    name="additional-issuance"
-                    id="additional-issuance">
+        <tick-field
+          v-model="makeAdditional"
+          name="additional-issuance"
+          id="additional-issuance">
           {{ i18n.tokens_want_to_make_additional_issuance_later() }}
         </tick-field>
       </div>
-      <div class="kyc-form__content-item" v-if="makeAdditional"> <!-- Transfrom to Boolean -->
+      <div
+        class="kyc-form__content-item"
+        v-if="makeAdditional"> <!-- Transfrom to Boolean -->
         <div class="app__form-row">
           <input-field-unchained
             id="token-preissued-asset-signer"
             v-model="request.preissuedAssetSigner"
             v-validate="'required|account_id'"
             :label="i18n.lbl_token_preissued_asset_signer()"
-            :errorMessage="errorMessage('preissued asset signer')"
+            :error-message="errorMessage('preissued asset signer')"
           />
         </div>
         <div class="app__form-row">
@@ -106,15 +115,16 @@
             type="number"
             v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
             :label="i18n.lbl_token_initial_preissued_amount()"
-            :errorMessage="errorMessage('initial preissued amount')"
+            :error-message="errorMessage('initial preissued amount')"
           />
         </div>
       </div>
       <div class="app__form-actions">
-        <button v-ripple
-                type="submit"
-                class="app__form-submit-btn"
-                :disabled="isPending">
+        <button
+          v-ripple
+          type="submit"
+          class="app__form-submit-btn"
+          :disabled="isPending">
           {{ i18n.lbl_submit() }}
         </button>
       </div>
@@ -126,7 +136,10 @@
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
       </div>
       <md-dialog-actions>
-        <button v-ripple @click="showDialog = false" class="app__button-flat">
+        <button
+          v-ripple
+          @click="showDialog = false"
+          class="app__button-flat">
           {{ i18n.lbl_close() }}
         </button>
       </md-dialog-actions>
@@ -153,8 +166,8 @@ import { TokenCreationRecord } from '../../../../js/records/token_creation.recor
 import config from '../../../../config'
 
 export default {
-  mixins: [FormMixin],
   components: { FileField },
+  mixins: [FormMixin],
   props: ['id'],
   data: _ => ({
     request: {
@@ -171,6 +184,9 @@ export default {
     ASSET_POLICIES
   }),
 
+  computed: {
+  },
+
   async created () {
     if (this.id) {
       this.makeAdditional = true
@@ -178,9 +194,6 @@ export default {
       this.documents[documentTypes.tokenTerms] = this.request.terms.key ? new DocumentContainer(this.request.terms) : null
       this.documents[documentTypes.tokenIcon] = this.request.logo.key ? new DocumentContainer(this.request.logo) : null
     }
-  },
-
-  computed: {
   },
 
   methods: {

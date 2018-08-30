@@ -1,27 +1,27 @@
 <template>
   <div class="timeline-item">
     <h3 class="timeline-item__title">{{ title }}</h3>
-    <span class="timeline-item__date" >{{ date }}</span>
-    <p class="timeline-item__message" v-html="message"></p>
+    <span class="timeline-item__date">{{ date }}</span>
+    <p class="timeline-item__message">{{ message }}</p>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'UpdatesTimeline-item',
+export default {
+  name: 'updates-timeline-item',
 
-    props: ['title', 'message', 'date']
-  }
+  props: ['title', 'message', 'date']
+}
 </script>
 
-<style lang="scss" scoped>  
+<style lang="scss" scoped>
   @import "../../../../../scss/variables";
 
   .timeline-item__date {
     color: lighten($col-text, 10%);
     font-weight: bold;
   }
-  
+
   .timeline-item__title {
     margin-bottom: 0.75rem;
   }

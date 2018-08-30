@@ -2,7 +2,11 @@
   <table class="app__table-details">
     <tr>
       <td>{{ counterpartyRole }}</td>
-      <td :id="`el-${id}`" class="app__table-details-counterparty">{{ tx.counterparty }}</td>
+      <td
+        :id="`el-${id}`"
+        class="app__table-details-counterparty">
+        {{ tx.counterparty }}
+      </td>
     </tr>
     <tr>
       <td>{{ i18n.lbl_amount() }}</td>
@@ -40,20 +44,20 @@
 </template>
 
 <script>
-  import DetailsMixin from './details.mixin'
+import DetailsMixin from './details.mixin'
 
-  export default {
-    name: 'transfer-details',
-    mixins: [DetailsMixin],
-    computed: {
-      counterpartyRole () {
-        return this.tx.direction === 'out' ? this.i18n.lbl_receiver() : this.i18n.lbl_sender()
-      },
-      id () {
-        return this._uid
-      }
+export default {
+  name: 'transfer-details',
+  mixins: [DetailsMixin],
+  computed: {
+    counterpartyRole () {
+      return this.tx.direction === 'out' ? this.i18n.lbl_receiver() : this.i18n.lbl_sender()
+    },
+    id () {
+      return this._uid
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

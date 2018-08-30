@@ -1,15 +1,21 @@
 <template>
-  <md-dialog :md-active.sync="show" @md-closed="closeDialog" class="info-dialog">
+  <md-dialog
+    :md-active.sync="show"
+    @md-closed="closeDialog"
+    class="info-dialog">
     <md-dialog-title> {{ i18n.lbl_transaction_details() }}</md-dialog-title>
 
     <div class="app__dialog-inner">
-      <tx-details class="info-dialog__history" :tx="dialogValues"/>
+      <tx-details
+        class="info-dialog__history"
+        :tx="dialogValues" />
     </div>
 
     <md-dialog-actions class="info-dialog__actions">
-      <button v-ripple
-              @click="closeDialog"
-              class="app__button-flat">
+      <button
+        v-ripple
+        @click="closeDialog"
+        class="app__button-flat">
         {{ i18n.lbl_close() }}
       </button>
     </md-dialog-actions>
@@ -17,28 +23,28 @@
 </template>
 
 <script>
-  import txDetails from '../../history/index/History.TxDetails'
-  import { i18n } from '../../../../js/i18n'
+import txDetails from '../../history/index/History.TxDetails'
+import { i18n } from '../../../../js/i18n'
 
-  export default {
-    name: 'info-dialog',
-    components: { txDetails },
-    props: {
-      showDialog: { type: Boolean, default: false },
-      dialogValues: { type: Object }
-    },
-    data () {
-      return {
-        show: this.showDialog,
-        i18n
-      }
-    },
-    methods: {
-      closeDialog (value) {
-        this.$emit('close-dialog', false)
-      }
+export default {
+  name: 'info-dialog',
+  components: { txDetails },
+  props: {
+    showDialog: { type: Boolean, default: false },
+    dialogValues: { type: Object }
+  },
+  data () {
+    return {
+      show: this.showDialog,
+      i18n
+    }
+  },
+  methods: {
+    closeDialog (value) {
+      this.$emit('close-dialog', false)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

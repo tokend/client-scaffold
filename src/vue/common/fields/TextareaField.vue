@@ -1,6 +1,11 @@
 <template>
-  <md-field class="textarea-field" :class="{ 'textarea-field--readonly': readonly }">
-    <label class="textarea-field__label" :for="id" v-if="label">{{ label }}</label>
+  <md-field
+    class="textarea-field"
+    :class="{ 'textarea-field--readonly': readonly }">
+    <label
+      class="textarea-field__label"
+      :for="id"
+      v-if="label">{{ label }}</label>
     <md-textarea
       :placeholder="placeholder"
       :disabled="disabled"
@@ -15,7 +20,9 @@
       @input="onInput"
       class="textarea-field__textarea"
     />
-    <span class="md-error" v-if="errorMessage">{{ errorMessage }}</span>
+    <span
+      class="md-error"
+      v-if="errorMessage">{{ errorMessage }}</span>
   </md-field>
 </template>
 

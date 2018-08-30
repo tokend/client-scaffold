@@ -5,12 +5,14 @@
         {{ message }}
       </p>
       <div class="form-confirmation__btns">
-        <button class="form-confirmation__cancel-btn"
+        <button
+          class="form-confirmation__cancel-btn"
           @click="emitCancel"
           :disabled="pending">
           {{ cancelButton }}
         </button>
-        <button class="form-confirmation__ok-btn"
+        <button
+          class="form-confirmation__ok-btn"
           @click="emitOk"
           :disabled="pending">
           {{ okButton }}
@@ -24,12 +26,6 @@
 import { i18n } from '@/js/i18n'
 
 export default {
-  data () {
-    return {
-      okEventName: 'ok',
-      cancelEventName: 'cancel'
-    }
-  },
   props: {
     message: {
       type: String,
@@ -56,6 +52,12 @@ export default {
     animated: {
       type: Boolean,
       default: false
+    }
+  },
+  data () {
+    return {
+      okEventName: 'ok',
+      cancelEventName: 'cancel'
     }
   },
   methods: {

@@ -36,7 +36,6 @@
         </p>
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Customer Agreement</h3>
         <p class="legal__paragraph">
@@ -74,7 +73,6 @@
         </p>
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Third Party Services</h3>
         <p class="legal__paragraph">
@@ -92,7 +90,6 @@
           customers.
         </p>
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Prohibited Uses and Intellectual Property</h3>
@@ -122,7 +119,6 @@
           intellectual property of TokenD or our licensors except as expressly authorized by these Terms.
         </p>
       </section>
-
 
       <section class="legal__content-section">
 
@@ -176,7 +172,6 @@
 
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Materials</h3>
         <p class="legal__paragraph">
@@ -201,7 +196,6 @@
 
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Third Party Accounts</h3>
         <p class="legal__paragraph">
@@ -211,7 +205,6 @@
           sites). If you do not want information about you to be shared in this manner, do not use this feature.
         </p>
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">International Users</h3>
@@ -239,9 +232,7 @@
 
       </section>
 
-
       <section class="legal__content-section">
-
 
         <h3 class="legal__question">Disclaimer of Certain Liabilities</h3>
         <p class="legal__paragraph">
@@ -274,7 +265,6 @@
       </section>
 
       <section class="legal__content-section">
-
 
         <h3 class="legal__question">Termination/access restriction</h3>
         <p class="legal__paragraph">
@@ -404,7 +394,6 @@
 
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Digital Millennium Copyright Act</h3>
         <p class="legal__paragraph">
@@ -470,7 +459,6 @@
 
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Contact Us</h3>
         <p class="legal__paragraph">
@@ -479,15 +467,14 @@
         </p>
       </section>
 
-
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'terms'
-  }
+export default {
+  name: 'terms'
+}
 </script>
 
 <style lang="scss" scoped>

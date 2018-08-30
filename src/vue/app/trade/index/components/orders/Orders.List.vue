@@ -11,7 +11,10 @@
       </md-table-row>
 
       <template v-for="(order, i) in list">
-        <md-table-row class="order-list__row" :key="`${i}-order-row`" @click.native="matchOrder(order)">
+        <md-table-row
+          class="order-list__row"
+          :key="`${i}-order-row`"
+          @click.native="matchOrder(order)">
           <md-table-cell class="order-list__cell">{{ order.baseAmount }}</md-table-cell>
           <md-table-cell class="order-list__cell">{{ order.quoteAmount }} </md-table-cell>
           <md-table-cell class="order-list__cell">{{ order.price }}</md-table-cell>
@@ -25,8 +28,8 @@
         <h2>{{ i18n.trd_no_orders_history() }}</h2>
         <p>{{
           type === ORDER_TYPES.buy ?
-          i18n.trd_here_will_be_the_order_ask_list() :
-          i18n.trd_here_will_be_the_order_bid_list()
+            i18n.trd_here_will_be_the_order_ask_list() :
+            i18n.trd_here_will_be_the_order_bid_list()
         }}</p>
       </div>
     </template>
@@ -44,13 +47,23 @@ import { confirmAction } from '../../../../../../js/modals/confirmation_message'
 export default {
   name: 'order-list',
   mixins: [OrderMakerMixin, SubmitterMixin],
+  props: {
+    type: { type: String, required: true },
+    list: { type: Array, required: true }
+  },
   data: _ => ({
     ORDER_TYPES,
     i18n
   }),
-  props: {
-    type: { type: String, required: true },
-    list: { type: Array, required: true }
+  computed: {
+    baseAsset () {
+      if (!this.list.length) return
+      return this.list[0].baseAssetCode
+    },
+    quoteAsset () {
+      if (!this.list.length) return
+      return this.list[0].quoteAssetCode
+    }
   },
   methods: {
     async matchOrder (order) {
@@ -67,16 +80,6 @@ export default {
         isBuy: !order.isBuy
       })
       this.enable()
-    }
-  },
-  computed: {
-    baseAsset () {
-      if (!this.list.length) return
-      return this.list[0].baseAssetCode
-    },
-    quoteAsset () {
-      if (!this.list.length) return
-      return this.list[0].quoteAssetCode
     }
   }
 }

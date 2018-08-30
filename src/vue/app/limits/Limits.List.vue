@@ -1,16 +1,14 @@
 <template>
-  <div>
-
-  </div>
+  <div />
 </template>
 
 <script>
-  import LimitsListMixin from './limits-list.mixin'
+import LimitsListMixin from './limits-list.mixin'
 
-  export default {
-    name: 'Limits.List',
-    mixins: [LimitsListMixin]
-  }
+export default {
+  name: 'limits-list',
+  mixins: [LimitsListMixin]
+}
 </script>
 
 <style lang="scss" scoped>

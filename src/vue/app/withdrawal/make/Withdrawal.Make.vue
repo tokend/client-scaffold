@@ -3,15 +3,17 @@
     <template v-if="tokenCodes.length">
       <div class="app__page-content-wrp">
         <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
-        <form @submit.prevent="processTransfer"
+        <form
+          @submit.prevent="processTransfer"
           id="withdrawal-form"
           v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
           <div class="app__form-row">
             <div class="app__form-field">
-              <select-field-unchained :values="tokenCodes"
+              <select-field-unchained
+                :values="tokenCodes"
                 v-model="form.tokenCode"
                 :label="i18n.lbl_asset()"
-                :readonly="view.mode === VIEW_MODES.confirm"/>
+                :readonly="view.mode === VIEW_MODES.confirm" />
               <div class="app__form-field-description">
                 <p v-if="minAmounts[form.tokenCode]">
                   {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}
@@ -33,21 +35,25 @@
                 type="number"
                 title="Amount"
                 :readonly="view.mode === VIEW_MODES.confirm"
-                vvValidateOn="change"
+                vv-validate-on="change"
                 v-validate="'required|amount'"
-                :errorMessage="errors.first('amount') ||
-                            (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
-                            (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
-                                                      value: minAmounts[form.tokenCode],
-                                                      asset: form.tokenCode })
-                                                    : '')"
+                :error-message="errors.first('amount') ||
+                  (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
+                  (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
+                    value: minAmounts[form.tokenCode],
+                    asset: form.tokenCode })
+                : '')"
               />
 
-              <div class="withdraw__fees-container app__form-field-description" :class="{ loading: isFeesLoadPending }">
+              <div
+                class="withdraw__fees-container app__form-field-description"
+                :class="{ loading: isFeesLoadPending }">
                 <p>
                   - {{ i18n.withdraw_network_fee_prefix() }}
                   <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
-                  <hint-wrapper :hint="i18n.withdraw_network_fee_hint()" :decorated="false">
+                  <hint-wrapper
+                    :hint="i18n.withdraw_network_fee_hint()"
+                    :decorated="false">
                     <span class="fee__hint-icon"><md-icon>help_outline</md-icon></span>
                   </hint-wrapper>
                 </p>
@@ -73,16 +79,17 @@
               name="wallet-address"
               :readonly="view.mode === VIEW_MODES.confirm"
               v-validate="'required|wallet_address'"
-              :errorMessage="
+              :error-message="
                 errors.first('wallet-address') ||
-                (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
+                  (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
               "
             />
           </div>
         </form>
 
         <div class="app__form-actions">
-          <button v-ripple
+          <button
+            v-ripple
             v-if="view.mode === VIEW_MODES.submit"
             type="submit"
             class="app__form-submit-btn"
@@ -106,7 +113,10 @@
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.withdraw_no_assets() }}
       </p>
-      <router-link to="/tokens" tag="button" class="app__button-raised">
+      <router-link
+        to="/tokens"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.withdraw_discover_assets_btn() }}
       </router-link>
     </template>
@@ -141,14 +151,14 @@ const VIEW_MODES = {
 }
 
 export default {
-  name: 'Withdraw',
-  mixins: [formMixin],
+  name: 'withdraw',
   components: {
     HintWrapper,
     SelectFieldUnchained,
     InputFieldUnchained,
     FormConfirmation
   },
+  mixins: [formMixin],
   data: _ => ({
     form: {
       tokenCode: null,

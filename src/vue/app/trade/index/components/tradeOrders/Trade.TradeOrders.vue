@@ -1,7 +1,11 @@
 <template>
   <div class="trade-orders">
-    <buy-order :assets="assets" class="md-layout-item"/>
-    <sell-order :assets="assets" class="md-layout-item"/>
+    <buy-order
+      :assets="assets"
+      class="md-layout-item" />
+    <sell-order
+      :assets="assets"
+      class="md-layout-item" />
   </div>
 </template>
 

@@ -1,90 +1,137 @@
 <template>
   <div class="tx-token-creation">
-    <div class="requests__list-wrapper" v-if="list.length">
-      <div class="requests__list" v-table-scroll-shadow>
+    <div
+      class="requests__list-wrapper"
+      v-if="list.length">
+      <div
+        class="requests__list"
+        v-table-scroll-shadow>
         <div class="requests__list-header">
           <div class="requests__list-header-item requests__list-header-item--token">{{ i18n.lbl_token_code() }}</div>
           <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
           <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
           <div class="requests__list-header-item requests__list-header-item--updated">{{ i18n.lbl_updated_at() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--btn"></div>
+          <div class="requests__list-header-item requests__list-header-item--btn" />
         </div>
         <div class="requests__list-body">
-          <div class="requests__list-body-elem"
-              v-for="(tx, i) in list"
-              :key="`activity-item-${i}`"
-              :class="`requests__list-body-elem--${tx.state}`">
+          <div
+            class="requests__list-body-elem"
+            v-for="(tx, i) in list"
+            :key="`activity-item-${i}`"
+            :class="`requests__list-body-elem--${tx.state}`">
             <div class="requests__list-body-row">
-              <div :title="tx.reference" class="requests__list-body-item requests__list-body-item--token">
+              <div
+                :title="tx.reference"
+                class="requests__list-body-item requests__list-body-item--token">
                 {{ tx.reference }}
               </div>
-              <div :title="tx.state" class="requests__list-body-item requests__list-body-item--state">
+              <div
+                :title="tx.state"
+                class="requests__list-body-item requests__list-body-item--state">
                 {{ tx.state }}
               </div>
-              <div :title="tx.createdAt" class="requests__list-body-item requests__list-body-item--created">
+              <div
+                :title="tx.createdAt"
+                class="requests__list-body-item requests__list-body-item--created">
                 {{ i18n.dmy(tx.createdAt) }}
               </div>
-              <div :title="tx.direction" class="requests__list-body-item requests__list-body-item--updated">
+              <div
+                :title="tx.direction"
+                class="requests__list-body-item requests__list-body-item--updated">
                 {{ i18n.dmy(tx.updatedAt) }}
               </div>
               <div class="requests__list-body-item requests__list-body-item--btn">
-                <button class="requests__list-body-item-btn" @click="toggleDetails(i)">
-                  <md-icon class="requests__list-body-item-icon"
-                          :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
+                <button
+                  class="requests__list-body-item-btn"
+                  @click="toggleDetails(i)">
+                  <md-icon
+                    class="requests__list-body-item-icon"
+                    :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
                     keyboard_arrow_down
                   </md-icon>
                 </button>
               </div>
             </div>
-            <div class="requests__list-body-row requests__list-body-row--details" v-if="isSelected(i)">
+            <div
+              class="requests__list-body-row requests__list-body-row--details"
+              v-if="isSelected(i)">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="tx.logoUrl" :src='tx.logoUrl' :alt="documentTypes.tokenIcon">
-                  <div class="token-icon" v-else>{{ tx.reference.substr(0, 1).toUpperCase() }}</div>
+                  <img
+                    class="token-icon"
+                    v-if="tx.logoUrl"
+                    :src="tx.logoUrl"
+                    :alt="documentTypes.tokenIcon">
+                  <div
+                    class="token-icon"
+                    v-else>{{ tx.reference.substr(0, 1).toUpperCase() }}</div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type" :value="`${getFancyName(tx.details.request_type)}`"/>
-                  <detail prop="Max issuance amount" :value="`${i18n.c(tx.maxIssuanceAmount)}`"/>
-                  <detail prop="Initial preissued amount" :value="`${i18n.c(tx.initialPreissuedAmount)}`"/>
-                  <detail prop="Token name" :value="`${tx.tokenName}`"/>
-                  <detail prop="Terms" v-if="tx.termsUrl" :value="`<a href='${tx.termsUrl}' target='_blank'>Open file</a>`"/>
-                  <detail prop="Terms" v-else />
-                  <detail prop="Policies" :value="`${getPolicies(tx.policies)}`"/>
-                  <detail prop="Reject reason" v-if="tx.isRejected || tx.isPermanentlyRejected"
-                                              :value="`${tx.rejectReason}`"/>
+                  <detail
+                    prop="Request type"
+                    :value="`${getFancyName(tx.details.request_type)}`" />
+                  <detail
+                    prop="Max issuance amount"
+                    :value="`${i18n.c(tx.maxIssuanceAmount)}`" />
+                  <detail
+                    prop="Initial preissued amount"
+                    :value="`${i18n.c(tx.initialPreissuedAmount)}`" />
+                  <detail
+                    prop="Token name"
+                    :value="`${tx.tokenName}`" />
+                  <detail
+                    prop="Terms"
+                    v-if="tx.termsUrl"
+                    :value="`<a href='${tx.termsUrl}' target='_blank'>Open file</a>`" />
+                  <detail
+                    prop="Terms"
+                    v-else />
+                  <detail
+                    prop="Policies"
+                    :value="`${getPolicies(tx.policies)}`" />
+                  <detail
+                    prop="Reject reason"
+                    v-if="tx.isRejected || tx.isPermanentlyRejected"
+                    :value="`${tx.rejectReason}`" />
                 </div>
               </md-card-content>
               <md-card-actions>
-                <button v-ripple
-                        @click="cancelRequest(tx.id)"
-                        class="app__button-flat"
-                        :disabled="!tx.isPending || isPending">
+                <button
+                  v-ripple
+                  @click="cancelRequest(tx.id)"
+                  class="app__button-flat"
+                  :disabled="!tx.isPending || isPending">
                   {{ i18n.lbl_cancel() }}
                 </button>
-                <router-link :to="{name: 'token-creation.index', params: { id: tx.id }}"
-                            tag="button"
-                            v-ripple
-                            class="app__button-flat"
-                            :disabled="(!tx.isPending && !tx.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                <router-link
+                  :to="{name: 'token-creation.index', params: { id: tx.id }}"
+                  tag="button"
+                  v-ripple
+                  class="app__button-flat"
+                  :disabled="(!tx.isPending && !tx.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </div>
           </div>
         </div>
-        <div class="requests__btn-outer" v-if="!isLoaded">
-          <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
+        <div
+          class="requests__btn-outer"
+          v-if="!isLoaded">
+          <button
+            v-ripple
+            @click="more"
+            class="app__button-flat"
+            :disabled="isLoading">
+            {{ i18n.lbl_view_more() }}
           </button>
         </div>
       </div>
     </div>
     <template v-else>
       <div class="tx-token-creation__no-requests">
-        <no-data-message icon-name="trending_up"
+        <no-data-message
+          icon-name="trending_up"
           :msg-title="i18n.lbl_no_token_creation_requests()"
-          :msg-message="i18n.lbl_no_token_creation_requests_desc()"/>
+          :msg-message="i18n.lbl_no_token_creation_requests_desc()" />
       </div>
     </template>
   </div>
@@ -106,8 +153,8 @@ import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { ErrorHandler } from '../../../../js/errors/error_handler'
 
 export default {
-  mixins: [FormMixin],
   components: { Detail, NoDataMessage },
+  mixins: [FormMixin],
   data: _ => ({
     i18n,
     documentTypes,

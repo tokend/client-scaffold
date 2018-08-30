@@ -5,7 +5,10 @@
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.preis_not_available() }}
       </p>
-      <router-link to="/verification" tag="button" class="app__button-raised">
+      <router-link
+        to="/verification"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.preis_kyc_btn() }}
       </router-link>
     </template>
@@ -15,43 +18,46 @@
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.preis_no_assets() }}
       </p>
-      <router-link to="/token-creation" tag="button" class="app__button-raised">
+      <router-link
+        to="/token-creation"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.preis_create_assets_btn() }}
       </router-link>
     </template>
 
     <template v-else>
-      <preissuance-upload-manager/>
+      <preissuance-upload-manager />
     </template>
   </div>
 </template>
 
 <script>
-  import PreissuanceUploadManager from './PreissuanceUpload.Manager'
-  import NotAvailableCard from '../../common/NotAvailableCard'
+import PreissuanceUploadManager from './PreissuanceUpload.Manager'
+import NotAvailableCard from '../../common/NotAvailableCard'
 
-  import { vuexTypes } from '../../../../vuex/types'
-  import { mapGetters } from 'vuex'
-  import { i18n } from '../../../../js/i18n'
+import { vuexTypes } from '../../../../vuex/types'
+import { mapGetters } from 'vuex'
+import { i18n } from '../../../../js/i18n'
 
-  import { ACCOUNT_TYPES } from '../../../../js/const/const'
+import { ACCOUNT_TYPES } from '../../../../js/const/const'
 
-  export default {
-    components: {
-      PreissuanceUploadManager,
-      NotAvailableCard
-    },
-    data: _ => ({
-      i18n,
-      ACCOUNT_TYPES
-    }),
-    computed: {
-      ...mapGetters([
-        vuexTypes.accountTypeI,
-        vuexTypes.accountOwnedTokens
-      ])
-    }
+export default {
+  components: {
+    PreissuanceUploadManager,
+    NotAvailableCard
+  },
+  data: _ => ({
+    i18n,
+    ACCOUNT_TYPES
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountTypeI,
+      vuexTypes.accountOwnedTokens
+    ])
   }
+}
 </script>
 
 <style lang="scss" scoped>

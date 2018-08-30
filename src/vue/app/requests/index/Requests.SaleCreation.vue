@@ -1,73 +1,124 @@
 <template>
   <div class="tx-sale-creation">
-    <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokens.length">
+    <div
+      class="tx-sale-creation__select-outer"
+      v-if="accountOwnedTokens.length">
       <select-field-custom
-      class="asset-select"
-      :label="i18n.lbl_asset()"
-      v-model="tokenCode"
-      :values="accountOwnedTokens"/>
+        class="asset-select"
+        :label="i18n.lbl_asset()"
+        v-model="tokenCode"
+        :values="accountOwnedTokens" />
     </div>
-    <div class="requests__list-wrapper" v-if="list.length">
-      <div class="requests__list" v-table-scroll-shadow>
+    <div
+      class="requests__list-wrapper"
+      v-if="list.length">
+      <div
+        class="requests__list"
+        v-table-scroll-shadow>
         <div class="requests__list-header">
           <div class="requests__list-header-item requests__list-header-item--sale-name">{{ i18n.lbl_sale_name() }}</div>
           <div class="requests__list-header-item requests__list-header-item--token-code">{{ i18n.lbl_token_code() }}</div>
           <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
           <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
           <div class="requests__list-header-item requests__list-header-item--updated">{{ i18n.lbl_updated_at() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--btn"></div>
+          <div class="requests__list-header-item requests__list-header-item--btn" />
         </div>
         <div class="requests__list-body">
-          <div class="requests__list-body-elem"
-              v-for="(tx, i) in list"
-              :key="`activity-item-${i}`"
-              :class="`requests__list-body-elem--${tx.state}`">
+          <div
+            class="requests__list-body-elem"
+            v-for="(tx, i) in list"
+            :key="`activity-item-${i}`"
+            :class="`requests__list-body-elem--${tx.state}`">
             <div class="requests__list-body-row">
-              <div :title="tx.saleName" class="requests__list-body-item requests__list-body-item--sale-name">
+              <div
+                :title="tx.saleName"
+                class="requests__list-body-item requests__list-body-item--sale-name">
                 {{ tx.saleName }}
               </div>
-              <div :title="tx.tokenCode" class="requests__list-body-item requests__list-body-item--token-code">
+              <div
+                :title="tx.tokenCode"
+                class="requests__list-body-item requests__list-body-item--token-code">
                 {{ tx.tokenCode }}
               </div>
-              <div :title="tx.state" class="requests__list-body-item requests__list-body-item--state">
+              <div
+                :title="tx.state"
+                class="requests__list-body-item requests__list-body-item--state">
                 {{ tx.state }}
               </div>
-              <div :title="tx.createdAt" class="requests__list-body-item requests__list-body-item--created">
+              <div
+                :title="tx.createdAt"
+                class="requests__list-body-item requests__list-body-item--created">
                 {{ i18n.dmy(tx.createdAt) }}
               </div>
-              <div :title="tx.direction" class="requests__list-body-item requests__list-body-item--updated">
+              <div
+                :title="tx.direction"
+                class="requests__list-body-item requests__list-body-item--updated">
                 {{ i18n.dmy(tx.updatedAt) }}
               </div>
               <div class="requests__list-body-item requests__list-body-item--btn">
-                <button class="requests__list-body-item-btn" @click="toggleDetails(i)">
-                  <md-icon class="requests__list-body-item-icon"
-                          :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
+                <button
+                  class="requests__list-body-item-btn"
+                  @click="toggleDetails(i)">
+                  <md-icon
+                    class="requests__list-body-item-icon"
+                    :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
                     keyboard_arrow_down
                   </md-icon>
                 </button>
               </div>
             </div>
-            <div class="requests__list-body-row requests__list-body-row--details" v-if="isSelected(i)">
+            <div
+              class="requests__list-body-row requests__list-body-row--details"
+              v-if="isSelected(i)">
               <md-card-content class="md-layout md-gutter">
                 <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="tx.saleLogoUrl" :src='tx.saleLogoUrl' :alt="documentTypes.fundLogo">
-                  <div class="token-icon" v-else>{{ tx.saleName.substr(0, 1).toUpperCase() }}</div>
+                  <img
+                    class="token-icon"
+                    v-if="tx.saleLogoUrl"
+                    :src="tx.saleLogoUrl"
+                    :alt="documentTypes.fundLogo">
+                  <div
+                    class="token-icon"
+                    v-else>
+                    {{ tx.saleName.substr(0, 1).toUpperCase() }}
+                  </div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type" :value="`${ tx.requestType }`"/>
-                  <detail prop="Token name" :value="`${tx.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${i18n.d(tx.startTime)}`"/>
-                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${i18n.d(tx.endTime)}`"/>
-                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${i18n.c(tx.softCap)} ${tx.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${i18n.c(tx.hardCap)} ${tx.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: tx.tokenCode})}`" :value="`${i18n.c(tx.baseAssetForHardCap)} ${tx.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${tx.quoteAssets}`"/>
-                  <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${tx.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
-                  <detail :prop="`${i18n.sale_short_description()}`" :value="`${tx.shortDescription}`"/>
-                  <detail :prop="`${i18n.lbl_reject_message()}`"
-                          v-if="tx.requestState === REQUEST_STATES_STR.rejected ||
-                                tx.requestState === REQUEST_STATES_STR.permanentlyRejected"
-                                :value="`${tx.rejectReason}`"/>
+                  <detail
+                    prop="Request type"
+                    :value="`${ tx.requestType }`" />
+                  <detail
+                    prop="Token name"
+                    :value="`${tx.tokenCode}`" />
+                  <detail
+                    :prop="`${i18n.sale_start_time()}`"
+                    :value="`${i18n.d(tx.startTime)}`" />
+                  <detail
+                    :prop="`${i18n.sale_close_time()}`"
+                    :value="`${i18n.d(tx.endTime)}`" />
+                  <detail
+                    :prop="`${i18n.sale_soft_cap()}`"
+                    :value="`${i18n.c(tx.softCap)} ${tx.defaultQuoteAsset}`" />
+                  <detail
+                    :prop="`${i18n.sale_hard_cap()}`"
+                    :value="`${i18n.c(tx.hardCap)} ${tx.defaultQuoteAsset}`" />
+                  <detail
+                    :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: tx.tokenCode})}`"
+                    :value="`${i18n.c(tx.baseAssetForHardCap)} ${tx.tokenCode}`" />
+                  <detail
+                    :prop="`${i18n.sale_quote_assets()}`"
+                    :value="`${tx.quoteAssets}`" />
+                  <detail
+                    :prop="`${i18n.sale_fund_video()}`"
+                    :value="`<a href='${tx.youtubeVideoUrl}' target='_blank'>Open video</a>`" />
+                  <detail
+                    :prop="`${i18n.sale_short_description()}`"
+                    :value="`${tx.shortDescription}`" />
+                  <detail
+                    :prop="`${i18n.lbl_reject_message()}`"
+                    v-if="tx.requestState === REQUEST_STATES_STR.rejected ||
+                    tx.requestState === REQUEST_STATES_STR.permanentlyRejected"
+                    :value="`${tx.rejectReason}`" />
                 </div>
               </md-card-content>
               <md-card-actions>
@@ -75,38 +126,44 @@
                           :disabled="item.requestState !== REQUEST_STATES_STR.pending
                                   || isPending"
                           @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
-              <template v-if="tx.isApproved">
-                <button v-ripple
-                           class="app__button-flat"
-                           @click="goFundDetails(tx.tokenCode)">
-                  {{ i18n.lbl_view_sale() }}
-                </button>
-              </template>
-              <router-link :to="{name: 'sale-creation.index', params: { id: tx.id }}"
-                            tag="button"
-                            v-ripple
-                            class="app__button-flat"
-                            :disabled="(!tx.isPending && !tx.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                <template v-if="tx.isApproved">
+                  <button
+                    v-ripple
+                    class="app__button-flat"
+                    @click="goFundDetails(tx.tokenCode)">
+                    {{ i18n.lbl_view_sale() }}
+                  </button>
+                </template>
+                <router-link
+                  :to="{name: 'sale-creation.index', params: { id: tx.id }}"
+                  tag="button"
+                  v-ripple
+                  class="app__button-flat"
+                  :disabled="(!tx.isPending && !tx.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
               </md-card-actions>
             </div>
           </div>
         </div>
-        <div class="requests__btn-outer" v-if="!isLoaded">
-          <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
+        <div
+          class="requests__btn-outer"
+          v-if="!isLoaded">
+          <button
+            v-ripple
+            @click="more"
+            class="app__button-flat"
+            :disabled="isLoading">
+            {{ i18n.lbl_view_more() }}
           </button>
         </div>
       </div>
     </div>
     <template v-else>
-        <div class="tx-sale-creation__no-requests">
-          <no-data-message icon-name="trending_up"
-            :msg-title="i18n.sale_no_creation_requests()"
-            :msg-message="i18n.sale_no_creation_requests_desc()"/>
-        </div>
+      <div class="tx-sale-creation__no-requests">
+        <no-data-message
+          icon-name="trending_up"
+          :msg-title="i18n.sale_no_creation_requests()"
+          :msg-message="i18n.sale_no_creation_requests_desc()" />
+      </div>
     </template>
   </div>
 </template>
@@ -127,8 +184,8 @@ import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 import { salesService } from '../../../../js/services/sales.service'
 
 export default {
-  mixins: [FormMixin],
   components: { Detail, NoDataMessage },
+  mixins: [FormMixin],
   data: _ => ({
     i18n,
     tokenCode: null,

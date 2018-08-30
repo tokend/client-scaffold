@@ -8,7 +8,7 @@
     </template>
 
     <template v-if="isLoading">
-      <loader :message="i18n.tokens_loading()"/>
+      <loader :message="i18n.tokens_loading()" />
     </template>
 
     <div v-else>
@@ -19,16 +19,20 @@
               <md-list class="tokens__md-list md-double-line">
                 <md-content class="tokens__md-scrollbar md-scrollbar">
                   <template v-for="token in tokens">
-                    <md-list-item class="tokens__md-list-item"
+                    <md-list-item
+                      class="tokens__md-list-item"
                       @click="selectToken(token)"
                       :key="`explore-tokens-token-${token.code}`"
                       :class="{ 'tokens__md-list-item--selected': selected.code === token.code }">
-                      <div class="explore-tokens__list-item-avatar"
-                           :class="`${hasBalance(token)
-                                    ? 'explore-tokens__list-item-avatar--success'
-                                    : 'explore-tokens__list-item-avatar--default'}`">
+                      <div
+                        class="explore-tokens__list-item-avatar"
+                        :class="`${hasBalance(token)
+                          ? 'explore-tokens__list-item-avatar--success'
+                        : 'explore-tokens__list-item-avatar--default'}`">
                         <template v-if="token.logoUrl">
-                          <img :src="token.logoUrl" :alt="avatar(token.code)">
+                          <img
+                            :src="token.logoUrl"
+                            :alt="avatar(token.code)">
                         </template>
 
                         <template v-else>{{ avatar(token.code) }}</template>
@@ -39,8 +43,9 @@
                           <span class="explore-tokens__token-code">
                             {{ token.code }}
                           </span>
-                          <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized"
-                                 v-if="hasBalance(token)"
+                          <md-icon
+                            class="explore-tokens__balance-exists-icon md-icon--half-sized"
+                            v-if="hasBalance(token)"
                           >check_circle</md-icon>
                         </span>
                         <span class="explore-tokens__token-name">{{ token.name }}</span>
@@ -58,13 +63,16 @@
             <div class="app__card-content explore-tokens__token-details">
 
               <div class="tokens__details-header">
-                <md-avatar class="tokens__details-avatar-icon"
-                          :class="`${hasBalance(selected)
-                            ? 'tokens__details-avatar-icon--success'
-                            : 'tokens__details-avatar-icon--default'}`"
+                <md-avatar
+                  class="tokens__details-avatar-icon"
+                  :class="`${hasBalance(selected)
+                    ? 'tokens__details-avatar-icon--success'
+                  : 'tokens__details-avatar-icon--default'}`"
                 >
                   <template v-if="selected.logoUrl">
-                    <img :src="selected.logoUrl" :alt="avatar(selected.code)">
+                    <img
+                      :src="selected.logoUrl"
+                      :alt="avatar(selected.code)">
                   </template>
 
                   <template v-else>{{ avatar(selected.code) }}</template>
@@ -73,7 +81,9 @@
                 <div>
                   <p class="tokens__details-heading">{{ selected.code }}</p>
                   <p class="tokens__details-subheading">{{ selected.name }}</p>
-                  <p class="explore-tokens__balance-exists-msg" v-if="hasBalance(selected)">
+                  <p
+                    class="explore-tokens__balance-exists-msg"
+                    v-if="hasBalance(selected)">
                     {{ i18n.lbl_balance_exists() }}
                     <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized">check_circle</md-icon>
                   </p>
@@ -106,8 +116,12 @@
                   <tr>
                     <td>{{ i18n.lbl_terms() }}</td>
                     <td v-if="selected.termsUrl">
-                      <a class="tokens__open-doc-link" target='_blank' rel='noopener' :href="selected.termsUrl">
-                        {{i18n.tokens_open_doc()}}
+                      <a
+                        class="tokens__open-doc-link"
+                        target="_blank"
+                        rel="noopener"
+                        :href="selected.termsUrl">
+                        {{ i18n.tokens_open_doc() }}
                       </a>
                     </td>
                     <td v-else>
@@ -118,11 +132,12 @@
               </div>
 
               <div class="tokens__actions">
-                <button v-ripple
-                        @click="createBalance"
-                        v-if="!hasBalance(selected)"
-                        class="app__button-raised"
-                        :disabled="isPending">
+                <button
+                  v-ripple
+                  @click="createBalance"
+                  v-if="!hasBalance(selected)"
+                  class="app__button-raised"
+                  :disabled="isPending">
                   {{ i18n.lbl_add_to_balances() }}
                 </button>
               </div>
@@ -149,9 +164,9 @@ import Loader from '@/vue/app/common/Loader'
 import SubmitterMixin from '../../common/mixins/submitter.mixin'
 
 export default {
-  name: 'TokensExplore',
-  mixins: [SubmitterMixin],
+  name: 'tokens-explore',
   components: { Detail, Loader },
+  mixins: [SubmitterMixin],
   data: _ => ({
     selected: null,
     isLoading: false,

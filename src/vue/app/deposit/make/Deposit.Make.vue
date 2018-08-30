@@ -10,9 +10,10 @@
       </p>
 
       <div class="app__form-row">
-        <select-field-unchained :values="tokenCodes"
+        <select-field-unchained
+          :values="tokenCodes"
           v-model="form.tokenCode"
-          :label="i18n.lbl_asset()"/>
+          :label="i18n.lbl_asset()" />
       </div>
 
       <template v-if="address">
@@ -32,10 +33,11 @@
         <div class="deposit__qr-outer">
           <span class="deposit__qr-code-hint">{{ i18n.deposit_qr_code_hint() }}</span>
           <!--TODO: use vue-qr instead for consistency-->
-          <qrcode class="deposit__qr-code"
-                  :text="address"
-                  :size="225"
-                  color="#3f4244"
+          <qrcode
+            class="deposit__qr-code"
+            :text="address"
+            :size="225"
+            color="#3f4244"
           />
         </div>
       </template>
@@ -59,7 +61,10 @@
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.deposit_no_assets() }}
       </p>
-      <router-link to="/tokens" tag="button" class="app__button-raised">
+      <router-link
+        to="/tokens"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.deposit_discover_assets_btn() }}
       </router-link>
     </template>

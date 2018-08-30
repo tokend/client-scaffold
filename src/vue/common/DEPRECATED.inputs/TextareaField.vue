@@ -1,36 +1,38 @@
 <template>
   <div class="textarea-field">
     <label :for="name">{{ title }}</label>
-    <textarea :class="{ danger }"
-              :name="name"
-              :id="name"
-              :value="value"
-              @input="onInput"
-              :placeholder="placeholder"
-              :disabled="disabled"
-              cols="30" :rows="rows"/>
+    <textarea
+      :class="{ danger }"
+      :name="name"
+      :id="name"
+      :value="value"
+      @input="onInput"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      cols="30"
+      :rows="rows" />
   </div>
 </template>
 
 <script>
-  import input from './input.mixin'
+import input from './input.mixin'
 
-  export default {
-    name: 'textarea-field',
+export default {
+  name: 'textarea-field',
 
-    mixins: [input],
+  mixins: [input],
 
-    props: {
-      rows: {
-        type: Number,
-        default: 3
-      },
-      danger: {
-        type: Boolean,
-        default: false
-      }
+  props: {
+    rows: {
+      type: Number,
+      default: 3
+    },
+    danger: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

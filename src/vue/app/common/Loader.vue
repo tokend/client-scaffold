@@ -1,17 +1,21 @@
 <template>
   <div class="loader">
-    <div class="loader__animation"></div>
-    <div class="loader__message" v-if="message"> {{ message }} </div>
+    <div class="loader__animation" />
+    <div
+      class="loader__message"
+      v-if="message">
+      {{ message }}
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'loader',
-    props: {
-      message: { type: String, default: '' }
-    }
+export default {
+  name: 'loader',
+  props: {
+    message: { type: String, default: '' }
   }
+}
 </script>
 
 <style lang="scss">

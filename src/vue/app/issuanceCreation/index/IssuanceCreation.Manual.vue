@@ -1,71 +1,85 @@
 <template>
-   <div class="app__page-content-wrp">
-      <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
-        <h2 class="app__page-heading">{{ i18n.iss_not_available_heading() }}</h2>
-        <p class="app__page-explanations app__page-explanations--secondary">
-          {{ i18n.iss_not_available() }}
-        </p>
-        <router-link to="/verification" tag="button" class="app__button-raised">
-          {{ i18n.iss_kyc_btn() }}
-        </router-link>
-      </template>
+  <div class="app__page-content-wrp">
+    <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
+      <h2 class="app__page-heading">{{ i18n.iss_not_available_heading() }}</h2>
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.iss_not_available() }}
+      </p>
+      <router-link
+        to="/verification"
+        tag="button"
+        class="app__button-raised">
+        {{ i18n.iss_kyc_btn() }}
+      </router-link>
+    </template>
 
-      <template v-else-if="!accountOwnedTokens.length">
-        <h2 class="app__page-heading">{{ i18n.iss_no_assets_heading() }}</h2>
-        <p class="app__page-explanations app__page-explanations--secondary">
-          {{ i18n.iss_no_assets() }}
-        </p>
-        <router-link to="/token-creation" tag="button" class="app__button-raised">
-          {{ i18n.iss_create_assets_btn() }}
-        </router-link>
-      </template>
+    <template v-else-if="!accountOwnedTokens.length">
+      <h2 class="app__page-heading">{{ i18n.iss_no_assets_heading() }}</h2>
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.iss_no_assets() }}
+      </p>
+      <router-link
+        to="/token-creation"
+        tag="button"
+        class="app__button-raised">
+        {{ i18n.iss_create_assets_btn() }}
+      </router-link>
+    </template>
 
-      <template v-else>
-        <form novalidate @submit.prevent="submit" v-if="formShown">
+    <template v-else>
+      <form
+        novalidate
+        @submit.prevent="submit"
+        v-if="formShown">
 
         <h2 class="app__page-heading">
           Issuance form
         </h2>
 
         <div class="app__form-row">
-          <select-field-unchained :values="accountOwnedTokens"
+          <select-field-unchained
+            :values="accountOwnedTokens"
             v-model="request.code"
-            :label="i18n.lbl_asset()"/>
+            :label="i18n.lbl_asset()" />
         </div>
 
         <div class="app__form-row">
-          <input-field-unchained name="amount"
+          <input-field-unchained
+            name="amount"
             v-model="request.amount"
             v-validate="'required|amount'"
             :label="i18n.lbl_amount()"
-            :errorMessage="errorMessage('amount')"
+            :error-message="errorMessage('amount')"
           />
         </div>
 
         <div class="app__form-row">
-          <input-field-unchained id="token-name"
-                      name="issuance email"
-                      v-model="request.receiver"
-                      v-validate="'required|email'"
-                      :label="i18n.lbl_email()"
-                      :errorMessage="errorMessage('issuance email')"
+          <input-field-unchained
+            id="token-name"
+            name="issuance email"
+            v-model="request.receiver"
+            v-validate="'required|email'"
+            :label="i18n.lbl_email()"
+            :error-message="errorMessage('issuance email')"
           />
         </div>
 
         <div class="app__form-row">
-          <input-field-unchained name="reference"
+          <input-field-unchained
+            name="reference"
             v-model="request.reference"
             v-validate="'required'"
             :label="i18n.lbl_reference()"
-            :errorMessage="errorMessage('reference')"
+            :error-message="errorMessage('reference')"
           />
         </div>
 
         <div class="app__form-actions">
-          <button v-ripple
-                  type="submit"
-                  class="app__form-submit-btn"
-                  :disabled="isPending">
+          <button
+            v-ripple
+            type="submit"
+            class="app__form-submit-btn"
+            :disabled="isPending">
             {{ i18n.iss_issue_btn() }}
           </button>
         </div>
@@ -89,8 +103,8 @@ import { ACCOUNT_TYPES } from '@/js/const/const'
 import { errors } from '@/js/errors/factory'
 
 export default {
-  mixins: [FormMixin],
   components: { SelectFieldUnchained, InputFieldUnchained },
+  mixins: [FormMixin],
   data: _ => ({
     request: {},
     formShown: true,

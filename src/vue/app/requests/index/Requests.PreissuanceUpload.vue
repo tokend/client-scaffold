@@ -1,65 +1,89 @@
 <template>
   <div class="tx-preissuance-upload">
-    <div class="requests__list-wrapper" v-if="list.length">
-      <div class="requests__list" v-table-scroll-shadow>
+    <div
+      class="requests__list-wrapper"
+      v-if="list.length">
+      <div
+        class="requests__list"
+        v-table-scroll-shadow>
         <div class="requests__list-header">
           <div class="requests__list-header-item requests__list-header-item--token-code">{{ i18n.lbl_token_code() }}</div>
           <div class="requests__list-header-item requests__list-header-item--amount">{{ i18n.preis_amount() }}</div>
           <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
           <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--btn"></div>
+          <div class="requests__list-header-item requests__list-header-item--btn" />
         </div>
         <div class="requests__list-body">
-          <div class="requests__list-body-elem"
-              v-for="(tx, i) in list"
-              :key="`activity-item-${i}`"
-              :class="`requests__list-body-elem--${tx.state}`">
+          <div
+            class="requests__list-body-elem"
+            v-for="(tx, i) in list"
+            :key="`activity-item-${i}`"
+            :class="`requests__list-body-elem--${tx.state}`">
             <div class="requests__list-body-row">
-              <div :title="tx.asset" class="requests__list-body-item requests__list-body-item--token-code">
+              <div
+                :title="tx.asset"
+                class="requests__list-body-item requests__list-body-item--token-code">
                 {{ tx.asset }}
               </div>
-              <div :title="tx.amount" class="requests__list-body-item requests__list-body-item--amount">
+              <div
+                :title="tx.amount"
+                class="requests__list-body-item requests__list-body-item--amount">
                 {{ i18n.c(tx.amount) }}
               </div>
-              <div :title="tx.state" class="requests__list-body-item requests__list-body-item--state">
+              <div
+                :title="tx.state"
+                class="requests__list-body-item requests__list-body-item--state">
                 {{ tx.state }}
               </div>
-              <div :title="tx.createdAt" class="requests__list-body-item requests__list-body-item--created">
+              <div
+                :title="tx.createdAt"
+                class="requests__list-body-item requests__list-body-item--created">
                 {{ i18n.dmy(tx.createdAt) }}
               </div>
               <div class="requests__list-body-item requests__list-body-item--btn">
-                <button class="requests__list-body-item-btn" @click="toggleDetails(i)">
-                  <md-icon class="requests__list-body-item-icon"
-                          :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
+                <button
+                  class="requests__list-body-item-btn"
+                  @click="toggleDetails(i)">
+                  <md-icon
+                    class="requests__list-body-item-icon"
+                    :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
                     keyboard_arrow_down
                   </md-icon>
                 </button>
               </div>
             </div>
-            <div class="requests__list-body-row requests__list-body-row--details" v-if="isSelected(i)">
-                <md-card-content class="md-layout md-gutter">
+            <div
+              class="requests__list-body-row requests__list-body-row--details"
+              v-if="isSelected(i)">
+              <md-card-content class="md-layout md-gutter">
                 <div class="details-column md-layout-item">
-                  <detail prop="Reject reason" :value="`${tx.rejectReason}`"/>
+                  <detail
+                    prop="Reject reason"
+                    :value="`${tx.rejectReason}`" />
                 </div>
               </md-card-content>
             </div>
           </div>
         </div>
-        <div class="requests__btn-outer" v-if="!isLoaded">
-          <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
+        <div
+          class="requests__btn-outer"
+          v-if="!isLoaded">
+          <button
+            v-ripple
+            @click="more"
+            class="app__button-flat"
+            :disabled="isLoading">
+            {{ i18n.lbl_view_more() }}
           </button>
         </div>
       </div>
     </div>
     <template v-else>
       <div class="tx-token-creation__no-requests">
-        <no-data-message icon-name="trending_up"
+        <no-data-message
+          icon-name="trending_up"
           :msg-title="i18n.preis_no_token_creation_requests()"
-          :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
+          :msg-message="i18n.preis_no_token_creation_requests_desc()" />
       </div>
     </template>
   </div>
@@ -78,8 +102,8 @@ import { vuexTypes } from '../../../../vuex/types'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 
 export default {
-  mixins: [FormMixin],
   components: { Detail, NoDataMessage },
+  mixins: [FormMixin],
   data: _ => ({
     i18n,
     isLoading: false,

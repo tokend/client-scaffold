@@ -12,10 +12,11 @@
         <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">person</md-icon>
       </div>
       <div class="user-type-selector__actions">
-        <button v-ripple
-                @click="selectType(userTypes.general)"
-                class="app__button-raised user-type-selector__user-button"
-                :disabled="isPending">
+        <button
+          v-ripple
+          @click="selectType(userTypes.general)"
+          class="app__button-raised user-type-selector__user-button"
+          :disabled="isPending">
           {{ i18n.kyc_apply_general() }}
         </button>
       </div>
@@ -32,10 +33,11 @@
         <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">domain</md-icon>
       </div>
       <div class="user-type-selector__actions">
-        <button v-ripple
-                @click="selectType(userTypes.syndicate)"
-                class="app__button-raised user-type-selector__user-button"
-                :disabled="isPending">
+        <button
+          v-ripple
+          @click="selectType(userTypes.syndicate)"
+          class="app__button-raised user-type-selector__user-button"
+          :disabled="isPending">
           {{ i18n.kyc_apply_corporate() }}
         </button>
       </div>
@@ -44,28 +46,28 @@
 </template>
 
 <script>
-  import { commonEvents } from '../../../../js/events/common_events'
-  import { userTypes } from '../../../../js/const/const'
-  import { i18n } from '../../../../js/i18n/index'
+import { commonEvents } from '../../../../js/events/common_events'
+import { userTypes } from '../../../../js/const/const'
+import { i18n } from '../../../../js/i18n/index'
 
-  export default {
-    name: 'user-type-selector',
-    props: ['isPending'],
-    data () {
-      return {
-        i18n,
-        userTypes,
-        events: {
-          selectUserType: commonEvents.selectUserTypeEvent
-        }
-      }
-    },
-    methods: {
-      selectType (type) {
-        this.$emit(this.events.selectUserType, type)
+export default {
+  name: 'user-type-selector',
+  props: ['isPending'],
+  data () {
+    return {
+      i18n,
+      userTypes,
+      events: {
+        selectUserType: commonEvents.selectUserTypeEvent
       }
     }
+  },
+  methods: {
+    selectType (type) {
+      this.$emit(this.events.selectUserType, type)
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -94,7 +96,6 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-
 
     .md-icon {
       position: relative;

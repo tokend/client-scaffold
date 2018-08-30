@@ -1,16 +1,21 @@
 <template>
   <div class="portfolio-widget">
-    <div class="portfolio-widget__wrapper" v-if="currentAsset">
+    <div
+      class="portfolio-widget__wrapper"
+      v-if="currentAsset">
       <div class="portfolio-widget__select">
         <div class="portfolio-widget__select-picture">
-          <img class="portfolio-widget__asset" :src="imgUrl">
+          <img
+            class="portfolio-widget__asset"
+            :src="imgUrl">
         </div>
         <div class="portfolio-widget__select-field">
           <!-- :key is a hack to ensure that the component will be updated after computed calculated -->
-          <select-field-custom :value="currentAssetForSelect"
-                               :values="tokensList"
-                               :key="currentAssetForSelect"
-                               @input="$emit(events.assetChange, $event)"
+          <select-field-custom
+            :value="currentAssetForSelect"
+            :values="tokensList"
+            :key="currentAssetForSelect"
+            @input="$emit(events.assetChange, $event)"
           />
         </div>
       </div>
@@ -40,125 +45,132 @@
           <div class="portfolio-widget__asset-value">{{ balance }} {{ currentAsset }}</div>
           <div class="portfolio-widget__asset-usd">{{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}</div>
         </div>
-        <div class="portfolio-widget__select-scale" v-if="showTabls">
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.hour }"
-                  @click="$emit(events.changeDashboardScale, tabs.hour)">
+        <div
+          class="portfolio-widget__select-scale"
+          v-if="showTabls">
+          <button
+            class="portfolio-widget__select-scale-btn"
+            :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.hour }"
+            @click="$emit(events.changeDashboardScale, tabs.hour)">
             Hour
           </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.day }"
-                  @click="$emit(events.changeDashboardScale, tabs.day)">
+          <button
+            class="portfolio-widget__select-scale-btn"
+            :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.day }"
+            @click="$emit(events.changeDashboardScale, tabs.day)">
             Day
           </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.month }"
-                  @click="$emit(events.changeDashboardScale, tabs.month)">
+          <button
+            class="portfolio-widget__select-scale-btn"
+            :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.month }"
+            @click="$emit(events.changeDashboardScale, tabs.month)">
             Month
           </button>
-          <button class="portfolio-widget__select-scale-btn"
-                  :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.year }"
-                  @click="$emit(events.changeDashboardScale, tabs.year)">
+          <button
+            class="portfolio-widget__select-scale-btn"
+            :class="{ 'portfolio-widget__select-scale-btn--selected': scale === tabs.year }"
+            @click="$emit(events.changeDashboardScale, tabs.year)">
             Year
           </button>
         </div>
       </div>
     </template>
     <template v-if="!currentAsset">
-      <no-data-message icon-name="toll"
-                       :msg-title="i18n.th_no_assets_in_your_wallet()"
-                       :msg-message="i18n.th_here_will_be_tokens()"/>
+      <no-data-message
+        icon-name="toll"
+        :msg-title="i18n.th_no_assets_in_your_wallet()"
+        :msg-message="i18n.th_here_will_be_tokens()" />
     </template>
 
   </div>
 </template>
 
 <script>
-  import config from '@/config'
-  import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
-  import NoDataMessage from '@/vue/common/messages/NoDataMessage'
-  import { ASSET_POLICIES } from '@/js/const/const'
+import config from '@/config'
+import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import { ASSET_POLICIES } from '@/js/const/const'
 
-  import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '@/vuex/types'
-  import { i18n } from '@/js/i18n'
-  import { commonEvents } from '@/js/events/common_events'
-  import get from 'lodash/get'
+import { mapGetters, mapActions } from 'vuex'
+import { vuexTypes } from '@/vuex/types'
+import { i18n } from '@/js/i18n'
+import { commonEvents } from '@/js/events/common_events'
+import get from 'lodash/get'
 
-  export default {
-    name: 'portfolio-widget',
-    components: {
-      SelectFieldCustom,
-      NoDataMessage
+export default {
+  name: 'portfolio-widget',
+  components: {
+    SelectFieldCustom,
+    NoDataMessage
+  },
+  props: {
+    scale: { type: String, required: true },
+    currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET },
+    showTabls: { type: Boolean, default: false }
+  },
+  data: _ => ({
+    i18n,
+    events: {
+      assetChange: commonEvents.assetChangeEvent,
+      changeDashboardScale: commonEvents.changeDashboardScale
     },
-    props: {
-      scale: { type: String, required: true },
-      currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET },
-      showTabls: { type: Boolean, default: false }
+    tabs: {
+      hour: 'hour',
+      day: 'day',
+      week: 'week',
+      month: 'month',
+      year: 'year',
+      all: 'all'
     },
-    data: _ => ({
-      i18n,
-      events: {
-        assetChange: commonEvents.assetChangeEvent,
-        changeDashboardScale: commonEvents.changeDashboardScale
-      },
-      tabs: {
-        hour: 'hour',
-        day: 'day',
-        week: 'week',
-        month: 'month',
-        year: 'year',
-        all: 'all'
-      },
-      config,
-      ASSET_POLICIES
-    }),
-    computed: {
-      ...mapGetters([
-        vuexTypes.accountBalances,
-        vuexTypes.userTransferableTokens,
-        vuexTypes.tokens
-      ]),
-      tokensList () {
-        const tokens = this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
-                                  .filter(token => token.code !== this.config.DEFAULT_QUOTE_ASSET)
-        const baseAssets = tokens.filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
-                                  .sort((a, b) => a.code.localeCompare(b.code))
-        const otherAssets = tokens.filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))
-                                  .sort((a, b) => a.code.localeCompare(b.code))
-        return [...baseAssets, ...otherAssets].map(item => `${item.name} (${item.code})`)
-      },
-      currentAssetForSelect () {
-        return this.tokens.filter(token => token.code === this.currentAsset)
-                          .map(item => `${item.name} (${item.code})`)[0]
-      },
-      balance () {
-        return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
-      },
-      convertedBalance () {
-        return i18n.cc(get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0)
-      },
-      imgUrl () {
-        const logoKey = get(this.accountBalances, `${this.currentAsset}.asset_details.details.logo.key`)
-        if (logoKey) {
-          return `${config.FILE_STORAGE}/${logoKey}`
-        }
-        const defaultUrl = '../../../../../static/coin-picture.png'
-        return defaultUrl
-      },
-      checkTransferable () {
-        return !(this.userTransferableTokens.map(token => token.code)).includes(this.currentAsset)
+    config,
+    ASSET_POLICIES
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountBalances,
+      vuexTypes.userTransferableTokens,
+      vuexTypes.tokens
+    ]),
+    tokensList () {
+      const tokens = this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
+        .filter(token => token.code !== this.config.DEFAULT_QUOTE_ASSET)
+      const baseAssets = tokens.filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
+        .sort((a, b) => a.code.localeCompare(b.code))
+      const otherAssets = tokens.filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))
+        .sort((a, b) => a.code.localeCompare(b.code))
+      return [...baseAssets, ...otherAssets].map(item => `${item.name} (${item.code})`)
+    },
+    currentAssetForSelect () {
+      return this.tokens.filter(token => token.code === this.currentAsset)
+        .map(item => `${item.name} (${item.code})`)[0]
+    },
+    balance () {
+      return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
+    },
+    convertedBalance () {
+      return i18n.cc(get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0)
+    },
+    imgUrl () {
+      const logoKey = get(this.accountBalances, `${this.currentAsset}.asset_details.details.logo.key`)
+      if (logoKey) {
+        return `${config.FILE_STORAGE}/${logoKey}`
       }
+      const defaultUrl = '../../../../../static/coin-picture.png'
+      return defaultUrl
     },
-    async created () {
-      await this.loadTokens()
-    },
-    methods: {
-      ...mapActions({
-        loadTokens: vuexTypes.GET_ALL_TOKENS
-      })
+    checkTransferable () {
+      return !(this.userTransferableTokens.map(token => token.code)).includes(this.currentAsset)
     }
+  },
+  async created () {
+    await this.loadTokens()
+  },
+  methods: {
+    ...mapActions({
+      loadTokens: vuexTypes.GET_ALL_TOKENS
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>

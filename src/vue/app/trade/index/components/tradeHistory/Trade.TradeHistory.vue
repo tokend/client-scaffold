@@ -13,9 +13,10 @@
           <md-table-head>{{ i18n.trd_history_time() }}</md-table-head>
         </md-table-row>
 
-        <md-table-row v-for="(item, i) in validatedTrades"
-                      :key="`${i}-trade-history-item`"
-                      :class="`trade-history__item-status--${item.priceStatus}`">
+        <md-table-row
+          v-for="(item, i) in validatedTrades"
+          :key="`${i}-trade-history-item`"
+          :class="`trade-history__item-status--${item.priceStatus}`">
           <template v-if="i < maxLengthOfTradeHistory">
             <md-table-cell>{{ i18n.c(item.baseAmount) }}</md-table-cell>
             <md-table-cell class="trade-history__item-price">
@@ -46,66 +47,66 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../../../vuex/types'
-  import { i18n } from '../../../../../../js/i18n'
-  import { multiply } from '../../../../../../js/utils/math.util'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../../../../../vuex/types'
+import { i18n } from '../../../../../../js/i18n'
+import { multiply } from '../../../../../../js/utils/math.util'
 
-  export default {
-    name: 'trade-history',
-    props: {
-      assets: { type: Object, require: true }
-    },
-    data () {
-      return {
-        maxLengthOfTradeHistory: 10,
-        i18n,
-        multiply
-      }
-    },
-    computed: {
-      ...mapGetters([
-        vuexTypes.trades
-      ]),
-      validatedTrades () {
-        // priceStatus:
-        // 0 === price decreased
-        // 1 === price increased
-        // 2 === price hasn't changed
-        let trades = this.trades.reverse()
-        for (let item of trades) {
-          let index = trades.indexOf(item)
-          if (trades.length) {
-            trades['0'].priceStatus = 2
-          }
-          if (trades[index] !== trades['0']) {
-            let prevIndex = index - 1
-            if (Number(trades[index].price) > Number(trades[prevIndex].price)) {
-              trades[index].priceStatus = 1
-            } else if (Number(trades[index].price) === Number(trades[prevIndex].price)) {
-              trades[index].priceStatus = 2
-            } else {
-              trades[index].priceStatus = 0
-            }
+export default {
+  name: 'trade-history',
+  props: {
+    assets: { type: Object, require: true }
+  },
+  data () {
+    return {
+      maxLengthOfTradeHistory: 10,
+      i18n,
+      multiply
+    }
+  },
+  computed: {
+    ...mapGetters([
+      vuexTypes.trades
+    ]),
+    validatedTrades () {
+      // priceStatus:
+      // 0 === price decreased
+      // 1 === price increased
+      // 2 === price hasn't changed
+      let trades = this.trades.reverse()
+      for (let item of trades) {
+        let index = trades.indexOf(item)
+        if (trades.length) {
+          trades['0'].priceStatus = 2
+        }
+        if (trades[index] !== trades['0']) {
+          let prevIndex = index - 1
+          if (Number(trades[index].price) > Number(trades[prevIndex].price)) {
+            trades[index].priceStatus = 1
+          } else if (Number(trades[index].price) === Number(trades[prevIndex].price)) {
+            trades[index].priceStatus = 2
+          } else {
+            trades[index].priceStatus = 0
           }
         }
-        return trades.reverse()
       }
-    },
-    methods: {
-      toValidDate (date) {
-        return new Date(date).toLocaleString('en-US', {
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-          hour12: true
-        })
-      }
-    },
-    watch: {
+      return trades.reverse()
+    }
+  },
+  watch: {
 
+  },
+  methods: {
+    toValidDate (date) {
+      return new Date(date).toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

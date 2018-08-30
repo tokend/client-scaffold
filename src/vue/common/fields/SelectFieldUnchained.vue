@@ -1,29 +1,40 @@
 <template>
-  <div class="select-field" :class="{
+  <div
+    class="select-field"
+    :class="{
       'select-field--readonly': readonly,
       'select-field--focused': showList,
       'select-field--label-minimized': selected
-    }">
-    <div v-if="label" class="select-field__label">
+  }">
+    <div
+      v-if="label"
+      class="select-field__label">
       {{ label }}
     </div>
-    <div class="select-field__selected" :class="{
+    <div
+      class="select-field__selected"
+      :class="{
         'select-field__selected--focused': showList
       }"
       @click="toggleListVisibility()">
       <div class="select-field__selected-value">{{ selected || '&nbsp;' }}</div>
       <div>
-        <md-icon class="select-field__selected-icon" :class="{ 'select-field__selected-icon--active': showList }">
+        <md-icon
+          class="select-field__selected-icon"
+          :class="{ 'select-field__selected-icon--active': showList }">
           keyboard_arrow_down
         </md-icon>
       </div>
     </div>
-    <div class="select-field__list" :class="{ 'select-field__list--active': showList }">
+    <div
+      class="select-field__list"
+      :class="{ 'select-field__list--active': showList }">
       <template v-for="(value, i) in values">
-        <div class="select-field__list-item"
-             :key="i"
-             :class="{ 'select-field__list-item--selected': selected === value }"
-             @click="selectItem(value)">
+        <div
+          class="select-field__list-item"
+          :key="i"
+          :class="{ 'select-field__list-item--selected': selected === value }"
+          @click="selectItem(value)">
           {{ value }}
         </div>
       </template>

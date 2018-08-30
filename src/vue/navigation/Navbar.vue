@@ -20,13 +20,19 @@
           </md-card-content>
         </md-card> -->
       </div>
-      <div class="navbar__user-picture" @click="isUserCardOpen = true">
+      <div
+        class="navbar__user-picture"
+        @click="isUserCardOpen = true">
         {{ userEmail.substr(0, 1).toUpperCase() }}
       </div>
       <div class="navbar__user-info">
-        <div class="navbar__user-name" @click="isUserCardOpen = true">
+        <div
+          class="navbar__user-name"
+          @click="isUserCardOpen = true">
           {{ userEmail }}
-          <md-icon class="navbar__user-name-icon" :class="{ 'navbar__user-name-icon--active': isUserCardOpen }">
+          <md-icon
+            class="navbar__user-name-icon"
+            :class="{ 'navbar__user-name-icon--active': isUserCardOpen }">
             keyboard_arrow_down
           </md-icon>
         </div>
@@ -62,7 +68,9 @@
         </div> -->
       </div>
 
-      <md-card class="navbar__user-card md-elevation-6" :class="{ 'navbar__user-card--active': isUserCardOpen }">
+      <md-card
+        class="navbar__user-card md-elevation-6"
+        :class="{ 'navbar__user-card--active': isUserCardOpen }">
         <md-card-content class="navbar__user-card-ctn">
           <div class="navbar__user-card-content">
             <div class="navbar__user-avatar">
@@ -84,18 +92,25 @@
                   {{ i18n.lbl_type_corporate() }}
                 </template>
               </div>
-              <button v-ripple="'rgba(255, 255, 255, .2)'"
-                      @click="goKyc"
-                      class="navbar__user-card-account-btn">
+              <button
+                v-ripple="'rgba(255, 255, 255, .2)'"
+                @click="goKyc"
+                class="navbar__user-card-account-btn">
                 {{ i18n.lbl_my_account() }}
               </button>
             </div>
           </div>
           <div class="navbar__user-actions">
-            <button v-ripple class="navbar__user-action" @click="goSettings">
+            <button
+              v-ripple
+              class="navbar__user-action"
+              @click="goSettings">
               {{ i18n.lbl_settings() }}
             </button>
-            <button v-ripple class="navbar__user-action" @click="signOut">
+            <button
+              v-ripple
+              class="navbar__user-action"
+              @click="signOut">
               {{ i18n.lbl_signout() }}
             </button>
           </div>
@@ -106,86 +121,86 @@
 </template>
 
 <script>
-  import { vuexTypes } from '../../vuex/types'
-  import { i18n } from '../../js/i18n'
-  import { mapActions, mapGetters } from 'vuex'
-  import { commonEvents } from '../../js/events/common_events'
-  import { attachEventHandler } from '../../js/events/helpers'
-  import { vueRoutes } from '../../vue-router/const'
-  import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
-  import { closeElement } from '@/js/helpers/closeElement'
+import { vuexTypes } from '../../vuex/types'
+import { i18n } from '../../js/i18n'
+import { mapActions, mapGetters } from 'vuex'
+import { commonEvents } from '../../js/events/common_events'
+import { attachEventHandler } from '../../js/events/helpers'
+import { vueRoutes } from '../../vue-router/const'
+import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
+import { closeElement } from '@/js/helpers/closeElement'
 
-  export default {
-    name: 'root-navbar',
+export default {
+  name: 'root-navbar',
 
-    data: () => ({
-      routes: [],
-      isUserCardOpen: false,
-      isNotificationCardOpen: false,
-      hasSeenNotif: null,
-      i18n,
-      ACCOUNT_TYPES
-    }),
+  data: () => ({
+    routes: [],
+    isUserCardOpen: false,
+    isNotificationCardOpen: false,
+    hasSeenNotif: null,
+    i18n,
+    ACCOUNT_TYPES
+  }),
 
-    computed: {
-      ...mapGetters([
-        vuexTypes.isLoggedIn,
-        vuexTypes.userEmail,
-        vuexTypes.userType,
-        vuexTypes.accountState,
-        vuexTypes.accountType,
-        vuexTypes.accountTypeI,
-        vuexTypes.accountBlocked
-      ])
+  computed: {
+    ...mapGetters([
+      vuexTypes.isLoggedIn,
+      vuexTypes.userEmail,
+      vuexTypes.userType,
+      vuexTypes.accountState,
+      vuexTypes.accountType,
+      vuexTypes.accountTypeI,
+      vuexTypes.accountBlocked
+    ])
+  },
+
+  created () {
+    attachEventHandler(commonEvents.routesUpdateEvent, this.updateRoutes)
+    this.hasSeenNotif = localStorage.hasOwnProperty('seen')
+  },
+
+  methods: {
+    ...mapActions([
+      vuexTypes.LOG_OUT
+    ]),
+    updateRoutes (routes) {
+      this.routes = routes
+    },
+    toggleUserCardVisibility () {
+      this.isUserCardOpen = !this.isUserCardOpen
+      this.isNotificationCardOpen = false
     },
 
-    created () {
-      attachEventHandler(commonEvents.routesUpdateEvent, this.updateRoutes)
-      this.hasSeenNotif = localStorage.hasOwnProperty('seen')
-    },
-
-    methods: {
-      ...mapActions([
-        vuexTypes.LOG_OUT
-      ]),
-      updateRoutes (routes) {
-        this.routes = routes
-      },
-      toggleUserCardVisibility () {
-        this.isUserCardOpen = !this.isUserCardOpen
-        this.isNotificationCardOpen = false
-      },
-
-      toggleNotificationCardVisibility () {
-        this.isNotificationCardOpen = !this.isNotificationCardOpen
-        this.isUserCardOpen = false
-        if (!this.hasSeenNotif) {
-          localStorage.setItem('seen', 'User saw it')
-          this.hasSeenNotif = true
-        }
-      },
-      signOut () {
-        this.LOG_OUT()
-      },
-      goSettings () {
-        this.isUserCardOpen = false
-        this.$router.push(vueRoutes.settings)
-      },
-      goKyc () {
-        this.isUserCardOpen = false
-        this.isNotificationCardOpen = false
-        this.$router.push(vueRoutes.verification)
+    toggleNotificationCardVisibility () {
+      this.isNotificationCardOpen = !this.isNotificationCardOpen
+      this.isUserCardOpen = false
+      if (!this.hasSeenNotif) {
+        localStorage.setItem('seen', 'User saw it')
+        this.hasSeenNotif = true
       }
     },
-    watch: {
-      isUserCardOpen (value) {
-        closeElement('navbar__user-card', value, this.toggleUserCardVisibility)
-      },
-      isNotificationCardOpen (value) {
-        closeElement('navbar__user-notif', value, this.toggleNotificationCardVisibility)
-      }
+    signOut () {
+      this.LOG_OUT()
+    },
+    goSettings () {
+      this.isUserCardOpen = false
+      this.$router.push(vueRoutes.settings)
+    },
+    goKyc () {
+      this.isUserCardOpen = false
+      this.isNotificationCardOpen = false
+      this.$router.push(vueRoutes.verification)
+    }
+  },
+  watch: {
+    isUserCardOpen (value) {
+      closeElement('navbar__user-card', value, this.toggleUserCardVisibility)
+    },
+    isNotificationCardOpen (value) {
+      closeElement('navbar__user-notif', value, this.toggleNotificationCardVisibility)
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

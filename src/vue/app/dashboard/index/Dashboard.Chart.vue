@@ -1,92 +1,93 @@
 <template>
   <div class="dashboard-cart">
-    <chart :scale="scale"
-          :has-value="isActualData && historyHasValue"
-          :is-loading="isLoading"
-          :currency="currency"
-          :data="history"
-          :precision="common.precision"/>
+    <chart
+      :scale="scale"
+      :has-value="isActualData && historyHasValue"
+      :is-loading="isLoading"
+      :currency="currency"
+      :data="history"
+      :precision="common.precision" />
   </div>
 </template>
 
 <script>
-  import { chartsService } from '@/js/services/charts.service'
-  import { errors } from '@/js/errors/factory'
-  import config from '@/config'
-  import { commonEvents } from '@/js/events/common_events'
+import { chartsService } from '@/js/services/charts.service'
+import { errors } from '@/js/errors/factory'
+import config from '@/config'
+import { commonEvents } from '@/js/events/common_events'
 
-  import Chart from './Dashboard.ChartRenderer'
+import Chart from './Dashboard.ChartRenderer'
 
-  export default {
-    name: 'dashboard-chart',
-    components: {
-      Chart
+export default {
+  name: 'dashboard-chart',
+  components: {
+    Chart
+  },
+  props: {
+    currency: { type: String, default: 'USD' },
+    scale: { type: String, required: true }
+  },
+  data: _ => ({
+    data: {},
+    isActualData: false,
+    isLoading: false,
+    common: {
+      precision: config.DECIMAL_POINTS,
+      defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET
+    }
+  }),
+  computed: {
+    history () {
+      if (!this.data[this.scale]) return []
+      return this.data[this.scale]
     },
-    props: {
-      currency: { type: String, default: 'USD' },
-      scale: { type: String, required: true }
+    historyHasValue () {
+      let valueIsPresent = false
+      this.history.map(item => {
+        if (!valueIsPresent) item.value > 0 ? valueIsPresent = true : valueIsPresent = false
+      })
+      return valueIsPresent
+    }
+  },
+  watch: {
+    async currency (value) {
+      if (value) await this.loadPrices(value)
     },
-    data: _ => ({
-      data: {},
-      isActualData: false,
-      isLoading: false,
-      common: {
-        precision: config.DECIMAL_POINTS,
-        defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET
-      }
-    }),
-    computed: {
-      history () {
-        if (!this.data[this.scale]) return []
-        return this.data[this.scale]
-      },
-      historyHasValue () {
-        let valueIsPresent = false
-        this.history.map(item => {
-          if (!valueIsPresent) item.value > 0 ? valueIsPresent = true : valueIsPresent = false
-        })
-        return valueIsPresent
-      }
+    historyHasValue (value) {
+      this.$emit(commonEvents.checkDashboardChartHasValue, this.isActualData && value)
     },
-    async created () {
-      if (this.currency) await this.loadPrices(this.currency)
-    },
-    methods: {
-      async loadPrices (asset) {
-        this.isLoading = true
-        try {
-          this.isActualData = true
-          this.data = (await chartsService.loadChartsForTokenPair(asset, this.common.defaultQuoteAsset)).data()
-        } catch (error) {
-          if (error instanceof errors.NotFoundError) {
-            this.isActualData = false
-            this.data = {
-              day: this.generateRandomData(),
-              week: this.generateRandomData(),
-              hour: this.generateRandomData(),
-              month: this.generateRandomData(),
-              year: this.generateRandomData()
-            }
+    isActualData (value) {
+      this.$emit(commonEvents.checkDashboardChartHasValue, this.historyHasValue && value)
+    }
+  },
+  async created () {
+    if (this.currency) await this.loadPrices(this.currency)
+  },
+  methods: {
+    async loadPrices (asset) {
+      this.isLoading = true
+      try {
+        this.isActualData = true
+        this.data = (await chartsService.loadChartsForTokenPair(asset, this.common.defaultQuoteAsset)).data()
+      } catch (error) {
+        if (error instanceof errors.NotFoundError) {
+          this.isActualData = false
+          this.data = {
+            day: this.generateRandomData(),
+            week: this.generateRandomData(),
+            hour: this.generateRandomData(),
+            month: this.generateRandomData(),
+            year: this.generateRandomData()
           }
         }
-        this.isLoading = false
-      },
-      generateRandomData () {
-        return [{ value: '0', timestamp: new Date().toString() }]
       }
+      this.isLoading = false
     },
-    watch: {
-      async currency (value) {
-        if (value) await this.loadPrices(value)
-      },
-      historyHasValue (value) {
-        this.$emit(commonEvents.checkDashboardChartHasValue, this.isActualData && value)
-      },
-      isActualData (value) {
-        this.$emit(commonEvents.checkDashboardChartHasValue, this.historyHasValue && value)
-      }
+    generateRandomData () {
+      return [{ value: '0', timestamp: new Date().toString() }]
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

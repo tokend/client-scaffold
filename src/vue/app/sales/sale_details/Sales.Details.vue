@@ -1,5 +1,7 @@
 <template>
-  <div class="sale-details" v-if="this.sale && this.token">
+  <div
+    class="sale-details"
+    v-if="this.sale && this.token">
     <!-- TEMP. HIDDEN -->
     <!-- <div class="sale-details__back-btn-wrapper">
       <back-button class="sale-details__back-btn" />
@@ -10,23 +12,27 @@
     </div>
     <div class="sale-details__content">
       <div class="sale-details__banner">
-        <img class="sale-details__banner-image"
-             :src="sale.image"
-             alt="crowdfund banner">
+        <img
+          class="sale-details__banner-image"
+          :src="sale.image"
+          alt="crowdfund banner">
       </div>
       <div class="sale-details__information">
         <div class="sale-details__information-item">
-          <invest-progress-bar class="invest-progress-bar"
-                               :sale="sale"
-                               :barHeight="'1.2rem'"/>
+          <invest-progress-bar
+            class="invest-progress-bar"
+            :sale="sale"
+            :bar-height="'1.2rem'" />
         </div>
         <div class="sale-details__information-item">
-          <sale-invest :sale="sale"
-                       @invest-in-sale="loadDetails" />
+          <sale-invest
+            :sale="sale"
+            @invest-in-sale="loadDetails" />
         </div>
       </div>
     </div>
-    <sale-tabs class="sale-details__tabs"
+    <sale-tabs
+      class="sale-details__tabs"
       :sale="sale"
       :description="description"
       :syndicate="syndicate"
@@ -49,13 +55,13 @@ import InvestProgressBar from '../sale_card/Sales.ProgressBar'
 
 export default {
   name: 'sale-details',
-  props: ['id'],
   components: {
     SaleInvest,
     InvestProgressBar,
     SaleTabs,
     BackButton
   },
+  props: ['id'],
 
   data: _ => ({
     sale: '',

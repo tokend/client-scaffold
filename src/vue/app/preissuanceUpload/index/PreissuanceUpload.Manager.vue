@@ -1,41 +1,52 @@
 <template>
-   <div class="upload-preissuance app__page-content-wrp">
+  <div class="upload-preissuance app__page-content-wrp">
     <h2 class="app__page-heading">
       {{ i18n.preis_heading() }}
     </h2>
-    <p class="app__page-explanations" v-html="i18n.preis_upload_tip()"></p>
+    <p class="app__page-explanations">
+      {{ i18n.preis_upload_tip() }}
+    </p>
     <template v-if="tokens.length">
       <div class="preissuance-form__upload-wrp">
-        <file-field class="preissuance-form__upload-input"
-              v-model="documents.preissuance"
-              label="Select File(s)"
-              accept=".iss"
-              id="preissuance-field"
+        <file-field
+          class="preissuance-form__upload-input"
+          v-model="documents.preissuance"
+          label="Select File(s)"
+          accept=".iss"
+          id="preissuance-field"
         />
       </div>
     </template>
     <template v-else>
       <p>{{ i18n.lbl_loading() }}</p>
     </template>
-    <ul class="preissuance-form__list" v-if="issuances.length">
+    <ul
+      class="preissuance-form__list"
+      v-if="issuances.length">
       <p>{{ i18n.lbl_to_upload() }}</p>
 
-      <li v-for="(item, index) in issuances" :key="item.reference">
-        {{index + 1}}. {{i18n.c(item.amount)}} {{item.asset}}
+      <li
+        v-for="(item, index) in issuances"
+        :key="item.reference">
+        {{ index + 1 }}. {{ i18n.c(item.amount) }} {{ item.asset }}
       </li>
     </ul>
 
-    <div class="app__form-actions" v-if="issuances.length">
-      <button v-ripple
-              @click="submit"
-              class="app__button-raised"
-              :disabled="isPending">
+    <div
+      class="app__form-actions"
+      v-if="issuances.length">
+      <button
+        v-ripple
+        @click="submit"
+        class="app__button-raised"
+        :disabled="isPending">
         {{ i18n.lbl_upload() }}
       </button>
-      <button v-ripple
-              @click="clear"
-              class="app__button-flat"
-              :disabled="isPending">
+      <button
+        v-ripple
+        @click="clear"
+        class="app__button-flat"
+        :disabled="isPending">
         {{ i18n.lbl_clear() }}
       </button>
     </div>
@@ -103,7 +114,7 @@ export default {
       for (let i = 0; i < items.length; i++) {
         const assetCode = items[i].asset
         if (!this.isAssetDefined(assetCode)) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_exist({asset: assetCode}))
+          EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_exist({ asset: assetCode }))
           return
         }
       }
@@ -128,7 +139,7 @@ export default {
       try {
         for (let item of this.issuances) {
           if (this.isNullAssetSigner(item.asset)) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_available({asset: item.asset}))
+            EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_available({ asset: item.asset }))
             this.enable()
             return
           }

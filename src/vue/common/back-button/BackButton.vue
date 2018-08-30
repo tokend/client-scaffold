@@ -1,5 +1,7 @@
 <template>
-  <button class="back-button" @click="back">
+  <button
+    class="back-button"
+    @click="back">
     <md-icon class="back-button__icon">
       arrow_back
     </md-icon>

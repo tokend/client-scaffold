@@ -1,32 +1,37 @@
 <template>
-  <footer class="footer"
-         :class="{ 'footer--private': isLoggedIn }">
+  <footer
+    class="footer"
+    :class="{ 'footer--private': isLoggedIn }">
     <span class="footer__item footer__text">{{ i18n.auth_copyright() }}</span>
     <span class="footer__links">
-      <router-link class="footer__item footer__link" :to="vueRoutes.terms">{{ i18n.auth_terms() }}</router-link>
-      <router-link class="footer__item footer__link" :to="vueRoutes.downloads">{{ i18n.auth_download_apps() }}</router-link>
+      <router-link
+        class="footer__item footer__link"
+        :to="vueRoutes.terms">{{ i18n.auth_terms() }}</router-link>
+      <router-link
+        class="footer__item footer__link"
+        :to="vueRoutes.downloads">{{ i18n.auth_download_apps() }}</router-link>
     </span>
   </footer>
 </template>
 
 <script>
-  import { vueRoutes } from '../../vue-router/const'
-  import { i18n } from '../../js/i18n'
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../vuex/types'
+import { vueRoutes } from '../../vue-router/const'
+import { i18n } from '../../js/i18n'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../vuex/types'
 
-  export default {
-    name: 'Footer',
-    data: _ => ({
-      vueRoutes,
-      i18n
-    }),
-    computed: {
-      ...mapGetters([
-        vuexTypes.isLoggedIn
-      ])
-    }
+export default {
+  name: 'footer',
+  data: _ => ({
+    vueRoutes,
+    i18n
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.isLoggedIn
+    ])
   }
+}
 </script>
 
 <style lang="scss" scoped>

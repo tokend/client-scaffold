@@ -1,11 +1,13 @@
 <template>
-  <div class="input-field"
+  <div
+    class="input-field"
     :class="{
       'input-field--error': errorMessage,
       'input-field--monospaced': monospaced,
       'input-field--readonly': readonly
     }">
-    <input class="input-field__input"
+    <input
+      class="input-field__input"
       :class="{ 'input-field__input--autofill-white': whiteAutofill }"
       :type="type"
       :placeholder="placeholder || ' '"
@@ -27,12 +29,14 @@
     >
 
     <span class="input-field__label">
-      {{label}}
+      {{ label }}
     </span>
 
     <transition name="input-field__err-transition">
-      <p class="input-field__err-mes" v-if="errorMessage">
-        {{errorMessage}}
+      <p
+        class="input-field__err-mes"
+        v-if="errorMessage">
+        {{ errorMessage }}
       </p>
     </transition>
   </div>
@@ -76,12 +80,12 @@ export default {
     }
   },
 
-  created () {
-    // created
-  },
-
   computed: {
     // computed
+  },
+
+  created () {
+    // created
   },
 
   methods: {

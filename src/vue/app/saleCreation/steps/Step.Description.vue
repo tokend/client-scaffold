@@ -1,12 +1,17 @@
 <template>
-  <form class="step" @submit.prevent="submit">
+  <form
+    class="step"
+    @submit.prevent="submit">
     <div class="app__form-row">
-      <div class="video-container" :class="{ 'video-container--empty': !form.youtubeId }">
+      <div
+        class="video-container"
+        :class="{ 'video-container--empty': !form.youtubeId }">
         <div v-if="!form.youtubeId">
           <p>Insert YouTube video by its ID</p>
-          <button @click="uploadVideo = true"
-                  type="button"
-                  class="app__button-raised">
+          <button
+            @click="uploadVideo = true"
+            type="button"
+            class="app__button-raised">
             Enter ID
           </button>
         </div>
@@ -18,20 +23,26 @@
           md-input-placeholder="Type your YouTube video ID..."
           md-confirm-text="Done" />
 
-        <div class="video-container__iframe-wrapper" v-show="form.youtubeId">
-          <iframe :src="`https://www.youtube.com/embed/${form.youtubeId}`"
-                  class="video-container__iframe"></iframe>
+        <div
+          class="video-container__iframe-wrapper"
+          v-show="form.youtubeId">
+          <iframe
+            :src="`https://www.youtube.com/embed/${form.youtubeId}`"
+            class="video-container__iframe" />
           <a @click="uploadVideo = true">Insert another YouTube video</a>
         </div>
       </div>
     </div>
     <div class="app__form-row">
-      <description-editor class="description-step__editor" v-model="form.description"/>
+      <description-editor
+        class="description-step__editor"
+        v-model="form.description" />
     </div>
     <div class="app__form-actions">
-      <button v-ripple
-              type="submit"
-              class="app__form-submit-btn">
+      <button
+        v-ripple
+        type="submit"
+        class="app__form-submit-btn">
         {{ i18n.sale_create_sale() }}
       </button>
     </div>
@@ -39,74 +50,74 @@
 </template>
 
 <script>
-  import StepMixin from './step.mixin'
-  import DescriptionEditor from '../components/DescriptionEditor'
-  import { documentTypes, blobTypes } from '../../../../js/const/const'
-  import { i18n } from '../../../../js/i18n'
+import StepMixin from './step.mixin'
+import DescriptionEditor from '../components/DescriptionEditor'
+import { documentTypes, blobTypes } from '../../../../js/const/const'
+import { i18n } from '../../../../js/i18n'
 
-  import { commonEvents } from '../../../../js/events/common_events'
-  import { ErrorHandler } from '../../../../js/errors/error_handler'
-  import { usersService } from '../../../../js/services/users.service'
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
+import { commonEvents } from '../../../../js/events/common_events'
+import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { usersService } from '../../../../js/services/users.service'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../../../vuex/types'
 
-  import _pick from 'lodash/pick'
-  export default {
-    name: 'StepCreateSale',
-    mixins: [StepMixin],
-    components: {
-      DescriptionEditor
+import _pick from 'lodash/pick'
+export default {
+  name: 'step-create-sale',
+  components: {
+    DescriptionEditor
+  },
+  mixins: [StepMixin],
+  data: _ => ({
+    form: {
+      description: '',
+      descriptionID: '',
+      youtubeId: ''
     },
-    data: _ => ({
-      form: {
-        description: '',
-        descriptionID: '',
-        youtubeId: ''
-      },
-      i18n,
-      documentTypes,
-      uploadVideo: false
-    }),
+    i18n,
+    documentTypes,
+    uploadVideo: false
+  }),
 
-    created () {
-      this.form = _pick(this.sale, Object.keys(this.form))
-      this._loadDescriptionIfExists()
-    },
+  created () {
+    this.form = _pick(this.sale, Object.keys(this.form))
+    this._loadDescriptionIfExists()
+  },
 
-    computed: {
-      ...mapGetters([
-        vuexTypes.userAccountId
-      ])
-    },
+  computed: {
+    ...mapGetters([
+      vuexTypes.userAccountId
+    ])
+  },
 
-    methods: {
-      async submit () {
-        if (!await this.isValid()) return
-        this.disable()
-        try {
-          const descriptionId = (await usersService
-            .blobsOf(this.userAccountId)
-            .create(blobTypes.fundOverview.str,
-                    this.form.description, {}, false))
-            .data('id')
-          this.form.descriptionID = descriptionId
-          this.$emit(commonEvents.saleUpdateEvent, {
-            form: this.form,
-            documents: this.documents
-          })
-          this.$emit(commonEvents.saleEditEndEvent)
-        } catch (error) {
-          ErrorHandler.processUnexpected(error)
-        }
-        this.enable()
-      },
-
-      async _loadDescriptionIfExists () {
-        if (!this.form.descriptionID) return
-        this.form.description = await usersService.blobsOf().get(this.form.descriptionID)
+  methods: {
+    async submit () {
+      if (!await this.isValid()) return
+      this.disable()
+      try {
+        const descriptionId = (await usersService
+          .blobsOf(this.userAccountId)
+          .create(blobTypes.fundOverview.str,
+            this.form.description, {}, false))
+          .data('id')
+        this.form.descriptionID = descriptionId
+        this.$emit(commonEvents.saleUpdateEvent, {
+          form: this.form,
+          documents: this.documents
+        })
+        this.$emit(commonEvents.saleEditEndEvent)
+      } catch (error) {
+        ErrorHandler.processUnexpected(error)
       }
+      this.enable()
+    },
+
+    async _loadDescriptionIfExists () {
+      if (!this.form.descriptionID) return
+      this.form.description = await usersService.blobsOf().get(this.form.descriptionID)
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

@@ -1,6 +1,7 @@
 <template>
   <div class="tick-field">
-    <input class="tick-field__input"
+    <input
+      class="tick-field__input"
       type="checkbox"
       :checked="checked"
       :disabled="disabled"
@@ -11,12 +12,18 @@
       :autofocus="autofocus"
       @change="onChange">
 
-    <label class="tick-field__label" :for="id" :title="title">
-      <slot></slot>
+    <label
+      class="tick-field__label"
+      :for="id"
+      :title="title">
+      <slot />
       <!-- {{ label }} -->
     </label>
 
-    <span class="tick-field__tick" :for="id" :title="title">
+    <span
+      class="tick-field__tick"
+      :for="id"
+      :title="title">
       <!-- css art -->
     </span>
 
@@ -42,10 +49,6 @@ export default {
     return {
       // data
     }
-  },
-
-  created () {
-    // created
   },
 
   computed: {
@@ -75,6 +78,10 @@ export default {
       }
       return result
     }
+  },
+
+  created () {
+    // created
   },
 
   methods: {

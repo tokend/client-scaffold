@@ -1,36 +1,38 @@
 <template>
-  <div class="load-indicator" v-if="isShown">
-    <div class="load-indicator__runner"></div>
+  <div
+    class="load-indicator"
+    v-if="isShown">
+    <div class="load-indicator__runner" />
   </div>
 </template>
 
 <script>
-  import { commonEvents } from '../../js/events/common_events'
-  import { attachEventHandler } from '../../js/events/helpers'
+import { commonEvents } from '../../js/events/common_events'
+import { attachEventHandler } from '../../js/events/helpers'
 
-  export default {
-    name: 'load-indicator',
+export default {
+  name: 'load-indicator',
 
-    data () {
-      return {
-        isShown: false
-      }
+  data () {
+    return {
+      isShown: false
+    }
+  },
+
+  created () {
+    attachEventHandler(commonEvents.showLoadIndicator, this.show)
+    attachEventHandler(commonEvents.hideLoadIndicator, this.hide)
+  },
+
+  methods: {
+    show () {
+      this.isShown = true
     },
-
-    created () {
-      attachEventHandler(commonEvents.showLoadIndicator, this.show)
-      attachEventHandler(commonEvents.hideLoadIndicator, this.hide)
-    },
-
-    methods: {
-      show () {
-        this.isShown = true
-      },
-      hide () {
-        this.isShown = false
-      }
+    hide () {
+      this.isShown = false
     }
   }
+}
 </script>
 
 <style lang="scss">

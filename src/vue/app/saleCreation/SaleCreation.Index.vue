@@ -2,34 +2,39 @@
   <div class="create-sale app__page-content-wrp">
     <div>
       <template v-if="!isReady">
-        <loader :message="i18n.sale_create_loading()"/>
+        <loader :message="i18n.sale_create_loading()" />
       </template>
       <template v-else-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
-        <not-available-card icon='work'
-                            :title="i18n.lbl_not_available()"
-                            :descr="i18n.sale_not_available_exp()"/>
+        <not-available-card
+          icon="work"
+          :title="i18n.lbl_not_available()"
+          :descr="i18n.sale_not_available_exp()" />
       </template>
       <template v-else-if="!accountOwnedTokens.length">
-        <not-available-card icon='work'
-                            :title="i18n.lbl_not_available()"
-                            :descr="i18n.lbl_token_not_available_yet()"/>
+        <not-available-card
+          icon="work"
+          :title="i18n.lbl_not_available()"
+          :descr="i18n.lbl_token_not_available_yet()" />
       </template>
       <template v-else-if="view.mode === VIEW_MODES.edit">
-        <md-steppers class="create-sale__steppers"
-                      md-vertical
-                      md-linear
-                      :md-active-step.sync="activeStep">
-          <md-step v-for="(step, i) in steps"
-                  :key="i"
-                  :id="step.name"
-                  :md-label="step.label"
-                  :md-done.sync="step.done"
+        <md-steppers
+          class="create-sale__steppers"
+          md-vertical
+          md-linear
+          :md-active-step.sync="activeStep">
+          <md-step
+            v-for="(step, i) in steps"
+            :key="i"
+            :id="step.name"
+            :md-label="step.label"
+            :md-done.sync="step.done"
           >
-            <component :is="step.component"
-                      :schema="step.schema"
-                      :sale="sale"
-                      @sale-update="handleSaleUpdate($event, { step, i })"
-                      @sale-edit-end="handleSaleEditEnd"
+            <component
+              :is="step.component"
+              :schema="step.schema"
+              :sale="sale"
+              @sale-update="handleSaleUpdate($event, { step, i })"
+              @sale-edit-end="handleSaleEditEnd"
             />
           </md-step>
         </md-steppers>
@@ -38,9 +43,10 @@
       <template v-else-if="view.mode === VIEW_MODES.list">
         <div class="app__page-content-wrp">
           <div class="sale-creation__actions">
-            <button v-ripple
-                    @click="startNewSale"
-                    class="app__button-raised">
+            <button
+              v-ripple
+              @click="startNewSale"
+              class="app__button-raised">
               {{ i18n.sale_start_new_sale() }}
             </button>
           </div>
@@ -50,7 +56,9 @@
               {{ i18n.sale_request_list() }}
             </h4>
 
-            <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
+            <request-list
+              :list="listManager.list"
+              @sale-select="handleSaleSelect" />
           </div>
         </div>
       </template>
@@ -86,7 +94,7 @@ const VIEW_MODES = {
 }
 
 export default {
-  name: 'CreateSale-index',
+  name: 'create-sale-index',
   components: {
     RequestList,
     NotAvailableCard,

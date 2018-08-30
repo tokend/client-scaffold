@@ -5,9 +5,10 @@
         <select-field-unchained
           :label="i18n.lbl_asset()"
           v-model="form.quoteAsset"
-          :values="sale.quoteAssetCodes"/>
+          :values="sale.quoteAssetCodes" />
 
-        <div class="invest__input-hint"
+        <div
+          class="invest__input-hint"
           :class="{ 'invest__input-hint--error': limitExceeded }">
           {{ i18n.sale_invest_available() }}
           <span class="invest__available-amount">{{ i18n.c(available) }}</span>
@@ -23,7 +24,7 @@
           name="investment"
           type="number"
           :disabled="isOwner"
-          :errorMessage="errorMessage('investment')"
+          :error-message="errorMessage('investment')"
           v-validate="'amount'"
           data-vv-validate-on="input"
           :step="config.MINIMAL_NUMBER_INPUT_STEP"
@@ -36,42 +37,60 @@
         </div>
       </div>
 
-        <button class="app__button-flat invest__max-value-btn"
-                  @click="form.amount = maxValue"
-                  :disabled="available === 0">
-          <i class="material-icons">publish</i>
-        </button>
+      <button
+        class="app__button-flat invest__max-value-btn"
+        @click="form.amount = maxValue"
+        :disabled="available === 0">
+        <i class="material-icons">publish</i>
+      </button>
     </div>
 
     <div class="invest__actions">
       <div class="invest__submit-btn-ctn">
-        <button v-ripple
-                @click="invest"
-                class="app__button-raised invest__submit-btn"
-                :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
+        <button
+          v-ripple
+          @click="invest"
+          class="app__button-raised invest__submit-btn"
+          :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
           {{ offer ? i18n.sale_update_offer() : i18n.sale_invest() }}
         </button>
-        <md-tooltip v-if="sale.isUpcoming"
-                    md-direction="top">{{ i18n.sale_disable_invest_upcoming_sale() }}</md-tooltip>
-        <md-tooltip v-else-if="isOwner"
-                    md-direction="top">{{ i18n.sale_disable_invest_owners() }}</md-tooltip>
-        <md-tooltip v-else-if="hardCapExceeded"
-                    md-direction="top">{{ i18n.sale_disable_invest_hardcap_exceed({amount: i18n.cc(sale.hardCap)}) }}</md-tooltip>
-        <md-tooltip v-else-if="sale.isClosed"
-                    md-direction="top">{{ i18n.sale_disable_invest_closed_sale() }}</md-tooltip>
-        <md-tooltip v-else-if="sale.isCanceled"
-                    md-direction="top">{{ i18n.sale_disable_invest_canceled_sale() }}</md-tooltip>
+        <md-tooltip
+          v-if="sale.isUpcoming"
+          md-direction="top">
+          {{ i18n.sale_disable_invest_upcoming_sale() }}
+        </md-tooltip>
+        <md-tooltip
+          v-else-if="isOwner"
+          md-direction="top">
+          {{ i18n.sale_disable_invest_owners() }}
+        </md-tooltip>
+        <md-tooltip
+          v-else-if="hardCapExceeded"
+          md-direction="top">
+          {{ i18n.sale_disable_invest_hardcap_exceed({amount: i18n.cc(sale.hardCap)}) }}
+        </md-tooltip>
+        <md-tooltip
+          v-else-if="sale.isClosed"
+          md-direction="top">
+          {{ i18n.sale_disable_invest_closed_sale() }}
+        </md-tooltip>
+        <md-tooltip
+          v-else-if="sale.isCanceled"
+          md-direction="top">
+          {{ i18n.sale_disable_invest_canceled_sale() }}
+        </md-tooltip>
       </div>
 
       <div class="invest__cancel-btn-ctn">
         <hint-wrapper
           :hint="i18n.sale_offer_cancel_tip({amount: i18n.c(investedAmount), asset: form.quoteAsset})"
           :decorated="false">
-          <button v-ripple
-                  @click="cancelOffer"
-                  v-if="sale.isOpened && offer"
-                  class="app__button-flat invest__cancel-btn"
-                  :disabled="isPending">
+          <button
+            v-ripple
+            @click="cancelOffer"
+            v-if="sale.isOpened && offer"
+            class="app__button-flat invest__cancel-btn"
+            :disabled="isPending">
             {{ i18n.sale_offer_cancel() }}
           </button>
         </hint-wrapper>
@@ -102,9 +121,9 @@ import HintWrapper from '@/vue/common/hint-wrapper/HintWrapper'
 
 export default {
   name: 'sale-invest',
+  components: { SelectFieldUnchained, InputFieldUnchained, HintWrapper },
   mixins: [FormMixin],
   props: ['sale'],
-  components: { SelectFieldUnchained, InputFieldUnchained, HintWrapper },
   data: _ => ({
     form: {
       quoteAsset: '',

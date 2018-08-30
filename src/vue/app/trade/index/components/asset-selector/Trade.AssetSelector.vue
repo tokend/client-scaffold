@@ -6,7 +6,7 @@
         v-model="currentAsset"
         :label="i18n.lbl_asset()"
         :values="sortedPairs"
-        :key="currentAsset"/>
+        :key="currentAsset" />
     </template>
 
     <div class="asset-select__balances">

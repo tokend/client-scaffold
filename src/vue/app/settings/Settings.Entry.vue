@@ -1,19 +1,19 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
-  import RouteEntryMixin from '../../common/mixins/route-entry'
+import RouteEntryMixin from '../../common/mixins/route-entry'
 
-  export default {
-    name: 'settings',
-    mixins: [RouteEntryMixin],
-    data: _ => ({
-      routes: [
-        { path: '/settings/security', label: 'Security' }
-      ]
-    })
-  }
+export default {
+  name: 'settings',
+  mixins: [RouteEntryMixin],
+  data: _ => ({
+    routes: [
+      { path: '/settings/security', label: 'Security' }
+    ]
+  })
+}
 </script>
 
 <style scoped>
