@@ -41,7 +41,8 @@
 
       <label
         :for="id"
-        class="file-field__uploader">
+        class="file-field__uploader"
+        :disabled="disabled">
         <md-icon class="file-field__icon md-icon-size-075x">
           insert_drive_file
         </md-icon>
@@ -90,14 +91,13 @@
 
 <script>
 import FieldMixin from './field.mixin'
-import { DocumentContainer } from '../../../js/helpers/DocumentContainer'
-import { MAX_FILE_MEGABYTES } from '../../../js/const/documents.const'
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { dispatchAppEvent } from '../../../js/events/helpers'
-import { commonEvents } from '../../../js/events/common_events'
-import { i18n } from '../../../js/i18n'
-import { FileHelper } from '../../../js/helpers/file.helper'
-import config from '../../../config'
+import { DocumentContainer } from '@/js/helpers/DocumentContainer'
+import { MAX_FILE_MEGABYTES } from '@/js/const/documents.const'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { dispatchAppEvent } from '@/js/events/helpers'
+import { commonEvents } from '@/js/events/common_events'
+import { i18n } from '@/js/i18n'
+import { FileHelper } from '@/js/helpers/file.helper'
 
 export default {
   name: 'file-field',
@@ -110,17 +110,19 @@ export default {
     minWidth: { type: Number, default: null },
     minHeight: { type: Number, default: null },
     accept: { type: String, default: 'image/png, image/jpeg' },
-    notes: { type: Array, default: () => ['JPEG, PNG or BMP', 'no more than 5mb', 'not less than 120x120, 1:1'] },
-    fileType: { type: String, default: 'default' }
+    notes: {
+      type: Array,
+      default: () => [
+        'JPEG, PNG or BMP',
+        'no more than 5mb',
+        'not less than 120x120, 1:1'
+      ]
+    },
+    fileType: { type: String, default: 'default' },
+    disabled: { type: Boolean, default: false }
   },
   data: _ => ({
-    fileName: '',
-    privateUrl: '',
-    i18n,
-    fileStorage: config.FILE_STORAGE,
-    flags: {
-      isReadyToDrop: false
-    }
+    i18n
   }),
   computed: {
     maxB () {
@@ -253,7 +255,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
+  @import "./scss/fields-variables";
   @import '~@scss/mixins';
 
   .file-field__outer {
@@ -269,8 +271,8 @@ export default {
   }
 
   .file-field__label {
-    font-size: $fs-tip;
-    color: $col-md-primary-inactive;
+    font-size: .8rem;
+    color: $field-color-unfocused;
     margin-bottom: 8px;
   }
 
@@ -280,7 +282,7 @@ export default {
   }
 
   .file-field__icon {
-    color: $col-md-primary-txt !important;
+    color: $col-button-raised-txt !important;
     margin-right: .5rem;
     position: relative;
     bottom: .05rem;
@@ -299,14 +301,14 @@ export default {
     position: relative;
     left: 1rem;
     top: .85rem;
-    color: $col-md-primary-inactive
+    color: $field-color-unfocused
   }
 
   .link-btn {
     border: none;
     background: none;
     cursor: pointer;
-    color: $col-md-primary;
+    color: $field-color-text;
 
     &:hover {
       & > span {
@@ -326,7 +328,7 @@ export default {
     width: 100%;
 
     &:hover {
-      border-color: $col-md-primary;
+      border-color: $field-color-text;
     }
   }
 
@@ -353,14 +355,14 @@ export default {
     width: 100%;
 
     .title {
-      color: $col-md-primary;
+      color: $field-color-text;
       margin-bottom: 10px;
     }
   }
 
   .image-input__note {
     color: $col-unfocused;
-    font-size: $fs-tip;
+    font-size: .8rem;
     line-height: 160%;
   }
 

@@ -1,27 +1,21 @@
 <template>
-  <div class="chart-root">
-    <div
-      v-if="isLoading"
-      class="chart-root__wrapper">
-      <div class="chart-root__wrapper-message">
+  <div class="chart-renderer">
+    <div v-if="isLoading" class="chart-renderer__wrapper">
+      <div class="chart-renderer__wrapper-message">
         {{ i18n.dash_chart_loading() }}
       </div>
     </div>
-    <div
-      v-else-if="!hasValue"
-      class="chart-root__wrapper">
-      <div class="chart-root__wrapper-message">
+    <div v-else-if="!hasValue" class="chart-renderer__wrapper">
+      <div class="chart-renderer__wrapper-message">
         {{ i18n.dash_empty_volume() }}
       </div>
     </div>
-    <div
-      class="chart-root__chart"
-      ref="chart" />
+    <div class="chart-renderer__chart" ref="chart" />
   </div>
 </template>
 
 <script>
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 
 import * as d3Array from 'd3-array'
 import * as d3Selection from 'd3-selection'
@@ -33,8 +27,8 @@ import * as d3Ease from 'd3-ease'
 
 // import * as d3 from 'd3'
 import moment from 'moment'
+import config from '@/config'
 import { chunk } from 'lodash'
-import config from '../../../../config'
 const d3 = Object.assign(
   {},
   d3Array,
@@ -54,7 +48,7 @@ export default {
     scale: { type: String, default: 'hour' },
     requiredTicks: { type: Array, default: () => [] },
     precision: { type: Number, default: 0 },
-    hasValue: { type: Boolean, default: false },
+    hasValue: { type: Boolean, default: true },
     isLoading: { type: Boolean, default: false }
   },
 
@@ -113,8 +107,8 @@ export default {
       }
     },
 
-    getMaxAndMin (data) {
-      const arr = data.map(item => item.value)
+    getMaxAndMin () {
+      const arr = this.data.map(item => item.value)
       const max = Math.max(...arr, ...this.requiredTicks)
       const min = this.requiredTicks && this.requiredTicks.length
         ? 0
@@ -143,7 +137,6 @@ export default {
       this.clear()
 
       // Setup the data
-      // const scale = this.scale
       const data = chunk(this.normalizedData, this.barTicks).map(item => {
         const itemLength = item.length
         let defaultDate = 0
@@ -311,7 +304,7 @@ export default {
         }, this.chartRenderingTime)
       }
 
-      // Render y-axis
+      // Render x-axis
       const yAxisLine = d3.axisRight(y)
         .tickValues([
           max,
@@ -488,41 +481,41 @@ export default {
 
 <style lang="scss">
   @import "~@scss/variables";
-  @import "~@scss/mixins";
 
-  .chart-root {
+   .chart-renderer {
     position: relative;
   }
 
-  .chart-root__wrapper {
+  .chart-renderer__wrapper {
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgba(#f2f2f4, .25);
+    background-color: $col-chart-message-wrapper;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .chart-root__wrapper-message {
-    background-color: #fff;
+  .chart-renderer__wrapper-message {
+    background-color: $col-chart-message-background;
     padding: 16px 28px;
     min-width: 20rem;
-    color: $col-md-primary;
+    color: $col-chart-message-text;
     text-align: center;
-    box-shadow: 0 0 14px 1px #fff;
+    box-shadow: 0 0 14px 1px $col-chart-message-background;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .chart-root__chart,
-  .chart-root__chart svg {
+  .chart-renderer__chart,
+  .chart-renderer__chart svg {
+    transition: .2s;
+
     @media (min-width: 767px) {
       min-height: 200px;
     }
-    transition: .2s;
   }
 
   svg.chart {
@@ -541,13 +534,13 @@ export default {
   .chart__line {
     fill: none;
     stroke-width: 2px;
-    stroke: $col-md-primary-secondary;
+    stroke: $col-chart-line;
     stroke-linecap: round;
   }
 
   .chart__x-axis {
     text {
-      font-size: $fs-root;
+      font-size: 1rem;
       fill: $col-chart-text;
     }
     .domain { display: none; }
@@ -555,7 +548,7 @@ export default {
 
   .chart__y-axis {
     text {
-      font-size: $fs-root;
+      font-size: 1rem;
       fill: $col-chart-text;
     }
     line {
@@ -569,40 +562,41 @@ export default {
   .chart__tip {
     transition: opacity .2s;
     opacity: 0;
+
     &--show { opacity: 1; }
-    &--hidden { opacity: 0!important; }
+    &--hidden { opacity: 0 !important; }
   }
   .chart__tip-line {
     stroke-width: 1px;
-    stroke: $col-md-primary;
+    stroke: $col-chart-tip-line-inactive;
   }
 
   .chart__tip-circle {
     stroke-width: 5px;
-    stroke: #fff;
-    fill: $col-md-primary;
+    stroke: $col-chart-tip-circle-border;
+    fill: $col-chart-tip-circle;
   }
 
-  .chart__tip-text-box { fill: #fff }
+  .chart__tip-text-box { fill: $col-chart-tip-text-box }
   .chart__tip-text-price {
-    font-size: $fs-root;
-    fill: $col-md-primary;
+    font-size: 1rem;
+    fill: $col-chart-tip-text-price;
     font-weight: 800;
   }
 
   .chart__tip-text-price-change {
-    fill: $col-md-primary;
+    fill: $col-chart-tip-text-price;
     font-weight: 400;
   }
 
   .chart__tip-text-time-dd {
     font-size: 18px;
-    fill: $col-md-primary;
+    fill: $col-chart-tip-date-dd;
   }
 
   .chart__tip-text-time-mm {
     font-size: 12px;
-    fill: #837fa1;
+    fill: $col-chart-tip-date-mm;
   }
 
   .chart__tip-motion-capture-area { opacity: 0 }

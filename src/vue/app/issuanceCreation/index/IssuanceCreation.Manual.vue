@@ -13,7 +13,7 @@
       </router-link>
     </template>
 
-    <template v-else-if="!accountOwnedTokens.length">
+    <template v-else-if="!accountOwnedTokenCodes.length">
       <h2 class="app__page-heading">{{ i18n.iss_no_assets_heading() }}</h2>
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.iss_no_assets() }}
@@ -37,19 +37,35 @@
 
         <div class="app__form-row">
           <select-field-unchained
-            :values="accountOwnedTokens"
+            :values="accountOwnedTokenCodes"
             v-model="request.code"
             :label="i18n.lbl_asset()" />
         </div>
 
         <div class="app__form-row">
-          <input-field-unchained
-            name="amount"
-            v-model="request.amount"
-            v-validate="'required|amount'"
-            :label="i18n.lbl_amount()"
-            :error-message="errorMessage('amount')"
-          />
+          <div class="app__form-field">
+            <input-field-unchained
+              name="amount"
+              v-model="request.amount"
+              type="number"
+              :max="selectedTokenAvailableToIssuance"
+              v-validate="`
+                required|amount|max:${selectedTokenAvailableToIssuance}
+              `"
+              :label="i18n.lbl_amount()"
+              :error-message="errorMessage('amount')"
+            />
+            <div class="app__form-field-description">
+              <p>
+                {{
+                  i18n.iss_available_to_issuance({
+                    value: selectedTokenAvailableToIssuance,
+                    tokenCode: request.code
+                  })
+                }}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div class="app__form-row">
@@ -105,9 +121,12 @@ export default {
   components: { SelectFieldUnchained, InputFieldUnchained },
   mixins: [FormMixin],
   data: _ => ({
-    request: {},
+    request: {
+      code: ''
+    },
     formShown: true,
     unissued: '', // TODO: unissued amount label, exceeding check
+    selectedTokenAvailableToIssuance: null,
     i18n,
     ACCOUNT_TYPES
   }),
@@ -115,10 +134,19 @@ export default {
     ...mapGetters([
       vuexTypes.accountOwnedTokens,
       vuexTypes.accountTypeI
-    ])
+    ]),
+    accountOwnedTokenCodes () {
+      return this.accountOwnedTokens.map(item => item.asset)
+    }
+  },
+  watch: {
+    'request.code' (value) {
+      this.getAvailableToIssuance(value)
+    }
   },
   created () {
     this.setTokenCode()
+    this.getAvailableToIssuance(this.request.code)
   },
   methods: {
     async submit () {
@@ -126,7 +154,8 @@ export default {
       this.disable()
       try {
         const receiver = await accountsService.loadBalanceIdByEmail(
-          this.request.receiver, this.request.code
+          this.request.receiver,
+          this.request.code
         )
         await issuanceService.createIssuanceRequest({
           token: this.request.code,
@@ -138,9 +167,6 @@ export default {
         EventDispatcher.dispatchShowSuccessEvent(i18n.iss_submit_success())
         this.rerenderForm()
       } catch (error) {
-        console.error(error)
-        console.error(error.constructor)
-        console.error(error.constructor === errors.NotFoundError)
         if (error.constructor === errors.NotFoundError) {
           EventDispatcher.dispatchShowErrorEvent(
             i18n.iss_no_balance({ asset: this.request.code })
@@ -154,7 +180,13 @@ export default {
     },
 
     setTokenCode () {
-      this.request.code = this.accountOwnedTokens[0] || null
+      this.request.code = this.accountOwnedTokenCodes[0] || null
+    },
+
+    getAvailableToIssuance (tokenCode) {
+      this.selectedTokenAvailableToIssuance = this.accountOwnedTokens
+        .filter(item => item.asset === tokenCode)[0]
+        .asset_details.available_for_issuance
     },
 
     rerenderForm () {

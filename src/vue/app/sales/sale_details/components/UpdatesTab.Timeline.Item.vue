@@ -18,10 +18,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../scss/variables";
+  @import "~@scss/variables";
 
   .timeline-item__date {
-    color: lighten($col-text, 10%);
+    color: lighten($col-text-field-hint, 10%);
     font-weight: bold;
   }
 

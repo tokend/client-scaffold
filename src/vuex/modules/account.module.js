@@ -167,6 +167,9 @@ export const getters = {
   accountRawBalances: state => state.balances,
   accountOwnedTokens: state =>
     state.balances
+      .filter((balance) => balance.account_id === balance.asset_details.owner),
+  accountOwnedTokenCodes: state =>
+    state.balances
       .filter((balance) => balance.account_id === balance.asset_details.owner)
       .map(balance => balance.asset_details.code),
   accountDepositAddresses: state =>

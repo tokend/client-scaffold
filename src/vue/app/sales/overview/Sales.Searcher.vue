@@ -10,6 +10,7 @@
           v-model="filters.token"
           class="searcher__filter"
           name="token-name"
+          :white-autofill="true"
           title="Token symbol"
           :label="i18n.lbl_token_code()"
         />
@@ -37,10 +38,10 @@
 <script>
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import { i18n } from '../../../../js/i18n'
-import { commonEvents } from '../../../../js/events/common_events'
+import { i18n } from '@/js/i18n'
+import { commonEvents } from '@/js/events/common_events'
 import debounce from 'lodash/debounce'
-import { saleSortTypes, saleStates } from '../../../../js/const/const'
+import { saleSortTypes, saleStates } from '@/js/const/const'
 
 export default {
   name: 'searcher',
@@ -114,14 +115,17 @@ export default {
   .searcher-title {
     font-weight: bold;
     font-size: 1.4 * $point;
-    color: $col-md-primary;
+    color: $col-text-page-heading;
     padding: 0;
     opacity: 1;
     margin-bottom: 1 * $point;
   }
 
   .searcher-wrapper {
+    background: $col-block-bg;
+    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
     margin: 0 0 1.5rem;
+    padding: 2.4 * $point 2.4 * $point;
   }
 
   .searcher__filters {

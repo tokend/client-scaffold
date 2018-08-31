@@ -129,7 +129,7 @@ export default {
     background-color: transparent;
 
     i {
-      font-size: $material-icon-xx-super-big;
+      font-size: $size-icon-super-big;
     }
 
     &:hover {
@@ -166,7 +166,7 @@ export default {
   }
 
   .user-type-selector__user {
-    font-size: $fs-root;
+    font-size: 1rem;
     margin: 0 16px;
   }
 

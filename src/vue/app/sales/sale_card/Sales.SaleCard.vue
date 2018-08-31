@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { humanizeFutureDate } from '../../../../js/utils/dates.util'
-import config from '../../../../config'
+import { humanizeFutureDate } from '@/js/utils/dates.util'
+import config from '@/config'
 import _get from 'lodash/get'
 import InvestProgressBar from './Sales.ProgressBar'
 
@@ -59,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   $padding-side: 20px;
 
@@ -72,7 +72,7 @@ export default {
     overflow: hidden;
     position: relative;
     width: $ratio_16;
-    color: $col-md-primary;
+    color: $col-text-page-heading;
 
     &:before {
       bottom: 0;
@@ -113,13 +113,13 @@ export default {
   }
 
   .card__syndicate {
-    color: $col-active;
+    color: $col-text-accented;
     font-style: italic;
   }
 
   .card__syndicate,
   .card__description {
-    font-size: $fs-tip;
+    font-size: .8rem;
   }
 
   .card__description {
@@ -142,11 +142,11 @@ export default {
     right: 0;
     padding: .5rem 3rem;
     transform: translate(32%,33%) rotate(45deg);
-    color: $col-msg-text;
+    color: $col-fund-card-state-tip;
 
     &--upcoming { background: $col-pending }
     &--finished { background: $col-success }
-    &--cancelled { background: $col-danger }
+    &--cancelled { background: $col-accent }
   }
 
 </style>

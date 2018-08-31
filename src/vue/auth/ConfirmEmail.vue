@@ -17,40 +17,42 @@
         v-ripple>
         {{ i18n.lbl_request_new_email() }}
       </button>
+      <router-link class="auth-page__submit-btn-secondary"
+                   :to="vueRoutes.login"
+                   tag="button">
+        {{ i18n.lbl_continue() }}
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 import form from '../common/mixins/form.mixin'
-import { EventDispatcher } from '../../js/events/event_dispatcher'
-import { emailService } from '../../js/services/email.service'
-import { i18n } from '../../js/i18n'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { emailService } from '@/js/services/email.service'
+import { i18n } from '@/js/i18n'
+import { vueRoutes } from '@/vue-router/const'
 
 export default {
   name: 'email-resend',
-
   mixins: [form],
-
   data () {
     return {
       i18n,
+      vueRoutes,
       walletId: '',
       email: ''
     }
   },
-
   beforeCreate () {
-    if (!this.$route.query.walletId || !this.$route.query.email) {
+    if (!this.$store.state.wallet || !this.$route.query.email) {
       this.$router.push('/login')
     }
   },
-
   created () {
-    this.walletId = this.$route.query.walletId
+    this.walletId = this.$store.state.wallet
     this.email = this.$route.query.email
   },
-
   methods: {
     async requestNew () {
       this.disable()

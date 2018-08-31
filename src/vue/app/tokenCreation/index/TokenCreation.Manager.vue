@@ -223,7 +223,7 @@ export default {
       try {
         await this.createRequest()
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
-        this.$router.push({ path: '/requests/token-creation' })
+        this.$router.push({ path: '/requests', hash: '#token-creation' })
       } catch (error) {
         console.error(error)
         ErrorHandler.processUnexpected(error)
@@ -257,7 +257,7 @@ export default {
         termsContainer.setKey(termsKey)
       }
       await tokensService.createTokenCreationRequest({
-        requestID: this.id ? this.id : '0',
+        requestID: this.request.requestID ? this.request.requestID : '0',
         code: this.request.tokenCode,
         preissuedAssetSigner: preissuedAssetSigner,
         maxIssuanceAmount: this.request.maxIssuanceAmount,

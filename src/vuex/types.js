@@ -128,6 +128,7 @@ const getters = {
   accountTokens: 'accountTokens',
   accountBalances: 'accountBalances',
   accountOwnedTokens: 'accountOwnedTokens',
+  accountOwnedTokenCodes: 'accountOwnedTokenCodes',
   accountRawBalances: 'accountRawBalances',
   accountDepositAddresses: 'accountDepositAddresses',
   // account.kyc:

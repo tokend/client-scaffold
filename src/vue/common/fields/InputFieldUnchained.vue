@@ -83,6 +83,14 @@ export default {
   computed: {
     // computed
   },
+  watch: {
+    max (value) {
+      if (+this.value && (+value < +this.value)) this.$emit('input', value)
+    },
+    min (value) {
+      if (+this.value && (+value > +this.value)) this.$emit('input', value)
+    }
+  },
 
   created () {
     // created
@@ -169,11 +177,11 @@ export default {
   @include text-font-sizes;
 
   &:not([readonly]) {
-    -webkit-box-shadow: inset 0 0 0 50px $col-md-background; // autofill hack
+    -webkit-box-shadow: inset 0 0 0 50px $col-field-background; // autofill hack
   }
 
   &--autofill-white:not([readonly]) {
-    -webkit-box-shadow: inset 0 0 0 50px $white !important;
+    -webkit-box-shadow: inset 0 0 0 50px $col-block-bg !important;
   }
 }
 

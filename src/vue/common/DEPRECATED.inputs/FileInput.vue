@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import { FileHelper } from '../../../js/helpers/file.helper'
-import { commonEvents } from '../../../js/events/common_events'
-import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from '../../../js/const/const'
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
+import { FileHelper } from '@/js/helpers/file.helper'
+import { commonEvents } from '@/js/events/common_events'
+import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from '@/js/const/const'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
 
 export default {
   name: 'file-input',
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
+  @import '~@/scss/variables';
 
   .file-input {
     display: inline-block;
@@ -98,8 +98,8 @@ export default {
   }
 
   .file-input__attachment-icon {
-    color: $col-btn-text;
-    font-size: $fs-root;
+    color: $col-file-field-icon-text;
+    font-size: 1rem;
 
   }
   .file-input__upload-input {
@@ -112,14 +112,14 @@ export default {
   }
 
   .file-input__name {
-    font-size: $fs-tip;
+    font-size: .8rem;
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .file-input__view-btn {
-    color: $col-active;
+    color: $col-text-accented;
     text-decoration: underline;
   }
 

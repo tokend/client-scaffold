@@ -254,11 +254,11 @@
 </template>
 
 <script>
-import config from '../.././config'
+import config from '@/config'
 
 import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../vuex/types'
-import { i18n } from '../../js/i18n'
+import { i18n } from '@/js/i18n'
 import Logotype from '../app/common/Logotype'
 import AppFooter from '../navigation/Footer'
 import { ACCOUNT_TYPES } from '@/js/const/const'
@@ -283,16 +283,9 @@ export default {
   computed: {
     ...mapGetters([
       vuexTypes.accountTypeI
-    ]),
-    discourseURL () {
-      return `${config.DISCOURSE_CLIENT}`
-    }
+    ])
   },
-
   methods: {
-    openSidebar () {
-      this.isSidebarOpened = true
-    },
     closeSidebar () {
       this.isSidebarOpened = false
       this.$emit('hide-sidebar', this.isSidebarOpened)
@@ -305,10 +298,10 @@ export default {
   @import '../../scss/variables';
 
   .sidebar {
-    background-color: #e9eaed !important;
+    background-color: $col-sidebar-background !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
     min-height: 100vh;
-    padding-bottom: 10 *  $point;
+    padding-bottom: 10 * $point;
     height: 100%;
   }
 
@@ -317,11 +310,11 @@ export default {
     align-items: center;
     min-height: 48px;
     cursor: pointer;
-    color: $col-md-primary-inactive;
+    color: $col-sidebar-text;
 
     &.router-link-active {
-      background-color: #f0f1f4;
-      color: $col-md-primary;
+      background-color: $col-sidebar-active-elem-background;
+      color: $col-sidebar-active-elem-text;
     }
   }
 
@@ -346,9 +339,10 @@ export default {
   .sidebar__list-item-icon {
     margin-right: 16px;
     // TODO: remove important rule when possible
-    color: $col-md-primary-inactive !important;
+    color: $col-sidebar-text !important;
+
     .router-link-active & {
-      color: $col-md-primary !important;
+      color: $col-sidebar-active-elem-text !important;
     }
   }
 
@@ -357,7 +351,7 @@ export default {
   }
 
   .sidebar__list-title {
-    color: $col-md-primary;
+    color: $col-sidebar-active-elem-text;
     font-size: 16px;
     margin-bottom: 8px;
   }

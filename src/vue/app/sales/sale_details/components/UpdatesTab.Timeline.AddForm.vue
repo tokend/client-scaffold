@@ -17,7 +17,7 @@
       title="Title"
     />
 
-    <textarea-field
+    <textarea-field-unchained
       v-model="form.message"
       v-validate="'required'"
       class="step__input-field"
@@ -45,16 +45,13 @@ import { blobTypes, blobFilters } from '@/js/const/const'
 import { usersService } from '@/js/services/users.service'
 export default {
   name: 'add-update-form',
-
   components: {
     InputField
   },
-
   mixins: [FormMixin],
   props: {
     sale: { type: Object, default: () => {} }
   },
-
   data: _ => ({
     form: {
       title: '',
@@ -65,7 +62,6 @@ export default {
     },
     i18n
   }),
-
   methods: {
     async createUpdate () {
       if (!await this.isValid()) return
@@ -105,9 +101,9 @@ export default {
   }
 
   .add-update-form__cancel-btn {
-    color: $col-active;
+    color: $col-text-accented;
     cursor: pointer;
-    font-size: $fs-tip;
+    font-size: .8rem;
     text-decoration: underline;
   }
 

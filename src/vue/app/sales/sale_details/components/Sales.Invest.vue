@@ -413,20 +413,20 @@ export default {
 
 .invest__available-amount,
 .invest__available-asset {
-  color: $col-md-primary-secondary;
+  color: $col-text-accented;
 }
 
 .invest__input-hint {
   font-size: 1.4 * $point;
-  color: $col-md-primary;
+  color: $col-text-field-hint;
   margin-top: 0.3 * $point;
 
   &--error {
-    color: $col-md-accent;
+    color: $col-accent;
     font-weight: bold;
     .invest__available-asset,
     .invest__available-amount {
-      color: $col-md-accent;
+      color: $col-accent;
     }
   }
 }
@@ -441,7 +441,7 @@ export default {
 }
 
 .invest__tip {
-  font-size: $fs-tip;
+  font-size: .8rem;
 }
 
 .invest__actions {
@@ -465,15 +465,14 @@ export default {
 .invest__max-value-btn {
   border: none;
   background: none;
-  // align-self: top;
   width: 4.4 * $point;
   height: 4.4 * $point;
   padding: 0;
-  color: $col-md-primary-inactive;
+  color: $col-button-flat-txt-inactive;
   cursor: pointer;
 
   &:hover {
-    color: $col-md-primary-secondary;
+    color: $col-button-flat-txt;
   }
 }
 

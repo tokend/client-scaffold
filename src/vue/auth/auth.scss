@@ -1,10 +1,14 @@
-@import '../../scss/variables';
-@import '../../scss/mixins';
+@import '~@scss/variables';
+@import '~@scss/mixins';
 
 .auth-page {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
+
+  .app__warning > & {
+    min-height: calc(100vh - #{$warning-banner-height});
+  }
 }
 
 .auth-page__titles,
@@ -49,7 +53,7 @@
   font-size: 32px;
   font-weight: 400;
   margin-bottom: 24px;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
 }
 
 .auth-page__form-title--center { text-align: center; }
@@ -69,29 +73,37 @@
 
 .auth-page__submit {
   width: 100%;
+  margin-top: 48px;
+  margin-bottom: 55px;
 }
 
 .auth-page__submit-btn {
   @include button-raised();
 
   width: 200px;
-  margin-top: 48px;
   margin-right: auto;
-  margin-bottom: 75px;
+  margin-bottom: 20px;
+}
+
+.auth-page__submit-btn-secondary {
+  @include button-flat();
+
+  width: 150px;
+  margin-left: 20px;
 }
 
 .auth-page__tips {
   margin-right: auto;
-  color: $col-md-primary;
+  color: $col-text-field-hint;
 }
 
 .auth-page .auth-page__tip-link { // WARN: icreased weight for break vue-material styles
-  color: $col-md-primary-secondary !important;
+  color: $col-text-accented !important;
   text-decoration: underline;
 }
 
 .auth-page__title {
-  color: $white;
+  color: $col-auth-page-title;
   font-size: 56px;
   line-height: 1.2;
 
@@ -103,7 +115,7 @@
 .auth-page__title-small {
   font-size: 24px;
   margin-bottom: 56px;
-  color: $col-md-primary-secondary;
+  color: $col-text-accented;
 
   @include respond-to(large) {
     font-size: 20px;
@@ -115,5 +127,5 @@
 }
 
 .auth-page__form-descr-info {
-  color: $col-md-primary-secondary;
+  color: $col-text-accented;
 }

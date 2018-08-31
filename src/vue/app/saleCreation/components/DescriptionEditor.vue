@@ -74,7 +74,7 @@ export default {
 
 <style lang="scss">
   @import '~simplemde/dist/simplemde.min.css';
-  @import '../../../../scss/variables';
+  @import '~@scss/variables';
   // @import '../../../../../assets/style/md';
 
   .description-editor {
@@ -88,7 +88,7 @@ export default {
 
   .CodeMirror-fullscreen,
   .editor-toolbar.fullscreen {
-    z-index: $z-markdown-editor !important;
+    z-index: 45 !important;
   }
 
 </style>

@@ -47,17 +47,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
+  @import '~@scss/variables';
   .token-list__char {
-    color: $col-md-primary-txt;
+    color: $col-primary-txt;
   }
 
   .token-list__list-item {
     &--selected {
-      background: $col-md-accent;
+      background: $col-accent;
 
       .md-list-item-text {
-        color: $col-md-primary-txt;
+        color: $col-primary-txt;
       }
     }
   }

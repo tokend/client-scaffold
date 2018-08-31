@@ -76,17 +76,17 @@
 
 <script>
 import formMixin from '../common/mixins/form.mixin'
-
-import { ErrorFactory, errorTypes, errors } from '../../js/errors/factory'
-import { ErrorHandler } from '../../js/errors/error_handler'
-import { vueRoutes } from '../../vue-router/const'
+import { ErrorFactory, errorTypes, errors } from '@/js/errors/factory'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { mapGetters, mapActions } from 'vuex'
+import { vuexTypes } from '@/vuex/types'
+import { vueRoutes } from '@/vue-router/const'
 import { Keypair } from 'swarm-js-sdk'
-import { showRememberSeedMessage } from '../../js/modals/remember_seed.modal'
-import config from '../../config'
-
-import { emailService } from '../../js/services/email.service'
-import { authService } from '../../js/services/auth.service'
-import { i18n } from '../../js/i18n'
+import { showRememberSeedMessage } from '@/js/modals/remember_seed.modal'
+import config from '@/config'
+import { emailService } from '@/js/services/email.service'
+import { authService } from '@/js/services/auth.service'
+import { i18n } from '@/js/i18n'
 
 export default {
   mixins: [formMixin],
@@ -103,6 +103,12 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters([
+      vuexTypes.walletId
+    ])
+  },
+
   methods: {
     async submit () {
       if (!await this.isValid()) return
@@ -114,7 +120,8 @@ export default {
         const walletId = await authService.signup(this.form, recoveryKeypair)
         this.enable()
         await showRememberSeedMessage(recoveryKeypair.secret())
-        this.goShowEmail(walletId)
+        this.goShowEmail()
+        this.setWalledId(walletId)
       } catch (error) {
         switch (error.constructor) {
           case errors.ConflictError:
@@ -125,8 +132,8 @@ export default {
         }
         this.enable()
       }
+      this.enable()
     },
-
     async checkEmailValidity () {
       if (!config.VALIDATE_EMAILS) return Promise.resolve(true)
 
@@ -143,14 +150,13 @@ export default {
       }
       return Promise.resolve(true)
     },
-
-    goShowEmail (walletId) {
-      const route = {
-        ...vueRoutes.email,
-        query: { walletId, email: this.form.email }
-      }
+    goShowEmail () {
+      const route = { ...vueRoutes.email, query: { email: this.form.email } }
       this.$router.push(route)
-    }
+    },
+    ...mapActions({
+      setWalledId: vuexTypes.SET_WALLET_ID
+    })
   }
 }
 </script>

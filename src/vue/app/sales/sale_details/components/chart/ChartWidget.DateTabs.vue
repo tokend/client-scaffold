@@ -8,8 +8,7 @@
       class="tab-btn"
       @click="$emit(common.inputEvent, tabs.hour)"
       :class="{ selected: value === tabs.hour }"
-      :disabled="isPending"
-    >
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_hour() }}</span>
     </button>
 
@@ -17,8 +16,7 @@
       class="tab-btn"
       @click="$emit(common.inputEvent, tabs.day)"
       :class="{ selected: value === tabs.day }"
-      :disabled="isPending"
-    >
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_day() }}</span>
     </button>
 
@@ -26,8 +24,7 @@
       class="tab-btn"
       @click="$emit(common.inputEvent, tabs.month)"
       :class="{ selected: value === tabs.month }"
-      :disabled="isPending"
-    >
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_month() }}</span>
     </button>
 
@@ -35,16 +32,15 @@
       class="tab-btn"
       @click="$emit(common.inputEvent, tabs.year)"
       :class="{ selected: value === tabs.year }"
-      :disabled="isPending"
-    >
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
     </button>
   </div>
 </template>
 
 <script>
-import { commonEvents } from '../../../../../../js/events/common_events'
-import { i18n } from '../../../../../../js/i18n'
+import { commonEvents } from '@/js/events/common_events'
+import { i18n } from '@/js/i18n'
 
 export default {
   name: 'date-tabs',
@@ -72,8 +68,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../../scss/variables";
-  @import "../../../../../../scss/mixins";
+  @import "~@scss/variables";
+  @import "~@scss/mixins";
 
   .date-tabs {
     display: flex;
@@ -87,7 +83,7 @@ export default {
     white-space: nowrap;
     display: inline-block;
     margin-right: 1 * $point;
-    color: $col-md-primary;
+    color: $col-text-field-hint;
   }
 
   .tab-btn {
@@ -98,12 +94,12 @@ export default {
     position: relative;
     border: none;
     font-size: 12px;
-    color: rgba($col-md-primary, .6);
+    color: rgba($col-text-field-hint, .6);
     background-color: transparent;
     font-weight: 500;
 
     &.selected {
-      color: $col-md-primary;
+      color: $col-text-field-hint;
       font-weight: 700;
     }
   }

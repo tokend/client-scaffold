@@ -269,9 +269,21 @@ export default {
     align-items: center;
   }
 
+  .tfa-settings__password-message {
+    color: $col-text-page-explanations;
+    margin-bottom: 16px;
+
+    i {
+      font-size: 18px !important;
+      margin-top: -2px;
+      margin-right: 5px;
+      color: $col-text-page-explanations !important;
+    }
+  }
+
   .tfa-settings__title {
     margin-bottom: 1rem;
-    color: $col-md-primary;
+    color: $col-text-page-heading;
   }
 
   .tfa-settings__switch-text {

@@ -360,7 +360,7 @@ export default {
   }
 
   .fee__fee-type {
-    color: $col-md-primary-secondary;
+    color: $col-text-accented;
   }
 }
 

@@ -1,36 +1,48 @@
 <template>
-  <div class="dashboard-cart">
-    <chart
+  <div class="chart">
+    <scale-tabs
+      v-if="isActualData && historyHasValue"
+      class="chart__tabs"
+      v-model="scale"
+      :value="scale"
+      :is-pending="isLoading"
+    />
+    <chart-renderer
+      class="chart__renderer"
       :scale="scale"
       :has-value="isActualData && historyHasValue"
       :is-loading="isLoading"
-      :currency="currency"
       :data="history"
-      :precision="common.precision" />
+      :precision="common.precision"
+    />
   </div>
 </template>
 
 <script>
+import ChartRenderer from './Chart.Renderer'
+import ScaleTabs from './Chart.Tabs'
+
 import { chartsService } from '@/js/services/charts.service'
 import { errors } from '@/js/errors/factory'
 import config from '@/config'
-import { commonEvents } from '@/js/events/common_events'
-
-import Chart from './Dashboard.ChartRenderer'
 
 export default {
-  name: 'dashboard-chart',
+  name: 'chart',
+
   components: {
-    Chart
+    ChartRenderer,
+    ScaleTabs
   },
   props: {
-    currency: { type: String, default: 'USD' },
-    scale: { type: String, required: true }
+    baseAsset: { type: String, required: true },
+    quoteAsset: { type: String, required: true },
+    initialScale: { type: String, default: 'month' }
   },
   data: _ => ({
     data: {},
     isActualData: false,
     isLoading: false,
+    scale: 'month',
     common: {
       precision: config.DECIMAL_POINTS,
       defaultQuoteAsset: config.DEFAULT_QUOTE_ASSET
@@ -51,39 +63,29 @@ export default {
         }
       })
       return valueIsPresent
+    },
+    lockedAssets () {
+      return { base: this.baseAsset, quote: this.quoteAsset }
     }
   },
   watch: {
-    async currency (value) {
-      if (value) await this.loadPrices(value)
-    },
-    historyHasValue (value) {
-      this.$emit(
-        commonEvents.checkDashboardChartHasValue,
-        this.isActualData && value
-      )
-    },
-    isActualData (value) {
-      this.$emit(
-        commonEvents.checkDashboardChartHasValue,
-        this.historyHasValue && value
-      )
+    async lockedAssets (value) {
+      await this.loadPrices()
     }
   },
   async created () {
-    if (this.currency) await this.loadPrices(this.currency)
+    await this.loadPrices()
+    this.scale = this.initialScale
   },
   methods: {
-    async loadPrices (asset) {
+    async loadPrices () {
       this.isLoading = true
       try {
         this.isActualData = true
-        this.data = (
-          await chartsService.loadChartsForTokenPair(
-            asset,
-            this.common.defaultQuoteAsset
-          )
-        ).data()
+        this.data =
+          (await chartsService.loadChartsForTokenPair(
+            this.lockedAssets.base, this.lockedAssets.quote
+          )).data()
       } catch (error) {
         if (error instanceof errors.NotFoundError) {
           this.isActualData = false
@@ -105,13 +107,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  @import '~@scss/variables';
+<style lang="scss">
+  .chart {
+    flex: 1;
+  }
 
-  .dashboard-cart__no-message {
-    text-align: center;
-    font-size: 24px;
-    margin: 24px 0;
-    color: $col-md-primary;
+  .chart__tabs {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: flex-end;
   }
 </style>

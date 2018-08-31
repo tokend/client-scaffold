@@ -89,7 +89,7 @@ export default {
     width: 100%;
 
     &:hover {
-      border-color: $col-active;
+      border-color: $col-text-accented;
     }
   }
 
@@ -116,14 +116,14 @@ export default {
     width: 100%;
 
     .title {
-      color: $col-active;
+      color: $col-text-accented;
       margin-bottom: 10px;
     }
   }
 
   .image-input__note {
     color: $col-unfocused;
-    font-size: $fs-tip;
+    font-size: .8rem;
     line-height: 160%;
   }
 
@@ -148,7 +148,7 @@ export default {
 
   .image-input--ready-to-drop {
     cursor: copy;
-    border-color: $col-active;
+    border-color: $col-text-accented;
     transform: scale(1.1);
   }
 

@@ -37,11 +37,11 @@
 import Timeline from '../components/UpdatesTab.Timeline'
 import AddUpdateForm from '../components/UpdatesTab.Timeline.AddForm'
 
-import { blobTypes, blobFilters } from '../../../../../js/const/const'
-import { usersService } from '../../../../../js/services/users.service'
-import { i18n } from '../../../../../js/i18n'
+import { blobTypes, blobFilters } from '@/js/const/const'
+import { usersService } from '@/js/services/users.service'
+import { i18n } from '@/js/i18n'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 
 export default {
   components: {
@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../scss/variables";
+  @import "~@scss/variables";
   .updates-tab {
     min-height: 300px;
   }
@@ -110,14 +110,14 @@ export default {
   }
 
   .empty-timeline-message__icon {
-    font-size: $material-icon-xx-super-big;
+    font-size: $size-icon-super-big;
   }
 
   .no-data-msg__wrapper {
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: $col-md-primary;
+    color: $col-no-data-message-text;
 
     & > h2 {
       font-weight: 500;
@@ -125,8 +125,8 @@ export default {
   }
 
   .no-data-msg__icon {
-    font-size: $material-icon-xx-super-big;
-    color: rgba($col-md-primary, .7);
+    font-size: $size-icon-super-big;
+    color: $col-no-data-message-icon-color;
   }
 
 </style>

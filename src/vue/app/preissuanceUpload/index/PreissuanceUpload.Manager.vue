@@ -162,6 +162,10 @@ export default {
           await issuanceService.createPreIssuanceRequest(
             this.issuances.map(item => item.xdr)
           )
+          this.$router.push({
+            path: '/requests',
+            hash: '#pre-issuance-upload'
+          })
           EventDispatcher.dispatchShowSuccessEvent(i18n.preis_uploaded())
         }
         this.issuances = []
@@ -185,6 +189,6 @@ export default {
   .preissuance-form__list {
     margin-top: 2rem;
     list-style-type: none;
-    color: $col-md-primary;
+    color: $col-list-text;
   }
 </style>

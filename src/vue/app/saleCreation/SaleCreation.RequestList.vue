@@ -47,7 +47,7 @@ export default {
 
   .request-list__request {
     &--pending  { color: $col-pending !important; }
-    &--approved { color: $col-approve !important; }
+    &--approved { color: $col-success !important; }
     &--rejected { color: $col-reject  !important; }
   }
   .request-list {
@@ -66,11 +66,11 @@ export default {
   }
 
   .md-list-item-text {
-    color: $col-md-primary;
+    color: $col-list-text;
   }
 
   .md-list-item-text :nth-child(2) {
-    color: $col-md-primary-inactive !important;
+    color: rgba($col-list-text, .7) !important;
   }
 }
 

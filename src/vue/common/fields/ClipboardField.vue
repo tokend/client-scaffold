@@ -94,7 +94,7 @@ export default {
   }
 
   .clipboard__label {
-    font-size: $fs-tip;
+    font-size: .8rem;
     position: absolute;
     left: 0;
     top: 0;

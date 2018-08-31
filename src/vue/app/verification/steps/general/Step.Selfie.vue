@@ -51,17 +51,17 @@
 
 <script>
 import StepMixin from '../../spec/step.mixin'
-import FormMixin from '../../../../common/mixins/form.mixin'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import {
   ASSET_POLICIES,
   ACCOUNT_STATES,
   documentTypes
-} from '../../../../../js/const/const'
-import { commonEvents } from '../../../../../js/events/common_events'
-import { ErrorHandler } from '../../../../../js/errors/error_handler'
-import { i18n } from '../../../../../js/i18n/index'
+} from '@/js/const/const'
+import { commonEvents } from '@/js/events/common_events'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { i18n } from '@/js/i18n/index'
 import _cloneDeep from 'lodash/cloneDeep'
-import { vuexTypes } from '../../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -123,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
+  @import '~@scss/variables';
 
   .kyc-form__page-explanations.app__page-explanations {
     margin-top: 0 !important;
@@ -131,7 +131,7 @@ export default {
   }
 
   .kyc-form__verification-key {
-    font-size: $fs-big;
+    font-size: 2rem;
     font-weight: bold;
     margin: 2rem 0;
     text-align: center;

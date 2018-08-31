@@ -48,9 +48,9 @@
 
 <script>
 import DetailRow from '../../../common/Detail.Row'
-import { i18n } from '../../../../../js/i18n'
-import { ASSET_POLICIES } from '../../../../../js/const/xdr.const'
-import { documentTypes } from '../../../../../js/const/documents.const'
+import { i18n } from '@/js/i18n'
+import { ASSET_POLICIES } from '@/js/const/xdr.const'
+import { documentTypes } from '@/js/const/documents.const'
 export default {
   components: {
     DetailRow
@@ -77,8 +77,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .crowdfund-token-header {
     display: flex;
@@ -87,7 +87,7 @@ export default {
   }
 
   .crowdfund-token__name-wrapper {
-    color: $col-md-primary;
+    color: $col-token-code;
   }
 
   .crowdfund-token__icon {
@@ -95,7 +95,7 @@ export default {
     height: 6rem;
     margin-right: 2rem;
     border-radius: 50%;
-    border: 1px solid $col-primary;
+    border: 1px solid $col-token-code-border;
   }
 
   .crowdfund-token__name {

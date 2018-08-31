@@ -6,7 +6,6 @@
       <md-progress-bar
         md-mode="indeterminate"
         v-if="isPending" />
-
       <md-steppers
         md-vertical
         :md-active-step.sync="activeStep">
@@ -33,25 +32,20 @@
 </template>
 
 <script>
-import FormMixin from '../../../common/mixins/form.mixin'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import steps from '../spec/kyc-steps.general.schema'
 
 import { mapGetters, mapActions } from 'vuex'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { vuexTypes } from '../../../../vuex/types'
-import { i18n } from '../../../../js/i18n'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { vuexTypes } from '@/vuex/types'
+import { i18n } from '@/js/i18n'
 
 import { KycTemplateParser } from '../spec/kyc-template-parser'
-import { accountsService } from '../../../../js/services/accounts.service'
+import { accountsService } from '@/js/services/accounts.service'
 
-import {
-  userTypes,
-  blobTypes,
-  ACCOUNT_TYPES,
-  ACCOUNT_STATES
-} from '../../../../js/const/const'
-import { confirmAction } from '../../../../js/modals/confirmation_message'
+import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '@/js/const/const'
+import { confirmAction } from '@/js/modals/confirmation_message'
 
 const KYC_LEVEL_TO_SET = 0
 
@@ -83,7 +77,8 @@ export default {
   },
   created () {
     this.kyc = KycTemplateParser.fromTemplate(
-      this.accountKycData, userTypes.general
+      this.accountKycData,
+      userTypes.general
     )
   },
   methods: {
@@ -114,7 +109,10 @@ export default {
       try {
         await this.updateDocuments(this.kyc.documents)
         const blobId = await this.updateKycData({
-          details: KycTemplateParser.toTemplate(this.kyc, userTypes.general),
+          details: KycTemplateParser.toTemplate(
+            this.kyc,
+            userTypes.general
+          ),
           documents: KycTemplateParser.getSaveableDocuments(
             this.kyc.documents
           ),
@@ -145,10 +143,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
+  @import '~@scss/variables';
 
   .kyc-form__verification-key {
-    font-size: $fs-big;
+    font-size: 2rem;
     font-weight: bold;
     margin: 2rem 0;
     text-align: center;

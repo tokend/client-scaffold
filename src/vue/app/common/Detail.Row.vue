@@ -74,7 +74,7 @@ export default {
   }
 
   .detail-row__key {
-    color: #837fa1;
+    color: $col-details-label;
 
     .sales-tabs__tab-inner & {
       width: calc(100% - 170px);
@@ -83,8 +83,7 @@ export default {
 
   .detail-row__value {
     position: relative;
-    color: #3a4180;
-    // font-size: 12px;
+    color: $col-details-value;
 
     .detail-row__clipboard-btn {
       @include center-vertically;

@@ -1,35 +1,32 @@
 <template>
-  <md-tabs
-    md-card
-    class="requests__tabs"
-    md-sync-route
-    :md-dynamic-height="true">
-    <md-tab
-      :md-label="`${ i18n.lbl_token_creation()}`"
-      to="/requests/token-creation">
+  <tabs>
+    <tab :name="i18n.lbl_token_creation()" id="token-creation">
       <token-creation />
-    </md-tab>
-    <md-tab
-      :md-label="`${ i18n.lbl_sale_creation()}`"
-      to="/requests/sale-creation">
+    </tab>
+    <tab :name="i18n.lbl_sale_creation()" id="sale-creation">
       <sale-creation />
-    </md-tab>
-    <md-tab :md-label="`${ i18n.preis_upload()}`">
+    </tab>
+    <tab :name="i18n.preis_upload()" id="pre-issuance-upload">
       <pre-issuance-upload />
-    </md-tab>
-  </md-tabs>
+    </tab>
+  </tabs>
 </template>
 
 <script>
 import TokenCreation from './Requests.TokenCreation'
 import PreIssuanceUpload from './Requests.PreissuanceUpload'
 import SaleCreation from './Requests.SaleCreation'
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '@/js/i18n'
+import Tabs from '@/vue/app/common/tabs/Tabs'
+import Tab from '@/vue/app/common/tabs/Tab'
+
 export default {
   components: {
     TokenCreation,
     SaleCreation,
-    PreIssuanceUpload
+    PreIssuanceUpload,
+    Tabs,
+    Tab
   },
   data: _ => ({
     i18n
@@ -44,16 +41,11 @@ export default {
 .requests__tabs {
   .md-title,
   .md-table-cell-container {
-    color: $col-md-primary !important;
+    color: $col-tabs-txt !important;
   }
 
   .md-table-head-label {
-    color: $col-md-primary-inactive !important;
-  }
-
-  .md-tabs-navigation {
-    background-color: transparent !important;
-    margin: 0 2rem 1rem;
+    color: rgba($col-tabs-txt, .7) !important;
   }
 
   .md-tab {
@@ -68,7 +60,6 @@ export default {
     height: auto !important;
     min-height: 100% !important;
     background-color: transparent;
-    // overflow: visible !important;
   }
 
   @include overwrite-tabs(50);

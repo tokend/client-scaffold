@@ -10,8 +10,8 @@
             :src="imgUrl">
         </div>
         <div class="portfolio-widget__select-field">
-          <!-- :key is a hack to ensure that the component will be updated
-               after computed calculated -->
+          <!-- :key is a hack to ensure that the component will
+               be updated after computed calculated -->
           <select-field-custom
             :value="currentAssetForSelect"
             :values="tokensList"
@@ -20,32 +20,36 @@
           />
         </div>
       </div>
-      <!-- Hided as requested in "Redesign fixes" -->
-      <!-- <div class="portfolio-widget__asset-btns">
-        <router-link tag="button"
-                      to="/issuance-creation"
-                      :disabled="checkTransferable"
-                      class="portfolio-widget__asset-btn"
-                      v-ripple>
-          <md-icon class="portfolio-widget__asset-btn-icon">add</md-icon>
+      <div class="portfolio-widget__asset-btns">
+        <router-link
+          tag="button"
+          to="/issuance-creation"
+          :disabled="checkTransferable"
+          class="portfolio-widget__asset-btn"
+          v-ripple>
+          <md-icon class="portfolio-widget__asset-btn-icon">
+            add
+          </md-icon>
           {{ i18n.lbl_create_issuance() }}
         </router-link>
-        <router-link tag="button"
-                      :to="'/transfers/make/' + currentAsset"
-                      :disabled="checkTransferable"
-                      class="portfolio-widget__asset-btn"
-                      v-ripple>
+        <router-link
+          tag="button"
+          :to="'/transfers/make/' + currentAsset"
+          :disabled="checkTransferable"
+          class="portfolio-widget__asset-btn"
+          v-ripple>
           <md-icon class="portfolio-widget__asset-btn-icon
                           portfolio-widget__asset-btn-icon--rotate">
             send
           </md-icon>
           {{ i18n.lbl_send() }} {{ currentAsset }}
         </router-link>
-      </div> -->
+      </div>
     </div>
     <template v-if="currentAsset">
-      <div class="portfolio-widget__wrapper
-                  portfolio-widget__wrapper--values">
+      <div
+        class="portfolio-widget__wrapper
+               portfolio-widget__wrapper--values">
         <div class="portfolio-widget__asset-available">
           <div class="portfolio-widget__asset-value">
             {{ balance }} {{ currentAsset }}
@@ -53,46 +57,6 @@
           <div class="portfolio-widget__asset-usd">
             {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
           </div>
-        </div>
-        <div
-          class="portfolio-widget__select-scale"
-          v-if="showTabls">
-          <button
-            class="portfolio-widget__select-scale-btn"
-            :class="{
-              'portfolio-widget__select-scale-btn--selected':
-                scale === tabs.hour
-            }"
-            @click="$emit(events.changeDashboardScale, tabs.hour)">
-            Hour
-          </button>
-          <button
-            class="portfolio-widget__select-scale-btn"
-            :class="{
-              'portfolio-widget__select-scale-btn--selected':
-                scale === tabs.day
-            }"
-            @click="$emit(events.changeDashboardScale, tabs.day)">
-            Day
-          </button>
-          <button
-            class="portfolio-widget__select-scale-btn"
-            :class="{
-              'portfolio-widget__select-scale-btn--selected':
-                scale === tabs.month
-            }"
-            @click="$emit(events.changeDashboardScale, tabs.month)">
-            Month
-          </button>
-          <button
-            class="portfolio-widget__select-scale-btn"
-            :class="{
-              'portfolio-widget__select-scale-btn--selected':
-                scale === tabs.year
-            }"
-            @click="$emit(events.changeDashboardScale, tabs.year)">
-            Year
-          </button>
         </div>
       </div>
     </template>
@@ -124,18 +88,15 @@ export default {
     NoDataMessage
   },
   props: {
-    scale: { type: String, required: true },
     currentAsset: {
       type: [String, Object],
       default: config.DEFAULT_QUOTE_ASSET
-    },
-    showTabls: { type: Boolean, default: false }
+    }
   },
   data: _ => ({
     i18n,
     events: {
-      assetChange: commonEvents.assetChangeEvent,
-      changeDashboardScale: commonEvents.changeDashboardScale
+      assetChange: commonEvents.assetChangeEvent
     },
     tabs: {
       hour: 'hour',
@@ -155,41 +116,42 @@ export default {
       vuexTypes.tokens
     ]),
     tokensList () {
-      const tokens = this.tokens
-        .filter(token =>
-          Object.keys(this.accountBalances).includes(token.code)
-        )
-        .filter(token => token.code !== this.config.DEFAULT_QUOTE_ASSET)
-
-      const baseAssets = tokens
-        .filter(token =>
-          token.policies.includes(ASSET_POLICIES.baseAsset)
-        )
-        .sort((a, b) => a.code.localeCompare(b.code))
-
-      const otherAssets = tokens
-        .filter(token =>
-          !token.policies.includes(ASSET_POLICIES.baseAsset)
-        )
-        .sort((a, b) => a.code.localeCompare(b.code))
-
-      return [...baseAssets, ...otherAssets]
-        .map(item => `${item.name} (${item.code})`)
+      const tokens = this.tokens.filter(token =>
+        Object.keys(this.accountBalances).includes(token.code)
+      ).filter(token =>
+        token.code !== this.config.DEFAULT_QUOTE_ASSET
+      )
+      const baseAssets = tokens.filter(token =>
+        token.policies.includes(ASSET_POLICIES.baseAsset)
+      ).sort((a, b) => a.code.localeCompare(b.code))
+      const otherAssets = tokens.filter(token =>
+        !token.policies.includes(ASSET_POLICIES.baseAsset)
+      ).sort((a, b) => a.code.localeCompare(b.code))
+      return [
+        ...baseAssets,
+        ...otherAssets
+      ].map(item => `${item.name} (${item.code})`)
     },
     currentAssetForSelect () {
-      return this.tokens.filter(token => token.code === this.currentAsset)
-        .map(item => `${item.name} (${item.code})`)[0]
+      return this.tokens.filter(token =>
+        token.code === this.currentAsset
+      ).map(item => `${item.name} (${item.code})`)[0]
     },
     balance () {
       return i18n.c(
-        get(this.accountBalances, `${this.currentAsset}.balance`) || 0
+        get(
+          this.accountBalances,
+          `${this.currentAsset}.balance`
+        ) || 0
       )
     },
     convertedBalance () {
-      return i18n.cc(get(
-        this.accountBalances,
-        `${this.currentAsset}.converted_balance`
-      ) || 0)
+      return i18n.cc(
+        get(
+          this.accountBalances,
+          `${this.currentAsset}.converted_balance`
+        ) || 0
+      )
     },
     imgUrl () {
       const logoKey = get(
@@ -246,12 +208,6 @@ export default {
     }
   }
 
-  .portfolio-widget__select-scale {
-    @include respond-to-custom($custom-breakpoint) {
-      margin-top: 16px;
-    }
-  }
-
   .portfolio-widget__select {
     display: flex;
     align-items: center;
@@ -263,7 +219,7 @@ export default {
     height: 55px;
     padding: 4px;
     border-radius: 2px;
-    background-color: #fff;
+    background-color: $col-block-bg;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
     margin-right: 16px;
     display: flex;
@@ -274,6 +230,12 @@ export default {
     @include respond-to(small) {
       width: 40px;
       height: 40px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -290,21 +252,11 @@ export default {
     }
   }
 
-  .portfolio-widget__select-scale-btn {
-    @include button();
-    @include button-flat();
-    font-weight: 400;
-  }
-
-  .portfolio-widget__select-scale-btn--selected {
-    font-weight: 700;
-  }
-
   .portfolio-widget__asset-btn {
     @include button();
     @include button-raised();
-    margin: 4px;
 
+    margin: 4px;
     width: 180px;
     position: relative;
     height: 36px;
@@ -322,17 +274,17 @@ export default {
 
   .portfolio-widget__asset-value {
     font-size: 30px;
-    color: $col-md-primary;
+    color: $col-details-value;
   }
 
   .portfolio-widget__asset-usd {
     margin-top: 8px;
     font-size: 16px;
-    color: rgba($col-md-primary, .5);
+    color: $col-details-label;
   }
 
   .portfolio-widget__asset-btn-icon {
-    color: $white !important;
+    color: $col-file-field-icon-text !important;
     transform: scale(.8);
     position: absolute;
     left: 5px;

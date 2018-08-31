@@ -123,24 +123,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/variables";
-  @import "~@scss/mixins";
+@import "~@scss/variables";
+@import "~@scss/mixins";
+
+.trade-history {
+  .md-table-head-label,
+  .md-table-cell-container {
+    @media (min-width: 1200px) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    white-space: nowrap;
+  }
+
+  .md-table-row .md-table-cell:first-of-type .md-table-cell-container,
+  .md-table-row .md-table-head:first-of-type .md-table-head-label {
+    padding-left: 24px !important;
+  }
 
   .md-table-cell {
     font-size: 12px;
     height: 28px;
     border-top: 0;
-    padding-left: 15px;
-
-    @include respond-to-custom(1340px) {
-      padding-left: 0;
-    }
   }
   .trade-history__table {
     padding-bottom: 16px;
-  }
-  .md-table-cell-container {
-    padding: 0 12px;
   }
 
   .trade-history {
@@ -154,10 +161,10 @@ export default {
   .trade-history__item-price .md-icon,
   .trade-history__item-total .md-icon {
     .trade-history__item-status--1 & {
-      color: $green;
+      color: $col-success;
     }
     .trade-history__item-status--0 & {
-      color: $red;
+      color: $col-reject;
     }
   }
   .trade-history__item-date {
@@ -189,5 +196,5 @@ export default {
     align-items: center;
     justify-content: center;
   }
-
+}
 </style>

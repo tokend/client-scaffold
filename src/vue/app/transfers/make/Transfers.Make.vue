@@ -74,12 +74,12 @@
         </div>
 
         <div class="app__form-row">
-          <textarea-field
+          <textarea-field-unchained
             id="transfer-description"
             name="description"
             v-model="form.subject"
             v-validate="'max:250'"
-            :label="i18n.lbl_add_note()"
+            :label="i18n.lbl_add_note({ length: 250 })"
             :maxlength="250"
             :error-message="errorMessage('recipient')"
             :readonly="view.mode === VIEW_MODES.confirm"
@@ -417,7 +417,7 @@ export default {
 .transfer__fee-box {
   margin-top: 4 * $point;
   padding-top: 4 * $point;
-  border-top: 0.1 * $point dashed $col-md-primary-inactive;
+  border-top: 0.1 * $point dashed $col-text-field-hint-inactive;
 }
 
 .transfer__fee-box-heading {
@@ -426,7 +426,7 @@ export default {
   font-weight: normal;
   display: block;
   font-size: 1.6 * $point;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
 }
 
 .transfer__fee-box-heading:not(:first-child) {
@@ -434,20 +434,20 @@ export default {
 }
 
 .transfer__fee {
-  color: $col-md-primary;
+  color: $col-details-value;
   font-size: 1.6 * $point;
   line-height: 1.5;
   margin: 0;
 }
 
 .transfer__no-fee-msg {
-  color: $col-md-primary-inactive;
+  color: $col-details-label;
   font-size: 1.6 * $point;
   line-height: 1.5;
   margin: 1 * $point 0;
 }
 
 .transfer__fee-type {
-  color: $col-md-primary-secondary;
+  color: $col-details-label;
 }
 </style>

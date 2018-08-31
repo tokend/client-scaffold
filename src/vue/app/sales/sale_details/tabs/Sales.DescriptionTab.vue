@@ -16,7 +16,7 @@
 
 <script>
 import MarkdownFormatter from '../components/DescriptionTab.MarkDownFormatter'
-import { i18n } from '../../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 export default {
   components: {
     MarkdownFormatter
@@ -31,11 +31,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .description__markdown-formatter {
     text-align: justify;
-    color: $col-md-primary;
+    color: $col-text-page-explanations;
   }
 </style>

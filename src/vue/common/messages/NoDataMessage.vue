@@ -32,15 +32,15 @@ export default {
 
   h2 {
     margin-bottom: 8px;
-    color: $col-md-primary;
+    color: $col-no-data-message-text;
   }
 
   p {
-    color: $col-md-primary-inactive;
+    color: $col-no-data-message-description;
   }
 
   .md-icon {
-    color: lighten($col-md-primary, 45) !important;
+    color: $col-no-data-message-icon-color !important;
   }
 }
 </style>

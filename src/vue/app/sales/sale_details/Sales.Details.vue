@@ -184,7 +184,7 @@ $ratio_9: $ratio_16 * (9/16);
   line-height: 1.5;
   margin: 0.8 * $point 0;
   vertical-align: middle;
-  color: $col-md-primary;
+  color: $col-text-page-heading;
   opacity: 1;
 }
 .sale-details__owner {
@@ -198,7 +198,7 @@ $ratio_9: $ratio_16 * (9/16);
 
 .sale-details__description {
   font-size: 1.6 * $point;
-  color: $col-md-primary-inactive;
+  color: $col-text-page-explanations-inactive;
 }
 
 .sale-details__back-btn {

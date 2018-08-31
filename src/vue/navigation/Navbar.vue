@@ -45,7 +45,7 @@
           <template v-if="accountTypeI === ACCOUNT_TYPES.notVerified">
             {{ i18n.lbl_type_unverified() }}
           </template>
-          <template v-else-if="accountTypeI === ACCOUNT_TYPES.general">
+          <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
             {{ i18n.lbl_type_general() }}
           </template>
           <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
@@ -152,13 +152,13 @@
 </template>
 
 <script>
-import { vuexTypes } from '../../vuex/types'
-import { i18n } from '../../js/i18n'
+import { vuexTypes } from '@/vuex/types'
+import { i18n } from '@/js/i18n'
 import { mapActions, mapGetters } from 'vuex'
-import { commonEvents } from '../../js/events/common_events'
-import { attachEventHandler } from '../../js/events/helpers'
-import { vueRoutes } from '../../vue-router/const'
-import { ACCOUNT_TYPES } from '../../js/const/xdr.const'
+import { commonEvents } from '@/js/events/common_events'
+import { attachEventHandler } from '@/js/events/helpers'
+import { vueRoutes } from '@/vue-router/const'
+import { ACCOUNT_TYPES } from '@/js/const/xdr.const'
 import { closeElement } from '@/js/helpers/closeElement'
 
 export default {
@@ -236,15 +236,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import "../../scss/mixins";
-  @import "../../scss/variables";
+  @import "~@scss/mixins";
+  @import "~@scss/variables";
 
   $custom-breakpoint: 800px;
 
   .navbar {
     width: 100%;
     min-height: 121px;
-    background-color: $col-md-background;
+    background-color: $col-navbar-background;
     padding: 0 40px;
     display: flex;
     align-items: center;
@@ -262,7 +262,7 @@ export default {
   }
 
   .navbar__title {
-    color: $col-md-primary;
+    color: $col-text-page-heading;
   }
 
   .navbar__user {
@@ -275,13 +275,13 @@ export default {
     width: 55px;
     height: 55px;
     font-size: 24px;
-    box-shadow: 0 4px 10px 0 rgba($col-md-primary, .15);
+    box-shadow: 0 4px 10px 0 rgba($col-text-field-hint, .15);
     margin-right: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background: rgba($col-md-primary, .15);
+    background: rgba($col-text-field-hint, .15);
 
     @include respond-to-custom($custom-breakpoint) {
       margin-right: 0;
@@ -297,7 +297,7 @@ export default {
     font-size: 18px;
     cursor: pointer;
     // TODO: remove important rule when possible
-    color: $col-md-primary !important;
+    color: $col-text-field-hint !important;
   }
 
   .navbar__user-name:hover > .navbar__user-email {
@@ -305,12 +305,12 @@ export default {
   }
 
   .navbar__account-type {
-    color: $col-md-primary;
+    color: $col-text-field-hint;
     font-size: 12px;
   }
 
   .navbar__user-notif {
-    color: $col-md-primary;
+    color: $col-text-field-hint;
     padding-left: 12px;
     font-size: 12px;
     cursor: pointer;
@@ -330,7 +330,7 @@ export default {
       display: flex;
 
       i {
-        color: rgba($col-md-primary, .8) !important;
+        color: rgba($col-text-field-hint, .8) !important;
         font-size: 28px !important;
       }
     }
@@ -351,7 +351,7 @@ export default {
       height: 4px;
       width: 4px;
       border-radius: 50%;
-      background-color: #f5645b;
+      background-color: $col-accent;
     }
   }
 
@@ -444,9 +444,10 @@ export default {
       right: 0;
       width: 15px;
       height: 15px;
-      background-color: #ffa000;
+      background-color: $col-pending;
       border-radius: 50%;
-      color: #ffffff;
+      // TODO: fix it after the notification function returns
+      color: $col-primary-txt;
     }
   }
 
@@ -503,7 +504,7 @@ export default {
       position: absolute;
       height: 1px;
       width: calc(100% + 48px);
-      background-color: #e8e8e8;
+      background-color: $col-navbar-background;
       left: -24px;
       top: 0;
     }
@@ -514,8 +515,8 @@ export default {
     height: 102px;
     border-radius: 50%;
     font-size: 48px;
-    color: #fff;
-    background-color: #ccc;
+    color: $col-navbar-avatar-color;
+    background-color: $col-navbar-avatar-background;
     margin-right: 27px;
     display: flex;
     align-items: center;
@@ -532,7 +533,7 @@ export default {
     font-size: 16px;
     line-height: 1;
     text-align: left;
-    color: $col-md-primary;
+    color: $col-text-field-hint;
     margin-top: 4px;
     margin-bottom: 4px;
     white-space: nowrap;
@@ -546,7 +547,7 @@ export default {
     font-size: 12px;
     line-height: 1;
     text-align: left;
-    color: $col-md-primary;
+    color: $col-text-field-hint;
 
     @include respond-to(small) {
       text-align: center;
@@ -575,10 +576,10 @@ export default {
     color: rgba(0, 0, 0, .75) !important;
   }
 
-  .notif-link {
+  .navbar__notif-link {
     cursor: pointer;
     text-decoration: underline;
-    color: #03a9f4;
+    color: $col-text-accented;
   }
 
   .navbar__user-card-ctn {

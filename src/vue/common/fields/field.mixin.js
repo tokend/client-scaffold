@@ -1,4 +1,4 @@
-import { commonEvents } from '../../../js/events/common_events'
+import { commonEvents } from '@/js/events/common_events'
 
 const fieldClasses = Object.freeze({
   hasValidationError: 'md-invalid'

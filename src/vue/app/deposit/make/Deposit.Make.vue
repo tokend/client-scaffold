@@ -180,7 +180,7 @@ export default {
 }
 
 .deposit__qr-code-hint {
-  color: $col-md-primary-inactive;
+  color: rgba($col-text-field-hint, .7);
   text-align: center;
   font-size: 1.4 * $point;
   margin-bottom: 1 * $point;

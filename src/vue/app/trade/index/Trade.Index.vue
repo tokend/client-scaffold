@@ -3,14 +3,12 @@
     <asset-selector
       v-if="formattedPairs.length"
       :pairs="formattedPairs" />
-    <div class="trade-row app__card-wrapper
+    <div class="trade-row
+                app__card-wrapper
                 app__card-wrapper--xmedium-breakpoint">
       <chart
-        class="trade__chart"
-        :data="history"
-        :precision="common.precision"
-        :assets="customAssetPair"
-      />
+        :base-asset="filters.base"
+        :quote-asset="filters.quote" />
       <trade-history
         :assets="filters"
         class="trade__history" />
@@ -37,7 +35,7 @@
 
 <script>
 import AssetSelector from './components/asset-selector/Trade.AssetSelector'
-import Chart from './components/chart/Trade.ChartWidget'
+import Chart from '@/vue/app/common/chart/Chart'
 import TradeHistory from './components/tradeHistory/Trade.TradeHistory'
 import TradeOrders from './components/tradeOrders/Trade.TradeOrders'
 import Orders from './components/orders/Trade.Orders'
@@ -70,7 +68,6 @@ export default {
       base: '',
       quote: ''
     },
-    customAssetPair: '',
     common: {
       precision: config.DECIMAL_POINTS
     }
@@ -92,7 +89,6 @@ export default {
     attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
     attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
     attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-    this.customAssetPair = this.formattedPairs[0]
   },
   methods: {
     ...mapActions({
@@ -124,7 +120,6 @@ export default {
     handleAssetChange (payload) {
       this.filters.base = payload.split('/')[0]
       this.filters.quote = payload.split('/')[1]
-      this.customAssetPair = payload
       this.loadData(this.filters)
     },
     handleCancelOrder () {
@@ -154,8 +149,8 @@ export default {
   }
 
   .transfer__success-amount {
-    color: $col-md-primary;
-    font-size: $fs-heading;
+    color: $col-text-page-heading;
+    font-size: 1.4rem;
     margin: 1rem 0 .5rem;
   }
 

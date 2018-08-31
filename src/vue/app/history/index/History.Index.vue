@@ -57,7 +57,7 @@
           <md-table-row
             class="th-history__expandable-row"
             v-if="isSelected(i)"
-            :key="`tx-history-expandable-row-${i}`">
+            :key="`history-index-${i}-${i}`">
             <md-table-cell colspan="7">
               <tx-details
                 class="tx-history__details"

@@ -413,11 +413,18 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '../../../scss/variables';
 
   .mass-transfer {
-    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mass-transfer__card {
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
   }
 
   .mass-transfer__table-cell {
@@ -428,7 +435,7 @@ export default {
     }
 
     &--error {
-      color: $col-md-accent;
+      color: $col-accent;
     }
   }
 
@@ -442,8 +449,8 @@ export default {
 
   .mass-transfer__csv-example {
     border: 1px solid rgba($col-unfocused, .5);
-    background: rgba($col-md-primary, .05);
-    color: $col-md-accent;
+    background: rgba($col-primary, .05);
+    color: $col-accent;
     /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
     border-radius: 5px;
     padding: .5rem 1rem;
@@ -463,69 +470,10 @@ export default {
   }
 
   .mass-transfer__amount {
-    color: $col-primary;
+    color: $col-text-field-hint;
   }
 
   .mass-transfer__asset {
     font-weight: bold;
-  }
-
-  .mass-transfer__list-body-elem {
-    @include box-shadow();
-    background-color: #fff;
-    &:not(:last-child) {
-      margin-bottom: 6px;
-    }
-  }
-
-  .mass-transfers__page-heading,
-  .mass-transfer__text-paragraph{
-    margin-bottom: 5.5 * $point;
-  }
-
-  .mass-transfer__actions {
-    margin-top: 5.5 * $point;
-  }
-
-  .mass-transfer__list-header,
-  .mass-transfer__list-body-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-  }
-
-  .mass-transfer__list-header-item,
-  .mass-transfer__list-body-item {
-    padding: 6px 32px 6px 24px;
-  }
-
-  .mass-transfer__list-header-item--status,
-  .mass-transfer__list-body-item--status {
-    width: 13%;
-  }
-
-  .mass-transfer__list-body-item--amount,
-  .mass-transfer__list-header-item--amount {
-    width: 13%;
-  }
-
-  .mass-transfer__list-body-item--asset,
-  .mass-transfer__list-header-item--asset {
-    width: 27%;
-  }
-
-  .mass-transfer__list-body-item--email,
-  .mass-transfer__list-header-item--email {
-    width: 25%;
-  }
-
-  .mass-transfer__list-body-item--source-fees,
-  .mass-transfer__list-header-item--source-fees {
-    width: 30%;
-  }
-
-  .mass-transfer__list-body-item--destination-fees,
-  .mass-transfer__list-header-item--destination-fees {
-    width: 30%;
   }
 </style>

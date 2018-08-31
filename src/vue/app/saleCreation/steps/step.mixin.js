@@ -1,8 +1,8 @@
-import FileField from '../../../common/fields/FileField'
-import FormMixin from '../../../common/mixins/form.mixin'
+import FileField from '@/vue/common/fields/FileField'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 
-import { fileService } from '../../../../js/services/file.service'
-import { i18n } from '../../../../js/i18n'
+import { fileService } from '@/js/services/file.service'
+import { i18n } from '@/js/i18n'
 export default {
   mixins: [FormMixin],
   components: { FileField },

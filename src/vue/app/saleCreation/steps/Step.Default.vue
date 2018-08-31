@@ -1,8 +1,7 @@
 <template>
-  <form
-    class="step"
-    novalidate
-    @submit.prevent="submit">
+  <form class="step"
+        novalidate
+        @submit.prevent="submit">
     <template v-for="(row, r) in schema.rows">
       <div
         class="app__form-row"
@@ -13,7 +12,6 @@
           :key="i">
           <input-field-unchained
             v-if="item.field === 'text'"
-
             v-model="form[item.model]"
             v-validate="item.validate"
             :name="item.name"
@@ -24,7 +22,7 @@
             :key="item.id"
             :error-message="errorMessage(item.name)"
           />
-          <textarea-field
+          <textarea-field-unchained
             v-if="item.field === 'textarea'"
             v-model="form[item.model]"
             v-validate="item.validate"
@@ -55,15 +53,8 @@
             :id="item.id"
             v-model="form[item.model]"
             :key="item.id"
-            :label="item.label" />
-
-          <select-field-unchained
-            v-if="item.field === 'select'"
-            :name="item.name"
-            :id="item.id"
             :label="item.label"
-            v-model="form[item.model]"
-            :key="item.id" />
+          />
 
           <date-field-flatpickr
             v-if="item.field === 'date'"
@@ -75,7 +66,8 @@
             :label="item.label"
             :disable-before="item.disableBefore"
             :key="item.id"
-            :error-message="errorMessage(item.name)" />
+            :error-message="errorMessage(item.name)"
+          />
         </div>
       </div>
     </template>
@@ -95,9 +87,9 @@
 <script>
 import StepMixin from './step.mixin'
 import _pick from 'lodash/pick'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { commonEvents } from '../../../../js/events/common_events'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { commonEvents } from '@/js/events/common_events'
+import { documentTypes } from '@/js/const/documents.const'
 export default {
   name: 'step-default',
   mixins: [ StepMixin ],

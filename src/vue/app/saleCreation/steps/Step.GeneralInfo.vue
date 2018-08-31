@@ -89,10 +89,10 @@
           max_issuance: [avalaibleForIssuance, form.baseAsset]
         }"
         class="app__form-field
-                        md-layout-item
-                        md-size-31
-                        md-small-size-95
-                        md-xsmall-size-100"
+              md-layout-item
+              md-size-31
+              md-small-size-95
+              md-xsmall-size-100"
         name="sale-base-asset-for-hard-cap"
         id="sale-base-asset-for-hard-cap"
         :label="i18n.sale_base_asset_hard_cap_to_sell({
@@ -132,15 +132,15 @@
 
 <script>
 import StepMixin from './step.mixin'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { commonEvents } from '../../../../js/events/common_events'
-import { ASSET_POLICIES, documentTypes } from '../../../../js/const/const'
-import { i18n } from '../../../../js/i18n'
-import { vuexTypes } from '../../../../vuex/types'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { commonEvents } from '@/js/events/common_events'
+import { ASSET_POLICIES, documentTypes } from '@/js/const/const'
+import { i18n } from '@/js/i18n'
+import { vuexTypes } from '@/vuex/types'
 import { mapGetters } from 'vuex'
 import _pick from 'lodash/pick'
-import config from '../../../../config'
+import config from '@/config'
 import moment from 'moment'
 
 export default {
@@ -166,10 +166,9 @@ export default {
     ASSET_POLICIES,
     uploadVideo: false
   }),
-
   computed: {
     ...mapGetters([
-      vuexTypes.accountOwnedTokens,
+      vuexTypes.accountOwnedTokenCodes,
       vuexTypes.walletTokens,
       vuexTypes.userAcquiredTokens
     ]),
@@ -182,15 +181,13 @@ export default {
       return moment().subtract(1, 'd').format()
     }
   },
-
   created () {
-    this.values.tokens = this.accountOwnedTokens
+    this.values.tokens = this.accountOwnedTokenCodes
     this.form = _pick(this.sale, Object.keys(this.form))
     if (!this.form.baseAsset) {
       this.setTokenCode()
     }
   },
-
   methods: {
     setTokenCode () {
       this.form.baseAsset = this.values.tokens[0] || null
@@ -198,7 +195,9 @@ export default {
     async submit () {
       if (!await this.isValid()) return
       if (!this.form.quoteAssets.length) {
-        EventDispatcher.dispatchShowErrorEvent(i18n.sale_accept_investments())
+        EventDispatcher.dispatchShowErrorEvent(
+          i18n.sale_accept_investments()
+        )
         return
       }
       this.disable()
@@ -228,7 +227,7 @@ export default {
   .step__quote-assets-label {
     font-weight: bold;
     font-size: 1.4 * $point;
-    color: $col-md-primary;
+    color: $col-fund-card-text;
   }
 
   .step__quote-assets-checkboxes {

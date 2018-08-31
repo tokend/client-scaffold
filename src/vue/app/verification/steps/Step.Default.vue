@@ -17,7 +17,6 @@
 
           <input-field-unchained
             v-if="item.field === 'text'"
-
             v-model="form[item.model]"
             v-validate="item.validate"
             class="step__input-field"
@@ -66,7 +65,6 @@
             v-model="form[item.model]"
             :values="values[item.values]"
             :key="item.id"
-
             :disabled="accountState === ACCOUNT_STATES.pending" />
 
           <date-field-flatpickr

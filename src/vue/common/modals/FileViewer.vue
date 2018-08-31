@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { commonEvents } from '../../../js/events/common_events'
-import { attachEventHandler } from '../../../js/events/helpers'
+import { commonEvents } from '@/js/events/common_events'
+import { attachEventHandler } from '@/js/events/helpers'
 
 export default {
   name: 'file-viewer',
@@ -47,8 +47,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
+
+  $custom-z-index: 45;
 
   .file-viewer {
     position: fixed;
@@ -56,14 +58,14 @@ export default {
     left: 0;
     height: 100vh;
     width: 100vw;
-    z-index: $z-embed-page;
+    z-index: $custom-z-index;
 
     .file-viewer__embed {
       @include center;
 
       max-width: 60%;
       position: absolute;
-      z-index: $z-embed-page;
+      z-index: $custom-z-index;
     }
   }
 </style>

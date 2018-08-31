@@ -1,9 +1,9 @@
 @import '~@scss/variables.scss';
 
-$field-color-text: $col-md-primary;
+$field-color-text: $col-field-text;
 $field-color-focused: $field-color-text;
-$field-color-unfocused: $col-md-primary-inactive;
-$field-color-error: $col-md-accent;
+$field-color-unfocused: $col-field-text-unfocused;
+$field-color-error: $col-accent;
 $field-label-font-size: 1.2 * $point;
 $field-label-line-height: 1;
 $field-text-font-size: 1.6 * $point;
@@ -15,7 +15,7 @@ $field-error-margin-top: .4 * $point;
 $field-input-padding-top: 1.7 * $point;
 $field-input-padding-bottom: .6 * $point;
 $field-input-padding: $field-input-padding-top 0 $field-input-padding-bottom 0;
-$field-placeholer-color: $field-color-unfocused;
+$field-placeholer-color: $col-field-text-unfocused;
 $textarea-background-color: #fafafa;
 
 @mixin input-paddings {
@@ -54,7 +54,6 @@ $textarea-background-color: #fafafa;
       background-size: 100% .2 * $point;
     }
   }
-
 }
 
 @mixin readonly-material-border($color) {

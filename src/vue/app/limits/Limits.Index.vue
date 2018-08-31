@@ -131,9 +131,16 @@ export default {
     margin-bottom: 4 * $point;
   }
 
-  .limits__op-name,
+  .limits__op-name {
+    color: $col-field-group-label;
+  }
+
   .limits__list-item {
-    color: $col-md-primary;
+    color: $col-details-value;
+  }
+
+  .limits__list-item-label {
+    color: $col-details-label;
   }
 
   .limits__list { margin-bottom: 3.2 * $point }

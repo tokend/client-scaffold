@@ -30,6 +30,7 @@ import formConfirmation from './views/form_confirmation_view'
 import saleInvest from './views/sale_invest_view'
 import marketPriceChartView from './views/market_price_chart_view'
 import sidebarView from './views/sidebar_view'
+import supportedBrowsersView from './views/supported_browsers_view'
 import downloadsView from './views/downloads_view'
 import limitsView from './views/limits_view'
 
@@ -72,6 +73,7 @@ const dictionary = {
   ...saleInvest,
   ...marketPriceChartView,
   ...sidebarView,
+  ...supportedBrowsersView,
   ...downloadsView,
   ...limitsView
 }

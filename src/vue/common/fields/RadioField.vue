@@ -71,7 +71,7 @@ export default {
         left: 3px;
         width: 7px;
         height: 7px;
-        background-color: $col-md-primary;
+        background-color: $col-radio-field-border;
         border-radius: 50%;
       }
     }
@@ -80,8 +80,8 @@ export default {
   .radio-field__input-custom {
     width: 15px;
     height: 15px;
-    background-color: #fff;
-    border: 1px solid $col-md-primary;
+    background-color: $col-radio-field-background;
+    border: 1px solid $col-radio-field-border;
     border-radius: 50%;
     margin-right: 8px;
   }

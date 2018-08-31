@@ -119,7 +119,7 @@ export default {
     padding-bottom: 8px;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $gray;
+      border-bottom: 1px solid $_gray;
     }
   }
 

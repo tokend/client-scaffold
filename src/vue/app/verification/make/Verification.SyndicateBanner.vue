@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 export default {

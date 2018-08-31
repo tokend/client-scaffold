@@ -34,14 +34,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .sale-banner {
     position: relative;
     height: 100%;
     width: 100%;
     padding-top: 56.25%;
+
     @include respond-to-custom(991px) {
       margin: 0 auto 2rem;
     }

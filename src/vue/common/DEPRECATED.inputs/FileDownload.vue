@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import { commonEvents } from '../../../js/events/common_events'
-import { dispatchAppEvent } from '../../../js/events/helpers'
-import config from '../../../config'
+import { commonEvents } from '@/js/events/common_events'
+import { dispatchAppEvent } from '@/js/events/helpers'
+import config from '@/config'
 
 export default {
   name: 'file-download',
@@ -56,37 +56,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .file-download {
     display: flex;
   }
 
   .file-download__link {
-    color: $col-text;
+    color: $col-text-field-hint;
     text-decoration: none;
     display: flex;
     align-items: center;
+
     i {
-      font-size: $material-icon-big;
+      font-size: 32px;
       margin-right: 10px;
     }
   }
 
   .view-btn {
-    color: $col-active;
+    color: $col-text-accented;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: $fs-tip;
+    font-size: .8rem;
     margin-left: 15px;
     text-decoration: underline;
 
     i {
-      font-size: $fs-tip;
-      color: $col-active;
+      font-size: .8rem;
+      color: $col-text-accented;
       margin-left: 5px;
     }
   }

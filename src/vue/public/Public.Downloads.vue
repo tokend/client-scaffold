@@ -125,7 +125,7 @@ export default {
 
   .downloads__title,
   .downloads__link {
-    color: $col-md-primary;
+    color: $col-primary;
     font-weight: 700;
   }
 
@@ -142,7 +142,7 @@ export default {
   }
   .downloads__heading,
   .downloads__paragraph {
-    color: $col-md-primary
+    color: $col-primary
   }
 
   .downloads__pm-link {

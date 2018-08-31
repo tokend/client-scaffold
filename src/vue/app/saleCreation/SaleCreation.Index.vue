@@ -1,5 +1,5 @@
 <template>
-  <div class="create-sale app__page-content-wrp">
+  <div class="create-sale">
     <div>
       <template v-if="!isReady">
         <loader :message="i18n.sale_create_loading()" />
@@ -10,7 +10,7 @@
           :title="i18n.lbl_not_available()"
           :descr="i18n.sale_not_available_exp()" />
       </template>
-      <template v-else-if="!accountOwnedTokens.length">
+      <template v-else-if="!accountOwnedTokenCodes.length">
         <not-available-card
           icon="work"
           :title="i18n.lbl_not_available()"
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import FormMixin from '../../common/mixins/form.mixin'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import RequestList from './SaleCreation.RequestList'
 import NotAvailableCard from '../common/NotAvailableCard'
 import Loader from '@/vue/app/common/Loader'
@@ -104,7 +104,7 @@ export default {
   },
   mixins: [FormMixin],
   props: {
-    id: { type: Object, default: () => {} }
+    id: { type: String, default: '' }
   },
   data: _ => ({
     activeStep: steps[0].name,
@@ -124,7 +124,7 @@ export default {
     ...mapGetters([
       vuexTypes.accountId,
       vuexTypes.accountTypeI,
-      vuexTypes.accountOwnedTokens
+      vuexTypes.accountOwnedTokenCodes
     ])
   },
   async created () {
@@ -203,7 +203,7 @@ export default {
         this.listManager.drop(this.sale)
         await this.listManager.fetch()
         this.view.mode = VIEW_MODES.list
-        this.$router.push({ path: '/requests/sale-creation' })
+        this.$router.push({ path: '/requests', hash: '#sale-creation' })
         EventDispatcher.dispatchShowSuccessEvent(
           i18n.sale_create_request_success()
         )

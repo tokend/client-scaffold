@@ -2,7 +2,7 @@
   <div class="settings-seed">
     <md-dialog-title>{{ i18n.set_copy_secret_seed() }}</md-dialog-title>
     <div class="account-seed__content app__card-content">
-      <p class="account-seed__description">{{ i18n.set_seed_description() }}</p>
+      <p class="app__page-explanations">{{ i18n.set_seed_description() }}</p>
 
       <clipboard-field
         class="account-seed__clipboard"
@@ -14,10 +14,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
-import { i18n } from '../../../../js/i18n'
+import { vuexTypes } from '@/vuex/types'
+import { i18n } from '@/js/i18n'
 
-import ClipboardField from '../../../common/fields/ClipboardField'
+import ClipboardField from '@/vue/common/fields/ClipboardField'
 
 export default {
   name: 'account-seed',
@@ -35,8 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-  @import '../../../../scss/mixins';
+  @import '~@scss/mixins';
 
   .account-seed__description {
     margin-bottom: 16px;

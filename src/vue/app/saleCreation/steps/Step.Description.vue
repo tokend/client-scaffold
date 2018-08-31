@@ -154,7 +154,7 @@ export default {
   }
 
   .video-container--empty {
-    border-color: $col-md-primary;
+    border-color: $col-fund-video-border;
     padding: 20px;
   }
 
@@ -162,7 +162,7 @@ export default {
     width: 100%;
     text-align: left;
     margin-bottom: 24px;
-    color: $col-md-primary;
+    color: $col-fund-video-border;
 
     & a {
       margin-top: 8px;
