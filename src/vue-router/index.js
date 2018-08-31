@@ -469,7 +469,8 @@ const router = new Router({
         }
       ].filter(route => route.feature_flag !== false)
     }
-  ]
+  ],
+  scrollBehavior
 })
 
 export default router
@@ -493,6 +494,10 @@ function inAppRouteGuard (to, from, next) {
         }
       }
     })
+}
+
+function scrollBehavior (to, from, savedPosition) {
+  return { x: 0, y: 0 }
 }
 
 router.beforeEach((to, from, next) => {
