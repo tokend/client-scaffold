@@ -33,7 +33,7 @@ import config from '@/config'
 export default {
   components: { SelectFieldCustom },
   props: {
-    pairs: { type: Array, require: true, default: [] }
+    pairs: { type: Array, require: true, default: () => [] }
   },
   data () {
     return {
@@ -42,14 +42,6 @@ export default {
       quoteAmount: '',
       i18n
     }
-  },
-  created () {
-    this.currentAsset = this.currentAsset ||
-      this.tryFindDefaultPair(this.pairs) ||
-      this.pairs[0] ||
-      null
-  },
-  mounted () {
   },
   computed: {
     ...mapGetters([
@@ -80,6 +72,12 @@ export default {
       dispatchAppEvent(commonEvents.changePairsAsset, value)
       this.handleAssetChange(value)
     }
+  },
+  created () {
+    this.currentAsset = this.currentAsset ||
+      this.tryFindDefaultPair(this.pairs) ||
+      this.pairs[0] ||
+      null
   },
   methods: {
     tryFindDefaultPair (pairs) {

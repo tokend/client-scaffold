@@ -14,7 +14,9 @@
     <label>{{ label }}</label>
     <span
       class="md-error"
-      v-if="errorMessage">{{ errorMessage }}</span>
+      v-if="errorMessage">
+      {{ errorMessage }}
+    </span>
   </md-datepicker>
 </template>
 
@@ -27,15 +29,18 @@ export default {
   name: 'date-field',
   mixins: [FieldMixin],
   props: {
-    disableBefore: { type: [String, null], default: null },
-    disableAfter: { type: [String, null], default: null },
+    disableBefore: { type: String, default: '' },
+    disableAfter: { type: String, default: '' },
     overrideNative: { type: Boolean, default: false },
     openOnFocus: { type: Boolean, default: true }
   },
   computed: {
     disabledDates () {
       if (!this.disableBefore && !this.disableAfter) return null
-      const [before, after] = [moment(this.disableBefore), moment(this.disableAfter)]
+      const [before, after] = [
+        moment(this.disableBefore),
+        moment(this.disableAfter)
+      ]
       return (d) => (before && moment(d).isBefore(before)) ||
                       (after && moment(d).isAfter(after))
     }

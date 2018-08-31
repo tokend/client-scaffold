@@ -16,7 +16,6 @@
       :message="linkify(item.message)"
     />
   </div>
-
 </template>
 
 <script>
@@ -31,7 +30,10 @@ export default {
   components: {
     TimelineItem
   },
-  props: ['sale', 'items'],
+  props: {
+    sale: { type: Object, default: () => {} },
+    items: { type: Array, default: () => [] }
+  },
   data: _ => ({
     i18n
   }),

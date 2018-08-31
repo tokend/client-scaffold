@@ -31,7 +31,6 @@
         novalidate
         @submit.prevent="submit"
         v-if="formShown">
-
         <h2 class="app__page-heading">
           Issuance form
         </h2>
@@ -112,24 +111,23 @@ export default {
     i18n,
     ACCOUNT_TYPES
   }),
-
-  created () {
-    this.setTokenCode()
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.accountOwnedTokens,
       vuexTypes.accountTypeI
     ])
   },
-
+  created () {
+    this.setTokenCode()
+  },
   methods: {
     async submit () {
       if (!await this.isValid()) return
       this.disable()
       try {
-        const receiver = await accountsService.loadBalanceIdByEmail(this.request.receiver, this.request.code)
+        const receiver = await accountsService.loadBalanceIdByEmail(
+          this.request.receiver, this.request.code
+        )
         await issuanceService.createIssuanceRequest({
           token: this.request.code,
           amount: this.request.amount,
@@ -140,11 +138,13 @@ export default {
         EventDispatcher.dispatchShowSuccessEvent(i18n.iss_submit_success())
         this.rerenderForm()
       } catch (error) {
-        console.log(error)
-        console.log(error.constructor)
-        console.log(error.constructor === errors.NotFoundError)
+        console.error(error)
+        console.error(error.constructor)
+        console.error(error.constructor === errors.NotFoundError)
         if (error.constructor === errors.NotFoundError) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.iss_no_balance({ asset: this.request.code }))
+          EventDispatcher.dispatchShowErrorEvent(
+            i18n.iss_no_balance({ asset: this.request.code })
+          )
           this.enable()
           return
         }

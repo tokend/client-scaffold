@@ -24,7 +24,9 @@
     />
     <span
       class="md-error"
-      v-if="errorMessage">{{ errorMessage }}</span>
+      v-if="errorMessage">
+      {{ errorMessage }}
+    </span>
   </md-field>
 </template>
 
@@ -37,8 +39,8 @@ export default {
   mixins: [FieldMixin],
   props: {
     type: { type: String, default: 'text' },
-    maxlength: { type: [Number, null], default: null },
-    counter: { type: [Number, null], default: null },
+    maxlength: { type: [Number, Object], default: 0 || null },
+    counter: { type: [Number, Object], default: 0 || null },
     readonly: { type: Boolean, default: false },
     align: { type: String, default: 'left' },
     step: { type: Number, default: config.MINIMAL_NUMBER_INPUT_STEP },

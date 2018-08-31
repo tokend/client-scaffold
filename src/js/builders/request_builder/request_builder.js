@@ -96,6 +96,7 @@ export class RequestBuilder {
   get () {
     this.method = 'get'
     return this.httpClient.get(this._composeURL(), this.config)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }
@@ -104,6 +105,7 @@ export class RequestBuilder {
     this.method = 'post'
     const password = this.params.data.password
     return this.httpClient.post(this._composeURL(), this.params, this.config)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
   }
@@ -111,6 +113,7 @@ export class RequestBuilder {
   put () {
     this.method = 'put'
     return this.httpClient.put(this._composeURL(), this.params, this.config)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, this.currentPassword))
   }
@@ -119,6 +122,7 @@ export class RequestBuilder {
     this.method = 'patch'
     const password = this.params.data.password
     return this.httpClient.patch(this._composeURL(), this.params, this.config)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
   }
@@ -127,6 +131,7 @@ export class RequestBuilder {
     this.method = 'delete'
     const password = this.params.data.password
     return this.httpClient.delete(this._composeURL(), this.config)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
   }
@@ -168,8 +173,17 @@ export class RequestBuilder {
           const salt = opts.salt
           const kdfAttr = kdf.attributes()
 
-          const { walletKey } = WalletHelper.calculateWalletParams(password, email, salt, kdfAttr)
-          const signedToken = WalletHelper.signToken(token, keychainData, walletKey)
+          const { walletKey } = WalletHelper.calculateWalletParams(
+            password,
+            email,
+            salt,
+            kdfAttr
+          )
+          const signedToken = WalletHelper.signToken(
+            token,
+            keychainData,
+            walletKey
+          )
           try {
             await factorsService.verifyFactor(factorId, token, signedToken)
             return this.repeat()
@@ -197,9 +211,11 @@ export class RequestBuilder {
 
   repeat () {
     const params = this.method === 'get' || this.method === 'delete'
-      ? [this._composeURL(), this.config] : [this._composeURL(), this.params, this.config]
+      ? [this._composeURL(), this.config]
+      : [this._composeURL(), this.params, this.config]
 
     return this.httpClient[this.method](...params)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err))
   }

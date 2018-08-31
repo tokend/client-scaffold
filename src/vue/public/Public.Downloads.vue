@@ -3,7 +3,6 @@
     class="downloads"
     :class="{ 'downloads--public': !isLoggedIn }"
   >
-
     <template v-if="!isLoggedIn">
       <div class="downloads__header">
         <span class="downloads__title">{{ $route.meta.pageName }}</span>
@@ -11,10 +10,14 @@
         <span class="downloads__links">
           <router-link
             class="downloads__link"
-            :to="vueRoutes.signup">{{ i18n.lbl_signup() }}</router-link>
+            :to="vueRoutes.signup">
+            {{ i18n.lbl_signup() }}
+          </router-link>
           <router-link
             class="downloads__link"
-            :to="vueRoutes.login">{{ i18n.lbl_signin() }}</router-link>
+            :to="vueRoutes.login">
+            {{ i18n.lbl_signin() }}
+          </router-link>
         </span>
       </div>
     </template>
@@ -23,16 +26,16 @@
       <div class="downloads__android">
         <div class="downloads__android-inner">
           <div class="downloads__android-img">
-
             <img
               src="../../../static/android.png"
               alt="">
           </div>
 
           <div class="downloads__android-content">
-
             <div class="downloads__android-content-section">
-              <h1 class="downloads__heading">{{ i18n.dl_download_android() }}</h1>
+              <h1 class="downloads__heading">
+                {{ i18n.dl_download_android() }}
+              </h1>
               <p class="downloads__paragraph">{{ i18n.dl_about_android() }}</p>
               <a
                 class="downloads__pm-link"
@@ -56,7 +59,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 

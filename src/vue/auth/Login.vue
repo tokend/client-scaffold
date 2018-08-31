@@ -98,11 +98,6 @@ export default {
     hasSeenWarning: null
   }),
 
-  created () {
-    if (this.verifyEmailParams) return this.verifyEmail()
-    this.hasSeenWarning = localStorage.hasOwnProperty('seenBlockWarning')
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.accountId,
@@ -115,6 +110,11 @@ export default {
       if (token && walletId) return { token, walletId }
       return null
     }
+  },
+
+  created () {
+    if (this.verifyEmailParams) return this.verifyEmail()
+    this.hasSeenWarning = localStorage.hasOwnProperty('seenBlockWarning')
   },
 
   methods: {
@@ -167,7 +167,10 @@ export default {
       this.$router.push(this.$route.params.redirect || vueRoutes.app)
       if (this.accountBlocked) {
         if (!this.hasSeenWarning) {
-          localStorage.setItem('seenBlockWarning', 'User acknowledged about block')
+          localStorage.setItem(
+            'seenBlockWarning',
+            'User acknowledged about block'
+          )
           this.hasSeenWarning = true
           showAlert({
             title: i18n.mod_accountBlocked_title(),
@@ -202,7 +205,10 @@ export default {
 
     async verifyEmail () {
       try {
-        await emailService.sendVerifyEmailRequest(this.verifyEmailParams.token, this.verifyEmailParams.walletId)
+        await emailService.sendVerifyEmailRequest(
+          this.verifyEmailParams.token,
+          this.verifyEmailParams.walletId
+        )
         EventDispatcher.dispatchShowSuccessEvent(i18n.auth_email_verified())
       } catch (error) {
         console.error(error)

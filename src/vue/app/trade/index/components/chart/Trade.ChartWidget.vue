@@ -12,13 +12,16 @@
 
     <div v-else>
       <div class="chart-container__header">
-        <div class="md-title chart-container__title">{{ i18n.trd_market_price() }}</div>
+        <div class="md-title chart-container__title">
+          {{ i18n.trd_market_price() }}
+        </div>
       </div>
 
       <div class="app__card-content">
         <div class="chart-container">
-
-          <div class="md-layout md-alignment-center-space-between chart-container__tabs">
+          <div class="md-layout
+                      md-alignment-center-space-between
+                      chart-container__tabs">
             <scale-tabs
               class="md-layout-item md-size-70 md-small-size-100"
               :asset="assets"
@@ -37,13 +40,13 @@
             :required-ticks="requiredTicks" />
           <div
             class="chart-container__loader"
-            v-else>Loading...</div>
-
+            v-else>
+            Loading...
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -55,22 +58,19 @@ import { vuexTypes } from '../../../../../../vuex/types'
 
 export default {
   name: 'chart',
-
   components: {
     ScaleTabs,
     D3Chart
   },
-
   props: {
     data: { type: Object, required: true },
-    assets: { type: String, required: false },
+    assets: { type: String, default: '' },
     action: { type: String, default: 'issued' },
-    currentCap: { type: [String, Number], required: false },
-    hardCap: { type: [String, Number], required: false },
-    softCap: { typ: [String, Number], required: false },
+    currentCap: { type: [String, Number], default: '' || 0 },
+    hardCap: { type: [String, Number], default: '' || 0 },
+    softCap: { type: [String, Number], default: '' || 0 },
     precision: { type: Number, default: 0 }
   },
-
   data () {
     return {
       scale: 'month',
@@ -81,11 +81,6 @@ export default {
       quoteAmount: ''
     }
   },
-
-  created () {
-    this.tokenCode = this.tokenCodes[0] || null
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.userWithdrawableTokens,
@@ -101,6 +96,9 @@ export default {
     requiredTicks () {
       return [this.softCap, this.hardCap].filter(value => value)
     }
+  },
+  created () {
+    this.tokenCode = this.tokenCodes[0] || null
   }
 }
 </script>

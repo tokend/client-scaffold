@@ -17,8 +17,8 @@
             type="number"
             :step="config.MINIMAL_NUMBER_INPUT_STEP"
             :error-message="(allowToValidPrice && (Number(form.price) === 0 ||
-                            Number(form.price) < 0) ?
-                              i18n.trd_validate_minimal_price() : '')"
+              Number(form.price) < 0) ?
+            i18n.trd_validate_minimal_price() : '')"
           />
         </div>
 
@@ -33,9 +33,9 @@
             type="number"
             :step="config.MINIMAL_NUMBER_INPUT_STEP"
             :error-message="(allowToValidAmount && lessThanMinimumAmount) ?
-                            i18n.trd_validate_minimal_amount({
-                              value: config.MINIMAL_NUMBER_INPUT_STEP
-                            }) : ''"
+              i18n.trd_validate_minimal_amount({
+                value: config.MINIMAL_NUMBER_INPUT_STEP
+            }) : ''"
           />
         </div>
 
@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import InputField from '@/vue/common/fields/InputField'
 import FormMixin from '@/vue/common/mixins/form.mixin'
 import OrderMakerMixin from '../order-maker.mixin'
 
@@ -75,10 +74,9 @@ import config from '@/config'
 
 export default {
   name: 'trade-orders-sell',
-  components: { InputField },
   mixins: [FormMixin, OrderMakerMixin],
   props: {
-    assets: { type: Object, require: true }
+    assets: { type: Object, require: true, default: () => {} }
   },
   data () {
     return {

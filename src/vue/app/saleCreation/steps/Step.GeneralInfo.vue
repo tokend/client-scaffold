@@ -22,7 +22,8 @@
     </div>
     <div class="app__form-row">
       <div class="app__form-field">
-        <!-- hack with key is necessary for correct rendering when disableAfter and disableBefore is changed -->
+        <!-- hack with key is necessary for correct rendering when
+             disableAfter and disableBefore is changed -->
         <date-field-flatpickr
           v-model="form.startTime"
           name="sale-start-time"
@@ -35,7 +36,8 @@
           :error-message="errorMessage('sale-open-time')" />
       </div>
       <div class="app__form-field">
-        <!-- hack with key is necessary for correct rendering when disableAfter and disableBefore is changed -->
+        <!-- hack with key is necessary for correct rendering when
+             disableAfter and disableBefore is changed -->
         <date-field-flatpickr
           v-model="form.endTime"
           name="sale-close-time"
@@ -57,7 +59,9 @@
         class="app__form-field"
         name="sale-soft-cap"
         id="sale-soft-cap"
-        :label="i18n.sale_soft_cap_with_asset({ asset: config.DEFAULT_QUOTE_ASSET })"
+        :label="i18n.sale_soft_cap_with_asset({
+          asset: config.DEFAULT_QUOTE_ASSET
+        })"
         :error-message="errorMessage('sale-soft-cap')"
       />
       <input-field-unchained
@@ -70,7 +74,9 @@
         class="app__form-field"
         name="sale-hard-cap"
         id="sale-hard-cap"
-        :label="i18n.sale_hard_cap_with_asset({ asset: config.DEFAULT_QUOTE_ASSET })"
+        :label="i18n.sale_hard_cap_with_asset({
+          asset: config.DEFAULT_QUOTE_ASSET
+        })"
         :error-message="errorMessage('sale-hard-cap')"
       />
     </div>
@@ -89,13 +95,17 @@
                         md-xsmall-size-100"
         name="sale-base-asset-for-hard-cap"
         id="sale-base-asset-for-hard-cap"
-        :label="i18n.sale_base_asset_hard_cap_to_sell({asset: form.baseAsset})"
+        :label="i18n.sale_base_asset_hard_cap_to_sell({
+          asset: form.baseAsset
+        })"
         :error-message="errorMessage('sale-base-asset-for-hard-cap')"
       />
     </div>
     <div class="app__form-row">
       <div class="app__form-field">
-        <label class="step__quote-assets-label">{{ i18n.sale_quote_assets() }}</label>
+        <label class="step__quote-assets-label">
+          {{ i18n.sale_quote_assets() }}
+        </label>
         <div class="step__quote-assets-checkboxes">
           <tick-field
             class="step__quote-assets-checkbox"
@@ -157,14 +167,6 @@ export default {
     uploadVideo: false
   }),
 
-  created () {
-    this.values.tokens = this.accountOwnedTokens
-    this.form = _pick(this.sale, Object.keys(this.form))
-    if (!this.form.baseAsset) {
-      this.setTokenCode()
-    }
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.accountOwnedTokens,
@@ -178,6 +180,14 @@ export default {
     },
     yesterday () {
       return moment().subtract(1, 'd').format()
+    }
+  },
+
+  created () {
+    this.values.tokens = this.accountOwnedTokens
+    this.form = _pick(this.sale, Object.keys(this.form))
+    if (!this.form.baseAsset) {
+      this.setTokenCode()
     }
   },
 

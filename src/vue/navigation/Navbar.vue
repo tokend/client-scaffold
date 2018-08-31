@@ -8,11 +8,16 @@
                 class="app__button-icon">
           <md-icon>notifications</md-icon>
         </button>
-        <md-card class="navbar__notif-card md-elevation-6" :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
+        <md-card
+          class="navbar__notif-card md-elevation-6"
+          :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
           <md-card-content>
             <div class="navbar__notif-card-content">
-              <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">
-                Your account functionality is restricted. To get advanced functionality go to
+              <p
+                v-if="accountType === ACCOUNT_TYPES.notVerified"
+                class="navbar__notif-status">
+                Your account functionality is restricted. To get advanced
+                functionality go to
                 <a class="notif-link" @click="goKyc">KYC</a>.
               </p>
               <p v-else class="navbar__notif-status">No new notifications!</p>
@@ -51,17 +56,28 @@
         <!-- <div class="navbar__user-notif"
               :class="{ 'navbar__user-notif--has-value': true }"
               @click="toggleNotificationCardVisibility">
-          <span v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-counter">1</span>
+          <span
+            v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified"
+            class="navbar__notif-counter">
+            1
+          </span>
           2 notifications
 
-          <md-card class="navbar__notif-card md-elevation-6" :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
+          <md-card
+            class="navbar__notif-card md-elevation-6"
+            :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
             <md-card-content>
               <div class="navbar__notif-card-content">
-                <p v-if="accountType === ACCOUNT_TYPES.notVerified" class="navbar__notif-status">
-                  Your account functionality is restricted. To get advanced functionality go to
+                <p
+                  v-if="accountType === ACCOUNT_TYPES.notVerified"
+                  class="navbar__notif-status">
+                  Your account functionality is restricted. To get advanced
+                  functionality go to
                   <a class="notif-link" @click="goKyc">KYC</a>.
                 </p>
-                <p v-else class="navbar__notif-status">No new notifications!</p>
+                <p v-else class="navbar__notif-status">
+                  No new notifications!
+                </p>
               </div>
             </md-card-content>
           </md-card>
@@ -79,13 +95,28 @@
             <div class="navbar__user-card-info">
               <p class="navbar__user-card-name">{{ userEmail }}</p>
               <!-- TODO: account status temporarily disabled -->
-              <!-- <p class="navbar__user-card-status" v-if="!accountBlocked">{{ `${i18n.lbl_account()} ${accountState === 'nil' ? 'not verifed' : accountState }` }}</p>
-              <p class="navbar__user-card-status navbar__user-card-status--blocked" v-else>{{ i18n.lbl_userBlocked() }}</p> -->
+              <!-- <p
+                class="navbar__user-card-status"
+                v-if="!accountBlocked">
+                {{
+                  `${i18n.lbl_account()}
+                  ${accountState === 'nil'
+                  ? 'not verifed'
+                  : accountState }`
+                }}
+              </p>
+              <p
+                class="navbar__user-card-status
+                       navbar__user-card-status--blocked"
+                v-else>
+                {{ i18n.lbl_userBlocked() }}
+              </p> -->
               <div class="navbar__user-card-status">
                 <template v-if="accountTypeI === ACCOUNT_TYPES.notVerified">
                   {{ i18n.lbl_type_unverified() }}
                 </template>
-                <template v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
+                <template
+                  v-else-if="accountTypeI === ACCOUNT_TYPES.individual">
                   {{ i18n.lbl_type_general() }}
                 </template>
                 <template v-else-if="accountTypeI === ACCOUNT_TYPES.syndicate">
@@ -141,7 +172,6 @@ export default {
     i18n,
     ACCOUNT_TYPES
   }),
-
   computed: {
     ...mapGetters([
       vuexTypes.isLoggedIn,
@@ -153,12 +183,22 @@ export default {
       vuexTypes.accountBlocked
     ])
   },
-
+  watch: {
+    isUserCardOpen (value) {
+      closeElement('navbar__user-card', value, this.toggleUserCardVisibility)
+    },
+    isNotificationCardOpen (value) {
+      closeElement(
+        'navbar__user-notif',
+        value,
+        this.toggleNotificationCardVisibility
+      )
+    }
+  },
   created () {
     attachEventHandler(commonEvents.routesUpdateEvent, this.updateRoutes)
     this.hasSeenNotif = localStorage.hasOwnProperty('seen')
   },
-
   methods: {
     ...mapActions([
       vuexTypes.LOG_OUT
@@ -190,14 +230,6 @@ export default {
       this.isUserCardOpen = false
       this.isNotificationCardOpen = false
       this.$router.push(vueRoutes.verification)
-    }
-  },
-  watch: {
-    isUserCardOpen (value) {
-      closeElement('navbar__user-card', value, this.toggleUserCardVisibility)
-    },
-    isNotificationCardOpen (value) {
-      closeElement('navbar__user-notif', value, this.toggleNotificationCardVisibility)
     }
   }
 }
@@ -264,7 +296,8 @@ export default {
   .navbar__user-name-icon {
     font-size: 18px;
     cursor: pointer;
-    color: $col-md-primary !important; // TODO: remove important rule when possible
+    // TODO: remove important rule when possible
+    color: $col-md-primary !important;
   }
 
   .navbar__user-name:hover > .navbar__user-email {

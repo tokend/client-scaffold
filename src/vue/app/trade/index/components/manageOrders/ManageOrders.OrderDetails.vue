@@ -46,15 +46,12 @@ export default {
   name: 'manage-orders',
   mixins: [DetailsMixin, SubmitterMixin],
   props: {
-    tx: { type: Object, require: true }
+    tx: { type: Object, require: true, default: () => {} }
   },
   data () {
     return {
       i18n
     }
-  },
-  created () {
-
   },
   computed: {
     ...mapGetters([
@@ -80,9 +77,6 @@ export default {
       }
       this.enable()
     }
-  },
-  watch: {
-
   }
 }
 </script>

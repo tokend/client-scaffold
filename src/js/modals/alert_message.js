@@ -23,10 +23,9 @@ export function showAlert (opts = {}) {
   const container = document.createElement('div')
   document.querySelector('#app').appendChild(container)
 
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve, reject) => {
     const alertMessage = new Vue({
-      template,
-      store,
       mixins: [FormBlockingModalMixin],
       data () {
         return {
@@ -34,12 +33,6 @@ export function showAlert (opts = {}) {
           title,
           i18n
         }
-      },
-      created () {
-        this.setResolvers(resolve, reject)
-      },
-      methods: {
-
       },
       watch: {
         isOpened (val) {
@@ -50,7 +43,12 @@ export function showAlert (opts = {}) {
             this.removeElement()
           }
         }
-      }
+      },
+      created () {
+        this.setResolvers(resolve, reject)
+      },
+      store,
+      template
     })
     alertMessage.$mount(container)
   })

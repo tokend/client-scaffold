@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import InputField from '../../../../common/fields/InputField'
-import FormMixin from '../../../../common/mixins/form.mixin'
-import { i18n } from '../../../../../js/i18n'
+import InputField from '@/vue/common/fields/InputField'
+import FormMixin from '@/vue/common/mixins/form.mixin'
+import { i18n } from '@/js/i18n'
 import moment from 'moment'
-import { commonEvents } from '../../../../../js/events/common_events'
-import { confirmAction } from '../../../../../js/modals/confirmation_message'
-import { blobTypes, blobFilters } from '../../../../../js/const/const'
-import { usersService } from '../../../../../js/services/users.service'
+import { commonEvents } from '@/js/events/common_events'
+import { confirmAction } from '@/js/modals/confirmation_message'
+import { blobTypes, blobFilters } from '@/js/const/const'
+import { usersService } from '@/js/services/users.service'
 export default {
   name: 'add-update-form',
 
@@ -51,7 +51,9 @@ export default {
   },
 
   mixins: [FormMixin],
-  props: ['sale'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
 
   data: _ => ({
     form: {
@@ -67,7 +69,9 @@ export default {
   methods: {
     async createUpdate () {
       if (!await this.isValid()) return
-      const confirmed = await confirmAction({ message: i18n.sale_upd_tab_warning() })
+      const confirmed = await confirmAction({
+        message: i18n.sale_upd_tab_warning()
+      })
       if (!confirmed) return
       this.disable()
       try {
@@ -93,7 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../scss/variables";
+  @import "~@scss/variables";
 
   .add-update-form__heading {
     display: inline-block;

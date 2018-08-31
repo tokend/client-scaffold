@@ -26,7 +26,6 @@
       :title="title">
       <!-- css art -->
     </span>
-
   </div>
 </template>
 
@@ -34,12 +33,17 @@
 export default {
   props: {
     // label: { type: String, default: 'Label' },
-    value: { default: false },
-
+    value: {
+      type: [String, Number, Array, Boolean],
+      required: true,
+      default: '' || 0
+    },
     // proxies
     name: { type: String, default: undefined },
     disabled: { type: Boolean, default: false },
+    /* eslint-disable */
     cbValue: { default: undefined },
+    /* eslint-enable */
     title: { type: [String, Number], default: undefined },
     required: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: false }

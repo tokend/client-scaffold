@@ -2,7 +2,9 @@
   <div class="no-data-message">
     <md-icon
       v-if="iconName"
-      class="md-size-4x">{{ iconName }}</md-icon>
+      class="md-size-4x">
+      {{ iconName }}
+    </md-icon>
     <h2>{{ msgTitle }}</h2>
     <p>{{ msgMessage }}</p>
   </div>

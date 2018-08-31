@@ -84,7 +84,7 @@
     "css-loader": "^0.28.0",
     "eslint": "^5.3.0",
     "eslint-config-distributed-lab": "^1.0.1",
-    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-chai-friendly": "^0.4.1",

@@ -62,7 +62,6 @@
 
 <script>
 import DescriptionTab from './tabs/Sales.DescriptionTab'
-import CrowdfundTab from './tabs/Sales.CrowdfundTab'
 import SaleBanner from './components/Sales.Banner'
 import TokenTab from './tabs/Sales.TokenTab'
 import DocumentsTab from './tabs/Sales.DocumentsTab'
@@ -74,14 +73,17 @@ export default {
   components: {
     DocumentsTab,
     DescriptionTab,
-    CrowdfundTab,
     SaleBanner,
     TokenTab,
     SaleTab,
     UpdatesTab,
     SaleChart
   },
-  props: ['sale', 'description', 'syndicate', 'token'],
+  props: {
+    sale: { type: Object, required: true },
+    description: { type: String, default: '' },
+    token: { type: Object, default: () => {} }
+  },
   computed: {
     isReadyToShowTabs () { return !!this.sale.id }
   }

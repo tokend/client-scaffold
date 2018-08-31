@@ -5,7 +5,7 @@
       'input-field--error': errorMessage,
       'input-field--monospaced': monospaced,
       'input-field--readonly': readonly
-    }">
+  }">
     <input
       class="input-field__input"
       :class="{ 'input-field__input--autofill-white': whiteAutofill }"
@@ -134,9 +134,6 @@ export default {
       } catch (error) {
         precision = 0
       }
-
-      console.log(precision)
-
       if (!precision) {
         return null
       } else {

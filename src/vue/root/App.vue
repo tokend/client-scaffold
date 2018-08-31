@@ -4,7 +4,6 @@
       <md-app
         md-waterfall
         md-mode="fixed">
-
         <md-app-toolbar
           class="md-primary app__sidebar"
           v-if="isLoggedIn">
@@ -31,7 +30,6 @@
           <file-viewer />
           <loader-bar />
         </md-app-content>
-
       </md-app>
     </template>
     <template v-else>

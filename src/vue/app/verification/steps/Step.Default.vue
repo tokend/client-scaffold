@@ -3,8 +3,10 @@
     class="step"
     novalidate
     @submit.prevent="submit">
-    <template v-for="row in schema.rows">
-      <div class="app__form-row">
+    <template v-for="(row, r) in schema.rows">
+      <div
+        class="app__form-row"
+        :key="`verification-step-default-row-${r}`">
         <div
           class="app__form-field"
           v-for="(item, i) in row"
@@ -82,7 +84,6 @@
             :disabled="accountState === ACCOUNT_STATES.pending"
             :enable-time="item.enableTime"
           />
-
         </div>
       </div>
     </template>
@@ -90,7 +91,8 @@
       <button
         v-ripple
         class="app__form-submit-btn"
-        :disabled="isPending || accountState === ACCOUNT_STATES.pending || isRequestPending"
+        :disabled="isPending ||
+        accountState === ACCOUNT_STATES.pending || isRequestPending"
         v-if="finished">
         {{ i18n.lbl_submit() }}
       </button>
@@ -115,14 +117,13 @@ import { vuexTypes } from '../../../../vuex/types'
 export default {
   name: 'step-default',
   mixins: [ StepMixin ],
-  props: ['schema'],
+  props: {
+    schema: { type: Object, default: () => {} }
+  },
   data: _ => ({
     finished: false,
     ACCOUNT_STATES
   }),
-  created () {
-    this.finished = (this.activeStep === this.finalStep)
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountKycData,
@@ -130,7 +131,18 @@ export default {
       vuexTypes.accountState
     ])
   },
-
+  watch: {
+    kyc: {
+      handler: 'stubData',
+      immediate: true
+    },
+    activeStep (value) {
+      this.finished = (value === this.finalStep)
+    }
+  },
+  created () {
+    this.finished = (this.activeStep === this.finalStep)
+  },
   methods: {
     async submit () {
       if (!await this.isValid()) return
@@ -155,16 +167,6 @@ export default {
         delete this.form.docs
         this.documents = this.accountKycDocuments
       }
-    }
-  },
-
-  watch: {
-    kyc: {
-      handler: 'stubData',
-      immediate: true
-    },
-    activeStep (value) {
-      this.finished = (value === this.finalStep)
     }
   }
 }

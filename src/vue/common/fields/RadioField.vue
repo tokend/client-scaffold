@@ -28,7 +28,7 @@ export default {
     name: { type: String, default: undefined },
     active: { type: [String, Boolean], default: '' },
     disabled: { type: Boolean, default: false },
-    cbValue: { default: undefined },
+    cbValue: { type: [Number, String], default: null },
     title: { type: [String, Number], default: undefined },
     required: { type: Boolean, default: false }
   },

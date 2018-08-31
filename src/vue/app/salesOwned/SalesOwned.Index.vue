@@ -58,13 +58,13 @@ export default {
   data: _ => ({
     i18n
   }),
-  created () {
-    this.loadSales()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.salesOwned
     ])
+  },
+  created () {
+    this.loadSales()
   },
   methods: {
     ...mapActions({

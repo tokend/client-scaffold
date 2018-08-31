@@ -1,13 +1,15 @@
 <template>
   <div
     class="sale-details"
-    v-if="this.sale && this.token">
+    v-if="sale && token">
     <!-- TEMP. HIDDEN -->
     <!-- <div class="sale-details__back-btn-wrapper">
       <back-button class="sale-details__back-btn" />
     </div> -->
     <div class="sale-details__header">
-      <h1 class="sale-details__heading"> {{ sale.name }} ({{ sale.baseAsset }})</h1>
+      <h1 class="sale-details__heading">
+        {{ sale.name }} ({{ sale.baseAsset }}
+      </h1>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
     </div>
     <div class="sale-details__content">
@@ -42,13 +44,11 @@
 </template>
 
 <script>
-import { salesService } from '../../../../js/services/sales.service'
-import { tokensService } from '../../../../js/services/tokens.service'
-import { SaleRecord } from '../../../../js/records/sale.record'
-import { TokenRecord } from '../../../../js/records/token.record'
+import { salesService } from '@/js/services/sales.service'
+import { tokensService } from '@/js/services/tokens.service'
+import { SaleRecord } from '@/js/records/sale.record'
+import { TokenRecord } from '@/js/records/token.record'
 import { i18n } from '@/js/i18n'
-
-import BackButton from '@/vue/common/back-button/BackButton'
 import SaleInvest from './components/Sales.Invest'
 import SaleTabs from './Sales.Tabs'
 import InvestProgressBar from '../sale_card/Sales.ProgressBar'
@@ -58,10 +58,11 @@ export default {
   components: {
     SaleInvest,
     InvestProgressBar,
-    SaleTabs,
-    BackButton
+    SaleTabs
   },
-  props: ['id'],
+  props: {
+    id: { type: String, required: true }
+  },
 
   data: _ => ({
     sale: '',
@@ -83,10 +84,17 @@ export default {
     async loadDetails () {
       this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
       await Promise.all([
-        this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset)),
-        this.description = await salesService.loadSaleDescription(this.sale.owner, this.sale.descriptionID)
+        this.token = new TokenRecord(
+          await tokensService.loadTokenByCode(this.sale.baseAsset)
+        ),
+        this.description =
+          await salesService.loadSaleDescription(
+            this.sale.owner,
+            this.sale.descriptionID
+          )
       ])
-      // const syndicateDetails = await salesService.loadSaleOwner(this.sale.owner)
+      // const syndicateDetails =
+      //   await salesService.loadSaleOwner(this.sale.owner)
       // this.syndicate = syndicateDetails.syndicateDetails
       // this.syndicate.email = syndicateDetails.syndicateEmail
     }
@@ -95,8 +103,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../../scss/variables";
-@import "../../../../scss/mixins";
+@import "~@scss/variables";
+@import "~@scss/mixins";
 $ratio_16: 370px;
 $ratio_9: $ratio_16 * (9/16);
 

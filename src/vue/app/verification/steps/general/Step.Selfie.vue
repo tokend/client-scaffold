@@ -7,7 +7,9 @@
     </p>
     <span
       class="app__button-raised"
-      @click="isDialogOpened = true">{{ i18n.kyc_show_key() }}</span>
+      @click="isDialogOpened = true">
+      {{ i18n.kyc_show_key() }}
+    </span>
     <div class="app__form-row">
       <file-field
         class="kyc-form__file-field"
@@ -22,7 +24,8 @@
     <div class="app__form-actions">
       <button
         class="app__form-submit-btn"
-        :disabled="isPending || isRequestPending || accountState === ACCOUNT_STATES.pending">
+        :disabled="isPending ||
+        isRequestPending || accountState === ACCOUNT_STATES.pending">
         {{ i18n.lbl_agree_submit() }}
       </button>
     </div>
@@ -38,7 +41,9 @@
       <md-dialog-actions class="md-layout md-alignment-center-right">
         <md-button
           class="md-primary"
-          @click="isDialogOpened = false">{{ i18n.lbl_done() }}</md-button>
+          @click="isDialogOpened = false">
+          {{ i18n.lbl_done() }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
   </form>
@@ -47,7 +52,11 @@
 <script>
 import StepMixin from '../../spec/step.mixin'
 import FormMixin from '../../../../common/mixins/form.mixin'
-import { ASSET_POLICIES, ACCOUNT_STATES, documentTypes } from '../../../../../js/const/const'
+import {
+  ASSET_POLICIES,
+  ACCOUNT_STATES,
+  documentTypes
+} from '../../../../../js/const/const'
 import { commonEvents } from '../../../../../js/events/common_events'
 import { ErrorHandler } from '../../../../../js/errors/error_handler'
 import { i18n } from '../../../../../js/i18n/index'

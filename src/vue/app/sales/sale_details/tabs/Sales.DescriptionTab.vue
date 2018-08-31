@@ -21,7 +21,9 @@ export default {
   components: {
     MarkdownFormatter
   },
-  props: ['description'],
+  props: {
+    description: { type: String, default: '' }
+  },
   data: _ => ({
     i18n
   })

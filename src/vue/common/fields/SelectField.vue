@@ -19,11 +19,15 @@
         v-for="(val, i) in values"
         :value="val"
         :selected="val === value"
-        :key="i">{{ val }}</md-option>
+        :key="i">
+        {{ val }}
+      </md-option>
     </md-select>
     <span
       class="md-error"
-      v-if="errorMessage">{{ errorMessage }}</span>
+      v-if="errorMessage">
+      {{ errorMessage }}
+    </span>
   </md-field>
 </template>
 

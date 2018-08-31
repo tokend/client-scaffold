@@ -34,7 +34,9 @@ export default {
 
   computed: {
     totalAmount () {
-      return Number(this.withdraw.amount) + Number(Number(this.withdraw.fixedFee) + Number(this.withdraw.percentFee))
+      return Number(this.withdraw.amount) +
+             Number(Number(this.withdraw.fixedFee) +
+             Number(this.withdraw.percentFee))
     }
   }
 }

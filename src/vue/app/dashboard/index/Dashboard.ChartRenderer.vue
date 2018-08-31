@@ -3,12 +3,16 @@
     <div
       v-if="isLoading"
       class="chart-root__wrapper">
-      <div class="chart-root__wrapper-message"> {{ i18n.dash_chart_loading() }} </div>
+      <div class="chart-root__wrapper-message">
+        {{ i18n.dash_chart_loading() }}
+      </div>
     </div>
     <div
       v-else-if="!hasValue"
       class="chart-root__wrapper">
-      <div class="chart-root__wrapper-message"> {{ i18n.dash_empty_volume() }} </div>
+      <div class="chart-root__wrapper-message">
+        {{ i18n.dash_empty_volume() }}
+      </div>
     </div>
     <div
       class="chart-root__chart"
@@ -31,7 +35,16 @@ import * as d3Ease from 'd3-ease'
 import moment from 'moment'
 import { chunk } from 'lodash'
 import config from '../../../../config'
-const d3 = Object.assign({}, d3Array, d3Selection, d3Axis, d3Shape, d3Scale, d3Transition, d3Ease)
+const d3 = Object.assign(
+  {},
+  d3Array,
+  d3Selection,
+  d3Axis,
+  d3Shape,
+  d3Scale,
+  d3Transition,
+  d3Ease
+)
 
 export default {
   name: 'chart-renderer',
@@ -103,7 +116,9 @@ export default {
     getMaxAndMin (data) {
       const arr = data.map(item => item.value)
       const max = Math.max(...arr, ...this.requiredTicks)
-      const min = this.requiredTicks && this.requiredTicks.length ? 0 : Math.min(...arr)
+      const min = this.requiredTicks && this.requiredTicks.length
+        ? 0
+        : Math.min(...arr)
       return { max, min }
     },
 

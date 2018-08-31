@@ -4,7 +4,9 @@
         <div class="md-title">{{ i18n.tr_create_mass() }}</div>
       </md-card-header> -->
     <div class="mass-transfer__desc app__page-content-wrp">
-      <h2 class="app__page-heading mass-transfers__page-heading">{{ i18n.tr_create_mass() }}</h2>
+      <h2 class="app__page-heading mass-transfers__page-heading">
+        {{ i18n.tr_create_mass() }}
+      </h2>
 
       <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about() }}</p>
 
@@ -19,27 +21,60 @@
         <p class="mass-transfer__total">
           {{ i18n.tr_total_amount() }}:
           <template v-for="(amount, asset, i) in totals.amounts">
-            <template v-if="Object.keys(totals.amounts).length > 1"><br>{{ i+1 }}.</template>
-            <span class="mass-transfer__amount">{{ amount }}</span>
-            <span class="mass-transfer__asset">{{ asset }}</span>
+            <template v-if="Object.keys(totals.amounts).length > 1">
+              <br :key="`mass-transfer-total-amounts-br-${i}`">
+              {{ i + 1 }}.
+            </template>
+            <span
+              class="mass-transfer__amount"
+              :key="`mass-transfer-total-amounts-value-${i}`">
+              {{ amount }}
+            </span>
+            <span
+              class="mass-transfer__asset"
+              :key="`mass-transfer-total-amounts-asset-${i}`">
+              {{ asset }}
+            </span>
           </template>
         </p>
 
         <p class="mass-transfer__total">
           {{ i18n.tr_total_source_fee() }}:
           <template v-for="(amount, asset, i) in totals.sourceFees">
-            <template v-if="Object.keys(totals.sourceFees).length > 1"><br>{{ i+1 }}.</template>
-            <span class="mass-transfer__amount">{{ amount }}</span>
-            <span class="mass-transfer__asset">{{ asset }}</span>
+            <template v-if="Object.keys(totals.sourceFees).length > 1">
+              <br :key="`mass-transfer-total-source-fees-br-${i}`">
+              {{ i + 1 }}.
+            </template>
+            <span
+              class="mass-transfer__amount"
+              :key="`mass-transfer-total-source-fees-value-${i}`">
+              {{ amount }}
+            </span>
+            <span
+              class="mass-transfer__asset"
+              :key="`mass-transfer-total-source-fees-asset-${i}`">
+              {{ asset }}
+            </span>
           </template>
         </p>
 
         <p class="mass-transfer__total">
           {{ i18n.tr_total_recipient_fee() }}:
           <template v-for="(amount, asset, i) in totals.destinationFees">
-            <template v-if="Object.keys(totals.destinationFees).length > 1"><br>{{ i+1 }}.</template>
-            <span class="mass-transfer__amount">{{ amount }}</span>
-            <span class="mass-transfer__asset">{{ asset }}</span>
+            <template v-if="Object.keys(totals.destinationFees).length > 1">
+              <br :key="`mass-transfer-total-destination-fees-br-${i}`">
+              {{ i + 1 }}.
+            </template>
+            <span
+              class="mass-transfer__amount"
+              :key="`mass-transfer-total-destination-fees-value-${i}`">
+              {{ amount }}
+            </span>
+            <span
+              class="mass-transfer__asset"
+              :key="`mass-transfer-total-destination-fees-value-${i}`">
+              {{ asset }}
+            </span>
           </template>
         </p>
       </template>
@@ -68,13 +103,25 @@
         class="mass-transfer__list"
         v-table-scroll-shadow>
         <div class="mass-transfer__list-header">
-          <div class="mass-transfer__list-header-item mass-transfer__list-header-item--status">{{ i18n.lbl_status() }}</div>
-          <div class="mass-transfer__list-header-item mass-transfer__list-header-item--amount">{{ i18n.lbl_amount() }}</div>
-          <div class="mass-transfer__list-header-item mass-transfer__list-header-item--email">{{ i18n.lbl_email() }}</div>
-          <div class="mass-transfer__list-header-item mass-transfer__list-header-item--source-fees">
+          <div class="mass-transfer__list-header-item
+                      mass-transfer__list-header-item--status">
+            {{ i18n.lbl_status() }}
+          </div>
+          <div class="mass-transfer__list-header-item
+                      mass-transfer__list-header-item--amount">
+            {{ i18n.lbl_amount() }}
+          </div>
+          <div class="mass-transfer__list-header-item
+                      mass-transfer__list-header-item--email">
+            {{ i18n.lbl_email() }}
+          </div>
+          <div class="mass-transfer__list-header-item
+                      mass-transfer__list-header-item--source-fees">
             {{ i18n.lbl_source_fees() }}
-            {{ i18n.lbl_fixed_percent() }}</div>
-          <div class="mass-transfer__list-header-item mass-transfer__list-header-item--destination-fees">
+            {{ i18n.lbl_fixed_percent() }}
+          </div>
+          <div class="mass-transfer__list-header-item
+                      mass-transfer__list-header-item--destination-fees">
             {{ i18n.lbl_destination_fees() }}
             {{ i18n.lbl_fixed_percent() }}
           </div>
@@ -87,7 +134,8 @@
             <div class="mass-transfer__list-body-row">
               <div
                 :title="transfer.status"
-                class="mass-transfer__list-body-item mass-transfer__list-body-item--status"
+                class="mass-transfer__list-body-item
+                       mass-transfer__list-body-item--status"
                 :class="{ 'mass-transfer__table-cell--error':
                   transfer.status && transfer.status !== 'Success'
                 }"
@@ -96,25 +144,33 @@
               </div>
               <div
                 :title="transfer.amount + transfer.asset"
-                class="mass-transfer__list-body-item mass-transfer__list-body-item--amount">
+                class="mass-transfer__list-body-item
+                       mass-transfer__list-body-item--amount">
                 {{ i18n.c(transfer.amount) }} {{ transfer.asset }}
               </div>
               <div
                 :title="transfer.email"
-                class="mass-transfer__list-body-item mass-transfer__list-body-item--email">
+                class="mass-transfer__list-body-item
+                       mass-transfer__list-body-item--email">
                 {{ transfer.email }}
               </div>
               <div
                 :title="transfer.sourceFees.feeAsset"
-                class="mass-transfer__list-body-item mass-transfer__list-body-item--source-fees">
-                {{ transfer.sourceFees.fixed }}/{{ transfer.sourceFees.percent }}
+                class="mass-transfer__list-body-item
+                       mass-transfer__list-body-item--source-fees">
+                {{ transfer.sourceFees.fixed }}
+                /
+                {{ transfer.sourceFees.percent }}
                 {{ transfer.sourceFees.feeAsset }}
               </div>
 
               <div
                 :title="transfer.destinationFees.feeAsset"
-                class="mass-transfer__list-body-item mass-transfer__list-body-item--destination-fees">
-                {{ transfer.destinationFees.fixed }}/{{ transfer.destinationFees.percent }}
+                class="mass-transfer__list-body-item
+                       mass-transfer__list-body-item--destination-fees">
+                {{ transfer.destinationFees.fixed }}
+                /
+                {{ transfer.destinationFees.percent }}
                 {{ transfer.destinationFees.feeAsset }}
               </div>
             </div>
@@ -125,12 +181,20 @@
     <md-dialog :md-active.sync="isHowToOpened">
       <md-dialog-title>{{ i18n.tr_about_csv() }}</md-dialog-title>
       <div class="app__dialog-inner">
-        <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about_detailed() }}</p>
+        <p class="mass-transfer__text-paragraph">
+          {{ i18n.tr_mass_about_detailed() }}
+        </p>
         <md-table class="mass-transfer__text-paragraph">
           <md-table-row>
-            <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_recipient_email_or_account() }}</md-table-head>
-            <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_amount() }}</md-table-head>
-            <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_asset() }}</md-table-head>
+            <md-table-head class="mass-transfer__table-cell">
+              {{ i18n.lbl_recipient_email_or_account() }}
+            </md-table-head>
+            <md-table-head class="mass-transfer__table-cell">
+              {{ i18n.lbl_amount() }}
+            </md-table-head>
+            <md-table-head class="mass-transfer__table-cell">
+              {{ i18n.lbl_asset() }}
+            </md-table-head>
           </md-table-row>
           <md-table-row>
             <md-table-cell>alice@mail.com</md-table-cell>
@@ -149,7 +213,9 @@
           </md-table-row>
         </md-table>
 
-        <p class="mass-transfer__text-paragraph">{{ i18n.tr_should_look_like() }}</p>
+        <p class="mass-transfer__text-paragraph">
+          {{ i18n.tr_should_look_like() }}
+        </p>
 
         <blockquote class="mass-transfer__csv-example">
           alice@mail.com,0.012,BTC <br>
@@ -214,13 +280,19 @@ export default {
       const destinationFeesByAssets = {}
 
       this.transfers.forEach(transfer => {
-        amountsByAssets[transfer.asset] = [...(amountsByAssets[transfer.asset] || []), transfer.amount]
+        amountsByAssets[transfer.asset] = [
+          ...(amountsByAssets[transfer.asset] || []),
+          transfer.amount
+        ]
         sourceFeesByAssets[transfer.sourceFees.feeAsset] = [
           ...(sourceFeesByAssets[transfer.sourceFees.feeAsset] || []),
           add(transfer.sourceFees.fixed, transfer.sourceFees.percent)
         ]
         destinationFeesByAssets[transfer.destinationFees.feeAsset] = [
-          ...(destinationFeesByAssets[transfer.destinationFees.feeAsset] || []),
+          ...(
+            destinationFeesByAssets[transfer.destinationFees.feeAsset] ||
+            []
+          ),
           add(transfer.destinationFees.fixed, transfer.destinationFees.percent)
         ]
       })
@@ -230,13 +302,16 @@ export default {
       const totalDestinationFees = {}
 
       for (const [asset, amounts] of Object.entries(amountsByAssets)) {
-        totalAmounts[asset] = amounts.reduce((total, amount) => add(total, amount), 0)
+        totalAmounts[asset] =
+          amounts.reduce((total, amount) => add(total, amount), 0)
       }
       for (const [asset, amounts] of Object.entries(sourceFeesByAssets)) {
-        totalSourceFees[asset] = amounts.reduce((total, amount) => add(total, amount), 0)
+        totalSourceFees[asset] =
+          amounts.reduce((total, amount) => add(total, amount), 0)
       }
       for (const [asset, amounts] of Object.entries(destinationFeesByAssets)) {
-        totalDestinationFees[asset] = amounts.reduce((total, amount) => add(total, amount), 0)
+        totalDestinationFees[asset] =
+          amounts.reduce((total, amount) => add(total, amount), 0)
       }
 
       return {
@@ -251,25 +326,26 @@ export default {
     async submit () {
       this.disable()
       try {
-        await transferService.createMassTransfer(this.transfers.map(transfer => ({
-          sourceBalanceId: this.accountBalances[transfer.asset].balance_id,
-          destinationAccountId: transfer.accountId,
-          amount: transfer.amount,
-          feeData: {
-            sourceFee: {
-              maxPaymentFee: transfer.sourceFees.percent,
-              fixedFee: transfer.sourceFees.fixed,
-              feeAsset: transfer.sourceFees.feeAsset
+        await transferService
+          .createMassTransfer(this.transfers.map(transfer => ({
+            sourceBalanceId: this.accountBalances[transfer.asset].balance_id,
+            destinationAccountId: transfer.accountId,
+            amount: transfer.amount,
+            feeData: {
+              sourceFee: {
+                maxPaymentFee: transfer.sourceFees.percent,
+                fixedFee: transfer.sourceFees.fixed,
+                feeAsset: transfer.sourceFees.feeAsset
+              },
+              destinationFee: {
+                maxPaymentFee: transfer.destinationFees.percent,
+                fixedFee: transfer.destinationFees.fixed,
+                feeAsset: transfer.destinationFees.feeAsset
+              }
             },
-            destinationFee: {
-              maxPaymentFee: transfer.destinationFees.percent,
-              fixedFee: transfer.destinationFees.fixed,
-              feeAsset: transfer.destinationFees.feeAsset
-            }
-          },
-          sourcePaysForDest: false,
-          subject: ''
-        })))
+            sourcePaysForDest: false,
+            subject: ''
+          })))
         EventDispatcher.dispatchShowSuccessEvent(i18n.transfer_successful())
       } catch (e) {
         const messages = ErrorHandler.deriveTxErrorMessages(e)
@@ -279,7 +355,9 @@ export default {
           this.transfers.forEach((transfer, i) => {
             transfer.status = messages[i]
           })
-          EventDispatcher.dispatchShowErrorEvent(i18n.tr_mass_payment_failed())
+          EventDispatcher.dispatchShowErrorEvent(
+            i18n.tr_mass_payment_failed()
+          )
         }
       }
       this.enable()
@@ -287,7 +365,8 @@ export default {
     async parseFile () {
       if (!this.documents.transfers) return
       const objKeys = ['recipient', 'amount', 'asset']
-      const extracted = await FileHelper.readFileAsText(this.documents.transfers.file)
+      const extracted =
+        await FileHelper.readFileAsText(this.documents.transfers.file)
 
       const parsed = extracted
         .replace(/\r\n/g, '\n')
@@ -305,10 +384,12 @@ export default {
       try {
         for (const transfer of transfers) {
           if (Keypair.isValidPublicKey(transfer.recipient)) {
-            transfer.email = await accountsService.loadEmailByAccountId(transfer.recipient)
+            transfer.email =
+              await accountsService.loadEmailByAccountId(transfer.recipient)
             transfer.accountId = transfer.recipient
           } else {
-            transfer.accountId = await accountsService.loadAccountIdByEmail(transfer.recipient)
+            transfer.accountId =
+              await accountsService.loadAccountIdByEmail(transfer.recipient)
             transfer.email = transfer.recipient
           }
           transfer.sourceFees = await feeService.loadPaymentFeeByAmount(

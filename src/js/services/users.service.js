@@ -1,5 +1,5 @@
 import { Service } from './service'
-import {errors} from '../errors/factory'
+import { errors } from '../errors/factory'
 
 export class UsersService extends Service {
   /**
@@ -38,8 +38,13 @@ export class UsersService extends Service {
    */
   checkIfUserExists () {
     return this.loadUser()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(_ => true)
-      .catch(error => error instanceof errors.NotFoundError ? false : Promise.reject(error))
+      .catch(error =>
+        error instanceof errors.NotFoundError
+          ? false
+          : Promise.reject(error)
+      )
   }
 
   /**
@@ -79,8 +84,8 @@ export class UsersService extends Service {
    *
    */
   patchUserDetails (type, state, sequence) {
-    const data = {type}
-    const attributes = {state, kyc_sequence: sequence}
+    const data = { type }
+    const attributes = { state, kyc_sequence: sequence }
 
     return this._apiRequestBuilder.users()
       .accountId(this._accountId)
@@ -150,6 +155,7 @@ export class UsersService extends Service {
         return blank
           .sign(_this._keypair)
           .get()
+          // eslint-disable-next-line promise/prefer-await-to-then
           .then(res => res.attributes().map(attr => JSON.parse(attr.value)))
       },
 
@@ -163,6 +169,7 @@ export class UsersService extends Service {
           .blobID(id)
           .sign(_this._keypair)
           .get()
+          // eslint-disable-next-line promise/prefer-await-to-then
           .then(res => JSON.parse(res.attribute('value')))
       },
 

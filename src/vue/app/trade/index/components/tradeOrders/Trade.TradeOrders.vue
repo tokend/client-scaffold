@@ -17,7 +17,7 @@ export default {
   name: 'trade-orders',
   components: { BuyOrder, SellOrder },
   props: {
-    assets: { type: Object, require: true }
+    assets: { type: Object, require: true, default: () => {} }
   }
 }
 </script>

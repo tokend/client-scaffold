@@ -2,14 +2,20 @@
   <div class="user-type-selector">
     <div class="app__card user-type-selector__user md-layout-item md-size-30">
       <div class="app__card-header user-type-selector__card-header">
-        <span class="user-type-selector__user-title md-title">{{ i18n.kyc_general() }}</span>
+        <span class="user-type-selector__user-title md-title">
+          {{ i18n.kyc_general() }}
+        </span>
         <md-icon>
           info
           <md-tooltip md-direction="top">{{ i18n.kyc_inv_tip() }}</md-tooltip>
         </md-icon>
       </div>
       <div class="app__card-content user-type-selector__user-content">
-        <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">person</md-icon>
+        <md-icon class="md-size-5x
+                        md-medium-size-3x
+                        user-type-selector__user-icon">
+          person
+        </md-icon>
       </div>
       <div class="user-type-selector__actions">
         <button
@@ -26,11 +32,17 @@
         <span class="md-title">{{ i18n.kyc_corporate() }}</span>
         <md-icon>
           info
-          <md-tooltip md-direction="top">{{ i18n.kyc_corporate_tip() }}</md-tooltip>
+          <md-tooltip md-direction="top">
+            {{ i18n.kyc_corporate_tip() }}
+          </md-tooltip>
         </md-icon>
       </div>
       <div class="app__card-content user-type-selector__user-content">
-        <md-icon class="md-size-5x md-medium-size-3x user-type-selector__user-icon">domain</md-icon>
+        <md-icon class="md-size-5x
+                        md-medium-size-3x
+                        user-type-selector__user-icon">
+          domain
+        </md-icon>
       </div>
       <div class="user-type-selector__actions">
         <button
@@ -46,13 +58,15 @@
 </template>
 
 <script>
-import { commonEvents } from '../../../../js/events/common_events'
-import { userTypes } from '../../../../js/const/const'
-import { i18n } from '../../../../js/i18n/index'
+import { commonEvents } from '@/js/events/common_events'
+import { userTypes } from '@/js/const/const'
+import { i18n } from '@/js/i18n/index'
 
 export default {
   name: 'user-type-selector',
-  props: ['isPending'],
+  props: {
+    isPending: { type: Boolean, default: false }
+  },
   data () {
     return {
       i18n,
@@ -71,8 +85,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .user-type-selector {
     display: flex;

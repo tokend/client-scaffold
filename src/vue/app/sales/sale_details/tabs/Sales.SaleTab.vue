@@ -18,7 +18,9 @@
           :prop="i18n.sale_hard_cap()"
           :value="`${i18n.cc(sale.hardCap)}`" />
         <detail-row
-          :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset:sale.baseAsset})}`"
+          :prop="`${i18n.sale_base_asset_hard_cap_to_sell({
+            asset:sale.baseAsset
+          })}`"
           :value="`${i18n.c(sale.baseHardCap)}`" />
       </div>
     </div>
@@ -27,12 +29,14 @@
 
 <script>
 import DetailRow from '../../../common/Detail.Row'
-import { i18n } from '../../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 export default {
   components: {
     DetailRow
   },
-  props: ['sale'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   data: _ => ({
     i18n
   }),
@@ -42,6 +46,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
 </style>

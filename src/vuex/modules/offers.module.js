@@ -41,7 +41,9 @@ const actions = {
   async GET_SALE_OFFERS ({ commit }, saleId) {
     const offersService = new OffersService({})
     const response = await offersService.loadUserSaleOffers(saleId)
-    const offers = response.records.map(record => RecordFactory.createOfferRecord(record))
+    const offers = response.records.map(record =>
+      RecordFactory.createOfferRecord(record)
+    )
     commit(vuexTypes.SET_SALE_OFFERS, offers)
   },
 
@@ -55,7 +57,9 @@ const actions = {
     for (const id of ids) {
       const offersService = new OffersService({})
       const response = await offersService.loadUserSaleOffers(id)
-      const offers = response.records.map(record => RecordFactory.createOfferRecord(record))
+      const offers = response.records.map(record =>
+        RecordFactory.createOfferRecord(record)
+      )
       commit(vuexTypes.SET_USER_SALE_OFFERS, { id, offers })
     }
   },
@@ -70,8 +74,13 @@ const actions = {
    */
   async GET_BUY_OFFERS ({ commit }, pair) {
     const offersService = new OffersService({})
-    const response = await offersService.loadTradeOffers({ ...pair, isBuy: true })
-    const offers = response.records.map(record => RecordFactory.createOfferRecord(record))
+    const response = await offersService.loadTradeOffers({
+      ...pair,
+      isBuy: true
+    })
+    const offers = response.records.map(record =>
+      RecordFactory.createOfferRecord(record)
+    )
     commit(vuexTypes.SET_BUY_OFFERS, offers)
   },
 
@@ -86,8 +95,12 @@ const actions = {
    */
   async GET_SELL_OFFERS ({ commit }, pair) {
     const offersService = new OffersService({})
-    const response = await offersService.loadTradeOffers({ ...pair, isBuy: false })
-    const offers = response.records.map(record => RecordFactory.createOfferRecord(record))
+    const response = await offersService.loadTradeOffers({
+      ...pair, isBuy: false
+    })
+    const offers = response.records.map(record =>
+      RecordFactory.createOfferRecord(record)
+    )
     commit(vuexTypes.SET_SELL_OFFERS, offers)
   },
 
@@ -108,7 +121,9 @@ const actions = {
 
   GET_TRADES ({ state }, pair) {
     const offersService = new OffersService({})
-    state.trades.attachInitLoader(offersService.loadCompletedTrades.bind(offersService))
+    state.trades.attachInitLoader(
+      offersService.loadCompletedTrades.bind(offersService)
+    )
     return state.trades.init(pair)
   },
 

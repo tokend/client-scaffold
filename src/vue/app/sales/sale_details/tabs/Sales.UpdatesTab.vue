@@ -1,6 +1,5 @@
 <template>
   <div class="updates-tab">
-
     <add-update-form
       v-if="isAddFormOpened && updatesLoaded"
       class="updates-tab__add-form"
@@ -49,7 +48,9 @@ export default {
     Timeline,
     AddUpdateForm
   },
-  props: ['sale'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   data: _ => ({
     isAddFormOpened: false,
     updates: [],

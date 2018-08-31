@@ -22,14 +22,18 @@ export function parseError (error) {
     }
   }
   const errors = body.errors
-  const parsedErrors = errors.map(error => parseSingleError({ ...error, ...additionalParams }))
+  const parsedErrors = errors.map(error =>
+    parseSingleError({ ...error, ...additionalParams })
+  )
   if (parsedErrors.length === 0) return parsedErrors[0]
   // TODO: need deal somehow with multiple errors:
   if (parsedErrors.length > 0) return parsedErrors[0]
 }
 
 function parseSingleError (error) {
-  if (!error || (!error.status && !error.response)) return ErrorFactory.getServerError()
+  if (!error || (!error.status && !error.response)) {
+    return ErrorFactory.getServerError()
+  }
   const status = +error.status || +error.response.status
   switch (status) {
     case 400:
@@ -55,7 +59,13 @@ function parseTfaError (error) {
   const repeatDetails = error.repeatDetails
   const code = error.code
   if (keychainData) {
-    return ErrorFactory.getPasswordFactorError(factorId, token, keychainData, salt, repeatDetails)
+    return ErrorFactory.getPasswordFactorError(
+      factorId,
+      token,
+      keychainData,
+      salt,
+      repeatDetails
+    )
   } else if (factorId && token) {
     return ErrorFactory.getOtpError({ factorId, token, repeatDetails })
   } else if (code === 'verification_required') {
@@ -94,8 +104,18 @@ function getTransactionError (error) {
   const opCodes = get(details, 'extras.result_codes.operations', [])
   const txMessages = get(details, 'extras.result_codes.messages', [])
   if (!opCodes.length) return {}
-  if (opCodes.length !== txMessages.length) return { code: opCodes[0], message: txMessages[0] }
-  if (opCodes.length === 1) return { opCode: opCodes[0], message: txMessages[0] }
+  if (opCodes.length !== txMessages.length) {
+    return {
+      code: opCodes[0],
+      message: txMessages[0]
+    }
+  }
+  if (opCodes.length === 1) {
+    return {
+      opCode: opCodes[0],
+      message: txMessages[0]
+    }
+  }
   return deriveCorrectTxError(opCodes, txMessages)
 }
 

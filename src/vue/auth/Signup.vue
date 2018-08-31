@@ -145,7 +145,10 @@ export default {
     },
 
     goShowEmail (walletId) {
-      const route = { ...vueRoutes.email, query: { walletId, email: this.form.email } }
+      const route = {
+        ...vueRoutes.email,
+        query: { walletId, email: this.form.email }
+      }
       this.$router.push(route)
     }
   }

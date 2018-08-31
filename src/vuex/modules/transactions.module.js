@@ -1,7 +1,7 @@
-import { accountsService } from '../../js/services/accounts.service'
-import { transactionsService } from '../../js/services/transactions.service'
-import { parseTransaction } from '../../js/parsers/tx.parser'
-import { Paginator } from '../../js/helpers/paginator'
+import { accountsService } from '@/js/services/accounts.service'
+import { transactionsService } from '@/js/services/transactions.service'
+import { parseTransaction } from '@/js/parsers/tx.parser'
+import { Paginator } from '@/js/helpers/paginator'
 import { vuexTypes } from '../types'
 import { Keypair } from 'swarm-js-sdk'
 import cloneDeep from 'lodash/cloneDeep'
@@ -52,7 +52,9 @@ export const actions = {
       paginator = state.lists[tokenCode]
     }
 
-    paginator.attachInitLoader(() => transactionsService.loadTransactionHistory(tokenCode))
+    paginator.attachInitLoader(() =>
+      transactionsService.loadTransactionHistory(tokenCode)
+    )
 
     await paginator.init()
     commit(vuexTypes.UPDATE_TX_LIST_ITEM, { tokenCode, paginator })
@@ -60,7 +62,6 @@ export const actions = {
 
   async NEXT_TX_LIST ({ state, commit, dispatch }, tokenCode) {
     const paginator = state.lists[tokenCode]
-    console.dir(paginator)
     await paginator.next()
     commit(vuexTypes.UPDATE_TX_LIST_ITEM, paginator)
   },
@@ -70,10 +71,14 @@ export const actions = {
       .map(transaction => transaction.counterparty)
       .filter(counterparty => Keypair.isValidPublicKey(counterparty))
 
-    const details = (await accountsService.loadMultipleAccountDetails(counterparties)).data('users')
+    const details =
+      (await accountsService.loadMultipleAccountDetails(counterparties))
+        .data('users')
 
     transactions.forEach(transaction => {
-      transaction.counterparty = get(details, `[${transaction.counterparty}].email`) || transaction.counterparty
+      transaction.counterparty =
+        get(details, `[${transaction.counterparty}].email`) ||
+        transaction.counterparty
     })
   }
 }

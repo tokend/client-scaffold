@@ -7,11 +7,24 @@
         class="requests__list"
         v-table-scroll-shadow>
         <div class="requests__list-header">
-          <div class="requests__list-header-item requests__list-header-item--token-code">{{ i18n.lbl_token_code() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--amount">{{ i18n.preis_amount() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--state">{{ i18n.lbl_request_state() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--created">{{ i18n.lbl_created_at() }}</div>
-          <div class="requests__list-header-item requests__list-header-item--btn" />
+          <div class="requests__list-header-item
+                      requests__list-header-item--token-code">
+            {{ i18n.lbl_token_code() }}
+          </div>
+          <div class="requests__list-header-item
+                      requests__list-header-item--amount">
+            {{ i18n.preis_amount() }}
+          </div>
+          <div class="requests__list-header-item
+                      requests__list-header-item--state">
+            {{ i18n.lbl_request_state() }}
+          </div>
+          <div class="requests__list-header-item
+                      requests__list-header-item--created">
+            {{ i18n.lbl_created_at() }}
+          </div>
+          <div class="requests__list-header-item
+                      requests__list-header-item--btn" />
         </div>
         <div class="requests__list-body">
           <div
@@ -22,31 +35,40 @@
             <div class="requests__list-body-row">
               <div
                 :title="tx.asset"
-                class="requests__list-body-item requests__list-body-item--token-code">
+                class="requests__list-body-item
+                       requests__list-body-item--token-code">
                 {{ tx.asset }}
               </div>
               <div
                 :title="tx.amount"
-                class="requests__list-body-item requests__list-body-item--amount">
+                class="requests__list-body-item
+                       requests__list-body-item--amount">
                 {{ i18n.c(tx.amount) }}
               </div>
               <div
                 :title="tx.state"
-                class="requests__list-body-item requests__list-body-item--state">
+                class="requests__list-body-item
+                       requests__list-body-item--state">
                 {{ tx.state }}
               </div>
               <div
                 :title="tx.createdAt"
-                class="requests__list-body-item requests__list-body-item--created">
+                class="requests__list-body-item
+                       requests__list-body-item--created">
                 {{ i18n.dmy(tx.createdAt) }}
               </div>
-              <div class="requests__list-body-item requests__list-body-item--btn">
+              <div class="requests__list-body-item
+                          requests__list-body-item--btn">
                 <button
                   class="requests__list-body-item-btn"
                   @click="toggleDetails(i)">
                   <md-icon
                     class="requests__list-body-item-icon"
-                    :class="{ 'requests__list-body-item-icon--active': isSelected(i) }">
+                    :class="{
+                      'requests__list-body-item-icon--active':
+                        isSelected(i)
+                    }"
+                  >
                     keyboard_arrow_down
                   </md-icon>
                 </button>
@@ -109,11 +131,6 @@ export default {
     isLoading: false,
     index: -1
   }),
-
-  async created () {
-    await this.loadList()
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.preIssuanceUploadRequests
@@ -125,7 +142,9 @@ export default {
       return _get(this.preIssuanceUploadRequests, 'isLoaded')
     }
   },
-
+  async created () {
+    await this.loadList()
+  },
   methods: {
     ...mapActions({
       loadList: vuexTypes.GET_USER_PREISSUANCE_UPLOAD_REQUESTS,

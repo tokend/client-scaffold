@@ -24,6 +24,7 @@ export class PairsService extends Service {
     return this._horizonRequestBuilder.assetPairs()
       .convert(amount, sourceToken, destToken)
       .callWithSignature(this._keypair)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => response.amount)
   }
 }

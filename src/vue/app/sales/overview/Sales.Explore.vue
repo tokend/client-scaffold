@@ -62,14 +62,14 @@ export default {
     },
     i18n
   }),
-  async created () {
-    await this.loadFilteredSales()
-    this.isLoaded = true
-  },
   computed: {
     ...mapGetters([
       vuexTypes.sales
     ])
+  },
+  async created () {
+    await this.loadFilteredSales()
+    this.isLoaded = true
   },
   methods: {
     ...mapActions({
@@ -85,8 +85,6 @@ export default {
       }
       return this.loadSales(this.filters)
     }
-  },
-  watch: {
   }
 }
 </script>

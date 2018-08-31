@@ -15,7 +15,9 @@ export default {
     VueMarkdown
   },
 
-  props: ['source'],
+  props: {
+    source: { type: String, required: true }
+  },
 
   created () {
   },

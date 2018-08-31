@@ -4,7 +4,6 @@
     :class="`state-banner--${accountState}`"
     v-if="accountState !== ACCOUNT_STATES.nil">
     <div class="state-banner__inner">
-
       <p
         class="state-banner__message"
         v-if="accountState === ACCOUNT_STATES.approved">
@@ -24,7 +23,6 @@
         {{ i18n.kyc_rejected_msg() }}
       </p>
     </div>
-
   </div>
 </template>
 

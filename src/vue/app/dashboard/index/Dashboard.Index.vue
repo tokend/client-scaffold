@@ -52,16 +52,21 @@ export default {
     scale: 'month',
     i18n
   }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountBalances
+    ])
+  },
+  watch: {
+    accountBalances () {
+      this.setCurrentAsset()
+    }
+  },
   async created () {
     this.isLoading = true
     await this.loadBalances()
     this.setCurrentAsset()
     this.isLoading = false
-  },
-  computed: {
-    ...mapGetters([
-      vuexTypes.accountBalances
-    ])
   },
   methods: {
     ...mapActions({
@@ -82,11 +87,6 @@ export default {
     },
     checkDashboardHasValue (value) {
       this.showTabs = value
-    }
-  },
-  watch: {
-    accountBalances () {
-      this.setCurrentAsset()
     }
   }
 }

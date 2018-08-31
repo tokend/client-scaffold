@@ -1,17 +1,17 @@
-import { EventDispatcher } from '../../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../../js/errors/error_handler'
-import { dispatchAppEvent } from '../../../../../js/events/helpers'
-import { commonEvents } from '../../../../../js/events/common_events'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { dispatchAppEvent } from '@/js/events/helpers'
+import { commonEvents } from '@/js/events/common_events'
 
-import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../../../../js/const/offers.const'
-import { i18n } from '../../../../../js/i18n'
+import { SECONDARY_MARKET_ORDER_BOOK_ID } from '@/js/const/offers.const'
+import { i18n } from '@/js/i18n'
 
-import { offersService } from '../../../../../js/services/offer.service'
-import { accountsService } from '../../../../../js/services/accounts.service'
-import { feeService } from '../../../../../js/services/fees.service'
+import { offersService } from '@/js/services/offer.service'
+import { accountsService } from '@/js/services/accounts.service'
+import { feeService } from '@/js/services/fees.service'
 
 import { mapActions, mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 
 export default {
   computed: {
@@ -48,14 +48,19 @@ export default {
 
         // const asset = opts.isBuy ? opts.pair.quote : opts.pair.base
         // const amount = opts.isBuy ? opts.quoteAmount : opts.baseAmount
-        //
+
         // if (Number(this.accountBalances[asset].balance) < Number(amount)) {
-        //   EventDispatcher.dispatchShowErrorEvent(i18n.trd_order_not_enough_funds())
+        //   EventDispatcher.dispatchShowErrorEvent(
+        //     i18n.trd_order_not_enough_funds()
+        //   )
         //   this.enable()
         //   return
         // }
 
-        const fee = await feeService.loadOfferFeeByAmount(opts.pair.quote, opts.quoteAmount)
+        const fee =
+          await feeService.loadOfferFeeByAmount(
+            opts.pair.quote, opts.quoteAmount
+          )
 
         await offersService.createOffer({
           amount: opts.baseAmount,

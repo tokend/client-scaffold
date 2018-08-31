@@ -1,13 +1,35 @@
 <template>
   <md-table class="order-list">
     <md-table-toolbar class="order-list__title">
-      <h2>{{ type === ORDER_TYPES.buy ? i18n.trd_ask () : i18n.trd_bid() }}</h2>
+      <h2>
+        {{
+          type === ORDER_TYPES.buy
+            ? i18n.trd_ask ()
+            : i18n.trd_bid()
+        }}
+      </h2>
     </md-table-toolbar>
     <template v-if="list.length">
       <md-table-row>
-        <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_want() : i18n.trd_order() }} ({{ baseAsset }})</md-table-head>
-        <md-table-head class="order-list__cell">{{ type === ORDER_TYPES.buy ? i18n.trd_order() : i18n.trd_want() }} ({{ quoteAsset }})</md-table-head>
-        <md-table-head class="order-list__cell">{{ i18n.trd_price() }} ({{ quoteAsset }})</md-table-head>
+        <md-table-head class="order-list__cell">
+          {{
+            type === ORDER_TYPES.buy
+              ? i18n.trd_want()
+              : i18n.trd_order()
+          }}
+          ({{ baseAsset }})
+        </md-table-head>
+        <md-table-head class="order-list__cell">
+          {{
+            type === ORDER_TYPES.buy
+              ? i18n.trd_order()
+              : i18n.trd_want()
+          }}
+          ({{ quoteAsset }})
+        </md-table-head>
+        <md-table-head class="order-list__cell">
+          {{ i18n.trd_price() }} ({{ quoteAsset }})
+        </md-table-head>
       </md-table-row>
 
       <template v-for="(order, i) in list">
@@ -15,34 +37,41 @@
           class="order-list__row"
           :key="`${i}-order-row`"
           @click.native="matchOrder(order)">
-          <md-table-cell class="order-list__cell">{{ order.baseAmount }}</md-table-cell>
-          <md-table-cell class="order-list__cell">{{ order.quoteAmount }} </md-table-cell>
-          <md-table-cell class="order-list__cell">{{ order.price }}</md-table-cell>
+          <md-table-cell class="order-list__cell">
+            {{ order.baseAmount }}
+          </md-table-cell>
+          <md-table-cell class="order-list__cell">
+            {{ order.quoteAmount }}
+          </md-table-cell>
+          <md-table-cell class="order-list__cell">
+            {{ order.price }}
+          </md-table-cell>
         </md-table-row>
       </template>
-
     </template>
     <template v-else>
       <div class="order-list__no-transactions">
         <md-icon class="md-size-4x">trending_up</md-icon>
         <h2>{{ i18n.trd_no_orders_history() }}</h2>
-        <p>{{
-          type === ORDER_TYPES.buy ?
-            i18n.trd_here_will_be_the_order_ask_list() :
-            i18n.trd_here_will_be_the_order_bid_list()
-        }}</p>
+        <p>
+          {{
+            type === ORDER_TYPES.buy ?
+              i18n.trd_here_will_be_the_order_ask_list() :
+              i18n.trd_here_will_be_the_order_bid_list()
+          }}
+        </p>
       </div>
     </template>
   </md-table>
 </template>
 
 <script>
-import { i18n } from '../../../../../../js/i18n'
-import { ORDER_TYPES } from '../../../../../../js/const/order-types'
+import { i18n } from '@/js/i18n'
+import { ORDER_TYPES } from '@/js/const/order-types'
 import OrderMakerMixin from '../order-maker.mixin'
-import SubmitterMixin from '../../../../../common/mixins/submitter.mixin'
+import SubmitterMixin from '@/vue/common/mixins/submitter.mixin'
 
-import { confirmAction } from '../../../../../../js/modals/confirmation_message'
+import { confirmAction } from '@/js/modals/confirmation_message'
 
 export default {
   name: 'order-list',
@@ -86,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../../../../scss/mixins";
+@import "~@scss/mixins";
 
 .order-list {
   max-height: 400px;

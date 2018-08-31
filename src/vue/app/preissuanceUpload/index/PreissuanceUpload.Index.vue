@@ -1,7 +1,9 @@
 <template>
   <div>
     <template v-if="accountTypeI !== ACCOUNT_TYPES.syndicate">
-      <h2 class="app__page-heading">{{ i18n.preis_not_available_heading() }}</h2>
+      <h2 class="app__page-heading">
+        {{ i18n.preis_not_available_heading() }}
+      </h2>
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.preis_not_available() }}
       </p>
@@ -34,7 +36,6 @@
 
 <script>
 import PreissuanceUploadManager from './PreissuanceUpload.Manager'
-import NotAvailableCard from '../../common/NotAvailableCard'
 
 import { vuexTypes } from '../../../../vuex/types'
 import { mapGetters } from 'vuex'
@@ -44,8 +45,7 @@ import { ACCOUNT_TYPES } from '../../../../js/const/const'
 
 export default {
   components: {
-    PreissuanceUploadManager,
-    NotAvailableCard
+    PreissuanceUploadManager
   },
   data: _ => ({
     i18n,

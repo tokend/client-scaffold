@@ -35,7 +35,16 @@ import * as d3Ease from 'd3-ease'
 import moment from 'moment'
 import { chunk } from 'lodash'
 import config from '@/config'
-const d3 = Object.assign({}, d3Array, d3Selection, d3Axis, d3Shape, d3Scale, d3Transition, d3Ease)
+const d3 = Object.assign(
+  {},
+  d3Array,
+  d3Selection,
+  d3Axis,
+  d3Shape,
+  d3Scale,
+  d3Transition,
+  d3Ease
+)
 
 export default {
   name: 'chart-renderer',
@@ -107,7 +116,8 @@ export default {
     getMaxAndMin (data) {
       const arr = data.map(item => item.value)
       const max = Math.max(...arr, ...this.requiredTicks)
-      const min = this.requiredTicks && this.requiredTicks.length ? 0 : Math.min(...arr)
+      const min = this.requiredTicks &&
+                  this.requiredTicks.length ? 0 : Math.min(...arr)
       return { max, min }
     },
 
@@ -396,7 +406,9 @@ export default {
           const d1 = data[bisectIndex]
           const nearestPoint = x0 - d0.time > d1.time - x0 ? d1 : d0
           // Change text of the tooltip
-          tipPriceText.text(`${i18n.c(nearestPoint.value)} ${this.defaultAsset}`)
+          tipPriceText.text(`
+            ${i18n.c(nearestPoint.value)} ${this.defaultAsset}
+          `)
 
           switch (this.scale) {
             case 'year': {
@@ -436,10 +448,14 @@ export default {
 
             if (prevValue > currentValue) {
               const val = ((prevValue - currentValue) / currentValue) * 100
-              tipPriceChangeText.text(`-${val.toPrecision(getPrecision(val))}%`)
+              tipPriceChangeText.text(`
+                -${val.toPrecision(getPrecision(val))}%
+              `)
             } else if (prevValue < currentValue) {
               const val = ((currentValue - prevValue) / currentValue) * 100
-              tipPriceChangeText.text(`+${val.toPrecision(getPrecision(val))}%`)
+              tipPriceChangeText.text(`
+                +${val.toPrecision(getPrecision(val))}%
+              `)
             } else {
               tipPriceChangeText.text('+0%')
             }
@@ -449,7 +465,10 @@ export default {
 
           // Change X position of the tip
           tip.attr('transform', `translate(${x(nearestPoint.time)})`)
-          tipTextBox.style('transform', `translateY(${y(nearestPoint.value) - 35}px)`)
+          tipTextBox.style(
+            'transform',
+            `translateY(${y(nearestPoint.value) - 35}px)`
+          )
           if (min === max) {
             tipLine.attr('y1', height / 2)
             tipLine.attr('y2', height)

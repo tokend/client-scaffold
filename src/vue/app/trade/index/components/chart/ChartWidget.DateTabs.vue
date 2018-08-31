@@ -1,6 +1,5 @@
 <template>
   <div class="date-tabs">
-
     <span class="date-tabs__prefix">
       {{ i18n.trd_chart_tabs_prefix() }}
     </span>
@@ -40,7 +39,6 @@
     >
       <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
     </button>
-
   </div>
 </template>
 
@@ -50,8 +48,10 @@ import { i18n } from '../../../../../../js/i18n'
 
 export default {
   name: 'date-tabs',
-  props: ['value', 'isPending'],
-
+  props: {
+    value: { type: String, default: '' },
+    isPending: { type: Boolean, default: false }
+  },
   data () {
     return {
       common: {

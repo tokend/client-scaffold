@@ -3,7 +3,8 @@
     <asset-selector
       v-if="formattedPairs.length"
       :pairs="formattedPairs" />
-    <div class="trade-row app__card-wrapper app__card-wrapper--xmedium-breakpoint">
+    <div class="trade-row app__card-wrapper
+                app__card-wrapper--xmedium-breakpoint">
       <chart
         class="trade__chart"
         :data="history"
@@ -31,7 +32,6 @@
         :offers="userOffers"
         class="md-layout-item md-size-100" />
     </div>
-
   </div>
 </template>
 
@@ -43,15 +43,15 @@ import TradeOrders from './components/tradeOrders/Trade.TradeOrders'
 import Orders from './components/orders/Trade.Orders'
 import ManageOrders from './components/manageOrders/Trade.ManageOrders'
 
-import { chartsService } from '../../../../js/services/charts.service'
-import { errors } from '../../../../js/errors/factory'
-import config from '../../../../config'
+import { chartsService } from '@/js/services/charts.service'
+import { errors } from '@/js/errors/factory'
+import config from '@/config'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
-import { attachEventHandler } from '../../../../js/events/helpers'
-import { commonEvents } from '../../../../js/events/common_events'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { vuexTypes } from '@/vuex/types'
+import { attachEventHandler } from '@/js/events/helpers'
+import { commonEvents } from '@/js/events/common_events'
+import { ErrorHandler } from '@/js/errors/error_handler'
 
 export default {
   name: 'trade-index',
@@ -75,14 +75,6 @@ export default {
       precision: config.DECIMAL_POINTS
     }
   }),
-  async created () {
-    await this.loadPairs()
-    await this.loadData(this.tradablePairs[0])
-    attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
-    attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
-    attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
-    this.customAssetPair = this.formattedPairs[0]
-  },
   computed: {
     ...mapGetters([
       vuexTypes.tradablePairs,
@@ -93,6 +85,14 @@ export default {
         return `${el.base}/${el.quote}`
       })
     }
+  },
+  async created () {
+    await this.loadPairs()
+    await this.loadData(this.tradablePairs[0])
+    attachEventHandler(commonEvents.changePairsAsset, this.handleAssetChange)
+    attachEventHandler(commonEvents.cancelOrder, this.handleCancelOrder)
+    attachEventHandler(commonEvents.createdOrder, this.handleCreatedOffer)
+    this.customAssetPair = this.formattedPairs[0]
   },
   methods: {
     ...mapActions({
@@ -112,10 +112,11 @@ export default {
     },
     async loadPrices ({ base, quote }) {
       try {
-        this.history = (await chartsService.loadChartsForTokenPair(base, quote)).data()
+        this.history =
+          (await chartsService.loadChartsForTokenPair(base, quote)).data()
       } catch (error) {
         if (error instanceof errors.NotFoundError) {
-          console.log('error')
+          console.error('error')
           ErrorHandler.processUnexpected(error)
         }
       }
@@ -137,8 +138,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
   $large-breakpoint: 1374px;
   $medium-breakpoint: 1374px;
 

@@ -78,18 +78,15 @@ export default {
     documentTypes,
     uploadVideo: false
   }),
-
-  created () {
-    this.form = _pick(this.sale, Object.keys(this.form))
-    this._loadDescriptionIfExists()
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.userAccountId
     ])
   },
-
+  created () {
+    this.form = _pick(this.sale, Object.keys(this.form))
+    this._loadDescriptionIfExists()
+  },
   methods: {
     async submit () {
       if (!await this.isValid()) return
@@ -114,7 +111,9 @@ export default {
 
     async _loadDescriptionIfExists () {
       if (!this.form.descriptionID) return
-      this.form.description = await usersService.blobsOf().get(this.form.descriptionID)
+      this.form.description =
+        await usersService.blobsOf()
+          .get(this.form.descriptionID)
     }
   }
 }

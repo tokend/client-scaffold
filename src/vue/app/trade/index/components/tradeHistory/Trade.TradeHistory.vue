@@ -7,9 +7,15 @@
         </md-table-toolbar>
 
         <md-table-row>
-          <md-table-head>{{ i18n.trd_history_amount({ asset: assets.base }) }}</md-table-head>
-          <md-table-head>{{ i18n.trd_history_price({ asset: assets.quote }) }}</md-table-head>
-          <md-table-head>{{ i18n.trd_history_total({ asset: assets.quote }) }}</md-table-head>
+          <md-table-head>
+            {{ i18n.trd_history_amount({ asset: assets.base }) }}
+          </md-table-head>
+          <md-table-head>
+            {{ i18n.trd_history_price({ asset: assets.quote }) }}
+          </md-table-head>
+          <md-table-head>
+            {{ i18n.trd_history_total({ asset: assets.quote }) }}
+          </md-table-head>
           <md-table-head>{{ i18n.trd_history_time() }}</md-table-head>
         </md-table-row>
 
@@ -28,8 +34,12 @@
                 <md-icon>call_made</md-icon>
               </template>
             </md-table-cell>
-            <md-table-cell class="trade-history__item-total">{{ i18n.c(multiply(item.baseAmount, item.price)) }}</md-table-cell>
-            <md-table-cell class="trade-history__item-date">{{ toValidDate(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="trade-history__item-total">
+              {{ i18n.c(multiply(item.baseAmount, item.price)) }}
+            </md-table-cell>
+            <md-table-cell class="trade-history__item-date">
+              {{ toValidDate(item.createdAt) }}
+            </md-table-cell>
           </template>
         </md-table-row>
       </md-table>
@@ -48,14 +58,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../../../vuex/types'
-import { i18n } from '../../../../../../js/i18n'
-import { multiply } from '../../../../../../js/utils/math.util'
+import { vuexTypes } from '@/vuex/types'
+import { i18n } from '@/js/i18n'
+import { multiply } from '@/js/utils/math.util'
 
 export default {
   name: 'trade-history',
   props: {
-    assets: { type: Object, require: true }
+    assets: { type: Object, require: true, default: () => {} }
   },
   data () {
     return {
@@ -73,7 +83,8 @@ export default {
       // 0 === price decreased
       // 1 === price increased
       // 2 === price hasn't changed
-      let trades = this.trades.reverse()
+      let trades = this.trades
+      trades = trades.reverse()
       for (let item of trades) {
         let index = trades.indexOf(item)
         if (trades.length) {
@@ -81,9 +92,11 @@ export default {
         }
         if (trades[index] !== trades['0']) {
           let prevIndex = index - 1
-          if (Number(trades[index].price) > Number(trades[prevIndex].price)) {
+          const indexPrice = Number(trades[index].price)
+          const prevIndexPrice = Number(trades[prevIndex].price)
+          if (indexPrice > prevIndexPrice) {
             trades[index].priceStatus = 1
-          } else if (Number(trades[index].price) === Number(trades[prevIndex].price)) {
+          } else if (indexPrice === prevIndexPrice) {
             trades[index].priceStatus = 2
           } else {
             trades[index].priceStatus = 0
@@ -110,8 +123,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../../scss/variables";
-  @import "../../../../../../scss/mixins";
+  @import "~@scss/variables";
+  @import "~@scss/mixins";
 
   .md-table-cell {
     font-size: 12px;

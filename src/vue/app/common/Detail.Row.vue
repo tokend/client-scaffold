@@ -5,7 +5,12 @@
       <span
         class="detail-row__value-text"
         :id="copiable ? `clipboard-target-${id}` : ''">
-        {{ value || '—' }}
+        <template v-if="value">
+          {{ value || '—' }}
+        </template>
+        <template v-else>
+          <slot />
+        </template>
       </span>
       <md-button
         v-if="copiable"
@@ -14,7 +19,9 @@
         @click="showCopySuccess"
         :data-clipboard-target="`#clipboard-target-${id}`"
       >
-        <md-icon class="detail-row__clipboard-icon md-icon-size-065x">content_copy</md-icon>
+        <md-icon class="detail-row__clipboard-icon md-icon-size-065x">
+          content_copy
+        </md-icon>
         <md-tooltip>Copy</md-tooltip>
       </md-button>
     </span>
@@ -23,14 +30,14 @@
 
 <script>
 import Clipboard from 'clipboard'
-import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { i18n } from '../../../js/i18n'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { i18n } from '@/js/i18n'
 
 export default {
   name: 'detail-row',
   props: {
     prop: { type: String, default: '' },
-    value: { type: [String, Number], default: '' },
+    value: { type: [String, Number, Array], default: '' },
     copiable: { type: Boolean, default: false }
   },
   data: _ => ({
@@ -52,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .detail-row {
     display: flex;

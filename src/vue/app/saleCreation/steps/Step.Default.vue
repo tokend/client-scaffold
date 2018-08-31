@@ -11,7 +11,6 @@
           class="app__form-field"
           v-for="(item, i) in row"
           :key="i">
-
           <input-field-unchained
             v-if="item.field === 'text'"
 
@@ -102,7 +101,9 @@ import { documentTypes } from '../../../../js/const/documents.const'
 export default {
   name: 'step-default',
   mixins: [ StepMixin ],
-  props: ['schema'],
+  props: {
+    schema: { type: Object, default: () => {} }
+  },
   created () {
     if (this.schema) {
       this.form = _pick(this.sale, Object.keys(this.schema.form))

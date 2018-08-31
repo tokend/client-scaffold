@@ -33,7 +33,10 @@ export function multiply (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
 
   BigNumber.config({ DECIMAL_PLACES })
 
-  return result.dividedBy(new BigNumber(ONE)).dividedBy(new BigNumber(ONE)).toFixed(DECIMAL_PLACES)
+  return result
+    .dividedBy(new BigNumber(ONE))
+    .dividedBy(new BigNumber(ONE))
+    .toFixed(DECIMAL_PLACES)
 }
 
 export function divide (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {

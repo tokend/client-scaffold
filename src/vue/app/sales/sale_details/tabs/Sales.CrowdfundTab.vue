@@ -4,25 +4,29 @@
       <h3>{{ i18n.sale_corporate_details() }}</h3>
       <detail-row
         :prop="i18n.com_name()"
-        :value="`${syndicate.name}`" />
+        :value="syndicate.name" />
       <detail-row
         :prop="i18n.com_date_of_foundation()"
-        :value="`${syndicate.founded}`" />
+        :value="syndicate.founded" />
       <detail-row
         :prop="i18n.com_homepage()"
-        :value="`<a href='${syndicate.homepage}' target='_blank'>${syndicate.homepage}</a>`" />
+        :value="''">
+        <a :href="syndicate.homepage" target="_blank">
+          {{ syndicate.homepage }}
+        </a>
+      </detail-row>
       <detail-row
         :prop="i18n.com_industry_tags()"
-        :value="`${syndicate.industry}`" />
+        :value="syndicate.industry" />
       <detail-row
         :prop="i18n.com_team_size()"
-        :value="`${syndicate.teamSize}`" />
+        :value="syndicate.teamSize" />
       <detail-row
         :prop="i18n.com_type()"
-        :value="`${syndicate.company}`" />
+        :value="syndicate.company" />
       <detail-row
         :prop="i18n.com_headquarters()"
-        :value="`${syndicate.headquarters}`" />
+        :value="syndicate.headquarters" />
     </div>
     <div class="crowdfund-team">
       <h3>{{ i18n.sale_crowdfund_team() }}</h3>
@@ -46,14 +50,16 @@
 
 <script>
 import DetailRow from '../../../common/Detail.Row'
-import { i18n } from '../../../../../js/i18n'
-import config from '../../../../../config'
+import { i18n } from '@/js/i18n'
+import config from '@/config'
 import _get from 'lodash/get'
 export default {
   components: {
     DetailRow
   },
-  props: ['syndicate'],
+  props: {
+    syndicate: { type: Object, default: () => {} }
+  },
   data: _ => ({
     i18n
   }),
@@ -67,8 +73,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .crowdfund-details {
     margin-bottom: 1rem;

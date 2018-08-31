@@ -1,5 +1,5 @@
-import { LocalStorageViewer } from '../../../../js/utils/local-storage-viewer.util'
-import { SaleRequestRecord } from '../../../../js/records/sale_request.record'
+import { LocalStorageViewer } from '@/js/utils/local-storage-viewer.util'
+import { SaleRequestRecord } from '@/js/records/sale_request.record'
 
 const storageKey = 'saleList'
 let localStorageViewer
@@ -38,7 +38,9 @@ export class SaleListManager {
   }
 
   drop (saleToDrop) {
-    const i = this._fromStorage.findIndex(sale => sale.saleIndex === saleToDrop.saleIndex)
+    const i = this._fromStorage.findIndex(sale =>
+      sale.saleIndex === saleToDrop.saleIndex
+    )
     this._fromStorage.splice(i, 1)
     this.pushToStorage()
   }

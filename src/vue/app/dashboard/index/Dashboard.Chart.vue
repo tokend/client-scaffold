@@ -44,7 +44,11 @@ export default {
     historyHasValue () {
       let valueIsPresent = false
       this.history.map(item => {
-        if (!valueIsPresent) item.value > 0 ? valueIsPresent = true : valueIsPresent = false
+        if (!valueIsPresent) {
+          item.value > 0
+            ? valueIsPresent = true
+            : valueIsPresent = false
+        }
       })
       return valueIsPresent
     }
@@ -54,10 +58,16 @@ export default {
       if (value) await this.loadPrices(value)
     },
     historyHasValue (value) {
-      this.$emit(commonEvents.checkDashboardChartHasValue, this.isActualData && value)
+      this.$emit(
+        commonEvents.checkDashboardChartHasValue,
+        this.isActualData && value
+      )
     },
     isActualData (value) {
-      this.$emit(commonEvents.checkDashboardChartHasValue, this.historyHasValue && value)
+      this.$emit(
+        commonEvents.checkDashboardChartHasValue,
+        this.historyHasValue && value
+      )
     }
   },
   async created () {
@@ -68,7 +78,12 @@ export default {
       this.isLoading = true
       try {
         this.isActualData = true
-        this.data = (await chartsService.loadChartsForTokenPair(asset, this.common.defaultQuoteAsset)).data()
+        this.data = (
+          await chartsService.loadChartsForTokenPair(
+            asset,
+            this.common.defaultQuoteAsset
+          )
+        ).data()
       } catch (error) {
         if (error instanceof errors.NotFoundError) {
           this.isActualData = false

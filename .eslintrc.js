@@ -1,6 +1,6 @@
 // https://eslint.org/docs/user-guide/configuring
 
-function checkNodeEnv () {
+function isDevelopmentBuild () {
   return [ 'production', 'staging', 'dev-build' ].indexOf(process.env.NODE_ENV) > -1
 }
 
@@ -28,13 +28,13 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': checkNodeEnv() ? 2 : 0,
-    'no-warning-comments': [checkNodeEnv() ? 1 : 0, {
+    'no-debugger': isDevelopmentBuild() ? 2 : 0,
+    'no-warning-comments': [isDevelopmentBuild() ? 1 : 0, {
       'terms': ['hardcoded'], location: 'anywhere'
     }],
-    'no-console': checkNodeEnv()
-                    ? [1, { allow: ['warn', 'error'] }]
-                    : [2, { allow: ['warn', 'error'] }],
+    'no-console': isDevelopmentBuild()
+                    ? [2, { allow: ['warn', 'error'] }]
+                    : [1, { allow: ['warn', 'error'] }],
     'max-len': [1, {
       'code': 80,
       'ignoreUrls': true,

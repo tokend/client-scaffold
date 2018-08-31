@@ -48,7 +48,8 @@ export class AccountsService extends Service {
    * @returns {TransactionBuilder}
    */
   createKycRequest (opts) {
-    const operation = CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
+    const operation =
+      CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
     return this._operationBuilder
       .operation()
       .add(operation)
@@ -63,7 +64,8 @@ export class AccountsService extends Service {
    * @returns {TransactionBuilder}
    */
   createLimitRequest (opts) {
-    const operation = CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
+    const operation =
+      CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
 
     return this._operationBuilder
       .operation()
@@ -115,6 +117,7 @@ export class AccountsService extends Service {
 
   loadBalanceIdByAccountid (accountId, tokenCode) {
     return this.loadAccountBalancesById(accountId)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(allBalances => {
         const balance = allBalances.find(balance => balance.asset === tokenCode)
         if (!balance) ErrorFactory.throwError(errorTypes.NotFoundError)
@@ -142,6 +145,7 @@ export class AccountsService extends Service {
     return this._apiRequestBuilder.userId()
       .forEmail(email)
       .get()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(r => r.data('account_id'))
   }
 
@@ -157,6 +161,7 @@ export class AccountsService extends Service {
       .sign(this._keypair)
       .json()
       .post()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => get(Object.values(response.data('users')), '[0].email'))
   }
 

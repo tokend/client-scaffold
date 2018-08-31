@@ -10,17 +10,15 @@
 </template>
 
 <script>
-import markdownEditor from 'vue-simplemde/src/markdown-editor'
+import MarkdownEditor from 'vue-simplemde/src/markdown-editor'
 import { commonEvents } from '../../../../js/events/common_events'
 
 export default {
   name: 'description-editor',
-
-  components: {
-    markdownEditor
+  components: { MarkdownEditor },
+  props: {
+    value: { type: [String, Number], required: true, default: '' || 0 }
   },
-
-  props: ['value'],
 
   data () {
     return {

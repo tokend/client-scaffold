@@ -105,8 +105,12 @@
       </ul>
     </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list">
-      <div class="sidebar__list-title">{{ i18n.sidebar_section_explore() }}</div>
+    <section class="sidebar__section
+                    sidebar__section--account
+                    sidebar__list">
+      <div class="sidebar__list-title">
+        {{ i18n.sidebar_section_explore() }}
+      </div>
       <ul>
         <router-link
           v-ripple
@@ -116,7 +120,9 @@
           tag="li"
           v-if="config.FEATURE_FLAGS.tokens">
           <md-icon class="sidebar__list-item-icon">toll</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_explore_tokens_page() }}</span>
+          <span class="md-list-item-text">
+            {{ i18n.lbl_explore_tokens_page() }}
+          </span>
         </router-link>
 
         <router-link
@@ -127,7 +133,9 @@
           tag="li"
           v-if="config.FEATURE_FLAGS.sales">
           <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_explore_sales() }}</span>
+          <span class="md-list-item-text">
+            {{ i18n.lbl_explore_sales() }}
+          </span>
         </router-link>
       </ul>
     </section>
@@ -135,7 +143,9 @@
     <section
       class="sidebar__section sidebar__section--account sidebar__list"
       v-if="accountTypeI === ACCOUNT_TYPES.syndicate">
-      <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
+      <div class="sidebar__list-title">
+        {{ i18n.sidebar_section_corporate() }}
+      </div>
       <ul>
         <router-link
           v-ripple
@@ -145,7 +155,9 @@
           tag="li"
           v-if="config.FEATURE_FLAGS.tokenCreation">
           <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
+          <span class="md-list-item-text">
+            {{ i18n.lbl_create_token_page() }}
+          </span>
         </router-link>
 
         <router-link
@@ -156,7 +168,9 @@
           tag="li"
           v-if="config.FEATURE_FLAGS.saleCreation">
           <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
+          <span class="md-list-item-text">
+            {{ i18n.lbl_create_sale_page() }}
+          </span>
         </router-link>
 
         <!-- <router-link v-ripple class="sidebar__list-item"
@@ -175,7 +189,9 @@
           tag="li"
           v-if="config.FEATURE_FLAGS.preIssuanceUpload">
           <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
+          <span class="md-list-item-text">
+            {{ i18n.lbl_upload_preissuance_page() }}
+          </span>
         </router-link>
 
         <router-link
@@ -186,7 +202,9 @@
           tag="li"
           v-if="config.FEATURE_FLAGS.issuanceCreation">
           <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
+          <span class="md-list-item-text">
+            {{ i18n.lbl_create_issuance_page() }}
+          </span>
         </router-link>
 
         <router-link
@@ -203,7 +221,9 @@
     </section>
 
     <section class="sidebar__section sidebar__section--account sidebar__list">
-      <div class="sidebar__list-title">{{ i18n.sidebar_section_account() }}</div>
+      <div class="sidebar__list-title">
+        {{ i18n.sidebar_section_account() }}
+      </div>
       <ul>
         <router-link
           v-ripple
@@ -325,7 +345,8 @@ export default {
 
   .sidebar__list-item-icon {
     margin-right: 16px;
-    color: $col-md-primary-inactive !important; // TODO: remove important rule when possible
+    // TODO: remove important rule when possible
+    color: $col-md-primary-inactive !important;
     .router-link-active & {
       color: $col-md-primary !important;
     }

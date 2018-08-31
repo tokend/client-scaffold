@@ -84,7 +84,9 @@ import { ErrorHandler } from '@/js/errors/error_handler'
 import { ACCOUNT_TYPES } from '@/js/const/const'
 import { confirmAction } from '@/js/modals/confirmation_message'
 import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { reviewableRequestsService } from '@/js/services/reviewable_requests.service'
+import {
+  reviewableRequestsService
+} from '@/js/services/reviewable_requests.service'
 import _get from 'lodash/get'
 
 const VIEW_MODES = {
@@ -101,7 +103,9 @@ export default {
     Loader
   },
   mixins: [FormMixin],
-  props: ['id'],
+  props: {
+    id: { type: Object, default: () => {} }
+  },
   data: _ => ({
     activeStep: steps[0].name,
     sale: null,
@@ -116,6 +120,13 @@ export default {
     VIEW_MODES,
     ACCOUNT_TYPES
   }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountId,
+      vuexTypes.accountTypeI,
+      vuexTypes.accountOwnedTokens
+    ])
+  },
   async created () {
     await Promise.all([
       this.loadTokens(),
@@ -124,7 +135,8 @@ export default {
     ])
     this.isReady = true
     if (this.id) {
-      this.saleRequest = await reviewableRequestsService.loadReviewableRequestById(this.id)
+      this.saleRequest =
+        await reviewableRequestsService.loadReviewableRequestById(this.id)
     }
     if (!this.id && this.listManager.list.length) {
       this.view.mode = VIEW_MODES.list
@@ -132,15 +144,6 @@ export default {
     }
     this.startNewSale()
   },
-
-  computed: {
-    ...mapGetters([
-      vuexTypes.accountId,
-      vuexTypes.accountTypeI,
-      vuexTypes.accountOwnedTokens
-    ])
-  },
-
   methods: {
     ...mapActions({
       loadTokens: vuexTypes.GET_ALL_TOKENS,
@@ -201,7 +204,9 @@ export default {
         await this.listManager.fetch()
         this.view.mode = VIEW_MODES.list
         this.$router.push({ path: '/requests/sale-creation' })
-        EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
+        EventDispatcher.dispatchShowSuccessEvent(
+          i18n.sale_create_request_success()
+        )
       } catch (error) {
         console.error(error)
         ErrorHandler.processUnexpected(error)

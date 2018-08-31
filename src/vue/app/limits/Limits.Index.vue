@@ -10,66 +10,116 @@
       />
       <div class="app__form-field-description">
         <p v-if="filters.tokenCode">
-          {{ i18n.transfer_balance({ amount: balance.balance, asset: filters.tokenCode }) }}
+          {{
+            i18n.transfer_balance({
+              amount: balance.balance,
+              asset: filters.tokenCode
+            })
+          }}
         </p>
       </div>
     </div>
 
     <template v-if="filters.tokenCode">
       <template v-for="[op, name] in Object.entries(LIMIT_OPS)">
-        <div class="limits__list">
-
+        <div
+          class="limits__list"
+          :key="`limits-index-${name}`">
           <h3 class="limits__op-name">{{ name }}</h3>
 
           <div class="limits__list-content">
             <p class="limits__list-item">
-              <span class="limits__list-item-label">{{ i18n.lim_daily() }}:</span>
-              {{ limits[op].dailyLeft ? i18n.c(limits[op].dailyLeft) : '—' }}
+              <span class="limits__list-item-label">
+                {{ i18n.lim_daily() }}:
+              </span>
+              {{
+                limits[op].dailyLeft
+                  ? i18n.c(limits[op].dailyLeft)
+                  : '—'
+              }}
               /
-              {{ limits[op].dailyLimit ? i18n.c(limits[op].dailyLimit) : '—' }}
-              <template v-if="limits[op].dailyLimit">{{ i18n.lim_total() }}</template>
+              {{
+                limits[op].dailyLimit
+                  ? i18n.c(limits[op].dailyLimit)
+                  : '—'
+              }}
+              <template v-if="limits[op].dailyLimit">
+                {{ i18n.lim_total() }}
+              </template>
             </p>
 
             <p class="limits__list-item">
-              <span class="limits__list-item-label">{{ i18n.lim_weekly() }}:</span>
-              {{ limits[op].weeklyLeft ? i18n.c(limits[op].weeklyLeft) : '—' }}
+              <span class="limits__list-item-label">
+                {{ i18n.lim_weekly() }}:
+              </span>
+              {{
+                limits[op].weeklyLeft
+                  ? i18n.c(limits[op].weeklyLeft)
+                  : '—'
+              }}
               /
-              {{ limits[op].weeklyLimit ? i18n.c(limits[op].weeklyLimit) : '—' }}
-              <template v-if="limits[op].weeklyLimit">{{ i18n.lim_total() }}</template>
+              {{
+                limits[op].weeklyLimit
+                  ? i18n.c(limits[op].weeklyLimit)
+                  : '—'
+              }}
+              <template v-if="limits[op].weeklyLimit">
+                {{ i18n.lim_total() }}
+              </template>
             </p>
 
             <p class="limits__list-item">
-              <span class="limits__list-item-label">{{ i18n.lim_monthly() }}:</span>
-              {{ limits[op].monthlyLeft ? i18n.c(limits[op].monthlyLeft) : '—' }}
+              <span class="limits__list-item-label">
+                {{ i18n.lim_monthly() }}:
+              </span>
+              {{
+                limits[op].monthlyLeft
+                  ? i18n.c(limits[op].monthlyLeft)
+                  : '—'
+              }}
               /
-              {{ limits[op].monthlyLimit ? i18n.c(limits[op].monthlyLimit) : '—' }}
-              <template v-if="limits[op].monthlyLimit">{{ i18n.lim_total() }}</template>
+              {{
+                limits[op].monthlyLimit
+                  ? i18n.c(limits[op].monthlyLimit)
+                  : '—'
+              }}
+              <template v-if="limits[op].monthlyLimit">
+                {{ i18n.lim_total() }}
+              </template>
             </p>
 
             <p class="limits__list-item">
-              <span class="limits__list-item-label">{{ i18n.lim_annual() }}:</span>
-              {{ limits[op].annualLeft ? i18n.c(limits[op].annualLeft) : '—' }}
+              <span class="limits__list-item-label">
+                {{ i18n.lim_annual() }}:
+              </span>
+              {{
+                limits[op].annualLeft
+                  ? i18n.c(limits[op].annualLeft)
+                  : '—'
+              }}
               /
-              {{ limits[op].annualLimit ? i18n.c(limits[op].annualLimit) : '—' }}
-              <template v-if="limits[op].annualLimit">{{ i18n.lim_total() }}</template>
+              {{
+                limits[op].annualLimit
+                  ? i18n.c(limits[op].annualLimit)
+                  : '—'
+              }}
+              <template v-if="limits[op].annualLimit">
+                {{ i18n.lim_total() }}
+              </template>
             </p>
-
           </div>
         </div>
       </template>
     </template>
-
   </div>
 </template>
 
 <script>
-import LimitsRequestsList from './Limits.List'
 import FormMixin from '../../common/mixins/form.mixin'
 import LimitsIndexMixin from './limits-index.mixin'
 
 export default {
   name: 'limits-index',
-  components: { LimitsRequestsList },
   mixins: [LimitsIndexMixin, FormMixin]
 }
 </script>

@@ -9,7 +9,9 @@
           :alt="documentTypes.tokenIcon">
         <div
           class="crowdfund-token__icon"
-          v-else>{{ token.name.substr(0, 1).toUpperCase() }}</div>
+          v-else>
+          {{ token.name.substr(0, 1).toUpperCase() }}
+        </div>
       </div>
       <div class="crowdfund-token__name-wrapper">
         <h2 class="crowdfund-token__name">{{ token.name }}</h2>
@@ -30,7 +32,9 @@
         <detail-row
           :prop="i18n.lbl_terms()"
           v-if="token.termsUrl"
-          :value="`<a href='${token.termsUrl}' target='_blank'>Open file</a>`" />
+          :value="''">
+          <a href="${token.termsUrl}" target="_blank">Open file</a>
+        </detail-row>
         <detail-row
           :prop="i18n.lbl_terms()"
           v-else />
@@ -51,7 +55,9 @@ export default {
   components: {
     DetailRow
   },
-  props: ['token'],
+  props: {
+    token: { type: Object, default: () => {} }
+  },
   data: _ => ({
     i18n,
     documentTypes,

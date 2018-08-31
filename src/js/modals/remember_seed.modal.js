@@ -46,9 +46,9 @@ export function showRememberSeedMessage (seed) {
   const seedModal = document.createElement('div')
   document.querySelector('#app').appendChild(seedModal)
 
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve) => {
     const messageEl = new Vue({
-      template,
       components: { InputField },
       data () {
         return {
@@ -60,7 +60,6 @@ export function showRememberSeedMessage (seed) {
           i18n
         }
       },
-
       computed: {
         isSeedValid () {
           return this.form.seed === this.form.provideSeed
@@ -78,7 +77,8 @@ export function showRememberSeedMessage (seed) {
           this.close()
           return resolve(true)
         }
-      }
+      },
+      template
     })
     messageEl.$mount(seedModal)
   })

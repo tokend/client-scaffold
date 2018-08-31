@@ -2,7 +2,9 @@
   <div class="date-field-flatpickr">
     <label
       class="date-field-flatpickr__label"
-      :class="{ 'date-field-flatpickr__label--unfocus': !value }"> {{ label }}</label>
+      :class="{ 'date-field-flatpickr__label--unfocus': !value }">
+      {{ label }}
+    </label>
 
     <div class="date-field-flatpickr__field">
       <flat-pickr
@@ -21,7 +23,6 @@
       {{ errorMessage }}
     </div>
   </div>
-
 </template>
 
 <script>

@@ -23,15 +23,15 @@
 </template>
 
 <script>
-import txDetails from '../../history/index/History.TxDetails'
-import { i18n } from '../../../../js/i18n'
+import TxDetails from '../../history/index/History.TxDetails'
+import { i18n } from '@/js/i18n'
 
 export default {
   name: 'info-dialog',
-  components: { txDetails },
+  components: { TxDetails },
   props: {
     showDialog: { type: Boolean, default: false },
-    dialogValues: { type: Object }
+    dialogValues: { type: Object, default: () => {} }
   },
   data () {
     return {
@@ -49,8 +49,8 @@ export default {
 
 <style lang="scss" scoped>
 
-  @import '../../../../scss/variables.scss';
-  @import '../../../../scss/mixins.scss';
+  @import '~@scss/variables.scss';
+  @import '~@scss/mixins.scss';
 
   .info-dialog {
     padding: 8px 16px;

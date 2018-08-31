@@ -71,7 +71,6 @@
         </template>
       </template>
       <template v-if="accountState === ACCOUNT_STATES.nil">
-
         <template v-if="selectedUserType === userTypes.general">
           <individual-form />
         </template>
@@ -79,10 +78,10 @@
         <template v-else-if="selectedUserType === userTypes.syndicate">
           <syndicate-form />
         </template>
-
       </template>
 
-      <template v-if="requestedToUpdate && accountState === ACCOUNT_STATES.approved">
+      <template
+        v-if="requestedToUpdate && accountState === ACCOUNT_STATES.approved">
         <state-banner />
         <template v-if="selectedUserType === userTypes.general">
           <individual-form />
@@ -107,7 +106,11 @@ import Loader from '@/vue/app/common/Loader'
 import { i18n } from '../../../../js/i18n'
 import { mapGetters, mapActions } from 'vuex'
 import { vuexTypes } from '../../../../vuex/types'
-import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+import {
+  userTypes,
+  ACCOUNT_TYPES,
+  ACCOUNT_STATES
+} from '../../../../js/const/const'
 
 export default {
   name: 'verification-make',
@@ -129,9 +132,6 @@ export default {
     i18n,
     requestedToUpdate: false
   }),
-  async created () {
-    await this.reset()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountLatestBlobId,
@@ -142,6 +142,9 @@ export default {
       vuexTypes.accountLatestKycLevel,
       vuexTypes.accountKycLatestRequest
     ])
+  },
+  async created () {
+    await this.reset()
   },
   methods: {
     ...mapActions({
@@ -162,7 +165,8 @@ export default {
       }
       switch (this.accountLatestKycLevel) {
         case 0:
-          if (this.accountKycLatestRequest.accountTypeToSet === userTypes.syndicate) {
+          const typeToSet = this.accountKycLatestRequest.accountTypeToSet
+          if (typeToSet === userTypes.syndicate) {
             await this.loadKycData({
               blobId: this.accountLatestBlobId,
               type: ACCOUNT_TYPES.syndicate
@@ -189,7 +193,6 @@ export default {
       this.isLoading = false
     },
     handleUserType (type) {
-      console.log(type)
       this.selectedUserType = type
     }
   }

@@ -9,8 +9,11 @@
 <script>
 export default {
   name: 'updates-timeline-item',
-
-  props: ['title', 'message', 'date']
+  props: {
+    title: { type: String, default: '' },
+    message: { type: String, default: '' },
+    date: { type: String, default: '' }
+  }
 }
 </script>
 

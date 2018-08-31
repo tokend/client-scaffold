@@ -66,7 +66,9 @@ export default {
           return limits
         }, {})
       if (!limits.payment) limits.payment = RecordFactory.createLimitRecord()
-      if (!limits.withdrawal) limits.withdrawal = RecordFactory.createLimitRecord()
+      if (!limits.withdrawal) {
+        limits.withdrawal = RecordFactory.createLimitRecord()
+      }
       return limits
     }
   },
@@ -83,8 +85,11 @@ export default {
     async submit () {
       this.disable()
       try {
-        await fileService.uploadSingleDocument(this.documents[documentTypes.limitsProofOfIncome])
-        const document = this.documents[documentTypes.limitsProofOfIncome].getDetailsForSave()
+        await fileService.uploadSingleDocument(
+          this.documents[documentTypes.limitsProofOfIncome]
+        )
+        const document =
+          this.documents[documentTypes.limitsProofOfIncome].getDetailsForSave()
         const asset = this.filters.tokenCode
         await accountsService.createLimitRequest({
           details: JSON.stringify({

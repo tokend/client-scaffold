@@ -31,7 +31,9 @@
         </div>
 
         <div class="deposit__qr-outer">
-          <span class="deposit__qr-code-hint">{{ i18n.deposit_qr_code_hint() }}</span>
+          <span class="deposit__qr-code-hint">
+            {{ i18n.deposit_qr_code_hint() }}
+          </span>
           <!--TODO: use vue-qr instead for consistency-->
           <qrcode
             class="deposit__qr-code"
@@ -115,7 +117,18 @@ export default {
     },
     address () {
       if (!this.selectedToken) return ''
-      return this.accountDepositAddresses[this.selectedToken.externalSystemType]
+      const externalSystemType = this.selectedToken.externalSystemType
+      return this.accountDepositAddresses[externalSystemType]
+    }
+  },
+  watch: {
+    tokenCodes: {
+      handler: 'setTokenCode',
+      immediate: true
+    },
+    selectedToken: {
+      handler: 'tryBindAddress',
+      immediate: true
     }
   },
   methods: {
@@ -126,8 +139,6 @@ export default {
       this.form.tokenCode = this.tokenCodes[0] || null
     },
     async tryBindAddress (token) {
-      console.log('trying to bind address, token: ')
-      console.log(token)
       if (!token || !token.externalSystemType) {
         return
       }
@@ -141,16 +152,6 @@ export default {
         console.error(e)
       }
       this.isPending = false
-    }
-  },
-  watch: {
-    tokenCodes: {
-      handler: 'setTokenCode',
-      immediate: true
-    },
-    selectedToken: {
-      handler: 'tryBindAddress',
-      immediate: true
     }
   }
 }

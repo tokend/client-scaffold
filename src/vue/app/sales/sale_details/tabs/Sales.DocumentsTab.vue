@@ -1,7 +1,9 @@
 <template>
   <div class="documents-tab">
     <template v-if="isMy">
-      <p class="documents-tab__explain">{{ i18n.sale_doc_tab_title_is_my() }}</p>
+      <p class="documents-tab__explain">
+        {{ i18n.sale_doc_tab_title_is_my() }}
+      </p>
       <div class="documents-tab__file-input">
         <file-field
           v-model="upload"
@@ -33,7 +35,9 @@
           :key="`sales-documents-tab-${d}`">
           <h3
             class="file-download__file-name"
-            :title="document.name">{{ document.name }}</h3>
+            :title="document.name">
+            {{ document.name }}
+          </h3>
           <a
             :href="getUrl(document)"
             class="file-view__link"
@@ -48,30 +52,29 @@
 </template>
 
 <script>
-import SubmitterMixin from '../../../../common/mixins/submitter.mixin'
-import FileField from '../../../../common/fields/FileField'
-import { i18n } from '../../../../../js/i18n'
+import SubmitterMixin from '@/vue/common/mixins/submitter.mixin'
+import FileField from '@/vue/common/fields/FileField'
+import { i18n } from '@/js/i18n'
 
-import { ErrorHandler } from '../../../../../js/errors/error_handler'
-import { EventDispatcher } from '../../../../../js/events/event_dispatcher'
-import { confirmAction } from '../../../../../js/modals/confirmation_message'
-import { blobTypes, blobFilters } from '../../../../../js/const/const'
-import { fileService } from '../../../../../js/services/file.service'
-import { usersService } from '../../../../../js/services/users.service'
-import { DocumentContainer } from
-  '../../../../../js/helpers/DocumentContainer'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { confirmAction } from '@/js/modals/confirmation_message'
+import { blobTypes, blobFilters } from '@/js/const/const'
+import { fileService } from '@/js/services/file.service'
+import { usersService } from '@/js/services/users.service'
+import { DocumentContainer } from '@/js/helpers/DocumentContainer'
 import _get from 'lodash/get'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 
 export default {
   components: {
     FileField
   },
-
   mixins: [SubmitterMixin],
-  props: ['sale'],
-
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   data: _ => ({
     i18n,
     documents: [],
@@ -81,7 +84,6 @@ export default {
       name: ''
     }
   }),
-
   computed: {
     ...mapGetters([
       vuexTypes.accountId
@@ -96,7 +98,6 @@ export default {
       immediate: true
     }
   },
-
   methods: {
     async submit () {
       if (!await confirmAction({
@@ -106,7 +107,10 @@ export default {
       const tokenCode = this.sale.baseAsset
       this.disable()
       try {
-        const fileKey = await fileService.uploadFile({ ...this.upload, type: blobTypes.fundDocument.str })
+        const fileKey = await fileService.uploadFile({
+          ...this.upload,
+          type: blobTypes.fundDocument.str
+        })
         await usersService.blobsOf(this.sale.owner).create(
           blobTypes.fundDocument.str,
           {
@@ -147,8 +151,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
   .documents-tab {
     padding-top: 1rem;
   }

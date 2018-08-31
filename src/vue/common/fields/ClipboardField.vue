@@ -7,7 +7,9 @@
         <label class="clipboard__label">{{ label }}</label>
         <span
           class="clipboard__value"
-          id="clipboard-target">{{ value }}</span>
+          id="clipboard-target">
+          {{ value }}
+        </span>
       </div>
       <md-button
         class="md-icon-button"
@@ -15,7 +17,9 @@
         @click="showSuccess"
         data-clipboard-target="#clipboard-target"
       >
-        <md-icon class="clipboard__icon md-icon-half-sized">content_copy</md-icon>
+        <md-icon class="clipboard__icon md-icon-half-sized">
+          content_copy
+        </md-icon>
         <md-tooltip>Copy</md-tooltip>
       </md-button>
     </div>

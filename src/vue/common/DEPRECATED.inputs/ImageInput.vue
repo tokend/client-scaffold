@@ -2,7 +2,6 @@
   <div
     class="image-input"
     :class="{ 'image-input--ready-to-drop': flags.isReadyToDrop }">
-
     <div
       class="image-input__image-preview"
       v-if="imageDataUrl">
@@ -10,7 +9,6 @@
     </div>
 
     <div class="image-input__input-inner">
-
       <div class="image-input__text">
         <div class="title">{{ title }}</div>
 
@@ -18,7 +16,9 @@
           <p
             class="image-input__note"
             v-for="(note, key) in notes"
-            :key="key">{{ note }}</p>
+            :key="key">
+            {{ note }}
+          </p>
         </div>
       </div>
 
@@ -26,7 +26,6 @@
         type="file"
         @change="handleImageUpload"
         accept="image/*">
-
     </div>
   </div>
 </template>

@@ -5,7 +5,6 @@
       novalidate
       class="change-password"
       @submit.prevent="submit">
-
       <div class="app__dialog-inner">
         <input-field
           v-model="form.currentPassword"
@@ -87,6 +86,12 @@ export default {
         ? i18n.set_pwd_do_not_match() : ''
     }
   },
+  watch: {
+    isFormOpened () {
+      this.form.password = ''
+      this.form.confirmPassword = ''
+    }
+  },
   methods: {
     ...mapActions({
       storeNewData: vuexTypes.STORE_USER_DATA_FROM_WALLET
@@ -124,12 +129,6 @@ export default {
         EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
       }
       this.enable()
-    }
-  },
-  watch: {
-    isFormOpened () {
-      this.form.password = ''
-      this.form.confirmPassword = ''
     }
   }
 }

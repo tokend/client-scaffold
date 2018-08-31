@@ -34,7 +34,6 @@
 
 <script>
 import FormMixin from '../../../common/mixins/form.mixin'
-import FileField from '../../../common/fields/FileField'
 import steps from '../spec/kyc-steps.general.schema'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -46,14 +45,18 @@ import { i18n } from '../../../../js/i18n'
 import { KycTemplateParser } from '../spec/kyc-template-parser'
 import { accountsService } from '../../../../js/services/accounts.service'
 
-import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+import {
+  userTypes,
+  blobTypes,
+  ACCOUNT_TYPES,
+  ACCOUNT_STATES
+} from '../../../../js/const/const'
 import { confirmAction } from '../../../../js/modals/confirmation_message'
 
 const KYC_LEVEL_TO_SET = 0
 
 export default {
   name: 'verification-individual',
-  components: { FileField },
   mixins: [FormMixin],
   data: _ => ({
     isDialogOpened: false,
@@ -65,9 +68,6 @@ export default {
     ACCOUNT_STATES,
     userTypes
   }),
-  created () {
-    this.kyc = KycTemplateParser.fromTemplate(this.accountKycData, userTypes.general)
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountLatestBlobId,
@@ -80,6 +80,11 @@ export default {
     verificationKey () {
       return this.accountId.slice(1, 6)
     }
+  },
+  created () {
+    this.kyc = KycTemplateParser.fromTemplate(
+      this.accountKycData, userTypes.general
+    )
   },
   methods: {
     ...mapActions({
@@ -110,7 +115,9 @@ export default {
         await this.updateDocuments(this.kyc.documents)
         const blobId = await this.updateKycData({
           details: KycTemplateParser.toTemplate(this.kyc, userTypes.general),
-          documents: KycTemplateParser.getSaveableDocuments(this.kyc.documents),
+          documents: KycTemplateParser.getSaveableDocuments(
+            this.kyc.documents
+          ),
           blobType: blobTypes.kycForm.str
         })
         await this.submitRequest(blobId)
@@ -124,7 +131,9 @@ export default {
     },
     async submitRequest (blobId) {
       await accountsService.createKycRequest({
-        requestID: this.accountState === ACCOUNT_STATES.rejected ? this.accountKycLatestRequest.id : '0',
+        requestID: this.accountState === ACCOUNT_STATES.rejected
+          ? this.accountKycLatestRequest.id
+          : '0',
         accountToUpdateKYC: this.accountId,
         accountTypeToSet: ACCOUNT_TYPES.general,
         kycLevelToSet: KYC_LEVEL_TO_SET,

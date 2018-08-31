@@ -1,10 +1,12 @@
-import { tokensService } from '../../js/services/tokens.service'
-import { reviewableRequestsService } from '../../js/services/reviewable_requests.service'
-import { salesService } from '../../js/services/sales.service'
-import { RecordFactory } from '../../js/records/factory'
-import { Paginator } from '../../js/helpers/paginator'
+import { tokensService } from '@/js/services/tokens.service'
+import {
+  reviewableRequestsService
+} from '@/js/services/reviewable_requests.service'
+import { salesService } from '@/js/services/sales.service'
+import { RecordFactory } from '@/js/records/factory'
+import { Paginator } from '@/js/helpers/paginator'
 import { vuexTypes } from '../types'
-import config from '../../config'
+import config from '@/config'
 import cloneDeep from 'lodash/cloneDeep'
 
 const state = {
@@ -27,7 +29,10 @@ const mutations = {
   UPDATE_SALE_REQUEST_LIST (state, tokenCodes) {
     tokenCodes.forEach(code => {
       state.saleCreationRequests[code] = new Paginator({
-        recordWrp: (record) => RecordFactory.createSaleCreationRecord(record, code)
+        recordWrp: (record) => RecordFactory.createSaleCreationRecord(
+          record,
+          code
+        )
       })
     })
   },
@@ -51,7 +56,9 @@ const actions = {
   },
 
   async GET_USER_TOKENS_CREATION_REQUESTS ({ state }) {
-    state.tokenCreationRequests.attachInitLoader(() => tokensService.loadTokenCreationRequestsForState())
+    state.tokenCreationRequests.attachInitLoader(() =>
+      tokensService.loadTokenCreationRequestsForState()
+    )
     return state.tokenCreationRequests.init()
   },
 
@@ -60,7 +67,9 @@ const actions = {
   },
 
   async GET_USER_PREISSUANCE_UPLOAD_REQUESTS ({ state }) {
-    state.preIssuanceUploadRequests.attachInitLoader(() => reviewableRequestsService.loadPreIssuanceRequests())
+    state.preIssuanceUploadRequests.attachInitLoader(() =>
+      reviewableRequestsService.loadPreIssuanceRequests()
+    )
     return state.preIssuanceUploadRequests.init()
   },
 
@@ -68,14 +77,19 @@ const actions = {
     return state.preIssuanceUploadRequests.next()
   },
 
-  async GET_USER_SALE_CREATION_REQUESTS ({ state, dispatch, commit }, tokenCode) {
+  async GET_USER_SALE_CREATION_REQUESTS (
+    { state, dispatch, commit },
+    tokenCode
+  ) {
     if (!state.isInitialized) dispatch(vuexTypes.INIT_SALE_REQUESTS_LIST)
     let paginator
     if (state.saleCreationRequests[tokenCode]) {
       paginator = state.saleCreationRequests[tokenCode]
     } else {
       state.saleCreationRequests[tokenCode] = new Paginator({
-        recordWrp: record => RecordFactory.createSaleCreationRecord(record, tokenCode)
+        recordWrp: record => RecordFactory.createSaleCreationRecord(
+          record, tokenCode
+        )
       })
       paginator = state.saleCreationRequests[tokenCode]
     }
@@ -86,7 +100,10 @@ const actions = {
     commit(vuexTypes.UPDATE_SALE_REQUEST_LIST_ITEM, { tokenCode, paginator })
   },
 
-  async NEXT_USER_SALE_CREATION_REQUESTS ({ state, commit, dispatch }, tokenCode) {
+  async NEXT_USER_SALE_CREATION_REQUESTS (
+    { state, commit, dispatch },
+    tokenCode
+  ) {
     const paginator = state.saleCreationRequests[tokenCode]
     await paginator.next()
     commit(vuexTypes.UPDATE_SALE_REQUEST_LIST_ITEM, paginator)
@@ -94,7 +111,11 @@ const actions = {
 
   async GET_LIMITS_REQUESTS ({ state }) {
     const limitsRequests = state.limitsRequests
-    limitsRequests.attachInitLoader(reviewableRequestsService.loadLimitsUpdateReviewableRequests.bind(reviewableRequestsService))
+    limitsRequests.attachInitLoader(
+      reviewableRequestsService.loadLimitsUpdateReviewableRequests.bind(
+        reviewableRequestsService
+      )
+    )
     await limitsRequests.init()
   },
 

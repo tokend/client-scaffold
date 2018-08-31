@@ -42,10 +42,12 @@ export default {
       vuexTypes.sellOffers
     ]),
     formattedBuyOffers () {
-      return this.buyOffers.sort((a, b) => { return b.price - a.price })
+      const buyOffers = this.buyOffers
+      return buyOffers.sort((a, b) => b.price - a.price)
     },
     formattedSellOffers () {
-      return this.sellOffers.sort((a, b) => { return a.price - b.price })
+      const sellOffers = this.sellOffers
+      return sellOffers.sort((a, b) => a.price - b.price)
     }
   }
 }

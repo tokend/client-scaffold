@@ -15,7 +15,16 @@ import * as d3Ease from 'd3-ease'
 
 // import * as d3 from 'd3'
 import moment from 'moment'
-const d3 = Object.assign({}, d3Array, d3Selection, d3Axis, d3Shape, d3Scale, d3Transition, d3Ease)
+const d3 = Object.assign(
+  {},
+  d3Array,
+  d3Selection,
+  d3Axis,
+  d3Shape,
+  d3Scale,
+  d3Transition,
+  d3Ease
+)
 
 export default {
   name: 'chart-renderer',
@@ -84,7 +93,9 @@ export default {
     getMaxAndMin () {
       const arr = this.data.map(item => item.value)
       const max = Math.max(...arr, ...this.requiredTicks)
-      const min = this.requiredTicks && this.requiredTicks.length ? 0 : Math.min(...arr)
+      const min = this.requiredTicks && this.requiredTicks.length
+        ? 0
+        : Math.min(...arr)
       return { max, min }
     },
 
@@ -271,7 +282,9 @@ export default {
           const nearestPoint = x0 - d0.time > d1.time - x0 ? d1 : d0
           // Change text of the tooltip
           tipPriceText.text(`${i18n.c(nearestPoint.value)} ${this.currency}`)
-          tipTimeText.text(moment(nearestPoint.time).format('MM/DD/YYYY hh:mm a'))
+          tipTimeText.text(
+            moment(nearestPoint.time).format('MM/DD/YYYY hh:mm a')
+          )
 
           // Change X position of the tip
           tip.attr('transform', `translate(${x(nearestPoint.time)})`)

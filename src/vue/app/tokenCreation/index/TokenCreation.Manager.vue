@@ -97,7 +97,8 @@
       </div>
       <div
         class="kyc-form__content-item"
-        v-if="makeAdditional"> <!-- Transfrom to Boolean -->
+        v-if="makeAdditional">
+        <!-- Transfrom to Boolean -->
         <div class="app__form-row">
           <input-field-unchained
             id="token-preissued-asset-signer"
@@ -113,7 +114,11 @@
             name="initial preissued amount"
             v-model="request.initialPreissuedAmount"
             type="number"
-            v-validate="{required:true, min_value: 0, max_value: request.maxIssuanceAmount}"
+            v-validate="{
+              required:true,
+              min_value: 0,
+              max_value: request.maxIssuanceAmount
+            }"
             :label="i18n.lbl_token_initial_preissued_amount()"
             :error-message="errorMessage('initial preissued amount')"
           />
@@ -133,7 +138,12 @@
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Tell you something more</md-dialog-title>
       <div class="app__card-content">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Ullam mollitia dolorum dolores quae commodi impedit possimus qui,
+          atque at voluptates cupiditate. Neque quae culpa suscipit
+          praesentium inventore ducimus ipsa aut.
+        </p>
       </div>
       <md-dialog-actions>
         <button
@@ -148,27 +158,31 @@
 </template>
 
 <script>
-import FormMixin from '../../../common/mixins/form.mixin'
-import FileField from '../../../common/fields/FileField'
+import FormMixin from '@/vue/common/mixins/form.mixin'
+import FileField from '@/vue/common/fields/FileField'
 
-import { i18n } from '../../../../js/i18n'
-import { documentTypes } from '../../../../js/const/documents.const'
+import { i18n } from '@/js/i18n'
+import { documentTypes } from '@/js/const/documents.const'
 
-import { tokensService } from '../../../../js/services/tokens.service'
-import { ASSET_POLICIES } from '../../../../js/const/xdr.const'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { tokensService } from '@/js/services/tokens.service'
+import { ASSET_POLICIES } from '@/js/const/xdr.const'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
 
-import { DocumentContainer } from '../../../../js/helpers/DocumentContainer'
-import { reviewableRequestsService } from '../../../../js/services/reviewable_requests.service'
-import { fileService } from '../../../../js/services/file.service'
-import { TokenCreationRecord } from '../../../../js/records/token_creation.record'
-import config from '../../../../config'
+import { DocumentContainer } from '@/js/helpers/DocumentContainer'
+import {
+  reviewableRequestsService
+} from '@/js/services/reviewable_requests.service'
+import { fileService } from '@/js/services/file.service'
+import { TokenCreationRecord } from '@/js/records/token_creation.record'
+import config from '@/config'
 
 export default {
   components: { FileField },
   mixins: [FormMixin],
-  props: ['id'],
+  props: {
+    id: { type: String, default: '' }
+  },
   data: _ => ({
     request: {
       policies: []
@@ -190,9 +204,15 @@ export default {
   async created () {
     if (this.id) {
       this.makeAdditional = true
-      this.request = new TokenCreationRecord(await reviewableRequestsService.loadReviewableRequestById(this.id))
-      this.documents[documentTypes.tokenTerms] = this.request.terms.key ? new DocumentContainer(this.request.terms) : null
-      this.documents[documentTypes.tokenIcon] = this.request.logo.key ? new DocumentContainer(this.request.logo) : null
+      this.request = new TokenCreationRecord(
+        await reviewableRequestsService.loadReviewableRequestById(this.id)
+      )
+      this.documents[documentTypes.tokenTerms] = this.request.terms.key
+        ? new DocumentContainer(this.request.terms)
+        : null
+      this.documents[documentTypes.tokenIcon] = this.request.logo.key
+        ? new DocumentContainer(this.request.logo)
+        : null
     }
   },
 
@@ -205,7 +225,7 @@ export default {
         EventDispatcher.dispatchShowSuccessEvent(i18n.kyc_upload_success())
         this.$router.push({ path: '/requests/token-creation' })
       } catch (error) {
-        console.log(error)
+        console.error(error)
         ErrorHandler.processUnexpected(error)
       }
       this.enable()
@@ -224,12 +244,16 @@ export default {
       const termsContainer = this.documents[documentTypes.tokenTerms]
 
       if (logoContainer && !logoContainer.isUploaded) {
-        const logoKey = await fileService.uploadFile(logoContainer.getDetailsForUpload())
+        const logoKey = await fileService.uploadFile(
+          logoContainer.getDetailsForUpload()
+        )
         logoContainer.setKey(logoKey)
       }
 
       if (termsContainer && !termsContainer.isUploaded) {
-        const termsKey = await fileService.uploadFile(termsContainer.getDetailsForUpload())
+        const termsKey = await fileService.uploadFile(
+          termsContainer.getDetailsForUpload()
+        )
         termsContainer.setKey(termsKey)
       }
       await tokensService.createTokenCreationRequest({

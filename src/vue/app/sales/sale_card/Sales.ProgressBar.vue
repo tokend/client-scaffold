@@ -1,10 +1,15 @@
 <template>
   <div class="invest-progress-bar">
     <div class="invest-progress-bar__details">
-      <span class="invest-progress-bar__detail">Buy
-        <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.baseHardCap) }}</span>
+      <span class="invest-progress-bar__detail">
+        Buy
+        <span class="invest-progress-bar__detail-value">
+          {{ i18n.c(sale.baseHardCap) }}
+        </span>
         {{ sale.baseAsset }} for
-        <span class="invest-progress-bar__detail-value">{{ i18n.c(sale.hardCap) }}</span>
+        <span class="invest-progress-bar__detail-value">
+          {{ i18n.c(sale.hardCap) }}
+        </span>
         {{ sale.defaultQuoteAsset }}
       </span>
     </div>
@@ -16,7 +21,9 @@
     </div>
     <div class="invest-progress-bar__details">
       <span class="invest-progress-bar__detail">
-        <span class="invest-progress-bar__detail-value">{{ i18n.n(sale.currentCap) }} {{ sale.defaultQuoteAsset }}</span>
+        <span class="invest-progress-bar__detail-value">
+          {{ i18n.n(sale.currentCap) }} {{ sale.defaultQuoteAsset }}
+        </span>
         invested
       </span>
       <span class="invest-progress-bar__detail">
@@ -28,16 +35,20 @@
 </template>
 
 <script>
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 export default {
   name: 'invest-progress-bar',
-  props: ['sale', 'barHeight'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   data: _ => ({
     i18n
   }),
   computed: {
     progress () {
-      const progress = Math.ceil((this.sale.currentCap / this.sale.hardCap) * 100)
+      const progress = Math.ceil(
+        (this.sale.currentCap / this.sale.hardCap) * 100
+      )
       return progress >= 100 ? 100 : progress
     },
     daysLeft () {
@@ -51,8 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .invest-progress-bar {
     color: $col-md-primary;

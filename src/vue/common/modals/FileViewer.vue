@@ -2,7 +2,6 @@
   <div
     class="file-viewer"
     v-if="url">
-
     <md-dialog
       :md-active.sync="isOpened"
       @md-closed="close">
@@ -12,7 +11,6 @@
         title
       >
     </md-dialog>
-
   </div>
 </template>
 

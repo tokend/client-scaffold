@@ -11,7 +11,6 @@
       </div>
 
       <div class="image-input__input-inner">
-
         <div class="image-input__text">
           <div class="title">{{ i18n.lbl_choose_image() }}</div>
 
@@ -19,7 +18,9 @@
             <p
               class="image-input__note"
               v-for="(note, key) in notes"
-              :key="key">{{ note }}</p>
+              :key="key">
+              {{ note }}
+            </p>
           </div>
         </div>
 
@@ -41,7 +42,9 @@
       <label
         :for="id"
         class="file-field__uploader">
-        <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>
+        <md-icon class="file-field__icon md-icon-size-075x">
+          insert_drive_file
+        </md-icon>
         {{ acceptLabel }}
       </label>
 
@@ -64,7 +67,9 @@
         type="button"
         @click="viewNew">
         <span>{{ value.name }}</span>
-        <md-icon class="file-field__link-icon md-icon-size-065x">open_in_new</md-icon>
+        <md-icon class="file-field__link-icon md-icon-size-065x">
+          open_in_new
+        </md-icon>
       </button>
 
       <a
@@ -72,10 +77,13 @@
         target="_blank"
         v-else-if="value && fileUrl">
         <span>{{ value.name }}</span>
-        <md-icon class="file-field__link-icon md-icon-size-065x">open_in_new</md-icon>
+        <md-icon class="file-field__link-icon md-icon-size-065x">
+          open_in_new
+        </md-icon>
       </a>
-      <span v-else>{{ i18n.fi_no_file_chosen() }}</span>
-
+      <span v-else>
+        {{ i18n.fi_no_file_chosen() }}
+      </span>
     </p>
   </div>
 </template>
@@ -180,11 +188,15 @@ export default {
 
     isValidFileSize (file) {
       if (this.maxSize && file.size > this.maxB) {
-        EventDispatcher.dispatchShowErrorEvent(i18n.max_file_size_exceeded({ size: this.maxSize }))
+        EventDispatcher.dispatchShowErrorEvent(
+          i18n.max_file_size_exceeded({ size: this.maxSize })
+        )
         this.clear()
         return false
       } else if (this.minSize && file.size < this.minB) {
-        EventDispatcher.dispatchShowErrorEvent(i18n.min_file_size_fail({ size: this.minSize }))
+        EventDispatcher.dispatchShowErrorEvent(
+          i18n.min_file_size_fail({ size: this.minSize })
+        )
         this.clear()
         return false
       } else {
@@ -195,16 +207,28 @@ export default {
     async checkImageDimensions (file) {
       const reader = await FileHelper.readFileAsDataURL(file)
       const image = await FileHelper.readImage(reader)
-      if (this.minWidth && this.minHeight && (image.naturalWidth < this.minWidth || image.naturalHeight < this.minHeight)) {
-        EventDispatcher.dispatchShowErrorEvent(i18n.min_image_dimension_fail({ width: this.minWidth, height: this.minHeight }))
+      if (this.minWidth &&
+          this.minHeight &&
+          (image.naturalWidth < this.minWidth ||
+          image.naturalHeight < this.minHeight)) {
+        EventDispatcher.dispatchShowErrorEvent(
+          i18n.min_image_dimension_fail({
+            width: this.minWidth,
+            height: this.minHeight
+          })
+        )
         return false
       }
       if (this.minWidth && image.naturalWidth < this.minWidth) {
-        EventDispatcher.dispatchShowErrorEvent(i18n.min_image_width_fail({ width: this.minWidth }))
+        EventDispatcher.dispatchShowErrorEvent(
+          i18n.min_image_width_fail({ width: this.minWidth })
+        )
         return false
       }
       if (this.minHeight && image.naturalHeight < this.minHeight) {
-        EventDispatcher.dispatchShowErrorEvent(i18n.min_image_height_fail({ height: this.minHeight }))
+        EventDispatcher.dispatchShowErrorEvent(
+          i18n.min_image_height_fail({ height: this.minHeight })
+        )
         return false
       }
       return true

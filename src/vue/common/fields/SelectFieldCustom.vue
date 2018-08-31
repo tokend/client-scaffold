@@ -18,13 +18,13 @@
     <div
       class="select__list"
       :class="{ 'select__list--active': showList }">
-      <template v-for="(value, i) in values">
+      <template v-for="(item, i) in values">
         <div
           class="select__list-item"
           :key="i"
-          :class="{ 'select__list-item--selected': selected === value }"
-          @click="selectItem(value)">
-          {{ value }}
+          :class="{ 'select__list-item--selected': selected === item }"
+          @click="selectItem(item)">
+          {{ item }}
         </div>
       </template>
     </div>

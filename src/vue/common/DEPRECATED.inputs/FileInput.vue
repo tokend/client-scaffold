@@ -4,7 +4,7 @@
       <label
         class="file-input__upload-btn btn btn--info"
         :for="id">
-        <i class="file-input__attachment-icon mdi mdi-paperclip"/>
+        <i class="file-input__attachment-icon mdi mdi-paperclip" />
         Select file pdf/image, 5Mb max
       </label>
       <span
@@ -34,7 +34,7 @@ export default {
   name: 'file-input',
 
   props: {
-    fileName: { type: String, defauld: '' },
+    fileName: { type: String, default: '' },
     id: { type: String, default: 'file-select' }
   },
 

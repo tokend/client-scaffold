@@ -4,7 +4,7 @@ import _get from 'lodash/get'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import { Keypair } from 'swarm-js-sdk'
 export class SaleRequestRecord extends RequestRecord {
-  constructor (record = {details: {sale: {}}}) {
+  constructor (record = { details: { sale: {} } }) {
     super(record)
     this._details = record.details['sale']
     this.baseAsset = this._details.base_asset || ''

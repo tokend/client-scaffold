@@ -23,7 +23,6 @@
       :class="`card__state-tip--${stateTip}`">
       {{ stateTip }}
     </div>
-
   </div>
 </template>
 
@@ -36,9 +35,10 @@ import InvestProgressBar from './Sales.ProgressBar'
 export default {
   name: 'sale-card',
   components: { InvestProgressBar },
-  props: ['sale', 'hasEditRedirect', 'imgUrl'],
-  data: _ => ({
-  }),
+  props: {
+    sale: { type: Object, default: () => {} },
+    imgUrl: { type: String, default: '' }
+  },
   computed: {
     stateTip () {
       if (this.sale.isCanceled) return 'cancelled'

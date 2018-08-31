@@ -1,7 +1,9 @@
 <template>
   <div class="transfer app__page-content-wrp">
     <template v-if="!tokenCodes.length">
-      <h2 class="app__page-heading">{{ i18n.transfer_no_assets_heading() }}</h2>
+      <h2 class="app__page-heading">
+        {{ i18n.transfer_no_assets_heading() }}
+      </h2>
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.transfer_no_assets() }}
       </p>
@@ -13,12 +15,14 @@
       </router-link>
     </template>
 
-    <template v-else-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+    <template v-else-if="view.mode === VIEW_MODES.submit ||
+    view.mode === VIEW_MODES.confirm">
       <h2 class="app__page-heading">{{ i18n.transfer_heading() }}</h2>
       <form
         @submit.prevent="processTransfer"
         id="transfer-form"
-        v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+        v-if="view.mode === VIEW_MODES.submit ||
+        view.mode === VIEW_MODES.confirm">
         <div class="app__form-row">
           <div class="app__form-field">
             <select-field-unchained
@@ -28,7 +32,12 @@
               :readonly="view.mode === VIEW_MODES.confirm" />
             <div class="app__form-field-description">
               <p v-if="form.tokenCode">
-                {{ i18n.transfer_balance({ amount: balance.balance, asset: form.tokenCode }) }}
+                {{
+                  i18n.transfer_balance({
+                    amount: balance.balance,
+                    asset: form.tokenCode
+                  })
+                }}
               </p>
             </div>
           </div>
@@ -46,7 +55,9 @@
               :label="i18n.lbl_amount()"
               :readonly="view.mode === VIEW_MODES.confirm"
               :error-message="errors.first('amount') ||
-              (isLimitExceeded ? i18n.transfer_error_insufficient_funds() : '')"
+                (isLimitExceeded
+                  ? i18n.transfer_error_insufficient_funds() : ''
+              )"
             />
           </div>
         </div>
@@ -84,33 +95,45 @@
             {{ i18n.transfer_source_fees() }}
           </h3>
 
-          <template v-if="+fees.source.fixed || +fees.source.percent || form.isPaidForRecipient">
+          <template v-if="
+            +fees.source.fixed ||
+              +fees.source.percent ||
+              form.isPaidForRecipient
+          ">
             <p
               class="transfer__fee"
               v-if="fees.source.fixed">
               - {{ fees.source.fixed }} {{ fees.source.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_source_fixed_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_source_fixed_fee() }}
+              </span>
             </p>
 
             <p
               class="transfer__fee"
               v-if="fees.source.percent">
               - {{ fees.source.percent }} {{ fees.source.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_source_percent_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_source_percent_fee() }}
+              </span>
             </p>
 
             <p
               class="transfer__fee"
               v-if="form.isPaidForRecipient && +fees.destination.fixed">
               - {{ fees.destination.fixed }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_fixed_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_fixed_fee() }}
+              </span>
             </p>
 
             <p
               class="transfer__fee"
               v-if="form.isPaidForRecipient && +fees.destination.percent">
               - {{ fees.destination.percent }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_percent_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_percent_fee() }}
+              </span>
             </p>
           </template>
 
@@ -124,19 +147,26 @@
             {{ i18n.transfer_destination_fees() }}
           </h3>
 
-          <template v-if="(+fees.destination.fixed || +fees.destination.percent) && !form.isPaidForRecipient">
+          <template v-if="
+            (+fees.destination.fixed || +fees.destination.percent) &&
+              !form.isPaidForRecipient
+          ">
             <p
               class="transfer__fee"
               v-if="fees.destination.fixed">
               - {{ fees.destination.fixed }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_fixed_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_fixed_fee() }}
+              </span>
             </p>
 
             <p
               class="transfer__fee"
               v-if="fees.destination.percent">
               - {{ fees.destination.percent }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_percent_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_percent_fee() }}
+              </span>
             </p>
           </template>
 
@@ -178,7 +208,6 @@
       </div>
     </template>
   </div>
-
 </template>
 
 <script>
@@ -247,10 +276,6 @@ export default {
     VIEW_MODES,
     config
   }),
-  created () {
-    this.setTokenCode()
-    this.loadCurrentBalances()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
@@ -263,8 +288,14 @@ export default {
       return this.accountBalances[this.form.tokenCode]
     },
     isLimitExceeded () {
-      return Number(this.form.amount) > Number(get(this.balance, 'balance') || 0)
+      const amount = Number(this.form.amount)
+      const balance = Number(get(this.balance, 'balance') || 0)
+      return amount > balance
     }
+  },
+  created () {
+    this.setTokenCode()
+    this.loadCurrentBalances()
   },
   methods: {
     ...mapActions({
@@ -327,18 +358,27 @@ export default {
       const providedRecipient = this.form.recipient
       if (Keypair.isValidPublicKey(providedRecipient)) {
         counterparty.accountId = providedRecipient
-        counterparty.email = await accountsService.loadEmailByAccountId(providedRecipient)
+        counterparty.email =
+          await accountsService.loadEmailByAccountId(providedRecipient)
         return counterparty
       }
       counterparty.email = providedRecipient
-      counterparty.accountId = await accountsService.loadAccountIdByEmail(providedRecipient)
+      counterparty.accountId =
+        await accountsService.loadAccountIdByEmail(providedRecipient)
       return counterparty
     },
     async loadFees (recipientAccountId) {
       const fees = { source: {}, destination: {} }
       const [senderFees, recipientFees] = await Promise.all([
-        feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount),
-        feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount, recipientAccountId)
+        feeService.loadPaymentFeeByAmount(
+          this.form.tokenCode,
+          this.form.amount
+        ),
+        feeService.loadPaymentFeeByAmount(
+          this.form.tokenCode,
+          this.form.amount,
+          recipientAccountId
+        )
       ])
       fees.source.fixed = senderFees.fixed
       fees.source.percent = senderFees.percent
@@ -362,7 +402,10 @@ export default {
       setTimeout(() => this.updateView(VIEW_MODES.submit, {}, true), 1)
     },
     setTokenCode () {
-      this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
+      this.form.tokenCode =
+        this.$route.params.tokenCode ||
+        this.tokenCodes[0] ||
+        null
     }
   }
 }

@@ -8,7 +8,6 @@
         :key="key"
         @click="select(token)"
       >
-
         <md-avatar class="md-primary">
           <img
             :src="token.logoURL"
@@ -25,7 +24,6 @@
           <span>{{ token.attachedDetails.balance }} {{ token.code }}</span>
           <span>{{ token.attachedDetails.convertedBalance }}</span>
         </div>
-
       </md-list-item>
     </md-list>
   </div>

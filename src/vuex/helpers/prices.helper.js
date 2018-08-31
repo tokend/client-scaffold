@@ -1,5 +1,5 @@
 import store from '../index'
-import { multiply, divide } from '../../js/utils/math.util'
+import { multiply, divide } from '@/js/utils/math.util'
 
 export class PricesHelper {
   static baseToQuote (amount, fromBase, toQuote) {
@@ -10,9 +10,15 @@ export class PricesHelper {
       return multiply(amount, price)
     }
     return 0
-    // const mediumAssetprice = this._findPriceForAssetPair(fromBase, MEDIUM_ASSET)
+    // const mediumAssetprice = this._findPriceForAssetPair(
+    //   fromBase,
+    //   MEDIUM_ASSET
+    // )
     // const mediumAssetAmount = multiply(amount, mediumAssetprice)
-    // const endConversionPrice = this._findPriceForAssetPair(MEDIUM_ASSET, toQuote)
+    // const endConversionPrice = this._findPriceForAssetPair(
+    //   MEDIUM_ASSET,
+    //   toQuote
+    // )
     // const result = multiply(mediumAssetAmount, endConversionPrice)
     // if (!result) {
     //   return 0
@@ -27,12 +33,17 @@ export class PricesHelper {
     if (price) {
       return divide(amount, price)
     }
-    console.warn(`Cannot convert amount from quote to base. Asset pair ${fromQuote}-${toBase} does not exist`)
+    console.warn(`
+      Cannot convert amount from quote to base. Asset pair
+      ${fromQuote}-${toBase} does not exist
+    `)
   }
 
   static _findPriceForAssetPair (base, quote) {
     const assetPairs = store.getters.assetPairs
-    const presentAssetPair = assetPairs.find(pair => pair.quote === quote && pair.base === base)
+    const presentAssetPair = assetPairs.find(pair =>
+      pair.quote === quote && pair.base === base
+    )
     if (presentAssetPair) return presentAssetPair.current_price
     return null
   }

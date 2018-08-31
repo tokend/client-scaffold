@@ -33,7 +33,6 @@
       <td>{{ tx.date }}</td>
     </tr>
   </table>
-
 </template>
 
 <script>

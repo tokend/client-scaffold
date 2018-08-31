@@ -1,6 +1,5 @@
 <template>
   <div class="tx-history">
-
     <md-table class="tx-history__table app__card">
       <md-table-toolbar class="tx-history__table-toolbar">
         <div class="tx-history__select-outer">
@@ -23,16 +22,27 @@
         </md-table-row>
 
         <template v-for="(tx, i) in list">
-
           <md-table-row
             class="tx-history__row"
-            @click="toggleDetails(i)">
-            <md-table-cell class="tx-history__table-cell">{{ tx.date }}</md-table-cell>
-            <md-table-cell class="tx-history__table-cell">{{ tx.name }}</md-table-cell>
-            <md-table-cell class="tx-history__table-cell">{{ tx.state }}</md-table-cell>
-            <md-table-cell class="tx-history__table-cell">{{ tx.asset }}</md-table-cell>
-            <md-table-cell class="tx-history__table-cell">{{ tx.amount }}</md-table-cell>
-            <md-table-cell class="tx-history__table-cell tx-history__table-cell--counterparty">
+            @click="toggleDetails(i)"
+            :key="`tx-history-row-${i}`">
+            <md-table-cell class="tx-history__table-cell">
+              {{ tx.date }}
+            </md-table-cell>
+            <md-table-cell class="tx-history__table-cell">
+              {{ tx.name }}
+            </md-table-cell>
+            <md-table-cell class="tx-history__table-cell">
+              {{ tx.state }}
+            </md-table-cell>
+            <md-table-cell class="tx-history__table-cell">
+              {{ tx.asset }}
+            </md-table-cell>
+            <md-table-cell class="tx-history__table-cell">
+              {{ tx.amount }}
+            </md-table-cell>
+            <md-table-cell class="tx-history__table-cell
+                                  tx-history__table-cell--counterparty">
               {{ tx.counterparty }}
             </md-table-cell>
 
@@ -42,19 +52,18 @@
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
             </md-table-cell>
-
           </md-table-row>
 
           <md-table-row
             class="th-history__expandable-row"
-            v-if="isSelected(i)">
+            v-if="isSelected(i)"
+            :key="`tx-history-expandable-row-${i}`">
             <md-table-cell colspan="7">
               <tx-details
                 class="tx-history__details"
                 :tx="tx" />
             </md-table-cell>
           </md-table-row>
-
         </template>
 
         <md-table-row v-if="!isLoaded">
@@ -79,7 +88,6 @@
           <p>{{ i18n.th_here_will_be_the_list() }}</p>
         </div>
       </template>
-
     </md-table>
   </div>
 </template>
@@ -104,12 +112,6 @@ export default {
     index: -1,
     i18n
   }),
-  async created () {
-    this.tokenCode = this.$route.params.tokenCode || this.tokens[0] || null
-    if (this.tokenCode) {
-      await this.loadList(this.tokenCode)
-    }
-  },
   computed: {
     ...mapGetters([
       vuexTypes.transactions,
@@ -133,6 +135,17 @@ export default {
       return this.userAcquiredTokens.map(token => token.code)
     }
   },
+  watch: {
+    tokenCode (code) {
+      this.loadList(code)
+    }
+  },
+  async created () {
+    this.tokenCode = this.$route.params.tokenCode || this.tokens[0] || null
+    if (this.tokenCode) {
+      await this.loadList(this.tokenCode)
+    }
+  },
   methods: {
     ...mapActions({
       loadList: vuexTypes.GET_TX_LIST,
@@ -153,11 +166,6 @@ export default {
         EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
       }
       this.isLoading = false
-    }
-  },
-  watch: {
-    tokenCode (code) {
-      this.loadList(code)
     }
   }
 }

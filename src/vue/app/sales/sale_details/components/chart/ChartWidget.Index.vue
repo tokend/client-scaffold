@@ -1,7 +1,6 @@
 <template>
   <div class="chart-container">
     <div class="chart-container__main">
-
       <div class="chart-container__tabs">
         <scale-tabs
           :asset="asset"
@@ -19,7 +18,9 @@
         v-if="history.length"
         :required-ticks="requiredTicks" />
       <p
-        class="app__page-explanations app__page-explanations--secondary chart-container__loader"
+        class="app__page-explanations
+               app__page-explanations--secondary
+               chart-container__loader"
         v-else>
         {{ i18n.market_price_chart_loading() }}
       </p>
@@ -43,12 +44,12 @@ export default {
   },
 
   props: {
-    data: { type: Object, required: true },
-    asset: { type: String, required: false },
+    data: { type: Object, required: true, default: () => {} },
+    asset: { type: String, default: '' },
     action: { type: String, default: 'issued' },
-    currentCap: { type: [String, Number], required: false },
-    hardCap: { type: [String, Number], required: false },
-    softCap: { typ: [String, Number], required: false },
+    currentCap: { type: [String, Number], default: '' || 0 },
+    hardCap: { type: [String, Number], default: '' || 0 },
+    softCap: { type: [String, Number], default: '' || 0 },
     precision: { type: Number, default: 0 }
   },
 
@@ -60,11 +61,6 @@ export default {
       tokenCode: null
     }
   },
-
-  created () {
-    this.tokenCode = this.tokenCodes[0] || null
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.userWithdrawableTokens,
@@ -84,7 +80,8 @@ export default {
       return this.accountBalances[this.tokenCode]
     }
   },
-  methods: {
+  created () {
+    this.tokenCode = this.tokenCodes[0] || null
   }
 }
 </script>

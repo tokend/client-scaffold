@@ -28,7 +28,9 @@ export default {
   components: {
     Chart
   },
-  props: ['sale'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   data: _ => ({
     chartData: {},
     common: {
@@ -45,7 +47,7 @@ export default {
         this.chartData = (await chartsService.loadChartsForToken(asset)).data()
       } catch (error) {
         if (error instanceof errors.NotFoundError) {
-          console.log('error')
+          console.error(error)
           ErrorHandler.processUnexpected(error)
         }
       }

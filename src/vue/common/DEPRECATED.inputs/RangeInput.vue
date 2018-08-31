@@ -2,7 +2,6 @@
   <div
     class="range-input"
     :class="{ disabled }">
-
     <input
       type="range"
       class="range-input__initial-marker"
@@ -25,7 +24,6 @@
       ref="inputField"
       :disabled="disabled"
     >
-
   </div>
 </template>
 
@@ -35,11 +33,6 @@ import config from '@/config'
 
 export default {
   name: 'range-input',
-
-  components: {
-    // components
-  },
-
   props: {
     min: {
       type: [ String, Number ],
@@ -47,7 +40,8 @@ export default {
     },
     max: {
       type: [ String, Number ],
-      required: true
+      required: true,
+      default: '' || 0
     },
     step: {
       type: [ String, Number ],
@@ -63,7 +57,8 @@ export default {
     },
     initialValue: {
       type: [ String, Number ],
-      required: false
+      required: false,
+      default: '' || 0
     }
   },
 

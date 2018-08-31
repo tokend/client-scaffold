@@ -6,10 +6,14 @@
     <span class="footer__links">
       <router-link
         class="footer__item footer__link"
-        :to="vueRoutes.terms">{{ i18n.auth_terms() }}</router-link>
+        :to="vueRoutes.terms">
+        {{ i18n.auth_terms() }}
+      </router-link>
       <router-link
         class="footer__item footer__link"
-        :to="vueRoutes.downloads">{{ i18n.auth_download_apps() }}</router-link>
+        :to="vueRoutes.downloads">
+        {{ i18n.auth_download_apps() }}
+      </router-link>
     </span>
   </footer>
 </template>
@@ -21,7 +25,7 @@ import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../vuex/types'
 
 export default {
-  name: 'footer',
+  name: 'app-footer',
   data: _ => ({
     vueRoutes,
     i18n

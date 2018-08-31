@@ -1,6 +1,5 @@
 <template>
   <div class="file-download">
-
     <a
       :href="url"
       class="file-download__link"
@@ -8,7 +7,9 @@
       <i class="mdi mdi-download" />
       <span
         class="file-download__file-name"
-        :title="file.name">{{ file.name }}</span>
+        :title="file.name">
+        {{ file.name }}
+      </span>
     </a>
 
     <a
@@ -21,7 +22,6 @@
     <!--<button class="view-btn" @click="view">-->
     <!--View online-->
     <!--</button>-->
-
   </div>
 </template>
 

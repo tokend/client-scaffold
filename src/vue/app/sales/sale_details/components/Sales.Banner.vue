@@ -17,7 +17,9 @@
 <script>
 export default {
   name: 'sale-banner',
-  props: ['sale'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   computed: {
     embedVideoUrl () {
       const query = 'watch?v='

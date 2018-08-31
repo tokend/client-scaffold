@@ -29,13 +29,13 @@
     <div
       class="select-field__list"
       :class="{ 'select-field__list--active': showList }">
-      <template v-for="(value, i) in values">
+      <template v-for="(item, i) in values">
         <div
           class="select-field__list-item"
           :key="i"
-          :class="{ 'select-field__list-item--selected': selected === value }"
-          @click="selectItem(value)">
-          {{ value }}
+          :class="{ 'select-field__list-item--selected': selected === item }"
+          @click="selectItem(item)">
+          {{ item }}
         </div>
       </template>
     </div>
@@ -98,7 +98,11 @@ export default {
   caret-color: $field-color-focused;
   color: $field-color-text;
   padding: $field-input-padding;
-  @include material-border($field-color-focused, $field-color-unfocused, '&.select-field__selected--focused');
+  @include material-border(
+    $field-color-focused,
+    $field-color-unfocused,
+    '&.select-field__selected--focused'
+  );
   @include text-font-sizes;
 }
 

@@ -5,7 +5,9 @@
       v-if="!isSettingsOpened">
       <h2 class="tfa-settings__title">{{ i18n.mod_pwd_required() }}</h2>
       <div class="tfa-settings__switch-outer">
-        <span class="tfa-settings__switch-text"> {{ i18n.set_tfa_enable() }}</span>
+        <span class="tfa-settings__switch-text">
+          {{ i18n.set_tfa_enable() }}
+        </span>
         <md-switch
           class="md-primary"
           @change="changeState"
@@ -31,14 +33,20 @@
         v-ripple
         :disabled="!switchTriggered"
         @click="save"
-        class="app__button-flat tfa-settings__submit-btn"> {{ i18n.lbl_ok() }} </button>
+        class="app__button-flat tfa-settings__submit-btn">
+        {{ i18n.lbl_ok() }}
+      </button>
     </div>
     <div
       class="tfa-settings__qr-wrapper"
       v-if="isSettingsOpened">
-      <md-dialog-title class="tfa-settings__qr-title">{{ i18n.set_tfa_enable() }}</md-dialog-title>
+      <md-dialog-title class="tfa-settings__qr-title">
+        {{ i18n.set_tfa_enable() }}
+      </md-dialog-title>
       <div class="app__dialog-inner">
-        <p class="tfa-settings__explain">{{ i18n.set_tfa_scan_the_qr_code() }}</p>
+        <p class="tfa-settings__explain">
+          {{ i18n.set_tfa_scan_the_qr_code() }}
+        </p>
         <div
           class="tfa-settings__qr-outer"
           v-if="inputMode === INPUT_MODES.qr">
@@ -50,7 +58,9 @@
             color="#3f4244"
           />
         </div>
-        <p class="tfa-settings__explain-additional">{{ i18n.set_or_manually_enter() }}</p>
+        <p class="tfa-settings__explain-additional">
+          {{ i18n.set_or_manually_enter() }}
+        </p>
         <clipboard-field
           class="tfa-settings__copy-secret"
           :value="factor.secret"
@@ -72,7 +82,6 @@
           {{ i18n.lbl_confirm() }}
         </button>
       </md-dialog-actions>
-
     </div>
   </div>
 </template>
@@ -167,7 +176,9 @@ export default {
         .map(factor => factor.id)
 
       if (disabledFactors.length) {
-        await Promise.all(disabledFactors.map(id => factorsService.deleteFactor(id)))
+        await Promise.all(disabledFactors.map(id =>
+          factorsService.deleteFactor(id))
+        )
         return
       }
 
@@ -179,7 +190,10 @@ export default {
         if (this.factor.id !== -1) {
           await factorsService.deleteFactor(this.factor.id)
         }
-        const factor = await factorsService.createFactor('totp', this.form.password)
+        const factor = await factorsService.createFactor(
+          'totp',
+          this.form.password
+        )
         this.factor.secret = factor.attribute('secret')
         this.factor.qr = factor.attribute('seed')
         this.factor.id = factor.data('id')

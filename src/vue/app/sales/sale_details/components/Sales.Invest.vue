@@ -33,7 +33,9 @@
 
         <div class="invest__input-hint">
           {{ i18n.sale_invest_converted() }}
-          <span class="invest__available-amount">{{ i18n.cc(form.convertedAmount) }}</span>
+          <span class="invest__available-amount">
+            {{ i18n.cc(form.convertedAmount) }}
+          </span>
         </div>
       </div>
 
@@ -51,7 +53,13 @@
           v-ripple
           @click="invest"
           class="app__button-raised invest__submit-btn"
-          :disabled="isPending || isOwner || hardCapExceeded || !sale.isOpened || sale.isUpcoming || !form.amount">
+          :disabled="isPending ||
+            isOwner ||
+            hardCapExceeded ||
+            !sale.isOpened ||
+            sale.isUpcoming ||
+            !form.amount
+          ">
           {{ offer ? i18n.sale_update_offer() : i18n.sale_invest() }}
         </button>
         <md-tooltip
@@ -67,7 +75,11 @@
         <md-tooltip
           v-else-if="hardCapExceeded"
           md-direction="top">
-          {{ i18n.sale_disable_invest_hardcap_exceed({amount: i18n.cc(sale.hardCap)}) }}
+          {{
+            i18n.sale_disable_invest_hardcap_exceed({
+              amount: i18n.cc(sale.hardCap)
+            })
+          }}
         </md-tooltip>
         <md-tooltip
           v-else-if="sale.isClosed"
@@ -83,7 +95,10 @@
 
       <div class="invest__cancel-btn-ctn">
         <hint-wrapper
-          :hint="i18n.sale_offer_cancel_tip({amount: i18n.c(investedAmount), asset: form.quoteAsset})"
+          :hint="i18n.sale_offer_cancel_tip({
+            amount: i18n.c(investedAmount),
+            asset: form.quoteAsset
+          })"
           :decorated="false">
           <button
             v-ripple
@@ -123,7 +138,9 @@ export default {
   name: 'sale-invest',
   components: { SelectFieldUnchained, InputFieldUnchained, HintWrapper },
   mixins: [FormMixin],
-  props: ['sale'],
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
   data: _ => ({
     form: {
       quoteAsset: '',
@@ -135,10 +152,6 @@ export default {
     i18n,
     config
   }),
-  created () {
-    this.setTokenCode()
-    this.loadOffers()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
@@ -169,7 +182,8 @@ export default {
       return this.available <= 0
     },
     hardCapExceeded () {
-      return parseFloat(this.form.convertedAmount) > parseFloat(add(this.sale.hardCap, 1))
+      return parseFloat(this.form.convertedAmount) >
+             parseFloat(add(this.sale.hardCap, 1))
     },
     maxValue () {
       const hardCap = this.sale.hardCaps[this.form.quoteAsset]
@@ -185,6 +199,33 @@ export default {
       }
     }
   },
+  watch: {
+    'form.amount': async function (value) {
+      if (value !== '' && value > 0) {
+        this.form.convertedAmount = await pairsService.loadConvertedAmount(
+          this.form.amount,
+          this.form.quoteAsset,
+          this.sale.defaultQuoteAsset
+        )
+      }
+      if (value === '') {
+        this.form.convertedAmount = 0
+      }
+    },
+    offer: function (value) {
+      if (value) {
+        this.form.amount = value.quoteAmount
+        this.investedAmount = value.quoteAmount
+      } else {
+        this.form.amount = ''
+        this.form.convertedAmount = 0
+      }
+    }
+  },
+  created () {
+    this.setTokenCode()
+    this.loadOffers()
+  },
   methods: {
     ...mapActions({
       loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
@@ -195,7 +236,9 @@ export default {
     async loadOffers () {
       const response = await offersService.loadUserSaleOffers(this.sale.id)
       const records = response.records
-      this.offers = records.map(record => RecordFactory.createOfferRecord(record))
+      this.offers = records.map(record =>
+        RecordFactory.createOfferRecord(record)
+      )
     },
     async invest () {
       if (!await this.isValid()) return
@@ -210,11 +253,20 @@ export default {
           await accountsService.createBalance(this.sale.baseAsset)
           await this.loadBalances()
         }
-        const offerFees = await feeService.loadOfferFeeByAmount(this.form.quoteAsset, multiply(this.form.amount, this.price))
+        const offerFees = await feeService.loadOfferFeeByAmount(
+          this.form.quoteAsset,
+          multiply(this.form.amount, this.price)
+        )
 
         const cancelOpts = this.offer ? {
-          baseBalance: _get(this.accountBalances, `${this.sale.baseAsset}.balance_id`),
-          quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
+          baseBalance: _get(
+            this.accountBalances,
+            `${this.sale.baseAsset}.balance_id`
+          ),
+          quoteBalance: _get(
+            this.accountBalances,
+            `${this.form.quoteAsset}.balance_id`
+          ),
           offerId: this.offer.id,
           price: this.price,
           orderBookId: this.sale.id
@@ -224,15 +276,23 @@ export default {
           price: this.price,
           orderBookId: this.sale.id,
           isBuy: true,
-          baseBalance: _get(this.accountBalances, `${this.sale.baseAsset}.balance_id`),
-          quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
+          baseBalance: _get(
+            this.accountBalances,
+            `${this.sale.baseAsset}.balance_id`
+          ),
+          quoteBalance: _get(
+            this.accountBalances,
+            `${this.form.quoteAsset}.balance_id`
+          ),
           fee: offerFees.percent
         } : null
         await offersService.createSaleOffer(createOpts, cancelOpts)
         this.$emit(commonEvents.investInSale)
         this.loadBalances()
         this.loadOffers()
-        EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_created({ asset: this.sale.baseAsset }))
+        EventDispatcher.dispatchShowSuccessEvent(
+          i18n.sale_offer_created({ asset: this.sale.baseAsset })
+        )
       } catch (error) { ErrorHandler.processUnexpected(error) }
       this.enable()
     },
@@ -240,8 +300,12 @@ export default {
       this.disable()
       try {
         const cancelOpts = this.offer ? {
-          baseBalance: _get(this.accountBalances, `${this.sale.baseAsset}.balance_id`),
-          quoteBalance: _get(this.accountBalances, `${this.form.quoteAsset}.balance_id`),
+          baseBalance: _get(
+            this.accountBalances, `${this.sale.baseAsset}.balance_id`
+          ),
+          quoteBalance: _get(
+            this.accountBalances, `${this.form.quoteAsset}.balance_id`
+          ),
           offerId: this.offer.id,
           price: this.price,
           orderBookId: this.sale.id
@@ -250,30 +314,13 @@ export default {
         this.$emit(commonEvents.investInSale)
         this.loadBalances()
         this.loadOffers()
-        EventDispatcher.dispatchShowSuccessEvent(i18n.sale_offer_cancelled({ asset: this.sale.baseAsset }))
+        EventDispatcher.dispatchShowSuccessEvent(
+          i18n.sale_offer_cancelled({ asset: this.sale.baseAsset })
+        )
       } catch (err) {
         ErrorHandler.processUnexpected(err)
       }
       this.enable()
-    }
-  },
-  watch: {
-    'form.amount': async function (value) {
-      if (value !== '' && value > 0) {
-        this.form.convertedAmount = await pairsService.loadConvertedAmount(this.form.amount, this.form.quoteAsset, this.sale.defaultQuoteAsset)
-      }
-      if (value === '') {
-        this.form.convertedAmount = 0
-      }
-    },
-    offer: function (value) {
-      if (value) {
-        this.form.amount = value.quoteAmount
-        this.investedAmount = value.quoteAmount
-      } else {
-        this.form.amount = ''
-        this.form.convertedAmount = 0
-      }
     }
   }
 }
