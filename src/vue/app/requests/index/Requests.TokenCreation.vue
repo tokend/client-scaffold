@@ -126,10 +126,11 @@
         <md-table-row v-if="!isLoaded">
           <md-table-cell colspan="7">
             <div class="tx-history__btn-outer">
-              <button v-ripple
-                      @click="more"
-                      class="app__button-flat"
-                      :disabled="isLoading">
+              <button
+                v-ripple
+                @click="more"
+                class="app__button-flat"
+                :disabled="isLoading">
                 {{ i18n.lbl_view_more() }}
               </button>
             </div>

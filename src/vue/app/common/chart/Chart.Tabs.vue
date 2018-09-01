@@ -4,35 +4,35 @@
       {{ i18n.trd_chart_tabs_prefix() }}
     </span> -->
 
-    <button class="chart-tabs__tab"
-            @click="$emit(common.inputEvent, tabs.hour)"
-            :class="{ 'chart-tabs__tab--selected': value === tabs.hour }"
-            :disabled="isPending"
-    >
+    <button
+      class="chart-tabs__tab"
+      @click="$emit(common.inputEvent, tabs.hour)"
+      :class="{ 'chart-tabs__tab--selected': value === tabs.hour }"
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_hour() }}</span>
     </button>
 
-    <button class="chart-tabs__tab"
-            @click="$emit(common.inputEvent, tabs.day)"
-            :class="{ 'chart-tabs__tab--selected': value === tabs.day }"
-            :disabled="isPending"
-    >
+    <button
+      class="chart-tabs__tab"
+      @click="$emit(common.inputEvent, tabs.day)"
+      :class="{ 'chart-tabs__tab--selected': value === tabs.day }"
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_day() }}</span>
     </button>
 
-    <button class="chart-tabs__tab"
-            @click="$emit(common.inputEvent, tabs.month)"
-            :class="{ 'chart-tabs__tab--selected': value === tabs.month }"
-            :disabled="isPending"
-    >
+    <button
+      class="chart-tabs__tab"
+      @click="$emit(common.inputEvent, tabs.month)"
+      :class="{ 'chart-tabs__tab--selected': value === tabs.month }"
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_month() }}</span>
     </button>
 
-    <button class="chart-tabs__tab"
-            @click="$emit(common.inputEvent, tabs.year)"
-            :class="{ 'chart-tabs__tab--selected': value === tabs.year }"
-            :disabled="isPending"
-    >
+    <button
+      class="chart-tabs__tab"
+      @click="$emit(common.inputEvent, tabs.year)"
+      :class="{ 'chart-tabs__tab--selected': value === tabs.year }"
+      :disabled="isPending">
       <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
     </button>
   </div>

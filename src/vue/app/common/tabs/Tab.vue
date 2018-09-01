@@ -1,10 +1,10 @@
 <template>
-  <section v-show="isActive"
-           :aria-hidden="! isActive"
-           class="app-tabs__panel"
-           :id="hash"
-           role="tabpanel"
-  >
+  <section
+    v-show="isActive"
+    :aria-hidden="! isActive"
+    class="app-tabs__panel"
+    :id="hash"
+    role="tabpanel">
     <slot />
   </section>
 </template>

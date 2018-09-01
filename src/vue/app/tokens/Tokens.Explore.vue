@@ -30,13 +30,14 @@
                 <md-list class="tokens__md-list md-double-line">
                   <md-content class="tokens__md-scrollbar md-scrollbar">
                     <template v-for="token in filteredTokens">
-                      <md-list-item class="tokens__md-list-item"
-                                    @click="selectToken(token)"
-                                    :key="`explore-tokens-token-${token.code}`"
-                                    :class="{
-                                      'tokens__md-list-item--selected':
-                                        selected.code === token.code
-                                    }"
+                      <md-list-item
+                        class="tokens__md-list-item"
+                        @click="selectToken(token)"
+                        :key="`explore-tokens-token-${token.code}`"
+                        :class="{
+                          'tokens__md-list-item--selected':
+                            selected.code === token.code
+                        }"
                       >
                         <div class="explore-tokens__list-item-avatar"
                              :class="`${hasBalance(token)
@@ -282,6 +283,12 @@ export default {
 <style lang="scss" scoped>
 @import "~@scss/variables";
 @import "~@scss/mixins";
+
+.token-search-form {
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 40px;
+}
 
 .token-search-form {
   width: 100%;

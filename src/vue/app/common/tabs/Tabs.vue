@@ -49,7 +49,10 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('hashchange', () => this.selectTab(window.location.hash))
+    window.addEventListener(
+      'hashchange',
+      () => this.selectTab(window.location.hash)
+    )
 
     if (this.findTab(window.location.hash)) {
       this.selectTab(window.location.hash)
@@ -112,8 +115,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../../scss/variables.scss';
-  @import '../../../../scss/mixins.scss';
+  @import '~@scss/variables.scss';
+  @import '~@scss/mixins.scss';
   .app-tabs__tabs {
     display: flex;
     justify-content: flex-start;
