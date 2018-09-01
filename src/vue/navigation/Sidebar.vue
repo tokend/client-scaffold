@@ -4,12 +4,11 @@
          :class="{ 'backdrop--active': isSidebarOpened }"
          @click="closeSidebar"></div>
 
-    <div :class="{ 'app__sidebar-icon--visible': !isSidebarOpened }">
-      <button @click="openSidebar"
-              class="app__sidebar-icon">
-        <md-icon>menu</md-icon>
-      </button>
-    </div>
+    <button @click="openSidebar"
+            class="app__sidebar-icon"
+            :class="{ 'app__sidebar-icon--invisible': isSidebarOpened }">
+      <md-icon>menu</md-icon>
+    </button>
 
     <div class="app__sidebar" :class="{ 'app__sidebar--closed': !isSidebarOpened }">
       <section class="sidebar__logotype">
@@ -253,7 +252,6 @@
     background-color: $col-sidebar-background !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
     min-height: 100%;
-    padding-bottom: 10 * $point;
   }
 
   .app__sidebar {
@@ -263,25 +261,24 @@
     z-index: 120;
     list-style: none;
 
-    @include respond-to(small) {
+    @include respond-to(tablet) {
       opacity: 1;
-      transform: translateX(0);
-      position: absolute !important;
+      width: 260px;
       background-color: $col-sidebar-background-media-small !important;
       transition: all 0.5s cubic-bezier(.4, 0, .2, 1);
     }
 
     &.app__sidebar--closed {
-      @include respond-to(small) {
+      @include respond-to(tablet) {
         opacity: 0;
-        transform: translateX(-150%);
+        width: 0;
         transition: all 0.5s cubic-bezier(.4, 0, .2, 1);
       }
     }
   }
 
   .backdrop {
-    @include respond-to(small) {
+    @include respond-to(tablet) {
       position: fixed;
       left: -100%;
       top: 0;
@@ -294,9 +291,9 @@
     }
 
     &.backdrop--active {
-      left: 0;
+      left: 260px;
       opacity: 1;
-      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1);
+      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.2s;
     }
   }
 
@@ -314,13 +311,18 @@
     border-radius: 50%;
     background-color: $col-button-flat-txt !important;
     transform: scale(0);
+    opacity: 0;
 
-    @include respond-to(small) {
+    @include respond-to(tablet) {
       transform: scale(1);
+      opacity: 1;
+      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.4s;
     }
 
-    .app__sidebar-icon--visible {
-      transform: scale(1);
+    &.app__sidebar-icon--invisible {
+      transform: scale(0);
+      opacity: 0;
+      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.4s;
     }
 
     .md-icon {

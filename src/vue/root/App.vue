@@ -141,6 +141,7 @@
   .app__container {
     display: flex;
     align-items: stretch;
+    overflow-x: hidden;
   }
 
   .app__main-content {
@@ -172,7 +173,7 @@
     padding: 10px 95px;
     background-color: $col-app-content-background;
 
-    @include respond-to(small) {
+    @include respond-to($tablet) {
       padding: 0 40px;
     }
   }
