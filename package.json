@@ -14,7 +14,9 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint src/**/*.{js,vue} --fix"
+    "lint": "eslint src/**/*.{js,vue}",
+    "init": "npm run init-pre-commit-hook",
+    "init-pre-commit-hook": "ln -s ../../git-hooks/pre-commit.sh .git/hooks/pre-commit"
   },
   "dependencies": {
     "@std/esm": "^0.18.0",
