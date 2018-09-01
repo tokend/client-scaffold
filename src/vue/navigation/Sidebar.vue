@@ -1,12 +1,24 @@
 <template>
   <div class="sidebar">
-    <section class="sidebar__logotype">
+    <div class="backdrop"
+         :class="{ 'backdrop--active': isSidebarOpened }"
+         @click="closeSidebar"></div>
+
+    <div :class="{ 'app__sidebar-icon--visible': !isSidebarOpened }">
+      <button @click="openSidebar"
+              class="app__sidebar-icon">
+        <md-icon>menu</md-icon>
+      </button>
+    </div>
+
+    <div class="app__sidebar" :class="{ 'app__sidebar--closed': !isSidebarOpened }">
+      <section class="sidebar__logotype">
       <router-link @click.native="closeSidebar" to="/dashboard">
         <logotype class="sidebar__logotype-icon"/>
       </router-link>
     </section>
 
-    <section class="sidebar__list">
+      <section class="sidebar__list">
       <ul>
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
@@ -83,7 +95,7 @@
       </ul>
     </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list">
+      <section class="sidebar__section sidebar__section--account sidebar__list">
       <div class="sidebar__list-title">{{ i18n.sidebar_section_explore() }}</div>
       <ul>
         <router-link v-ripple class="sidebar__list-item"
@@ -104,7 +116,7 @@
       </ul>
     </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list"
+      <section class="sidebar__section sidebar__section--account sidebar__list"
       v-if="accountTypeI === ACCOUNT_TYPES.syndicate">
       <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
       <ul>
@@ -158,7 +170,7 @@
       </ul>
     </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list">
+      <section class="sidebar__section sidebar__section--account sidebar__list">
       <div class="sidebar__list-title">{{ i18n.sidebar_section_account() }}</div>
       <ul>
         <router-link v-ripple class="sidebar__list-item"
@@ -179,7 +191,8 @@
       </ul>
     </section>
 
-    <app-footer/>
+      <app-footer/>
+    </div>
   </div>
 </template>
 
@@ -200,6 +213,10 @@
       Logotype,
       AppFooter
     },
+
+    // props: {
+    //   menuVisible: true
+    // },
 
     data () {
       return {
@@ -222,7 +239,6 @@
       },
       closeSidebar () {
         this.isSidebarOpened = false
-        this.$emit('hide-sidebar', this.isSidebarOpened)
       }
     }
   }
@@ -230,13 +246,87 @@
 
 <style lang="scss" scoped>
   @import '../../scss/variables';
+  @import '../../scss/mixins';
 
   .sidebar {
+    position: relative;
     background-color: $col-sidebar-background !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
-    min-height: 100vh;
+    min-height: 100%;
     padding-bottom: 10 * $point;
-    height: 100%;
+  }
+
+  .app__sidebar {
+    width: 260px;
+    min-height: 100%;
+    padding-bottom: 70px;
+    z-index: 120;
+    list-style: none;
+
+    @include respond-to(small) {
+      opacity: 1;
+      transform: translateX(0);
+      position: absolute !important;
+      background-color: $col-sidebar-background-media-small !important;
+      transition: all 0.5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    &.app__sidebar--closed {
+      @include respond-to(small) {
+        opacity: 0;
+        transform: translateX(-150%);
+        transition: all 0.5s cubic-bezier(.4, 0, .2, 1);
+      }
+    }
+  }
+
+  .backdrop {
+    @include respond-to(small) {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      z-index: 115;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    &.backdrop--active {
+      left: 0;
+      opacity: 1;
+      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1);
+    }
+  }
+
+  .app__sidebar-icon {
+    position: absolute;
+    left: 5px;
+    top: 41px;
+    z-index: 110;
+    width: 40px;
+    height: 40px;
+    margin-right: 0;
+    margin-left: 8px !important;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background-color: $col-button-flat-txt !important;
+    transform: scale(0);
+
+    @include respond-to(small) {
+      transform: scale(1);
+    }
+
+    .app__sidebar-icon--visible {
+      transform: scale(1);
+    }
+
+    .md-icon {
+      color: $col-button-raised-txt !important;
+      transition: color 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
   }
 
   .sidebar__list-item {

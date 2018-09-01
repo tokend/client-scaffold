@@ -3,31 +3,22 @@
     <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
       <warning-banner v-if="isNotSupportedBworser" :message="i18n.cm_edge_warning()"/>
       <div :class="{ 'app__warning': isNotSupportedBworser }">
-        <md-app md-waterfall md-mode="fixed">
+        <div class="app__container">
+          <sidebar />
 
-          <md-app-toolbar class="md-primary app__sidebar" v-if="isLoggedIn">
-            <div class="md-toolbar-row">
-              <md-button class="md-icon-button app__sidebar-icon"
-                        @click="menuVisible = !menuVisible">
-                <md-icon>menu</md-icon>
-              </md-button>
+          <div class="app__main-content">
+            <div class="app__navbar">
               <navbar/>
             </div>
-          </md-app-toolbar>
 
-          <md-app-drawer md-permanent="full"
-                        :md-active.sync="menuVisible"
-                        v-if="isLoggedIn">
-            <sidebar @hide-sidebar="hideSidebar"/>
-          </md-app-drawer>
-
-          <md-app-content>
-            <router-view/>
-            <snackbar/>
-            <file-viewer/>
-            <loader-bar/>
-          </md-app-content>
-        </md-app>
+            <div class="main">
+              <router-view/>
+              <snackbar/>
+              <file-viewer/>
+              <loader-bar/>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
     <template v-else-if="!isLoggedIn && $route.meta.routeWithAuth">
@@ -76,7 +67,6 @@
     },
 
     data: () => ({
-      menuVisible: false,
       isNotSupportedBworser: false,
       i18n
     }),
@@ -139,9 +129,6 @@
               break
           }
         })
-      },
-      hideSidebar (status) {
-        this.menuVisible = status
       }
     }
   }
@@ -151,41 +138,47 @@
   @import '~@scss/mixins';
   @import '~@scss/variables';
 
-  .md-app-content {
-    padding-top: 40px;
+  .app__container {
+    display: flex;
+    align-items: stretch;
   }
 
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
+  .app__main-content {
+    flex-grow: 1;
+    min-height: 100vh;
+    height: 100%;
+  }
+
+  .app__navbar {
+    position: relative;
+    z-index: 100;
+    min-height: 64px;
+    padding-left: 55px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    transition: .3s cubic-bezier(.4,0,.2,1);
+    transition-property: opacity,background-color,box-shadow,transform,color,min-height,-webkit-transform;
+    will-change: opacity,background-color,box-shadow,transform,color,min-height;
+  }
+
+  .main {
+    width: 100%;
+    z-index: 1;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 95px;
+    background-color: $col-app-content-background;
+
+    @include respond-to(small) {
+      padding: 0 40px;
+    }
   }
 
   .app__warning {
     max-height: calc(100vh - #{$warning-banner-height}) !important;
     overflow-y: auto;
-  }
-
-  .app__sidebar-icon {
-    display: none;
-
-    @include respond-to(small) {
-      display: initial;
-    }
-  }
-
-  .app__sidebar {
-    z-index: 10;
-
-    @include respond-to(small) {
-      background-color: $col-sidebar-background-media-small !important;
-    }
-  }
-
-  .app__sidebar-icon {
-    @include respond-to(small) {
-      background-color: $col-sidebar-icon;
-      margin-right: 0;
-      margin-left: 8px !important;
-    }
   }
 </style>
