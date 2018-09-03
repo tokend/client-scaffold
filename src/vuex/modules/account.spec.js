@@ -49,7 +49,6 @@ describe('module.account', () => {
     SET_ACCOUNT_BALANCES(state, balancesResponse)
     expect(state.balances).to.deep.equal(balancesResponse)
   })
-  //
   it ('GET_ACCOUNT_DETAILS', (done) => {
     testAction({
       action: module.actions.GET_ACCOUNT_DETAILS,

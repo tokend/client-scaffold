@@ -13,7 +13,6 @@
 
     <label class="tick-field__label" :for="id" :title="title">
       <slot></slot>
-      <!-- {{ label }} -->
     </label>
 
     <span class="tick-field__tick" :for="id" :title="title">
