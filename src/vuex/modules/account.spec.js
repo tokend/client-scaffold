@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mutations } from './account.module'
 import {
   mockAccountId,

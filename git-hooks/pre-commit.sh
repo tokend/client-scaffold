@@ -10,7 +10,7 @@ errors="false"
 
 for file in ${files}; do
   if [[ $file != *".eslintrc.js"* ]]; then
-    ./node_modules/.bin/eslint --max-warnings 0 $file
+    ./node_modules/.bin/eslint --max-warnings 0 $file --no-ignore
 
     if [[ $? -ne 0 ]]; then
       lintfiles+="\n$file"

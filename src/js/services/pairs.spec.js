@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { PairsService } from './pairs.service'
 import { mockAccountId, mockResponses } from './test/default.mocks'
 import { mockConvertAmount } from './test/prices.mocks'
