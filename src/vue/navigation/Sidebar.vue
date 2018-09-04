@@ -1,8 +1,9 @@
 <template>
-  <div class="sidebar">
-    <div class="backdrop"
-         :class="{ 'backdrop--active': isSidebarOpened }"
-         @click="closeSidebar"></div>
+  <div class="app__sidebar">
+    <div class="sidebar__backdrop"
+         :class="{ 'sidebar__backdrop--active': isSidebarOpened }"
+         @click="closeSidebar">
+    </div>
 
     <button @click="openSidebar"
             class="app__sidebar-icon"
@@ -14,8 +15,8 @@
       <section class="sidebar__logotype">
       <router-link @click.native="closeSidebar" to="/dashboard">
         <logotype class="sidebar__logotype-icon"/>
-      </router-link>
-    </section>
+        </router-link>
+      </section>
 
       <section class="sidebar__list">
       <ul>
@@ -117,57 +118,57 @@
 
       <section class="sidebar__section sidebar__section--account sidebar__list"
       v-if="accountTypeI === ACCOUNT_TYPES.syndicate">
-      <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
-      <ul>
-        <router-link v-ripple class="sidebar__list-item"
-                    @click.native="closeSidebar"
-                    to="/token-creation"
-                    tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
-          <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
-        </router-link>
+        <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
+        <ul>
+          <router-link v-ripple class="sidebar__list-item"
+                      @click.native="closeSidebar"
+                      to="/token-creation"
+                      tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
+            <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
+          </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/sale-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
-          <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
-        </router-link>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/sale-creation"
+                       tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
+            <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
+          </router-link>
 
-        <!-- <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/my-sales"
-                     tag="li" v-if="config.FEATURE_FLAGS.sales">
-          <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_my_funds() }}</span>
-        </router-link> -->
+          <!-- <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/my-sales"
+                       tag="li" v-if="config.FEATURE_FLAGS.sales">
+            <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_my_funds() }}</span>
+          </router-link> -->
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/preissuance-upload"
-                     tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
-          <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
-        </router-link>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/preissuance-upload"
+                       tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
+            <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
+          </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/issuance-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
-          <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
-        </router-link>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/issuance-creation"
+                       tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
+            <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
+          </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     :to="{ name: 'app.requests' }"
-                     tag="li" v-if="config.FEATURE_FLAGS.requests">
-          <md-icon class="sidebar__list-item-icon">import_contacts</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
-        </router-link>
-      </ul>
-    </section>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       :to="{ name: 'app.requests' }"
+                       tag="li" v-if="config.FEATURE_FLAGS.requests">
+            <md-icon class="sidebar__list-item-icon">import_contacts</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
+          </router-link>
+        </ul>
+      </section>
 
       <section class="sidebar__section sidebar__section--account sidebar__list">
       <div class="sidebar__list-title">{{ i18n.sidebar_section_account() }}</div>
@@ -212,10 +213,6 @@
       Logotype,
       AppFooter
     },
-
-    // props: {
-    //   menuVisible: true
-    // },
 
     data () {
       return {
@@ -277,7 +274,7 @@
     }
   }
 
-  .backdrop {
+  .sidebar__backdrop {
     @include respond-to(tablet) {
       position: fixed;
       left: -100%;
@@ -290,7 +287,7 @@
       transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
     }
 
-    &.backdrop--active {
+    &.sidebar__backdrop--active {
       left: 260px;
       opacity: 1;
       transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.2s;

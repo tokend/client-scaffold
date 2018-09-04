@@ -11,7 +11,7 @@
               <navbar/>
             </div>
 
-            <div class="main">
+            <div class="app__main">
               <router-view/>
               <snackbar/>
               <file-viewer/>
@@ -164,7 +164,7 @@
     will-change: opacity,background-color,box-shadow,transform,color,min-height;
   }
 
-  .main {
+  .app__main {
     width: 100%;
     z-index: 1;
     display: inline-flex;
