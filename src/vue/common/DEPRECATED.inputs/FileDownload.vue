@@ -19,9 +19,6 @@
       rel="noopener">
       <span>View  <i class="mdi mdi-open-in-new" /></span>
     </a>
-    <!--<button class="view-btn" @click="view">-->
-    <!--View online-->
-    <!--</button>-->
   </div>
 </template>
 

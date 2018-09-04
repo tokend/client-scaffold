@@ -107,11 +107,11 @@
 <script>
 import StepMixin from '../spec/step.mixin'
 import _pick from 'lodash/pick'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { commonEvents } from '../../../../js/events/common_events'
-import { ACCOUNT_STATES } from '../../../../js/const/const'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { commonEvents } from '@/js/events/common_events'
+import { ACCOUNT_STATES } from '@/js/const/const'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 export default {
   name: 'step-default',
   mixins: [ StepMixin ],
@@ -144,7 +144,6 @@ export default {
   methods: {
     async submit () {
       if (!await this.isValid()) return
-      // if (!this.isValidDocs(this.schema.requiredDocs)) return
       this.disable()
       try {
         await this.uploadDocuments()

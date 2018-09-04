@@ -413,11 +413,17 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../scss/variables';
+  @import '~@scss/variables';
 
   .mass-transfer {
     display: flex;
     justify-content: center;
+    width: 100%;
+  }
+
+  .mass-transfer__card {
+    max-width: 1200px;
+    margin: auto;
     width: 100%;
   }
 

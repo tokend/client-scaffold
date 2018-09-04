@@ -1,14 +1,11 @@
 <template>
   <div class="chart-tabs">
-    <!-- <span class="chart-tabs__prefix">
-      {{ i18n.trd_chart_tabs_prefix() }}
-    </span> -->
-
     <button
       class="chart-tabs__tab"
       @click="$emit(common.inputEvent, tabs.hour)"
       :class="{ 'chart-tabs__tab--selected': value === tabs.hour }"
-      :disabled="isPending">
+      :disabled="isPending"
+    >
       <span class="mobile-hidden">{{ i18n.trd_chart_hour() }}</span>
     </button>
 
@@ -16,7 +13,8 @@
       class="chart-tabs__tab"
       @click="$emit(common.inputEvent, tabs.day)"
       :class="{ 'chart-tabs__tab--selected': value === tabs.day }"
-      :disabled="isPending">
+      :disabled="isPending"
+    >
       <span class="mobile-hidden">{{ i18n.trd_chart_day() }}</span>
     </button>
 
@@ -24,7 +22,8 @@
       class="chart-tabs__tab"
       @click="$emit(common.inputEvent, tabs.month)"
       :class="{ 'chart-tabs__tab--selected': value === tabs.month }"
-      :disabled="isPending">
+      :disabled="isPending"
+    >
       <span class="mobile-hidden">{{ i18n.trd_chart_month() }}</span>
     </button>
 
@@ -32,7 +31,8 @@
       class="chart-tabs__tab"
       @click="$emit(common.inputEvent, tabs.year)"
       :class="{ 'chart-tabs__tab--selected': value === tabs.year }"
-      :disabled="isPending">
+      :disabled="isPending"
+    >
       <span class="mobile-hidden">{{ i18n.trd_chart_year() }}</span>
     </button>
   </div>
@@ -48,6 +48,7 @@ export default {
     value: { type: String, default: '' },
     isPending: { type: Boolean, default: false }
   },
+
   data () {
     return {
       common: {

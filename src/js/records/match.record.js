@@ -13,8 +13,6 @@ export class MatchRecord extends TxRecord {
         : RECORDS_VERBOSE.investment
     )
     this.asset = asset
-    // console.log(record)
-    // console.log(record.type_i)
     this.participants = record.participants
     this.participant = this._getParticipant()
     this.effects = this._getEffects()

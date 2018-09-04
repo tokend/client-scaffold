@@ -101,7 +101,6 @@ export default {
   methods: {
     async submit () {
       if (!await this.isValid()) return
-      // if (!this.isValidDocs(this.schema.requiredDocs)) return
       this.disable()
       try {
         await this.uploadDocuments()

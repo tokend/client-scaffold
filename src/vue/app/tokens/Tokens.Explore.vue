@@ -296,6 +296,12 @@ export default {
   margin-bottom: 40px;
 }
 
+.token-search-form {
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 40px;
+}
+
 .explore-tokens__token-ctn {
   width: 100%;
   display: flex;

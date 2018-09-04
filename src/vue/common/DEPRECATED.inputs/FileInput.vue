@@ -12,7 +12,6 @@
         :title="name || fileName">
         {{ name || fileName }}
       </span>
-      <!--<button class="file-input__view-btn">View</button>-->
       <input
         class="file-input__upload-input"
         :id="id"

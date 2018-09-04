@@ -13,9 +13,6 @@
                            manage-orders__table">
             <md-table-row class="manage-orders__row">
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
-              <!-- <md-table-head>
-                {{ i18n.trd_manahe_marken() }}
-              </md-table-head> -->
               <md-table-head>
                 {{ i18n.trd_manahe_order() }}
               </md-table-head>
@@ -35,9 +32,6 @@
                 <md-table-cell class="manage-orders__table-cell">
                   {{ i18n.dmy(order.createdAt) }}
                 </md-table-cell>
-                <!-- <md-table-cell class="manage-orders__table-cell">
-                  {{ `${order.baseAssetCode}/${order.quoteAssetCode}` }}
-                </md-table-cell> -->
                 <md-table-cell class="manage-orders__table-cell">
                   {{
                     order.isBuy
@@ -87,7 +81,7 @@
 
 <script>
 import OrderDetails from './ManageOrders.OrderDetails'
-import { i18n } from '../../../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 
 export default {
   name: 'manage-orders',
@@ -101,9 +95,6 @@ export default {
       index: -1,
       i18n
     }
-  },
-  watch: {
-
   },
   methods: {
     toggleDetails (index) {

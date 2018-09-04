@@ -150,6 +150,5 @@ export default {
     display: inline-block;
     margin-right: 1 * $point;
     width: 10 * $point;
-    /*width: 100%;*/
   }
 </style>

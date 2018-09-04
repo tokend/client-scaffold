@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import DetailRow from '../../../common/Detail.Row'
+import DetailRow from '@/vue/app/common/Detail.Row'
 import { i18n } from '@/js/i18n'
 import { ASSET_POLICIES } from '@/js/const/xdr.const'
 import { documentTypes } from '@/js/const/documents.const'

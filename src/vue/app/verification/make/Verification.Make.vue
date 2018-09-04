@@ -91,10 +91,10 @@ import SyndicateBanner from './Verification.SyndicateBanner'
 import UserTypeSelector from './Verification.Selector'
 import Loader from '@/vue/app/common/Loader'
 
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
-import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '../../../../js/const/const'
+import { vuexTypes } from '@/vuex/types'
+import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '@/js/const/const'
 
 export default {
   name: 'verification-make',

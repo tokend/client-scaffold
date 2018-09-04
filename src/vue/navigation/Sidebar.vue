@@ -86,22 +86,6 @@
           <md-icon class="sidebar__list-item-icon">compare_arrows</md-icon>
           <span class="md-list-item-text">{{ i18n.lbl_trade() }}</span>
         </router-link>
-
-        <!-- TEMP. HIDDEN -->
-        <!-- <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/history"
-                     tag="li" v-if="config.FEATURE_FLAGS.history">
-          <md-icon class="sidebar__list-item-icon">featured_play_list</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
-        </router-link> -->
-
-        <!-- <router-link v-ripple class="sidebar__list-item"
-                          @click.native="closeSidebar"
-                          to="/help" tag="li">
-          <md-icon class="sidebar__list-item-icon">help</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_help() }}</span>
-        </router-link> -->
       </ul>
     </section>
 

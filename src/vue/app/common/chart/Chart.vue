@@ -82,10 +82,10 @@ export default {
       this.isLoading = true
       try {
         this.isActualData = true
-        this.data =
-          (await chartsService.loadChartsForTokenPair(
-            this.lockedAssets.base, this.lockedAssets.quote
-          )).data()
+        this.data = (await chartsService.loadChartsForTokenPair(
+          this.lockedAssets.base,
+          this.lockedAssets.quote)
+        ).data()
       } catch (error) {
         if (error instanceof errors.NotFoundError) {
           this.isActualData = false

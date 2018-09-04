@@ -52,6 +52,8 @@ export default {
 
   $custom-z-index: 45;
 
+  $custom-z-index: 45;
+
   .file-viewer {
     position: fixed;
     top: 0;

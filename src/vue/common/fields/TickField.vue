@@ -17,7 +17,6 @@
       :for="id"
       :title="title">
       <slot />
-      <!-- {{ label }} -->
     </label>
 
     <span

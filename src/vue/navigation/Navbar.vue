@@ -2,29 +2,6 @@
   <nav class="navbar">
     <h2 class="navbar__title">{{ $route.meta.pageName }}</h2>
     <div class="navbar__user">
-      <div class="navbar__user-notif navbar__user-notif--mobile">
-        <!-- NOTE: notifications are temporarily disabled -->
-        <!-- <button @click="toggleNotificationCardVisibility"
-                class="app__button-icon">
-          <md-icon>notifications</md-icon>
-        </button>
-        <md-card
-          class="navbar__notif-card md-elevation-6"
-          :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
-          <md-card-content>
-            <div class="navbar__notif-card-content">
-              <p
-                v-if="accountType === ACCOUNT_TYPES.notVerified"
-                class="navbar__notif-status">
-                Your account functionality is restricted. To get advanced
-                functionality go to
-                <a class="notif-link" @click="goKyc">KYC</a>.
-              </p>
-              <p v-else class="navbar__notif-status">No new notifications!</p>
-            </div>
-          </md-card-content>
-        </md-card> -->
-      </div>
       <div
         class="navbar__user-picture"
         @click="isUserCardOpen = true">
@@ -52,36 +29,6 @@
             {{ i18n.lbl_type_corporate() }}
           </template>
         </div>
-        <!-- NOTE: notifications are temporarily disabled -->
-        <!-- <div class="navbar__user-notif"
-              :class="{ 'navbar__user-notif--has-value': true }"
-              @click="toggleNotificationCardVisibility">
-          <span
-            v-if="!hasSeenNotif && accountType === ACCOUNT_TYPES.notVerified"
-            class="navbar__notif-counter">
-            1
-          </span>
-          2 notifications
-
-          <md-card
-            class="navbar__notif-card md-elevation-6"
-            :class="{ 'navbar__notif-card--active': isNotificationCardOpen }">
-            <md-card-content>
-              <div class="navbar__notif-card-content">
-                <p
-                  v-if="accountType === ACCOUNT_TYPES.notVerified"
-                  class="navbar__notif-status">
-                  Your account functionality is restricted. To get advanced
-                  functionality go to
-                  <a class="notif-link" @click="goKyc">KYC</a>.
-                </p>
-                <p v-else class="navbar__notif-status">
-                  No new notifications!
-                </p>
-              </div>
-            </md-card-content>
-          </md-card>
-        </div> -->
       </div>
 
       <md-card
@@ -309,52 +256,6 @@ export default {
     font-size: 12px;
   }
 
-  .navbar__user-notif {
-    color: $col-text-field-hint;
-    padding-left: 12px;
-    font-size: 12px;
-    cursor: pointer;
-    display: inline-block;
-
-    &.navbar__user-notif--mobile {
-      display: none;
-
-      @include respond-to-custom($custom-breakpoint) {
-        display: flex;
-      }
-    }
-
-    @include respond-to-custom($custom-breakpoint) {
-      display: none;
-      margin-right: 16px;
-      display: flex;
-
-      i {
-        color: rgba($col-text-field-hint, .8) !important;
-        font-size: 28px !important;
-      }
-    }
-
-    &:not(.navbar__user-notif--mobile):hover {
-      text-decoration: underline;
-    }
-  }
-
-  .navbar__user-notif--has-value {
-    position: relative;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: calc(50% - 2px);
-      left: 2px;
-      height: 4px;
-      width: 4px;
-      border-radius: 50%;
-      background-color: $col-accent;
-    }
-  }
-
   .navbar__user-name-icon {
     transition: .3s ease-out;
     will-change: transform;
@@ -379,7 +280,6 @@ export default {
     margin-left: 0;
   }
 
-  .navbar__notif-card,
   .navbar__user-card {
     position: absolute;
     right: 0;
@@ -433,52 +333,6 @@ export default {
     visibility: visible;
     opacity: 1;
     margin-top: 0;
-  }
-
-  .navbar__open-notif-btn {
-    position: relative;
-
-    & .navbar__notif-counter {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 15px;
-      height: 15px;
-      background-color: $col-pending;
-      border-radius: 50%;
-      // TODO: fix it after the notification function returns
-      color: $col-primary-txt;
-    }
-  }
-
-  .navbar__notif-card {
-    padding: 0;
-    width: 404px;
-
-    & .navbar__notif-card-content { font-size: 12px; }
-    &:before {
-      border-color: transparent transparent #fff transparent;
-      @include respond-to-custom($custom-breakpoint) {
-        right: 150px;
-      }
-    }
-    @include respond-to-custom($custom-breakpoint) {
-      right: 0;
-      max-width: 404px;
-      width: calc(100vw - 404px + 125px);
-    }
-    @include respond-to(small) {
-      width: calc(100vw - 24px);
-    }
-    @include respond-to(xsmall) {
-      width: calc(100vw - 32px);
-    }
-  }
-
-  .navbar__notif-card--active {
-    margin: 0;
-    visibility: visible;
-    opacity: 1;
   }
 
   .navbar__user-card-content {
@@ -574,12 +428,6 @@ export default {
 
   .navbar__user-action-btn {
     color: rgba(0, 0, 0, .75) !important;
-  }
-
-  .navbar__notif-link {
-    cursor: pointer;
-    text-decoration: underline;
-    color: $col-text-accented;
   }
 
   .navbar__user-card-ctn {

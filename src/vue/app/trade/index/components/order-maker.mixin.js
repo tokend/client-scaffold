@@ -46,17 +46,6 @@ export default {
           await this.loadBalances()
         }
 
-        // const asset = opts.isBuy ? opts.pair.quote : opts.pair.base
-        // const amount = opts.isBuy ? opts.quoteAmount : opts.baseAmount
-
-        // if (Number(this.accountBalances[asset].balance) < Number(amount)) {
-        //   EventDispatcher.dispatchShowErrorEvent(
-        //     i18n.trd_order_not_enough_funds()
-        //   )
-        //   this.enable()
-        //   return
-        // }
-
         const fee =
           await feeService.loadOfferFeeByAmount(
             opts.pair.quote, opts.quoteAmount

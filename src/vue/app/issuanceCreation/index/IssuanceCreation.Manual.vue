@@ -188,7 +188,6 @@ export default {
         .filter(item => item.asset === tokenCode)[0]
         .asset_details.available_for_issuance
     },
-
     rerenderForm () {
       this.formShown = false
       this.request = {}

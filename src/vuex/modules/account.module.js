@@ -24,7 +24,6 @@ export const state = {
     seed: ''
   },
   limits: [],
-  // kyc:
   kycRequests: [],
   kycData: {
     address: {},

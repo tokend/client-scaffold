@@ -18,9 +18,10 @@
             </div>
           </md-app-toolbar>
 
-          <md-app-drawer md-permanent="full"
-                         :md-active.sync="menuVisible"
-                         v-if="isLoggedIn">
+          <md-app-drawer
+            md-permanent="full"
+            :md-active.sync="menuVisible"
+            v-if="isLoggedIn">
             <sidebar @hide-sidebar="hideSidebar" />
           </md-app-drawer>
 

@@ -2,10 +2,6 @@
   <div
     class="sale-details"
     v-if="sale && token">
-    <!-- TEMP. HIDDEN -->
-    <!-- <div class="sale-details__back-btn-wrapper">
-      <back-button class="sale-details__back-btn" />
-    </div> -->
     <div class="sale-details__header">
       <h1 class="sale-details__heading">
         {{ sale.name }} ({{ sale.baseAsset }}
@@ -93,10 +89,6 @@ export default {
             this.sale.descriptionID
           )
       ])
-      // const syndicateDetails =
-      //   await salesService.loadSaleOwner(this.sale.owner)
-      // this.syndicate = syndicateDetails.syndicateDetails
-      // this.syndicate.email = syndicateDetails.syndicateEmail
     }
   }
 }
