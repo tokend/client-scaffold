@@ -2,7 +2,9 @@
   <div class="auth-page">
     <div class="auth-page__titles">
       <h3 class="auth-page__title-small">{{ i18n.auth_phrase() }}</h3>
-      <h1 class="auth-page__title">{{ i18n.auth_title() }}</h1>
+      <h1 class="auth-page__title">
+        <markdown :markdown="i18n.auth_title()" />
+      </h1>
     </div>
     <div class="auth-page__form">
       <logotype class="auth-page__form-logotype" />
@@ -16,11 +18,13 @@
 import { i18n } from '@/js/i18n'
 import Logotype from '../app/common/Logotype'
 import AppFooter from '../navigation/Footer'
+import Markdown from '@/vue/app/common/Markdown'
 
 export default {
   components: {
     Logotype,
-    AppFooter
+    AppFooter,
+    Markdown
   },
 
   data () {
