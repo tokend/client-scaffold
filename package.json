@@ -16,7 +16,7 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint src/**/*.{js,vue}",
     "init": "npm run init-pre-commit-hook",
-    "init-pre-commit-hook": "ln -s ../../git-hooks/pre-commit.sh .git/hooks/pre-commit"
+    "init-pre-commit-hook": "chmod +x ./git-hooks/init-hooks.sh && ./git-hooks/init-hooks.sh"
   },
   "dependencies": {
     "@std/esm": "^0.18.0",
