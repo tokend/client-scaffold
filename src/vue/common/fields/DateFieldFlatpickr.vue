@@ -1,17 +1,22 @@
 <template>
   <div class="date-field-flatpickr">
     <label class="date-field-flatpickr__label"
-          :class="{ 'date-field-flatpickr__label--unfocus': !value }"> {{ label }}</label>
+          :class="{ 'date-field-flatpickr__label--focus': dateValue || value}"> {{ label }}</label>
 
     <div class="date-field-flatpickr__field">
       <flat-pickr :id="id"
                   class="date-field-flatpickr__input"
                   :class="{ 'date-field-flatpickr__input--disabled': disabled }"
+                  ref="dataField"
                   :config="config"
                   :value="value"
+                  :placeholder="placeholder || ' '"
                   :key="value + disabled"
                   :disabled="disabled"
-                  @input.native="dateFieldUpdated"/>
+                  @input.native="dateFieldUpdated"
+                  @on-close="onClose"
+                  @on-open="onOpen"
+                  @blur="blur" />
     </div>
 
     <div class="date-field-flatpickr__err-mes" v-if="errorMessage">
@@ -40,19 +45,22 @@
       enableTime: { type: Boolean, default: true },
       disableBefore: { type: String, default: '' },
       disableAfter: { type: String, default: '' },
+      placeholder: { type: String, default: 'yyyy-dd-m at HH:MM' },
       label: { type: String, default: '' }
     },
 
     data () {
       return {
-        date: ''
+        date: '',
+        dateValue: false
       }
     },
     computed: {
       config () {
         return {
           altInput: true,
-          altFormat: this.enableTime ? 'F j, Y at H:i' : 'F j, Y',
+          allowInput: true,
+          altFormat: this.enableTime ? 'Y-m-d at H:i' : 'F j, Y',
           disableMobile: true,
           disable: [
             (date) => {
@@ -73,7 +81,23 @@
     },
     methods: {
       dateFieldUpdated (event) {
-        this.onInput(event.target.value)
+        if (event !== undefined || '' || null) {
+          this.onInput(event.target.value)
+        }
+      },
+      onOpen () {
+        this.dateValue = !this.dateValue
+      },
+      onClose () {
+        this.dateValue = !this.dateValue
+      },
+      blur (event) {
+        console.log(event)
+        console.log(this.dateValue)
+        this.value = event
+        if (event === '') {
+          this.dateValue = false
+        }
       }
     }
   }
@@ -98,6 +122,59 @@
 
     @include material-border($field-color-focused, $field-color-unfocused);
     @include text-font-sizes;
+
+    @mixin placeholder {
+      color: $field-placeholer-color;
+      transition: opacity $field-transition-duration;
+    }
+
+    &::-webkit-input-placeholder {
+      @include placeholder;
+      opacity: 0;
+    }
+
+    &::-moz-placeholder {
+      @include placeholder;
+      opacity: 0;
+    }
+
+    &:-moz-placeholder {
+      @include placeholder;
+      opacity: 0;
+    }
+
+    &:-ms-input-placeholder {
+      @include placeholder;
+      opacity: 0;
+    }
+
+    &::placeholder {
+      @include placeholder;
+      opacity: 0;
+    }
+
+    &.active {
+      &::-webkit-input-placeholder {
+        opacity: 1;
+      }
+
+      &::-moz-placeholder {
+        opacity: 1;
+      }
+
+      &:-moz-placeholder {
+        opacity: 1;
+      }
+
+      &:-ms-input-placeholder {
+        opacity: 1;
+      }
+
+      &::placeholder {
+        opacity: 1;
+      }
+
+    }
   }
 
   .date-field-flatpickr__input--disabled {
@@ -114,16 +191,16 @@
   .date-field-flatpickr__label {
     position: absolute;
     left: 0;
-    top: 0;
+    top: $field-input-padding-top;
     transition: all $field-transition-duration;
     pointer-events: none;
     color: $field-color-unfocused;
-    @include label-font-sizes;
+    @include text-font-sizes;
   }
 
-  .date-field-flatpickr__label--unfocus {
-    top: $field-input-padding-top;
-    @include text-font-sizes;
+  .date-field-flatpickr__label--focus {
+    top: 0;
+    @include label-font-sizes;
   }
 
   .date-field-flatpickr__err-mes {
