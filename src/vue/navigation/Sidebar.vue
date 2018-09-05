@@ -1,17 +1,17 @@
 <template>
-  <div class="app__sidebar">
+  <div class="sidebar">
     <div class="sidebar__backdrop"
          :class="{ 'sidebar__backdrop--active': isSidebarOpened }"
          @click="closeSidebar">
     </div>
 
     <button @click="openSidebar"
-            class="app__sidebar-icon"
-            :class="{ 'app__sidebar-icon--invisible': isSidebarOpened }">
+            class="sidebar__burger-btn"
+            :class="{ 'sidebar__burger-btn--invisible': isSidebarOpened }">
       <md-icon>menu</md-icon>
     </button>
 
-    <div class="app__sidebar" :class="{ 'app__sidebar--closed': !isSidebarOpened }">
+    <div class="sidebar__lists" :class="{ 'sidebar__lists--closed': !isSidebarOpened }">
       <section class="sidebar__logotype">
       <router-link @click.native="closeSidebar" to="/dashboard">
         <logotype class="sidebar__logotype-icon"/>
@@ -251,7 +251,7 @@
     min-height: 100%;
   }
 
-  .app__sidebar {
+  .sidebar__lists {
     width: 260px;
     min-height: 100%;
     padding-bottom: 70px;
@@ -262,14 +262,14 @@
       opacity: 1;
       width: 260px;
       background-color: $col-sidebar-background-media-small !important;
-      transition: all 0.5s cubic-bezier(.4, 0, .2, 1);
+      transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
     }
 
-    &.app__sidebar--closed {
+    &.sidebar__lists--closed {
       @include respond-to(tablet) {
         opacity: 0;
         width: 0;
-        transition: all 0.5s cubic-bezier(.4, 0, .2, 1);
+        transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
       }
     }
   }
@@ -284,17 +284,17 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.7);
       opacity: 0;
-      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
+      transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1);
     }
 
     &.sidebar__backdrop--active {
       left: 260px;
       opacity: 1;
-      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.2s;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.1s;
     }
   }
 
-  .app__sidebar-icon {
+  .sidebar__burger-btn {
     position: absolute;
     left: 5px;
     top: 41px;
@@ -313,18 +313,18 @@
     @include respond-to(tablet) {
       transform: scale(1);
       opacity: 1;
-      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.4s;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.2s;
     }
 
-    &.app__sidebar-icon--invisible {
+    &.sidebar__burger-btn--invisible {
       transform: scale(0);
       opacity: 0;
-      transition: opacity 0.6s cubic-bezier(.4, 0, .2, 1) 0.4s;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.2s;
     }
 
     .md-icon {
       color: $col-button-raised-txt !important;
-      transition: color 0.4s cubic-bezier(0.4,0,0.2,1);
+      transition: color 0.2s cubic-bezier(0.4,0,0.2,1);
     }
   }
 
@@ -353,10 +353,10 @@
   }
 
   .sidebar__logotype-icon {
-    width: 95px;
+    max-width: 95px;
+    width: 100%;
     height: 31px;
     display: block;
-    width: 100%;
   }
 
   .sidebar__list-item-icon {
