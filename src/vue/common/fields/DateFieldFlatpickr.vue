@@ -1,7 +1,7 @@
 <template>
   <div class="date-field-flatpickr">
     <label class="date-field-flatpickr__label"
-          :class="{ 'date-field-flatpickr__label--focus': dateValue || value}"> {{ label }}</label>
+          :class="{ 'date-field-flatpickr__label--focus': isCalendarOpen || flatpickrDate}"> {{ label }}</label>
 
     <div class="date-field-flatpickr__field">
       <flat-pickr :id="id"
@@ -9,14 +9,14 @@
                   :class="{ 'date-field-flatpickr__input--disabled': disabled }"
                   ref="dataField"
                   :config="config"
-                  :value="value"
+                  :value="flatpickrDate"
                   :placeholder="placeholder || ' '"
-                  :key="value + disabled"
+                  :key="flatpickrDate + disabled"
                   :disabled="disabled"
                   @input.native="dateFieldUpdated"
                   @on-close="onClose"
                   @on-open="onOpen"
-                  @blur="blur" />
+                  @blur="onBlur" />
     </div>
 
     <div class="date-field-flatpickr__err-mes" v-if="errorMessage">
@@ -51,10 +51,15 @@
 
     data () {
       return {
-        date: '',
-        dateValue: false
+        flatpickrDate: '',
+        isCalendarOpen: false
       }
     },
+
+    created () {
+      this.flatpickrDate = this.value
+    },
+
     computed: {
       config () {
         return {
@@ -79,6 +84,7 @@
         }
       }
     },
+
     methods: {
       dateFieldUpdated (event) {
         if (event !== undefined || '' || null) {
@@ -86,18 +92,21 @@
         }
       },
       onOpen () {
-        this.dateValue = !this.dateValue
+        this.isCalendarOpen = true
       },
       onClose () {
-        this.dateValue = !this.dateValue
+        this.isCalendarOpen = false
+        this.$emit('getNewValue', this.flatpickrDate)
       },
-      blur (event) {
-        console.log(event)
-        console.log(this.dateValue)
-        this.value = event
-        if (event === '') {
-          this.dateValue = false
-        }
+      onBlur (event) {
+        this.flatpickrDate = event
+        this.$emit('getNewValue', this.flatpickrDate)
+      }
+    },
+
+    watch: {
+      flatpickrDate () {
+        this.flatpickrDate = this.value
       }
     }
   }
