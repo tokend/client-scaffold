@@ -35,7 +35,7 @@
     },
     props: {
       baseAsset: { type: String, required: true },
-      quoteAsset: { type: String, required: true },
+      quoteAsset: { type: String, default: '' },
       initialScale: { type: String, default: 'month' }
     },
     data: _ => ({
@@ -74,7 +74,13 @@
         try {
           this.isActualData = true
           console.log(this.baseAsset, this.quoteAsset)
-          this.data = (await chartsService.loadChartsForTokenPair(this.lockedAssets.base, this.lockedAssets.quote)).data()
+          const response = this.quoteAsset
+            ? await chartsService.loadChartsForTokenPair(
+              this.lockedAssets.base,
+              this.lockedAssets.quote
+            )
+            : await chartsService.loadChartsForToken(this.lockedAssets.base)
+          this.data = response.data()
         } catch (error) {
           if (error instanceof errors.NotFoundError) {
             this.isActualData = false
