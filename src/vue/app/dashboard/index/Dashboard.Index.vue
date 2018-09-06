@@ -4,15 +4,13 @@
       <loader :message="i18n.dash_loading()"/>
     </template>
     <template v-else>
-      <portfolio-widget class="md-layout-item dashboard__portfolio"
+      <portfolio-widget class="dashboard__portfolio"
                         :currentAsset="currentAsset"
                         @asset-change="setCurrentAsset"
-                        @change-dashboard-scale="changeDashboardScale"
                         :scale="scale"
-                        :show-tabls="showTabs"
       />
       <div class="dashboard__chart" v-if="currentAsset">
-        <chart :currency="currentAsset" :scale="scale" @check-dashboard-chart-has-value="checkDashboardHasValue"/>
+        <chart :base-asset="currentAsset" :quote-asset="config.DEFAULT_QUOTE_ASSET"/>
       </div>
       <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
     </template>
@@ -22,11 +20,12 @@
 <script>
   import PortfolioWidget from './Dashboard.PortfolioWidget'
   import InfoWidget from './Dashboard.InfoWidget'
-  import Chart from './Dashboard.Chart'
+  import Chart from '@/vue/app/common/chart/Chart'
   import { mapGetters, mapActions } from 'vuex'
   import { vuexTypes } from '@/vuex/types'
   import { i18n } from '@/js/i18n'
   import Loader from '@/vue/app/common/Loader'
+  import config from '@/config'
 
   export default {
     name: 'dashboard',
@@ -38,10 +37,10 @@
     },
     data: _ => ({
       currentAsset: null,
-      showTabs: false,
       isLoading: false,
       scale: 'month',
-      i18n
+      i18n,
+      config
     }),
     async created () {
       this.isLoading = true
@@ -67,12 +66,6 @@
           this.currentAsset =
             keys.filter(a => a === 'ETH')[0] || keys[0] || null
         }
-      },
-      changeDashboardScale (value) {
-        this.scale = value
-      },
-      checkDashboardHasValue (value) {
-        this.showTabs = value
       }
     },
     watch: {
@@ -93,8 +86,12 @@
     padding: 0 0;
   }
 
-  .dashboard__portfolio {
+  .dashboard__chart {
     margin-bottom: 24px;
+  }
+
+  .dashboard__portfolio {
+    margin-bottom: -40px;
   }
 
   .dashboard__activity {

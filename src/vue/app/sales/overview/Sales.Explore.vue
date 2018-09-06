@@ -81,8 +81,6 @@
         }
         return this.loadSales(this.filters)
       }
-    },
-    watch: {
     }
   }
 </script>
@@ -131,7 +129,7 @@
 
   .sales-overview__card-wrapper {
     display: block;
-    background: $col-block;
+    background: $col-block-bg;
     box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
     border: none;
     flex: 1;

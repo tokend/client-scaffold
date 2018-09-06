@@ -15,7 +15,7 @@
             v-validate="'required'"
             :whiteAutofill="true"
             type="number"
-            :step="0.000001"
+            :step="config.MINIMAL_NUMBER_INPUT_STEP"
             :errorMessage="(allowToValidPrice && (Number(form.price) === 0 ||
                           Number(form.price) < 0) ? i18n.trd_validate_minimal_price() : '')"
           />
@@ -30,8 +30,11 @@
             v-validate="'required'"
             :whiteAutofill="true"
             type="number"
-            :step="0.000001"
-            :errorMessage="(allowToValidAmount && lessThanMinimumAmount) ? i18n.trd_validate_minimal_amount() : ''"
+            :step="config.MINIMAL_NUMBER_INPUT_STEP"
+            :errorMessage="(allowToValidAmount && lessThanMinimumAmount)
+              ? i18n.trd_validate_minimal_amount({ value: config.MINIMAL_NUMBER_INPUT_STEP })
+              : ''
+            "
           />
         </div>
 
@@ -59,13 +62,14 @@
 </template>
 
 <script>
-  import InputField from '../../../../../common/fields/InputField'
-  import FormMixin from '../../../../../common/mixins/form.mixin'
+  import InputField from '@/vue/common/fields/InputField'
+  import FormMixin from '@/vue/common/mixins/form.mixin'
   import OrderMakerMixin from '../order-maker.mixin'
 
-  import { confirmAction } from '../../../../../../js/modals/confirmation_message'
-  import { multiply } from '../../../../../../js/utils/math.util'
-  import { i18n } from '../../../../../../js/i18n'
+  import { confirmAction } from '@/js/modals/confirmation_message'
+  import { multiply } from '@/js/utils/math.util'
+  import { i18n } from '@/js/i18n'
+  import config from '@/config'
 
   export default {
     name: 'trade-orders-sell',
@@ -83,14 +87,15 @@
         },
         allowToValidPrice: false,
         allowToValidAmount: false,
-        i18n
+        i18n,
+        config
       }
     },
     created () {
     },
     computed: {
       lessThanMinimumAmount () {
-        return Number(this.form.amount) < 0.000001
+        return Number(this.form.amount) < config.MINIMAL_NUMBER_INPUT_STEP
       }
     },
     methods: {

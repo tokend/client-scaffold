@@ -10,7 +10,7 @@
       </router-link>
     </template>
 
-    <template v-else-if="!accountOwnedTokens.length">
+    <template v-else-if="!accountOwnedTokenCodes.length">
       <h2 class="app__page-heading">{{ i18n.preis_no_assets_heading() }}</h2>
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.preis_no_assets() }}
@@ -30,11 +30,11 @@
   import PreissuanceUploadManager from './PreissuanceUpload.Manager'
   import NotAvailableCard from '../../common/NotAvailableCard'
 
-  import { vuexTypes } from '../../../../vuex/types'
+  import { vuexTypes } from '@/vuex/types'
   import { mapGetters } from 'vuex'
-  import { i18n } from '../../../../js/i18n'
+  import { i18n } from '@/js/i18n'
 
-  import { ACCOUNT_TYPES } from '../../../../js/const/const'
+  import { ACCOUNT_TYPES } from '@/js/const/const'
 
   export default {
     components: {
@@ -48,7 +48,7 @@
     computed: {
       ...mapGetters([
         vuexTypes.accountTypeI,
-        vuexTypes.accountOwnedTokens
+        vuexTypes.accountOwnedTokenCodes
       ])
     }
   }

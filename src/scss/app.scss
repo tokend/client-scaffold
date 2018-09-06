@@ -27,7 +27,9 @@
 }
 
 body,
-input, select,
+input,
+select,
+button,
 textarea {
   background: $col-app-background;
   font-family: 'Circular', 'Noto Sans', '-apple-system', 'BlinkMacSystemFont', sans-serif !important;
@@ -42,13 +44,12 @@ textarea {
 }
 
 html,body {
-  height: 100% !important;
   overflow: auto !important;
   -webkit-overflow-scrolling : touch !important;
 }
 
 #app {
-  height: 100%;
+  min-height: 100%;
 
   &,
   & main,
@@ -75,6 +76,12 @@ html,body {
 
   .md-switch.md-theme-default.md-checked.md-primary .md-switch-thumb {
     background-color: $col-checkbox-field-background;
+  }
+
+  .app__page-content-wrp {
+    flex: 1;
+    width: 100%;
+    max-width: 46 * $point;
   }
 
   p.app__page-explanations {
@@ -244,13 +251,6 @@ html,body {
   }
 }
 
-.app__page-content-wrp {
-  flex: 1;
-  width: 100%;
-  max-width: 45 * $point;
-  margin: auto;
-}
-
 #app,
 .md-dialog {
   @mixin resize-icon ($size) {
@@ -395,7 +395,7 @@ h4 {
 }
 
 .app__card {
-  background-color: $col-block;
+  background-color: $col-block-bg;
 
   &:not(.app__card--shadow-none) {
     @include box-shadow();
@@ -538,17 +538,6 @@ h4 {
 
 .md-dialog-container {
   max-width: 100%;
-}
-
-.trade-history .md-table-cell-container {
-  padding: 0 0 0 24px;
-  white-space: nowrap;
-}
-
-.trade-history .md-table-head-label {
-  @include respond-to-custom(1340px) {
-    padding-left: 24px;
-  }
 }
 
 .manage-orders .md-card-header + .md-card-content {

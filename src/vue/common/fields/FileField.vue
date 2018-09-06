@@ -30,7 +30,7 @@
         {{ label }}
       </div>
 
-      <label :for="id" class="file-field__uploader">
+      <label :for="id" class="file-field__uploader" :disabled="disabled">
         <md-icon class="file-field__icon md-icon-size-075x">insert_drive_file</md-icon>
         {{ acceptLabel }}
       </label>
@@ -64,19 +64,20 @@
 
 <script>
   import FieldMixin from './field.mixin'
-  import { DocumentContainer } from '../../../js/helpers/DocumentContainer'
-  import { MAX_FILE_MEGABYTES } from '../../../js/const/documents.const'
-  import { EventDispatcher } from '../../../js/events/event_dispatcher'
-  import { dispatchAppEvent } from '../../../js/events/helpers'
-  import { commonEvents } from '../../../js/events/common_events'
-  import { i18n } from '../../../js/i18n'
-  import { FileHelper } from '../../../js/helpers/file.helper'
-  import config from '../../../config'
+  import { DocumentContainer } from '@/js/helpers/DocumentContainer'
+  import { MAX_FILE_MEGABYTES } from '@/js/const/documents.const'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { dispatchAppEvent } from '@/js/events/helpers'
+  import { commonEvents } from '@/js/events/common_events'
+  import { i18n } from '@/js/i18n'
+  import { FileHelper } from '@/js/helpers/file.helper'
+  import config from '@/config'
 
   export default {
     name: 'file-field',
     mixins: [FieldMixin],
     props: {
+      disabled: { type: Boolean, default: false },
       type: { type: String, default: 'default' },
       private: { type: Boolean, default: false },
       minSize: { type: Number, default: null },

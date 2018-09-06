@@ -6,14 +6,7 @@
     <user-type-selector v-else-if="!selectedUserType" @select-user-type="handleUserType"/>
     <template v-else>
       <template v-if="accountState === ACCOUNT_STATES.approved">
-        <div class="verification__approved-wrapper" v-if="!requestedToUpdate">
-          <syndicate-banner/>
-          <button v-ripple
-              @click="requestedToUpdate = true"
-              class="verification__update-btn app__form-submit-btn">
-              {{ i18n.lbl_update_information() }}
-          </button>
-        </div>
+        <syndicate-banner/>
       </template>
       <template v-if="accountState === ACCOUNT_STATES.pending">
         <state-banner/>
@@ -27,20 +20,29 @@
       </template>
 
       <template v-if="accountState === ACCOUNT_STATES.rejected">
-        <div class="verification__rejected-wrapper
-                    verification__card
-                    verification__card--rejected"
-            v-show="!showForm">
-          <div class="verification__card-message">
-            <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
-            <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
-            <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
+        <div class="verification__card
+                    verification__card--rejected
+                    md-size-55
+                    md-medium-size-75
+                    md-small-size-100
+                    md-layout-item
+                    app__card"
+              v-show="!showForm" >
+          <div class="app__card-content">
+            <div class="verification__card-message">
+              <md-icon class="md-size-4x verification__card-message-icon">warning</md-icon>
+              <h2 class="verification__card-message-title">{{i18n.kyc_rejected_title()}}</h2>
+              <p class="verification__card-message-text" v-html="i18n.kyc_rejected_msg_html({ reason: accountKycLatestRequest.rejectReason }) "></p>
+            </div>
           </div>
-          <button v-ripple
-              @click="showForm = true"
-              class="app__form-submit-btn verification__update-btn">
-              {{ i18n.lbl_update_information() }}
-          </button>
+
+          <div class="app__card-actions md-layout">
+            <button v-ripple
+                    @click="showForm = true"
+                    class="app__button-flat">
+              {{ i18n.lbl_edit_details() }}
+            </button>
+          </div>
         </div>
 
         <template v-if="showForm">
@@ -63,17 +65,6 @@
           <syndicate-form />
         </template>
 
-      </template>
-
-      <template v-if="requestedToUpdate && accountState === ACCOUNT_STATES.approved" >
-        <state-banner/>
-        <template v-if="selectedUserType === userTypes.general">
-          <individual-form />
-        </template>
-
-        <template v-if="selectedUserType === userTypes.syndicate">
-          <syndicate-form />
-        </template>
       </template>
     </template>
   </div>
@@ -109,8 +100,7 @@
       userTypes,
       showForm: false,
       isLoading: false,
-      i18n,
-      requestedToUpdate: false
+      i18n
     }),
     async created () {
       await this.reset()
@@ -191,9 +181,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 0 8px;
+
     @include respond-to(medium) {
       padding: 0 .625rem;
     }
@@ -243,17 +231,4 @@
     }
   }
 }
-
-.verification__approved-wrapper,
-.verification__rejected-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .verification__update-btn {
-    margin-top: 1rem;
-  }
-}
-
-
-
 </style>

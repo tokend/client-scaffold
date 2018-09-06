@@ -43,17 +43,17 @@
 </template>
 
 <script>
-import { i18n } from '../../../../js/i18n'
+import { i18n } from '@/js/i18n'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { issuanceService } from '../../../../js/services/issuances.service'
-import { FileHelper } from '../../../../js/helpers/file.helper'
+import { vuexTypes } from '@/vuex/types'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { issuanceService } from '@/js/services/issuances.service'
+import { FileHelper } from '@/js/helpers/file.helper'
 import { PreIssuanceRequest, xdr } from 'tokend-js-sdk'
-import FormMixin from '../../../common/mixins/form.mixin'
-import FileField from '../../../common/fields/FileField'
-import config from '../../../../config'
+import FormMixin from '@/vue/common/mixins/form.mixin'
+import FileField from '@/vue/common/fields/FileField'
+import config from '@/config'
 
 export default {
   components: { FileField },
@@ -133,6 +133,7 @@ export default {
             return
           }
           await issuanceService.createPreIssuanceRequest(this.issuances.map(item => item.xdr))
+          this.$router.push({ path: '/requests', hash: '#pre-issuance-upload' })
           EventDispatcher.dispatchShowSuccessEvent(i18n.preis_uploaded())
         }
         this.issuances = []

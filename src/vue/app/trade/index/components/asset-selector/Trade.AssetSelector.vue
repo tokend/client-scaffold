@@ -23,8 +23,8 @@
 <script>
 import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 
-import { dispatchAppEvent } from '../../../../../../js/events/helpers'
-import { commonEvents } from '../../../../../../js/events/common_events'
+import { dispatchAppEvent } from '@/js/events/helpers'
+import { commonEvents } from '@/js/events/common_events'
 import { mapGetters } from 'vuex'
 import { vuexTypes } from '@/vuex/types'
 import { i18n } from '@/js/i18n'
@@ -107,26 +107,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables";
-.assets-select__select {
-  display: inline-block;
-  width: auto;
-  &:not(:last-child) {
-    margin-right: 1.5 * $point;
-  }
-}
+  @import "~@scss/variables";
 
-.asset-select__balances {
-  margin: 2 * $point 0 4 * $point;
-
-  .asset-select__balances-label {
-    font-size: 1.2 * $point;
-    color: $col-details-label;
+  .assets-select {
+    margin-bottom: -70px;
   }
 
-  .asset-select__balances-value {
-    font-size: 1.8 * $point;
-    color: $col-details-value;
+  .assets-select__select {
+    display: inline-block;
+    width: auto;
+    &:not(:last-child) {
+      margin-right: 1.5 * $point;
+    }
   }
-}
+
+  .asset-select__balances {
+    margin: 2 * $point 0 4 * $point;
+
+    .asset-select__balances-label {
+      font-size: 1.2 * $point;
+      color: $col-text-inactive;
+    }
+
+    .asset-select__balances-value {
+      font-size: 1.8 * $point;
+      color: $col-text;
+    }
+  }
 </style>

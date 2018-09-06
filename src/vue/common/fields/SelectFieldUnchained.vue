@@ -11,61 +11,113 @@
         'select-field__selected--focused': showList
       }"
       @click="toggleListVisibility()">
-      <div class="select-field__selected-value">{{ selected || '&nbsp;' }}</div>
+      <button class="select-field__selected-value">{{ currentValue || '&nbsp;' }}</button>
       <div>
         <md-icon class="select-field__selected-icon" :class="{ 'select-field__selected-icon--active': showList }">
           keyboard_arrow_down
         </md-icon>
       </div>
     </div>
-    <div class="select-field__list" :class="{ 'select-field__list--active': showList }">
+    <div class="select-field__list" ref="list" :class="{ 'select-field__list--active': showList }">
       <template v-for="(value, i) in values">
-        <div class="select-field__list-item"
-             :key="i"
-             :class="{ 'select-field__list-item--selected': selected === value }"
-             @click="selectItem(value)">
+        <button class="select-field__list-item"
+                :key="i"
+                :class="{ 'select-field__list-item--selected': selected === value }"
+                @click="selectItem(value)">
           {{ value }}
-        </div>
+        </button>
       </template>
     </div>
   </div>
 </template>
 
 <script>
-import { commonEvents } from '../../../js/events/common_events'
+  import { commonEvents } from '@/js/events/common_events'
+  import { onKeyDown } from '@/js/helpers/onKeyDown'
+  import { closeElement } from '@/js/helpers/closeElement'
+  import { KEY_CODES } from '@/js/const/const'
 
-export default {
-  name: 'select-field-unchained',
-  props: {
-    value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
-    values: { type: Array, default: _ => [] },
-    label: { type: String, default: '' },
-    readonly: { type: Boolean, default: false }
-  },
-  data: _ => ({
-    selected: '',
-    showList: false
-  }),
-  created () {
-    this.selected = this.value
-  },
-  methods: {
-    selectItem (item) {
-      if (this.readonly) {
-        return null
-      }
-      this.selected = item
-      this.$emit(commonEvents.inputEvent, item)
-      this.toggleListVisibility()
+  export default {
+    name: 'select-field-unchained',
+    props: {
+      value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
+      values: { type: Array, default: _ => [] },
+      label: { type: String, default: '' },
+      readonly: { type: Boolean, default: false }
     },
-    toggleListVisibility () {
-      if (this.readonly) {
-        return null
+    data: _ => ({
+      currentValue: '', // selected item in the list
+      selected: '', // active element but not selected (for support arrow navigation)
+      showList: false,
+      KEY_CODES
+    }),
+    created () {
+      this.selected = this.value
+      this.currentValue = this.value
+    },
+    methods: {
+      selectItem (item) {
+        if (this.readonly) return null
+        this.selected = item
+        this.currentValue = item
+        this.$emit(commonEvents.inputEvent, item)
+        this.toggleListVisibility()
+      },
+      toggleListVisibility () {
+        if (this.readonly) return null
+        this.showList ? this.closelist() : this.openList()
+        onKeyDown(this.showList, this.keyDownEvents)
+      },
+      openList () {
+        const list = this.$refs.list
+        const index = this.values.indexOf(this.currentValue)
+        list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
+        this.showList = true
+      },
+      closelist () {
+        this.selected = this.currentValue // set active element as selected
+        this.showList = false
+      },
+      keyDownEvents (event) {
+        let index = this.values.indexOf(this.selected)
+        const valuesList = this.values
+        const childrenList = this.$refs.list
+
+        if (event.which === KEY_CODES.enter) {
+          this.selectItem(valuesList[index])
+        } else if (event.which === KEY_CODES.up) {
+          index = this.selectPrevItem(index, valuesList)
+        } else if (event.which === KEY_CODES.right) {
+          this.selectItem(valuesList[index])
+        } else if (event.which === KEY_CODES.down) {
+          index = this.selectNextItem(index, valuesList)
+        } else if (event.which === KEY_CODES.escape) {
+          this.toggleListVisibility()
+        } else if (event.shiftKey && event.which === KEY_CODES.tab) {
+          index = this.selectPrevItem(index, valuesList)
+        } else if (event.which === KEY_CODES.tab) {
+          index = this.selectNextItem(index, valuesList)
+        }
+
+        childrenList.scrollTop = childrenList.childNodes[index].offsetTop - (childrenList.offsetHeight / 2) + 18
+      },
+      selectNextItem (index, valuesList) {
+        index === valuesList.length - 1 ? index = 0 : index += 1
+        this.selected = valuesList[index]
+        return index
+      },
+      selectPrevItem (index, valuesList) {
+        index === 0 ? index += valuesList.length - 1 : index -= 1
+        this.selected = valuesList[index]
+        return index
       }
-      this.showList = !this.showList
+    },
+    watch: {
+      showList (value) {
+        closeElement('select__list', value, this.closelist)
+      }
     }
   }
-}
 </script>
 
 <style scoped lang="scss">
@@ -96,6 +148,12 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background-color: transparent;
+  border: none;
+  color: $field-color-text;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .select-field__label {
@@ -146,7 +204,7 @@ export default {
   left: 0;
   min-width: 170px;
   top: calc(100% + 4px);
-  background-color: $col-block;
+  background-color: $col-dropdown-bg;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
   border-radius: 3px;
   z-index: 5;
@@ -164,16 +222,21 @@ export default {
 .select-field__list-item {
   padding: 8px 16px;
   font-size: 16px;
-  transition: 0.15s ease-out;
+  transition: background-color .15s ease-out;
   cursor: pointer;
+  border: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
 
-  &:hover {
-    background-color: rgba(58, 65, 128, 0.1);
+  &:not(.select-field__list-item--selected):hover {
+    background-color: rgba(58, 65, 128, 0.05);
   }
 }
 
 .select-field__list-item--selected {
-  top: $field-input-padding-top;
+  background-color: rgba(58, 65, 128, 0.1);
   @include text-font-sizes;
 }
 </style>

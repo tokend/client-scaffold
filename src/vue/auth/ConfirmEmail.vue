@@ -27,10 +27,10 @@
 
 <script>
   import form from '../common/mixins/form.mixin'
-  import { EventDispatcher } from '../../js/events/event_dispatcher'
-  import { emailService } from '../../js/services/email.service'
-  import { i18n } from '../../js/i18n'
-  import { vueRoutes } from '../../vue-router/const'
+  import { EventDispatcher } from '@/js/events/event_dispatcher'
+  import { emailService } from '@/js/services/email.service'
+  import { i18n } from '@/js/i18n'
+  import { vueRoutes } from '@/vue-router/const'
 
   export default {
     name: 'email-resend',
@@ -47,13 +47,13 @@
     },
 
     beforeCreate () {
-      if (!this.$route.query.walletId || !this.$route.query.email) {
+      if (!this.$store.state.wallet || !this.$route.query.email) {
         this.$router.push('/login')
       }
     },
 
     created () {
-      this.walletId = this.$route.query.walletId
+      this.walletId = this.$store.state.wallet
       this.email = this.$route.query.email
     },
 

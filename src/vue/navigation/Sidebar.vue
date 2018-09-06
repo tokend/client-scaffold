@@ -184,11 +184,11 @@
 </template>
 
 <script>
-  import config from '../.././config'
+  import config from '@/config'
 
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../vuex/types'
-  import { i18n } from '../../js/i18n'
+  import { i18n } from '@/js/i18n'
   import Logotype from '../app/common/Logotype'
   import AppFooter from '../navigation/Footer'
   import { ACCOUNT_TYPES } from '@/js/const/const'
