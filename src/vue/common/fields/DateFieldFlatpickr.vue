@@ -7,7 +7,6 @@
       <flat-pickr :id="id"
                   class="date-field-flatpickr__input"
                   :class="{ 'date-field-flatpickr__input--disabled': disabled }"
-                  ref="dataField"
                   :config="config"
                   :value="flatpickrDate"
                   :placeholder="placeholder || ' '"
