@@ -73,12 +73,11 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
-    ],
-    loaders: [
+      },
       {
         test: /\.s[a|c]ss$/,
-        loader: 'style!css!sass'
+        loader: 'style-loader'
+        // loader: 'style!css!sass'
       }
     ]
   }
