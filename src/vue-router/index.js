@@ -182,7 +182,7 @@ const router = new Router({
           name: 'app.limits',
           path: '/limits',
           component: Limits,
-          redirect: {path: '/limits/index'},
+          redirect: { path: '/limits/index' },
           children: [
             {
               path: '/limits/index',

@@ -159,8 +159,8 @@
 
       getAvailableToIssuance (tokenCode) {
         this.selectedTokenAvailableToIssuance = this.accountOwnedTokens
-                                                  .filter(item => item.asset === tokenCode)[0]
-                                                  .asset_details.available_for_issuance
+          .filter(item => item.asset === tokenCode)[0]
+          .asset_details.available_for_issuance
       },
 
       rerenderForm () {

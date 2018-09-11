@@ -94,7 +94,7 @@
           this.loadUserOffers(pair)
         ])
       },
-      async loadPrices ({base, quote}) {
+      async loadPrices ({ base, quote }) {
         try {
           this.history = (await chartsService.loadChartsForTokenPair(base, quote)).data()
         } catch (error) {

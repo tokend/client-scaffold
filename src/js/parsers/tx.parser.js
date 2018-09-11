@@ -1,5 +1,5 @@
-import {RecordFactory} from '../records/factory'
-import {ErrorFactory, errorTypes} from '../errors/factory'
+import { RecordFactory } from '../records/factory'
+import { ErrorFactory, errorTypes } from '../errors/factory'
 import store from '../../vuex'
 
 export function parseTransaction (transaction, asset) {

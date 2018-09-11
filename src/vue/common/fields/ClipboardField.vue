@@ -29,7 +29,7 @@
     props: {
       value: { type: String, default: '' },
       label: { type: String, default: '' },
-      monospaced: {type: Boolean, default: false}
+      monospaced: { type: Boolean, default: false }
     },
     mounted () {
       const btn = document.querySelector('#clipboard-btn')

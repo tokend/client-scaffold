@@ -2,7 +2,7 @@ import Vue from 'vue'
 import store from '../../vuex'
 import FlowBlockingModalMixin from './flow-blocking-modal.mixin'
 
-import {ErrorFactory, errors} from '../errors/factory'
+import { ErrorFactory, errors } from '../errors/factory'
 import { EventDispatcher } from '../events/event_dispatcher'
 import { factorsService } from '../services/factors.service'
 import { i18n } from '../i18n'

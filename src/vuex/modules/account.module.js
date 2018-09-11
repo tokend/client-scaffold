@@ -63,7 +63,7 @@ export const mutations = {
   SET_ACCOUNT_KYC_DOCUMENTS (state, documents) {
     state.kycDocuments = Object.entries(documents)
       .reduce((docs, [type, doc]) => {
-        return {...docs, [type]: new DocumentContainer(doc.front || doc)}
+        return { ...docs, [type]: new DocumentContainer(doc.front || doc) }
       }, {})
   }
 }
@@ -126,7 +126,7 @@ export const actions = {
       documents: opts.documents
     }
     return (await usersService.blobsOf()
-    .create(opts.blobType, data))
+      .create(opts.blobType, data))
       .data('id')
   }
 }
@@ -146,11 +146,11 @@ export const getters = {
   accountRawBalances: state => state.balances,
   accountOwnedTokens: state =>
     state.balances
-    .filter((balance) => balance.account_id === balance.asset_details.owner),
+      .filter((balance) => balance.account_id === balance.asset_details.owner),
   accountOwnedTokenCodes: state =>
     state.balances
-    .filter((balance) => balance.account_id === balance.asset_details.owner)
-    .map(balance => balance.asset_details.code),
+      .filter((balance) => balance.account_id === balance.asset_details.owner)
+      .map(balance => balance.asset_details.code),
   accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))

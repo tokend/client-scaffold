@@ -16,8 +16,7 @@ export function humanizeFutureDate (date) {
     sameDay: '[today at] HH:mm',
     nextDay: '[tomorrow at] HH:mm',
     sameElse: 'DD/MM/YYYY'
-  }
- )
+  })
 }
 
 export function humanizePastDate (date) {

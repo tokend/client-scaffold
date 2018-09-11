@@ -87,7 +87,7 @@
           const descriptionId = (await usersService
             .blobsOf(this.userAccountId)
             .create(blobTypes.fundOverview.str,
-                    this.form.description, {}, false))
+              this.form.description, {}, false))
             .data('id')
           this.form.descriptionID = descriptionId
           this.$emit(commonEvents.saleUpdateEvent, {

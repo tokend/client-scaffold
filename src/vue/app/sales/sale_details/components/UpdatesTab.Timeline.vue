@@ -44,9 +44,9 @@
         this.$emit(commonEvents.timelineAddClick)
       },
       linkify (text) {
-        /*eslint-disable*/
+        /* eslint-disable */
         const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-        /*eslint-enable*/
+        /* eslint-enable */
         return text.replace(urlRegex, (url) => '<a href="' + url + '" target="_blank">' + url + '</a>')
       }
     }

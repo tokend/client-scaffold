@@ -42,11 +42,11 @@ export class ReviewableRequestsService extends Service {
       .callWithSignature(this._keypair)
   }
 
- /**
-   * Loads all update kyc reviewable requests for current user
-   *
-   * @return {Promise<object>} - Promise object representing rr
-   */
+  /**
+    * Loads all update kyc reviewable requests for current user
+    *
+    * @return {Promise<object>} - Promise object representing rr
+    */
   loadKycReviewableRequests () {
     return this._horizonRequestBuilder
       .reviewableRequestsHelper()
@@ -57,7 +57,7 @@ export class ReviewableRequestsService extends Service {
       .callWithSignature(this._keypair)
   }
 
-   /**
+  /**
    * Loads all preissuance upload requests for current user
    *
    * @return {Promise<object>} - Promise object representing rr

@@ -14,6 +14,7 @@ var env
 env = require(path.resolve(process.env.CONFIG_PATH))
 
 const webpackConfig = merge(baseWebpackConfig, {
+  mode: 'production',
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -51,21 +52,15 @@ const webpackConfig = merge(baseWebpackConfig, {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
+    //     // more options:
+    //     // https://github.com/kangax/html-minifier#options-quick-reference
       },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+    //   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
     new webpack.IgnorePlugin(/ed25519/),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
-    // extract webpack runtime and module manifest to its own file in order to
-    // prevent vendor hash from being updated whenever app bundle is updated
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
-    }),
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -74,7 +69,19 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ])
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        commons: {
+          name: 'manifest',
+          chunks: 'initial',
+          minChunks: 1
+        }
+      }
+    }
+  }
 })
 
 if (config.build.productionGzip) {
