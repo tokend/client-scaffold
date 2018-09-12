@@ -25,7 +25,7 @@ to change the hostnames of `horizon`, `api` and `storage` servers and `network_p
 - `default.env.js` contains default configuration of the application and may be included
   and merged into other `.env` files
 
-To run the application in local development mode run `npm run dev`
+To run the application in local development mode run `npm run dev`  
 To build the application for production run `npm run build.prod`
 
 ## Customize Crowdsale
