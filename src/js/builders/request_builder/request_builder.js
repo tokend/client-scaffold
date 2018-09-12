@@ -15,6 +15,7 @@ import { EventDispatcher } from '../../events/event_dispatcher'
 import { factorsService } from '../../services/factors.service'
 import { WalletHelper } from '../../helpers/wallet.helper'
 import set from 'lodash/set'
+import _get from 'lodash/get'
 
 export class RequestBuilder {
   constructor (serverUrl) {
@@ -102,7 +103,9 @@ export class RequestBuilder {
 
   post () {
     this.method = 'post'
-    const password = this.params.data.password
+    const password = function () {
+      return _get(this.params, 'data.password', '')
+    }
     return this.httpClient.post(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
