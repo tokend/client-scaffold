@@ -2,7 +2,6 @@
   <div class="tx-sale-creation">
     <md-table md-card class="tx-sale-creation__table">
       <md-table-toolbar class="tx-sale-creation__table-toolbar">
-        <!-- <h1 class="tx-sale-creation__table-title md-title">{{ i18n.sale_creation_requests() }}</h1> -->
         <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokenCodes.length">
            <select-field-custom
             :label="i18n.lbl_asset()"
@@ -62,10 +61,6 @@
                 </div>
               </md-card-content>
               <md-card-actions>
-                <!-- <md-button class="md-dense md-accent"
-                          :disabled="item.requestState !== REQUEST_STATES_STR.pending
-                                  || isPending"
-                          @click="cancelRequest(item.requestID)">{{ i18n.lbl_cancel() }}</md-button> -->
               <template v-if="item.isApproved">
                 <md-button class="md-primary"
                            @click="goFundDetails(item.tokenCode)">

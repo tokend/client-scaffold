@@ -9,7 +9,6 @@
           <md-table class="app__card app__card--shadow-none manage-orders__table">
             <md-table-row class="manage-orders__row">
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
-              <!-- <md-table-head>{{ i18n.trd_manahe_marken() }}</md-table-head> -->
               <md-table-head>{{ i18n.trd_manahe_order() }}</md-table-head>
               <md-table-head>{{ i18n.trd_manage_base_asset_amount() }}</md-table-head>
               <md-table-head>{{ i18n.trd_manage_quote_asset_price() }}</md-table-head>

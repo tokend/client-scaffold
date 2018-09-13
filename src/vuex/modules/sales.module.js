@@ -1,10 +1,8 @@
 import { Keypair } from 'tokend-js-sdk'
-// import { Paginator } from '../../js/helpers/paginator'
 import { RecordFactory } from '../../js/records/factory'
 import { vuexTypes } from '../types'
 import { accountsService } from '../../js/services/accounts.service'
 import { salesService } from '../../js/services/sales.service'
-// import { StateHelper } from '../helpers/state.helper'
 
 const state = {
   sales: [],
@@ -58,8 +56,8 @@ const actions = {
   async GET_STARRED_SALES ({ commit, dispatch, rootGetters }) {
     const tokenCodes = rootGetters.userFavorites.map(item => item.key)
     const sales =
-        (await Promise.all(tokenCodes.map(code => salesService.loadSaleByTokenCode(code))))
-          .map(sale => RecordFactory.createSaleRecord(sale))
+      (await Promise.all(tokenCodes.map(code => salesService.loadSaleByTokenCode(code))))
+        .map(sale => RecordFactory.createSaleRecord(sale))
 
     await dispatch('GET_OWNERS', sales)
     commit(vuexTypes.RESET_STARRED_SALES)

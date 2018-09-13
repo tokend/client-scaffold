@@ -9,10 +9,6 @@
     <a :href="url" class="view-btn" target="_blank" rel="noopener">
       <span>View  <i class="mdi mdi-open-in-new"></i></span>
     </a>
-    <!--<button class="view-btn" @click="view">-->
-      <!--View online-->
-    <!--</button>-->
-
   </div>
 </template>
 

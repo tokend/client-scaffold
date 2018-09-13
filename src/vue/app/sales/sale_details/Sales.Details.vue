@@ -1,9 +1,5 @@
 <template>
   <div class="sale-details" v-if="this.sale && this.token">
-    <!-- TEMP. HIDDEN -->
-    <!-- <div class="sale-details__back-btn-wrapper">
-      <back-button class="sale-details__back-btn" />
-    </div> -->
     <div class="sale-details__header">
       <h1 class="sale-details__heading"> {{ sale.name }} ({{ sale.baseAsset }})</h1>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
@@ -80,9 +76,6 @@ export default {
         this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset)),
         this.description = await salesService.loadSaleDescription(this.sale.owner, this.sale.descriptionID)
       ])
-      // const syndicateDetails = await salesService.loadSaleOwner(this.sale.owner)
-      // this.syndicate = syndicateDetails.syndicateDetails
-      // this.syndicate.email = syndicateDetails.syndicateEmail
     }
   }
 }
