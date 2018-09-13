@@ -15,7 +15,7 @@ import { EventDispatcher } from '../../events/event_dispatcher'
 import { factorsService } from '../../services/factors.service'
 import { WalletHelper } from '../../helpers/wallet.helper'
 import set from 'lodash/set'
-import _get from 'lodash/get'
+import get from 'lodash/get'
 
 export class RequestBuilder {
   constructor (serverUrl) {
@@ -103,9 +103,7 @@ export class RequestBuilder {
 
   post () {
     this.method = 'post'
-    const password = function () {
-      return _get(this.params, 'data.password', '')
-    }
+    const password = get(this.params, 'data.password', '')
     return this.httpClient.post(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
@@ -120,7 +118,7 @@ export class RequestBuilder {
 
   patch () {
     this.method = 'patch'
-    const password = this.params.data.password
+    const password = get(this.params, 'data.password', '')
     return this.httpClient.patch(this._composeURL(), this.params, this.config)
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
@@ -128,7 +126,7 @@ export class RequestBuilder {
 
   delete () {
     this.method = 'delete'
-    const password = this.params.data.password
+    const password = get(this.params, 'data.password', '')
     return this.httpClient.delete(this._composeURL(), this.config)
       .then(response => this._parseResponse(response))
       .catch(err => this._handleError(err, password))
