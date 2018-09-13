@@ -2,7 +2,6 @@
   <div class="sale-chart-container">
     <chart
       :baseAsset="sale.baseAsset"
-      :quoteAsset="config.DEFAULT_QUOTE_ASSET"
     />
   </div>
 </template>

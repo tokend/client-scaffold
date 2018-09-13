@@ -92,7 +92,6 @@
       if (this.schema) {
         this.form = _pick(this.sale, Object.keys(this.schema.form))
         delete this.form.docs
-        // this.documents = _pick(this.sale, Object.keys(this.schema.form.docs || {}))
         this.documents = {
           [documentTypes.fundLogo]: this.sale.logo
         }

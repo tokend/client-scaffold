@@ -8,7 +8,6 @@
         <i class="file-input__attachment-icon mdi mdi-paperclip"></i> Select file pdf/image, 5Mb max
       </label>
       <span class="file-input__name" :title="name || fileName">{{ name || fileName }}</span>
-      <!--<button class="file-input__view-btn">View</button>-->
       <input class="file-input__upload-input"
              :id="id"
              type="file"

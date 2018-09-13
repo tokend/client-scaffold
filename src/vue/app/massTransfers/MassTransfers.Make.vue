@@ -346,7 +346,6 @@
     border: 1px solid rgba($col-unfocused, .5);
     background: rgba($col-primary, .05);
     color: $col-accent;
-    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
     border-radius: 5px;
     padding: .5rem 1rem;
     margin-bottom: 1rem;

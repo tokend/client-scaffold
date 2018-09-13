@@ -28,7 +28,6 @@ describe('pairs.service test', () => {
 
   it('loadConvertedAmount() should properly build request url', () => {
     const prefix = `asset_pairs/convert?amount=${mockConvertAmount}&source_asset=${mockBaseTokenCode}&dest_asset=${mockQuoteTokenCode}`
-    // pairsService.loadConvertedAmount('1000', 'a', 'b')
     return ServiceTestHelper.doAxiosMockedRequest(
       () => pairsService.loadConvertedAmount(mockConvertAmount, mockBaseTokenCode, mockQuoteTokenCode),
       prefix,
