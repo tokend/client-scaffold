@@ -160,6 +160,7 @@
   import { feeService } from '../../../js/services/fees.service'
 
   import { i18n } from '../../../js/i18n'
+  import { ErrorFactory, errorTypes, errors } from '@/js/errors/factory'
 
   import { PAYMENT_FEE_SUBTYPES } from '../../../js/const/xdr.const'
 

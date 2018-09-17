@@ -38,7 +38,3 @@ export const ASSET_POLICIES_VERBOSE = Object.freeze({
   [xdr.AssetPolicy.requiresKyc().value]: 'Requires Kyc',
   [xdr.AssetPolicy.issuanceManualReviewRequired().value]: 'Issuance manual review required'
 })
-
-export const STATS_OPERATION_TYPES = Object.freeze(
-  xdrEnumToConstant('StatsOpType')
-)

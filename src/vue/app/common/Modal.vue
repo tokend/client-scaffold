@@ -82,7 +82,7 @@ export default {
   max-width: 100%;
   overflow: auto;
   border-radius: 0.3rem;
-  background-color: $col-content-block;
+  background-color: $col-block-bg;
   box-shadow: 0px 1px 5.6px 0.4px rgba(170, 170, 170, 0.72);
   padding: 1.5rem;
   padding-bottom: 0;

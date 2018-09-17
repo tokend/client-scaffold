@@ -90,22 +90,6 @@ export class AccountsService extends Service {
   }
 
   /**
-   * Creates limits update request
-   * @param {object} opts
-   * @param {string} opts.details - JSON string about proof document
-   * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
-   * @returns {TransactionBuilder}
-   */
-  createLimitRequest (opts) {
-    const operation = CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
-
-    return this._operationBuilder
-      .operation()
-      .add(operation)
-      .submit(this._accountId, this._keypair)
-  }
-
-  /**
    * Loads details for each balance, including asset_details and opened sales for each asset
    * @return {Promise<array>} Promise object representing user balances
    */
@@ -200,19 +184,6 @@ export class AccountsService extends Service {
   loadAccountIdByBalanceId (balanceId) {
     return this._horizonRequestBuilder.balances()
       .account(balanceId)
-      .callWithSignature(this._keypair)
-  }
-
-  /**
-   * Loads account limits
-   * @param {int} type - operation type limits imposed on
-   * @param {asset} asset - asset type limits imposed on
-   * @return {Promise<object>} - promise object representing account limits
-   */
-
-  loadAccountLimits () {
-    return this._horizonRequestBuilder.accounts()
-      .limits(this._accountId)
       .callWithSignature(this._keypair)
   }
 }

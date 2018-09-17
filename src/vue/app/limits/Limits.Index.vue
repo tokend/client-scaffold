@@ -73,7 +73,7 @@
               @close-request="showDialog = false"
               maxWidth="30rem">
         <limits-manager :limits="limits[limitOp]"
-                        :op="limitOp" 
+                        :op="limitOp"
                         :asset="filters.tokenCode"
                         @close-request="showDialog = false"/>
       </modal>
@@ -110,7 +110,7 @@
   .limits {
     flex: 1;
     width: 100%;
-    background-color: $col-content-block;
+    background-color: $col-block-bg;
     max-width: calc(80 * 0.625rem);
     margin: auto;
     border-radius: 2px;

@@ -22,7 +22,6 @@ export const state = {
     publicKey: '',
     seed: ''
   },
-  limits: [],
   kycRequests: [],
   kycData: {
     address: {},
@@ -46,10 +45,6 @@ export const mutations = {
 
   SET_ACCOUNT_BALANCES (state, balances) {
     state.balances = balances
-  },
-
-  SET_ACCOUNT_LIMITS (state, limits) {
-    state.limits = limits
   },
 
   SET_ACCOUNT_KYC_REQUESTS (state, requests) {

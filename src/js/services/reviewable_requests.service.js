@@ -98,16 +98,6 @@ export class ReviewableRequestsService extends Service {
       .callWithSignature(this._keypair)
       .then(response => response.records[0])
   }
-
-  loadLimitsUpdateReviewableRequests () {
-    return this._horizonRequestBuilder
-      .reviewableRequestsHelper()
-      .limits_updates()
-      .forRequestor(this._accountId)
-      .order('desc')
-      .limit(config.TRANSACTIONS_PER_PAGE)
-      .callWithSignature(this._keypair)
-  }
 }
 
 export const reviewableRequestsService = new ReviewableRequestsService()
