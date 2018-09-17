@@ -106,7 +106,7 @@
     <md-dialog :md-active.sync="isHowToOpened">
       <md-dialog-title>{{ i18n.tr_about_csv() }}</md-dialog-title>
       <div class="app__dialog-inner">
-        <p class="app__page-explanations">{{ i18n.tr_mass_about_detailed() }}</p>
+        <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about_detailed() }}</p>
         <md-table class="mass-transfer__text-paragraph">
           <md-table-row>
             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_recipient_email_or_account() }}</md-table-head>
@@ -160,7 +160,6 @@
   import { feeService } from '../../../js/services/fees.service'
 
   import { i18n } from '../../../js/i18n'
-  import { ErrorFactory, errorTypes, errors } from '@/js/errors/factory'
 
   import { PAYMENT_FEE_SUBTYPES } from '../../../js/const/xdr.const'
 
@@ -171,7 +170,7 @@
 
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
-
+  import { errors, ErrorFactory, errorTypes } from '../../../js/errors/factory'
   export default {
     name: 'MassTransfersIndex',
     components: { FileField },
@@ -374,10 +373,6 @@
     margin-bottom: 1rem;
   }
 
-  .mass-transfer__confirm-btn {
-    margin-left: -23px;
-  }
-
   .mass-transfer__total {
     margin-bottom: 1rem;
   }
@@ -392,9 +387,5 @@
 
   .mass-transfer__asset {
     font-weight: bold;
-  }
-
-  .mass-transfer__errors {
-
   }
 </style>
