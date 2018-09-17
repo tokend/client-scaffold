@@ -4,7 +4,7 @@ import _get from 'lodash/get'
 export class LimitsRequestRecord extends RequestRecord {
   constructor (record) {
     super(record)
-    const details = JSON.parse(_get(record, 'details.limits_update.details') || '{}')
+    const details = _get(record, 'details.limits_update.details', '{}')
     this.details = details
     this.rawDocument = details.document || null
     this.tokenCode = details.asset || null
