@@ -1,7 +1,7 @@
 import { LocalStorageViewer } from '../../../../js/utils/local-storage-viewer.util'
 import { SaleRequestRecord } from '../../../../js/records/sale_request.record'
-
-const storageKey = 'saleList'
+import store from '../../../../vuex'
+const storageKey = `saleList-${store.getters.accountId}`
 let localStorageViewer
 
 export class SaleListManager {

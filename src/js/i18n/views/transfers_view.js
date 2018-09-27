@@ -35,5 +35,9 @@ export default {
   transfer_no_assets: 'Your wallet doesn\'t contain any transferable assets yet. You can discover some on the token list.',
   transfer_no_assets_heading: 'No assets, no transfers',
   transfer_error_insufficient_funds: 'Insufficient funds',
-  transfer_discover_assets_btn: 'Discover assets'
+  transfer_discover_assets_btn: 'Discover assets',
+  tr_current_recipient_not_found: 'recipient %{recipient} not found',
+  tr_transfer_balance: 'Balance is %{amount} %{asset}.',
+  tr_found_errors: 'Found errors',
+  tr_not_valid_file: 'Operation failed, uploaded file\'s data are not valid'
 }

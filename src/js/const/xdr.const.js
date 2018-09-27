@@ -25,6 +25,10 @@ export const ACCOUNT_TYPES = Object.freeze(
   xdrEnumToConstant('AccountType')
 )
 
+export const STATS_OPERATION_TYPES = Object.freeze(
+  xdrEnumToConstant('StatsOpType')
+)
+
 export const ASSET_POLICIES_VERBOSE = Object.freeze({
   [xdr.AssetPolicy.transferable().value]: 'Transferable',
   [xdr.AssetPolicy.baseAsset().value]: 'Base asset',
@@ -34,7 +38,3 @@ export const ASSET_POLICIES_VERBOSE = Object.freeze({
   [xdr.AssetPolicy.requiresKyc().value]: 'Requires Kyc',
   [xdr.AssetPolicy.issuanceManualReviewRequired().value]: 'Issuance manual review required'
 })
-
-export const STATS_OPERATION_TYPES = Object.freeze(
-  xdrEnumToConstant('StatsOpType')
-)

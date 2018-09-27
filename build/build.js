@@ -2,7 +2,7 @@
 require('./check-versions')()
 var envArg = process.argv[2]
 
-process.env.CONFIG_PATH = envArg
+if (envArg) process.env.CONFIG_PATH = envArg
 
 const ora = require('ora')
 const rm = require('rimraf')

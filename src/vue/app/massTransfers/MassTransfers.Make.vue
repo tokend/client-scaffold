@@ -14,7 +14,12 @@
                      accept=".csv"
                      id="preissuance-field"
          />
-
+         <template v-if="recipientNotFound">
+            <p class="mass-transfer__errors">
+             {{ i18n.tr_found_errors() }}:
+             <span>{{ i18n.tr_current_recipient_not_found({recipient: recipientNotFound}) }}</span>
+             </p>
+         </template>
          <template v-if="transfers.length">
            <p class="mass-transfer__total">
              {{ i18n.tr_total_amount() }}:
@@ -101,7 +106,7 @@
     <md-dialog :md-active.sync="isHowToOpened">
       <md-dialog-title>{{ i18n.tr_about_csv() }}</md-dialog-title>
       <div class="app__dialog-inner">
-        <p class="app__page-explanations">{{ i18n.tr_mass_about_detailed() }}</p>
+        <p class="mass-transfer__text-paragraph">{{ i18n.tr_mass_about_detailed() }}</p>
         <md-table class="mass-transfer__text-paragraph">
           <md-table-row>
             <md-table-head class="mass-transfer__table-cell">{{ i18n.lbl_recipient_email_or_account() }}</md-table-head>
@@ -165,7 +170,7 @@
 
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../vuex/types'
-
+  import { errors, ErrorFactory, errorTypes } from '../../../js/errors/factory'
   export default {
     name: 'MassTransfersIndex',
     components: { FileField },
@@ -175,6 +180,7 @@
         transfers: null
       },
       transfers: [],
+      recipientNotFound: '',
       i18n,
       isHowToOpened: false
     }),
@@ -265,16 +271,19 @@
         const parsed = extracted
           .replace(/\r\n/g, '\n')
           .split('\n')
+          .filter(row => row)
           .map(row => row
             .split(',')
             .reduce((transfer, item, i) => ({
-              ...transfer, [objKeys[i]]: item
+              ...transfer, [objKeys[i]]: item.trim()
             }), {})
           )
         await this.loadTransferDetails(parsed)
       },
       async loadTransferDetails (transfers) {
         this.disable()
+        this.transfers = []
+        this.recipientNotFound = ''
         try {
           for (const transfer of transfers) {
             if (Keypair.isValidPublicKey(transfer.recipient)) {
@@ -284,6 +293,11 @@
               transfer.accountId = await accountsService.loadAccountIdByEmail(transfer.recipient)
               transfer.email = transfer.recipient
             }
+            if (!transfer.email || !transfer.accountId) {
+              this.recipientNotFound = transfer.recipient
+              ErrorFactory.throwError(errorTypes.NotFoundError, { email: transfer.recipient })
+            }
+
             transfer.sourceFees = await feeService.loadPaymentFeeByAmount(
               transfer.asset,
               transfer.amount
@@ -297,7 +311,15 @@
             transfer.sourcePaysForDest = false
           }
           this.transfers = transfers
-        } catch (e) { ErrorHandler.processUnexpected(e) }
+        } catch (e) {
+          console.error(e)
+          if (e instanceof errors.NotFoundError) {
+            e.showBanner(i18n.tr_not_valid_file())
+            this.enable()
+            return
+          }
+          ErrorHandler.processUnexpected(e)
+        }
         this.enable()
       }
     },
@@ -349,10 +371,6 @@
     border-radius: 5px;
     padding: .5rem 1rem;
     margin-bottom: 1rem;
-  }
-
-  .mass-transfer__confirm-btn {
-    margin-left: -23px;
   }
 
   .mass-transfer__total {

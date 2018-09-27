@@ -64,6 +64,14 @@
           <md-icon class="sidebar__list-item-icon">compare_arrows</md-icon>
           <span class="md-list-item-text">{{ i18n.lbl_trade() }}</span>
         </router-link>
+
+        <router-link v-ripple class="sidebar__list-item"
+                      @click.native="closeSidebar"
+                      :to="{ name: 'app.fees' }"
+                      tag="li" v-if="config.FEATURE_FLAGS.feesExplorer">
+          <md-icon class="sidebar__list-item-icon">flash_on</md-icon>
+          <span class="md-list-item-text">{{ i18n.lbl_fee() }}</span>
+        </router-link>
       </ul>
     </section>
 

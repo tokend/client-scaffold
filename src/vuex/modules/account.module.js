@@ -16,12 +16,12 @@ export const state = {
     external_system_accounts: []
   },
   balances: [],
+  limits: [],
   keys: {
     accountId: '',
     publicKey: '',
     seed: ''
   },
-  limits: [],
   kycRequests: [],
   kycData: {
     address: {},

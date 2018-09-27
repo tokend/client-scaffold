@@ -143,6 +143,7 @@ export class AccountsService extends Service {
       .forEmail(email)
       .get()
       .then(r => r.data('account_id'))
+      .catch(e => '')
   }
 
   /**
