@@ -419,8 +419,8 @@ const router = new Router({
           ]
         },
         {
-          feature_flag: config.FEATURE_FLAGS.requests,
-          name: 'app.requests',
+          feature_flag: config.FEATURE_FLAGS.feesExplorer,
+          name: 'app.fees',
           path: '/fee',
           component: Fee,
           redirect: { path: '/fee/index' },
