@@ -174,6 +174,7 @@ import { errors } from '@/js/errors/factory'
 import { i18n } from '@/js/i18n'
 import config from '@/config'
 import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { PAYMENT_FEE_SUBTYPES } from '@/js/const/xdr.const'
 
 import { accountsService } from '@/js/services/accounts.service'
 import { feeService } from '@/js/services/fees.service'
@@ -313,8 +314,16 @@ export default {
     async loadFees (recipientAccountId) {
       const fees = { source: {}, destination: {} }
       const [senderFees, recipientFees] = await Promise.all([
-        feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount),
-        feeService.loadPaymentFeeByAmount(this.form.tokenCode, this.form.amount, recipientAccountId)
+        feeService.loadPaymentFeeByAmount(
+          this.form.tokenCode,
+          this.form.amount
+        ),
+        feeService.loadPaymentFeeByAmount(
+          this.form.tokenCode,
+          this.form.amount,
+          recipientAccountId,
+          PAYMENT_FEE_SUBTYPES.incoming
+        )
       ])
       fees.source.fixed = senderFees.fixed
       fees.source.percent = senderFees.percent
