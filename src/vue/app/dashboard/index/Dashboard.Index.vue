@@ -10,7 +10,9 @@
                         :scale="scale"
       />
       <div class="dashboard__chart" v-if="currentAsset">
-        <chart :base-asset="currentAsset" :quote-asset="config.DEFAULT_QUOTE_ASSET"/>
+        <chart v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
+               :base-asset="currentAsset"
+               :quote-asset="config.DEFAULT_QUOTE_ASSET"/>
       </div>
       <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
     </template>
