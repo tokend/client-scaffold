@@ -16,7 +16,7 @@
             <template v-for="(fee, i) in assetFees">
               <md-table-row>
                 <md-table-cell>{{fee.fee_type | localizeFeeType}}</md-table-cell>
-                <md-table-cell>{{fee.subtype | localizeSubtype}}</md-table-cell>
+                <md-table-cell>{{fee.subtype | localizeFeeSubType}}</md-table-cell>
                 <md-table-cell>{{i18n.c(fee.fixed)}} {{fee.fee_asset}}</md-table-cell>
                 <md-table-cell>{{i18n.c(fee.percent)}}%</md-table-cell>
                 <md-table-cell>{{i18n.c(fee.lower_bound)}}</md-table-cell>

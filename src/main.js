@@ -28,7 +28,10 @@ import tableScrollShadow from './directives/tableScrollShadow'
 import rippleEffect from './directives/rippleEffect'
 
 // filters
-import { localizeFeeType, localizeSubtype } from './js/filters/filters'
+import { translate } from './vue/common/filters/translate'
+import { localizeFeeType } from './vue/common/filters/localizeFeeType'
+import { localizeFeeSubType } from './vue/common/filters/localizeFeeSubType'
+import { formatDate } from './vue/common/filters/formatDate'
 
 // ripple effects:
 rippleEffect.color = 'rgba(58, 65, 128, .2)'
@@ -55,4 +58,6 @@ new Vue({
 
 /* Vue filters */
 Vue.filter('localizeFeeType', localizeFeeType)
-Vue.filter('localizeSubtype', localizeSubtype)
+Vue.filter('localizeFeeSubType', localizeFeeSubType)
+Vue.filter('translate', translate)
+Vue.filter('formatDate', formatDate)
