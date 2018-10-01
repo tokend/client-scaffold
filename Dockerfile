@@ -15,6 +15,7 @@ RUN true \
  && git config --global url.ssh://git@gitlab.com/.insteadOf https://gitlab.com/ \
  && npm install --progress=false --loglevel=warn \
  && npm run build $BUILD_ENV \
+ && rm ~/.ssh/id_rsa \
  && true
 
 FROM shebgregor/nginx4spa:latest
