@@ -121,7 +121,7 @@
     "klaw": "^3.0.0",
     "mini-css-extract-plugin": "^0.4.2",
     "mocha": "^5.2.0",
-    "nightwatch": "^0.9.12",
+    "nightwatch": "^1.0.11",
     "nock": "^9.6.1",
     "node-sass": "^4.9.3",
     "opn": "^5.1.0",
