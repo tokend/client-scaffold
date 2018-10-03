@@ -166,12 +166,8 @@
     align-items: center;
     justify-content: space-between;
 
-    @include respond-to(xsmall) {
-      padding: 0 16px;
-    }
-
     @include respond-to-custom($sidebar-hide-bp) {
-      padding: 0 16px 0 12px + 40px + 16px;
+      padding: 0 $content-side-paddings-sm 0 $content-side-paddings-sm + 5.2 * $point;
     }
   }
 

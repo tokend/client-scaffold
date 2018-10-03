@@ -141,7 +141,8 @@ export default {
 }
 
 .app__main-content {
-  flex: 1 1 100%;
+  flex: 1;
+  overflow: hidden;
 }
 
 .app__navbar {
@@ -161,15 +162,15 @@ export default {
 
 .app__main {
   width: 100%;
-  z-index: 1;
-  display: inline-flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px $content-side-paddings;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 4 * $point $content-side-paddings;
   background-color: $col-app-content-background;
 
-  @include respond-to($tablet) {
-    padding: 0 40px;
+  @include respond-to-custom($sidebar-hide-bp) {
+    width: 100vw;
+    padding: 0 $content-side-paddings-sm;
   }
 }
 </style>

@@ -302,7 +302,8 @@
     transform: scale(0);
     opacity: 0;
     cursor: pointer;
-    transition: opacity 0.2s cubic-bezier(.4, 0, .2, 1) 0.1s;
+    transition: opacity 0.2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+      transform 0.25s cubic-bezier(.4, 0, .2, 1);
 
     @include respond-to(tablet) {
       transform: scale(1);
@@ -311,7 +312,8 @@
 
     &.sidebar__burger-btn--invisible {
       transform: scale(0);
-      opacity: 0;
+      // opacity: 0;
+      transform: translateX($sidebar-width)
     }
 
     .md-icon {
