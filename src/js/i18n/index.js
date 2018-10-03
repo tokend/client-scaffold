@@ -24,6 +24,7 @@ import fileUpload from './views/file-upload'
 import trade from './views/trade_view'
 import companyView from './views/company_view'
 import preissuanceView from './views/preissuance_view'
+import fees from './views/fees'
 import common from './views/common'
 import auth from './views/auth_view'
 import formConfirmation from './views/form_confirmation_view'
@@ -75,7 +76,8 @@ const dictionary = {
   ...sidebarView,
   ...supportedBrowsersView,
   ...downloadsView,
-  ...limitsView
+  ...limitsView,
+  ...fees
 }
 
 polyglot.extend(dictionary)

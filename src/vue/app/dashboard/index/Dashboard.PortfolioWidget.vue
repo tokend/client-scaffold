@@ -95,7 +95,6 @@
       ]),
       tokensList () {
         const tokens = this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
-          .filter(token => token.code !== this.config.DEFAULT_QUOTE_ASSET)
         const baseAssets = tokens.filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
           .sort((a, b) => a.code.localeCompare(b.code))
         const otherAssets = tokens.filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))

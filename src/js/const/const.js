@@ -24,6 +24,7 @@ export { REQUEST_STATES, REQUEST_STATES_STR } from './request_states.const'
 export { SIGNER_TYPES } from './signer_types.const'
 export { ACCOUNT_STATES } from './account.const'
 export { DOCUMENT_POLICIES } from './document-policies.const'
+export { LIMIT_OPS, LIMIT_OPS_STR, LIMITS_REQUEST_TYPE, LIMITS_REQUEST_TYPE_STR } from './limits.const'
 export { KEY_CODES } from './key_codes.const'
 
 export { PAGES_NAMES } from './pages-names.const'

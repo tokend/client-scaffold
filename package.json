@@ -42,6 +42,7 @@
     "vee-validate": "^2.1.0-beta.8",
     "vue": "^2.5.17",
     "vue-async-computed": "^3.4.1",
+    "sjcl": "^1.0.7",
     "vue-flatpickr-component": "^7.0.6",
     "vue-markdown": "2.2.4",
     "vue-material": "1.0.0-beta-7",

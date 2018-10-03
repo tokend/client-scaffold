@@ -1,5 +1,5 @@
 <template>
-  <tabs class="app__tabs">
+  <tabs>
     <tab :name="i18n.lbl_token_creation()" id="token-creation">
       <token-creation />
     </tab>

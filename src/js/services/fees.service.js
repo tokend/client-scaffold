@@ -35,6 +35,13 @@ export class FeeService extends Service {
       .call()
       .then(result => ({ fixed: result.fixed, percent: result.percent }))
   }
+
+  loadAccountFees () {
+    return this._horizonRequestBuilder.accounts()
+      .fees(this._accountId)
+      .call()
+      .then(result => (result.fees))
+  }
 }
 
 export const feeService = new FeeService()

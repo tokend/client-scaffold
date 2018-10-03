@@ -17,6 +17,7 @@ export class OTPCancelledError extends ExtendableError {
     super('TFA cancelled')
   }
 
+  // TODO: remove this
   showBanner () {
     // we need this to prevent showing errors when user cancels tfa verification
     return true

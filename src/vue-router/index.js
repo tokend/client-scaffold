@@ -63,6 +63,9 @@ import SaleCreationIndex from '@/vue/app/saleCreation/SaleCreation.Index'
 import Requests from '@/vue/app/requests/Requests.Entry'
 import RequestsIndex from '@/vue/app/requests/index/Requests.Index'
 
+import Fee from '@/vue/app/fee/Fee.Entry'
+import FeeIndex from '@/vue/app/fee/index/Fee.Index'
+
 import Sales from '@/vue/app/sales/Sales.Entry'
 import SalesDetails from '@/vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '@/vue/app/sales/overview/Sales.Explore'
@@ -416,6 +419,20 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.feesExplorer,
+          name: 'app.fees',
+          path: '/fee',
+          component: Fee,
+          redirect: { path: '/fee/index' },
+          children: [
+            {
+              path: '/fee/index',
+              name: 'fee.index',
+              component: FeeIndex
+            }
+          ]
+        },
+        {
           feature_flag: config.FEATURE_FLAGS.sales,
           name: 'app.sales',
           path: '/sales',
@@ -469,7 +486,8 @@ const router = new Router({
         }
       ].filter(route => route.feature_flag !== false)
     }
-  ]
+  ],
+  scrollBehavior
 })
 
 export default router
@@ -493,6 +511,10 @@ function inAppRouteGuard (to, from, next) {
         }
       }
     })
+}
+
+function scrollBehavior (to, from, savedPosition) {
+  return { x: 0, y: 0 }
 }
 
 router.beforeEach((to, from, next) => {
