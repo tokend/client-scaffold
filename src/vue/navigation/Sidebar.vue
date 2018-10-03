@@ -7,7 +7,7 @@
 
     <button @click="openSidebar"
             class="sidebar__burger-btn"
-            :class="{ 'sidebar__burger-btn--invisible': isSidebarOpened }">
+            :class="{ 'sidebar__burger-btn--sidebar-active': isSidebarOpened }">
       <md-icon>menu</md-icon>
     </button>
 
@@ -299,21 +299,19 @@
     outline: none;
     border-radius: 50%;
     background-color: $col-button-flat-txt !important;
-    transform: scale(0);
+    transform: translateX($sidebar-width);
     opacity: 0;
     cursor: pointer;
-    transition: opacity 0.2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+    transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1),
       transform 0.25s cubic-bezier(.4, 0, .2, 1);
 
-    @include respond-to(tablet) {
-      transform: scale(1);
+    @include respond-to-custom($sidebar-hide-bp) {
       opacity: 1;
+      transform: translateX(0);
     }
 
-    &.sidebar__burger-btn--invisible {
-      transform: scale(0);
-      // opacity: 0;
-      transform: translateX($sidebar-width)
+    &.sidebar__burger-btn--sidebar-active {
+      transform: translateX($sidebar-width);
     }
 
     .md-icon {
