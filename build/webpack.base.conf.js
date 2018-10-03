@@ -86,8 +86,8 @@ module.exports = {
           process.env.NODE_ENV !== 'production'
             ? 'vue-style-loader'
             : MiniCssExtractPlugin.loader,
-            'css-loader',
-            'sass-loader'
+          'css-loader',
+          'sass-loader'
         ]
       }
     ]
