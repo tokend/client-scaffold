@@ -1,12 +1,24 @@
 <template>
   <div class="sidebar">
-    <section class="sidebar__logotype">
+    <div class="sidebar__backdrop"
+         :class="{ 'sidebar__backdrop--active': isSidebarOpened }"
+         @click="closeSidebar">
+    </div>
+
+    <button @click="openSidebar"
+            class="sidebar__burger-btn"
+            :class="{ 'sidebar__burger-btn--invisible': isSidebarOpened }">
+      <md-icon>menu</md-icon>
+    </button>
+
+    <div class="sidebar__lists" :class="{ 'sidebar__lists--closed': !isSidebarOpened }">
+      <section class="sidebar__logotype">
       <router-link @click.native="closeSidebar" to="/dashboard">
         <logotype class="sidebar__logotype-icon"/>
-      </router-link>
-    </section>
+        </router-link>
+      </section>
 
-    <section class="sidebar__list">
+      <section class="sidebar__list">
       <ul>
         <router-link v-ripple class="sidebar__list-item"
                      @click.native="closeSidebar"
@@ -75,7 +87,7 @@
       </ul>
     </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list">
+      <section class="sidebar__section sidebar__section--account sidebar__list">
       <div class="sidebar__list-title">{{ i18n.sidebar_section_explore() }}</div>
       <ul>
         <router-link v-ripple class="sidebar__list-item"
@@ -96,61 +108,61 @@
       </ul>
     </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list"
+      <section class="sidebar__section sidebar__section--account sidebar__list"
       v-if="accountTypeI === ACCOUNT_TYPES.syndicate">
-      <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
-      <ul>
-        <router-link v-ripple class="sidebar__list-item"
-                    @click.native="closeSidebar"
-                    to="/token-creation"
-                    tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
-          <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
-        </router-link>
+        <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
+        <ul>
+          <router-link v-ripple class="sidebar__list-item"
+                      @click.native="closeSidebar"
+                      to="/token-creation"
+                      tag="li" v-if="config.FEATURE_FLAGS.tokenCreation">
+            <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
+          </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/sale-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
-          <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
-        </router-link>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/sale-creation"
+                       tag="li" v-if="config.FEATURE_FLAGS.saleCreation">
+            <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
+          </router-link>
 
-        <!-- <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/my-sales"
-                     tag="li" v-if="config.FEATURE_FLAGS.sales">
-          <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_my_funds() }}</span>
-        </router-link> -->
+          <!-- <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/my-sales"
+                       tag="li" v-if="config.FEATURE_FLAGS.sales">
+            <md-icon class="sidebar__list-item-icon">trending_up</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_my_funds() }}</span>
+          </router-link> -->
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/preissuance-upload"
-                     tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
-          <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
-        </router-link>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/preissuance-upload"
+                       tag="li" v-if="config.FEATURE_FLAGS.preIssuanceUpload">
+            <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
+          </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     to="/issuance-creation"
-                     tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
-          <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
-        </router-link>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       to="/issuance-creation"
+                       tag="li" v-if="config.FEATURE_FLAGS.issuanceCreation">
+            <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
+          </router-link>
 
-        <router-link v-ripple class="sidebar__list-item"
-                     @click.native="closeSidebar"
-                     :to="{ name: 'app.requests' }"
-                     tag="li" v-if="config.FEATURE_FLAGS.requests">
-          <md-icon class="sidebar__list-item-icon">import_contacts</md-icon>
-          <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
-        </router-link>
-      </ul>
-    </section>
+          <router-link v-ripple class="sidebar__list-item"
+                       @click.native="closeSidebar"
+                       :to="{ name: 'app.requests' }"
+                       tag="li" v-if="config.FEATURE_FLAGS.requests">
+            <md-icon class="sidebar__list-item-icon">import_contacts</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_requests() }}</span>
+          </router-link>
+        </ul>
+      </section>
 
-    <section class="sidebar__section sidebar__section--account sidebar__list">
+      <section class="sidebar__section sidebar__section--account sidebar__list">
       <div class="sidebar__list-title">{{ i18n.sidebar_section_account() }}</div>
       <ul>
         <router-link v-ripple class="sidebar__list-item"
@@ -171,7 +183,8 @@
       </ul>
     </section>
 
-    <app-footer/>
+      <app-footer/>
+    </div>
   </div>
 </template>
 
@@ -214,7 +227,6 @@
       },
       closeSidebar () {
         this.isSidebarOpened = false
-        this.$emit('hide-sidebar', this.isSidebarOpened)
       }
     }
   }
@@ -222,13 +234,90 @@
 
 <style lang="scss" scoped>
   @import '../../scss/variables';
+  @import '../../scss/mixins';
 
   .sidebar {
+    position: relative;
     background-color: $col-sidebar-background !important;
     box-shadow: inset -10px -10px 20px 0 rgba(0, 0, 0, .03);
-    min-height: 100vh;
-    padding-bottom: 10 * $point;
-    height: 100%;
+    min-height: 100%;
+  }
+
+  .sidebar__lists {
+    width: 260px;
+    min-height: 100%;
+    padding-bottom: 70px;
+    z-index: 120;
+    list-style: none;
+
+    @include respond-to(tablet) {
+      opacity: 1;
+      width: 260px;
+      background-color: $col-sidebar-background-media-small !important;
+      transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    &.sidebar__lists--closed {
+      @include respond-to(tablet) {
+        opacity: 0;
+        width: 0;
+        transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+      }
+    }
+  }
+
+  .sidebar__backdrop {
+    @include respond-to(tablet) {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      z-index: 115;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    &.sidebar__backdrop--active {
+      left: 260px;
+      opacity: 1;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.1s;
+    }
+  }
+
+  .sidebar__burger-btn {
+    position: absolute;
+    left: 5px;
+    top: 41px;
+    z-index: 110;
+    width: 40px;
+    height: 40px;
+    margin-right: 0;
+    margin-left: 8px !important;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background-color: $col-button-flat-txt !important;
+    transform: scale(0);
+    opacity: 0;
+
+    @include respond-to(tablet) {
+      transform: scale(1);
+      opacity: 1;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.2s;
+    }
+
+    &.sidebar__burger-btn--invisible {
+      transform: scale(0);
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.2s;
+    }
+
+    .md-icon {
+      color: $col-button-raised-txt !important;
+      transition: color 0.2s cubic-bezier(0.4,0,0.2,1);
+    }
   }
 
   .sidebar__list-item {
@@ -256,10 +345,10 @@
   }
 
   .sidebar__logotype-icon {
-    width: 95px;
+    max-width: 95px;
+    width: 100%;
     height: 31px;
     display: block;
-    width: 100%;
   }
 
   .sidebar__list-item-icon {
