@@ -7,7 +7,7 @@ import { factorsService } from '../services/factors.service'
 import { AuthStateHelper } from '../../vuex/helpers/auth.helper'
 import { WalletHelper } from '../helpers/wallet.helper'
 import { i18n } from '../i18n'
-import {ErrorFactory} from '../errors/factory'
+import { ErrorFactory } from '../errors/factory'
 
 const template = `
   <form novalidate>

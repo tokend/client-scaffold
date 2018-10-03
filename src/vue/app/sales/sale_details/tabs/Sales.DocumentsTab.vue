@@ -46,8 +46,7 @@
   import { blobTypes, blobFilters } from '../../../../../js/const/const'
   import { fileService } from '../../../../../js/services/file.service'
   import { usersService } from '../../../../../js/services/users.service'
-  import { DocumentContainer } from
-  '../../../../../js/helpers/DocumentContainer'
+  import { DocumentContainer } from '../../../../../js/helpers/DocumentContainer'
   import _get from 'lodash/get'
   import { mapGetters } from 'vuex'
   import { vuexTypes } from '../../../../../vuex/types'

@@ -96,14 +96,14 @@
       tokensList () {
         const tokens = this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
         const baseAssets = tokens.filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
-                                  .sort((a, b) => a.code.localeCompare(b.code))
+          .sort((a, b) => a.code.localeCompare(b.code))
         const otherAssets = tokens.filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))
-                                  .sort((a, b) => a.code.localeCompare(b.code))
+          .sort((a, b) => a.code.localeCompare(b.code))
         return [...baseAssets, ...otherAssets].map(item => `${item.name} (${item.code})`)
       },
       currentAssetForSelect () {
         return this.tokens.filter(token => token.code === this.currentAsset)
-                          .map(item => `${item.name} (${item.code})`)[0]
+          .map(item => `${item.name} (${item.code})`)[0]
       },
       balance () {
         return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)

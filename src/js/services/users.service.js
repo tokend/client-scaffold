@@ -1,5 +1,5 @@
 import { Service } from './service'
-import {errors} from '../errors/factory'
+import { errors } from '../errors/factory'
 
 export class UsersService extends Service {
   /**
@@ -79,8 +79,8 @@ export class UsersService extends Service {
    *
    */
   patchUserDetails (type, state, sequence) {
-    const data = {type}
-    const attributes = {state, kyc_sequence: sequence}
+    const data = { type }
+    const attributes = { state, kyc_sequence: sequence }
 
     return this._apiRequestBuilder.users()
       .accountId(this._accountId)

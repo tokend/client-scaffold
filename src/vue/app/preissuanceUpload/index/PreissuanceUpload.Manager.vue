@@ -103,7 +103,7 @@ export default {
       for (let i = 0; i < items.length; i++) {
         const assetCode = items[i].asset
         if (!this.isAssetDefined(assetCode)) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_exist({asset: assetCode}))
+          EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_exist({ asset: assetCode }))
           return
         }
       }
@@ -128,7 +128,7 @@ export default {
       try {
         for (let item of this.issuances) {
           if (this.isNullAssetSigner(item.asset)) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_available({asset: item.asset}))
+            EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_available({ asset: item.asset }))
             this.enable()
             return
           }

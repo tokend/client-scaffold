@@ -3,6 +3,8 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -73,13 +75,24 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
-    ],
-    loaders: [
+      },
       {
         test: /\.s[a|c]ss$/,
-        loader: 'style!css!sass'
+        loader: 'style-loader'
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          process.env.NODE_ENV !== 'production'
+            ? 'vue-style-loader'
+            : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 }

@@ -72,8 +72,8 @@ export class TxHelper {
         this._addSignerOp(newKeypair.accountId()),
         ...(
           signerToReplace
-          ? this._removeMasterAndCurrentSignerOps(signers, accountId, signerToReplace)
-          : this._removeAllSignersOps(signers, accountId)
+            ? this._removeMasterAndCurrentSignerOps(signers, accountId, signerToReplace)
+            : this._removeAllSignersOps(signers, accountId)
         )
       ]
     } catch (error) {

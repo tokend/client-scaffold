@@ -81,8 +81,8 @@
       ]),
       pwdUnconfirmedMessage () {
         return (this.form.password && this.form.confirmPassword &&
-                this.form.confirmPassword !== this.form.password)
-               ? i18n.set_pwd_do_not_match() : ''
+          this.form.confirmPassword !== this.form.password)
+          ? i18n.set_pwd_do_not_match() : ''
       }
     },
     methods: {

@@ -4,11 +4,11 @@ import { DEFAULT_PRECISION, DEFAULT_CONVERSION_PRESICION } from '../const/config
 const locales = {
   en: {
     currency: {
-      symbol: '',   // default currency symbol is '$'
+      symbol: '', // default currency symbol is '$'
       format: '%s%v', // controls output: %s = symbol, %v = value/number (can be object: see below)
-      decimal: '.',  // decimal point separator
-      thousand: ',',  // thousands separator
-      precision: DEFAULT_PRECISION   // decimal places
+      decimal: '.', // decimal point separator
+      thousand: ',', // thousands separator
+      precision: DEFAULT_PRECISION // decimal places
     },
     number: {
       precision: 0,
@@ -29,7 +29,7 @@ export function formatCurrency (locale = 'en') {
 export function formatConvertedCurrency (locale = 'en') {
   const settings = locales[locale].currency
   return (n) => {
-    return numberFormatter.formatMoney(n, {...settings, symbol: locales[locale].symbol, precision: DEFAULT_CONVERSION_PRESICION})
+    return numberFormatter.formatMoney(n, { ...settings, symbol: locales[locale].symbol, precision: DEFAULT_CONVERSION_PRESICION })
   }
 }
 

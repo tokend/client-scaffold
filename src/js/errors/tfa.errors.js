@@ -1,7 +1,7 @@
 import { ExtendableError } from './extendable_error.error'
 
 export class OtpError extends ExtendableError {
-  constructor ({factorId, token, repeatDetails}) {
+  constructor ({ factorId, token, repeatDetails }) {
     super('TFA required')
     this.errorType = 'TFA'
     this.meta = {
