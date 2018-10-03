@@ -114,7 +114,7 @@
   .searcher-title {
     font-weight: bold;
     font-size: 1.4 * $point;
-    color: $col-md-primary;
+    color: $col-text-page-heading;
     padding: 0;
     opacity: 1;
     margin-bottom: 1 * $point;
