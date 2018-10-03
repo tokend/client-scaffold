@@ -1,6 +1,7 @@
 <template>
   <div class="select-field" :class="{
       'select-field--readonly': readonly,
+      'select-field--disabled': disabled,
       'select-field--focused': showList,
       'select-field--label-minimized': selected
     }">
@@ -43,6 +44,7 @@
       value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
       values: { type: Array, default: _ => [] },
       label: { type: String, default: '' },
+      disabled: { type: Boolean, default: false },
       readonly: { type: Boolean, default: false }
     },
     data: _ => ({
@@ -57,14 +59,14 @@
     },
     methods: {
       selectItem (item) {
-        if (this.readonly) return null
+        if (this.readonly || this.disabled) return null
         this.selected = item
         this.currentValue = item
         this.$emit(commonEvents.inputEvent, item)
         this.toggleListVisibility()
       },
       toggleListVisibility () {
-        if (this.readonly) return null
+        if (this.readonly || this.disabled) return null
         this.showList ? this.closelist() : this.openList()
         onKeyDown(this.showList, this.keyDownEvents)
       },
@@ -167,6 +169,11 @@
 }
 
 .select-field--readonly > .select-field__selected {
+  cursor: default;
+  @include readonly-material-border($field-color-focused);
+}
+
+.select-field--disabled > .select-field__selected {
   cursor: default;
   @include readonly-material-border($field-color-focused);
 }
