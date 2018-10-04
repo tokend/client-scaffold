@@ -1,8 +1,8 @@
 <template>
   <div class="chart">
     <scale-tabs
-      v-if="isActualData && historyHasValue"
       class="chart__tabs"
+      :class="{ 'chart__tabs--hidden': !(isActualData && historyHasValue) }"
       v-model="scale"
       :value="scale"
       :is-pending="isLoading"
@@ -116,5 +116,12 @@
     margin-bottom: 24px;
     display: flex;
     justify-content: flex-end;
+    transition: all 0.25s;
+
+    &--hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
   }
 </style>

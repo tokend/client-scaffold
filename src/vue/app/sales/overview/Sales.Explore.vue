@@ -94,6 +94,7 @@
     flex-direction: column;
     align-items: stretch;
     margin: auto;
+    width: 100%;
   }
 
   .sales-overview__sale-overview-inner {

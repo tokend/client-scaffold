@@ -161,13 +161,13 @@
     width: 100%;
     min-height: 121px;
     background-color: $col-navbar-background;
-    padding: 0 40px;
+    padding: 0 $content-side-paddings;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @include respond-to(xsmall) {
-      padding: 0 16px;
+    @include respond-to-custom($sidebar-hide-bp) {
+      padding: 0 $content-side-paddings-sm 0 $content-side-paddings-sm + 5.2 * $point;
     }
   }
 
@@ -191,13 +191,14 @@
     width: 55px;
     height: 55px;
     font-size: 24px;
-    box-shadow: 0 4px 10px 0 rgba($col-text-field-hint, .15);
+    box-shadow: 0 4px 10px 0 $col-avatar-instead-bg;
     margin-right: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background: rgba($col-text-field-hint, .15);
+    background: $col-avatar-instead-bg;
+    color: $col-avatar-instead-text;
 
     @include respond-to-custom($custom-breakpoint) {
       margin-right: 0;

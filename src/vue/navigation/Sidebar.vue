@@ -7,7 +7,7 @@
 
     <button @click="openSidebar"
             class="sidebar__burger-btn"
-            :class="{ 'sidebar__burger-btn--invisible': isSidebarOpened }">
+            :class="{ 'sidebar__burger-btn--sidebar-active': isSidebarOpened }">
       <md-icon>menu</md-icon>
     </button>
 
@@ -233,8 +233,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../scss/variables';
-  @import '../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .sidebar {
     position: relative;
@@ -244,21 +244,21 @@
   }
 
   .sidebar__lists {
-    width: 260px;
+    width: $sidebar-width;
     min-height: 100%;
     padding-bottom: 70px;
     z-index: 120;
     list-style: none;
 
-    @include respond-to(tablet) {
+    @include respond-to-custom($sidebar-hide-bp) {
       opacity: 1;
-      width: 260px;
+      width: $sidebar-width;
       background-color: $col-sidebar-background-media-small !important;
       transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
     }
 
     &.sidebar__lists--closed {
-      @include respond-to(tablet) {
+      @include respond-to-custom($sidebar-hide-bp) {
         opacity: 0;
         width: 0;
         transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
@@ -267,7 +267,7 @@
   }
 
   .sidebar__backdrop {
-    @include respond-to(tablet) {
+    @include respond-to-custom($sidebar-hide-bp) {
       position: fixed;
       left: -100%;
       top: 0;
@@ -280,9 +280,9 @@
     }
 
     &.sidebar__backdrop--active {
-      left: 260px;
+      left: $sidebar-width;
       opacity: 1;
-      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.1s;
+      transition: opacity 0.25s cubic-bezier(.4, 0, .2, 1) 0.1s;
     }
   }
 
@@ -299,24 +299,23 @@
     outline: none;
     border-radius: 50%;
     background-color: $col-button-flat-txt !important;
-    transform: scale(0);
+    transform: translateX($sidebar-width);
     opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1),
+      transform 0.25s cubic-bezier(.4, 0, .2, 1);
 
-    @include respond-to(tablet) {
-      transform: scale(1);
+    @include respond-to-custom($sidebar-hide-bp) {
       opacity: 1;
-      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.2s;
+      transform: translateX(0);
     }
 
-    &.sidebar__burger-btn--invisible {
-      transform: scale(0);
-      opacity: 0;
-      transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1) 0.2s;
+    &.sidebar__burger-btn--sidebar-active {
+      transform: translateX($sidebar-width);
     }
 
     .md-icon {
       color: $col-button-raised-txt !important;
-      transition: color 0.2s cubic-bezier(0.4,0,0.2,1);
     }
   }
 

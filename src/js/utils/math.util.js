@@ -59,7 +59,8 @@ export function add (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
   const one = new BigNumber(a)
   const two = new BigNumber(b)
 
-  const result = one.add(two)
+  const result = one.add ? one.add(two) : one.plus(two)
+
   return result.toFixed(DECIMAL_PLACES)
 }
 

@@ -11,7 +11,7 @@
       />
       <div class="dashboard__chart" v-if="currentAsset">
         <chart v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
-               :base-asset="currentAsset" 
+               :base-asset="currentAsset"
                :quote-asset="config.DEFAULT_QUOTE_ASSET"/>
       </div>
       <info-widget v-if="currentAsset" class="dashboard__activity" :currentAsset="currentAsset"/>
@@ -85,15 +85,13 @@
   $custom-breakpoint: 800px;
 
   .dashboard {
-    padding: 0 0;
+    flex: 1;
+    overflow: hidden;
   }
 
   .dashboard__chart {
     margin-bottom: 24px;
-  }
-
-  .dashboard__portfolio {
-    margin-bottom: -40px;
+    margin-top: -40px;
   }
 
   .dashboard__activity {
