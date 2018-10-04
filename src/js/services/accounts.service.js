@@ -147,6 +147,7 @@ export class AccountsService extends Service {
       .get()
       // eslint-disable-next-line promise/prefer-await-to-then
       .then(r => r.data('account_id'))
+      .catch(e => '')
   }
 
   /**

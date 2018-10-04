@@ -15,6 +15,7 @@ import { EventDispatcher } from '../../events/event_dispatcher'
 import { factorsService } from '../../services/factors.service'
 import { WalletHelper } from '../../helpers/wallet.helper'
 import set from 'lodash/set'
+import get from 'lodash/get'
 
 export class RequestBuilder {
   constructor (serverUrl) {
@@ -103,7 +104,7 @@ export class RequestBuilder {
 
   post () {
     this.method = 'post'
-    const password = this.params.data.password
+    const password = get(this.params, 'data.password', '')
     return this.httpClient.post(this._composeURL(), this.params, this.config)
       // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
@@ -120,7 +121,7 @@ export class RequestBuilder {
 
   patch () {
     this.method = 'patch'
-    const password = this.params.data.password
+    const password = get(this.params, 'data.password', '')
     return this.httpClient.patch(this._composeURL(), this.params, this.config)
       // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))
@@ -129,7 +130,7 @@ export class RequestBuilder {
 
   delete () {
     this.method = 'delete'
-    const password = this.params.data.password
+    const password = get(this.params, 'data.password', '')
     return this.httpClient.delete(this._composeURL(), this.config)
       // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => this._parseResponse(response))

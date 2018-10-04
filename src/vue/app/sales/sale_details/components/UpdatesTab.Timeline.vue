@@ -31,7 +31,7 @@ export default {
     TimelineItem
   },
   props: {
-    sale: { type: Object, default: () => {} },
+    sale: { type: Object, default: () => { } },
     items: { type: Array, default: () => [] }
   },
   data: _ => ({
@@ -47,28 +47,27 @@ export default {
       this.$emit(commonEvents.timelineAddClick)
     },
     linkify (text) {
-      /*eslint-disable*/
-        const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-        /* eslint-enable */
+      /* eslint-disable */
+      const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
       return text.replace(urlRegex, (url) => '<a href="' + url + '" target="_blank">' + url + '</a>')
+      /* eslint-enable */
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../scss/mixins";
-  @import "../../../../../scss/variables";
+@import "~@scss/mixins";
+@import "~@scss/variables";
 
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
 
-  .timeline__timeline-item {
-    margin-bottom: 1rem;
-  }
-
+.timeline__timeline-item {
+  margin-bottom: 1rem;
+}
 </style>

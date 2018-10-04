@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'mixins';
 @import '../../static/fonts/index.css';
-@import '../../node_modules/mdi/css/materialdesignicons.min.css';
+@import '../../node_modules/@mdi/font/css/materialdesignicons.min.css';
 @import '../../node_modules/vue-material/dist/theme/engine';
 @import '../../node_modules/flatpickr/dist/flatpickr.css';
 @import 'forms';
@@ -49,7 +49,9 @@ html,body {
 }
 
 #app {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 
   &,
   & main,
@@ -82,6 +84,7 @@ html,body {
     flex: 1;
     width: 100%;
     max-width: 46 * $point;
+    margin: 0 auto;
   }
 
   p.app__page-explanations {

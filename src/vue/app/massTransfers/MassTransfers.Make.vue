@@ -463,10 +463,6 @@ export default {
     margin-bottom: 1rem;
   }
 
-  .mass-transfer__confirm-btn {
-    margin-left: -23px;
-  }
-
   .mass-transfer__total {
     margin-bottom: 1rem;
   }

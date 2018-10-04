@@ -10,15 +10,19 @@
         @asset-change="setCurrentAsset"
         :scale="scale"
       />
-      <div class="dashboard__chart" v-if="currentAsset">
-        <chart
-          :base-asset="currentAsset"
-          :quote-asset="config.DEFAULT_QUOTE_ASSET" />
-      </div>
-      <info-widget
-        v-if="currentAsset"
-        class="dashboard__activity"
-        :current-asset="currentAsset" />
+      <template v-if="currentAsset">
+        <div class="dashboard__chart">
+          <chart
+            v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
+            :base-asset="currentAsset"
+            :quote-asset="config.DEFAULT_QUOTE_ASSET"
+          />
+        </div>
+        <info-widget
+          class="dashboard__activity"
+          :current-asset="currentAsset"
+        />
+      </template>
     </template>
   </div>
 </template>
@@ -75,7 +79,7 @@ export default {
       } else {
         const keys = Object.keys(this.accountBalances)
         this.currentAsset =
-            keys.filter(a => a === 'ETH')[0] || keys[0] || null
+          keys.filter(a => a === 'ETH')[0] || keys[0] || null
       }
     }
   }
@@ -83,24 +87,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+@import "~@scss/variables";
+@import "~@scss/mixins";
 
-  $custom-breakpoint: 800px;
+$custom-breakpoint: 800px;
 
-  .dashboard {
-    padding: 0 0;
-  }
+.dashboard {
+  flex: 1;
+  overflow: hidden;
+}
 
-  .dashboard__chart {
-    margin-bottom: 24px;
-  }
+.dashboard__chart {
+  margin-bottom: 24px;
+  margin-top: -40px;
+}
 
-  .dashboard__portfolio {
-    margin-bottom: -40px;
-  }
-
-  .dashboard__activity {
-    width: 100%;
-  }
+.dashboard__activity {
+  width: 100%;
+}
 </style>

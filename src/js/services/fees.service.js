@@ -47,6 +47,13 @@ export class FeeService extends Service {
       // eslint-disable-next-line promise/prefer-await-to-then
       .then(result => ({ fixed: result.fixed, percent: result.percent }))
   }
+
+  loadAccountFees () {
+    return this._horizonRequestBuilder.accounts()
+      .fees(this._accountId)
+      .call()
+      .then(result => (result.fees))
+  }
 }
 
 export const feeService = new FeeService()

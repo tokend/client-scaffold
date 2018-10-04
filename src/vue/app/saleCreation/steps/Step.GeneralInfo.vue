@@ -44,7 +44,7 @@
           id="sale-close-time"
           :key="`sale-creation-general-info-${form.startTime}`"
           :label="i18n.sale_close_time()"
-          :disable-before="form.startTime"
+          :disable-before="form.startTime || yesterday"
           v-validate="'required'"
           :error-message="errorMessage('sale-close-time')" />
       </div>

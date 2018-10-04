@@ -3,11 +3,15 @@
     class="select-field"
     :class="{
       'select-field--readonly': readonly,
+      'select-field--disabled': disabled,
       'select-field--focused': showList,
       'select-field--label-minimized': selected
     }"
   >
-    <div v-if="label" class="select-field__label">
+    <div
+      v-if="label"
+      class="select-field__label"
+    >
       {{ label }}
     </div>
     <div
@@ -15,15 +19,16 @@
       :class="{
         'select-field__selected--focused': showList
       }"
-      @click="toggleListVisibility()">
-      <button
-        class="select-field__selected-value">
+      @click="toggleListVisibility()"
+    >
+      <button class="select-field__selected-value">
         {{ currentValue || '&nbsp;' }}
       </button>
       <div>
         <md-icon
           class="select-field__selected-icon"
-          :class="{ 'select-field__selected-icon--active': showList }">
+          :class="{ 'select-field__selected-icon--active': showList }"
+        >
           keyboard_arrow_down
         </md-icon>
       </div>
@@ -31,13 +36,15 @@
     <div
       class="select-field__list"
       ref="list"
-      :class="{ 'select-field__list--active': showList }">
+      :class="{ 'select-field__list--active': showList }"
+    >
       <template v-for="(item, i) in values">
         <button
           class="select-field__list-item"
           :key="i"
           :class="{ 'select-field__list-item--selected': selected === item }"
-          @click="selectItem(item)">
+          @click="selectItem(item)"
+        >
           {{ item }}
         </button>
       </template>
@@ -60,33 +67,23 @@ export default {
     },
     values: { type: Array, default: _ => [] },
     label: { type: String, default: '' },
+    disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false }
   },
-  data: _ => ({
-    currentValue: '', // selected item in the list
-    selected: '', // active element but not selected (for support arrow navigation)
-    showList: false,
-    KEY_CODES
-  }),
-  watch: {
-    showList (value) {
-      closeElement('select__list', value, this.closelist)
-    }
-  },
-  created () {
-    this.selected = this.value
-    this.currentValue = this.value
+  closelist () {
+    this.selected = this.currentValue // set active element as selected
+    this.showList = false
   },
   methods: {
     selectItem (item) {
-      if (this.readonly) return null
+      if (this.readonly || this.disabled) return null
       this.selected = item
       this.currentValue = item
       this.$emit(commonEvents.inputEvent, item)
       this.toggleListVisibility()
     },
     toggleListVisibility () {
-      if (this.readonly) return null
+      if (this.readonly || this.disabled) return null
       this.showList ? this.closelist() : this.openList()
       onKeyDown(this.showList, this.keyDownEvents)
     },
@@ -122,9 +119,8 @@ export default {
         index = this.selectNextItem(index, valuesList)
       }
 
-      childrenList.scrollTop =
-        childrenList.childNodes[index].offsetTop -
-        (childrenList.offsetHeight / 2) + 18
+      childrenList.scrollTop = childrenList.childNodes[index].offsetTop
+        - (childrenList.offsetHeight / 2) + 18
     },
     selectNextItem (index, valuesList) {
       index === valuesList.length - 1 ? index = 0 : index += 1
@@ -162,7 +158,7 @@ export default {
   @include material-border(
     $field-color-focused,
     $field-color-unfocused,
-    '&.select-field__selected--focused'
+    "&.select-field__selected--focused"
   );
   @include text-font-sizes;
 }
@@ -191,6 +187,11 @@ export default {
 }
 
 .select-field--readonly > .select-field__selected {
+  cursor: default;
+  @include readonly-material-border($field-color-focused);
+}
+
+.select-field--disabled > .select-field__selected {
   cursor: default;
   @include readonly-material-border($field-color-focused);
 }
@@ -246,7 +247,7 @@ export default {
 .select-field__list-item {
   padding: 8px 16px;
   font-size: 16px;
-  transition: background-color .15s ease-out;
+  transition: background-color 0.15s ease-out;
   cursor: pointer;
   border: none;
   display: block;

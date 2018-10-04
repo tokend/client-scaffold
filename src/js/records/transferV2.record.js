@@ -53,25 +53,11 @@ export class TransferV2Record extends TxRecord {
   _getFees () {
     return {
       source: add(
-        _safeGet(
-          this.transactionDetails,
-          'source_fee_data.actual_payment_fee'
-        ),
-        _safeGet(
-          this.transactionDetails,
-          'source_fee_data.fixed_fee'
-        )
-      ),
+        _safeGet(this._record, 'source_fee_data.actual_payment_fee'),
+        _safeGet(this._record, 'source_fee_data.fixed_fee')),
       destination: add(
-        _safeGet(
-          this.transactionDetails,
-          'destination_fee_data.actual_payment_fee'
-        ),
-        _safeGet(
-          this.transactionDetails,
-          'destination_fee_data.fixed_fee'
-        )
-      )
+        _safeGet(this._record, 'destination_fee_data.actual_payment_fee'),
+        _safeGet(this._record, 'destination_fee_data.fixed_fee'))
     }
   }
 }

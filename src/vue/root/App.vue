@@ -2,47 +2,34 @@
   <div id="app">
     <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
       <warning-banner
-        v-if="isNotSupportedBworser"
-        :message="i18n.cm_edge_warning()" />
-      <div :class="{ 'app__warning': isNotSupportedBworser }">
-        <md-app md-waterfall md-mode="fixed">
-          <md-app-toolbar
-            class="md-primary app__sidebar"
-            v-if="isLoggedIn">
-            <div class="md-toolbar-row">
-              <md-button class="md-icon-button app__sidebar-icon"
-                         @click="menuVisible = !menuVisible">
-                <md-icon>menu</md-icon>
-              </md-button>
-              <navbar />
-            </div>
-          </md-app-toolbar>
+        v-if="isNotSupportedBrowser"
+        :message="i18n.cm_edge_warning()"
+      />
+      <div class="app__container">
+        <sidebar />
 
-          <md-app-drawer
-            md-permanent="full"
-            :md-active.sync="menuVisible"
-            v-if="isLoggedIn">
-            <sidebar @hide-sidebar="hideSidebar" />
-          </md-app-drawer>
+        <div class="app__main-content">
+          <div class="app__navbar">
+            <navbar />
+          </div>
 
-          <md-app-content>
+          <div class="app__main">
             <router-view />
             <snackbar />
             <file-viewer />
             <loader-bar />
-          </md-app-content>
-        </md-app>
+          </div>
+        </div>
       </div>
     </template>
     <template v-else-if="!isLoggedIn && $route.meta.routeWithAuth">
       <warning-banner
-        v-if="isNotSupportedBworser"
-        :message="i18n.cm_edge_warning()" />
-      <div :class="{ 'app__warning': isNotSupportedBworser }">
-        <router-view />
-        <loader-bar />
-        <snackbar />
-      </div>
+        v-if="isNotSupportedBrowser"
+        :message="i18n.cm_edge_warning()"
+      />
+      <router-view />
+      <loader-bar />
+      <snackbar />
     </template>
     <template v-else>
       <router-view />
@@ -82,8 +69,7 @@ export default {
   },
 
   data: () => ({
-    menuVisible: false,
-    isNotSupportedBworser: false,
+    isNotSupportedBrowser: false,
     i18n
   }),
 
@@ -122,7 +108,7 @@ export default {
     detectIE () {
       const edge = window.navigator.userAgent.indexOf('Edge/')
 
-      if (edge > 0) this.isNotSupportedBworser = true
+      if (edge > 0) this.isNotSupportedBrowser = true
     },
     performLoggedInActions () {
       dispatchAppEvent(commonEvents.enterAppEvent)
@@ -145,53 +131,52 @@ export default {
             break
         }
       })
-    },
-    hideSidebar (status) {
-      this.menuVisible = status
     }
   }
 }
 </script>
 
 <style lang="scss">
-  @import '~@scss/mixins';
-  @import '~@scss/variables';
+@import "~@scss/mixins";
+@import "~@scss/variables";
 
-  .md-app-content {
-    padding-top: 40px;
+.app__container {
+  display: flex;
+  align-items: stretch;
+  overflow-x: hidden;
+}
+
+.app__main-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.app__navbar {
+  position: relative;
+  z-index: 100;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: opacity, background-color, box-shadow, transform, color,
+    min-height, -webkit-transform;
+  will-change: opacity, background-color, box-shadow, transform, color,
+    min-height;
+}
+
+.app__main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 4 * $point $content-side-paddings;
+  background-color: $col-app-content-background;
+
+  @include respond-to-custom($sidebar-hide-bp) {
+    width: 100vw;
+    padding: 0 $content-side-paddings-sm;
   }
-
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-  }
-
-  .app__warning {
-    max-height: calc(100vh - #{$warning-banner-height}) !important;
-    overflow-y: auto;
-  }
-
-  .app__sidebar-icon {
-    display: none;
-
-    @include respond-to(small) {
-      display: initial;
-    }
-  }
-
-  .app__sidebar {
-    z-index: 10;
-
-    @include respond-to(small) {
-      background-color: $col-sidebar-background-media-small !important;
-    }
-  }
-
-  .app__sidebar-icon {
-    @include respond-to(small) {
-      background-color: $col-sidebar-icon;
-      margin-right: 0;
-      margin-left: 8px !important;
-    }
-  }
+}
 </style>

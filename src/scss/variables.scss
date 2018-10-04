@@ -1,7 +1,13 @@
 /* eslint-disable */
 
-$warning-banner-height: 80px;
+// use as multiplier for more convenient way to calculating sizes
+$point: 0.625rem; /* 10px in case of 1rem=16px */
+
 $size-icon-super-big: 128px;
+$content-side-paddings: 4 * $point;
+$content-side-paddings-sm: 2 * $point;
+$sidebar-width: 23 * $point;
+$sidebar-hide-bp: 768px;
 
 /* colors: */
 /* CAUTION: do not use these colors externally */
@@ -64,6 +70,10 @@ $col-heading: $col-text;
 $col-text-page-explanations: $col-text;
 $col-text-page-explanations-inactive: $col-text-inactive;
 $col-text-page-heading: $col-heading;
+
+// instead-of-avatar colors:
+$col-avatar-instead-text: $col-text-on-dark-bg;
+$col-avatar-instead-bg: rgba($_eastBay, .15);
 
 // details colors:
 $col-details-label: $col-primary-inactive;
@@ -170,6 +180,3 @@ $col-loader-icon: $col-primary-inactive;
 // snackbar colors:
 $col-snackbar-text: $col-primary-txt;
 $col-snackbar-text-hover: rgba($col-primary, .2);
-
-// use as multiplier for more convenient way to calculating sizes
-$point: 0.625rem; /* 10px in case of 1rem=16px */

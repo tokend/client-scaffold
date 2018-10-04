@@ -4,7 +4,8 @@
     <form
       novalidate
       class="change-password"
-      @submit.prevent="submit">
+      @submit.prevent="submit"
+    >
       <div class="app__dialog-inner">
         <input-field
           v-model="form.currentPassword"
@@ -45,7 +46,8 @@
           v-ripple
           type="submit"
           class="app__button-flat"
-          :disabled="isPending">
+          :disabled="isPending"
+        >
           {{ i18n.lbl_submit() }}
         </button>
       </md-dialog-actions>
@@ -82,7 +84,7 @@ export default {
     ]),
     pwdUnconfirmedMessage () {
       return (this.form.password && this.form.confirmPassword &&
-                this.form.confirmPassword !== this.form.password)
+        this.form.confirmPassword !== this.form.password)
         ? i18n.set_pwd_do_not_match() : ''
     }
   },
@@ -135,8 +137,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import './settings.scss';
-  .md-dialog {
-    width: 36rem;
-  }
+@import "./settings.scss";
+.md-dialog {
+  width: 36rem;
+}
 </style>
