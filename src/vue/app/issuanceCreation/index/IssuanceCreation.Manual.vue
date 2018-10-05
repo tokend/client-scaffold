@@ -49,9 +49,11 @@
               v-model="request.amount"
               type="number"
               :max="selectedTokenAvailableToIssuance"
-              v-validate="`
-                required|amount|max:${selectedTokenAvailableToIssuance}
-              `"
+              v-validate="{
+                required: true,
+                amount: true,
+                max_value: selectedTokenAvailableToIssuance
+              }"
               :label="i18n.lbl_amount()"
               :error-message="errorMessage('amount')"
             />

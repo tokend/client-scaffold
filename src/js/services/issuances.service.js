@@ -31,6 +31,7 @@ export class IssuanceService extends Service {
    * @param {string} opts.receiver - balance ID of the receiver
    * @param {string} opts.reference - Reference of the request
    * @param {object} opts.externalDetails - External details about issuance
+   * @param {object|number} [opts.allTasks] - Issuance tasks
    * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
    *
    * @return {TransactionResponseBuilder}
@@ -47,7 +48,8 @@ export class IssuanceService extends Service {
     function _opts () {
       return {
         ...opts,
-        asset: opts.token
+        asset: opts.token,
+        allTasks: opts.allTasks || 0
       }
     }
   }
