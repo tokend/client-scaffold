@@ -81,7 +81,7 @@
             v-validate="'max:250'"
             :label="i18n.lbl_add_note({ length: 250 })"
             :maxlength="250"
-            :error-message="errorMessage('recipient')"
+            :error-message="errorMessage('subject')"
             :readonly="view.mode === VIEW_MODES.confirm"
           />
         </div>
@@ -95,11 +95,8 @@
             {{ i18n.transfer_source_fees() }}
           </h3>
 
-          <template v-if="
-            +fees.source.fixed ||
-              +fees.source.percent ||
-              form.isPaidForRecipient
-          ">
+          <!-- eslint-disable-next-line -->
+          <template v-if=" +fees.source.fixed || +fees.source.percent || form.isPaidForRecipient ">
             <p
               class="transfer__fee"
               v-if="fees.source.fixed">
@@ -147,10 +144,8 @@
             {{ i18n.transfer_destination_fees() }}
           </h3>
 
-          <template v-if="
-            (+fees.destination.fixed || +fees.destination.percent) &&
-              !form.isPaidForRecipient
-          ">
+          <!-- eslint-disable-next-line -->
+          <template v-if="(+fees.destination.fixed || +fees.destination.percent) && !form.isPaidForRecipient">
             <p
               class="transfer__fee"
               v-if="fees.destination.fixed">
