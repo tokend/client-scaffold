@@ -10,41 +10,40 @@
             class="portfolio-widget__asset"
             :src="imgUrl">
         </div>
-          <div class="portfolio-widget__select-field">
-            <!--
+        <div class="portfolio-widget__select-field">
+          <!--
               :key is a hack to ensure that the component will be updated
               after computed calculated
             -->
-            <select-field-custom
-              :value="currentAssetForSelect"
-              :values="tokensList"
-              :key="currentAssetForSelect"
-              @input="$emit(events.assetChange, $event)"
-            />
+          <select-field-custom
+            :value="currentAssetForSelect"
+            :values="tokensList"
+            :key="currentAssetForSelect"
+            @input="$emit(events.assetChange, $event)"
+          />
+        </div>
+      </div>
+    </div>
+    <template v-if="currentAsset">
+      <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
+        <div class="portfolio-widget__asset-available">
+          <div class="portfolio-widget__asset-value">
+            {{ balance }} {{ currentAsset }}
+          </div>
+          <div class="portfolio-widget__asset-usd">
+            {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
           </div>
         </div>
       </div>
-      <template v-if="currentAsset">
-        <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
-          <div class="portfolio-widget__asset-available">
-            <div class="portfolio-widget__asset-value">
-              {{ balance }} {{ currentAsset }}
-            </div>
-            <div class="portfolio-widget__asset-usd">
-              {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
-            </div>
-          </div>
-        </div>
-      </template>
-      <template v-if="!currentAsset">
-        <no-data-message
-          icon-name="toll"
-          :msg-title="i18n.th_no_assets_in_your_wallet()"
-          :msg-message="i18n.th_here_will_be_tokens()"
-        />
-      </template>
-
-    </div>
+    </template>
+    <template v-if="!currentAsset">
+      <no-data-message
+        icon-name="toll"
+        :msg-title="i18n.th_no_assets_in_your_wallet()"
+        :msg-message="i18n.th_here_will_be_tokens()"
+      />
+    </template>
+  </div>
 </template>
 
 <script>

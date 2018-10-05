@@ -1,8 +1,7 @@
 <template>
   <div class="sales-owned">
     <template v-if="salesOwned.length">
-      <div
-        class="md-layout
+      <div class="md-layout
                   md-gutter
                   md-layout-item
                   md-size-90
@@ -17,7 +16,8 @@
           <md-card>
             <sale-card
               class="sales-owned__card"
-              :sale="sale" />
+              :sale="sale"
+            />
           </md-card>
         </router-link>
       </div>
@@ -25,8 +25,7 @@
 
     <template v-else>
       <div class="md-layout md-alignment-center-center">
-        <div
-          class="md-layout-item
+        <div class="md-layout-item
                     md-size-50
                     md-medium-size-65
                     md-small-size-95
@@ -34,7 +33,8 @@
           <not-available-card
             icon="trending_up"
             :title="i18n.sale_nothing_found()"
-            :descr="i18n.sale_no_created_sales()" />
+            :descr="i18n.sale_no_created_sales()"
+          />
         </div>
       </div>
     </template>
@@ -75,14 +75,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.sales-owned__sale-overview-inner {
+  margin: 0 auto;
 
-  .sales-owned__sale-overview-inner {
-    margin: 0 auto;
-
-    @media (max-width: 767px) {
-      justify-content: center;
-    }
+  @media (max-width: 767px) {
+    justify-content: center;
   }
+}
 
-  .sales-owned__card { cursor: pointer }
+.sales-owned__card {
+  cursor: pointer;
+}
 </style>

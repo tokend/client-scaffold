@@ -65,10 +65,6 @@ export default {
     }
   },
 
-  created () {
-    this.flatpickrDate = this.value
-  },
-
   computed: {
     config () {
       return {
@@ -94,6 +90,16 @@ export default {
     }
   },
 
+  watch: {
+    flatpickrDate () {
+      this.flatpickrDate = this.value
+    }
+  },
+
+  created () {
+    this.flatpickrDate = this.value
+  },
+
   methods: {
     dateFieldUpdated (event) {
       if (event) {
@@ -110,12 +116,6 @@ export default {
     onBlur (event) {
       this.flatpickrDate = event
       this.$emit('getNewValue', this.flatpickrDate)
-    }
-  },
-
-  watch: {
-    flatpickrDate () {
-      this.flatpickrDate = this.value
     }
   }
 }

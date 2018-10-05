@@ -68,6 +68,11 @@ export default {
       return { base: this.baseAsset, quote: this.quoteAsset }
     }
   },
+  watch: {
+    async lockedAssets (value) {
+      await this.loadPrices()
+    }
+  },
   async created () {
     await this.loadPrices()
     this.scale = this.initialScale
@@ -77,7 +82,6 @@ export default {
       this.isLoading = true
       try {
         this.isActualData = true
-        console.log(this.baseAsset, this.quoteAsset)
         const response = this.quoteAsset
           ? await chartsService.loadChartsForTokenPair(
             this.lockedAssets.base,
@@ -101,11 +105,6 @@ export default {
     },
     generateRandomData () {
       return [{ value: '0', timestamp: new Date().toString() }]
-    }
-  },
-  watch: {
-    async lockedAssets (value) {
-      await this.loadPrices()
     }
   }
 }

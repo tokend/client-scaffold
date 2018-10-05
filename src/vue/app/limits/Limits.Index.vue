@@ -6,7 +6,9 @@
         :key="i"
       >
         <div class="limits__header">
-          <h2 class="app__page-heading">{{ assetName(asset) }} ({{ asset }})</h2>
+          <h2 class="app__page-heading">
+            {{ assetName(asset) }} ({{ asset }})
+          </h2>
         </div>
         <md-table class="limits__table">
           <md-table-row class="limits__row">
@@ -26,42 +28,75 @@
               {{ i18n.lim_annual() }} {{ i18n.lim_left_total() }}
             </md-table-head>
           </md-table-row>
-          <template v-for="([operation, name],i) in Object.entries(limitOperations)">
-            <md-table-row
-              class="limits__table-row"
-              :key="i"
-            >
-              <md-table-cell class="limits__table-cell limits__operation-type">
-                {{ operation }}
-              </md-table-cell>
-              <md-table-cell class="limits__table-cell">
-                {{ limits(asset)[operation].dailySpent ? i18n.c(limits(asset)[operation].dailySpent) : '—' }}
-                /
-                {{ limits(asset)[operation].dailyLimit ? i18n.c(limits(asset)[operation].dailyLimit) : '—' }}
-              </md-table-cell>
-              <md-table-cell class="limits__table-cell">
-                {{ limits(asset)[operation].weeklySpent ? i18n.c(limits(asset)[operation].weeklySpent) : '—' }}
-                /
-                {{ limits(asset)[operation].weeklyLimit ? i18n.c(limits(asset)[operation].weeklyLimit) : '—' }}
-              </md-table-cell>
-              <md-table-cell class="limits__table-cell">
-                {{ limits(asset)[operation].monthlySpent ? i18n.c(limits(asset)[operation].monthlySpent) : '—' }}
-                /
-                {{ limits(asset)[operation].monthlyLimit ? i18n.c(limits(asset)[operation].monthlyLimit) : '—' }}
-              </md-table-cell>
-              <md-table-cell class="limits__table-cell">
-                {{ limits(asset)[operation].annualSpent ? i18n.c(limits(asset)[operation].annualSpent) : '—' }}
-                /
-                {{ limits(asset)[operation].annualLimit ? i18n.c(limits(asset)[operation].annualLimit) : '—' }}
-              </md-table-cell>
-            </md-table-row>
-          </template>
+          <md-table-row
+            class="limits__table-row"
+            v-for="([operation, name], j) in Object.entries(limitOperations)"
+            :key="j"
+          >
+            <md-table-cell class="limits__table-cell limits__operation-type">
+              {{ operation }}
+            </md-table-cell>
+            <md-table-cell class="limits__table-cell">
+              {{
+                limits(asset)[operation].dailySpent
+                  ? i18n.c(limits(asset)[operation].dailySpent)
+                  : '—'
+              }}
+              /
+              {{
+                limits(asset)[operation].dailyLimit
+                  ? i18n.c(limits(asset)[operation].dailyLimit)
+                  : '—'
+              }}
+            </md-table-cell>
+            <md-table-cell class="limits__table-cell">
+              {{
+                limits(asset)[operation].weeklySpent
+                  ? i18n.c(limits(asset)[operation].weeklySpent)
+                  : '—'
+              }}
+              /
+              {{
+                limits(asset)[operation].weeklyLimit
+                  ? i18n.c(limits(asset)[operation].weeklyLimit)
+                  : '—'
+              }}
+            </md-table-cell>
+            <md-table-cell class="limits__table-cell">
+              {{
+                limits(asset)[operation].monthlySpent
+                  ? i18n.c(limits(asset)[operation].monthlySpent)
+                  : '—'
+              }}
+              /
+              {{
+                limits(asset)[operation].monthlyLimit
+                  ? i18n.c(limits(asset)[operation].monthlyLimit)
+                  : '—'
+              }}
+            </md-table-cell>
+            <md-table-cell class="limits__table-cell">
+              {{
+                limits(asset)[operation].annualSpent
+                  ? i18n.c(limits(asset)[operation].annualSpent)
+                  : '—'
+              }}
+              /
+              {{
+                limits(asset)[operation].annualLimit
+                  ? i18n.c(limits(asset)[operation].annualLimit)
+                  : '—'
+              }}
+            </md-table-cell>
+          </md-table-row>
         </md-table>
         <div class="limits__table-action-btn-outer">
           <md-button
             class="limits__table-action-btn md-primary"
             @click="showForm(asset)"
-          >{{i18n.lim_change_limits()}}</md-button>
+          >
+            {{ i18n.lim_change_limits() }}
+          </md-button>
         </div>
       </md-card>
     </template>
@@ -74,7 +109,7 @@
     <modal
       v-if="showDialog"
       @close-request="showDialog = false"
-      maxWidth="30rem"
+      max-width="30rem"
     >
       <limits-manager
         :limits="selectedLimits"
@@ -107,13 +142,13 @@ import {
 } from '../../../js/const/const'
 
 export default {
-  name: 'LimitsIndex',
-  mixins: [FormMixin],
+  name: 'limits-index',
   components: {
     LimitsManager,
     LimitsList,
     Modal
   },
+  mixins: [FormMixin],
   data: _ => ({
     showDialog: false,
     limitOp: '',
@@ -124,10 +159,6 @@ export default {
     ACCOUNT_TYPES,
     STATS_OPERATION_TYPES
   }),
-  created () {
-    this.loadLimits()
-    this.loadRequests()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
@@ -138,8 +169,14 @@ export default {
     ]),
     limitOperations () {
       const limitsOperations = cloneDeep(LIMIT_OPS_STR)
-      return (this.accountTypeI !== this.ACCOUNT_TYPES.notVerified) ? limitsOperations : omit(limitsOperations, 'withdrawal')
+      return (this.accountTypeI !== this.ACCOUNT_TYPES.notVerified)
+        ? limitsOperations
+        : omit(limitsOperations, 'withdrawal')
     }
+  },
+  created () {
+    this.loadLimits()
+    this.loadRequests()
   },
   methods: {
     ...mapActions({
@@ -159,25 +196,34 @@ export default {
         .filter(limit => limit.tokenCode === tokenCode)
         .reduce((limits, limit) => {
           if (limit.statsOpType === STATS_OPERATION_TYPES.paymentOut) {
-            return {              ...limits,
+            return {
+              ...limits,
               payment: limit
             }
           }
           if (limit.statsOpType === STATS_OPERATION_TYPES.withdraw) {
-            return {              ...limits,
+            return {
+              ...limits,
               withdrawal: limit
             }
           }
           if (limit.statsOpType === STATS_OPERATION_TYPES.deposit) {
-            return {              ...limits,
+            return {
+              ...limits,
               deposit: limit
             }
           }
           return limits
         }, {})
-      if (!limits.payment) limits.payment = RecordFactory.createLimitRecord()
-      if (!limits.withdrawal) limits.withdrawal = RecordFactory.createLimitRecord()
-      if (!limits.deposit) limits.deposit = RecordFactory.createLimitRecord()
+      if (!limits.payment) {
+        limits.payment = RecordFactory.createLimitRecord()
+      }
+      if (!limits.withdrawal) {
+        limits.withdrawal = RecordFactory.createLimitRecord()
+      }
+      if (!limits.deposit) {
+        limits.deposit = RecordFactory.createLimitRecord()
+      }
       return limits
     }
   }

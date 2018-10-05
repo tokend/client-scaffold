@@ -8,17 +8,12 @@
       'select-field--label-minimized': selected
     }"
   >
-    <div
-      v-if="label"
-      class="select-field__label"
-    >
-      {{ label }}
-    </div>
+    <template v-if="label">
+      <div class="select-field__label">{{ label }}</div>
+    </template>
     <div
       class="select-field__selected"
-      :class="{
-        'select-field__selected--focused': showList
-      }"
+      :class="{'select-field__selected--focused': showList}"
       @click="toggleListVisibility()"
     >
       <button class="select-field__selected-value">
@@ -38,14 +33,14 @@
       ref="list"
       :class="{ 'select-field__list--active': showList }"
     >
-      <template v-for="(item, i) in values">
+      <template v-for="(val, i) in values">
         <button
           class="select-field__list-item"
           :key="i"
-          :class="{ 'select-field__list-item--selected': selected === item }"
-          @click="selectItem(item)"
+          :class="{ 'select-field__list-item--selected': selected === val }"
+          @click="selectItem(val)"
         >
-          {{ item }}
+          {{ val }}
         </button>
       </template>
     </div>
@@ -70,9 +65,20 @@ export default {
     disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false }
   },
-  closelist () {
-    this.selected = this.currentValue // set active element as selected
-    this.showList = false
+  data: _ => ({
+    currentValue: '', // selected item in the list
+    selected: '', // active element but not selected (for arrow navigation)
+    showList: false,
+    KEY_CODES
+  }),
+  watch: {
+    showList (value) {
+      closeElement('select__list', value, this.closelist)
+    }
+  },
+  created () {
+    this.selected = this.value
+    this.currentValue = this.value
   },
   methods: {
     selectItem (item) {
@@ -90,8 +96,8 @@ export default {
     openList () {
       const list = this.$refs.list
       const index = this.values.indexOf(this.currentValue)
-      list.scrollTop =
-        list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
+      // eslint-disable-next-line
+      list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
       this.showList = true
     },
     closelist () {
@@ -119,8 +125,8 @@ export default {
         index = this.selectNextItem(index, valuesList)
       }
 
-      childrenList.scrollTop = childrenList.childNodes[index].offsetTop
-        - (childrenList.offsetHeight / 2) + 18
+      // eslint-disable-next-line
+      childrenList.scrollTop = childrenList.childNodes[index].offsetTop - (childrenList.offsetHeight / 2) + 18
     },
     selectNextItem (index, valuesList) {
       index === valuesList.length - 1 ? index = 0 : index += 1

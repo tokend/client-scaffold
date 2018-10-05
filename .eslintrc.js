@@ -1,7 +1,9 @@
 // https://eslint.org/docs/user-guide/configuring
 
 function isDevelopmentBuild () {
-  return [ 'production', 'staging', 'dev-build' ].indexOf(process.env.NODE_ENV) > -1
+  return [
+    'production', 'staging', 'dev-build'
+  ].indexOf(process.env.NODE_ENV) > -1
 }
 
 module.exports = {
@@ -33,8 +35,8 @@ module.exports = {
       'terms': ['hardcoded'], location: 'anywhere'
     }],
     'no-console': isDevelopmentBuild()
-                    ? [2, { allow: ['warn', 'error'] }]
-                    : [1, { allow: ['warn', 'error'] }],
+      ? [2, { allow: ['warn', 'error'] }]
+      : [1, { allow: ['warn', 'error'] }],
     'max-len': [1, {
       'code': 80,
       'ignoreUrls': true,

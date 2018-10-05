@@ -52,6 +52,7 @@ export class FeeService extends Service {
     return this._horizonRequestBuilder.accounts()
       .fees(this._accountId)
       .call()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(result => (result.fees))
   }
 }

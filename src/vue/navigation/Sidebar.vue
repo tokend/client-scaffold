@@ -4,8 +4,7 @@
       class="sidebar__backdrop"
       :class="{ 'sidebar__backdrop--active': isSidebarOpened }"
       @click="closeSidebar"
-    >
-    </div>
+    />
 
     <button
       @click="openSidebar"
@@ -129,6 +128,7 @@
       </section>
 
       <section class="sidebar__section sidebar__section--account sidebar__list">
+        <!-- eslint-disable-next-line -->
         <div class="sidebar__list-title">{{ i18n.sidebar_section_explore() }}</div>
         <ul>
           <router-link
@@ -165,6 +165,7 @@
         class="sidebar__section sidebar__section--account sidebar__list"
         v-if="accountTypeI === ACCOUNT_TYPES.syndicate"
       >
+        <!-- eslint-disable-next-line -->
         <div class="sidebar__list-title">{{ i18n.sidebar_section_corporate() }}</div>
         <ul>
           <router-link
@@ -176,6 +177,7 @@
             v-if="config.FEATURE_FLAGS.tokenCreation"
           >
             <md-icon class="sidebar__list-item-icon">add_circle</md-icon>
+            <!-- eslint-disable-next-line -->
             <span class="md-list-item-text">{{ i18n.lbl_create_token_page() }}</span>
           </router-link>
 
@@ -188,6 +190,7 @@
             v-if="config.FEATURE_FLAGS.saleCreation"
           >
             <md-icon class="sidebar__list-item-icon">calendar_today</md-icon>
+            <!-- eslint-disable-next-line -->
             <span class="md-list-item-text">{{ i18n.lbl_create_sale_page() }}</span>
           </router-link>
 
@@ -208,6 +211,7 @@
             v-if="config.FEATURE_FLAGS.preIssuanceUpload"
           >
             <md-icon class="sidebar__list-item-icon">zoom_out_map</md-icon>
+            <!-- eslint-disable-next-line -->
             <span class="md-list-item-text">{{ i18n.lbl_upload_preissuance_page() }}</span>
           </router-link>
 
@@ -220,6 +224,7 @@
             v-if="config.FEATURE_FLAGS.issuanceCreation"
           >
             <md-icon class="sidebar__list-item-icon">bar_chart</md-icon>
+            <!-- eslint-disable-next-line -->
             <span class="md-list-item-text">{{ i18n.lbl_create_issuance_page() }}</span>
           </router-link>
 
@@ -238,6 +243,7 @@
       </section>
 
       <section class="sidebar__section sidebar__section--account sidebar__list">
+        <!-- eslint-disable-next-line -->
         <div class="sidebar__list-title">{{ i18n.sidebar_section_account() }}</div>
         <ul>
           <router-link
@@ -261,6 +267,7 @@
             v-if="config.FEATURE_FLAGS.settings"
           >
             <md-icon class="sidebar__list-item-icon">settings</md-icon>
+            <!-- eslint-disable-next-line -->
             <span class="md-list-item-text">{{ i18n.lbl_settings_page() }}</span>
           </router-link>
         </ul>

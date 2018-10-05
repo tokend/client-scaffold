@@ -24,20 +24,24 @@
             </md-table-cell>
             <md-table-cell class="limits-list__cell limits-list__cell--type">
               {{
-              LIMITS_REQUEST_TYPE_STR[get(request, 'details.requestType', '-')]
+                LIMITS_REQUEST_TYPE_STR[
+                  get(request, 'details.requestType', '-')
+                ]
               }}
             </md-table-cell>
             <md-table-cell class="limits-list__cell limits-list__cell--state">
               {{ getState(request.state) }}
             </md-table-cell>
             <md-table-cell class="limits-list__cell limits-list__cell--asset">
-              {{ get(request, 'tokenCode', '-')}}
+              {{ get(request, 'tokenCode', '-') }}
             </md-table-cell>
             <md-table-cell class="limits-list__cell limits-list__cell--button">
               <md-button
                 :disabled="request.state !== REQUEST_STATES_STR.rejected"
                 @click="viewRequest(request)"
-              >{{i18n.lim_upload_documents_btn()}}</md-button>
+              >
+                {{ i18n.lim_upload_documents_btn() }}
+              </md-button>
             </md-table-cell>
           </md-table-row>
         </template>
@@ -56,12 +60,14 @@
       <md-button
         class="limits__more-requests-btn md-primary"
         @click="loadNext()"
-      >{{i18n.lbl_more()}}</md-button>
+      >
+        {{ i18n.lbl_more() }}
+      </md-button>
     </div>
     <modal
       v-if="isUploadingDocs"
       @close-request="isUploadingDocs = false"
-      maxWidth="30rem"
+      max-width="30rem"
     >
       <documents-uploader
         :request="selectedRequest"
@@ -86,8 +92,8 @@ import { vuexTypes } from '../../../vuex/types'
 export default {
   components: {
     Modal,
-    DocumentsUploader  },
-  props: ['list'],
+    DocumentsUploader },
+  props: { list: { type: Array, default () { return [] } } },
   data: _ => ({
     i18n,
     isUploadingDocs: false,
