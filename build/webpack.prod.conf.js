@@ -76,7 +76,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     splitChunks: {
       chunks: 'async',
       minSize: 30000,
-      maxSize: 0,
+      maxSize: 600000,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
