@@ -5,7 +5,9 @@ import store from '../../vuex'
 export function parseTransaction (transaction, asset) {
   switch (transaction.type_i) {
     case 1:
-      return RecordFactory.createTransferRecord(transaction, store.getters.accountId)
+      return RecordFactory.createTransferRecord(
+        transaction, store.getters.accountId
+      )
     case 3:
       return RecordFactory.createIssuanceRecord(transaction)
     case 7:
@@ -15,7 +17,9 @@ export function parseTransaction (transaction, asset) {
     case 16:
       return RecordFactory.createMatchRecord(transaction, asset)
     case 23:
-      return RecordFactory.createTransferV2Record(transaction, store.getters.accountId)
+      return RecordFactory.createTransferV2Record(
+        transaction, store.getters.accountId
+      )
     default:
       ErrorFactory.throwError(errorTypes.UnknownTransactionError)
   }

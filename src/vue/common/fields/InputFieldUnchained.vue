@@ -1,11 +1,13 @@
 <template>
-  <div class="input-field"
+  <div
+    class="input-field"
     :class="{
       'input-field--error': errorMessage,
       'input-field--monospaced': monospaced,
       'input-field--readonly': readonly
-    }">
-    <input class="input-field__input"
+  }">
+    <input
+      class="input-field__input"
       :class="{ 'input-field__input--autofill-white': whiteAutofill }"
       :type="type"
       :placeholder="placeholder || ' '"
@@ -31,7 +33,9 @@
     </span>
 
     <transition name="input-field__err-transition">
-      <p class="input-field__err-mes" v-if="errorMessage">
+      <p
+        class="input-field__err-mes"
+        v-if="errorMessage">
         {{ errorMessage }}
       </p>
     </transition>
@@ -76,12 +80,20 @@ export default {
     }
   },
 
-  created () {
-    // created
-  },
-
   computed: {
     // computed
+  },
+  watch: {
+    max (value) {
+      if (+this.value && (+value < +this.value)) this.$emit('input', value)
+    },
+    min (value) {
+      if (+this.value && (+value > +this.value)) this.$emit('input', value)
+    }
+  },
+
+  created () {
+    // created
   },
 
   methods: {
@@ -130,9 +142,6 @@ export default {
       } catch (error) {
         precision = 0
       }
-
-      console.log(precision)
-
       if (!precision) {
         return null
       } else {
@@ -142,14 +151,6 @@ export default {
           target.value = value.replace(replaceRe, '$1')
         }
       }
-    }
-  },
-  watch: {
-    max (value) {
-      if (+this.value && (+value < +this.value)) this.$emit('input', value)
-    },
-    min (value) {
-      if (+this.value && (+value > +this.value)) this.$emit('input', value)
     }
   }
 }

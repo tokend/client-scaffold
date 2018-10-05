@@ -1,5 +1,5 @@
 // TODO: deal with not-working tests
-
+/* eslint-disable */
 import { mutations } from './transactions.module'
 import { mockAccountId } from '../test/default.mocks'
 import { testAction } from '../test/vuex-test.helper'
@@ -14,7 +14,7 @@ const loadTransactionHistory = () => Promise.resolve(transactionsResponse)
 
 const module = moduleInjector({
   '../../js/services/accounts.service': {
-  accountsService: {
+    accountsService: {
       loadMultipleAccountDetails
     }
   },
@@ -25,7 +25,11 @@ const module = moduleInjector({
   }
 })
 
-const {UPDATE_TX_LIST, UPDATE_TX_LIST_ITEM, SET_TX_LIST_INITIALIZED} = mutations
+const {
+  UPDATE_TX_LIST,
+  UPDATE_TX_LIST_ITEM,
+  SET_TX_LIST_INITIALIZED
+} = mutations
 
 describe('module.transactions', () => {
   it('UPDATE_TX_LIST', () => {

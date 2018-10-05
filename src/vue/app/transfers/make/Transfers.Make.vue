@@ -1,37 +1,52 @@
 <template>
   <div class="transfer app__page-content-wrp">
     <template v-if="!tokenCodes.length">
-      <h2 class="app__page-heading">{{ i18n.transfer_no_assets_heading() }}</h2>
+      <h2 class="app__page-heading">
+        {{ i18n.transfer_no_assets_heading() }}
+      </h2>
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.transfer_no_assets() }}
       </p>
-      <router-link to="/tokens" tag="button" class="app__button-raised">
+      <router-link
+        to="/tokens"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.transfer_discover_assets_btn() }}
       </router-link>
     </template>
 
-    <template v-else-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+    <template v-else-if="view.mode === VIEW_MODES.submit ||
+    view.mode === VIEW_MODES.confirm">
       <h2 class="app__page-heading">{{ i18n.transfer_heading() }}</h2>
-      <form @submit.prevent="processTransfer"
+      <form
+        @submit.prevent="processTransfer"
         id="transfer-form"
-        v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+        v-if="view.mode === VIEW_MODES.submit ||
+        view.mode === VIEW_MODES.confirm">
         <div class="app__form-row">
           <div class="app__form-field">
-            <select-field-unchained :values="tokenCodes"
+            <select-field-unchained
+              :values="tokenCodes"
               v-model="form.tokenCode"
               :label="i18n.lbl_asset()"
-              :readonly="view.mode === VIEW_MODES.confirm"/>
-              <div class="app__form-field-description">
-                <p v-if="form.tokenCode">
-                  {{ i18n.transfer_balance({ amount: balance.balance, asset: form.tokenCode }) }}
-                </p>
-              </div>
+              :readonly="view.mode === VIEW_MODES.confirm" />
+            <div class="app__form-field-description">
+              <p v-if="form.tokenCode">
+                {{
+                  i18n.transfer_balance({
+                    amount: balance.balance,
+                    asset: form.tokenCode
+                  })
+                }}
+              </p>
+            </div>
           </div>
         </div>
 
         <div class="app__form-row">
           <div class="app__form-field">
-            <input-field-unchained name="amount"
+            <input-field-unchained
+              name="amount"
               :step="config.MINIMAL_NUMBER_INPUT_STEP"
               type="number"
               v-model.trim="form.amount"
@@ -39,18 +54,21 @@
               v-validate="'required|amount'"
               :label="i18n.lbl_amount()"
               :readonly="view.mode === VIEW_MODES.confirm"
-              :errorMessage="errors.first('amount') ||
-                (isLimitExceeded ? i18n.transfer_error_insufficient_funds() : '')"
+              :error-message="errors.first('amount') ||
+                (isLimitExceeded
+                  ? i18n.transfer_error_insufficient_funds() : ''
+              )"
             />
           </div>
         </div>
 
         <div class="app__form-row">
-          <input-field-unchained name="recipient"
+          <input-field-unchained
+            name="recipient"
             v-model.trim="form.recipient"
             v-validate="'required|email_or_account_id'"
             :label="i18n.lbl_recipient_email_or_account()"
-            :errorMessage="errorMessage('recipient')"
+            :error-message="errorMessage('recipient')"
             :readonly="view.mode === VIEW_MODES.confirm"
           />
         </div>
@@ -63,37 +81,56 @@
             v-validate="'max:250'"
             :label="i18n.lbl_add_note({ length: 250 })"
             :maxlength="250"
-            :errorMessage="errorMessage('recipient')"
+            :error-message="errorMessage('subject')"
             :readonly="view.mode === VIEW_MODES.confirm"
           />
         </div>
       </form>
 
       <transition name="app__fade-in">
-        <div class="transfer__fee-box" v-if="isFeesLoaded">
+        <div
+          class="transfer__fee-box"
+          v-if="isFeesLoaded">
           <h3 class="transfer__fee-box-heading">
             {{ i18n.transfer_source_fees() }}
           </h3>
 
-          <template v-if="+fees.source.fixed || +fees.source.percent || form.isPaidForRecipient">
-            <p class="transfer__fee" v-if="fees.source.fixed">
+          <!-- eslint-disable-next-line -->
+          <template v-if=" +fees.source.fixed || +fees.source.percent || form.isPaidForRecipient ">
+            <p
+              class="transfer__fee"
+              v-if="fees.source.fixed">
               - {{ fees.source.fixed }} {{ fees.source.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_source_fixed_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_source_fixed_fee() }}
+              </span>
             </p>
 
-            <p class="transfer__fee" v-if="fees.source.percent">
+            <p
+              class="transfer__fee"
+              v-if="fees.source.percent">
               - {{ fees.source.percent }} {{ fees.source.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_source_percent_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_source_percent_fee() }}
+              </span>
             </p>
 
-            <p class="transfer__fee" v-if="form.isPaidForRecipient && +fees.destination.fixed">
+            <p
+              class="transfer__fee"
+              v-if="form.isPaidForRecipient && +fees.destination.fixed">
               - {{ fees.destination.fixed }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_fixed_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_fixed_fee() }}
+              </span>
             </p>
 
-            <p class="transfer__fee" v-if="form.isPaidForRecipient && +fees.destination.percent">
+            <p
+              class="transfer__fee"
+              v-if="form.isPaidForRecipient && +fees.destination.percent">
               - {{ fees.destination.percent }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_percent_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_percent_fee() }}
+              </span>
             </p>
           </template>
 
@@ -107,15 +144,24 @@
             {{ i18n.transfer_destination_fees() }}
           </h3>
 
+          <!-- eslint-disable-next-line -->
           <template v-if="(+fees.destination.fixed || +fees.destination.percent) && !form.isPaidForRecipient">
-            <p class="transfer__fee" v-if="fees.destination.fixed">
+            <p
+              class="transfer__fee"
+              v-if="fees.destination.fixed">
               - {{ fees.destination.fixed }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_fixed_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_fixed_fee() }}
+              </span>
             </p>
 
-            <p class="transfer__fee" v-if="fees.destination.percent">
+            <p
+              class="transfer__fee"
+              v-if="fees.destination.percent">
               - {{ fees.destination.percent }} {{ fees.destination.feeAsset }}
-              <span class="transfer__fee-type">{{ i18n.transfer_destination_percent_fee() }}</span>
+              <span class="transfer__fee-type">
+                {{ i18n.transfer_destination_percent_fee() }}
+              </span>
             </p>
           </template>
 
@@ -125,7 +171,9 @@
             </p>
           </template>
 
-          <div class="app__form-row" v-if="+fees.destination.fixed || +fees.destination.percent">
+          <div
+            class="app__form-row"
+            v-if="+fees.destination.fixed || +fees.destination.percent">
             <tick-field v-model="form.isPaidForRecipient">
               {{ i18n.transfer_pay_fees_for_recipient() }}
             </tick-field>
@@ -134,7 +182,8 @@
       </transition>
 
       <div class="app__form-actions">
-        <button v-ripple
+        <button
+          v-ripple
           v-if="view.mode === VIEW_MODES.submit"
           type="submit"
           class="app__form-submit-btn"
@@ -154,7 +203,6 @@
       </div>
     </template>
   </div>
-
 </template>
 
 <script>
@@ -188,13 +236,13 @@ const VIEW_MODES = {
 
 export default {
   name: 'transfers-make',
-  mixins: [FormMixin],
   components: {
     SelectFieldUnchained,
     InputFieldUnchained,
     FormConfirmation,
     TickField
   },
+  mixins: [FormMixin],
   data: _ => ({
     form: {
       tokenCode: null,
@@ -224,10 +272,6 @@ export default {
     VIEW_MODES,
     config
   }),
-  created () {
-    this.setTokenCode()
-    this.loadCurrentBalances()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
@@ -240,8 +284,14 @@ export default {
       return this.accountBalances[this.form.tokenCode]
     },
     isLimitExceeded () {
-      return Number(this.form.amount) > Number(get(this.balance, 'balance') || 0)
+      const amount = Number(this.form.amount)
+      const balance = Number(get(this.balance, 'balance') || 0)
+      return amount > balance
     }
+  },
+  created () {
+    this.setTokenCode()
+    this.loadCurrentBalances()
   },
   methods: {
     ...mapActions({
@@ -304,11 +354,13 @@ export default {
       const providedRecipient = this.form.recipient
       if (Keypair.isValidPublicKey(providedRecipient)) {
         counterparty.accountId = providedRecipient
-        counterparty.email = await accountsService.loadEmailByAccountId(providedRecipient)
+        counterparty.email =
+          await accountsService.loadEmailByAccountId(providedRecipient)
         return counterparty
       }
       counterparty.email = providedRecipient
-      counterparty.accountId = await accountsService.loadAccountIdByEmail(providedRecipient)
+      counterparty.accountId =
+        await accountsService.loadAccountIdByEmail(providedRecipient)
       return counterparty
     },
     async loadFees (recipientAccountId) {
@@ -347,7 +399,10 @@ export default {
       setTimeout(() => this.updateView(VIEW_MODES.submit, {}, true), 1)
     },
     setTokenCode () {
-      this.form.tokenCode = this.$route.params.tokenCode || this.tokenCodes[0] || null
+      this.form.tokenCode =
+        this.$route.params.tokenCode ||
+        this.tokenCodes[0] ||
+        null
     }
   }
 }

@@ -1,14 +1,23 @@
 <template>
-  <div class="modal" @click="onClick">
-    <div class="modal__content" :style="{ maxWidth: maxWidth, minWidth: minWidth }">
-      <slot/>
+  <div
+    class="modal"
+    @click="onClick"
+  >
+    <div
+      class="modal__content"
+      :style="{ maxWidth: maxWidth, minWidth: minWidth }"
+    >
+      <slot />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['maxWidth', 'minWidth'],
+  props: {
+    maxWidth: { type: [String, Number], default: '' },
+    minWidth: { type: [String, Number], default: '' }
+  },
 
   created () {
     document.addEventListener('keydown', this.onDocumentKeyDown, false)
@@ -50,8 +59,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../../scss/variables';
-@import '../../../scss/mixins';
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
 
 .modal {
   position: fixed;

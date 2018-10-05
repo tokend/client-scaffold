@@ -29,7 +29,11 @@ export function formatCurrency (locale = 'en') {
 export function formatConvertedCurrency (locale = 'en') {
   const settings = locales[locale].currency
   return (n) => {
-    return numberFormatter.formatMoney(n, { ...settings, symbol: locales[locale].symbol, precision: DEFAULT_CONVERSION_PRESICION })
+    return numberFormatter.formatMoney(n, {
+      ...settings,
+      symbol: locales[locale].symbol,
+      precision: DEFAULT_CONVERSION_PRESICION
+    })
   }
 }
 

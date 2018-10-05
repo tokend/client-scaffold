@@ -2,34 +2,39 @@
   <div class="create-sale">
     <div>
       <template v-if="!isReady">
-        <loader :message="i18n.sale_create_loading()"/>
+        <loader :message="i18n.sale_create_loading()" />
       </template>
       <template v-else-if=" accountTypeI !== ACCOUNT_TYPES.syndicate">
-        <not-available-card icon='work'
-                            :title="i18n.lbl_not_available()"
-                            :descr="i18n.sale_not_available_exp()"/>
+        <not-available-card
+          icon="work"
+          :title="i18n.lbl_not_available()"
+          :descr="i18n.sale_not_available_exp()" />
       </template>
       <template v-else-if="!accountOwnedTokenCodes.length">
-        <not-available-card icon='work'
-                            :title="i18n.lbl_not_available()"
-                            :descr="i18n.lbl_token_not_available_yet()"/>
+        <not-available-card
+          icon="work"
+          :title="i18n.lbl_not_available()"
+          :descr="i18n.lbl_token_not_available_yet()" />
       </template>
       <template v-else-if="view.mode === VIEW_MODES.edit">
-        <md-steppers class="create-sale__steppers"
-                      md-vertical
-                      md-linear
-                      :md-active-step.sync="activeStep">
-          <md-step v-for="(step, i) in steps"
-                  :key="i"
-                  :id="step.name"
-                  :md-label="step.label"
-                  :md-done.sync="step.done"
+        <md-steppers
+          class="create-sale__steppers"
+          md-vertical
+          md-linear
+          :md-active-step.sync="activeStep">
+          <md-step
+            v-for="(step, i) in steps"
+            :key="i"
+            :id="step.name"
+            :md-label="step.label"
+            :md-done.sync="step.done"
           >
-            <component :is="step.component"
-                      :schema="step.schema"
-                      :sale="sale"
-                      @sale-update="handleSaleUpdate($event, { step, i })"
-                      @sale-edit-end="handleSaleEditEnd"
+            <component
+              :is="step.component"
+              :schema="step.schema"
+              :sale="sale"
+              @sale-update="handleSaleUpdate($event, { step, i })"
+              @sale-edit-end="handleSaleEditEnd"
             />
           </md-step>
         </md-steppers>
@@ -38,9 +43,10 @@
       <template v-else-if="view.mode === VIEW_MODES.list">
         <div class="app__page-content-wrp">
           <div class="sale-creation__actions">
-            <button v-ripple
-                    @click="startNewSale"
-                    class="app__button-raised">
+            <button
+              v-ripple
+              @click="startNewSale"
+              class="app__button-raised">
               {{ i18n.sale_start_new_sale() }}
             </button>
           </div>
@@ -50,7 +56,9 @@
               {{ i18n.sale_request_list() }}
             </h4>
 
-            <request-list :list="listManager.list" @sale-select="handleSaleSelect"/>
+            <request-list
+              :list="listManager.list"
+              @sale-select="handleSaleSelect" />
           </div>
         </div>
       </template>
@@ -76,7 +84,9 @@ import { ErrorHandler } from '@/js/errors/error_handler'
 import { ACCOUNT_TYPES } from '@/js/const/const'
 import { confirmAction } from '@/js/modals/confirmation_message'
 import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { reviewableRequestsService } from '@/js/services/reviewable_requests.service'
+import {
+  reviewableRequestsService
+} from '@/js/services/reviewable_requests.service'
 import _get from 'lodash/get'
 
 const VIEW_MODES = {
@@ -86,14 +96,16 @@ const VIEW_MODES = {
 }
 
 export default {
-  name: 'CreateSale-index',
+  name: 'create-sale-index',
   components: {
     RequestList,
     NotAvailableCard,
     Loader
   },
   mixins: [FormMixin],
-  props: ['id'],
+  props: {
+    id: { type: String, default: '' }
+  },
   data: _ => ({
     activeStep: steps[0].name,
     sale: null,
@@ -108,6 +120,13 @@ export default {
     VIEW_MODES,
     ACCOUNT_TYPES
   }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountId,
+      vuexTypes.accountTypeI,
+      vuexTypes.accountOwnedTokenCodes
+    ])
+  },
   async created () {
     await Promise.all([
       this.loadTokens(),
@@ -116,7 +135,8 @@ export default {
     ])
     this.isReady = true
     if (this.id) {
-      this.saleRequest = await reviewableRequestsService.loadReviewableRequestById(this.id)
+      this.saleRequest =
+        await reviewableRequestsService.loadReviewableRequestById(this.id)
     }
     if (!this.id && this.listManager.list.length) {
       this.view.mode = VIEW_MODES.list
@@ -124,15 +144,6 @@ export default {
     }
     this.startNewSale()
   },
-
-  computed: {
-    ...mapGetters([
-      vuexTypes.accountId,
-      vuexTypes.accountTypeI,
-      vuexTypes.accountOwnedTokenCodes
-    ])
-  },
-
   methods: {
     ...mapActions({
       loadTokens: vuexTypes.GET_ALL_TOKENS,
@@ -193,7 +204,9 @@ export default {
         await this.listManager.fetch()
         this.view.mode = VIEW_MODES.list
         this.$router.push({ path: '/requests', hash: '#sale-creation' })
-        EventDispatcher.dispatchShowSuccessEvent(i18n.sale_create_request_success())
+        EventDispatcher.dispatchShowSuccessEvent(
+          i18n.sale_create_request_success()
+        )
       } catch (error) {
         console.error(error)
         ErrorHandler.processUnexpected(error)

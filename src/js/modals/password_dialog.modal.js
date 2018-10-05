@@ -59,15 +59,26 @@ export function createPasswordDialog (onSubmit, opts) {
   const passwordModal = document.createElement('div')
   document.querySelector('#app').appendChild(passwordModal)
 
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve, reject) => {
     const TFADialog = new Vue({
-      template,
-      store,
       mixins: [FlowBlockingModalMixin],
       data () {
         return {
           form: {
             password: ''
+          }
+        }
+      },
+      // TODO: this watcher doesn't work if placed in mixin, resolve why and remove code duplication from here and
+      // tfa modal
+      watch: {
+        isOpened (val) {
+          if (!val) {
+            if (!this.isResolved) {
+              this.resolvers.reject(ErrorFactory.getOTPCancelledError())
+            }
+            this.removeElement()
           }
         }
       },
@@ -80,8 +91,17 @@ export function createPasswordDialog (onSubmit, opts) {
           if (!await AuthStateHelper.isPasswordCorrect(this.form.password)) {
             EventDispatcher.dispatchShowErrorEvent(i18n.mod_pwd_wrond())
           }
-          const { walletKey } = WalletHelper.calculateWalletParams(this.form.password, email, salt, kdf)
-          const signedToken = WalletHelper.signToken(token, keychainData, walletKey)
+          const { walletKey } = WalletHelper.calculateWalletParams(
+            this.form.password,
+            email,
+            salt,
+            kdf
+          )
+          const signedToken = WalletHelper.signToken(
+            token,
+            keychainData,
+            walletKey
+          )
           this.disable()
           try {
             await factorsService.verifyFactor(factorId, token, signedToken)
@@ -102,18 +122,8 @@ export function createPasswordDialog (onSubmit, opts) {
           }
         }
       },
-      // TODO: this watcher doesn't work if placed in mixin, resolve why and remove code duplication from here and
-      // tfa modal
-      watch: {
-        isOpened (val) {
-          if (!val) {
-            if (!this.isResolved) {
-              this.resolvers.reject(ErrorFactory.getOTPCancelledError())
-            }
-            this.removeElement()
-          }
-        }
-      }
+      store,
+      template
     })
     TFADialog.$mount(passwordModal)
   })

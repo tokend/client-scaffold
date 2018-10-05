@@ -92,7 +92,10 @@ export class DocumentContainer {
 
   async derivePrivateUrl () {
     if (!this.key) {
-      throw new Error('To derive private url file must be already uploaded and contain the key')
+      throw new Error(`
+        To derive private url file must be already uploaded and contain
+        the key
+      `)
     }
     const details = await fileService.loadDocumentDetailsById(this.key)
     this._privateUrl = details.data('url')
@@ -124,7 +127,9 @@ export function wrapDocuments (documents) {
   return Object.entries(documents)
     .reduce((documents, [type, doc]) => {
       // .front is here only for backwards compatibility:
-      documents[type] = doc && (doc.key || doc.file || doc.front) ? new DocumentContainer(doc.front || doc) : null
+      documents[type] = doc && (doc.key || doc.file || doc.front)
+        ? new DocumentContainer(doc.front || doc)
+        : null
       return documents
     }, {})
 }

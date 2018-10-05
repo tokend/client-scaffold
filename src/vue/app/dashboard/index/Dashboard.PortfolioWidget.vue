@@ -1,45 +1,49 @@
 <template>
   <div class="portfolio-widget">
-    <div class="portfolio-widget__wrapper" v-if="currentAsset">
+    <div
+      class="portfolio-widget__wrapper"
+      v-if="currentAsset"
+    >
       <div class="portfolio-widget__select">
         <div class="portfolio-widget__select-picture">
-          <img class="portfolio-widget__asset" :src="imgUrl">
+          <img
+            class="portfolio-widget__asset"
+            :src="imgUrl">
         </div>
-          <div class="portfolio-widget__select-field">
-            <!--
+        <div class="portfolio-widget__select-field">
+          <!--
               :key is a hack to ensure that the component will be updated
               after computed calculated
             -->
-            <select-field-custom
-              :value="currentAssetForSelect"
-              :values="tokensList"
-              :key="currentAssetForSelect"
-              @input="$emit(events.assetChange, $event)"
-            />
+          <select-field-custom
+            :value="currentAssetForSelect"
+            :values="tokensList"
+            :key="currentAssetForSelect"
+            @input="$emit(events.assetChange, $event)"
+          />
+        </div>
+      </div>
+    </div>
+    <template v-if="currentAsset">
+      <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
+        <div class="portfolio-widget__asset-available">
+          <div class="portfolio-widget__asset-value">
+            {{ balance }} {{ currentAsset }}
+          </div>
+          <div class="portfolio-widget__asset-usd">
+            {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
           </div>
         </div>
       </div>
-      <template v-if="currentAsset">
-        <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
-          <div class="portfolio-widget__asset-available">
-            <div class="portfolio-widget__asset-value">
-              {{ balance }} {{ currentAsset }}
-            </div>
-            <div class="portfolio-widget__asset-usd">
-              {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
-            </div>
-          </div>
-        </div>
-      </template>
-      <template v-if="!currentAsset">
-        <no-data-message
-          icon-name="toll"
-          :msg-title="i18n.th_no_assets_in_your_wallet()"
-          :msg-message="i18n.th_here_will_be_tokens()"
-        />
-      </template>
-
-    </div>
+    </template>
+    <template v-if="!currentAsset">
+      <no-data-message
+        icon-name="toll"
+        :msg-title="i18n.th_no_assets_in_your_wallet()"
+        :msg-message="i18n.th_here_will_be_tokens()"
+      />
+    </template>
+  </div>
 </template>
 
 <script>
@@ -61,7 +65,10 @@ export default {
     NoDataMessage
   },
   props: {
-    currentAsset: { type: [String, Object], default: config.DEFAULT_QUOTE_ASSET }
+    currentAsset: {
+      type: [String, Object],
+      default: config.DEFAULT_QUOTE_ASSET
+    }
   },
   data: _ => ({
     i18n,
@@ -86,25 +93,38 @@ export default {
       vuexTypes.tokens
     ]),
     tokensList () {
-      const tokens = this.tokens.filter(token => Object.keys(this.accountBalances).includes(token.code))
-      const baseAssets = tokens.filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
+      const tokens = this.tokens
+        .filter(token => Object.keys(this.accountBalances).includes(token.code))
+      const baseAssets = tokens
+        .filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
         .sort((a, b) => a.code.localeCompare(b.code))
-      const otherAssets = tokens.filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))
+      const otherAssets = tokens
+        .filter(token => !token.policies.includes(ASSET_POLICIES.baseAsset))
         .sort((a, b) => a.code.localeCompare(b.code))
-      return [...baseAssets, ...otherAssets].map(item => `${item.name} (${item.code})`)
+      return [
+        ...baseAssets,
+        ...otherAssets
+      ].map(item => `${item.name} (${item.code})`)
     },
     currentAssetForSelect () {
       return this.tokens.filter(token => token.code === this.currentAsset)
         .map(item => `${item.name} (${item.code})`)[0]
     },
     balance () {
-      return i18n.c(get(this.accountBalances, `${this.currentAsset}.balance`) || 0)
+      return i18n.c(
+        get(this.accountBalances, `${this.currentAsset}.balance`) || 0
+      )
     },
     convertedBalance () {
-      return i18n.cc(get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0)
+      return i18n.cc(
+        get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0
+      )
     },
     imgUrl () {
-      const logoKey = get(this.accountBalances, `${this.currentAsset}.asset_details.details.logo.key`)
+      const logoKey = get(
+        this.accountBalances,
+        `${this.currentAsset}.asset_details.details.logo.key`
+      )
       if (logoKey) {
         return `${config.FILE_STORAGE}/${logoKey}`
       }
@@ -112,7 +132,9 @@ export default {
       return defaultUrl
     },
     checkTransferable () {
-      return !(this.userTransferableTokens.map(token => token.code)).includes(this.currentAsset)
+      return !(this.userTransferableTokens
+        .map(token => token.code))
+        .includes(this.currentAsset)
     }
   },
   async created () {

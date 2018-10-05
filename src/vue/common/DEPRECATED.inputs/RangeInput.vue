@@ -1,85 +1,86 @@
 <template>
-  <div class="range-input" :class="{ disabled }">
+  <div
+    class="range-input"
+    :class="{ disabled }">
+    <input
+      type="range"
+      class="range-input__initial-marker"
 
-    <input type="range" class="range-input__initial-marker"
-
-           v-if="initialValue && Number(initialValue) > 0"
-           :value="initialValue"
-           :min="min"
-           :max="max"
-           :step="step"
-           disabled
+      v-if="initialValue && Number(initialValue) > 0"
+      :value="initialValue"
+      :min="min"
+      :max="max"
+      :step="step"
+      disabled
     >
 
-    <input type="range" class="slider"
-           :min="min"
-           :max="max"
-           :step="step"
-           :value="value"
-           ref="inputField"
-           :disabled="disabled"
+    <input
+      type="range"
+      class="slider"
+      :min="min"
+      :max="max"
+      :step="step"
+      :value="value"
+      ref="inputField"
+      :disabled="disabled"
     >
-
   </div>
 </template>
 
 <script>
-  import { commonEvents } from '@/js/events/common_events'
-  import config from '@/config'
+import { commonEvents } from '@/js/events/common_events'
+import config from '@/config'
 
-  export default {
-    name: 'range-input',
-
-    components: {
-      // components
+export default {
+  name: 'range-input',
+  props: {
+    min: {
+      type: [ String, Number ],
+      default: 0
     },
-
-    props: {
-      min: {
-        type: [ String, Number ],
-        default: 0
-      },
-      max: {
-        type: [ String, Number ],
-        required: true
-      },
-      step: {
-        type: [ String, Number ],
-        default: config.MINIMAL_NUMBER_INPUT_STEP
-      },
-      value: {
-        type: [ String, Number ],
-        default: 0
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      },
-      initialValue: {
-        type: [ String, Number ],
-        required: false
-      }
+    max: {
+      type: [ String, Number ],
+      required: true,
+      default: '' || 0
     },
-
-    mounted () {
-      const listener = this.onInput.bind(this)
-      const input = this.$refs.inputField
-      input.addEventListener('mousedown', function (event) {
-        listener(event)
-        input.addEventListener('mousemove', listener)
-      })
-
-      input.addEventListener('mouseup', function (event) {
-        input.removeEventListener('mousemove', listener)
-      })
+    step: {
+      type: [ String, Number ],
+      default: config.MINIMAL_NUMBER_INPUT_STEP
     },
+    value: {
+      type: [ String, Number ],
+      default: 0
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    initialValue: {
+      type: [ String, Number ],
+      required: false,
+      default: '' || 0
+    }
+  },
 
-    methods: {
-      onInput (event) {
-        this.$emit(commonEvents.inputEvent, event.target.value)
-      }
+  mounted () {
+    const listener = this.onInput.bind(this)
+    const input = this.$refs.inputField
+    input.addEventListener('mousedown', function (event) {
+      listener(event)
+      input.addEventListener('mousemove', listener)
+    })
+
+    input.addEventListener('mouseup', function (event) {
+      input.removeEventListener('mousemove', listener)
+    })
+  },
+
+  methods: {
+    onInput (event) {
+      this.$emit(commonEvents.inputEvent, event.target.value)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -218,7 +219,6 @@
     &:focus::-ms-fill-upper {
       background: $col-text-accented;
     }
-
 
     &:disabled {
       opacity: .75;

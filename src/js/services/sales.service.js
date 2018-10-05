@@ -50,7 +50,8 @@ export class SalesService extends Service {
    * @returns {TransactionResponseBuilder}
    */
   createSaleCreationRequestWithTokenRequestUpdate (saleOpts, tokenOpts) {
-    const saleOperation = SaleRequestBuilder.createSaleCreationRequest(saleOpts)
+    const saleOperation =
+      SaleRequestBuilder.createSaleCreationRequest(saleOpts)
     const tokenOperation = ManageAssetBuilder.assetCreationRequest(tokenOpts)
     return this._operationBuilder
       .operation()
@@ -78,7 +79,9 @@ export class SalesService extends Service {
       .forBaseAsset(filters.baseAsset)
       .openOnly(filters.openOnly)
       .sortBy(filters.sortBy)
-      .currentSoftCapsRatio(getSoftCapRatio(filters.nearlyFunded, filters.reachedSoftCap))
+      .currentSoftCapsRatio(
+        getSoftCapRatio(filters.nearlyFunded, filters.reachedSoftCap)
+      )
       .upcoming(filters.upcoming)
       .order(filters.order)
       .limit(config.TRANSACTIONS_PER_PAGE)
@@ -97,6 +100,7 @@ export class SalesService extends Service {
     return this._horizonRequestBuilder.sales()
       .forBaseAsset(tokenCode)
       .callWithSignature(this._keypair)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => Promise.resolve(response.records[0]))
   }
 
@@ -133,12 +137,14 @@ export class SalesService extends Service {
    * @returns {Promise<object>} - Promise object representing syndicate details
    */
   async loadSaleOwner (owner) {
-    const syndicateEmail = await accountsService.loadEmailByAccountId(this.owner)
+    const syndicateEmail =
+      await accountsService.loadEmailByAccountId(this.owner)
     const filters = {
       [blobFilters.fundOwner]: owner,
       [blobFilters.type]: blobTypes.syndicate_kyc.num
     }
-    const syndicateDetails = (await usersService.blobsOf(owner).getAll(filters))[0]
+    const syndicateDetails =
+      (await usersService.blobsOf(owner).getAll(filters))[0]
     const syndicate = {
       syndicateEmail: syndicateEmail,
       syndicateDetails: syndicateDetails

@@ -14,7 +14,8 @@ export class IssuanceService extends Service {
    * @return {TransactionResponseBuilder}
    */
   createPreIssuanceRequest (opts) {
-    const operation = PreIssuanceRequestOpBuilder.createPreIssuanceRequestOp({ request: opts[0] })
+    const operation = PreIssuanceRequestOpBuilder
+      .createPreIssuanceRequestOp({ request: opts[0] })
     return this._operationBuilder
       .operation()
       .add(operation)
@@ -35,7 +36,8 @@ export class IssuanceService extends Service {
    * @return {TransactionResponseBuilder}
    */
   createIssuanceRequest (opts) {
-    const operation = CreateIssuanceRequestBuilder.createIssuanceRequest(_opts())
+    const operation = CreateIssuanceRequestBuilder
+      .createIssuanceRequest(_opts())
 
     return this._operationBuilder
       .operation()
@@ -51,7 +53,8 @@ export class IssuanceService extends Service {
   }
 
   bindExternalAccount (opts) {
-    const operation = BindExternalSystemAccountIdBuilder.createBindExternalSystemAccountIdOp(opts)
+    const operation = BindExternalSystemAccountIdBuilder
+      .createBindExternalSystemAccountIdOp(opts)
 
     return this._operationBuilder
       .operation()

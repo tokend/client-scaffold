@@ -4,7 +4,7 @@
     v-if="isReadyToShowTabs"
     :options="{ useUrlFragment: false }">
     <tab :name="i18n.sale_tabs_market_price()">
-      <sale-chart :sale="sale"/>
+      <sale-chart :sale="sale" />
     </tab>
     <tab :name="i18n.sale_tabs_overwiev()">
       <description-tab :description="description" />
@@ -22,48 +22,50 @@
       <updates-tab :sale="sale" />
     </tab>
     <tab :name="i18n.sale_tabs_documents()">
-      <documents-tab :sale="sale"/>
+      <documents-tab :sale="sale" />
     </tab>
   </tabs>
 </template>
 
 <script>
-  import DescriptionTab from './tabs/Sales.DescriptionTab'
-  import CrowdfundTab from './tabs/Sales.CrowdfundTab'
-  import SaleBanner from './components/Sales.Banner'
-  import TokenTab from './tabs/Sales.TokenTab'
-  import DocumentsTab from './tabs/Sales.DocumentsTab'
-  import UpdatesTab from './tabs/Sales.UpdatesTab'
-  import SaleTab from './tabs/Sales.SaleTab'
-  import SaleChart from './components/Sales.Chart'
-  import Tabs from '@/vue/app/common/tabs/Tabs'
-  import Tab from '@/vue/app/common/tabs/Tab'
+import DescriptionTab from './tabs/Sales.DescriptionTab'
+import SaleBanner from './components/Sales.Banner'
+import TokenTab from './tabs/Sales.TokenTab'
+import DocumentsTab from './tabs/Sales.DocumentsTab'
+import UpdatesTab from './tabs/Sales.UpdatesTab'
+import SaleTab from './tabs/Sales.SaleTab'
+import SaleChart from './components/Sales.Chart'
+import Tabs from '@/vue/app/common/tabs/Tabs'
+import Tab from '@/vue/app/common/tabs/Tab'
+import { i18n } from '@/js/i18n'
 
-  import { i18n } from '@/js/i18n'
-  export default {
-    name: 'sale-details-tabs',
-    props: ['sale', 'description', 'syndicate', 'token'],
-    components: {
-      DocumentsTab,
-      DescriptionTab,
-      CrowdfundTab,
-      SaleBanner,
-      TokenTab,
-      SaleTab,
-      UpdatesTab,
-      SaleChart,
-      Tab,
-      Tabs
-    },
-    data () {
-      return {
-        i18n
-      }
-    },
-    computed: {
-      isReadyToShowTabs () { return !!this.sale.id }
+export default {
+  name: 'sale-details-tabs',
+  components: {
+    DocumentsTab,
+    DescriptionTab,
+    SaleBanner,
+    TokenTab,
+    SaleTab,
+    UpdatesTab,
+    SaleChart,
+    Tab,
+    Tabs
+  },
+  props: {
+    sale: { type: Object, required: true },
+    description: { type: String, default: '' },
+    token: { type: Object, default: () => {} }
+  },
+  data () {
+    return {
+      i18n
     }
+  },
+  computed: {
+    isReadyToShowTabs () { return !!this.sale.id }
   }
+}
 </script>
 
 <style lang="scss">

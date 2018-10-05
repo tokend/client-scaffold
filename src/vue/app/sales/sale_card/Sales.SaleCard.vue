@@ -1,7 +1,9 @@
 <template>
   <div class="card">
     <div class="card__image-wrp">
-      <img :src="imgUrl || getUrl" alt="">
+      <img
+        :src="imgUrl || getUrl"
+        alt="">
     </div>
 
     <div class="card__content">
@@ -10,52 +12,55 @@
       </div>
       <p class="card__description">{{ sale.shortDescription }}</p>
       <div class="card__progress-wrp">
-        <invest-progress-bar :sale="sale" :barHeight="'1.2rem'"/>
+        <invest-progress-bar
+          :sale="sale"
+          :bar-height="'1.2rem'" />
       </div>
     </div>
 
-    <div class="card__state-tip"
-        :class="`card__state-tip--${stateTip}`">
+    <div
+      class="card__state-tip"
+      :class="`card__state-tip--${stateTip}`">
       {{ stateTip }}
     </div>
-
   </div>
 </template>
 
 <script>
-  import { humanizeFutureDate } from '../../../../js/utils/dates.util'
-  import config from '../../../../config'
-  import _get from 'lodash/get'
-  import InvestProgressBar from './Sales.ProgressBar'
+import { humanizeFutureDate } from '@/js/utils/dates.util'
+import config from '@/config'
+import _get from 'lodash/get'
+import InvestProgressBar from './Sales.ProgressBar'
 
-  export default {
-    name: 'sale-card',
-    components: { InvestProgressBar },
-    props: ['sale', 'hasEditRedirect', 'imgUrl'],
-    data: _ => ({
-    }),
-    computed: {
-      stateTip () {
-        if (this.sale.isCanceled) return 'cancelled'
-        if (this.sale.isUpcoming) return 'upcoming'
-        if (this.sale.isClosed) return 'finished'
-        return ''
-      },
-      getUrl () {
-        const key = _get(this.sale, '_record.details.logo.key')
-        if (!key) return ''
-        return `${config.FILE_STORAGE}/${key}`
-      }
+export default {
+  name: 'sale-card',
+  components: { InvestProgressBar },
+  props: {
+    sale: { type: Object, default: () => {} },
+    imgUrl: { type: String, default: '' }
+  },
+  computed: {
+    stateTip () {
+      if (this.sale.isCanceled) return 'cancelled'
+      if (this.sale.isUpcoming) return 'upcoming'
+      if (this.sale.isClosed) return 'finished'
+      return ''
     },
-    methods: {
-      humanizeFutureDate
+    getUrl () {
+      const key = _get(this.sale, '_record.details.logo.key')
+      if (!key) return ''
+      return `${config.FILE_STORAGE}/${key}`
     }
+  },
+  methods: {
+    humanizeFutureDate
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
-  @import '../../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   $padding-side: 20px;
 
@@ -78,7 +83,6 @@
       right: 0;
     }
   }
-
 
   .card__image-wrp {
     position: relative;

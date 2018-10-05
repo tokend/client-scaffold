@@ -10,9 +10,10 @@
       </p>
 
       <div class="app__form-row">
-        <select-field-unchained :values="tokenCodes"
+        <select-field-unchained
+          :values="tokenCodes"
           v-model="form.tokenCode"
-          :label="i18n.lbl_asset()"/>
+          :label="i18n.lbl_asset()" />
       </div>
 
       <template v-if="address">
@@ -30,12 +31,15 @@
         </div>
 
         <div class="deposit__qr-outer">
-          <span class="deposit__qr-code-hint">{{ i18n.deposit_qr_code_hint() }}</span>
+          <span class="deposit__qr-code-hint">
+            {{ i18n.deposit_qr_code_hint() }}
+          </span>
           <!--TODO: use vue-qr instead for consistency-->
-          <qrcode class="deposit__qr-code"
-                  :text="address"
-                  :size="225"
-                  color="#3f4244"
+          <qrcode
+            class="deposit__qr-code"
+            :text="address"
+            :size="225"
+            color="#3f4244"
           />
         </div>
       </template>
@@ -59,7 +63,10 @@
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.deposit_no_assets() }}
       </p>
-      <router-link to="/tokens" tag="button" class="app__button-raised">
+      <router-link
+        to="/tokens"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.deposit_discover_assets_btn() }}
       </router-link>
     </template>
@@ -110,7 +117,18 @@ export default {
     },
     address () {
       if (!this.selectedToken) return ''
-      return this.accountDepositAddresses[this.selectedToken.externalSystemType]
+      const externalSystemType = this.selectedToken.externalSystemType
+      return this.accountDepositAddresses[externalSystemType]
+    }
+  },
+  watch: {
+    tokenCodes: {
+      handler: 'setTokenCode',
+      immediate: true
+    },
+    selectedToken: {
+      handler: 'tryBindAddress',
+      immediate: true
     }
   },
   methods: {
@@ -121,8 +139,6 @@ export default {
       this.form.tokenCode = this.tokenCodes[0] || null
     },
     async tryBindAddress (token) {
-      console.log('trying to bind address, token: ')
-      console.log(token)
       if (!token || !token.externalSystemType) {
         return
       }
@@ -136,16 +152,6 @@ export default {
         console.error(e)
       }
       this.isPending = false
-    }
-  },
-  watch: {
-    tokenCodes: {
-      handler: 'setTokenCode',
-      immediate: true
-    },
-    selectedToken: {
-      handler: 'tryBindAddress',
-      immediate: true
     }
   }
 }

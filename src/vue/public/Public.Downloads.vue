@@ -1,15 +1,23 @@
 <template>
-  <div class="downloads"
-      :class="{ 'downloads--public': !isLoggedIn }"
+  <div
+    class="downloads"
+    :class="{ 'downloads--public': !isLoggedIn }"
   >
-
     <template v-if="!isLoggedIn">
       <div class="downloads__header">
         <span class="downloads__title">{{ $route.meta.pageName }}</span>
 
         <span class="downloads__links">
-          <router-link class="downloads__link" :to="vueRoutes.signup">{{ i18n.lbl_signup() }}</router-link>
-          <router-link class="downloads__link" :to="vueRoutes.login">{{ i18n.lbl_signin() }}</router-link>
+          <router-link
+            class="downloads__link"
+            :to="vueRoutes.signup">
+            {{ i18n.lbl_signup() }}
+          </router-link>
+          <router-link
+            class="downloads__link"
+            :to="vueRoutes.login">
+            {{ i18n.lbl_signin() }}
+          </router-link>
         </span>
       </div>
     </template>
@@ -18,18 +26,22 @@
       <div class="downloads__android">
         <div class="downloads__android-inner">
           <div class="downloads__android-img">
-
-            <img src="../../../static/android.png" alt="">
+            <img
+              src="../../../static/android.png"
+              alt="">
           </div>
 
           <div class="downloads__android-content">
-
             <div class="downloads__android-content-section">
-              <h1 class="downloads__heading">{{ i18n.dl_download_android() }}</h1>
+              <h1 class="downloads__heading">
+                {{ i18n.dl_download_android() }}
+              </h1>
               <p class="downloads__paragraph">{{ i18n.dl_about_android() }}</p>
-              <a class="downloads__pm-link"
-                 href="https://play.google.com/store/apps/details?id=org.tokend.template"
-                 target="_blank" rel="noopener"
+              <a
+                class="downloads__pm-link"
+                href="https://play.google.com/store/apps/details?id=org.tokend.template"
+                target="_blank"
+                rel="noopener"
               >
                 <img src="../../../static/googleplay.png">
               </a>
@@ -38,51 +50,51 @@
             <div class="downloads__android-content-section">
               <h1 class="downloads__heading">{{ i18n.dl_use_config() }}</h1>
               <p class="downloads__paragraph">{{ i18n.dl_android_qr() }}</p>
-              <qr-code :text="qrValue"
-                       :margin="0"
-                       :size="175"/>
+              <qr-code
+                :text="qrValue"
+                :margin="0"
+                :size="175" />
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-  import QrCode from 'vue-qr'
+import QrCode from 'vue-qr'
 
-  import { i18n } from '../../js/i18n'
-  import config from '../../config'
+import { i18n } from '../../js/i18n'
+import config from '../../config'
 
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../vuex/types'
-  import { vueRoutes } from '../../vue-router/const'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../vuex/types'
+import { vueRoutes } from '../../vue-router/const'
 
-  export default {
-    name: 'PublicDownloads',
-    components: { QrCode },
-    data: _ => ({
-      i18n,
-      vueRoutes
-    }),
-    computed: {
-      ...mapGetters([
-        vuexTypes.isLoggedIn
-      ]),
-      qrValue () {
-        const hostname = window.location.hostname
+export default {
+  name: 'public-downloads',
+  components: { QrCode },
+  data: _ => ({
+    i18n,
+    vueRoutes
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.isLoggedIn
+    ]),
+    qrValue () {
+      const hostname = window.location.hostname
 
-        return JSON.stringify({
-          api: config.HORIZON_SERVER,
-          storage: config.FILE_STORAGE,
-          kyc: `${hostname}/verification`,
-          terms: `${hostname}/terms`
-        })
-      }
+      return JSON.stringify({
+        api: config.HORIZON_SERVER,
+        storage: config.FILE_STORAGE,
+        kyc: `${hostname}/verification`,
+        terms: `${hostname}/terms`
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -11,12 +11,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'not-available',
-    props: {
-      icon: { type: String, required: true },
-      title: { type: String, required: true },
-      descr: { type: String, required: true }
-    }
+export default {
+  name: 'not-available',
+  props: {
+    icon: { type: String, required: true },
+    title: { type: String, required: true },
+    descr: { type: String, required: true }
   }
+}
 </script>

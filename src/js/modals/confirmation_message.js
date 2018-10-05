@@ -32,10 +32,9 @@ export function confirmAction (opts = {}) {
   const container = document.createElement('div')
   document.querySelector('#app').appendChild(container)
 
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve, reject) => {
     const confirmMessage = new Vue({
-      template,
-      store,
       mixins: [FormBlockingModalMixin],
       data () {
         return {
@@ -44,6 +43,16 @@ export function confirmAction (opts = {}) {
           message,
           title,
           i18n
+        }
+      },
+      watch: {
+        isOpened (val) {
+          if (!val) {
+            if (!this.isResolved) {
+              this.resolvers.resolve(false)
+            }
+            this.removeElement()
+          }
         }
       },
       created () {
@@ -61,16 +70,8 @@ export function confirmAction (opts = {}) {
           return this.resolvers.resolve(false)
         }
       },
-      watch: {
-        isOpened (val) {
-          if (!val) {
-            if (!this.isResolved) {
-              this.resolvers.resolve(false)
-            }
-            this.removeElement()
-          }
-        }
-      }
+      store,
+      template
     })
     confirmMessage.$mount(container)
   })

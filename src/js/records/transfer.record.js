@@ -23,12 +23,20 @@ export class TransferRecord extends TxRecord {
 
   _getDirection () {
     const userAccountId = this.userAccountId
-    return this._record.from === userAccountId ? DIRECTION_VERBOSE.out : DIRECTION_VERBOSE.in
+    return this._record.from === userAccountId
+      ? DIRECTION_VERBOSE.out
+      : DIRECTION_VERBOSE.in
   }
 
   _getFee () {
-    const sendersFee = add(this._record.source_payment_fee, this._record.source_fixed_fee)
-    const recipientsFee = add(this._record.destination_payment_fee, this._record.destination_fixed_fee)
+    const sendersFee = add(
+      this._record.source_payment_fee,
+      this._record.source_fixed_fee
+    )
+    const recipientsFee = add(
+      this._record.destination_payment_fee,
+      this._record.destination_fixed_fee
+    )
     const sourcePaysForDest = this._record.source_pays_for_dest
     const direction = this.direction
 
@@ -39,12 +47,16 @@ export class TransferRecord extends TxRecord {
   }
 
   _getParticipants () {
-    return this._record.participants.map(participant => participant.account_id)
+    return this._record.participants.map(participant =>
+      participant.account_id
+    )
   }
 
   _getCounterParty () {
     const direction = this._getDirection()
-    return direction === DIRECTION_VERBOSE.in ? this._record.from : this._record.to
+    return direction === DIRECTION_VERBOSE.in
+      ? this._record.from
+      : this._record.to
   }
 
   _getSUNAmount () {

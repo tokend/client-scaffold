@@ -1,8 +1,10 @@
 <template>
   <div class="supported-browsers">
     <div class="supported-browsers__wrapper">
-      <logotype class="supported-browsers__logotype"/>
-      <h1 class="supported-browsers__title"> {{ i18n.supbrows_title() }} </h1>
+      <logotype class="supported-browsers__logotype" />
+      <h1 class="supported-browsers__title">
+        {{ i18n.supbrows_title() }}
+      </h1>
       <h2 class="supported-browsers__description">
         {{ i18n.supbrows_description() }}
       </h2>
@@ -11,12 +13,17 @@
         <div class="supported-browsers__browser">
           <picture class="supported-browsers__browser-picture">
             <img
-              :srcset="`${defaultSrc}/chrome/chrome_128x128.png, ${defaultSrc}/chrome/chrome_256x256.png 2x`"
+              :srcset="`
+                ${defaultSrc}/chrome/chrome_128x128.png,
+                ${defaultSrc}/chrome/chrome_256x256.png 2x
+              `"
               :src="`${defaultSrc}/chrome/chrome_128x128.png`"
               alt="Chrome logotype"
             >
           </picture>
-          <h3 class="supported-browsers__browser-name">Google chrome (68+)</h3>
+          <h3 class="supported-browsers__browser-name">
+            Google chrome (68+)
+          </h3>
           <div class="supported-browsers__browser-link">
             <a href="https://www.google.com/chrome" target="_blank">
               {{ i18n.lbl_go_to_website() }}
@@ -27,12 +34,17 @@
         <div class="supported-browsers__browser">
           <picture class="supported-browsers__browser-picture">
             <img
-              :srcset="`${defaultSrc}/firefox/firefox_128x128.png, ${defaultSrc}/firefox/firefox_256x256.png 2x`"
+              :srcset="`
+                ${defaultSrc}/firefox/firefox_128x128.png,
+                ${defaultSrc}/firefox/firefox_256x256.png 2x
+              `"
               :src="`${defaultSrc}/firefox/firefox_128x128.png`"
               alt="Firefox logotype"
             >
           </picture>
-          <h3 class="supported-browsers__browser-name">Mozilla Firefox (61+)</h3>
+          <h3 class="supported-browsers__browser-name">
+            Mozilla Firefox (61+)
+          </h3>
           <div class="supported-browsers__browser-link">
             <a href="https://www.firefox.com/" target="_blank">
               {{ i18n.lbl_go_to_website() }}
@@ -43,12 +55,17 @@
         <div class="supported-browsers__browser">
           <picture class="supported-browsers__browser-picture">
             <img
-              :srcset="`${defaultSrc}/safari/safari_128x128.png, ${defaultSrc}/safari/safari_256x256.png 2x`"
+              :srcset="`
+                ${defaultSrc}/safari/safari_128x128.png,
+                ${defaultSrc}/safari/safari_256x256.png 2x
+              `"
               :src="`${defaultSrc}/safari/safari_128x128.png`"
               alt="Safari logotype"
             >
           </picture>
-          <h3 class="supported-browsers__browser-name">Safari (11+)</h3>
+          <h3 class="supported-browsers__browser-name">
+            Safari (11+)
+          </h3>
           <div class="supported-browsers__browser-link">
             <a href="https://www.apple.com/safari/" target="_blank">
               {{ i18n.lbl_go_to_website() }}
@@ -59,12 +76,17 @@
         <div class="supported-browsers__browser">
           <picture class="supported-browsers__browser-picture">
             <img
-              :srcset="`${defaultSrc}/opera/opera_128x128.png, ${defaultSrc}/opera/opera_256x256.png 2x`"
+              :srcset="`
+                ${defaultSrc}/opera/opera_128x128.png,
+                ${defaultSrc}/opera/opera_256x256.png 2x
+              `"
               :src="`${defaultSrc}/opera/opera_128x128.png`"
               alt="Opera logotype"
             >
           </picture>
-          <h3 class="supported-browsers__browser-name">Opera (54+)</h3>
+          <h3 class="supported-browsers__browser-name">
+            Opera (54+)
+          </h3>
           <div class="supported-browsers__browser-link">
             <a href="https://www.opera.com/" target="_blank">
               {{ i18n.lbl_go_to_website() }}
@@ -78,19 +100,19 @@
 </template>
 
 <script>
-  import Logotype from '@/vue/app/common/Logotype'
-  import { i18n } from '@/js/i18n'
+import Logotype from '@/vue/app/common/Logotype'
+import { i18n } from '@/js/i18n'
 
-  export default {
-    name: 'supported-browsers',
-    components: { Logotype },
-    data () {
-      return {
-        defaultSrc: '../../../static/images/browsers-logotypes',
-        i18n
-      }
+export default {
+  name: 'supported-browsers',
+  components: { Logotype },
+  data () {
+    return {
+      defaultSrc: '../../../static/images/browsers-logotypes',
+      i18n
     }
   }
+}
 </script>
 
 <style lang="scss">
@@ -120,7 +142,9 @@
     margin-bottom: 72px;
     position: absolute;
     top: 70px;
-    left: calc(50% - 60px); // we can't get a size of the logo programmatically, that's why we use this magic value
+    // we can't get a size of the logo programmatically,
+    // that's why we use this magic value
+    left: calc(50% - 60px);
     transform: scale(2);
 
     @include respond-to-custom($custom-medium-breakpoint) {

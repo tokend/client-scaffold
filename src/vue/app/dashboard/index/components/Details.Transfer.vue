@@ -24,19 +24,19 @@
 </template>
 
 <script>
-  import DetailsMixin from './details.mixin'
+import DetailsMixin from './details.mixin'
 
-  export default {
-    name: 'transfer-details',
-    mixins: [DetailsMixin],
-    computed: {
-      counterpartyRole () {
-        return this.tx.direction === 'out' ? this.i18n.lbl_receiver() : this.i18n.lbl_sender()
-      },
-      transferFee () {
-        if (this.senderPaid) return this.tx.fee
-        return this.i18n.c(this.tx.fee)
-      }
+export default {
+  name: 'transfer-details',
+  mixins: [DetailsMixin],
+  computed: {
+    counterpartyRole () {
+      return this.tx.direction === 'out' ? this.i18n.lbl_receiver() : this.i18n.lbl_sender()
+    },
+    transferFee () {
+      if (this.senderPaid) return this.tx.fee
+      return this.i18n.c(this.tx.fee)
     }
   }
+}
 </script>

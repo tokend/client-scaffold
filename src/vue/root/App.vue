@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
-      <warning-banner v-if="isNotSupportedBrowser" :message="i18n.cm_edge_warning()" />
+      <warning-banner
+        v-if="isNotSupportedBrowser"
+        :message="i18n.cm_edge_warning()"
+      />
       <div class="app__container">
         <sidebar />
 
@@ -20,7 +23,10 @@
       </div>
     </template>
     <template v-else-if="!isLoggedIn && $route.meta.routeWithAuth">
-      <warning-banner v-if="isNotSupportedBrowser" :message="i18n.cm_edge_warning()" />
+      <warning-banner
+        v-if="isNotSupportedBrowser"
+        :message="i18n.cm_edge_warning()"
+      />
       <router-view />
       <loader-bar />
       <snackbar />

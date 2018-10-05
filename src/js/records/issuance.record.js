@@ -20,9 +20,7 @@ export class IssuanceRecord extends TxRecord {
     const counterparty =
       this._record
         .participants
-        .find(participant =>
-          participant.account_id !== this.userAccountId
-        )
+        .find(participant => participant.account_id !== this.userAccountId)
     return get(counterparty, 'account_id') || ''
   }
 

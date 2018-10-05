@@ -1,7 +1,11 @@
 <template>
   <div class="trade-orders">
-    <buy-order :assets="assets" class="md-layout-item"/>
-    <sell-order :assets="assets" class="md-layout-item"/>
+    <buy-order
+      :assets="assets"
+      class="md-layout-item" />
+    <sell-order
+      :assets="assets"
+      class="md-layout-item" />
   </div>
 </template>
 
@@ -13,7 +17,7 @@ export default {
   name: 'trade-orders',
   components: { BuyOrder, SellOrder },
   props: {
-    assets: { type: Object, require: true }
+    assets: { type: Object, require: true, default: () => {} }
   }
 }
 </script>

@@ -10,10 +10,11 @@
     <p class="auth-page__form-descr">{{ i18n.auth_check_span_folder() }}</p>
 
     <div class="auth-page__submit">
-      <button @click="requestNew"
-              class="auth-page__submit-btn"
-              :disabled="isButtonDisabled"
-              v-ripple>
+      <button
+        @click="requestNew"
+        class="auth-page__submit-btn"
+        :disabled="isButtonDisabled"
+        v-ripple>
         {{ i18n.lbl_request_new_email() }}
       </button>
       <router-link class="auth-page__submit-btn-secondary"
@@ -26,51 +27,46 @@
 </template>
 
 <script>
-  import form from '../common/mixins/form.mixin'
-  import { EventDispatcher } from '@/js/events/event_dispatcher'
-  import { emailService } from '@/js/services/email.service'
-  import { i18n } from '@/js/i18n'
-  import { vueRoutes } from '@/vue-router/const'
+import form from '../common/mixins/form.mixin'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { emailService } from '@/js/services/email.service'
+import { i18n } from '@/js/i18n'
+import { vueRoutes } from '@/vue-router/const'
 
-  export default {
-    name: 'email-resend',
-
-    mixins: [form],
-
-    data () {
-      return {
-        i18n,
-        vueRoutes,
-        walletId: '',
-        email: ''
+export default {
+  name: 'email-resend',
+  mixins: [form],
+  data () {
+    return {
+      i18n,
+      vueRoutes,
+      walletId: '',
+      email: ''
+    }
+  },
+  beforeCreate () {
+    if (!this.$store.state.wallet || !this.$route.query.email) {
+      this.$router.push('/login')
+    }
+  },
+  created () {
+    this.walletId = this.$store.state.wallet
+    this.email = this.$route.query.email
+  },
+  methods: {
+    async requestNew () {
+      this.disable()
+      try {
+        await emailService.sendResendEmailRequest(this.walletId)
+        EventDispatcher.dispatchShowSuccessEvent(i18n.auth_request_sent())
+      } catch (error) {
+        console.error(error)
+        EventDispatcher.dispatchShowErrorEvent(i18n.auth_email_confirmed())
       }
-    },
-
-    beforeCreate () {
-      if (!this.$store.state.wallet || !this.$route.query.email) {
-        this.$router.push('/login')
-      }
-    },
-
-    created () {
-      this.walletId = this.$store.state.wallet
-      this.email = this.$route.query.email
-    },
-
-    methods: {
-      async requestNew () {
-        this.disable()
-        try {
-          await emailService.sendResendEmailRequest(this.walletId)
-          EventDispatcher.dispatchShowSuccessEvent(i18n.auth_request_sent())
-        } catch (error) {
-          console.error(error)
-          EventDispatcher.dispatchShowErrorEvent(i18n.auth_email_confirmed())
-        }
-        this.enable()
-      }
+      this.enable()
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

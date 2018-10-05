@@ -26,8 +26,12 @@ export class OffersService extends Service {
    * @returns {Promise<object>} - Promise object representing creation of sale offer
    */
   async createSaleOffer (createOpts, cancelOpts) {
-    const removeOfferOperation = cancelOpts ? await this._composeCancelOfferOperation(cancelOpts) : null
-    const createOfferOperation = createOpts ? await this._composeCreateOfferOperation(createOpts) : null
+    const removeOfferOperation = cancelOpts
+      ? await this._composeCancelOfferOperation(cancelOpts)
+      : null
+    const createOfferOperation = createOpts
+      ? await this._composeCreateOfferOperation(createOpts)
+      : null
     return this._operationBuilder
       .operation()
       .add(removeOfferOperation)

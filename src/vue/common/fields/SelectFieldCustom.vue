@@ -1,23 +1,31 @@
 <template>
   <div class="select">
-    <div v-if="label" class="select__label">
+    <div
+      v-if="label"
+      class="select__label">
       {{ label }}
     </div>
     <div class="select__selected"
          :class="{ 'select__selected--readonly': readonly }"
          @click="toggleListVisibility()">
       <button class="select__selected-value">{{ currentValue }}</button>
-      <md-icon class="select__selected-icon" :class="{ 'select__selected-icon--active': showList }">
+      <md-icon
+        class="select__selected-icon"
+        :class="{ 'select__selected-icon--active': showList }">
         keyboard_arrow_down
       </md-icon>
     </div>
-    <div class="select__list" ref="list" :class="{ 'select__list--active': showList }">
-      <template v-for="(value, i) in values">
-        <button class="select__list-item"
-                :key="i"
-                :class="{ 'select__list-item--selected': selected === value }"
-                @click="selectItem(value)">
-          {{ value }}
+    <div
+      class="select__list"
+      ref="list"
+      :class="{ 'select__list--active': showList }">
+      <template v-for="(item, i) in values">
+        <button
+          class="select__list-item"
+          :key="i"
+          :class="{ 'select__list-item--selected': selected === item }"
+          @click="selectItem(item)">
+          {{ item }}
         </button>
       </template>
     </div>
@@ -25,92 +33,98 @@
 </template>
 
 <script>
-  import { commonEvents } from '@/js/events/common_events'
-  import { onKeyDown } from '@/js/helpers/onKeyDown'
-  import { closeElement } from '@/js/helpers/closeElement'
-  import { KEY_CODES } from '@/js/const/const'
+import { commonEvents } from '@/js/events/common_events'
+import { onKeyDown } from '@/js/helpers/onKeyDown'
+import { closeElement } from '@/js/helpers/closeElement'
+import { KEY_CODES } from '@/js/const/const'
 
-  export default {
-    name: 'select-field-custom',
-    props: {
-      value: { type: [String, Number, Boolean, Array, Object, Date], default: '' },
-      values: { type: Array, default: _ => [] },
-      label: { type: String, default: '' },
-      readonly: { type: Boolean, default: false }
+export default {
+  name: 'select-field-custom',
+  props: {
+    value: {
+      type: [String, Number, Boolean, Array, Object, Date],
+      default: ''
     },
-    data: _ => ({
-      currentValue: '', // selected item in the list
-      selected: '', // active element but not selected (for support arrow navigation)
-      showList: false,
-      KEY_CODES
-    }),
-    created () {
-      this.selected = this.value
-      this.currentValue = this.value
+    values: { type: Array, default: _ => [] },
+    label: { type: String, default: '' },
+    readonly: { type: Boolean, default: false }
+  },
+  data: _ => ({
+    currentValue: '', // selected item in the list
+    selected: '', // active element but not selected (for support arrow navigation)
+    showList: false,
+    KEY_CODES
+  }),
+  watch: {
+    showList (value) {
+      closeElement('select__list', value, this.closelist)
+    }
+  },
+  created () {
+    this.selected = this.value
+    this.currentValue = this.value
+  },
+  methods: {
+    selectItem (item) {
+      if (this.readonly) return false
+      this.selected = item
+      this.currentValue = item
+      this.$emit(commonEvents.inputEvent, item)
+      this.toggleListVisibility()
     },
-    methods: {
-      selectItem (item) {
-        if (this.readonly) return false
-        this.selected = item
-        this.currentValue = item
-        this.$emit(commonEvents.inputEvent, item)
+    toggleListVisibility () {
+      if (this.readonly) return false
+      this.showList ? this.closelist() : this.openList()
+      onKeyDown(this.showList, this.keyDownEvents)
+    },
+    openList () {
+      const list = this.$refs.list
+      const index = this.values.indexOf(this.currentValue)
+      list.scrollTop =
+        list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
+      this.showList = true
+    },
+    closelist () {
+      this.selected = this.currentValue // set active element as selected
+      this.showList = false
+    },
+    keyDownEvents (event) {
+      let index = this.values.indexOf(this.selected)
+      const valuesList = this.values
+      const childrenList = this.$refs.list
+
+      if (event.which === KEY_CODES.enter) {
+        this.selectItem(valuesList[index])
+      } else if (event.which === KEY_CODES.up) {
+        index = this.selectPrevItem(index, valuesList)
+      } else if (event.which === KEY_CODES.right) {
+        this.selectItem(valuesList[index])
+      } else if (event.which === KEY_CODES.down) {
+        index = this.selectNextItem(index, valuesList)
+      } else if (event.which === KEY_CODES.escape) {
         this.toggleListVisibility()
-      },
-      toggleListVisibility () {
-        if (this.readonly) return false
-        this.showList ? this.closelist() : this.openList()
-        onKeyDown(this.showList, this.keyDownEvents)
-      },
-      openList () {
-        const list = this.$refs.list
-        const index = this.values.indexOf(this.currentValue)
-        list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
-        this.showList = true
-      },
-      closelist () {
-        this.selected = this.currentValue // set active element as selected
-        this.showList = false
-      },
-      keyDownEvents (event) {
-        let index = this.values.indexOf(this.selected)
-        const valuesList = this.values
-        const childrenList = this.$refs.list
-
-        if (event.which === KEY_CODES.enter) {
-          this.selectItem(valuesList[index])
-        } else if (event.which === KEY_CODES.up) {
-          index = this.selectPrevItem(index, valuesList)
-        } else if (event.which === KEY_CODES.right) {
-          this.selectItem(valuesList[index])
-        } else if (event.which === KEY_CODES.down) {
-          index = this.selectNextItem(index, valuesList)
-        } else if (event.which === KEY_CODES.escape) {
-          this.toggleListVisibility()
-        } else if (event.shiftKey && event.which === KEY_CODES.tab) {
-          index = this.selectPrevItem(index, valuesList)
-        } else if (event.which === KEY_CODES.tab) {
-          index = this.selectNextItem(index, valuesList)
-        }
-
-        childrenList.scrollTop = childrenList.childNodes[index].offsetTop - (childrenList.offsetHeight / 2) + 18
-      },
-      selectNextItem (index, valuesList) {
-        index === valuesList.length - 1 ? index = 0 : index += 1
-        this.selected = valuesList[index]
-        return index
-      },
-      selectPrevItem (index, valuesList) {
-        index === 0 ? index += valuesList.length - 1 : index -= 1
-        this.selected = valuesList[index]
-        return index
+      } else if (event.shiftKey && event.which === KEY_CODES.tab) {
+        index = this.selectPrevItem(index, valuesList)
+      } else if (event.which === KEY_CODES.tab) {
+        index = this.selectNextItem(index, valuesList)
       }
+
+      childrenList.scrollTop =
+        childrenList.childNodes[index].offsetTop -
+        (childrenList.offsetHeight / 2) + 18
     },
-    watch: {
-      showList (value) {
-        closeElement('select__list', value, this.closelist)
-      }
+    selectNextItem (index, valuesList) {
+      index === valuesList.length - 1 ? index = 0 : index += 1
+      this.selected = valuesList[index]
+      return index
+    },
+    selectPrevItem (index, valuesList) {
+      index === 0 ? index += valuesList.length - 1 : index -= 1
+      this.selected = valuesList[index]
+      return index
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

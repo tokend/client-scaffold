@@ -1,4 +1,8 @@
-import { Keypair, TransactionBuilder, SetOptionsBuilder } from 'swarm-js-sdk'
+import {
+  Keypair,
+  TransactionBuilder,
+  SetOptionsBuilder
+} from 'swarm-js-sdk'
 import { defaultSignerParams } from '../const/const'
 import { initHorizonServer } from './server.helper'
 import { parseError } from '../parsers/error.parser'
@@ -72,14 +76,21 @@ export class TxHelper {
         this._addSignerOp(newKeypair.accountId()),
         ...(
           signerToReplace
-            ? this._removeMasterAndCurrentSignerOps(signers, accountId, signerToReplace)
+            ? this._removeMasterAndCurrentSignerOps(
+              signers,
+              accountId,
+              signerToReplace
+            )
             : this._removeAllSignersOps(signers, accountId)
         )
       ]
     } catch (error) {
       switch (parseError(error).constructor) {
         case errors.NotFoundError:
-          operations = [ this._addSignerOp(newKeypair.accountId()), this._removeMasterOp() ]
+          operations = [
+            this._addSignerOp(newKeypair.accountId()),
+            this._removeMasterOp()
+          ]
           break
         default:
           throw new Error(error)
@@ -95,8 +106,14 @@ export class TxHelper {
 
   static _removeMasterAndCurrentSignerOps (signers, accountId, publicKey) {
     return signers
-      .filter(signer => signer.public_key !== accountId && signer.public_key !== publicKey)
-      .map(signer => isMaster(signer, accountId) ? this._removeMasterOp() : this._removeOneSignerOp(signer))
+      .filter(signer =>
+        signer.public_key !== accountId && signer.public_key !== publicKey
+      )
+      .map(signer =>
+        isMaster(signer, accountId)
+          ? this._removeMasterOp()
+          : this._removeOneSignerOp(signer)
+      )
 
     function isMaster (signer, masterAccountId) {
       return signer.public_key === masterAccountId
@@ -105,7 +122,11 @@ export class TxHelper {
 
   static _removeAllSignersOps (signers, accountId) {
     return signers
-      .map(signer => isMaster(signer, accountId) ? this._removeMasterOp() : this._removeOneSignerOp(signer))
+      .map(signer =>
+        isMaster(signer, accountId)
+          ? this._removeMasterOp()
+          : this._removeOneSignerOp(signer)
+      )
 
     function isMaster (signer, masterAccountId) {
       return signer.public_key === masterAccountId

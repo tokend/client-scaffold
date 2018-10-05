@@ -14,24 +14,34 @@
       :id="id"
       @input="onInput"
     >
-      <md-option v-for="(val, i) in values" :value="val" :selected="val === value" :key="i">{{ val }}</md-option>
+      <md-option
+        v-for="(val, i) in values"
+        :value="val"
+        :selected="val === value"
+        :key="i">
+        {{ val }}
+      </md-option>
     </md-select>
-    <span class="md-error" v-if="errorMessage">{{ errorMessage }}</span>
+    <span
+      class="md-error"
+      v-if="errorMessage">
+      {{ errorMessage }}
+    </span>
   </md-field>
 </template>
 
 <script>
-  import FieldMixin from './field.mixin'
+import FieldMixin from './field.mixin'
 
-  export default {
-    name: 'select-field',
-    mixins: [FieldMixin],
-    props: {
-      values: { type: Array, default: _ => [] },
-      multiple: { type: Boolean, default: false },
-      dense: { type: Boolean, default: false }
-    }
+export default {
+  name: 'select-field',
+  mixins: [FieldMixin],
+  props: {
+    values: { type: Array, default: _ => [] },
+    multiple: { type: Boolean, default: false },
+    dense: { type: Boolean, default: false }
   }
+}
 </script>
 
 <style scoped>

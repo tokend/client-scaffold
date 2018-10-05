@@ -1,70 +1,70 @@
 <template>
   <div class="file-input">
-
     <div class="file-input__wrp">
-
-      <label class="file-input__upload-btn btn btn--info"
-             :for="id">
-        <i class="file-input__attachment-icon mdi mdi-paperclip"></i> Select file pdf/image, 5Mb max
+      <label
+        class="file-input__upload-btn btn btn--info"
+        :for="id">
+        <i class="file-input__attachment-icon mdi mdi-paperclip" />
+        Select file pdf/image, 5Mb max
       </label>
-      <span class="file-input__name" :title="name || fileName">{{ name || fileName }}</span>
-      <input class="file-input__upload-input"
-             :id="id"
-             type="file"
-             accept="application/pdf, image/*"
-             @change="onFileChange"
-      />
-
+      <span
+        class="file-input__name"
+        :title="name || fileName">
+        {{ name || fileName }}
+      </span>
+      <input
+        class="file-input__upload-input"
+        :id="id"
+        type="file"
+        accept="application/pdf, image/*"
+        @change="onFileChange"
+      >
     </div>
-
   </div>
 </template>
 
 <script>
-  import { FileHelper } from '../../../js/helpers/file.helper'
-  import { commonEvents } from '../../../js/events/common_events'
-  import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from '../../../js/const/const'
-  import { EventDispatcher } from '../../../js/events/event_dispatcher'
+import { FileHelper } from '@/js/helpers/file.helper'
+import { commonEvents } from '@/js/events/common_events'
+import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from '@/js/const/const'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
 
-  export default {
-    name: 'file-input',
+export default {
+  name: 'file-input',
 
-    props: {
-      fileName: '',
-      id: {
-        type: String,
-        default: 'file-select'
+  props: {
+    fileName: { type: String, default: '' },
+    id: { type: String, default: 'file-select' }
+  },
+
+  data () {
+    return {
+      name: ''
+    }
+  },
+
+  methods: {
+    async onFileChange (event) {
+      const files = event.target.files || event.dataTransfer.files
+      if (!files.length) return
+      const file = files[0]
+      if (file.size > MAX_FILE_BYTES) {
+        EventDispatcher.dispatchShowErrorEvent(`Maximum file size is ${MAX_FILE_MEGABYTES} Mb`)
+        return
       }
-    },
-
-    data () {
-      return {
-        name: ''
-      }
-    },
-
-    methods: {
-      async onFileChange (event) {
-        const files = event.target.files || event.dataTransfer.files
-        if (!files.length) return
-        const file = files[0]
-        if (file.size > MAX_FILE_BYTES) {
-          EventDispatcher.dispatchShowErrorEvent(`Maximum file size is ${MAX_FILE_MEGABYTES} Mb`)
-          return
-        }
-        this.name = file.name
-        this.type = file.type
-        const extracted = await FileHelper.readFileAsArrayBuffer(file)
-        const mimeType = file.type
-        const name = file.name
-        this.$emit(commonEvents.inputEvent, { file: extracted, mimeType, name })
-      }
+      this.name = file.name
+      this.type = file.type
+      const extracted = await FileHelper.readFileAsArrayBuffer(file)
+      const mimeType = file.type
+      const name = file.name
+      this.$emit(commonEvents.inputEvent, { file: extracted, mimeType, name })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
+  @import '~@/scss/variables';
 
   .file-input {
     display: inline-block;

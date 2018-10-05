@@ -16,7 +16,8 @@ export class WithdrawService extends Service {
    * @returns {TransactionResponseBuilder}
    */
   createWithdrawalRequest (opts) {
-    const operation = CreateWithdrawRequestBuilder.createWithdrawWithAutoConversion(opts)
+    const operation = CreateWithdrawRequestBuilder
+      .createWithdrawWithAutoConversion(opts)
 
     return this._operationBuilder
       .operation()

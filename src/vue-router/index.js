@@ -518,7 +518,11 @@ function scrollBehavior (to, from, savedPosition) {
 }
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.routeWithFeatures)) to.meta.routeWithFeatures = true
-  if (to.matched.some(record => record.meta.routeWithAuth)) to.meta.routeWithAuth = true
+  if (to.matched.some(record => record.meta.routeWithFeatures)) {
+    to.meta.routeWithFeatures = true
+  }
+  if (to.matched.some(record => record.meta.routeWithAuth)) {
+    to.meta.routeWithAuth = true
+  }
   next()
 })

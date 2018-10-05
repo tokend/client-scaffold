@@ -1,15 +1,17 @@
-import { DocumentContainer } from '../../js/helpers/DocumentContainer'
-import { usersService } from '../../js/services/users.service'
+import { DocumentContainer } from '@/js/helpers/DocumentContainer'
+import { usersService } from '@/js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
 import { vuexTypes } from '../types'
 import { Keypair } from 'swarm-js-sdk'
-import { RecordFactory } from '../../js/records/factory'
+import { RecordFactory } from '@/js/records/factory'
 
-import { accountsService } from '../../js/services/accounts.service'
-import { reviewableRequestsService } from '../../js/services/reviewable_requests.service'
-import { fileService } from '../../js/services/file.service'
+import { accountsService } from '@/js/services/accounts.service'
+import {
+  reviewableRequestsService
+} from '@/js/services/reviewable_requests.service'
+import { fileService } from '@/js/services/file.service'
 
-import { ACCOUNT_STATES } from '../../js/const/account.const'
+import { ACCOUNT_STATES } from '@/js/const/account.const'
 
 export const state = {
   account: {
@@ -69,21 +71,36 @@ export const mutations = {
 
 export const actions = {
   async GET_ACCOUNT_DETAILS ({ commit }) {
-    commit(vuexTypes.SET_ACCOUNT_DETAILS, await accountsService.loadAccount())
+    commit(
+      vuexTypes.SET_ACCOUNT_DETAILS,
+      await accountsService.loadAccount()
+    )
   },
 
   async GET_ACCOUNT_BALANCES ({ commit }) {
-    commit(vuexTypes.SET_ACCOUNT_BALANCES, await accountsService.loadDetailsForEachBalance())
+    commit(
+      vuexTypes.SET_ACCOUNT_BALANCES,
+      await accountsService.loadDetailsForEachBalance()
+    )
   },
 
   async GET_ACCOUNT_KYC_REQUESTS ({ commit }) {
-    const requests = await reviewableRequestsService.loadKycReviewableRequests()
-    commit(vuexTypes.SET_ACCOUNT_KYC_REQUESTS, requests.records.map(record => RecordFactory.createKycRequestRecord(record)))
+    const requests =
+      await reviewableRequestsService.loadKycReviewableRequests()
+    commit(
+      vuexTypes.SET_ACCOUNT_KYC_REQUESTS,
+      requests.records
+        .map(record => RecordFactory.createKycRequestRecord(record))
+    )
   },
 
   async GET_ACCOUNT_LIMITS ({ commit }) {
     const limits = await accountsService.loadAccountLimits()
-    commit(vuexTypes.SET_ACCOUNT_LIMITS, (limits.limits || []).map(limit => RecordFactory.createLimitRecord(limit)))
+    commit(
+      vuexTypes.SET_ACCOUNT_LIMITS,
+      (limits.limits || [])
+        .map(limit => RecordFactory.createLimitRecord(limit))
+    )
   },
 
   async GET_ACCOUNT_KYC_DATA ({ commit }, opts) {
@@ -107,7 +124,9 @@ export const actions = {
       }
     }
 
-    await Promise.all(Object.values(documents).map(document => uploadBothDocSides(document)))
+    await Promise.all(
+      Object.values(documents).map(document => uploadBothDocSides(document))
+    )
   },
 
   /**
@@ -138,7 +157,9 @@ export const getters = {
   accountBlocked: state => state.account.is_blocked,
   accountSeed: state => state.keys.seed,
   accountPublicKey: state => state.keys.publicKey,
-  accountKeypair: state => state.keys.seed ? Keypair.fromSecret(state.keys.seed) : {},
+  accountKeypair: state => state.keys.seed
+    ? Keypair.fromSecret(state.keys.seed)
+    : {},
   accountCreatedAt: state => state.account.createdAt,
   accountTokens: state => state.balances.map(balance => balance.asset),
   accountBalances: state => StateHelper.groupBalances(state.balances),
@@ -153,16 +174,23 @@ export const getters = {
   accountDepositAddresses: state =>
     state.account.external_system_accounts
       .map(account => RecordFactory.createExternalAccountRecord(account))
-      .reduce((accounts, account) => { accounts[account.type] = account.address; return accounts }, {}),
+      .reduce((accounts, account) => {
+        accounts[account.type] = account.address
+        return accounts
+      }, {}),
   accountLimits: state => state.limits,
   // kyc:
   accountKycRequests: state => state.kycRequests,
   accountKycLatestRequest: state => StateHelper.defineLatestKycRequest(state),
-  accountState: (state, getters) => ACCOUNT_STATES[getters.accountKycLatestRequest.state] || ACCOUNT_STATES.nil,
-  accountLatestBlobId: (state, getters) => getters.accountKycLatestRequest.blobId,
+  accountState: (state, getters) =>
+    ACCOUNT_STATES[getters.accountKycLatestRequest.state] ||
+    ACCOUNT_STATES.nil,
+  accountLatestBlobId: (state, getters) =>
+    getters.accountKycLatestRequest.blobId,
   accountKycData: state => state.kycData,
   accountKycDocuments: state => state.kycDocuments,
-  accountLatestKycLevel: (state, getters) => getters.accountKycLatestRequest.kycLevel
+  accountLatestKycLevel: (state, getters) =>
+    getters.accountKycLatestRequest.kycLevel
 }
 
 export default {

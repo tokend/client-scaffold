@@ -1,18 +1,19 @@
 <template>
   <div class="updates-tab">
-
-    <add-update-form v-if="isAddFormOpened && updatesLoaded"
-                      class="updates-tab__add-form"
-                      :sale="sale"
-                      @close="closeForm"
-                      @timeline-add-finished="getUpdates"
+    <add-update-form
+      v-if="isAddFormOpened && updatesLoaded"
+      class="updates-tab__add-form"
+      :sale="sale"
+      @close="closeForm"
+      @timeline-add-finished="getUpdates"
     />
 
-    <timeline v-if="!isAddFormOpened && updates.length > 0 && updatesLoaded"
-              @timeline-add-click="openForm"
-              class="updates-tab__timeline"
-              :items="updates"
-              :sale="sale"
+    <timeline
+      v-if="!isAddFormOpened && updates.length > 0 && updatesLoaded"
+      @timeline-add-click="openForm"
+      class="updates-tab__timeline"
+      :items="updates"
+      :sale="sale"
     />
 
     <template v-if="updates.length === 0 && !isAddFormOpened && updatesLoaded">
@@ -33,64 +34,66 @@
 </template>
 
 <script>
-  import Timeline from '../components/UpdatesTab.Timeline'
-  import AddUpdateForm from '../components/UpdatesTab.Timeline.AddForm'
+import Timeline from '../components/UpdatesTab.Timeline'
+import AddUpdateForm from '../components/UpdatesTab.Timeline.AddForm'
 
-  import { blobTypes, blobFilters } from '../../../../../js/const/const'
-  import { usersService } from '../../../../../js/services/users.service'
-  import { i18n } from '../../../../../js/i18n'
-  import { mapGetters } from 'vuex'
-  import { vuexTypes } from '../../../../../vuex/types'
+import { blobTypes, blobFilters } from '@/js/const/const'
+import { usersService } from '@/js/services/users.service'
+import { i18n } from '@/js/i18n'
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '@/vuex/types'
 
-  export default {
-    components: {
-      Timeline,
-      AddUpdateForm
+export default {
+  components: {
+    Timeline,
+    AddUpdateForm
+  },
+  props: {
+    sale: { type: Object, default: () => {} }
+  },
+  data: _ => ({
+    isAddFormOpened: false,
+    updates: [],
+    updatesLoaded: false,
+    i18n
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountId
+    ]),
+    isMy () {
+      return this.sale.owner === this.accountId
+    }
+  },
+  watch: {
+    sale: {
+      handler: 'getUpdates',
+      immediate: true
+    }
+  },
+  methods: {
+    async getUpdates () {
+      if (!this.sale || !this.sale.id) return
+      this.updates = await usersService
+        .blobsOf(this.sale.owner)
+        .getAll({
+          [blobFilters.fundID]: this.sale.id,
+          [blobFilters.type]: blobTypes.fundUpdate.num
+        })
+      this.updatesLoaded = true
     },
-    props: ['sale'],
-    data: _ => ({
-      isAddFormOpened: false,
-      updates: [],
-      updatesLoaded: false,
-      i18n
-    }),
-    computed: {
-      ...mapGetters([
-        vuexTypes.accountId
-      ]),
-      isMy () {
-        return this.sale.owner === this.accountId
-      }
+    openForm () {
+      this.isAddFormOpened = true
     },
-    methods: {
-      async getUpdates () {
-        if (!this.sale || !this.sale.id) return
-        this.updates = await usersService
-          .blobsOf(this.sale.owner)
-          .getAll({
-            [blobFilters.fundID]: this.sale.id,
-            [blobFilters.type]: blobTypes.fundUpdate.num
-          })
-        this.updatesLoaded = true
-      },
-      openForm () {
-        this.isAddFormOpened = true
-      },
-      closeForm () {
-        this.isAddFormOpened = false
-      }
-    },
-    watch: {
-      sale: {
-        handler: 'getUpdates',
-        immediate: true
-      }
+    closeForm () {
+      this.isAddFormOpened = false
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../../scss/variables";
+  @import "~@scss/variables";
   .updates-tab {
     min-height: 300px;
   }

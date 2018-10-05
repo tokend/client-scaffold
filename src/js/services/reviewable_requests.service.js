@@ -43,10 +43,10 @@ export class ReviewableRequestsService extends Service {
   }
 
   /**
-    * Loads all update kyc reviewable requests for current user
-    *
-    * @return {Promise<object>} - Promise object representing rr
-    */
+   * Loads all update kyc reviewable requests for current user
+   *
+   * @return {Promise<object>} - Promise object representing rr
+   */
   loadKycReviewableRequests () {
     return this._horizonRequestBuilder
       .reviewableRequestsHelper()
@@ -96,6 +96,7 @@ export class ReviewableRequestsService extends Service {
       .forBaseAsset(code)
       .forRequestor(this._accountId)
       .callWithSignature(this._keypair)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => response.records[0])
   }
 }

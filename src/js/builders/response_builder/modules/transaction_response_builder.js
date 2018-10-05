@@ -16,6 +16,14 @@ export class TransactionResponseBuilder extends ResponseBuilder {
   }
 
   requestID () {
-    return this.result().result().results()[0].tr().manageAssetResult().success().requestId().toString()
+    return this
+      .result()
+      .result()
+      .results()[0]
+      .tr()
+      .manageAssetResult()
+      .success()
+      .requestId()
+      .toString()
   }
 }
