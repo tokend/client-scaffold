@@ -16,7 +16,7 @@ const featureFlags = {
   sales: true,
   limits: true,
   requests: true,
-  massTransfers: true,
+  massTransfers: false,
   feesExplorer: true
 }
 
