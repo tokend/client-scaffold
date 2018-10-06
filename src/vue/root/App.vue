@@ -144,6 +144,7 @@ export default {
   display: flex;
   align-items: stretch;
   overflow-x: hidden;
+  flex: 1;
 }
 
 .app__main-content {

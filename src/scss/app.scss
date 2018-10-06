@@ -43,15 +43,21 @@ textarea {
   width: 100%;
 }
 
-html,body {
+html {
   overflow: auto !important;
   -webkit-overflow-scrolling : touch !important;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  flex: 1;
 
   &,
   & main,
