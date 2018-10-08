@@ -76,7 +76,7 @@ export function subtract (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
   const one = new BigNumber(a)
   const two = new BigNumber(b)
 
-  const result = one.sub(two)
+  const result = one.sub ? one.sub(two) : one.minus(two)
   return result.toFixed(DECIMAL_PLACES)
 }
 
