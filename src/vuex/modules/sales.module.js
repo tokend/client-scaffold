@@ -1,4 +1,4 @@
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 import { RecordFactory } from '../../js/records/factory'
 import { vuexTypes } from '../types'
 import { accountsService } from '../../js/services/accounts.service'

@@ -1,5 +1,5 @@
 import common from '../services/common/common'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 export function signToken (token, encryptedKeychain, key) {
   const keychainData = common.decryptKeychainData(encryptedKeychain, key)

@@ -3,7 +3,7 @@ import {
   Operation,
   CreateUpdateKYCRequestBuilder,
   CreateManageLimitsRequestBuilder
-} from 'swarm-js-sdk'
+} from 'tokend-js-sdk'
 import { ErrorFactory, errorTypes } from '../errors/factory'
 import { Service } from './service'
 import get from 'lodash/get'

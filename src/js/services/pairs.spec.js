@@ -4,7 +4,7 @@ import { mockAccountId, mockResponses } from './test/default.mocks'
 import { mockConvertAmount } from './test/prices.mocks'
 import { mockBaseTokenCode, mockQuoteTokenCode } from './test/offers.mocks'
 import { ServiceTestHelper } from './test/service_test_helper'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 

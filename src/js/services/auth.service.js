@@ -1,4 +1,4 @@
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 import { TxHelper } from '../helpers/tx.helper'
 import { walletService, WalletService } from './wallet.service'
 import { WalletHelper } from '../helpers/wallet.helper'

@@ -1,6 +1,6 @@
 import { Service } from './service'
 import { PAYMENT_FEE_SUBTYPES } from '../const/xdr.const'
-import { xdr } from 'swarm-js-sdk'
+import { xdr } from 'tokend-js-sdk'
 
 const feeTypes = {
   PAYMENT_FEE: 'paymentFee',

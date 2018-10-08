@@ -1,4 +1,4 @@
-import { PaymentV2Builder } from 'swarm-js-sdk'
+import { PaymentV2Builder } from 'tokend-js-sdk'
 import { Service } from './service'
 
 export class TransferService extends Service {

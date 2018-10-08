@@ -1,7 +1,7 @@
 {
-  "name": "swarm.fund_web-client",
+  "name": "tokend-web-client",
   "version": "1.0.0",
-  "description": "Swarm.fund web-client",
+  "description": "TokenD web-client",
   "author": "Distributed Lab <contact@distributedlab.com>",
   "private": true,
   "scripts": {
@@ -14,14 +14,14 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint src/**/*.{js,vue} --fix",
+    "lint": "eslint {src,test,config,build}/**/*.{.spec.js,js,vue} --fix",
     "init": "npm run init-pre-commit-hook",
     "init-pre-commit-hook": "chmod +x ./git-hooks/init-hooks.sh && ./git-hooks/init-hooks.sh"
   },
   "dependencies": {
     "@mdi/font": "^2.7.94",
     "@std/esm": "^0.18.0",
-    "@tokend/wallet.js": "git+https://gitlab.com/tokend/wallet.js.git",
+    "@tokend/wallet.js": "git+https://github.com/tokend/wallet.js.git",
     "@vue/test-utils": "^1.0.0-beta.24",
     "accounting": "^0.4.1",
     "axios": "^0.18.0",
@@ -39,7 +39,7 @@
     "moment": "^2.22.2",
     "node-polyglot": "^2.3.0",
     "raven-js": "^3.27.0",
-    "swarm-js-sdk": "git+ssh://git@gitlab.com/swarmfund/js-sdk.git",
+    "tokend-js-sdk": "git+https://github.com/tokend/js-sdk.git",
     "ua-parser-js": "^0.7.18",
     "vee-validate": "^2.1.0-beta.8",
     "vue": "^2.5.17",

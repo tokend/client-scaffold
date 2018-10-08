@@ -1,6 +1,6 @@
 import { ResponseBuilder } from '../response_builder'
 
-import { xdr } from 'swarm-js-sdk'
+import { xdr } from 'tokend-js-sdk'
 
 export class TransactionResponseBuilder extends ResponseBuilder {
   constructor (response) {

@@ -1,1 +1,1 @@
-export const STORAGE_KEY = 'SwarmClient'
+export const STORAGE_KEY = 'TokendClient'

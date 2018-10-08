@@ -1,5 +1,5 @@
 import { xdrEnumToConstant } from '../utils/xdr_enum_to_constant.util'
-import { xdr } from 'swarm-js-sdk'
+import { xdr } from 'tokend-js-sdk'
 
 export const REQUEST_TYPES = Object.freeze(
   xdrEnumToConstant('ReviewableRequestType')

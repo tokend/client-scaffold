@@ -1,4 +1,4 @@
-import { Server, Network } from 'swarm-js-sdk'
+import { Server, Network } from 'tokend-js-sdk'
 import config from '../../config'
 
 export function initHorizonServer () {

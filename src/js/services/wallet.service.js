@@ -1,5 +1,5 @@
 import { Service } from './service'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 export class WalletService extends Service {
   /**

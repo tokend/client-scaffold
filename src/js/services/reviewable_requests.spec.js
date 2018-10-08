@@ -1,8 +1,11 @@
 import { ReviewableRequestsService } from './reviewable_requests.service'
 import { mockAccountId, mockResponses } from './test/default.mocks'
 import { ServiceTestHelper } from './test/service_test_helper'
-import { Keypair } from 'swarm-js-sdk'
-import { mockReviewableRequestId, mockReviewableRequestTokenCode } from './test/reviewable_requests.mocks'
+import { Keypair } from 'tokend-js-sdk'
+import {
+  mockReviewableRequestId,
+  mockReviewableRequestTokenCode
+} from './test/reviewable_requests.mocks'
 import config from '../../config'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
@@ -11,13 +14,16 @@ describe('reviewable_requests.service test', () => {
   let reviewableRequestsService
 
   beforeEach(() => {
-    reviewableRequestsService = new ReviewableRequestsService({accountId: mockAccountId, keypair: Keypair.random()})
-
+    reviewableRequestsService = new ReviewableRequestsService({
+      accountId: mockAccountId,
+      keypair: Keypair.random()
+    })
   })
 
   /** requests to horizon: **/
 
   it('loadTokensReviewableRequests() should properly build request url', () => {
+    // eslint-disable-next-line
     const prefix = `request/assets?requestor=${mockAccountId}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`
     return ServiceTestHelper.doAxiosMockedRequest(
       () => reviewableRequestsService.loadTokensReviewableRequests(),
@@ -26,7 +32,9 @@ describe('reviewable_requests.service test', () => {
     )
   })
 
+  // eslint-disable-next-line
   it('loadWithdrawalsReviewableRequests() should properly build request url', () => {
+    // eslint-disable-next-line
     const prefix = `request/withdrawals?requestor=${mockAccountId}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`
     return ServiceTestHelper.doAxiosMockedRequest(
       () => reviewableRequestsService.loadWithdrawalsReviewableRequests(),
@@ -38,19 +46,22 @@ describe('reviewable_requests.service test', () => {
   it('loadReviewableRequestById() should properly build request url', () => {
     const prefix = `requests/${mockReviewableRequestId}`
     return ServiceTestHelper.doAxiosMockedRequest(
-      () => reviewableRequestsService.loadReviewableRequestById(mockReviewableRequestId),
+      () => reviewableRequestsService
+        .loadReviewableRequestById(mockReviewableRequestId),
       prefix,
       mockResponses[prefix]
     )
   })
 
+  // eslint-disable-next-line
   it('loadSalesReviewableRequestByTokenCode() should properly build request url', () => {
+    // eslint-disable-next-line
     const prefix = `request/sales?base_asset=${mockReviewableRequestTokenCode}&requestor=${mockAccountId}`
     return ServiceTestHelper.doAxiosMockedRequest(
-      () => reviewableRequestsService.loadSalesReviewableRequestByTokenCode(mockReviewableRequestTokenCode),
+      () => reviewableRequestsService
+        .loadSalesReviewableRequestByTokenCode(mockReviewableRequestTokenCode),
       prefix,
       mockResponses[prefix]
     )
   })
-
 })

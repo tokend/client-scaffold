@@ -1,5 +1,5 @@
 import * as libphonenumber from 'libphonenumber-js'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 import { validateAddress } from './address_validation'
 import { i18n } from '../js/i18n'
 const rules = [

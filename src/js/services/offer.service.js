@@ -1,7 +1,7 @@
 import config from '../../config'
 
 import { Service } from './service'
-import { ManageOfferBuilder } from 'swarm-js-sdk'
+import { ManageOfferBuilder } from 'tokend-js-sdk'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../const/const'
 
 export class OffersService extends Service {
@@ -23,7 +23,8 @@ export class OffersService extends Service {
    *
    * @param {object} createOpts {@borrows _composeCreateOfferOperation}
    * @param {object} cancelOpts {@borrows _composeCancelOfferOperation}
-   * @returns {Promise<object>} - Promise object representing creation of sale offer
+   * @returns {Promise<object>} - Promise object representing creation of sale
+   * offer
    */
   async createSaleOffer (createOpts, cancelOpts) {
     const removeOfferOperation = cancelOpts
@@ -42,11 +43,14 @@ export class OffersService extends Service {
    * @param {object} opts
    * @param {string} opts.amount
    * @param {string} opts.price
-   * @param {string} opts.orderBookId - orderBook ID, '0' - for secondary market, saleID {@link SaleEntity}  otherwise
-   * @param {string} opts.isBuy - Defines if offer goal buying or selling base asset
+   * @param {string} opts.orderBookId - orderBook ID, '0' - for secondary
+   * market, saleID {@link SaleEntity}  otherwise
+   * @param {string} opts.isBuy - Defines if offer goal buying or selling
+  *  base asset
    * @param {string} opts.baseBalance - Base balance id
    * @param {string} opts.quoteBalance - Quote balance id
-   * @param {string} opts.fee - Should be loaded externally before creating offer, use {@link loadOfferFees}
+   * @param {string} opts.fee - Should be loaded externally before creating
+  *  offer, use {@link loadOfferFees}
    * @return {xdr.ManageOfferOp}
    * @private
    */
@@ -149,7 +153,8 @@ export class OffersService extends Service {
    * @param {string} opts.quoteBalance - Quote token code
    * @param {string} opts.offerId - ID of the offer to cancel
    * @param {string} opts.price - price of the base token
-   * @param {string} opts.orderBookId - orderBook ID, '0' - for secondary market, saleID {@link SaleRecord} otherwise
+   * @param {string} opts.orderBookId - orderBook ID, '0' - for secondary
+   * market, saleID {@link SaleRecord} otherwise
    * @return {xdr.cancelOfferOp}
    * @private
    */

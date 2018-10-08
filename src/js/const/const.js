@@ -39,13 +39,8 @@ export {
 } from './xdr.const'
 
 export {
-  DEFAULT_BASE_ASSET,
-  DEFAULT_QUOTE_ASSET,
   DEFAULT_PRECISION,
   DEFAULT_INPUT_STEP,
-  DEFAULT_INPUT_MIN,
-  DEFAULT_DATE_FORMAT,
-  DEFAULT_DATE_TIME_FORMAT,
   DEFAULT_MAX_AMOUNT
 } from './configs.const'
 export { assetMap } from './asset_map'
