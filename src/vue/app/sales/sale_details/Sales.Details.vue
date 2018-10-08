@@ -4,7 +4,7 @@
     v-if="sale && token">
     <div class="sale-details__header">
       <h1 class="sale-details__heading">
-        {{ sale.name }} ({{ sale.baseAsset }}
+        {{ sale.name }} ({{ sale.baseAsset }})
       </h1>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
     </div>
