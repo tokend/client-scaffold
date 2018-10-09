@@ -7,7 +7,8 @@ export class FileService extends Service {
    * Uploads the file into storage
    *
    * @param opts
-   * @param opts.type {string} - document type {@link documentTypes} of the document (!! nothing common with MIME-type)
+   * @param opts.type {string} - document type {@link documentTypes} of the
+   * document (!! nothing common with MIME-type)
    * @param opts.mimeType - MIME-type of the file being uploaded
    * @param opts.file {ArrayBuffer} - file itself
    *
@@ -52,7 +53,8 @@ export class FileService extends Service {
   }
 
   /**
-   * @param {DocumentContainer} document - instance of {@link DocumentContainer} to be uploaded
+   * @param {DocumentContainer} document - instance of {@link DocumentContainer}
+   * to be uploaded
    * @returns {Promise<object>}
    */
   async uploadSingleDocument (document) {

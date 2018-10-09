@@ -2,7 +2,7 @@ import { Service } from './service'
 import { BindExternalSystemAccountIdBuilder,
   PreIssuanceRequestOpBuilder,
   CreateIssuanceRequestBuilder
-} from 'swarm-js-sdk'
+} from 'tokend-js-sdk'
 
 export class IssuanceService extends Service {
   /**
@@ -32,7 +32,8 @@ export class IssuanceService extends Service {
    * @param {string} opts.reference - Reference of the request
    * @param {object} opts.externalDetails - External details about issuance
    * @param {object|number} [opts.allTasks] - Issuance tasks
-   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the payment.
+   * Defaults to the transaction's source account.
    *
    * @return {TransactionResponseBuilder}
    */

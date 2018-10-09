@@ -1,4 +1,4 @@
-import { xdr } from 'swarm-js-sdk'
+import { xdr } from 'tokend-js-sdk'
 
 export const defaultSignerParams = Object.freeze({
   weight: 255,

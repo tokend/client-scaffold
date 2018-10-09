@@ -48,9 +48,11 @@ export class UsersService extends Service {
   }
 
   /**
-   * Changes user type to provided. Note: this works only if user have no specified type before
+   * Changes user type to provided. Note: this works only if user have no
+   * specified type before
    *
-   * @param {string} type, 'general' - for individual users, 'syndicate' - for corporations
+   * @param {string} type, 'general' - for individual users,
+   * 'syndicate' - for corporations
    *
    */
   patchUserType (type) {

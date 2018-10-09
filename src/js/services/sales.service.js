@@ -1,4 +1,4 @@
-import { SaleRequestBuilder, ManageAssetBuilder } from 'swarm-js-sdk'
+import { SaleRequestBuilder, ManageAssetBuilder } from 'tokend-js-sdk'
 import { Service } from './service'
 import { blobFilters, blobTypes } from '../const/const'
 import { usersService } from './users.service'
@@ -39,7 +39,7 @@ export class SalesService extends Service {
   }
 
   /**
-   * Creates sale creation request additionally updating token creation request. In swarm, we need this to change tokens max issuance
+   * Creates sale creation request additionally updating token creation request. In the system, we need this to change tokens max issuance
    * property depending on sale's hard cap. If no need to update token request, use {@link createSaleCreationRequest}
    *
    * @borrows {createSaleCreationRequest}
@@ -89,7 +89,7 @@ export class SalesService extends Service {
   }
 
   /**
-   * Loads sale by token code. By default loads an array of sales, but because Swarm sale/tokens are 1-1 we can derive
+   * Loads sale by token code. By default loads an array of sales, but because sale/tokens are 1-1 we can derive
    * 1st element here
    *
    * @param {string} tokenCode - token code

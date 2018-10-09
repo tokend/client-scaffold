@@ -2,7 +2,7 @@ import {
   Keypair,
   TransactionBuilder,
   SetOptionsBuilder
-} from 'swarm-js-sdk'
+} from 'tokend-js-sdk'
 import { defaultSignerParams } from '../const/const'
 import { initHorizonServer } from './server.helper'
 import { parseError } from '../parsers/error.parser'

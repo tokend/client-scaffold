@@ -1,5 +1,5 @@
 import { ASSET_POLICIES } from '../const/xdr.const'
-import { xdr } from 'swarm-js-sdk'
+import { xdr } from 'tokend-js-sdk'
 import config from '../../config'
 import get from 'lodash/get'
 

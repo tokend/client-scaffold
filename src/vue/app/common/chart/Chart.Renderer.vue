@@ -44,7 +44,7 @@ export default {
   name: 'chart-renderer',
   props: {
     data: { type: Array, default: () => [] },
-    currency: { type: String, default: 'SUN' },
+    currency: { type: String, default: 'BTC' },
     scale: { type: String, default: 'hour' },
     requiredTicks: { type: Array, default: () => [] },
     precision: { type: Number, default: 0 },
@@ -126,7 +126,7 @@ export default {
     },
 
     formatMoney (amount) {
-      const curSym = ({ 'SUN': 'SUN' })[this.currency]
+      const curSym = ({ 'BTC': 'BTC' })[this.currency]
       const moneyFormats = {
         'en': (curSym, amount) => `${curSym}${amount}`
       }

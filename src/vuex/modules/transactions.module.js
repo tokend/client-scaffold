@@ -3,7 +3,7 @@ import { transactionsService } from '@/js/services/transactions.service'
 import { parseTransaction } from '@/js/parsers/tx.parser'
 import { Paginator } from '@/js/helpers/paginator'
 import { vuexTypes } from '../types'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 

@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter'
 import config from '../../../config'
-import axios from 'swarm-js-sdk/node_modules/axios'
+import axios from 'tokend-js-sdk/node_modules/axios'
 import Vue from 'vue'
 import VueResourse from 'vue-resource'
 
@@ -24,7 +24,6 @@ export class ServiceTestHelper {
           payload: request.body
         }
       }
-      console.log(JSON.stringify(request))
       next(request.respondWith(body, {
         status: 200,
         statusText: 'OK'

@@ -1,7 +1,6 @@
 import { TxRecord } from './tx.record'
 
 import { add } from '../utils/math.util'
-import { PricesHelper } from '../../vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class TransferRecord extends TxRecord {
@@ -14,7 +13,6 @@ export class TransferRecord extends TxRecord {
     this.receiver = record.to
     this.sender = record.from
     this.subject = record.subject
-    this.amountSUN = this._getSUNAmount()
     this.counterparty = this._getCounterParty()
     this.direction = this._getDirection()
     this.fee = this._getFee() // TODO: need parse fees separately later to show in extended details
@@ -57,9 +55,5 @@ export class TransferRecord extends TxRecord {
     return direction === DIRECTION_VERBOSE.in
       ? this._record.from
       : this._record.to
-  }
-
-  _getSUNAmount () {
-    return PricesHelper.baseToQuote(this.amount, this.asset, 'SUN')
   }
 }

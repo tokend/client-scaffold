@@ -1,8 +1,16 @@
 import { OffersService } from './offer.service'
-import { mockAccountId, mockBalanceId, mockEmail, mockResponses, offerPrefixes } from './test/default.mocks'
-import { ServiceTestHelper}  from './test/service_test_helper'
-import { Keypair } from 'swarm-js-sdk'
-import { mockOrderBookId, mockBaseTokenCode, mockQuoteTokenCode  } from './test/offers.mocks'
+import {
+  mockAccountId,
+  mockResponses,
+  offerPrefixes
+} from './test/default.mocks'
+import { ServiceTestHelper } from './test/service_test_helper'
+import { Keypair } from 'tokend-js-sdk'
+import {
+  mockOrderBookId,
+  mockBaseTokenCode,
+  mockQuoteTokenCode
+} from './test/offers.mocks'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 
@@ -10,7 +18,10 @@ describe('offers.service test', () => {
   let offersService
 
   beforeEach(() => {
-    offersService = new OffersService({accountId: mockAccountId, keypair: Keypair.random()})
+    offersService = new OffersService({
+      accountId: mockAccountId,
+      keypair: Keypair.random()
+    })
   })
 
   it('loadUserOffers() should properly build request url', () => {
@@ -25,7 +36,6 @@ describe('offers.service test', () => {
 
   it('loadUserSaleOffers() should properly build request url', () => {
     const prefix = offerPrefixes.saleOffers
-    console.log(prefix)
     return ServiceTestHelper.doAxiosMockedRequest(
       () => offersService.loadUserSaleOffers(mockOrderBookId),
       prefix,
@@ -36,7 +46,6 @@ describe('offers.service test', () => {
 
   it('loadTradeOffers() should properly build request url', () => {
     const prefix = offerPrefixes.currentOffers
-    console.log(prefix)
     const opts = {
       base: mockBaseTokenCode,
       quote: mockQuoteTokenCode,
@@ -52,7 +61,6 @@ describe('offers.service test', () => {
 
   it('loadCompletedTrades() should properly build request url', () => {
     const prefix = offerPrefixes.trades
-    console.log(prefix)
     const opts = {
       base: mockBaseTokenCode,
       quote: mockQuoteTokenCode

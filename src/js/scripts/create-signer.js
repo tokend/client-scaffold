@@ -1,4 +1,4 @@
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 import { TxHelper } from '../helpers/tx.helper'
 import { operationBuilder } from '../builders/operation_builder/operation_builder'
 

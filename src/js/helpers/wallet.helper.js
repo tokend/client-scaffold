@@ -1,5 +1,5 @@
 import walletUtil from '@tokend/wallet.js'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 export class WalletHelper {
   /**

@@ -10,20 +10,6 @@ export class PricesHelper {
       return multiply(amount, price)
     }
     return 0
-    // const mediumAssetprice = this._findPriceForAssetPair(
-    //   fromBase,
-    //   MEDIUM_ASSET
-    // )
-    // const mediumAssetAmount = multiply(amount, mediumAssetprice)
-    // const endConversionPrice = this._findPriceForAssetPair(
-    //   MEDIUM_ASSET,
-    //   toQuote
-    // )
-    // const result = multiply(mediumAssetAmount, endConversionPrice)
-    // if (!result) {
-    //   return 0
-    // }
-    // return result
   }
 
   static quoteToBase (amount, fromQuote, toBase) {

@@ -240,7 +240,7 @@
 import { FileHelper } from '../../../js/helpers/file.helper'
 import { ErrorHandler } from '../../../js/errors/error_handler'
 import { EventDispatcher } from '../../../js/events/event_dispatcher'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 import { accountsService } from '../../../js/services/accounts.service'
 import { transferService } from '../../../js/services/transfers.service'

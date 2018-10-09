@@ -2,7 +2,6 @@ import get from 'lodash/get'
 import { TxRecord } from './tx.record'
 import store from '@/vuex'
 
-import { PricesHelper } from '@/vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class MatchRecord extends TxRecord {
@@ -66,7 +65,6 @@ export class MatchTransaction {
     this.feePaid = this._getTxFeePaid()
     this.amount = this._getTxAmount()
     this.direction = this._getTxDirection()
-    this.amountSUN = this._getTxAmountSUN()
   }
 
   _getTxBaseAsset () {
@@ -106,10 +104,6 @@ export class MatchTransaction {
       return this.quoteAmount
     }
     return this.baseAmount
-  }
-
-  _getTxAmountSUN () {
-    return PricesHelper.baseToQuote(this.amount, this.asset, 'SUN')
   }
 
   _getTxPrice () {

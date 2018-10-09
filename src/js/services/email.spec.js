@@ -1,7 +1,11 @@
 import { EmailService } from './email.service'
-import {mockAccountId, mockBalanceId, mockEmail, mockWalletId, mockResponses, mockTokenCodes} from './test/default.mocks'
+import {
+  mockAccountId,
+  mockWalletId,
+  mockResponses
+} from './test/default.mocks'
 import { ServiceTestHelper } from './test/service_test_helper'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 
@@ -11,7 +15,10 @@ describe('service.email', () => {
   let emailService
 
   beforeEach(() => {
-    emailService = new EmailService({ accountId: mockAccountId, keypair: Keypair.random() })
+    emailService = new EmailService({
+      accountId: mockAccountId,
+      keypair: Keypair.random()
+    })
   })
 
   it('sendResendEmailRequest() should properly build request url', () => {

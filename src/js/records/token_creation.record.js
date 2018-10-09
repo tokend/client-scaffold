@@ -8,9 +8,12 @@ export class TokenCreationRecord extends RequestRecord {
     this._record = record
     this.tokenName = _get(this._record, 'details.asset_create.details.name')
     this.tokenCode = _get(this._record, 'details.asset_create.code')
-    this.preissuedAssetSigner = _get(this._record, 'details.asset_create.pre_issued_asset_signer')
-    this.maxIssuanceAmount = _get(this._record, 'details.asset_create.max_issuance_amount')
-    this.initialPreissuedAmount = _get(this._record, 'details.asset_create.initial_preissued_amount')
+    this.preissuedAssetSigner =
+      _get(this._record, 'details.asset_create.pre_issued_asset_signer')
+    this.maxIssuanceAmount =
+      _get(this._record, 'details.asset_create.max_issuance_amount')
+    this.initialPreissuedAmount =
+      _get(this._record, 'details.asset_create.initial_preissued_amount')
     this.policies = this._getPolicies()
     this.terms = _get(this._record, 'details.asset_create.details.terms')
     this.termsUrl = this._getTermsUrl()

@@ -1,8 +1,12 @@
-import { FileService  } from './file.service'
-import {mockAccountId, mockBalanceId, mockEmail, mockResponses, mockWalletId} from './test/default.mocks'
-import { mockDocumentId, mockMimeType, mockDocumentType } from './test/files.mocks'
+import { FileService } from './file.service'
+import { mockAccountId, mockResponses } from './test/default.mocks'
+import {
+  mockDocumentId,
+  mockMimeType,
+  mockDocumentType
+} from './test/files.mocks'
 import { ServiceTestHelper } from './test/service_test_helper'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 
 ServiceTestHelper.letVueResourseRespondFrom(mockResponses)
 
@@ -10,7 +14,10 @@ describe('service.files test', () => {
   let fileService
 
   beforeEach(() => {
-    fileService = new FileService({accountId: mockAccountId, keypair: Keypair.random()})
+    fileService = new FileService({
+      accountId: mockAccountId,
+      keypair: Keypair.random()
+    })
   })
 
   /** requests to api: **/

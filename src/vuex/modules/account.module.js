@@ -2,7 +2,7 @@ import { DocumentContainer } from '@/js/helpers/DocumentContainer'
 import { usersService } from '@/js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
 import { vuexTypes } from '../types'
-import { Keypair } from 'swarm-js-sdk'
+import { Keypair } from 'tokend-js-sdk'
 import { RecordFactory } from '@/js/records/factory'
 
 import { accountsService } from '@/js/services/accounts.service'

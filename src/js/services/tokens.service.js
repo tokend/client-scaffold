@@ -1,4 +1,4 @@
-import { xdr, Operation, ManageAssetBuilder, Keypair } from 'swarm-js-sdk'
+import { xdr, Operation, ManageAssetBuilder, Keypair } from 'tokend-js-sdk'
 import { Service } from './service'
 
 export class TokensService extends Service {
@@ -6,17 +6,23 @@ export class TokensService extends Service {
    * Creates a request to create token
    *
    * @param opts
-   * @param {string} opts.requestID - request ID, if 0 - creates new, updates otherwise
+   * @param {string} opts.requestID - request ID, if 0 - creates new, updates
+   * otherwise
    * @param {string} opts.code - Token code
-   * @param {string} opts.preissuedAssetSigner - AccountID of keypair which will sign request for token to be authrorized to be issued
-   * @param {string} opts.maxIssuanceAmount - Max amount can be issued of that token
+   * @param {string} opts.preissuedAssetSigner - AccountID of keypair which will
+   * sign request for token to be authrorized to be issued
+   * @param {string} opts.maxIssuanceAmount - Max amount can be issued of that
+   * token
    * @param {number} opts.policies - Token policies
-   * @param {string} opts.initialPreissuedAmount - Amount of pre issued tokens available after creation of the token
+   * @param {string} opts.initialPreissuedAmount - Amount of pre issued tokens
+   * available after creation of the token
    *
    * @param {object} opts.details - Additional details about token
    * @param {string} opts.details.name - Name of the token
-   * @param {string} opts.details.logo - Token picture {@link DocumentContainer.getDetailsForSave}
-   * @param {string} opts.details.terms - Token terms {@link DocumentContainer.getDetailsForSave}
+   * @param {string} opts.details.logo - Token picture
+   * {@link DocumentContainer.getDetailsForSave}
+   * @param {string} opts.details.terms - Token terms
+   * {@link DocumentContainer.getDetailsForSave}
    *
    * @return {Promise<TransactionResponseBuilder>}
    */
@@ -31,7 +37,8 @@ export class TokensService extends Service {
   /**
    * Creates balance in users account for provided token
    *
-   * @param {string} tokenCode - token code of token, which balance is being created
+   * @param {string} tokenCode - token code of token, which balance is being
+   * created
    * @return {Promise<TransactionResponseBuilder>}
    */
   static createBalance (tokenCode) {
@@ -55,7 +62,8 @@ export class TokensService extends Service {
    * Creates a request to update token
    *
    * @param opts
-   * @param {string} opts.requestID - request ID, if 0 - creates new, updates otherwise
+   * @param {string} opts.requestID - request ID, if 0 - creates new, updates
+   * otherwise
    * @param {string} opts.code - Token code
    * @param {number} opts.policies - Token policies
    *
@@ -68,7 +76,8 @@ export class TokensService extends Service {
    * @param {string} opts.details.terms.type - Content type of terms document
    * @param {string} opts.details.terms.name - Name of terms document
    *
-   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the payment.
+   * Defaults to the transaction's source account.
    * @return {Promise<TransactionResponseBuilder>}
    */
   createTokenUpdateRequest (opts) {
@@ -83,7 +92,8 @@ export class TokensService extends Service {
    * Cancels token creation/update request
    * @param {object} opts
    * @param {string} opts.requestID - request ID
-   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the payment.
+   * Defaults to the transaction's source account.
    * @returns {Promise<TransactionResponseBuilder>}
    */
   cancelTokenCreationRequest (opts) {
@@ -147,16 +157,6 @@ export class TokensService extends Service {
       .order('desc')
       .callWithSignature(this._keypair)
   }
-
-  // // TODO: move to reviewable requests
-  // loadReviewableRequestById (id) {
-  //   return this._horizonRequestBuilder
-  //     .reviewableRequests()
-  //     .reviewableRequest(id)
-  //     .order('desc')
-  //     .callWithSignature(this._keypair)
-  //     .then(result => Promise.resolve(ReviewableRequestFactory.createTokenCreationRequest(result)))
-  // }
 }
 
 export const tokensService = new TokensService()
