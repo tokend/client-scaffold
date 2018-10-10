@@ -12,27 +12,27 @@ export default {
   rows: [
     [
       {
-        "field": "file",
-        "fileType": "image",
-        "id": "sale-blurb-image",
-        "name": "sale-blurb-image",
-        "type": documentTypes.fundLogo,
-        "private": false,
-        "label": i18n.sale_image_label(),
-        "required": true,
-        "validate": "required"
+        'field': 'file',
+        'fileType': 'image',
+        'id': 'sale-blurb-image',
+        'name': 'sale-blurb-image',
+        'type': documentTypes.fundLogo,
+        'private': false,
+        'label': i18n.sale_image_label(),
+        'required': true,
+        'validate': 'required'
       }
     ],
     [
       {
-        "field": "textarea",
-        "model": "shortDescription",
-        "name": "blurb-description",
-        "id":  "blurb-description",
-        "maxlength": 250,
-        "validate": "required",
-        "required": true,
-        "label": i18n.sale_description_label()
+        'field': 'textarea',
+        'model': 'shortDescription',
+        'name': 'blurb-description',
+        'id': 'blurb-description',
+        'maxlength': 250,
+        'validate': 'required',
+        'required': true,
+        'label': i18n.sale_description_label()
       }
     ]
   ]

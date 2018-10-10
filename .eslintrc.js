@@ -1,15 +1,9 @@
 // https://eslint.org/docs/user-guide/configuring
 
-function isDevelopmentBuild () {
-  return [
-    'production', 'staging', 'dev-build'
-  ].indexOf(process.env.NODE_ENV) > -1
-}
-
 module.exports = {
   root: true,
   extends: [
-    'distributed-lab',
+    'distributed-lab/vue',
     'plugin:vue/recommended'
   ],
   parserOptions: {
@@ -24,19 +18,19 @@ module.exports = {
     'vue'
   ],
   rules: {
-    // 0 – off, 1 – warning, 2 – error
+    // 0 off, 1 warning, 2 error
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': isDevelopmentBuild() ? 2 : 0,
-    'no-warning-comments': [isDevelopmentBuild() ? 1 : 0, {
+    'no-debugger': 1,
+    'no-warning-comments': [1, {
       'terms': ['hardcoded'], location: 'anywhere'
     }],
-    'no-console': isDevelopmentBuild()
-      ? [2, { allow: ['warn', 'error'] }]
-      : [1, { allow: ['warn', 'error'] }],
+    'no-console': [1, {
+      allow: ['warn', 'error']
+    }],
     'max-len': [1, {
       'code': 80,
       'ignoreUrls': true,
@@ -48,11 +42,11 @@ module.exports = {
     'vue/attributes-order': 0,
     'indent': 2,
     'vue/order-in-components': 2,
-    'vue/name-property-casing': [2, "kebab-case"],
+    'vue/name-property-casing': [2, 'kebab-case'],
     'vue/html-closing-bracket-newline': 0,
     'vue/max-attributes-per-line': 0,
     'vue/attribute-hyphenation': 2,
-    'vue/component-name-in-template-casing': [2, "kebab-case"],
+    'vue/component-name-in-template-casing': [2, 'kebab-case'],
     'vue/html-end-tags': 2,
     'vue/html-indent': 2,
     'vue/html-quotes': 2,

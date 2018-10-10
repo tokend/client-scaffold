@@ -20,7 +20,7 @@ for file in ${files}; do
 done
 
 if [ "$errors" == "true" ]; then
-  echo "\n\033[41m COMMIT FAILED: \033[0m Your commit contains lint errors and/or warnings. Fix them before commit"
+  echo -e "\033[0;41mCOMMIT FAILED:\033[0m \033[1;33mYour commit contains lint errors or warnings. Fix them before commit\033[0m"
   exit 1
 fi
 
