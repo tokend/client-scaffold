@@ -33,12 +33,18 @@ export const testAction = (opts, done) => {
       const expectedMutationPayload = expectedMutationPayloads[mutationsCount]
 
       try {
+        /* eslint-disable-next-line */
         expect(expectedMutation.type).to.equal(type)
         if (payload) {
+          /* eslint-disable-next-line */
           console.log('mutation payload:')
+          /* eslint-disable-next-line */
           console.log(payload)
+          /* eslint-disable-next-line */
           console.log('expected payload:')
+          /* eslint-disable-next-line */
           console.log(expectedMutationPayload)
+          /* eslint-disable-next-line */
           expect(payload).to.deep.equal(expectedMutationPayload)
         }
       } catch (error) {
@@ -57,12 +63,18 @@ export const testAction = (opts, done) => {
         const expectedActionPayload = expectedActionsPayloads[actionsCount]
 
         try {
+          /* eslint-disable-next-line */
           expect(expectedAction.type).to.equal(type)
           if (payload) {
+            /* eslint-disable-next-line */
             console.log('action payload:')
+            /* eslint-disable-next-line */
             console.log(payload)
+            /* eslint-disable-next-line */
             console.log('expected payload:')
+            /* eslint-disable-next-line */
             console.log(expectedActionPayload)
+            /* eslint-disable-next-line */
             expect(payload).to.deep.equal(expectedActionPayload)
           }
         } catch (error) {
@@ -79,15 +91,16 @@ export const testAction = (opts, done) => {
     action({ commit, dispatch, state, getters, rootGetters }, actionPayload)
 
     if (expectedMutations.length === 0) {
+      /* eslint-disable-next-line */
       expect(mutationsCount).to.equal(0)
       done()
     }
 
     if (expectedActions.length === 0) {
+      /* eslint-disable-next-line */
       expect(actionsCount).to.equal(0)
       done()
     }
-
   } catch (e) {
     done(e)
   }

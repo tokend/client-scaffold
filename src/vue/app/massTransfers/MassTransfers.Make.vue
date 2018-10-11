@@ -103,25 +103,30 @@
         class="mass-transfer__list"
         v-table-scroll-shadow>
         <div class="mass-transfer__list-header">
-          <div class="mass-transfer__list-header-item
-                      mass-transfer__list-header-item--status">
+          <div
+            class="mass-transfer__list-header-item
+                   mass-transfer__list-header-item--status">
             {{ i18n.lbl_status() }}
           </div>
-          <div class="mass-transfer__list-header-item
-                      mass-transfer__list-header-item--amount">
+          <div
+            class="mass-transfer__list-header-item
+                   mass-transfer__list-header-item--amount">
             {{ i18n.lbl_amount() }}
           </div>
-          <div class="mass-transfer__list-header-item
-                      mass-transfer__list-header-item--email">
+          <div
+            class="mass-transfer__list-header-item
+                   mass-transfer__list-header-item--email">
             {{ i18n.lbl_email() }}
           </div>
-          <div class="mass-transfer__list-header-item
-                      mass-transfer__list-header-item--source-fees">
+          <div
+            class="mass-transfer__list-header-item
+                   mass-transfer__list-header-item--source-fees">
             {{ i18n.lbl_source_fees() }}
             {{ i18n.lbl_fixed_percent() }}
           </div>
-          <div class="mass-transfer__list-header-item
-                      mass-transfer__list-header-item--destination-fees">
+          <div
+            class="mass-transfer__list-header-item
+                   mass-transfer__list-header-item--destination-fees">
             {{ i18n.lbl_destination_fees() }}
             {{ i18n.lbl_fixed_percent() }}
           </div>

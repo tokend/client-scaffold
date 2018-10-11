@@ -41,8 +41,9 @@
             <md-table-cell class="tx-history__table-cell">
               {{ tx.amount }}
             </md-table-cell>
-            <md-table-cell class="tx-history__table-cell
-                                  tx-history__table-cell--counterparty">
+            <md-table-cell
+              class="tx-history__table-cell
+                     tx-history__table-cell--counterparty">
               {{ tx.counterparty }}
             </md-table-cell>
 

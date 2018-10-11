@@ -11,9 +11,10 @@
         </md-icon>
       </div>
       <div class="app__card-content user-type-selector__user-content">
-        <md-icon class="md-size-5x
-                        md-medium-size-3x
-                        user-type-selector__user-icon">
+        <md-icon
+          class="md-size-5x
+                 md-medium-size-3x
+                 user-type-selector__user-icon">
           person
         </md-icon>
       </div>
@@ -38,9 +39,10 @@
         </md-icon>
       </div>
       <div class="app__card-content user-type-selector__user-content">
-        <md-icon class="md-size-5x
-                        md-medium-size-3x
-                        user-type-selector__user-icon">
+        <md-icon
+          class="md-size-5x
+                 md-medium-size-3x
+                 user-type-selector__user-icon">
           domain
         </md-icon>
       </div>

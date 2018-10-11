@@ -16,8 +16,9 @@
         <md-table-head class="limits-manager__table-head">
           {{ i18n.lbl_to() }}
         </md-table-head>
-        <md-table-head class="limits-manager__table-head
-            limits-manager__table-head--right">
+        <md-table-head
+          class="limits-manager__table-head
+                 limits-manager__table-head--right">
           {{ i18n.lim_limits() }}
         </md-table-head>
       </md-table-row>

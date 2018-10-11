@@ -1,7 +1,8 @@
 <template>
-  <form class="step"
-        novalidate
-        @submit.prevent="submit">
+  <form
+    class="step"
+    novalidate
+    @submit.prevent="submit">
     <template v-for="(row, r) in schema.rows">
       <div
         class="app__form-row"

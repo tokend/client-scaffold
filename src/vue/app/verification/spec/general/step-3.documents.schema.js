@@ -11,15 +11,15 @@ export default {
   rows: [
     [
       {
-        "name": "account-file-photo",
-        "id":  "kyc-file-photo",
-        "label": i18n.lbl_kyc_selfie(),
-        "field": "file",
-        "side": "front",
-        "required": true,
-        "private": true,
-        "type": documentTypes.kycSelfie,
-        "validate": "required"
+        'name': 'account-file-photo',
+        'id': 'kyc-file-photo',
+        'label': i18n.lbl_kyc_selfie(),
+        'field': 'file',
+        'side': 'front',
+        'required': true,
+        'private': true,
+        'type': documentTypes.kycSelfie,
+        'validate': 'required'
       }
     ]
   ]

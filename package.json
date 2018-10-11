@@ -4,6 +4,11 @@
   "description": "TokenD web-client",
   "author": "Distributed Lab <contact@distributedlab.com>",
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "./git-hooks/pre-commit.sh"
+    }
+  },
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
@@ -14,9 +19,7 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint {src,test,config,build}/**/*.{.spec.js,js,vue} --fix",
-    "init": "npm run init-pre-commit-hook",
-    "init-pre-commit-hook": "chmod +x ./git-hooks/init-hooks.sh && ./git-hooks/init-hooks.sh"
+    "lint": "eslint '{src,config}/**/*.{js,vue}' --fix"
   },
   "dependencies": {
     "@mdi/font": "^2.7.94",
@@ -32,6 +35,7 @@
     "d3": "^4.12.0",
     "debounce": "^1.2.0",
     "flatpickr": "^4.5.2",
+    "husky": "^1.1.1",
     "keypair": "^1.0.1",
     "libphonenumber-js": "^1.4.4",
     "lodash": "^4.17.10",
@@ -39,12 +43,12 @@
     "moment": "^2.22.2",
     "node-polyglot": "^2.3.0",
     "raven-js": "^3.27.0",
+    "sjcl": "^1.0.7",
     "tokend-js-sdk": "git+https://github.com/tokend/js-sdk.git",
     "ua-parser-js": "^0.7.18",
     "vee-validate": "^2.1.0-beta.8",
     "vue": "^2.5.17",
     "vue-async-computed": "^3.4.1",
-    "sjcl": "^1.0.7",
     "vue-flatpickr-component": "^7.0.6",
     "vue-markdown": "2.2.4",
     "vue-material": "1.0.0-beta-7",
@@ -91,10 +95,10 @@
     "cross-spawn": "^6.0.5",
     "css-loader": "^0.28.0",
     "eslint": "^5.5.0",
-    "eslint-config-distributed-lab": "^1.0.1",
+    "eslint-config-distributed-lab": "^1.0.3",
     "eslint-config-standard": "^12.0.0",
-    "eslint-loader": "^2.1.0",
     "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.1.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
     "eslint-plugin-html": "^4.0.5",
     "eslint-plugin-import": "^2.14.0",

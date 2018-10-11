@@ -39,10 +39,11 @@
                             selected.code === token.code
                         }"
                       >
-                        <div class="explore-tokens__list-item-avatar"
-                             :class="`${hasBalance(token)
-                               ? 'explore-tokens__list-item-avatar--success'
-                             : 'explore-tokens__list-item-avatar--default'}`">
+                        <div
+                          class="explore-tokens__list-item-avatar"
+                          :class="`${hasBalance(token)
+                            ? 'explore-tokens__list-item-avatar--success'
+                          : 'explore-tokens__list-item-avatar--default'}`">
                           <template v-if="token.logoUrl">
                             <img
                               :src="token.logoUrl"
@@ -81,13 +82,15 @@
 
           <template v-if="selected">
             <div class="explore-tokens__token-ctn">
-              <div class="app__card-content
-                          explore-tokens__token-details">
+              <div
+                class="app__card-content
+                       explore-tokens__token-details">
                 <div class="tokens__details-header">
-                  <md-avatar class="tokens__details-avatar-icon"
-                             :class="`${hasBalance(selected)
-                               ? 'tokens__details-avatar-icon--success'
-                             : 'tokens__details-avatar-icon--default'}`"
+                  <md-avatar
+                    class="tokens__details-avatar-icon"
+                    :class="`${hasBalance(selected)
+                      ? 'tokens__details-avatar-icon--success'
+                    : 'tokens__details-avatar-icon--default'}`"
                   >
                     <template v-if="selected.logoUrl">
                       <img
@@ -110,8 +113,9 @@
                       class="explore-tokens__balance-exists-msg"
                       v-if="hasBalance(selected)">
                       {{ i18n.lbl_balance_exists() }}
-                      <md-icon class="explore-tokens__balance-exists-icon
-                                      md-icon--half-sized">
+                      <md-icon
+                        class="explore-tokens__balance-exists-icon
+                               md-icon--half-sized">
                         check_circle
                       </md-icon>
                     </p>
@@ -164,11 +168,12 @@
                 </div>
 
                 <div class="tokens__actions">
-                  <button v-ripple
-                          @click="createBalance"
-                          v-if="!hasBalance(selected)"
-                          class="app__button-raised"
-                          :disabled="isPending">
+                  <button
+                    v-ripple
+                    @click="createBalance"
+                    v-if="!hasBalance(selected)"
+                    class="app__button-raised"
+                    :disabled="isPending">
                     {{ i18n.lbl_add_to_balances() }}
                   </button>
                 </div>

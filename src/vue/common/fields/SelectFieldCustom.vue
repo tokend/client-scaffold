@@ -5,9 +5,10 @@
       class="select__label">
       {{ label }}
     </div>
-    <div class="select__selected"
-         :class="{ 'select__selected--readonly': readonly }"
-         @click="toggleListVisibility()">
+    <div
+      class="select__selected"
+      :class="{ 'select__selected--readonly': readonly }"
+      @click="toggleListVisibility()">
       <button class="select__selected-value">{{ currentValue }}</button>
       <md-icon
         class="select__selected-icon"

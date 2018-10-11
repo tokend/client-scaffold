@@ -3,9 +3,10 @@
     <asset-selector
       v-if="formattedPairs.length"
       :pairs="formattedPairs" />
-    <div class="trade-row
-                app__card-wrapper
-                app__card-wrapper--xmedium-breakpoint">
+    <div
+      class="trade-row
+             app__card-wrapper
+             app__card-wrapper--xmedium-breakpoint">
       <chart
         :base-asset="filters.base"
         :quote-asset="filters.quote" />
