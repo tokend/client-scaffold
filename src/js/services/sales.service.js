@@ -11,23 +11,28 @@ export class SalesService extends Service {
    * @param {object} opts
    * @param {string} opts.requestID - ID of the request. 0 - to create new;
    * @param {string} opts.baseAsset - asset for which sale will be performed
-   * @param {string} opts.defaultQuoteAsset - asset in which hardcap/soft cap will be calculated
+   * @param {string} opts.defaultQuoteAsset - asset in which hardcap/soft cap
+   *        will be calculated
    * @param {string} opts.startTime - start time of the sale
    * @param {string} opts.endTime - close time of the sale
-   * @param {string} opts.softCap - minimum amount of quote asset to be received at which sale will be considered a successful
+   * @param {string} opts.softCap - minimum amount of quote asset to be
+   *        received at which sale will be considered a successful
    * @param {string} opts.hardCap - max amount of quote asset to be received
    * @param {object} opts.details - sale specific details
    * @param {object} opts.details.name - name of the sale
-   * @param {object} opts.details.short_description - short description of the sale
+   * @param {object} opts.details.short_description - short sale description
    * @param {object} opts.details.description - sale specific details
    * @param {object} opts.details.logo - details of the logo
    * @param {object} opts.details.youtube_video_id - details of the logo
-   * @param {string} opts.baseAssetForHardCap - specifies the amount of base asset required for hard cap
+   * @param {string} opts.baseAssetForHardCap - specifies the amount of base
+   *        asset required for hard cap
    * @param {array} opts.quoteAssets - accepted assets
-   * @param {object} opts.quoteAssets.price - price for 1 baseAsset in terms of quote asset
+   * @param {object} opts.quoteAssets.price - price for 1 baseAsset in terms of
+   *        quote asset
    * @param {object} opts.quoteAssets.asset - asset code of the quote asset
    * @param {object} opts.isCrowdfunding - true
-   * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the operation.
+   *        Defaults to the transaction's source account.
    * @returns {TransactionResponseBuilder}
    */
   createSaleCreationRequest (opts) {
@@ -39,8 +44,10 @@ export class SalesService extends Service {
   }
 
   /**
-   * Creates sale creation request additionally updating token creation request. In the system, we need this to change tokens max issuance
-   * property depending on sale's hard cap. If no need to update token request, use {@link createSaleCreationRequest}
+   * Creates sale creation request additionally updating token creation
+   * request. In the system, we need this to change tokens max issuance
+   * property depending on sale's hard cap. If no need to update token request,
+   * use {@link createSaleCreationRequest}
    *
    * @borrows {createSaleCreationRequest}
    * @borrows {createTokenCreationRequest}
@@ -64,7 +71,8 @@ export class SalesService extends Service {
    * Loads created sales with specified filters
    * @param filters
    * @param {string} filters.baseAsset - base token code (match case only)
-   * @param {boolean} filters.openOnly - if true, loads all sales with open state (includes upcoming)
+   * @param {boolean} filters.openOnly - if true, loads all sales with open
+   *        state (includes upcoming)
    * @param {boolean} filters.upcoming - if true, loads only upcoming sales
    * @param {number} filters.sortBy - sort type {@link saleSortTypes}
    * @param {string} filters.name - name of the sale (works with substring)
@@ -89,8 +97,8 @@ export class SalesService extends Service {
   }
 
   /**
-   * Loads sale by token code. By default loads an array of sales, but because sale/tokens are 1-1 we can derive
-   * 1st element here
+   * Loads sale by token code. By default loads an array of sales, but because
+   * sale/tokens are 1-1 we can derive 1st element here
    *
    * @param {string} tokenCode - token code
    *

@@ -8,9 +8,10 @@
       </div>
       <div class="app__card-content">
         <template v-if="offers.length">
-          <md-table class="app__card
-                           app__card--shadow-none
-                           manage-orders__table">
+          <md-table
+            class="app__card
+                   app__card--shadow-none
+                   manage-orders__table">
             <md-table-row class="manage-orders__row">
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
               <md-table-head>
@@ -46,8 +47,9 @@
                   {{ order.price }}
                 </md-table-cell>
                 <md-table-cell>
-                  <md-button class="manage-orders__open-details-btn
-                                    md-icon-button">
+                  <md-button
+                    class="manage-orders__open-details-btn
+                           md-icon-button">
                     <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                     <md-icon v-else>keyboard_arrow_down</md-icon>
                   </md-button>

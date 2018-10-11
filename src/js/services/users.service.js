@@ -78,11 +78,15 @@ export class UsersService extends Service {
   }
 
   /**
-   * Changes user details to provided. Note: user type will be changed only if user have no specified type before
+   * Changes user details to provided. Note: user type will be changed only if
+   * user have no specified type before
    *
-   * @param {string} type, 'general' - for individual users, 'syndicate' - for corporations
-   * @param {string} state, ('waiting_for_approval' is the only one needed in most cases)
-   * @param {number} sequence - sequence of KYC blob, you should increment it every time user changes his KYC
+   * @param {string} type, 'general' - for individual users, 'syndicate' - for
+   *        corporations
+   * @param {string} state, ('waiting_for_approval' is the only one needed in
+   *        most cases)
+   * @param {number} sequence - sequence of KYC blob, you should increment it
+   *        every time user changes his KYC
    *
    */
   patchUserDetails (type, state, sequence) {

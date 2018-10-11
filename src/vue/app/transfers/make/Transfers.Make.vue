@@ -15,8 +15,9 @@
       </router-link>
     </template>
 
-    <template v-else-if="view.mode === VIEW_MODES.submit ||
-    view.mode === VIEW_MODES.confirm">
+    <template
+      v-else-if="view.mode === VIEW_MODES.submit ||
+      view.mode === VIEW_MODES.confirm">
       <h2 class="app__page-heading">{{ i18n.transfer_heading() }}</h2>
       <form
         @submit.prevent="processTransfer"

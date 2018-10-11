@@ -44,7 +44,8 @@ export class AccountsService extends Service {
    * @param {string} opts.accountTypeToSet
    * @param {number} opts.kycLevelToSet
    * @param {object} opts.kycData
-   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the payment.
+   *        Defaults to the transaction's source account.
    * @returns {TransactionBuilder}
    */
   createKycRequest (opts) {
@@ -60,7 +61,8 @@ export class AccountsService extends Service {
    * Creates limits update request
    * @param {object} opts
    * @param {string} opts.details - JSON string about proof document
-   * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the operation.
+   *        Defaults to the transaction's source account.
    * @returns {TransactionBuilder}
    */
   createLimitRequest (opts) {
@@ -92,7 +94,9 @@ export class AccountsService extends Service {
   }
 
   /**
-   * Loads details for each balance, including asset_details and opened sales for each asset
+   * Loads details for each balance, including asset_details and opened sales
+   * for each asset
+   *
    * @return {Promise<array>} Promise object representing user balances
    */
   loadDetailsForEachBalance () {

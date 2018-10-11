@@ -133,8 +133,9 @@ export const actions = {
    * @param commit
    * @param {object} opts
    * @param {object} opts.details - KYC details from form
-   * @param {documents} opts.documents - Containers instances with uploaded documents
-   * (separate for document.front/document.back) {@link DocumentContainer.getDetailsForSave}
+   * @param {documents} opts.documents - Containers instances with uploaded
+   *        documents (separate for document.front/document.back)
+   *        {@link DocumentContainer.getDetailsForSave}
    * @returns {Promise<string>} - blobId
    * @constructor
    */

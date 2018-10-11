@@ -31,8 +31,9 @@
               {{ i18n.d(item.updatedAt) }}
             </md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">
-              <md-button class="tx-token-creation__open-details-btn
-                                md-icon-button">
+              <md-button
+                class="tx-token-creation__open-details-btn
+                       md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
@@ -44,11 +45,12 @@
             :key="'selected-'+i">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
-                <div class="icon-column
-                            md-layout-item
-                            md-size-35
-                            md-layout
-                            md-alignment-center-center">
+                <div
+                  class="icon-column
+                         md-layout-item
+                         md-size-35
+                         md-layout
+                         md-alignment-center-center">
                   <img
                     class="token-icon"
                     v-if="item.logoUrl"

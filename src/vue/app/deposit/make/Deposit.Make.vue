@@ -109,7 +109,6 @@ export default {
       return this.userAcquiredTokens
         .filter(token => token.isDepositable)
         .map(token => token.code)
-      // .filter(code => Object.keys(this.accountDepositAddresses).includes(code))
     },
     selectedToken () {
       return this.userAcquiredTokens

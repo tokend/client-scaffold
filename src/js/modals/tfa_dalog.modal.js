@@ -44,8 +44,8 @@ export function createTfaDialog (onSubmit, { factorId, token }, walletId) {
           code: ''
         }
       }),
-      // TODO: this watcher doesn't work if placed in mixin, resolve why and remove code duplication from here and
-      // tfa modal
+      // TODO: this watcher doesn't work if placed in mixin, resolve why and
+      //       remove code duplication from here and tfa modal
       watch: {
         isOpened (val) {
           if (!val) {

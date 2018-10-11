@@ -15,7 +15,8 @@ export class TransferRecord extends TxRecord {
     this.subject = record.subject
     this.counterparty = this._getCounterParty()
     this.direction = this._getDirection()
-    this.fee = this._getFee() // TODO: need parse fees separately later to show in extended details
+    // TODO: need parse fees separately later to show in extended details
+    this.fee = this._getFee()
     this.participants = this._getParticipants()
   }
 

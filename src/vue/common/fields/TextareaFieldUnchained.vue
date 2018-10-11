@@ -1,8 +1,11 @@
 <template>
-  <div class="text-field" :class="{
-    'text-field--error': errorMessage,
-    'text-field--disabled': disabled
-  }">
+  <div
+    class="text-field"
+    :class="{
+      'text-field--error': errorMessage,
+      'text-field--disabled': disabled
+    }
+    ">
     <textarea
       class="text-field__input"
       :class="{ 'text-field__input--dirty': hasValue }"

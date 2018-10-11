@@ -39,14 +39,16 @@
             <md-table-cell class="tx-sale-creation__table-cell">
               {{ i18n.d(item.createdAt) }}
             </md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell
-                                  tx-sale-creation__hide-md">
+            <md-table-cell
+              class="tx-sale-creation__table-cell
+                     tx-sale-creation__hide-md">
               {{ i18n.d(item.updatedAt) }}
             </md-table-cell>
 
             <md-table-cell class="tx-sale-creation__table-cell">
-              <md-button class="tx-sale-creation__open-details-btn
-                                md-icon-button">
+              <md-button
+                class="tx-sale-creation__open-details-btn
+                       md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
@@ -59,11 +61,12 @@
             :key="'selected-'+i">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
-                <div class="icon-column
-                            md-layout-item
-                            md-size-35
-                            md-layout
-                            md-alignment-center-center">
+                <div
+                  class="icon-column
+                         md-layout-item
+                         md-size-35
+                         md-layout
+                         md-alignment-center-center">
                   <img
                     class="token-icon"
                     v-if="item.saleLogoUrl"
@@ -132,8 +135,9 @@
               </md-card-content>
               <md-card-actions>
                 <template v-if="item.isApproved">
-                  <md-button class="md-primary"
-                             @click="goFundDetails(item.tokenCode)">
+                  <md-button
+                    class="md-primary"
+                    @click="goFundDetails(item.tokenCode)">
                     {{ i18n.lbl_view_sale() }}
                   </md-button>
                 </template>

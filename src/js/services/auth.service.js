@@ -12,9 +12,10 @@ export class AuthService extends WalletService {
    * @param credentials
    * @param credentials.email
    * @param credentials.password
-   * @param recoveryKeypair - random keypair containing recovery seed. IMPORTANT: User will need to copy this seed to make account
-   *                          recovery possible. Seed itself is NOT being stored anywhere, so user should know he has the
-   *                          only possibility to save it
+   * @param recoveryKeypair - random keypair containing recovery seed.
+   *        IMPORTANT: User will need to copy this seed to make account
+   *        recovery possible. Seed itself is NOT being stored anywhere, so
+   *        user should know he has the only possibility to save it
    * @returns {string} walletId - wallet id of created wallet
    */
   async signup (credentials, recoveryKeypair) {

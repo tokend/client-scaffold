@@ -12,7 +12,8 @@ export class WalletHelper {
    *
    * @return {object} walletParams
    *         {string} walletParams.walletId - unique identifier of user's wallet
-   *         {ArrayBuffer} walletParams.walletKey - wallet key used later/previously to encrypt keychain data
+   *         {ArrayBuffer} walletParams.walletKey - wallet key used
+   *         later/previously to encrypt keychain data
    */
   static calculateWalletParams (password, email, salt, kdfParams) {
     return walletUtil.calculateWalletParams(...arguments)
@@ -89,7 +90,15 @@ export class WalletHelper {
    * @param kdfAttributes
    * @param rawKeychainData
    * @param accountId
-   * @return {{id: string, attributes: {account_id: string, email: string, salt: string, keychain_data: string}}}
+   * @return {{
+   *    id: string,
+   *    attributes: {
+   *      account_id: string,
+   *      email: string,
+   *      salt: string,
+   *      keychain_data: string
+   *    }
+   * }}
    */
   static getRandomWalletAttributes (
     password,

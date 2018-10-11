@@ -24,9 +24,10 @@
               {{ i18n.d(item.createdAt) }}
             </md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">
-              <md-button class="tx-token-creation__open-details-btn
-                                md-icon-button"
-                         v-if="item.rejectReason">
+              <md-button
+                class="tx-token-creation__open-details-btn
+                       md-icon-button"
+                v-if="item.rejectReason">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
@@ -50,10 +51,11 @@
         <md-table-row v-if="!isLoaded">
           <md-table-cell colspan="7">
             <div class="tx-history__btn-outer">
-              <button v-ripple
-                      @click="more"
-                      class="app__button-flat"
-                      :disabled="isLoading">
+              <button
+                v-ripple
+                @click="more"
+                class="app__button-flat"
+                :disabled="isLoading">
                 {{ i18n.lbl_view_more() }}
               </button>
             </div>

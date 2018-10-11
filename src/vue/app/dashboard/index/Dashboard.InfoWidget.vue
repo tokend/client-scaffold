@@ -7,32 +7,39 @@
           class="info-widget__list"
           v-table-scroll-shadow>
           <div class="info-widget__list-header">
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--date">
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--date">
               {{ i18n.lbl_date() }}
             </div>
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--type">
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--type">
               {{ i18n.lbl_tx_type() }}
             </div>
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--asset">
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--asset">
               {{ i18n.lbl_asset() }}
             </div>
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--amount">
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--amount">
               {{ i18n.lbl_amount() }}
             </div>
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--counterparty">
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--counterparty">
               {{ i18n.lbl_counterparty() }}
             </div>
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--status">
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--status">
               {{ i18n.lbl_status() }}
             </div>
-            <div class="info-widget__list-header-item
-                        info-widget__list-header-item--btn" />
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--btn" />
           </div>
           <div class="info-widget__list-body">
             <template v-for="(tx, i) in list">
@@ -78,8 +85,9 @@
                            info-widget__list-body-item--status">
                     {{ tx.state }}
                   </div>
-                  <div class="info-widget__list-body-item
-                              info-widget__list-body-item--btn">
+                  <div
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--btn">
                     <button
                       class="info-widget__list-body-item-btn"
                       @click="toggleDetails(i)">
