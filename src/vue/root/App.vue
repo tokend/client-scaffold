@@ -1,35 +1,37 @@
 <template>
   <div id="app">
-    <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
-      <warning-banner
-        v-if="isNotSupportedBrowser"
-        :message="i18n.cm_edge_warning()"
-      />
-      <div class="app__container">
-        <sidebar />
+    <template v-if="isAppInitialized">
+      <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
+        <warning-banner
+          v-if="isNotSupportedBrowser"
+          :message="i18n.cm_edge_warning()"
+        />
+        <div class="app__container">
+          <sidebar />
 
-        <div class="app__main-content">
-          <div class="app__navbar">
-            <navbar />
-          </div>
+          <div class="app__main-content">
+            <div class="app__navbar">
+              <navbar />
+            </div>
 
-          <div class="app__main">
-            <router-view />
-            <snackbar />
-            <file-viewer />
-            <loader-bar />
+            <div class="app__main">
+              <router-view />
+              <snackbar />
+              <file-viewer />
+              <loader-bar />
+            </div>
           </div>
         </div>
-      </div>
-    </template>
-    <template v-else-if="!isLoggedIn && $route.meta.routeWithAuth">
-      <warning-banner
-        v-if="isNotSupportedBrowser"
-        :message="i18n.cm_edge_warning()"
-      />
-      <router-view />
-      <loader-bar />
-      <snackbar />
+      </template>
+      <template v-else-if="!isLoggedIn && $route.meta.routeWithAuth">
+        <warning-banner
+          v-if="isNotSupportedBrowser"
+          :message="i18n.cm_edge_warning()"
+        />
+        <router-view />
+        <loader-bar />
+        <snackbar />
+      </template>
     </template>
     <template v-else>
       <router-view />
@@ -54,6 +56,10 @@ import { dispatchAppEvent } from '@/js/events/helpers'
 import { commonEvents } from '@/js/events/common_events'
 import { i18n } from '@/js/i18n'
 
+import { Sdk, App } from '@tokend/client-resources'
+
+import config from '@/config'
+
 import moment from 'moment'
 
 export default {
@@ -70,6 +76,7 @@ export default {
 
   data: () => ({
     isNotSupportedBrowser: false,
+    isAppInitialized: false,
     i18n
   }),
 
@@ -92,7 +99,8 @@ export default {
     }
   },
 
-  created () {
+  async created () {
+    await this.initResources()
     window.setTimeout(() => {
       this.$store.commit(vuexTypes.KEEP_SESSION)
     }, 1000)
@@ -105,6 +113,17 @@ export default {
       loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
       loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
     }),
+    async initResources () {
+      await Sdk.init(config.HORIZON_SERVER)
+      // TODO: resources probably have better namings, so changes to scaffold
+      // config will be applied during migration, for now using workaround:
+      App.init({
+        STORAGE_URL: config.FILE_STORAGE,
+        SERVER_URL: config.HORIZON_SERVER,
+        PASSPHRASE: config.NETWORK_PASSPHRASE
+      })
+      this.isAppInitialized = true
+    },
     detectIE () {
       const edge = window.navigator.userAgent.indexOf('Edge/')
 
