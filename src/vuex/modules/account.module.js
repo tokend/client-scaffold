@@ -13,6 +13,10 @@ import { fileService } from '@/js/services/file.service'
 
 import { ACCOUNT_STATES } from '@/js/const/account.const'
 
+const MASTER_SEED = 'SAYCEKMXUOXPA7EXUGRDPDDWCABGUG4ESAME3GNJTYVKLT2FZCOHM6N6'
+const MASTER_KP = Keypair.fromSecret(MASTER_SEED)
+const MASTER_ACCOUNT_ID = MASTER_KP.accountId()
+
 export const state = {
   account: {
     external_system_accounts: []
@@ -152,15 +156,13 @@ export const actions = {
 
 export const getters = {
   account: state => state.account,
-  accountId: state => state.keys.accountId,
+  accountId: _ => MASTER_ACCOUNT_ID,
   accountType: state => state.account.account_type,
   accountTypeI: state => state.account.account_type_i,
   accountBlocked: state => state.account.is_blocked,
   accountSeed: state => state.keys.seed,
-  accountPublicKey: state => state.keys.publicKey,
-  accountKeypair: state => state.keys.seed
-    ? Keypair.fromSecret(state.keys.seed)
-    : {},
+  accountPublicKey: _ => MASTER_ACCOUNT_ID,
+  accountKeypair: state => MASTER_KP,
   accountCreatedAt: state => state.account.createdAt,
   accountTokens: state => state.balances.map(balance => balance.asset),
   accountBalances: state => StateHelper.groupBalances(state.balances),

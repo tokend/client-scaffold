@@ -147,6 +147,7 @@ const router = new Router({
     },
     {
       feature_flag: config.FEATURE_FLAGS.docReferences,
+      meta: { routeWithFeatures: true },
       name: 'documents',
       path: '/documents',
       component: DocReferences,
