@@ -573,3 +573,12 @@ h4 {
     opacity: 1;
   }
 }
+
+// FIXME sorry plz
+.md-dialog {
+  z-index: 102!important;
+}
+
+.md-overlay {
+  z-index: 101!important;
+}
