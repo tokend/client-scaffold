@@ -105,8 +105,11 @@
         <file-field
           v-model="document"
           v-validate="'required'"
+          :type="DOCUMENT_TYPES.delta"
           label="Select File(s)"
           class="docs-manager__upload-field"
+          name="file-to-upload"
+          id="file-to-upload"
         />
       </div>
 
@@ -143,6 +146,8 @@ import FileField from '@/vue/common/fields/FileField'
 import { i18n } from '../../../js/i18n'
 import InputFieldUnchained from '../../common/fields/InputFieldUnchained'
 
+import { documentTypes as DOCUMENT_TYPES } from '../../../js/const/const'
+
 const VIEW_MODES = Object.freeze({
   submit: 'submit',
   confirm: 'confirm',
@@ -173,6 +178,7 @@ export default {
       mode: VIEW_MODES.submit
     },
     DOC_TYPE_VALUES,
+    DOCUMENT_TYPES,
     VIEW_MODES,
     i18n
   }),
