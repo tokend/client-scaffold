@@ -78,6 +78,9 @@ import PreissuanceUploadIndex from '@/vue/app/preissuanceUpload/index/Preissuanc
 
 import SupportedBrowsers from '@/vue/common/SupportedBrowsers'
 
+import DocReferences from '@/vue/app/docReferences/DocReferences.Entry'
+import DocReferencesUpload from '@/vue/app/docReferences/DocReferences.Upload'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -143,12 +146,27 @@ const router = new Router({
       ]
     },
     {
+      feature_flag: config.FEATURE_FLAGS.docReferences,
+      name: 'documents',
+      path: '/documents',
+      component: DocReferences,
+      redirect: { path: '/documents/upload' },
+      children: [
+        {
+          component: DocReferencesUpload,
+          path: 'upload',
+          name: 'documents.upload',
+          meta: { pageName: PAGES_NAMES.uploadDocuments }
+        }
+      ]
+    },
+    {
       path: '/',
       name: 'app',
       component: AppContent,
       meta: { routeWithFeatures: true },
       beforeEnter: inAppRouteGuard,
-      redirect: { name: 'app.dashboard' },
+      redirect: { name: 'documents' },
       children: [
         {
           feature_flag: config.FEATURE_FLAGS.dashboard,
@@ -486,7 +504,7 @@ const router = new Router({
         }
       ].filter(route => route.feature_flag !== false)
     }
-  ],
+  ].filter(r => r.feature_flag !== false),
   scrollBehavior
 })
 
