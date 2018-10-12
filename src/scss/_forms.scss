@@ -46,6 +46,10 @@ $field-to-field-gap: 2 * $point;
   }
 }
 
+.app__form-section {
+  margin-bottom: 4 * $point;
+}
+
 .app__form-actions {
   display: flex;
 
@@ -101,6 +105,11 @@ $field-to-field-gap: 2 * $point;
   @include button-raised();
   min-width: 16 * $point;
   height: 36px;
+}
+
+.app__form-heading {
+  margin-bottom: 1.5rem;
+  color: $col-primary;
 }
 
 .app__form-subheading {
