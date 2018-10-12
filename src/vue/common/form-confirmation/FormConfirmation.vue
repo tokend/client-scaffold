@@ -8,12 +8,14 @@
         <button
           class="form-confirmation__cancel-btn"
           @click="emitCancel"
+          type="button"
           :disabled="pending">
           {{ cancelButton }}
         </button>
         <button
           class="form-confirmation__ok-btn"
           @click="emitOk"
+          type="button"
           :disabled="pending">
           {{ okButton }}
         </button>
