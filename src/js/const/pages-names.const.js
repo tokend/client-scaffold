@@ -20,5 +20,6 @@ export const PAGES_NAMES = Object.freeze({
   terms: 'Terms',
   massTransfer: 'Mass transfer',
   uploadDocuments: 'Upload documents',
-  viewDocument: 'View document'
+  viewDocument: 'View document',
+  exploreDocuments: 'Explore documents'
 })

@@ -43,6 +43,20 @@
               {{ i18n.sidebar_upload_docs() }}
             </span>
           </router-link>
+
+          <router-link
+            v-ripple
+            class="sidebar__list-item"
+            @click.native="closeSidebar"
+            to="/documents/explore"
+            tag="li"
+            v-if="config.FEATURE_FLAGS.docReferences"
+          >
+            <md-icon class="sidebar__list-item-icon">list_alt</md-icon>
+            <span class="md-list-item-text">
+              {{ i18n.sidebar_explore_docs() }}
+            </span>
+          </router-link>
         </ul>
       </section>
 

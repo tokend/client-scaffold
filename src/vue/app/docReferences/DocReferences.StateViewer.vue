@@ -2,9 +2,9 @@
   <div :class="classObj">
     <div class="state-viewer__inner">
       <div class="state-viewer__icon">
-        <tempate v-if="isVerified">
+        <template v-if="isVerified">
           <md-icon class="md-size-4x">verified_user</md-icon>
-        </tempate>
+        </template>
         <tempate v-else>
           <md-icon class="md-size-4x">error</md-icon>
         </tempate>
