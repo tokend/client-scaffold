@@ -24,6 +24,7 @@
   "dependencies": {
     "@mdi/font": "^2.7.94",
     "@std/esm": "^0.18.0",
+    "@tokend/js-sdk": "git@gitlab.com:tokend/new-js-sdk.git#feature/manage_reference",
     "@tokend/wallet.js": "git+https://github.com/tokend/wallet.js.git",
     "@vue/test-utils": "^1.0.0-beta.24",
     "accounting": "^0.4.1",
@@ -79,6 +80,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.0.0",
+    "@babel/runtime-corejs2": "^7.1.2",
     "autoprefixer": "9.1.5",
     "axios-mock-adapter": "^1.14.0",
     "babel-eslint": "^9.0.0",

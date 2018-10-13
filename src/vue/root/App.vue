@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="isAppInitialized">
     <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
       <warning-banner
         v-if="isNotSupportedBrowser"
@@ -54,6 +54,10 @@ import { dispatchAppEvent } from '@/js/events/helpers'
 import { commonEvents } from '@/js/events/common_events'
 import { i18n } from '@/js/i18n'
 
+import { Sdk } from '../../sdk'
+import { Wallet } from '@tokend/js-sdk'
+import config from '../../config'
+
 import moment from 'moment'
 
 export default {
@@ -70,12 +74,14 @@ export default {
 
   data: () => ({
     isNotSupportedBrowser: false,
+    isAppInitialized: false,
     i18n
   }),
 
   computed: {
     ...mapGetters([
-      vuexTypes.userAccountId,
+      vuexTypes.accountKeypair,
+      vuexTypes.accountId,
       vuexTypes.isLoggedIn,
       vuexTypes.userEmail
     ]),
@@ -92,19 +98,29 @@ export default {
     }
   },
 
-  created () {
+  async created () {
+    await this.initApp()
     window.setTimeout(() => {
       this.$store.commit(vuexTypes.KEEP_SESSION)
     }, 1000)
     this.subscribeToUserLogout()
     this.detectIE()
   },
-
   methods: {
     ...mapActions({
       loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
       loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
     }),
+    async initApp () {
+      await Sdk.init(config.HORIZON_SERVER)
+      Sdk.sdk.useWallet(new Wallet(
+        'foo@bar.com',
+        this.accountKeypair.secret(),
+        this.accountId,
+        'anything'
+      ))
+      this.isAppInitialized = true
+    },
     detectIE () {
       const edge = window.navigator.userAgent.indexOf('Edge/')
 
