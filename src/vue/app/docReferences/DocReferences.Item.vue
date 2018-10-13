@@ -1,32 +1,7 @@
 <template>
   <div class="reference-item">
     <div class="reference-item__inner">
-      <div class="reference-item__icon-wrp">
-        <template v-if="item.mimeType === PDF_MIME">
-          <md-icon
-            class="reference-item__icon
-                   reference-item__icon--pdf
-                   md-size-3x">
-            picture_as_pdf
-          </md-icon>
-        </template>
-        <template v-else-if="item.mimeType">
-          <md-icon
-            class="reference-item__icon
-                   reference-item__icon--img
-                   md-size-3x">
-            filter
-          </md-icon>
-        </template>
-        <template v-else>
-          <md-icon
-            class="reference-item__icon
-                   reference-item__icon--err
-                   md-size-3x">
-            filter_none
-          </md-icon>
-        </template>
-      </div>
+      <doc-icon :mime-type="item.mimeType" />
 
       <div class="reference-item__details">
         <p class="reference-item__file-name">{{ item.fileName }}</p>
@@ -38,11 +13,11 @@
 </template>
 
 <script>
+import DocIcon from './DocReferences.Icon'
 import { i18n } from '../../../js/i18n'
 
-const PDF_MIME = 'application/pdf'
-
 export default {
+  components: { DocIcon },
   props: {
     item: {
       type: Object,
@@ -50,8 +25,7 @@ export default {
     }
   },
   data: _ => ({
-    i18n,
-    PDF_MIME
+    i18n
   })
 }
 </script>
@@ -99,18 +73,4 @@ export default {
     font-size: 1.2 * $point;
   }
 
-  .reference-item__icon--pdf,
-  .reference-item__icon--img,
-  .reference-item__icon--err {
-    color: $col-primary !important;
-  }
-
-  .reference-item__icon--img.md-icon.md-size-3x,
-  .reference-item__icon--err.md-icon.md-size-3x {
-    padding-top: 8px;
-    font-size: 64px !important;
-    height: 64px !important;
-    min-width: 64px !important;
-    width: 64px !important;
-  }
 </style>

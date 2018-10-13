@@ -80,6 +80,7 @@ import SupportedBrowsers from '@/vue/common/SupportedBrowsers'
 
 import DocReferences from '@/vue/app/docReferences/DocReferences.Entry'
 import DocReferencesUpload from '@/vue/app/docReferences/DocReferences.Upload'
+import DocReferencesViewer from '@/vue/app/docReferences/DocReferences.Viewer'
 
 Vue.use(Router)
 
@@ -158,6 +159,13 @@ const router = new Router({
           path: 'upload',
           name: 'documents.upload',
           meta: { pageName: PAGES_NAMES.uploadDocuments }
+        },
+        {
+          component: DocReferencesViewer,
+          path: ':id',
+          name: 'documents.view',
+          meta: { pageName: PAGES_NAMES.viewDocument },
+          props: true
         }
       ]
     },

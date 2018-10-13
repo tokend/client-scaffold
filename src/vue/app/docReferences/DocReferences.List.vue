@@ -2,7 +2,12 @@
   <div class="reference-list">
     <div class="reference-list__inner">
       <template v-for="item in list.slice().reverse()">
-        <reference-item :item="item" :key="item.reference" />
+        <router-link
+          :key="item.reference"
+          :to="{ name: 'documents.view', params: { id: item.reference } }"
+        >
+          <reference-item :item="item" />
+        </router-link>
       </template>
     </div>
   </div>
