@@ -21,5 +21,7 @@ export default {
   docs_loading: 'Verifying the document',
   docs_creator: 'About creator',
   docs_file_details: 'File details',
-  docs_check_file: 'Check if file exists in the system'
+  docs_check_file: 'Search by file',
+  docs_check_meta: 'Search by meta information',
+  docs_search_btn: 'Search'
 }

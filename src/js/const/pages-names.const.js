@@ -22,5 +22,5 @@ export const PAGES_NAMES = Object.freeze({
   uploadDocuments: 'Upload documents',
   viewDocument: 'View document',
   exploreDocuments: 'Explore documents',
-  checkDocument: 'Check document'
+  checkDocument: 'Find document'
 })
