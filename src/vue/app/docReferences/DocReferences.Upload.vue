@@ -145,17 +145,20 @@
         />
       </div>
     </form>
+
+    <reference-list :list="references" />
   </div>
 </template>
 
 <script>
 import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
-import FormMixin from '@/vue/common/mixins/form.mixin'
-
+import ReferenceList from './DocReferences.List'
 import FileField from '@/vue/common/fields/FileField'
 
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import ReferenceCreator from './reference-creator.mixin'
 import DocumentManager from './document-manager'
+import ReferenceLoader from './reference-loader'
 
 import { i18n } from '../../../js/i18n'
 
@@ -177,12 +180,14 @@ const DOC_TYPE_VALUES = Object.freeze(['Passport', 'Tax identification', 'Other'
 
 export default {
   components: {
+    ReferenceList,
     FormConfirmation,
     FileField
   },
   mixins: [
     FormMixin,
     ReferenceCreator,
+    ReferenceLoader,
     DocumentManager
   ],
   data: _ => ({
@@ -210,11 +215,14 @@ export default {
       vuexTypes.accountId
     ])
   },
+  async created () {
+    await this.loadReferenceList()
+  },
   methods: {
     async submit () {
       this.disable()
       try {
-        // await this.uploadDocuments(this.document)
+        await this.uploadDocuments(this.document)
         const reference = await this.getFileHash(this.document.file)
         await this.createReference(reference, {
           key: this.document.key,
