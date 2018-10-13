@@ -1,7 +1,9 @@
 <template>
   <div class="reference-item">
     <div class="reference-item__inner">
-      <doc-icon :mime-type="item.mimeType" />
+      <div class="reference-item__doc-icon-wrp">
+        <doc-icon :mime-type="item.mimeType" />
+      </div>
 
       <div class="reference-item__details">
         <p class="reference-item__file-name">{{ item.fileName }}</p>
@@ -43,14 +45,12 @@ export default {
     background: $col-block-bg;
     max-width: $item-width;
     width: 100%;
-    margin-bottom: 3 * $point;
-    margin-right: 3 * $point;
     text-align: center;
     padding: 1 * $point 0;
   }
 
-  .reference-item__icon-wrp {
-    height: 10 * $point;
+  .reference-item__doc-icon-wrp {
+    margin-bottom: 1.5 * $point;
   }
 
   .reference-item__file-name,

@@ -149,16 +149,16 @@
         </form>
       </div>
 
-      <div class="docs-manager__reference-list-wrp">
-        <reference-list :list="references" />
-      </div>
+      <!--<div class="docs-manager__reference-list-wrp">-->
+      <!--<reference-list :list="references" />-->
+      <!--</div>-->
     </div>
   </div>
 </template>
 
 <script>
 import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
-import ReferenceList from './DocReferences.List'
+// import ReferenceList from './DocReferences.List'
 import FileField from '@/vue/common/fields/FileField'
 
 import FormMixin from '@/vue/common/mixins/form.mixin'
@@ -190,7 +190,7 @@ const DOC_TYPE_VALUES = Object.freeze([
 
 export default {
   components: {
-    ReferenceList,
+    // ReferenceList,
     FormConfirmation,
     FileField
   },
@@ -202,13 +202,13 @@ export default {
   ],
   data: _ => ({
     form: {
-      firstName: 'ewqeqw',
-      lastName: 'eqweqw',
-      taxId: 'wqeqwe',
-      mobilePhone: 'eqwe',
-      serialNumber: 'qweq',
-      dateOfBirth: 'eqw',
-      counterparty: 'qweqew',
+      firstName: '',
+      lastName: '',
+      taxId: '',
+      mobilePhone: '',
+      serialNumber: '',
+      dateOfBirth: '',
+      counterparty: '',
       documentType: DOC_TYPE_VALUES[0]
     },
     document: null,

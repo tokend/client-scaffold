@@ -7,7 +7,7 @@ export default {
   doc_lbl_last_name: 'Last name',
   doc_lbl_tax_id: 'Tax ID',
   doc_lbl_mobile_phone: 'Mobile phone',
-  doc_lbl_serial_number: 'Serial number',
+  doc_lbl_serial_number: 'Passport serial and number',
   doc_lbl_date_of_birth: 'Date of birth',
   doc_lbl_document_type: 'Document type',
   doc_lbl_counterparty: 'Counterparty',
@@ -17,5 +17,8 @@ export default {
   actions`,
   doc_verified: 'Document is verified',
   doc_verified_exp: `We can guarantee that document haven't became subject to 
-  any malicious actions`
+  any malicious actions`,
+  docs_loading: 'Verifying the document',
+  docs_creator: 'About creator',
+  docs_file_details: 'File details'
 }

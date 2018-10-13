@@ -3,6 +3,7 @@
     <div class="reference-list__inner">
       <template v-for="item in list.slice().reverse()">
         <router-link
+          class="reference-list__item-link"
           :key="item.reference"
           :to="{ name: 'documents.view', params: { id: item.reference } }"
         >
@@ -36,5 +37,20 @@ export default {
   display: flex;
   flex-wrap: wrap;
   max-width: 100 * $point;
+}
+
+$item-width: 25 * $point;
+
+.reference-list__item-link {
+  display: block;
+  margin-bottom: 3 * $point;
+  margin-right: 3 * $point;
+  text-decoration: none;
+  max-width: $item-width;
+  width: 100%;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 </style>

@@ -1,6 +1,14 @@
 <template>
   <div class="doc-viewer app__page-content-wrp">
-    <template v-if="reference">
+    <template v-if="isPending">
+      <loader :message="i18n.docs_loading()" />
+    </template>
+
+    <template v-else-if="reference && !isFailed">
+      <div class="doc-viewer__hash-wrp">
+        <h2>Document hash: <clipboard-field :value="reference.reference" /></h2>
+      </div>
+
       <div class="doc-viewer__header">
         <div class="doc-viewer__icon-wrp">
           <doc-icon :mime-type="reference.mimeType" :size="'4x'" />
@@ -14,36 +22,17 @@
       <div class="doc-viewer__content">
         <div class="doc-viewer__description-wrp">
           <div class="doc-viewer__details">
+            <h3 class="doc-viewer__details-heading">
+              {{ i18n.docs_creator() }}
+            </h3>
+
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Counterparty:</span>
-              <span class="doc-viewer__detail-value">
-                {{ reference.counterparty }}
-              </span>
-            </p>
-            <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Creator:</span>
+              <span class="doc-viewer__detail-key">Public Key:</span>
               <span class="doc-viewer__detail-value">
                 {{ reference.creator }}
               </span>
             </p>
-            <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Date of Birth:</span>
-              <span class="doc-viewer__detail-value">
-                {{ reference.dateOfBirth }}
-              </span>
-            </p>
-            <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Document Type:</span>
-              <span class="doc-viewer__detail-value">
-                {{ reference.documentType }}
-              </span>
-            </p>
-            <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">File name:</span>
-              <span class="doc-viewer__detail-value">
-                {{ reference.fileName }}
-              </span>
-            </p>
+
             <p class="doc-viewer__detail">
               <span class="doc-viewer__detail-key">First name:</span>
               <span class="doc-viewer__detail-value">
@@ -57,25 +46,13 @@
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Mime type:</span>
+              <span class="doc-viewer__detail-key">Date of Birth:</span>
               <span class="doc-viewer__detail-value">
-                {{ reference.mimeType }}
+                {{ reference.dateOfBirth }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Mobile phone:</span>
-              <span class="doc-viewer__detail-value">
-                {{ reference.mobilePhone }}
-              </span>
-            </p>
-            <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Reference:</span>
-              <span class="doc-viewer__detail-value">
-                {{ reference.reference }}
-              </span>
-            </p>
-            <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Serial number:</span>
+              <span class="doc-viewer__detail-key">Passport:</span>
               <span class="doc-viewer__detail-value">
                 {{ reference.serialNumber }}
               </span>
@@ -84,6 +61,43 @@
               <span class="doc-viewer__detail-key">Tax ID:</span>
               <span class="doc-viewer__detail-value">
                 {{ reference.taxId }}
+              </span>
+            </p>
+            <p class="doc-viewer__detail">
+              <span class="doc-viewer__detail-key">Mobile phone:</span>
+              <span class="doc-viewer__detail-value">
+                {{ reference.mobilePhone }}
+              </span>
+            </p>
+
+            <h3 class="doc-viewer__details-heading">
+              {{ i18n.docs_file_details() }}
+            </h3>
+
+            <p class="doc-viewer__detail">
+              <span class="doc-viewer__detail-key">File name:</span>
+              <span class="doc-viewer__detail-value">
+                {{ reference.fileName }}
+              </span>
+            </p>
+            <p class="doc-viewer__detail">
+              <span class="doc-viewer__detail-key">Mime type:</span>
+              <span class="doc-viewer__detail-value">
+                {{ reference.mimeType }}
+              </span>
+            </p>
+
+            <p class="doc-viewer__detail">
+              <span class="doc-viewer__detail-key">Document Type:</span>
+              <span class="doc-viewer__detail-value">
+                {{ reference.documentType }}
+              </span>
+            </p>
+
+            <p class="doc-viewer__detail">
+              <span class="doc-viewer__detail-key">Counterparty:</span>
+              <span class="doc-viewer__detail-value">
+                {{ reference.counterparty }}
               </span>
             </p>
           </div>
@@ -97,20 +111,30 @@
         </div>
       </div>
     </template>
+
+    <template v-else>
+      Failed to load reference
+    </template>
   </div>
 </template>
 
 <script>
 import ReferenceLoader from './reference-loader'
 import ReferenceVerifier from './reference-verifier'
+import ClipboardField from '@/vue/common/fields/ClipboardField'
 
 import DocIcon from './DocReferences.Icon'
 import StateViewer from './DocReferences.StateViewer'
+import Loader from '@/vue/app/common/Loader'
+
+import { i18n } from '../../../js/i18n'
 
 export default {
   components: {
     DocIcon,
-    StateViewer
+    StateViewer,
+    ClipboardField,
+    Loader
   },
   mixins: [
     ReferenceLoader,
@@ -123,11 +147,23 @@ export default {
     }
   },
   data: _ => ({
-    isPending: false
+    i18n,
+    isPending: false,
+    isFailed: false
   }),
   async created () {
-    await this.loadReference(this.id)
-    await this.verifyReference(this.reference.fileKey, this.reference.reference)
+    this.isPending = true
+    try {
+      await this.loadReference(this.id)
+      await this.verifyReference(
+        this.reference.fileKey,
+        this.reference.reference
+      )
+    } catch (e) {
+      console.error(e)
+      this.isFailed = true
+    }
+    this.isPending = false
   }
 }
 </script>
@@ -135,6 +171,14 @@ export default {
 <style lang="scss" scoped>
   @import "~@scss/variables";
   @import "~@scss/mixins";
+
+  .doc-viewer__hash-wrp {
+    margin-bottom: 3 * $point;
+
+    h2 {
+      color: $col-primary;
+    }
+  }
 
   .doc-viewer__header {
     align-items: center;
@@ -149,6 +193,18 @@ export default {
   .doc-viewer__detail-key,
   .doc-viewer__detail-value {
     display: inline-block;
+  }
+
+  .doc-viewer__detail {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doc-viewer__details-heading {
+    color: $col-primary;
+    margin-top: 1.5 * $point;
+    margin-bottom: .75 * $point;
   }
 
   .doc-viewer__detail-key {

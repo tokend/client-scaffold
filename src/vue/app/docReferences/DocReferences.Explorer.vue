@@ -23,7 +23,9 @@
       />
     </div>
 
-    <doc-list :list="filteredList" />
+    <div class="explorer__list-wrp">
+      <doc-list :list="filteredList" />
+    </div>
   </div>
 </template>
 
@@ -81,4 +83,11 @@ export default {
       margin-right: 1 * $point;
     }
   }
+
+  .explorer__list-wrp {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+
 </style>
