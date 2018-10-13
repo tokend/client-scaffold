@@ -167,6 +167,7 @@ const getters = {
 
   // requests:
   tokenCreationRequests: 'tokenCreationRequests',
+  withdrawalRequests: 'withdrawalRequests',
   saleCreationRequests: 'saleCreationRequests',
   preIssuanceUploadRequests: 'preIssuanceUploadRequests',
   limitsRequests: 'limitsRequests',

@@ -66,6 +66,20 @@ const actions = {
     return state.tokenCreationRequests.next()
   },
 
+  async GET_USER_WITHDRAWAL_REQUESTS ({ state }) {
+    state.withdrawalUploadRequests.attachInitLoader(
+      () => reviewableRequestsService.loadWithdrawalsReviewableRequests()
+    )
+    return state.withdrawalUploadRequests.init()
+  },
+
+  async NEXT_USER_WITHDRAWAL_REQUESTS ({ state }) {
+    state.withdrawalRequests.attachInitLoader(
+      () => reviewableRequestsService.loadWithdrawalsReviewableRequests()
+    )
+    return state.withdrawalRequests.next()
+  },
+
   async GET_USER_PREISSUANCE_UPLOAD_REQUESTS ({ state }) {
     state.preIssuanceUploadRequests.attachInitLoader(() =>
       reviewableRequestsService.loadPreIssuanceRequests()
@@ -126,6 +140,7 @@ const actions = {
 
 const getters = {
   tokenCreationRequests: state => state.tokenCreationRequests,
+  withdrawalRequests: state => state.tokenCreationRequests,
   preIssuanceUploadRequests: state => state.preIssuanceUploadRequests,
   saleCreationRequests: state => state.saleCreationRequests,
   limitsRequests: state => state.limitsRequests.records,
