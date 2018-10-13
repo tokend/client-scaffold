@@ -16,7 +16,7 @@ export default {
 
       async function uploadSingleDocument (document) {
         if (document.isUploaded) return
-        document = await fileService.uploadSingleDocument(document)
+        await fileService.uploadSingleDocument(document)
       }
     }
   }
