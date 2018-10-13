@@ -20,5 +20,6 @@ export default {
   any malicious actions`,
   docs_loading: 'Verifying the document',
   docs_creator: 'About creator',
-  docs_file_details: 'File details'
+  docs_file_details: 'File details',
+  docs_check_file: 'Check if file exists in the system'
 }
