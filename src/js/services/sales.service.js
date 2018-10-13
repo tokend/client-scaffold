@@ -44,6 +44,23 @@ export class SalesService extends Service {
   }
 
   /**
+     * Creates operation to cancel sale request
+     *
+     * @param {object} opts
+     * @param {string} opts.requestID - ID of the request
+     * @param {string} [opts.source] - The source account for the operation.
+     * Defaults to the transaction's source account.
+     * @returns {xdr.CancelSaleCreationRequestOp}
+     */
+  cancelSaleCreationRequest (opts) {
+    const operation = SaleRequestBuilder.cancelSaleCreationRequest(opts)
+    return this._operationBuilder
+      .operation()
+      .add(operation)
+      .submit(this._accountId, this._keypair)
+  }
+
+  /**
    * Creates sale creation request additionally updating token creation
    * request. In the system, we need this to change tokens max issuance
    * property depending on sale's hard cap. If no need to update token request,

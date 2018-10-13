@@ -145,6 +145,13 @@
                     {{ i18n.lbl_view_sale() }}
                   </md-button>
                 </template>
+                <button
+                  v-ripple
+                  @click="cancelRequest(item.id)"
+                  class="app__button-flat"
+                  :disabled="!item.isPending || isPending">
+                  {{ i18n.lbl_cancel() }}
+                </button>
                 <router-link
                   :to="{name: 'sale-creation.index', params: { id: item.id }}"
                   tag="button"
@@ -200,6 +207,7 @@ import { EventDispatcher } from '@/js/events/event_dispatcher'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 import { salesService } from '@/js/services/sales.service'
+import { ErrorHandler } from '@/js/errors/error_handler'
 
 export default {
   components: { Detail, NoDataMessage },
@@ -241,6 +249,21 @@ export default {
       loadList: vuexTypes.GET_USER_SALE_CREATION_REQUESTS,
       loadNext: vuexTypes.NEXT_USER_SALE_CREATION_REQUESTS
     }),
+
+    async cancelRequest (requestID) {
+      this.disable()
+      try {
+        await salesService.cancelSaleCreationRequest({
+          requestID: requestID
+        })
+        this.loadList(this.tokenCode)
+        EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
+      } catch (error) {
+        console.error(error)
+        ErrorHandler.processUnexpected(error)
+      }
+      this.enable()
+    },
 
     checkIsValidYoutubeId (youtubeId) {
       // if user doesn't enter the youtube video id when creating the sale
