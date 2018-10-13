@@ -38,7 +38,7 @@ import FormMixin from '@/vue/common/mixins/form.mixin'
 import { i18n } from '../../../js/i18n'
 import { documentTypes as DOCUMENT_TYPES } from '../../../js/const/const'
 
-import { ErrorHandler } from '../../../js/errors/error_handler'
+import { EventDispatcher } from '../../../js/events/event_dispatcher'
 
 export default {
   components: {
@@ -58,10 +58,16 @@ export default {
     async submit () {
       this.disable()
       try {
-        const reference = this.getFileHash(this.document.file)
+        const reference = await this.getFileHash(this.document.file)
         await this.getReference(reference)
+        this.$router.push({
+          name: 'documents.view',
+          params: {
+            id: reference
+          }
+        })
       } catch (e) {
-        ErrorHandler.processUnexpected(e)
+        EventDispatcher.dispatchShowErrorEvent('There is no such document in the system')
       }
       this.enable()
     }
