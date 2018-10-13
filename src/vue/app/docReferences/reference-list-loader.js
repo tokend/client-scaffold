@@ -1,8 +1,8 @@
-import ReferenceGetter from './reference-getter'
+import ReferenceListGetter from './reference-list-getter'
 
 export default {
   mixins: [
-    ReferenceGetter
+    ReferenceListGetter
   ],
   data: _ => ({
     references: []

@@ -164,7 +164,7 @@ import FileField from '@/vue/common/fields/FileField'
 import FormMixin from '@/vue/common/mixins/form.mixin'
 import ReferenceCreator from './reference-creator.mixin'
 import DocumentManager from './document-manager'
-import ReferenceLoader from './reference-loader'
+import ReferenceListLoader from './reference-list-loader'
 
 import { i18n } from '../../../js/i18n'
 
@@ -197,7 +197,7 @@ export default {
   mixins: [
     FormMixin,
     ReferenceCreator,
-    ReferenceLoader,
+    ReferenceListLoader,
     DocumentManager
   ],
   data: _ => ({
