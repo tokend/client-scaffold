@@ -2,25 +2,25 @@
   <div class="doc-icon-wrp">
     <template v-if="mimeType === PDF_MIME">
       <md-icon
-        class="doc-icon
-               doc-icon--pdf
-               md-size-3x">
+        :class="`doc-icon
+                 doc-icon--pdf
+                 md-size-${size}`">
         picture_as_pdf
       </md-icon>
     </template>
     <template v-else-if="mimeType">
       <md-icon
-        class="doc-icon
-               doc-icon--pdf
-               md-size-3x">
+        :class="`doc-icon
+                 doc-icon--pdf
+                 md-size-${size}`">
         filter
       </md-icon>
     </template>
     <template v-else>
       <md-icon
-        class="doc-icon
-               doc-icon--pdf
-               md-size-3x">
+        :class="`doc-icon
+                 doc-icon--pdf
+                 md-size-${size}`">
         filter_none
       </md-icon>
     </template>
@@ -35,6 +35,10 @@ export default {
     mimeType: {
       type: String,
       default: ''
+    },
+    size: {
+      type: String,
+      default: '3x'
     }
   },
   data: _ => ({

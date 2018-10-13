@@ -11,5 +11,11 @@ export default {
   doc_lbl_date_of_birth: 'Date of birth',
   doc_lbl_document_type: 'Document type',
   doc_lbl_counterparty: 'Counterparty',
-  doc_uploaded: 'Document successfully uploaded'
+  doc_uploaded: 'Document successfully uploaded',
+  doc_hash_mismatch: 'Document hash mismatched',
+  doc_hash_mismatch_exp: `The file was corrupted or became subject to malicious 
+  actions`,
+  doc_verified: 'Document is verified',
+  doc_verified_exp: `We can guarantee that document haven't became subject to 
+  any malicious actions`
 }

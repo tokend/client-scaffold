@@ -16,6 +16,7 @@ export class ReferenceRecord {
     this.mobilePhone = _get(record, 'meta.mobilePhone')
     this.serialNumber = _get(record, 'meta.serialNumber')
     this.taxId = _get(record, 'meta.taxId')
+    this.fileKey = _get(record, 'meta.key')
     this.createdAt = record.createdAt
   }
 }
