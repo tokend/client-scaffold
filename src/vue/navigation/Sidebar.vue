@@ -57,6 +57,20 @@
               {{ i18n.sidebar_explore_docs() }}
             </span>
           </router-link>
+
+          <router-link
+            v-ripple
+            class="sidebar__list-item"
+            @click.native="closeSidebar"
+            to="/documents/check"
+            tag="li"
+            v-if="config.FEATURE_FLAGS.docReferences"
+          >
+            <md-icon class="sidebar__list-item-icon">search</md-icon>
+            <span class="md-list-item-text">
+              {{ i18n.sidebar_check_docs() }}
+            </span>
+          </router-link>
         </ul>
       </section>
 

@@ -82,6 +82,7 @@ import DocReferences from '@/vue/app/docReferences/DocReferences.Entry'
 import DocReferencesUpload from '@/vue/app/docReferences/DocReferences.Upload'
 import DocReferencesViewer from '@/vue/app/docReferences/DocReferences.Viewer'
 import DocReferencesExplorer from '@/vue/app/docReferences/DocReferences.Explorer'
+import DocReferencesChecker from '@/vue/app/docReferences/DocReferences.Checker'
 
 Vue.use(Router)
 
@@ -166,6 +167,12 @@ const router = new Router({
           path: 'explore',
           name: 'documents.explore',
           meta: { pageName: PAGES_NAMES.exploreDocuments }
+        },
+        {
+          component: DocReferencesChecker,
+          path: 'check',
+          name: 'documents.check',
+          meta: { pageName: PAGES_NAMES.checkDocument }
         },
         {
           component: DocReferencesViewer,
