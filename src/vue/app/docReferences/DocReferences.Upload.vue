@@ -96,6 +96,16 @@
               :error-message="errorMessage('documentType')"
             />
           </div>
+          <div class="app__form-field">
+            <input-field-unchained
+              name="counterparty"
+              v-model.trim="form.counterparty"
+              v-validate="'required'"
+              :label="i18n.doc_lbl_counterparty()"
+              :error-message="errorMessage('counterparty')"
+              :readonly="view.mode === VIEW_MODES.confirm"
+            />
+          </div>
         </div>
       </div>
 
@@ -141,12 +151,21 @@
 <script>
 import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
 import FormMixin from '@/vue/common/mixins/form.mixin'
+
 import FileField from '@/vue/common/fields/FileField'
 
+import ReferenceCreator from './reference-creator.mixin'
+import DocumentManager from './document-manager'
+
 import { i18n } from '../../../js/i18n'
-import InputFieldUnchained from '../../common/fields/InputFieldUnchained'
 
 import { documentTypes as DOCUMENT_TYPES } from '../../../js/const/const'
+
+import { ErrorHandler } from '../../../js/errors/error_handler'
+import { EventDispatcher } from '../../../js/events/event_dispatcher'
+
+import { mapGetters } from 'vuex'
+import { vuexTypes } from '../../../vuex/types'
 
 const VIEW_MODES = Object.freeze({
   submit: 'submit',
@@ -158,11 +177,14 @@ const DOC_TYPE_VALUES = Object.freeze(['Passport', 'Tax identification', 'Other'
 
 export default {
   components: {
-    InputFieldUnchained,
     FormConfirmation,
     FileField
   },
-  mixins: [FormMixin],
+  mixins: [
+    FormMixin,
+    ReferenceCreator,
+    DocumentManager
+  ],
   data: _ => ({
     form: {
       firstName: '',
@@ -171,6 +193,7 @@ export default {
       mobilePhone: '',
       serialNumber: '',
       dateOfBirth: '',
+      counterparty: '',
       documentType: DOC_TYPE_VALUES[0]
     },
     document: null,
@@ -182,11 +205,34 @@ export default {
     VIEW_MODES,
     i18n
   }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.accountId
+    ])
+  },
   methods: {
-    submit () {
-      // wip
+    async submit () {
+      this.disable()
+      try {
+        const reference = await this.calculateHash(this.document.file)
+        await this.createReference(reference, {
+          file_name: this.document.name,
+          document_type: this.document.mimeType,
+          creator: this.accountId,
+          ...this.form
+        })
+        EventDispatcher.dispatchShowSuccessEvent(i18n.doc_uploaded())
+      } catch (e) {
+        ErrorHandler.processUnexpected(e)
+      }
+      this.view.mode = VIEW_MODES.submit
+      this.enable()
     },
-    updateView (mode, clear = false) {
+    async updateView (mode, clear = false) {
+      if (mode === VIEW_MODES.confirm &&
+        !await this.isValid()) {
+        return
+      }
       this.view.mode = mode
       if (clear) {
         this.clear()

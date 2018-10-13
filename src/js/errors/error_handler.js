@@ -9,10 +9,21 @@ export class ErrorHandler {
       error.showBanner(i18n.unexpected_error())
       return
     }
-    EventDispatcher.dispatchShowErrorEvent(i18n.unexpected_error())
+    EventDispatcher.dispatchShowErrorEvent(
+      this.tryGetNewSdkErrorMessage(error) ||
+      i18n.unexpected_error()
+    )
   }
 
   static deriveTxErrorMessages (rawError) {
     return _get(rawError, 'response.data.extras.result_codes.messages', [])
+  }
+
+  static tryGetNewSdkErrorMessage (e) {
+    const message = _get(e, 'originalError.response.data.extras.result_codes.messages[0]')
+    if (message === 'Entry already exists') {
+      return 'Such document already exists in the system'
+    }
+    return message
   }
 }

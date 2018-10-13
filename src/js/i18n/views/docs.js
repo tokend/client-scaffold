@@ -9,5 +9,7 @@ export default {
   doc_lbl_mobile_phone: 'Mobile phone',
   doc_lbl_serial_number: 'Serial number',
   doc_lbl_date_of_birth: 'Date of birth',
-  doc_lbl_document_type: 'Document type'
+  doc_lbl_document_type: 'Document type',
+  doc_lbl_counterparty: 'Counterparty',
+  doc_uploaded: 'Document successfully uploaded'
 }
