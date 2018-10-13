@@ -17,6 +17,17 @@
           <p class="doc-viewer__main-detail">{{ reference.fileName }}</p>
           <p class="doc-viewer__main-detail">{{ reference.documentType }}</p>
           <p class="doc-viewer__main-detail">{{ reference.createdAt }}</p>
+
+          <template v-if="isReferenceVerified">
+            <p class="doc-viewer__download-link-wrp">
+              <a
+                :href="`${config.FILE_STORAGE}/${reference.fileKey}`"
+                :download="reference.fileName"
+              >
+                Download file
+              </a>
+            </p>
+          </template>
         </div>
       </div>
       <div class="doc-viewer__content">
@@ -129,6 +140,8 @@ import Loader from '@/vue/app/common/Loader'
 
 import { i18n } from '../../../js/i18n'
 
+import config from '../../../config'
+
 export default {
   components: {
     DocIcon,
@@ -148,6 +161,7 @@ export default {
   },
   data: _ => ({
     i18n,
+    config,
     isPending: false,
     isFailed: false
   }),
@@ -155,6 +169,11 @@ export default {
     this.isPending = true
     try {
       await this.loadReference(this.id)
+      if (this.reference.isBroken) {
+        this.isReferenceVerified = false
+        this.isPending = false
+        return
+      }
       await this.verifyReference(
         this.reference.fileKey,
         this.reference.reference
@@ -217,5 +236,9 @@ export default {
 
   .doc-viewer__description-wrp {
     margin-bottom: 3.5 * $point;
+  }
+
+  .doc-viewer__download-link-wrp {
+    text-decoration: underline;
   }
 </style>

@@ -16,8 +16,8 @@ export default {
   doc_hash_mismatch_exp: `The file was corrupted or became subject to malicious 
   actions`,
   doc_verified: 'Document is verified',
-  doc_verified_exp: `We can guarantee that document haven't became subject to 
-  any malicious actions`,
+  doc_verified_exp: `We can guarantee that document has't became a subject to 
+  any malicious action`,
   docs_loading: 'Verifying the document',
   docs_creator: 'About creator',
   docs_file_details: 'File details',

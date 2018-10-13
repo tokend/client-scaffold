@@ -19,4 +19,10 @@ export class ReferenceRecord {
     this.fileKey = _get(record, 'meta.key')
     this.createdAt = record.createdAt
   }
+
+  get isBroken () {
+    return !this.fileKey ||
+           !this.reference ||
+            this.reference.length !== 64
+  }
 }
