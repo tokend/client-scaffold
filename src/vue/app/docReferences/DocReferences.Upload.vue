@@ -214,8 +214,10 @@ export default {
     async submit () {
       this.disable()
       try {
-        const reference = await this.calculateHash(this.document.file)
+        // await this.uploadDocuments(this.document)
+        const reference = await this.getFileHash(this.document.file)
         await this.createReference(reference, {
+          key: this.document.key,
           file_name: this.document.name,
           document_type: this.document.mimeType,
           creator: this.accountId,

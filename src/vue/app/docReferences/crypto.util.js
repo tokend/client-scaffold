@@ -2,7 +2,6 @@ export class CryptoUtil {
   static async sha256 (msg) {
     // encode as UTF-8
     const msgBuffer = new TextEncoder('utf-8').encode(msg)
-
     // hash the message
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer)
 
