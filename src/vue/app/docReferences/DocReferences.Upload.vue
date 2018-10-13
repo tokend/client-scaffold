@@ -187,13 +187,13 @@ export default {
   ],
   data: _ => ({
     form: {
-      firstName: '',
-      lastName: '',
-      taxId: '',
-      mobilePhone: '',
-      serialNumber: '',
-      dateOfBirth: '',
-      counterparty: '',
+      firstName: 'ewqeqw',
+      lastName: 'eqweqw',
+      taxId: 'wqeqwe',
+      mobilePhone: 'eqwe',
+      serialNumber: 'qweq',
+      dateOfBirth: 'eqw',
+      counterparty: 'qweqew',
       documentType: DOC_TYPE_VALUES[0]
     },
     document: null,
