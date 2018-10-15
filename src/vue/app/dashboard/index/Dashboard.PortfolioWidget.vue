@@ -8,7 +8,8 @@
         <div class="portfolio-widget__select-picture">
           <img
             class="portfolio-widget__asset"
-            :src="imgUrl">
+            :src="imgUrl"
+          >
         </div>
         <div class="portfolio-widget__select-field">
           <!--
@@ -29,9 +30,11 @@
         <div class="portfolio-widget__asset-available">
           <div class="portfolio-widget__asset-value">
             {{ balance }} {{ currentAsset }}
+            ({{ i18n.lbl_locked() }}: {{ lockedAmount }})
           </div>
           <div class="portfolio-widget__asset-usd">
             {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
+            ({{ i18n.lbl_locked() }}: {{ convertedLockedAmount }})
           </div>
         </div>
       </div>
@@ -118,6 +121,16 @@ export default {
     convertedBalance () {
       return i18n.cc(
         get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0
+      )
+    },
+    lockedAmount () {
+      return i18n.c(
+        get(this.accountBalances, `${this.currentAsset}.locked`) || 0
+      )
+    },
+    convertedLockedAmount () {
+      return i18n.cc(
+        get(this.accountBalances, `${this.currentAsset}.converted_locked`) || 0
       )
     },
     imgUrl () {
