@@ -236,5 +236,9 @@ export default {
   lbl_permanently_rejected: 'Permanently rejected',
   lbl_reject_request: 'Reject request',
   lbl_reject_reason: 'Reject reason',
-  lbl_contracts_not_available_exp: 'Contracts are available only for verified users, complete verification to become one.'
+  lbl_contracts_not_available_exp: 'Contracts are available only for verified users, complete verification to become one.',
+  lbl_time: 'Time',
+  lbl_total: 'Total',
+  lbl_trade_pair: 'Trade pair',
+  lbl_locked: 'locked'
 }
