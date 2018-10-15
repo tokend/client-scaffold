@@ -1,6 +1,15 @@
 <template>
   <div class="withdrawal-requests">
     <md-table md-card class="withdrawal-requests__table">
+      <md-table-toolbar class="withdrawal-requests__table-toolbar">
+        <div class="withdrawal-requests__select-outer">
+          <select-field-object-unchained
+            :label="i18n.lbl_asset()"
+            v-model="withdrawalState"
+            :values="withdrawalStates"
+          />
+        </div>
+      </md-table-toolbar>
       <template v-if="list.length">
         <md-table-row class="withdrawal-requests__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
@@ -88,14 +97,19 @@
 </template>
 
 <script>
-import FormMixin from '../../../common/mixins/form.mixin'
 import _get from 'lodash/get'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 import DetailsReader from '@/vue/app/common/DetailsReader'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '@/js/i18n'
-import { documentTypes, ASSET_POLICIES_VERBOSE } from '@/js/const/const'
+import {
+  documentTypes,
+  ASSET_POLICIES_VERBOSE,
+  REQUEST_STATES_STR,
+  REQUEST_STATES
+} from '@/js/const/const'
 import { vuexTypes } from '@/vuex/types'
 
 import { tokensService } from '@/js/services/tokens.service'
@@ -113,7 +127,39 @@ export default {
     documentTypes,
     isLoading: false,
     index: -1,
-    ASSET_POLICIES_VERBOSE
+    ASSET_POLICIES_VERBOSE,
+    REQUEST_STATES_STR,
+    REQUEST_STATES,
+    withdrawalStates: [
+      {
+        value: '',
+        translationId: 'lbl_all'
+      },
+      {
+        value: REQUEST_STATES.pending,
+        translationId: 'lbl_pending'
+      },
+      {
+        value: REQUEST_STATES.approved,
+        translationId: 'lbl_approved'
+      },
+      {
+        value: REQUEST_STATES.rejected,
+        translationId: 'lbl_rejected'
+      },
+      {
+        value: REQUEST_STATES.cancelled,
+        translationId: 'lbl_cancelled'
+      },
+      {
+        value: REQUEST_STATES.permanentlyRejected,
+        translationId: 'lbl_permanently_rejected'
+      }
+    ],
+    withdrawalState: {
+      value: '',
+      translationId: 'lbl_all'
+    }
   }),
   computed: {
     ...mapGetters([
@@ -126,8 +172,13 @@ export default {
       return _get(this.withdrawalRequests, 'isLoaded')
     }
   },
+  watch: {
+    'withdrawalState.value' (val) {
+      this.loadList({ state: this.withdrawalState.value })
+    }
+  },
   async created () {
-    await this.loadList()
+    await this.loadList({ state: this.withdrawalState.value })
     this.$emit('loaded')
   },
   methods: {
@@ -147,7 +198,7 @@ export default {
         await tokensService.cancelTokenCreationRequest({
           requestID: requestID
         })
-        this.loadList()
+        this.loadList({ state: this.withdrawalState.value })
         EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
       } catch (error) {
         console.error(error)
