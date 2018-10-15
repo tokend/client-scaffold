@@ -176,6 +176,14 @@
                     :disabled="isPending">
                     {{ i18n.lbl_add_to_balances() }}
                   </button>
+                  <router-link tag="button"
+                      :to="{name: 'token-creation.index.code', params: { code: selected.code }}"
+                      v-if="isTokenOwner"
+                      :disabled="isPending"
+                      class="app__button-raised"
+                      v-ripple>
+                    {{ i18n.lbl_update() }}
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -213,7 +221,8 @@ export default {
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
-      vuexTypes.tokens
+      vuexTypes.tokens,
+      vuexTypes.accountId
     ]),
     filteredTokens () {
       return this.filtrationCriteria
@@ -226,6 +235,9 @@ export default {
           }
         })
         : this.tokens || []
+    },
+    isTokenOwner () {
+      return this.selected.owner === this.accountId
     }
   },
   watch: {
