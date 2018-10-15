@@ -66,10 +66,12 @@
                     :value="`${getFancyName(item.details.request_type)}`" />
                   <detail
                     prop="Max issuance amount"
-                    :value="`${i18n.c(item.maxIssuanceAmount)}`" />
+                    :value="`${i18n.c(item.maxIssuanceAmount)}`"
+                    v-if="item.details.request_type !== 'asset_update'" />
                   <detail
                     prop="Initial preissued amount"
-                    :value="`${i18n.c(item.initialPreissuedAmount)}`" />
+                    :value="`${i18n.c(item.initialPreissuedAmount)}`"
+                    v-if="item.details.request_type !== 'asset_update'" />
                   <detail
                     prop="Token name"
                     :value="`${item.tokenName}`" />
