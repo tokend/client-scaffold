@@ -82,6 +82,7 @@ export default {
         this.filters.sortBy = filters.sortBy.num
         this.filters.order = filters.sortBy.order
         this.filters.baseAsset = filters.token
+        this.filters.name = filters.name
       }
       return this.loadSales(this.filters)
     }
