@@ -1,28 +1,39 @@
 <template>
   <div>
     <detail
+      :prop="'Order ID'"
+      :value="`${tx.id}`"
+    />
+    <detail
       :prop="'Base amount'"
-      :value="`${tx.baseAmount} ${tx.baseAssetCode}`" />
+      :value="`${tx.baseAmount} ${tx.baseAssetCode}`"
+    />
     <detail
       :prop="'Quote amount'"
-      :value="`${tx.quoteAmount} ${tx.quoteAssetCode}`" />
+      :value="`${tx.quoteAmount} ${tx.quoteAssetCode}`"
+    />
     <detail
       :prop="'Order'"
-      :value="tx.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell()" />
+      :value="tx.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell()"
+    />
     <detail
       :prop="'Price'"
-      :value="`${tx.price} ${tx.quoteAssetCode}`" />
+      :value="`${tx.price} ${tx.quoteAssetCode}`"
+    />
     <detail
       :prop="'Fee'"
-      :value="`${tx.fee} ${tx.baseAssetCode}`" />
+      :value="`${tx.fee} ${tx.baseAssetCode}`"
+    />
     <detail
       :prop="'Date'"
-      :value="i18n.d(tx.createdAt)" />
+      :value="i18n.d(tx.createdAt)"
+    />
     <button
       v-ripple
       @click="cancelOffer"
       class="cancel-button"
-      :disabled="isPending">
+      :disabled="isPending"
+    >
       {{ i18n.trd_cancel_order() }}
     </button>
   </div>
@@ -46,7 +57,7 @@ export default {
   name: 'manage-orders',
   mixins: [DetailsMixin, SubmitterMixin],
   props: {
-    tx: { type: Object, require: true, default: () => {} }
+    tx: { type: Object, require: true, default: () => { } }
   },
   data () {
     return {
@@ -82,17 +93,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/mixins";
+@import "~@scss/mixins";
 
-  .cancel-button {
-    @include button-accent();
-    margin-left: -16px;
-    margin-top: 24px;
-    display: block;
+.cancel-button {
+  @include button-accent();
+  margin-left: -16px;
+  margin-top: 24px;
+  display: block;
 
-    @include respond-to-custom(760px) {
-      margin-left: 0;
-      margin-right: auto;
-    }
+  @include respond-to-custom(760px) {
+    margin-left: 0;
+    margin-right: auto;
   }
+}
 </style>
