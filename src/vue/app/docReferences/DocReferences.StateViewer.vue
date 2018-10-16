@@ -5,9 +5,9 @@
         <template v-if="isVerified">
           <md-icon class="md-size-4x">verified_user</md-icon>
         </template>
-        <tempate v-else>
+        <template v-else>
           <md-icon class="md-size-4x">error</md-icon>
-        </tempate>
+        </template>
       </div>
       <div class="state-viewer__text">
         <template v-if="isVerified">

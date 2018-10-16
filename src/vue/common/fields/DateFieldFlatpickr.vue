@@ -212,8 +212,6 @@ export default {
 
 .date-field-flatpickr__input--readonly {
   cursor: default;
-  -webkit-text-fill-color: $field-color-unfocused;
-  color: $field-color-unfocused;
   @include readonly-material-border($field-color-unfocused);
 
   & ~ .input-field__label {
