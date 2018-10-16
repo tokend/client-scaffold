@@ -209,7 +209,7 @@ export default {
   lbl_to: 'To',
   lbl_request_type: 'Request type',
   lbl_more: 'More',
-  lbl_upload_documents: 'Upload documents',
+  lbl_upload_documents: 'Upload document',
   lbl_request_creation_date: 'Request creation date',
   lbl_requesting: 'Requesting',
   lbl_contracts: 'Contracts',

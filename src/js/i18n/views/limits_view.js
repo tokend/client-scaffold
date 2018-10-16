@@ -26,7 +26,7 @@ export default {
   lim_transaction_type_title: 'Transaction type',
   lim_requirements_title: 'Requirements',
   lim_pending_request_msg: 'Your request is pending review by the administrator',
-  lim_upload_documents_btn: 'Upload documents',
+  lim_upload_documents_btn: 'Upload document',
   lim_operation_type_limit_label: 'Operation type limit',
   limit_daily_validation_msg: 'Please, set daily out limit',
   limit_weekly_validation_msg: 'Please, set weekly out limit',
