@@ -77,10 +77,12 @@
                   v-validate="'required'"
                   name="dateOfBirth"
                   id="sale-start-time"
+                  placeholder="yyyy-dd-m"
                   :label="i18n.doc_lbl_date_of_birth()"
                   :disable-after="new Date().toString()"
                   :error-message="errorMessage('dateOfBirth')"
                   :readonly="view.mode === VIEW_MODES.confirm"
+                  :enable-time="false"
                 />
               </div>
             </div>

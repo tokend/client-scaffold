@@ -3,7 +3,7 @@
     <label
       class="date-field-flatpickr__label"
       :class="{
-        'date-field-flatpickr__label--focus': isCalendarOpen || flatpickrDate
+        'date-field-flatpickr__label--focus': flatpickrDate || isCalendarOpen
       }"
     >
       {{ label }}
@@ -13,12 +13,15 @@
       <flat-pickr
         :id="id"
         class="date-field-flatpickr__input"
-        :class="{ 'date-field-flatpickr__input--disabled': disabled }"
+        :class="{
+          'date-field-flatpickr__input--disabled': disabled,
+          'date-field-flatpickr__input--readonly': readonly
+        }"
         :config="config"
         :value="flatpickrDate"
         :placeholder="placeholder || ' '"
-        :key="flatpickrDate + disabled"
-        :disabled="disabled"
+        :key="flatpickrDate + disabled + readonly"
+        :disabled="disabled || readonly"
         @input.native="dateFieldUpdated"
         @on-close="onClose"
         @on-open="onOpen"
@@ -51,6 +54,7 @@ export default {
 
   props: {
     disabled: { type: Boolean, default: false },
+    readonly: { type: Boolean, default: false },
     enableTime: { type: Boolean, default: true },
     disableBefore: { type: String, default: '' },
     disableAfter: { type: String, default: '' },
@@ -200,6 +204,17 @@ export default {
   filter: grayscale(100%);
   -webkit-text-fill-color: $field-color-unfocused;
   color: $field-color-unfocused;
+
+  & ~ .input-field__label {
+    filter: grayscale(100%);
+  }
+}
+
+.date-field-flatpickr__input--readonly {
+  cursor: default;
+  -webkit-text-fill-color: $field-color-unfocused;
+  color: $field-color-unfocused;
+  @include readonly-material-border($field-color-unfocused);
 
   & ~ .input-field__label {
     filter: grayscale(100%);
