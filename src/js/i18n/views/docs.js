@@ -1,5 +1,5 @@
 export default {
-  doc_upload: 'Upload document',
+  doc_upload: 'Select document',
   docs_recheck_form: 'Please recheck the form before proceeding',
   docs_submit: 'Upload',
   doc_fill_meta: 'Provide metadata',

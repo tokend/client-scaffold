@@ -8,6 +8,20 @@
           v-if="view.mode === VIEW_MODES.submit ||
           view.mode === VIEW_MODES.confirm"
         >
+          <div class="app__form-section">
+            <h3 class="app__form-heading">{{ i18n.doc_upload() }}</h3>
+
+            <file-field
+              v-model="document"
+              v-validate="'required'"
+              :type="DOCUMENT_TYPES.delta"
+              label="Select File(s)"
+              class="docs-manager__upload-field"
+              name="file-to-upload"
+              id="file-to-upload"
+            />
+          </div>
+
           <h3 class="app__form-heading">{{ i18n.doc_fill_meta() }}</h3>
 
           <div class="app__form-section">
@@ -111,20 +125,6 @@
                 />
               </div>
             </div>
-          </div>
-
-          <h3 class="app__form-heading">{{ i18n.doc_upload() }}</h3>
-
-          <div class="app__form-row">
-            <file-field
-              v-model="document"
-              v-validate="'required'"
-              :type="DOCUMENT_TYPES.delta"
-              label="Select File(s)"
-              class="docs-manager__upload-field"
-              name="file-to-upload"
-              id="file-to-upload"
-            />
           </div>
 
           <div class="app__form-actions">
