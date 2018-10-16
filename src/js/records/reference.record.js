@@ -18,6 +18,7 @@ export class ReferenceRecord {
     this.taxId = _get(record, 'meta.taxId')
     this.fileKey = _get(record, 'meta.key')
     this.createdAt = record.createdAt
+    this.isModified = record.isModified
   }
 
   get isBroken () {

@@ -169,7 +169,7 @@ export default {
     this.isPending = true
     try {
       await this.loadReference(this.id)
-      if (this.reference.isBroken) {
+      if (this.reference.isBroken || this.reference.isModified) {
         this.isReferenceVerified = false
         this.isPending = false
         return
