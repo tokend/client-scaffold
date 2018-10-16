@@ -16,7 +16,7 @@
       :class="{'select-field__selected--focused': showList}"
       @click="toggleListVisibility()"
     >
-      <button class="select-field__selected-value">
+      <button class="select-field__selected-value" type="button">
         {{ currentValue || '&nbsp;' }}
       </button>
       <div>
