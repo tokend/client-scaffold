@@ -45,6 +45,12 @@ Vue.use(VeeValidate)
 Vue.use(VueMaterial)
 Vue.use(VueSimpleMDE)
 
+/* Vue filters */
+Vue.filter('localizeFeeType', localizeFeeType)
+Vue.filter('localizeFeeSubType', localizeFeeSubType)
+Vue.filter('translate', translate)
+Vue.filter('formatDate', formatDate)
+
 VeeValidate.Validator = extendValidator(VeeValidate.Validator)
 
 /* eslint-disable no-new */
@@ -55,9 +61,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-
-/* Vue filters */
-Vue.filter('localizeFeeType', localizeFeeType)
-Vue.filter('localizeFeeSubType', localizeFeeSubType)
-Vue.filter('translate', translate)
-Vue.filter('formatDate', formatDate)

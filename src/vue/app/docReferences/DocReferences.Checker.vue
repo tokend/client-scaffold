@@ -1,12 +1,12 @@
 <template>
   <div class="ref-checker app__page-content-wrp">
-    <md-divider class="ref-checker__divider" />
-
     <h3 class="app__form-heading">{{ i18n.docs_check_file() }}</h3>
 
     <div class="app__form-section">
       <div class="app__form-row">
         <file-field
+          :value="document"
+          @input="checkFile"
           v-model="document"
           v-validate="'required'"
           :type="DOCUMENT_TYPES.delta"
@@ -16,35 +16,38 @@
           id="file-to-upload"
         />
       </div>
-      <div class="app__form-actions">
-        <button
-          v-ripple
-          @click="checkFile"
-          class="app__form-submit-btn"
-          :disabled="isPending"
-          form="upload-form"
-        >
-          {{ i18n.docs_search_btn() }}
-        </button>
-      </div>
+
+      <transition name="app__fade-in">
+        <template v-if="fileSearchFailed">
+          <p class="ref-checker__not-found-error">
+            {{ 'docs_check_not_found' | translate }}
+          </p>
+        </template>
+      </transition>
     </div>
 
-    <md-divider class="ref-checker__divider" />
+    <h3 class="app__form-heading">
+      {{ i18n.docs_check_meta() }}
+    </h3>
 
-    <h3 class="app__form-heading">{{ i18n.docs_check_meta() }}</h3>
-
-    <div class="app__form-section">
+    <form
+      class="app__form-section"
+      id="meta-search-form"
+      @submit.prevent="checkMeta"
+    >
       <div class="app__form-row">
         <div class="app__form-field">
           <input-field-unchained
             v-model="form.lastName"
             :label="i18n.doc_lbl_last_name()"
+            :required="false"
           />
         </div>
         <div class="app__form-field">
           <input-field-unchained
             v-model="form.taxId"
             :label="i18n.doc_lbl_tax_id()"
+            :required="false"
           />
         </div>
       </div>
@@ -53,24 +56,25 @@
           <input-field-unchained
             v-model="form.mobilePhone"
             :label="i18n.doc_lbl_mobile_phone()"
+            :required="false"
           />
         </div>
         <div class="app__form-field">
           <input-field-unchained
             v-model="form.serialNumber"
             :label="i18n.doc_lbl_serial_number()"
+            :required="false"
           />
         </div>
       </div>
-    </div>
+    </form>
 
     <div class="app__form-actions">
       <button
         v-ripple
-        @click="checkMeta"
         class="app__form-submit-btn"
         :disabled="isPending"
-        form="upload-form"
+        form="meta-search-form"
       >
         {{ i18n.docs_search_btn() }}
       </button>
@@ -109,15 +113,17 @@ export default {
       mobilePhone: '',
       serialNumber: ''
     },
+    fileSearchFailed: false,
     document: null,
     DOCUMENT_TYPES
   }),
   methods: {
     async checkFile () {
-      if (!this.document) {
+      if (!this.document) { // deprecated if
         EventDispatcher.dispatchShowErrorEvent('Please upload the file first')
         return
       }
+      this.fileSearchFailed = false
       this.disable()
       try {
         const reference = await this.getFileHash(this.document.file)
@@ -129,6 +135,7 @@ export default {
           }
         })
       } catch (e) {
+        this.fileSearchFailed = true
         EventDispatcher.dispatchShowErrorEvent('There is no such document in the system')
       }
       this.enable()
@@ -141,7 +148,7 @@ export default {
         !this.form.serialNumber
       ) {
         EventDispatcher.dispatchShowErrorEvent(
-          'Please fill at leas one form field'
+          'Please fill at least one form field'
         )
         return
       }
@@ -163,9 +170,10 @@ export default {
               id: item.reference
             }
           })
+        } else {
+          throw new Error('Not found')
         }
       } catch (e) {
-        console.error(e)
         EventDispatcher.dispatchShowErrorEvent('There is no such document in the system')
       }
       this.enable()
@@ -175,7 +183,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .ref-checker__divider {
-    margin-bottom: 20px;
-  }
+.ref-checker__not-found-error {
+  color: crimson;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ref-checker .app__form-section:first-of-type {
+  margin-bottom: 60px;
+}
 </style>

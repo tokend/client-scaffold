@@ -13,15 +13,17 @@ export default {
   doc_lbl_counterparty: 'Counterparty',
   doc_uploaded: 'Document successfully uploaded',
   doc_hash_mismatch: 'Document hash mismatched',
-  doc_hash_mismatch_exp: `The file was corrupted or became subject to malicious 
+  doc_hash_mismatch_exp: `The file was corrupted or became subject to malicious
   actions`,
   doc_verified: 'Document is verified',
-  doc_verified_exp: `We can guarantee that document has't became a subject to 
+  doc_verified_exp: `We can guarantee that document hasn't became a subject to
   any malicious action`,
   docs_loading: 'Verifying the document',
   docs_creator: 'About creator',
   docs_file_details: 'File details',
   docs_check_file: 'Search by file',
   docs_check_meta: 'Search by meta information',
-  docs_search_btn: 'Search'
+  docs_search_btn: 'Search',
+  docs_check_not_found: 'Document not found',
+  docs_check_checking: 'Checking'
 }
