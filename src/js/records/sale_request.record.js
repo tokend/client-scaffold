@@ -14,7 +14,8 @@ export class SaleRequestRecord extends RequestRecord {
     this.endTime = this._details.end_time || ''
     this.softCap = this._details.soft_cap || ''
     this.hardCap = this._details.hard_cap || ''
-    this.quoteAssets = (this._details.quote_assets || []).map(a => a.asset)
+    this.quoteAssets =
+      (this._details.quote_assets || []).map(a => a.quote_asset)
     this.name = _get(this._details, 'details.name') || ''
     this.description = _get(this._details, 'details.description') || ''
     this.descriptionID = _get(this._details, 'details.description') || ''
@@ -52,7 +53,7 @@ export class SaleRequestRecord extends RequestRecord {
           soft_cap: this.softCap,
           hard_cap: this.hardCap,
           quote_assets: this.quoteAssets.filter(i => i).map((item) => ({
-            asset: item,
+            quote_asset: item,
             price: '1'
           })),
           details: {
