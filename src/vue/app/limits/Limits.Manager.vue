@@ -4,7 +4,7 @@
       {{ i18n.lim_change_limits_title({assetName: assetName, asset: asset}) }}
     </h2>
     <div class="limits-manager__select-wrp">
-      <select-field
+      <select-field-unchained
         v-model="form.operationType"
         :values="Object.values(LIMIT_OPS_STR)"
         :label="i18n.lim_operation_type_limit_label()"
