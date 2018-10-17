@@ -1,41 +1,52 @@
 <template>
-   <div class="upload-preissuance app__page-content-wrp">
+  <div class="upload-preissuance app__page-content-wrp">
     <h2 class="app__page-heading">
       {{ i18n.preis_heading() }}
     </h2>
-    <p class="app__page-explanations" v-html="i18n.preis_upload_tip()"></p>
+    <p class="app__page-explanations">
+      <markdown :source="i18n.preis_upload_tip()" />
+    </p>
     <template v-if="tokens.length">
       <div class="preissuance-form__upload-wrp">
-        <file-field class="preissuance-form__upload-input"
-              v-model="documents.preissuance"
-              label="Select File(s)"
-              accept=".iss"
-              id="preissuance-field"
+        <file-field
+          class="preissuance-form__upload-input"
+          v-model="documents.preissuance"
+          label="Select File(s)"
+          accept=".iss"
+          id="preissuance-field"
         />
       </div>
     </template>
     <template v-else>
       <p>{{ i18n.lbl_loading() }}</p>
     </template>
-    <ul class="preissuance-form__list" v-if="issuances.length">
+    <ul
+      class="preissuance-form__list"
+      v-if="issuances.length">
       <p>{{ i18n.lbl_to_upload() }}</p>
 
-      <li v-for="(item, index) in issuances" :key="item.reference">
-        {{index + 1}}. {{i18n.c(item.amount)}} {{item.asset}}
+      <li
+        v-for="(item, index) in issuances"
+        :key="item.reference">
+        {{ index + 1 }}. {{ i18n.c(item.amount) }} {{ item.asset }}
       </li>
     </ul>
 
-    <div class="app__form-actions" v-if="issuances.length">
-      <button v-ripple
-              @click="submit"
-              class="app__button-raised"
-              :disabled="isPending">
+    <div
+      class="app__form-actions"
+      v-if="issuances.length">
+      <button
+        v-ripple
+        @click="submit"
+        class="app__button-raised"
+        :disabled="isPending">
         {{ i18n.lbl_upload() }}
       </button>
-      <button v-ripple
-              @click="clear"
-              class="app__button-flat"
-              :disabled="isPending">
+      <button
+        v-ripple
+        @click="clear"
+        class="app__button-flat"
+        :disabled="isPending">
         {{ i18n.lbl_clear() }}
       </button>
     </div>
@@ -53,10 +64,14 @@ import { FileHelper } from '@/js/helpers/file.helper'
 import { PreIssuanceRequest, xdr } from 'tokend-js-sdk'
 import FormMixin from '@/vue/common/mixins/form.mixin'
 import FileField from '@/vue/common/fields/FileField'
+import Markdown from '@/vue/app/common/Markdown'
 import config from '@/config'
 
 export default {
-  components: { FileField },
+  components: {
+    FileField,
+    Markdown
+  },
   mixins: [FormMixin],
   data: _ => ({
     documents: {
@@ -65,11 +80,6 @@ export default {
     issuances: [],
     i18n
   }),
-
-  created () {
-    this.loadTokens()
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.accountId,
@@ -79,7 +89,17 @@ export default {
       return this.tokens.filter(token => token.owner === this.accountId)
     }
   },
-
+  watch: {
+    'documents.preissuance': async function (value) {
+      if (value) {
+        const extracted = await FileHelper.readFileAsText(value.file)
+        this.parsePreIssuances(JSON.parse(extracted).issuances)
+      }
+    }
+  },
+  created () {
+    this.loadTokens()
+  },
   methods: {
     ...mapActions({
       loadTokens: vuexTypes.GET_ALL_TOKENS
@@ -103,18 +123,23 @@ export default {
       for (let i = 0; i < items.length; i++) {
         const assetCode = items[i].asset
         if (!this.isAssetDefined(assetCode)) {
-          EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_exist({asset: assetCode}))
+          EventDispatcher.dispatchShowErrorEvent(
+            i18n.preis_token_not_exist({ asset: assetCode })
+          )
           return
         }
       }
       this.issuances = this.issuances.concat(items)
     },
     isAssetDefined (assetCode) {
-      return !!this.userOwnedTokens.filter(item => item.code === assetCode).length
+      return !!this.userOwnedTokens
+        .filter(item => item.code === assetCode).length
     },
 
     isNullAssetSigner (asset) {
-      const nullSigner = this.userOwnedTokens.filter(item => item.signer === config.NULL_ASSET_SIGNER)
+      const nullSigner = this.userOwnedTokens.filter(item =>
+        item.signer === config.NULL_ASSET_SIGNER
+      )
       return !!nullSigner.filter(item => item.code === asset).length
     },
 
@@ -128,12 +153,19 @@ export default {
       try {
         for (let item of this.issuances) {
           if (this.isNullAssetSigner(item.asset)) {
-            EventDispatcher.dispatchShowErrorEvent(i18n.preis_token_not_available({asset: item.asset}))
+            EventDispatcher.dispatchShowErrorEvent(
+              i18n.preis_token_not_available({ asset: item.asset })
+            )
             this.enable()
             return
           }
-          await issuanceService.createPreIssuanceRequest(this.issuances.map(item => item.xdr))
-          this.$router.push({ path: '/requests', hash: '#pre-issuance-upload' })
+          await issuanceService.createPreIssuanceRequest(
+            this.issuances.map(item => item.xdr)
+          )
+          this.$router.push({
+            path: '/requests',
+            hash: '#pre-issuance-upload'
+          })
           EventDispatcher.dispatchShowSuccessEvent(i18n.preis_uploaded())
         }
         this.issuances = []
@@ -141,14 +173,6 @@ export default {
         ErrorHandler.processUnexpected(err)
       }
       this.enable()
-    }
-  },
-  watch: {
-    'documents.preissuance': async function (value) {
-      if (value) {
-        const extracted = await FileHelper.readFileAsText(value.file)
-        this.parsePreIssuances(JSON.parse(extracted).issuances)
-      }
     }
   }
 }

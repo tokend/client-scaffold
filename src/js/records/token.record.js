@@ -32,11 +32,15 @@ export class TokenRecord {
   }
 
   get requiresKYC () {
-    return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.requiresKyc().value) !== -1
+    return this._record.policies &&
+           this._record.policies.map(policy => policy.value)
+             .indexOf(xdr.AssetPolicy.requiresKyc().value) !== -1
   }
 
   get isTransferable () {
-    return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.transferable().value) !== -1
+    return this._record.policies &&
+           this._record.policies.map(policy => policy.value)
+             .indexOf(xdr.AssetPolicy.transferable().value) !== -1
   }
 
   get isWalletToken () {
@@ -44,7 +48,9 @@ export class TokenRecord {
   }
 
   get isWithdrawable () {
-    return this._record.policies && this._record.policies.map(policy => policy.value).indexOf(xdr.AssetPolicy.withdrawable().value) !== -1
+    return this._record.policies &&
+           this._record.policies.map(policy => policy.value)
+             .indexOf(xdr.AssetPolicy.withdrawable().value) !== -1
   }
 
   get isDepositable () {
@@ -72,7 +78,9 @@ export class TokenRecord {
   }
 
   _getPolicies () {
-    return this._record.policies ? this._record.policies.map(policy => policy.value) : []
+    return this._record.policies
+      ? this._record.policies.map(policy => policy.value)
+      : []
   }
 
   attachDetails (details) {

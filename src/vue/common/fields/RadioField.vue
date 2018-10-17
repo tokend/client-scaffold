@@ -11,10 +11,13 @@
       :checked="cbValue"
       @change="onChange">
 
-    <div class="radio-field__input-custom"></div>
+    <div class="radio-field__input-custom" />
 
-    <label class="radio-field__label" :for="id" :title="title">
-      <slot></slot>
+    <label
+      class="radio-field__label"
+      :for="id"
+      :title="title">
+      <slot />
     </label>
   </div>
 </template>
@@ -25,7 +28,7 @@ export default {
     name: { type: String, default: undefined },
     active: { type: [String, Boolean], default: '' },
     disabled: { type: Boolean, default: false },
-    cbValue: { default: undefined },
+    cbValue: { type: [Number, String], default: null },
     title: { type: [String, Number], default: undefined },
     required: { type: Boolean, default: false }
   },

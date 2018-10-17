@@ -2,27 +2,44 @@
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  extends: [
+    'distributed-lab/vue'
+  ],
   parserOptions: {
+    parser: 'babel-eslint',
+    ecmaVersion: 2017,
     sourceType: 'module'
   },
-  env: {
-    browser: true
-  },
-  // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-  extends: 'standard',
-  // required to lint *.vue files
-  plugins: [
-    'html'
-  ],
-  // add your custom rules here
-  'rules': {
+  rules: {
+    // 0 off, 1 warning, 2 error
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': [ 'production', 'staging', 'dev-build' ].indexOf(process.env.NODE_ENV) > -1 ? 2 : 0
+    'no-debugger': 1,
+    'no-warning-comments': [1, {
+      'terms': ['hardcoded'], location: 'anywhere'
+    }],
+    'no-console': [1, {
+      allow: ['warn', 'error']
+    }],
+    'no-tabs': 2,
+    'max-len': [1, {
+      'code': 80,
+      'comments': 80,
+      'ignoreUrls': true,
+      'ignoreStrings': true,
+      'ignoreTemplateLiterals': true,
+      'ignoreRegExpLiterals': true
+    }],
+    'vue/max-attributes-per-line': [1, {
+      'singleline': 2,
+      'multiline': {
+        'max': 1,
+        'allowFirstLine': false
+      }
+    }]
   },
   globals: {
     Elm: true

@@ -11,12 +11,15 @@ const emptyAsync = () => Promise.resolve({
 
 export class Paginator {
   /**
-   * Class to facilitate horizon paginated requests. For now, can be used only with js-sdk server.
+   * Class to facilitate horizon paginated requests. For now, can be used only
+   * with js-sdk server.
    *
    * @constructor
    * @param {object} opts
-   * @param {function}  [opts.initLoader] - Initial function making request to horizon
-   * @param {function} [opts.recordWrp] - To create specified instance from every record
+   * @param {function} [opts.initLoader] - Initial function making request to
+   *        horizon
+   * @param {function} [opts.recordWrp] - To create specified instance from
+   *        every record
    * @param {number} [opts.txPerPage] - Limit of transactions
    */
   /*

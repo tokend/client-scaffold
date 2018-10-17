@@ -24,6 +24,7 @@ export { REQUEST_STATES, REQUEST_STATES_STR } from './request_states.const'
 export { SIGNER_TYPES } from './signer_types.const'
 export { ACCOUNT_STATES } from './account.const'
 export { DOCUMENT_POLICIES } from './document-policies.const'
+export { LIMIT_OPS, LIMIT_OPS_STR, LIMITS_REQUEST_TYPE, LIMITS_REQUEST_TYPE_STR } from './limits.const'
 export { KEY_CODES } from './key_codes.const'
 
 export { PAGES_NAMES } from './pages-names.const'
@@ -38,13 +39,8 @@ export {
 } from './xdr.const'
 
 export {
-  DEFAULT_BASE_ASSET,
-  DEFAULT_QUOTE_ASSET,
   DEFAULT_PRECISION,
   DEFAULT_INPUT_STEP,
-  DEFAULT_INPUT_MIN,
-  DEFAULT_DATE_FORMAT,
-  DEFAULT_DATE_TIME_FORMAT,
   DEFAULT_MAX_AMOUNT
 } from './configs.const'
 export { assetMap } from './asset_map'

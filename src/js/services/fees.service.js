@@ -9,13 +9,23 @@ const feeTypes = {
 }
 
 export class FeeService extends Service {
-  loadPaymentFeeByAmount (asset, amount, accountId = this._accountId, subtype = PAYMENT_FEE_SUBTYPES.outgoing) {
+  loadPaymentFeeByAmount (
+    asset,
+    amount,
+    accountId = this._accountId,
+    subtype = PAYMENT_FEE_SUBTYPES.outgoing
+  ) {
     const feeType = xdr.FeeType.fromName(feeTypes.PAYMENT_FEE).value
 
     return this._horizonRequestBuilder.fees()
       .fee(feeType, asset, accountId, amount, subtype)
       .call()
-      .then(result => ({ fixed: result.fixed, percent: result.percent, feeAsset: result.fee_asset }))
+      // eslint-disable-next-line promise/prefer-await-to-then
+      .then(result => ({
+        fixed: result.fixed,
+        percent: result.percent,
+        feeAsset: result.fee_asset
+      }))
   }
 
   loadWithdrawalFeeByAmount (asset, amount, accountId = this._accountId) {
@@ -24,6 +34,7 @@ export class FeeService extends Service {
     return this._horizonRequestBuilder.fees()
       .fee(feeType, asset, accountId, amount)
       .call()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(result => ({ fixed: result.fixed, percent: result.percent }))
   }
 
@@ -33,7 +44,16 @@ export class FeeService extends Service {
     return this._horizonRequestBuilder.fees()
       .fee(feeType, asset, accountId, amount)
       .call()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(result => ({ fixed: result.fixed, percent: result.percent }))
+  }
+
+  loadAccountFees () {
+    return this._horizonRequestBuilder.accounts()
+      .fees(this._accountId)
+      .call()
+      // eslint-disable-next-line promise/prefer-await-to-then
+      .then(result => (result.fees))
   }
 }
 

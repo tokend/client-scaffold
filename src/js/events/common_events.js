@@ -60,7 +60,8 @@ const componentEvents = Object.freeze({
   saleEditEndEvent: 'sale-edit-end',
   selectUserTypeEvent: 'select-user-type',
   kycUpdateEvent: 'kyc-update',
-  kycEditEndEvent: 'kyc-edit-end'
+  kycEditEndEvent: 'kyc-edit-end',
+  closeRequestEvent: 'close-request'
 })
 
 export const commonEvents = {

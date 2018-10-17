@@ -1,9 +1,15 @@
 <template>
   <div class="clipboard__outer">
-    <div class="clipboard" :class="{'clipboard--monospaced': monospaced}">
+    <div
+      class="clipboard"
+      :class="{'clipboard--monospaced': monospaced}">
       <div class="clipboard__value-outer">
         <label class="clipboard__label">{{ label }}</label>
-        <span class="clipboard__value" id="clipboard-target">{{ value }}</span>
+        <span
+          class="clipboard__value"
+          id="clipboard-target">
+          {{ value }}
+        </span>
       </div>
       <md-button
         class="md-icon-button"
@@ -11,7 +17,9 @@
         @click="showSuccess"
         data-clipboard-target="#clipboard-target"
       >
-        <md-icon class="clipboard__icon md-icon-half-sized">content_copy</md-icon>
+        <md-icon class="clipboard__icon md-icon-half-sized">
+          content_copy
+        </md-icon>
         <md-tooltip>Copy</md-tooltip>
       </md-button>
     </div>
@@ -19,29 +27,29 @@
 </template>
 
 <script>
-  import { EventDispatcher } from '../../../js/events/event_dispatcher'
-  import { i18n } from '../../../js/i18n'
+import { EventDispatcher } from '../../../js/events/event_dispatcher'
+import { i18n } from '../../../js/i18n'
 
-  import Clipboard from 'clipboard'
+import Clipboard from 'clipboard'
 
-  export default {
-    name: 'clipboard-field',
-    props: {
-      value: { type: String, default: '' },
-      label: { type: String, default: '' },
-      monospaced: {type: Boolean, default: false}
-    },
-    mounted () {
-      const btn = document.querySelector('#clipboard-btn')
-      if (!btn) return
-      this.clipboard = new Clipboard(btn)
-    },
-    methods: {
-      showSuccess () {
-        EventDispatcher.dispatchShowSuccessEvent(i18n.dep_copied())
-      }
+export default {
+  name: 'clipboard-field',
+  props: {
+    value: { type: String, default: '' },
+    label: { type: String, default: '' },
+    monospaced: { type: Boolean, default: false }
+  },
+  mounted () {
+    const btn = document.querySelector('#clipboard-btn')
+    if (!btn) return
+    this.clipboard = new Clipboard(btn)
+  },
+  methods: {
+    showSuccess () {
+      EventDispatcher.dispatchShowSuccessEvent(i18n.dep_copied())
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +65,6 @@
     width: 100%;
     @include material-border($field-color-focused, $field-color-unfocused);
   }
-
 
   .clipboard--monospaced > .clipboard__value-outer > .clipboard__value {
     font-family: 'SourceCodePro', Courier, monospace !important;

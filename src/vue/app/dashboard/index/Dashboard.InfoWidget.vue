@@ -3,135 +3,204 @@
     <template v-if="list.length">
       <div class="info-widget__title"> {{ i18n.dash_activity() }} </div>
       <div class="info-widget__list-wrapper">
-        <div class="info-widget__list" v-table-scroll-shadow>
+        <div
+          class="info-widget__list"
+          v-table-scroll-shadow>
           <div class="info-widget__list-header">
-            <div class="info-widget__list-header-item info-widget__list-header-item--date">{{ i18n.lbl_date() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--type">{{ i18n.lbl_tx_type() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--asset">{{ i18n.lbl_asset() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--amount">{{ i18n.lbl_amount() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--counterparty">{{ i18n.lbl_counterparty() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--status">{{ i18n.lbl_status() }}</div>
-            <div class="info-widget__list-header-item info-widget__list-header-item--btn"></div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--date">
+              {{ i18n.lbl_date() }}
+            </div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--type">
+              {{ i18n.lbl_tx_type() }}
+            </div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--asset">
+              {{ i18n.lbl_asset() }}
+            </div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--amount">
+              {{ i18n.lbl_amount() }}
+            </div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--counterparty">
+              {{ i18n.lbl_counterparty() }}
+            </div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--status">
+              {{ i18n.lbl_status() }}
+            </div>
+            <div
+              class="info-widget__list-header-item
+                     info-widget__list-header-item--btn" />
           </div>
           <div class="info-widget__list-body">
-            <div class="info-widget__list-body-elem"
-                v-for="(tx, i) in list"
+            <template v-for="(tx, i) in list">
+              <div
+                class="info-widget__list-body-elem"
                 v-if="i < transactionsToShow"
                 :key="`activity-item-${i}`"
                 :class="`info-widget__list-body-elem--${tx.state}`">
-              <div class="info-widget__list-body-row">
-                <div :title="tx.date" class="info-widget__list-body-item info-widget__list-body-item--date">
-                  {{ i18n.dmy(tx.date) }}
+                <div class="info-widget__list-body-row">
+                  <div
+                    :title="tx.date"
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--date">
+                    {{ i18n.dmy(tx.date) }}
+                  </div>
+                  <div
+                    :title="tx.name"
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--type">
+                    {{ tx.name }}
+                  </div>
+                  <div
+                    :title="tx.asset"
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--asset">
+                    {{ tx.asset }}
+                  </div>
+                  <div
+                    :title="tx.direction"
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--amount">
+                    {{ tx.direction === 'in' ? '+' : '-' }}{{ tx.amount }}
+                  </div>
+                  <div
+                    :title="tx.counterparty"
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--counterparty">
+                    {{ tx.counterparty }}
+                  </div>
+                  <div
+                    :title="tx.state"
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--status">
+                    {{ tx.state }}
+                  </div>
+                  <div
+                    class="info-widget__list-body-item
+                           info-widget__list-body-item--btn">
+                    <button
+                      class="info-widget__list-body-item-btn"
+                      @click="toggleDetails(i)">
+                      <md-icon
+                        class="info-widget__list-body-item-icon"
+                        :class="{
+                          'info-widget__list-body-item-icon--active':
+                            isSelected(i)
+                        }"
+                      >
+                        keyboard_arrow_down
+                      </md-icon>
+                    </button>
+                  </div>
                 </div>
-                <div :title="tx.name" class="info-widget__list-body-item info-widget__list-body-item--type">
-                  {{ tx.name }}
-                </div>
-                <div :title="tx.asset" class="info-widget__list-body-item info-widget__list-body-item--asset">
-                  {{ tx.asset }}
-                </div>
-                <div :title="tx.direction" class="info-widget__list-body-item info-widget__list-body-item--amount">
-                  {{ tx.direction === 'in' ? '+' : '-' }}{{ tx.amount }}
-                </div>
-                <div :title="tx.counterparty" class="info-widget__list-body-item info-widget__list-body-item--counterparty">
-                  {{ tx.counterparty }}
-                </div>
-                <div :title="tx.state" class="info-widget__list-body-item info-widget__list-body-item--status">
-                  {{ tx.state }}
-                </div>
-                <div class="info-widget__list-body-item info-widget__list-body-item--btn">
-                  <button class="info-widget__list-body-item-btn" @click="toggleDetails(i)">
-                    <md-icon class="info-widget__list-body-item-icon"
-                            :class="{ 'info-widget__list-body-item-icon--active': isSelected(i) }">
-                      keyboard_arrow_down
-                    </md-icon>
-                  </button>
+                <div
+                  class="info-widget__list-body-row
+                         info-widget__list-body-row--details"
+                  v-if="isSelected(i)">
+                  <tx-details
+                    class="info-widget__list-body-row-details"
+                    :tx="tx" />
                 </div>
               </div>
-              <div class="info-widget__list-body-row info-widget__list-body-row--details" v-if="isSelected(i)">
-                <tx-details class="info-widget__list-body-row-details" :tx="tx"/>
-              </div>
-            </div>
+            </template>
           </div>
         </div>
       </div>
     </template>
     <template v-else>
-      <no-data-message icon-name="trending_up"
-                       :msg-title="i18n.th_no_transaction_history()"
-                       :msg-message="i18n.th_here_will_be_the_list()"/>
+      <no-data-message
+        icon-name="trending_up"
+        :msg-title="i18n.th_no_transaction_history()"
+        :msg-message="i18n.th_here_will_be_the_list()" />
     </template>
   </div>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { RecordTypes } from '../../../../js/records/types'
-  import { PricesHelper } from '../../../../vuex/helpers/prices.helper'
-  import { DEFAULT_CONVERSION_ASSET } from '../../../../js/const/configs.const'
-  import { i18n } from '../../../../js/i18n'
-  import { TX_STATES } from '../../../../js/const/const'
-  import NoDataMessage from '@/vue/common/messages/NoDataMessage'
-  import { humanizePastDate } from '../../../../js/utils/dates.util'
-  import TxDetails from './Dashboard.TxDetails'
+import { mapGetters, mapActions } from 'vuex'
+import { vuexTypes } from '@/vuex/types'
+import { RecordTypes } from '@/js/records/types'
+import { PricesHelper } from '@/vuex/helpers/prices.helper'
+import { DEFAULT_CONVERSION_ASSET } from '@/js/const/configs.const'
+import { i18n } from '@/js/i18n'
+import { TX_STATES } from '@/js/const/const'
+import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import { humanizePastDate } from '@/js/utils/dates.util'
+import TxDetails from './Dashboard.TxDetails'
 
-  import get from 'lodash/get'
+import get from 'lodash/get'
 
-  export default {
-    name: 'info-widget',
-    components: {
-      NoDataMessage,
-      TxDetails
-    },
-    data: _ => ({
-      transactionsToShow: 10,
-      i18n,
-      DEFAULT_CONVERSION_ASSET,
-      TX_STATES,
-      index: -1
-    }),
-    props: ['currentAsset'],
-    created () {
-      this.loadList(this.currentAsset)
-    },
-    computed: {
-      ...mapGetters([
-        vuexTypes.transactions,
-        vuexTypes.userWalletTokens
-      ]),
-      list () {
-        return (get(this.transactions, `${this.currentAsset}.records`) || [])
-          .reduce((list, item) => {
-            if (item instanceof RecordTypes.MatchRecord) {
-              item.transactions.forEach(tx => { list.push(tx) })
-              return list
-            }
-            list.push(item)
+export default {
+  name: 'info-widget',
+  components: {
+    NoDataMessage,
+    TxDetails
+  },
+  props: {
+    currentAsset: { type: String, required: true }
+  },
+  data: _ => ({
+    transactionsToShow: 10,
+    i18n,
+    DEFAULT_CONVERSION_ASSET,
+    TX_STATES,
+    index: -1
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.transactions,
+      vuexTypes.userWalletTokens
+    ]),
+    list () {
+      return (get(this.transactions, `${this.currentAsset}.records`) || [])
+        .reduce((list, item) => {
+          if (item instanceof RecordTypes.MatchRecord) {
+            item.transactions.forEach(tx => { list.push(tx) })
             return list
-          }, [])
-      }
+          }
+          list.push(item)
+          return list
+        }, [])
+    }
+  },
+  watch: {
+    currentAsset (value) {
+      this.loadList(value)
+    }
+  },
+  created () {
+    this.loadList(this.currentAsset)
+  },
+  methods: {
+    humanizePastDate,
+    ...mapActions({
+      loadList: vuexTypes.GET_TX_LIST
+    }),
+    toggleDetails (index) {
+      this.index = this.index === index ? -1 : index
     },
-    methods: {
-      humanizePastDate,
-      ...mapActions({
-        loadList: vuexTypes.GET_TX_LIST
-      }),
-      toggleDetails (index) {
-        this.index = this.index === index ? -1 : index
-      },
-      isSelected (i) {
-        return this.index === i
-      },
-      convertAmount (amount) {
-        return PricesHelper.baseToQuote(amount, this.currentAsset, DEFAULT_CONVERSION_ASSET)
-      }
+    isSelected (i) {
+      return this.index === i
     },
-    watch: {
-      currentAsset (value) {
-        this.loadList(value)
-      }
+    convertAmount (amount) {
+      return PricesHelper.baseToQuote(
+        amount,
+        this.currentAsset,
+        DEFAULT_CONVERSION_ASSET
+      )
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

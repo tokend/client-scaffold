@@ -24,7 +24,12 @@ export class WalletService extends Service {
    * @return {ResponseBuilder}
    */
   // TODO: write proper detailed doc
-  createWallet (walletAttributes, kdfData, factorAttributes, recoveryAttributes) {
+  createWallet (
+    walletAttributes,
+    kdfData,
+    factorAttributes,
+    recoveryAttributes
+  ) {
     const kdf = { data: { type: kdfData.type, id: kdfData.id } }
     return this._apiRequestBuilder.wallets()
       .data(walletAttributes)
@@ -57,7 +62,9 @@ export class WalletService extends Service {
     const kdfAttributes = opts.kdfAttributes
     const kdf = { data: { type: kdfAttributes.type, id: kdfAttributes.id } }
 
-    const keypair = recoverySeed ? Keypair.fromSecret(recoverySeed) : this._keypair
+    const keypair = recoverySeed
+      ? Keypair.fromSecret(recoverySeed)
+      : this._keypair
     const walletId = recoveryWalletId || this._walletId
 
     return this._apiRequestBuilder

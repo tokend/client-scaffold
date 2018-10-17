@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'mixins';
 @import '../../static/fonts/index.css';
-@import '../../node_modules/mdi/css/materialdesignicons.min.css';
+@import '../../node_modules/@mdi/font/css/materialdesignicons.min.css';
 @import '../../node_modules/vue-material/dist/theme/engine';
 @import '../../node_modules/flatpickr/dist/flatpickr.css';
 @import 'forms';
@@ -43,13 +43,21 @@ textarea {
   width: 100%;
 }
 
-html,body {
+html {
   overflow: auto !important;
   -webkit-overflow-scrolling : touch !important;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 #app {
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
   &,
   & main,
@@ -82,6 +90,7 @@ html,body {
     flex: 1;
     width: 100%;
     max-width: 46 * $point;
+    margin: 0 auto;
   }
 
   p.app__page-explanations {

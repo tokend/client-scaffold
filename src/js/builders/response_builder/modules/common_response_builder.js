@@ -28,7 +28,10 @@ export class CommonResponseBuilder extends ResponseBuilder {
   }
 
   data (field) {
-    const data = this._parsedData.data || this._parsedData || this._rawResponse.data || this._rawResponse
+    const data = this._parsedData.data ||
+                 this._parsedData ||
+                 this._rawResponse.data ||
+                 this._rawResponse
     if (!field) {
       return data
     }
@@ -50,7 +53,8 @@ export class CommonResponseBuilder extends ResponseBuilder {
       if (index) {
         return get(data[index], 'attributes')
       } else {
-        return data.map(item => get(item, 'attributes') || get(item, 'data.attributes'))
+        return data.map(item => get(item, 'attributes') ||
+               get(item, 'data.attributes'))
       }
     }
 
@@ -63,7 +67,10 @@ export class CommonResponseBuilder extends ResponseBuilder {
 
   attribute (attributeName) {
     if (!attributeName) {
-      throw new Error('Arttribute name is required when using attribute(). To get all the attributes, use attributes() instead')
+      throw new Error(`
+        Attribute name is required when using attribute().
+        To get all the attributes, use attributes() instead
+      `)
     }
     const attributes = this.attributes()
     return attributes[attributeName]

@@ -1,33 +1,36 @@
 <template>
   <div class="sale-banner">
     <template v-if="sale.youTubeVideoId">
-      <iframe class="sale-banner__video"
-              :src="embedVideoUrl"
-              allowfullscreen>
-      </iframe>
+      <iframe
+        class="sale-banner__video"
+        :src="embedVideoUrl"
+        allowfullscreen />
     </template>
     <template v-else>
-      <img class="sale-banner__image"
-           :src="sale.image">
+      <img
+        class="sale-banner__image"
+        :src="sale.image">
     </template>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'sale-banner',
-    props: ['sale'],
-    computed: {
-      embedVideoUrl () {
-        const query = 'watch?v='
-        const youTubeVideoId = this.sale.youTubeVideoId
-        if (youTubeVideoId.includes(query)) {
-          return youTubeVideoId.replace(query, 'embed/')
-        }
-        return `https://www.youtube.com/embed/${youTubeVideoId}`
+export default {
+  name: 'sale-banner',
+  props: {
+    sale: { type: Object, default: undefined }
+  },
+  computed: {
+    embedVideoUrl () {
+      const query = 'watch?v='
+      const youTubeVideoId = this.sale.youTubeVideoId
+      if (youTubeVideoId.includes(query)) {
+        return youTubeVideoId.replace(query, 'embed/')
       }
+      return `https://www.youtube.com/embed/${youTubeVideoId}`
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

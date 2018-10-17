@@ -1,82 +1,81 @@
 <template>
-    <div class="description-editor">
-      <markdown-editor
-        @input="onInput"
-        :value="value"
-        :sanitize="true"
-        ref="markdownEditor"
-        :configs="configs"/>
-    </div>
+  <div class="description-editor">
+    <markdown-editor
+      @input="onInput"
+      :value="value"
+      :sanitize="true"
+      ref="markdownEditor"
+      :configs="configs" />
+  </div>
 </template>
 
 <script>
-  import markdownEditor from 'vue-simplemde/src/markdown-editor'
-  import { commonEvents } from '../../../../js/events/common_events'
+import MarkdownEditor from 'vue-simplemde/src/markdown-editor'
+import { commonEvents } from '../../../../js/events/common_events'
 
-  export default {
-    name: 'description-editor',
+export default {
+  name: 'description-editor',
+  components: { MarkdownEditor },
+  props: {
+    value: { type: [String, Number], required: true, default: '' || 0 }
+  },
 
-    components: {
-      markdownEditor
-    },
-
-    props: ['value'],
-
-    data () {
-      return {
-        content: '',
-        configs: {
-          toolbar: [
-            'bold', 'italic', '|',
-            'heading-1', 'heading-2', '|',
-            'image', 'link', '|',
-            'quote', 'unordered-list', 'ordered-list', '|',
-            'preview', 'fullscreen'
-          ],
-          status: false,
-          spellChecker: false
-        }
-      }
-    },
-
-    mounted () {
-      try {
-        this.simplemde.togglePreview()
-
-        this.simplemde.codemirror.on('beforeChange', (instance, changeObj) => {
-          // do some things
-        })
-
-        this.simplemde = null
-
-        this.$refs.markdownEditor.initialize() // init
-        this.simplemde.toTextArea()
-        this.simplemde.isPreviewActive() // returns boolean
-        this.simplemde.isSideBySideActive() // returns boolean
-        this.simplemde.isFullscreenActive() // returns boolean
-        this.simplemde.clearAutosavedValue() // no returned value
-        this.simplemde.markdown(this.content) // returns parsed html
-        this.simplemde.codemirror.refresh() // refresh codemirror
-      } catch (e) {}
-    },
-
-    computed: {
-      simplemde () {
-        return this.$refs.markdownEditor.simplemde
-      }
-    },
-
-    methods: {
-      onInput (value) {
-        this.$emit(commonEvents.inputEvent, value)
+  data () {
+    return {
+      content: '',
+      configs: {
+        toolbar: [
+          'bold', 'italic', '|',
+          'heading-1', 'heading-2', '|',
+          'image', 'link', '|',
+          'quote', 'unordered-list', 'ordered-list', '|',
+          'preview', 'fullscreen'
+        ],
+        status: false,
+        spellChecker: false
       }
     }
+  },
+
+  computed: {
+    simplemde () {
+      return this.$refs.markdownEditor.simplemde
+    }
+  },
+
+  mounted () {
+    try {
+      this.simplemde.togglePreview()
+
+      this.simplemde.codemirror.on('beforeChange', (instance, changeObj) => {
+        // do some things
+      })
+
+      this.simplemde = null
+
+      this.$refs.markdownEditor.initialize() // init
+      this.simplemde.toTextArea()
+      this.simplemde.isPreviewActive() // returns boolean
+      this.simplemde.isSideBySideActive() // returns boolean
+      this.simplemde.isFullscreenActive() // returns boolean
+      this.simplemde.clearAutosavedValue() // no returned value
+      this.simplemde.markdown(this.content) // returns parsed html
+      this.simplemde.codemirror.refresh() // refresh codemirror
+    } catch (e) {}
+  },
+
+  methods: {
+    onInput (value) {
+      this.$emit(commonEvents.inputEvent, value)
+    }
   }
+}
 </script>
 
 <style lang="scss">
   @import '~simplemde/dist/simplemde.min.css';
-  @import '../../../../scss/variables';
+  @import '~@scss/variables';
+  // @import '../../../../../assets/style/md';
 
   .description-editor {
     width: 100%;
@@ -91,6 +90,5 @@
   .editor-toolbar.fullscreen {
     z-index: 45 !important;
   }
-
 
 </style>

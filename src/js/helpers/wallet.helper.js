@@ -12,7 +12,8 @@ export class WalletHelper {
    *
    * @return {object} walletParams
    *         {string} walletParams.walletId - unique identifier of user's wallet
-   *         {ArrayBuffer} walletParams.walletKey - wallet key used later/previously to encrypt keychain data
+   *         {ArrayBuffer} walletParams.walletKey - wallet key used
+   *         later/previously to encrypt keychain data
    */
   static calculateWalletParams (password, email, salt, kdfParams) {
     return walletUtil.calculateWalletParams(...arguments)
@@ -38,7 +39,10 @@ export class WalletHelper {
    */
   static getRandomKeychainData () {
     const keys = Keypair.random()
-    const rawKeychainData = JSON.stringify({ seed: keys.secret(), accountId: keys.accountId() })
+    const rawKeychainData = JSON.stringify({
+      seed: keys.secret(),
+      accountId: keys.accountId()
+    })
     const accountId = keys.accountId()
     return { rawKeychainData, accountId }
   }
@@ -54,8 +58,13 @@ export class WalletHelper {
    * @param accountId
    * @return {object}
    */
-  static getRandomRecoveryAttributes (recoverySeed, email, kdfParams, rawKeychainData, accountId) {
-    console.log(arguments)
+  static getRandomRecoveryAttributes (
+    recoverySeed,
+    email,
+    kdfParams,
+    rawKeychainData,
+    accountId
+  ) {
     return walletUtil.generateRecoveryData(...arguments)
   }
 
@@ -81,9 +90,23 @@ export class WalletHelper {
    * @param kdfAttributes
    * @param rawKeychainData
    * @param accountId
-   * @return {{id: string, attributes: {account_id: string, email: string, salt: string, keychain_data: string}}}
+   * @return {{
+   *    id: string,
+   *    attributes: {
+   *      account_id: string,
+   *      email: string,
+   *      salt: string,
+   *      keychain_data: string
+   *    }
+   * }}
    */
-  static getRandomWalletAttributes (password, email, kdfAttributes, rawKeychainData, accountId) {
+  static getRandomWalletAttributes (
+    password,
+    email,
+    kdfAttributes,
+    rawKeychainData,
+    accountId
+  ) {
     return walletUtil.generateWalletData(...arguments)
   }
 
@@ -117,7 +140,10 @@ export class WalletHelper {
     const encryptedKeychainData = wallet.attribute('keychain_data')
     const accountId = wallet.attribute('account_id')
     const email = wallet.attribute('email')
-    const keychainData = this.decryptKeychainData(encryptedKeychainData, walletKey)
+    const keychainData = this.decryptKeychainData(
+      encryptedKeychainData,
+      walletKey
+    )
     const publicKey = keychainData.accountId
     const seed = keychainData.seed
     return {

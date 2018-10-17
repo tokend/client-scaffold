@@ -13,9 +13,12 @@ export class KycRequestRecord {
     this.twoStepWithdrawal = get(record, 'details.two_step_withdrawal')
     this.limitsUpdate = get(record, 'details.limits_update')
     this.amlAlert = get(record, 'details.aml_alert')
-    this.accountToUpdateKyc = get(record, 'details.update_kyc.account_to_update_kyc')
-    this.accountTypeToSetI = get(record, 'details.update_kyc.account_type_to_set.int')
-    this.accountTypeToSet = get(record, 'details.update_kyc.account_type_to_set.string')
+    this.accountToUpdateKyc =
+      get(record, 'details.update_kyc.account_to_update_kyc')
+    this.accountTypeToSetI =
+      get(record, 'details.update_kyc.account_type_to_set.int')
+    this.accountTypeToSet =
+      get(record, 'details.update_kyc.account_type_to_set.string')
     this.kycLevel = get(record, 'details.update_kyc.kyc_level')
     this.blobId = get(record, 'details.update_kyc.kyc_data.blob_id')
     this.allTasks = get(record, 'details.update_kyc.all_tasks')

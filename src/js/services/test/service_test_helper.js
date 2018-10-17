@@ -24,7 +24,6 @@ export class ServiceTestHelper {
           payload: request.body
         }
       }
-      console.log(JSON.stringify(request))
       next(request.respondWith(body, {
         status: 200,
         statusText: 'OK'

@@ -24,7 +24,10 @@ export const mutations = {
 
 export const actions = {
   async GET_ALL_TOKENS ({ commit }) {
-    commit(vuexTypes.SET_ALL_TOKENS, (await tokensService.loadTokens()).map(record => RecordFactory.createTokenRecord(record)))
+    commit(vuexTypes.SET_ALL_TOKENS, (
+      await tokensService.loadTokens())
+      .map(record => RecordFactory.createTokenRecord(record))
+    )
   }
 }
 
@@ -33,9 +36,12 @@ export const getters = {
   walletTokens: state => state.tokens.filter(token => token.isWalletToken),
   userOwnedTokens: state => state.userOwnedTokens,
   userAcquiredTokens: _ => StateHelper.deriveTokensFromBalancesDetails(),
-  userWalletTokens: _ => StateHelper.deriveTokensFromBalancesDetails(token => token.isWalletToken),
-  userTransferableTokens: _ => StateHelper.deriveTokensFromBalancesDetails(token => token.isTransferable),
-  userWithdrawableTokens: _ => StateHelper.deriveTokensFromBalancesDetails(token => token.isWithdrawable)
+  userWalletTokens: _ =>
+    StateHelper.deriveTokensFromBalancesDetails(token => token.isWalletToken),
+  userTransferableTokens: _ =>
+    StateHelper.deriveTokensFromBalancesDetails(token => token.isTransferable),
+  userWithdrawableTokens: _ =>
+    StateHelper.deriveTokensFromBalancesDetails(token => token.isWithdrawable)
 }
 
 export default {

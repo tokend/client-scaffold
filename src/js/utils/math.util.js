@@ -33,7 +33,10 @@ export function multiply (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
 
   BigNumber.config({ DECIMAL_PLACES })
 
-  return result.dividedBy(new BigNumber(ONE)).dividedBy(new BigNumber(ONE)).toFixed(DECIMAL_PLACES)
+  return result
+    .dividedBy(new BigNumber(ONE))
+    .dividedBy(new BigNumber(ONE))
+    .toFixed(DECIMAL_PLACES)
 }
 
 export function divide (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
@@ -59,7 +62,8 @@ export function add (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
   const one = new BigNumber(a)
   const two = new BigNumber(b)
 
-  const result = one.add(two)
+  const result = one.add ? one.add(two) : one.plus(two)
+
   return result.toFixed(DECIMAL_PLACES)
 }
 
@@ -72,7 +76,7 @@ export function subtract (a, b, ROUND_TYPE = ROUNDING_MODES.ROUND_UP) {
   const one = new BigNumber(a)
   const two = new BigNumber(b)
 
-  const result = one.sub(two)
+  const result = one.sub ? one.sub(two) : one.minus(two)
   return result.toFixed(DECIMAL_PLACES)
 }
 

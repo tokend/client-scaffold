@@ -44,11 +44,13 @@ export class AccountsService extends Service {
    * @param {string} opts.accountTypeToSet
    * @param {number} opts.kycLevelToSet
    * @param {object} opts.kycData
-   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the payment.
+   *        Defaults to the transaction's source account.
    * @returns {TransactionBuilder}
    */
   createKycRequest (opts) {
-    const operation = CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
+    const operation =
+      CreateUpdateKYCRequestBuilder.createUpdateKYCRequest(opts)
     return this._operationBuilder
       .operation()
       .add(operation)
@@ -59,11 +61,13 @@ export class AccountsService extends Service {
    * Creates limits update request
    * @param {object} opts
    * @param {string} opts.details - JSON string about proof document
-   * @param {string} [opts.source] - The source account for the operation. Defaults to the transaction's source account.
+   * @param {string} [opts.source] - The source account for the operation.
+   *        Defaults to the transaction's source account.
    * @returns {TransactionBuilder}
    */
   createLimitRequest (opts) {
-    const operation = CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
+    const operation =
+      CreateManageLimitsRequestBuilder.createManageLimitsRequest(opts)
 
     return this._operationBuilder
       .operation()
@@ -90,7 +94,9 @@ export class AccountsService extends Service {
   }
 
   /**
-   * Loads details for each balance, including asset_details and opened sales for each asset
+   * Loads details for each balance, including asset_details and opened sales
+   * for each asset
+   *
    * @return {Promise<array>} Promise object representing user balances
    */
   loadDetailsForEachBalance () {
@@ -115,6 +121,7 @@ export class AccountsService extends Service {
 
   loadBalanceIdByAccountid (accountId, tokenCode) {
     return this.loadAccountBalancesById(accountId)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(allBalances => {
         const balance = allBalances.find(balance => balance.asset === tokenCode)
         if (!balance) ErrorFactory.throwError(errorTypes.NotFoundError)
@@ -142,7 +149,9 @@ export class AccountsService extends Service {
     return this._apiRequestBuilder.userId()
       .forEmail(email)
       .get()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(r => r.data('account_id'))
+      .catch(e => '')
   }
 
   /**
@@ -157,6 +166,7 @@ export class AccountsService extends Service {
       .sign(this._keypair)
       .json()
       .post()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(response => get(Object.values(response.data('users')), '[0].email'))
   }
 

@@ -7,6 +7,6 @@ export const LOG_OUT = ({ commit }) => {
   location.reload()
 }
 
-export const SET_WALLET_ID = ({commit}, wallet) => {
+export const SET_WALLET_ID = ({ commit }, wallet) => {
   commit('SET_WALLET_ID', wallet)
 }

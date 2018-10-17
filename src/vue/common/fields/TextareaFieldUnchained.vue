@@ -1,8 +1,11 @@
 <template>
-  <div class="text-field" :class="{
+  <div
+    class="text-field"
+    :class="{
       'text-field--error': errorMessage,
       'text-field--disabled': disabled
-    }">
+    }
+    ">
     <textarea
       class="text-field__input"
       :class="{ 'text-field__input--dirty': hasValue }"
@@ -18,9 +21,11 @@
       :rows="rows"
       :cols="cols"
       @input="onInput"
-    ></textarea>
+    />
 
-    <span class="text-field__label" :class="{'text-field__label--hidden': isNoLabel}">
+    <span
+      class="text-field__label"
+      :class="{'text-field__label--hidden': isNoLabel}">
       {{ label }}
     </span>
 

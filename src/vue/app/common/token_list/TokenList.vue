@@ -8,10 +8,15 @@
         :key="key"
         @click="select(token)"
       >
-
         <md-avatar class="md-primary">
-          <img :src="token.logoURL" v-if="token.logoURL">
-          <span class="token-list__char" v-else>{{ token.code.charAt(0) }}</span>
+          <img
+            :src="token.logoURL"
+            v-if="token.logoURL">
+          <span
+            class="token-list__char"
+            v-else>
+            {{ token.code.charAt(0) }}
+          </span>
         </md-avatar>
 
         <div class="md-list-item-text">
@@ -19,31 +24,30 @@
           <span>{{ token.attachedDetails.balance }} {{ token.code }}</span>
           <span>{{ token.attachedDetails.convertedBalance }}</span>
         </div>
-
       </md-list-item>
     </md-list>
   </div>
 </template>
 
 <script>
-  import { commonEvents } from '../../../../js/events/common_events'
+import { commonEvents } from '../../../../js/events/common_events'
 
-  export default {
-    name: 'token-list',
-    props: {
-      tokens: { type: Array, required: true },
-      value: { type: String, required: true }
-    },
-    methods: {
-      select (token) {
-        this.$emit(commonEvents.inputEvent, token.code)
-      }
+export default {
+  name: 'token-list',
+  props: {
+    tokens: { type: Array, required: true },
+    value: { type: String, required: true }
+  },
+  methods: {
+    select (token) {
+      this.$emit(commonEvents.inputEvent, token.code)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/variables';
+  @import '~@scss/variables';
   .token-list__char {
     color: $col-primary-txt;
   }

@@ -7,7 +7,7 @@ export default {
   preis_no_token_creation_requests: 'No pre-issuance upload requests',
   preis_no_token_creation_requests_desc: 'Here will be the list of your pre-issuance upload requests',
   preis_token_not_exist: 'Asset with code %{asset} does not exist in the system',
-  preis_upload_tip: 'Select file(s) with preissued asset and click <strong>Upload</strong>.<br/><em>Note:</em> you cannot upload the same preissuance twice',
+  preis_upload_tip: 'Select files with preissued asset and click **Upload**.  \nYou cannot upload the same preissuance twice',
   preis_token_not_available: 'Pre-issuance for asset %{asset} is not available',
   preis_not_available_heading: 'Pre-issuance unavailable',
   preis_not_available: 'Pre-issuance upload is available only for corporate users, complete verification to become one.',

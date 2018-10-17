@@ -2,11 +2,13 @@
   <div class="tx-sale-creation">
     <md-table md-card class="tx-sale-creation__table">
       <md-table-toolbar class="tx-sale-creation__table-toolbar">
-        <div class="tx-sale-creation__select-outer" v-if="accountOwnedTokenCodes.length">
-           <select-field-custom
+        <div
+          class="tx-sale-creation__select-outer"
+          v-if="accountOwnedTokenCodes.length">
+          <select-field-custom
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
-            :values="accountOwnedTokenCodes"/>
+            :values="accountOwnedTokenCodes" />
         </div>
       </md-table-toolbar>
       <template v-if="tokenCode && list.length">
@@ -15,85 +17,169 @@
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head class="tx-sale-creation__hide-md">{{ i18n.lbl_updated_at() }}</md-table-head>
+          <md-table-head class="tx-sale-creation__hide-md">
+            {{ i18n.lbl_updated_at() }}
+          </md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
-
-          <md-table-row class="tx-sale-creation__row" @click.native="toggleDetails(i)" :key="i">
-            <md-table-cell class="tx-sale-creation__table-cell">{{ item.saleName }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ item.tokenCode }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ item.requestState }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-sale-creation__table-cell tx-sale-creation__hide-md">{{ i18n.d(item.updatedAt) }}</md-table-cell>
+          <md-table-row
+            class="tx-sale-creation__row"
+            @click.native="toggleDetails(i)"
+            :key="i">
+            <md-table-cell class="tx-sale-creation__table-cell">
+              {{ item.saleName }}
+            </md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">
+              {{ item.tokenCode }}
+            </md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">
+              {{ item.requestState }}
+            </md-table-cell>
+            <md-table-cell class="tx-sale-creation__table-cell">
+              {{ i18n.d(item.createdAt) }}
+            </md-table-cell>
+            <md-table-cell
+              class="tx-sale-creation__table-cell
+                     tx-sale-creation__hide-md">
+              {{ i18n.d(item.updatedAt) }}
+            </md-table-cell>
 
             <md-table-cell class="tx-sale-creation__table-cell">
-              <md-button class="tx-sale-creation__open-details-btn md-icon-button">
+              <md-button
+                class="tx-sale-creation__open-details-btn
+                       md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
             </md-table-cell>
-
           </md-table-row>
 
-          <md-table-row class="tx-sale-creation__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
+          <md-table-row
+            class="tx-sale-creation__expandable-row"
+            v-if="isSelected(i)"
+            :key="`selected-${i}`">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
-                <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="item.saleLogoUrl" :src='item.saleLogoUrl' :alt="documentTypes.fundLogo">
-                  <div class="token-icon" v-else>{{ item.saleName.substr(0, 1).toUpperCase() }}</div>
+                <div
+                  class="icon-column
+                         md-layout-item
+                         md-size-35
+                         md-layout
+                         md-alignment-center-center">
+                  <img
+                    class="token-icon"
+                    v-if="item.saleLogoUrl"
+                    :src="item.saleLogoUrl"
+                    :alt="documentTypes.fundLogo">
+                  <div class="token-icon" v-else>
+                    {{ item.saleName.substr(0, 1).toUpperCase() }}
+                  </div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type" :value="`${ item.requestType }`"/>
-                  <detail prop="Token name" :value="`${item.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_start_time()}`" :value="`${i18n.d(item.startTime)}`"/>
-                  <detail :prop="`${i18n.sale_close_time()}`" :value="`${i18n.d(item.endTime)}`"/>
-                  <detail :prop="`${i18n.sale_soft_cap()}`" :value="`${i18n.c(item.softCap)} ${item.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_hard_cap()}`" :value="`${i18n.c(item.hardCap)} ${item.defaultQuoteAsset}`"/>
-                  <detail :prop="`${i18n.sale_base_asset_hard_cap_to_sell({asset: item.tokenCode})}`" :value="`${i18n.c(item.baseAssetForHardCap)} ${item.tokenCode}`"/>
-                  <detail :prop="`${i18n.sale_quote_assets()}`" :value="`${item.quoteAssets}`"/>
-                  <detail :prop="`${i18n.sale_fund_video()}`" :value="`<a href='${item.youtubeVideoUrl}' target='_blank'>Open video</a>`"/>
-                  <detail :prop="`${i18n.sale_short_description()}`" :value="`${item.shortDescription}`"/>
-                  <detail :prop="`${i18n.lbl_reject_message()}`"
-                          v-if="item.requestState === REQUEST_STATES_STR.rejected ||
-                                item.requestState === REQUEST_STATES_STR.permanentlyRejected"
-                                :value="`${item.rejectReason}`"/>
+                  <detail
+                    prop="Request type"
+                    :value="`${ item.requestType }`" />
+                  <detail
+                    prop="Token name"
+                    :value="`${item.tokenCode}`" />
+                  <detail
+                    :prop="`${i18n.sale_start_time()}`"
+                    :value="`${i18n.d(item.startTime)}`" />
+                  <detail
+                    :prop="`${i18n.sale_close_time()}`"
+                    :value="`${i18n.d(item.endTime)}`" />
+                  <detail
+                    :prop="`${i18n.sale_soft_cap()}`"
+                    :value="
+                      `${i18n.c(item.softCap)} ${item.defaultQuoteAsset}`
+                    "
+                  />
+                  <detail
+                    :prop="`${i18n.sale_hard_cap()}`"
+                    :value="
+                      `${i18n.c(item.hardCap)} ${item.defaultQuoteAsset}`
+                    "
+                  />
+                  <detail
+                    :prop="`
+                      ${i18n.sale_base_asset_hard_cap_to_sell({
+                        asset: item.tokenCode
+                    })}
+                    `"
+                    :value="`
+                      ${i18n.c(item.baseAssetForHardCap)} ${item.tokenCode}
+                    `"
+                  />
+                  <detail
+                    :prop="`${i18n.sale_quote_assets()}`"
+                    :value="`${item.quoteAssets}`" />
+                  <detail :prop="`${i18n.sale_fund_video()}`">
+                    <template
+                      v-if="checkIsValidYoutubeId(item.youtubeVideoUrl)">
+                      <a :href="item.youtubeVideoUrl" target="_blank">
+                        Open video
+                      </a>
+                    </template>
+                    <template v-else>
+                      –
+                    </template>
+                  </detail>
+                  <detail
+                    :prop="`${i18n.sale_short_description()}`"
+                    :value="`${item.shortDescription}`" />
+                  <!-- eslint-disable max-len -->
+                  <detail
+                    :prop="`${i18n.lbl_reject_message()}`"
+                    v-if="item.requestState === REQUEST_STATES_STR.rejected ||
+                    item.requestState === REQUEST_STATES_STR.permanentlyRejected"
+                    :value="`${item.rejectReason}`" />
+                    <!-- eslint-enable max-len -->
                 </div>
               </md-card-content>
               <md-card-actions>
-              <template v-if="item.isApproved">
-                <md-button class="md-primary"
-                           @click="goFundDetails(item.tokenCode)">
-                  {{ i18n.lbl_view_sale() }}
-                </md-button>
-              </template>
-              <router-link :to="{name: 'sale-creation.index', params: { id: item.id }}"
-                            tag="button"
-                            v-ripple
-                            class="app__button-flat"
-                            :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                <template v-if="item.isApproved">
+                  <md-button
+                    class="md-primary"
+                    @click="goFundDetails(item.tokenCode)">
+                    {{ i18n.lbl_view_sale() }}
+                  </md-button>
+                </template>
+                <router-link
+                  :to="{name: 'sale-creation.index', params: { id: item.id }}"
+                  tag="button"
+                  v-ripple
+                  class="app__button-flat"
+                  :disabled="
+                    (!item.isPending && !item.isRejected) || isPending
+                  "
+                >
+                  {{ i18n.lbl_update() }}
+                </router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
         </template>
-         <md-table-row v-if="!isLoaded">
-            <md-table-cell colspan="7">
-                <div class="tx-history__btn-outer">
-                  <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
-                  </button>
-                </div>
-            </md-table-cell>
-         </md-table-row>
+        <md-table-row v-if="!isLoaded">
+          <md-table-cell colspan="7">
+            <div class="tx-history__btn-outer">
+              <button
+                v-ripple
+                @click="more"
+                class="app__button-flat"
+                :disabled="isLoading">
+                {{ i18n.lbl_view_more() }}
+              </button>
+            </div>
+          </md-table-cell>
+        </md-table-row>
       </template>
       <template v-else>
         <div class="tx-sale-creation__no-requests">
-          <no-data-message icon-name="trending_up"
+          <no-data-message
+            icon-name="trending_up"
             :msg-title="i18n.sale_no_creation_requests()"
-            :msg-message="i18n.sale_no_creation_requests_desc()"/>
+            :msg-message="i18n.sale_no_creation_requests_desc()" />
         </div>
       </template>
     </md-table>
@@ -116,8 +202,8 @@ import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 import { salesService } from '@/js/services/sales.service'
 
 export default {
-  mixins: [FormMixin],
   components: { Detail, NoDataMessage },
+  mixins: [FormMixin],
   data: _ => ({
     i18n,
     tokenCode: null,
@@ -126,14 +212,6 @@ export default {
     documentTypes,
     REQUEST_STATES_STR
   }),
-
-  async created () {
-    this.tokenCode = this.accountOwnedTokenCodes[0] || null
-    if (this.tokenCode) {
-      await this.loadList(this.tokenCode)
-    }
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.saleCreationRequests,
@@ -146,12 +224,32 @@ export default {
       return _get(this.saleCreationRequests, `${this.tokenCode}.isLoaded`)
     }
   },
-
+  watch: {
+    tokenCode (code) {
+      this.loadList(code)
+      this.index = -1
+    }
+  },
+  async created () {
+    this.tokenCode = this.accountOwnedTokenCodes[0] || null
+    if (this.tokenCode) {
+      await this.loadList(this.tokenCode)
+    }
+  },
   methods: {
     ...mapActions({
       loadList: vuexTypes.GET_USER_SALE_CREATION_REQUESTS,
       loadNext: vuexTypes.NEXT_USER_SALE_CREATION_REQUESTS
     }),
+
+    checkIsValidYoutubeId (youtubeId) {
+      // if user doesn't enter the youtube video id when creating the sale
+      // method _getYoutubeVideoUrl don't handle this so we have link like
+      // this: https://www.youtube.com/watch?v=
+      // With regexp below we handle this empty link
+      const regexp = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/]{11})/i
+      return regexp.test(youtubeId)
+    },
 
     toggleDetails (index) {
       this.index = this.index === index ? -1 : index
@@ -174,17 +272,10 @@ export default {
 
     async goFundDetails (code) {
       const sale = await salesService.loadSaleByTokenCode(code)
-      console.log('sale.id')
-      console.log(sale.id)
       this.$router.push({
         ...vueRoutes.saleDetails,
         params: { id: sale.id }
       })
-    }
-  },
-  watch: {
-    tokenCode (code) {
-      this.loadList(code)
     }
   }
 }

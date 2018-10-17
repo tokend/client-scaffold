@@ -37,6 +37,7 @@ export class OperationBuilder {
     const server = initHorizonServer()
     const operations = this.operations
     return server.submitOperationGroup(operations, source, keypair)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(rawResponse => response.getTransactionResponse(rawResponse))
       .catch(err => this._handleError(err))
   }
@@ -46,6 +47,7 @@ export class OperationBuilder {
     const config = this.repeatDetails.config
     const tx = this.repeatDetails.tx
     return server.repeatTransaction(config, tx)
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(rawResponse => response.getTransactionResponse(rawResponse))
       .catch(err => this._handleError(err))
   }

@@ -2,7 +2,16 @@
   <p class="detail-row">
     <span class="detail-row__key">{{ prop }}</span>
     <span class="detail-row__value">
-      <span class="detail-row__value-text" :id="copiable ? `clipboard-target-${id}` : ''" v-html="value || '—'"></span>
+      <span
+        class="detail-row__value-text"
+        :id="copiable ? `clipboard-target-${id}` : ''">
+        <template v-if="value">
+          {{ value || '—' }}
+        </template>
+        <template v-else>
+          <slot />
+        </template>
+      </span>
       <md-button
         v-if="copiable"
         class="detail-row__clipboard-btn md-icon-button"
@@ -10,7 +19,9 @@
         @click="showCopySuccess"
         :data-clipboard-target="`#clipboard-target-${id}`"
       >
-        <md-icon class="detail-row__clipboard-icon md-icon-size-065x">content_copy</md-icon>
+        <md-icon class="detail-row__clipboard-icon md-icon-size-065x">
+          content_copy
+        </md-icon>
         <md-tooltip>Copy</md-tooltip>
       </md-button>
     </span>
@@ -18,38 +29,38 @@
 </template>
 
 <script>
-  import Clipboard from 'clipboard'
-  import { EventDispatcher } from '../../../js/events/event_dispatcher'
-  import { i18n } from '../../../js/i18n'
+import Clipboard from 'clipboard'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { i18n } from '@/js/i18n'
 
-  export default {
-    name: 'detail-row',
-    props: {
-      prop: { type: String, default: '' },
-      value: { type: [String, Number], default: '' },
-      copiable: { type: Boolean, default: false }
-    },
-    data: _ => ({
-      clipboard: null,
-      id: null
-    }),
+export default {
+  name: 'detail-row',
+  props: {
+    prop: { type: String, default: '' },
+    value: { type: [String, Number, Array], default: '' },
+    copiable: { type: Boolean, default: false }
+  },
+  data: _ => ({
+    clipboard: null,
+    id: null
+  }),
 
-    mounted () {
-      this.id = this._uid
-      if (!this.copiable) return
-      this.clipboard = new Clipboard(this.$el.querySelector('#clipboard-btn'))
-    },
-    methods: {
-      showCopySuccess () {
-        EventDispatcher.dispatchShowSuccessEvent(i18n.dep_copied())
-      }
+  mounted () {
+    this.id = this._uid
+    if (!this.copiable) return
+    this.clipboard = new Clipboard(this.$el.querySelector('#clipboard-btn'))
+  },
+  methods: {
+    showCopySuccess () {
+      EventDispatcher.dispatchShowSuccessEvent(i18n.dep_copied())
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .detail-row {
     display: flex;

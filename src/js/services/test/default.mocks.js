@@ -4,8 +4,8 @@ import { mockDocumentId } from './files.mocks'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../../const/offers.const'
 import { mockBaseTokenCode, mockOrderBookId, mockQuoteTokenCode } from './offers.mocks'
 import config from '../../../config'
-import {mockConvertAmount} from './prices.mocks'
-import {mockReviewableRequestId, mockReviewableRequestTokenCode} from './reviewable_requests.mocks'
+import { mockConvertAmount } from './prices.mocks'
+import { mockReviewableRequestId, mockReviewableRequestTokenCode } from './reviewable_requests.mocks'
 import { mockTxTokenCode } from './transactions.mocks'
 
 export const mockAccountId = 'GBUY24GOTSRWOIW5IZAWXCR3BFFQIGO34C4SVQ6CEPZNC67DUKFWVVOJ'
@@ -21,8 +21,8 @@ export const accountResponses = {
   [`balances/${mockBalanceId}/account`]: 'request for load accountId by balance id succesfully built!',
   [`user_id?email=${mockEmail}`]: 'request for load account id by email successfully sent',
   [`details`]: { users: {
-       [mockAccountId]: { email: mockEmail }
-      }
+    [mockAccountId]: { email: mockEmail }
+  }
   },
   [``]: ''
 }
@@ -49,7 +49,7 @@ export const fileResponses = {
 }
 
 export const offerPrefixes = {
-  smOffers:`accounts/${mockAccountId}/offers?is_buy=&order_book_id=${+SECONDARY_MARKET_ORDER_BOOK_ID}&limit=${config.TRANSACTIONS_PER_PAGE}`,
+  smOffers: `accounts/${mockAccountId}/offers?is_buy=&order_book_id=${+SECONDARY_MARKET_ORDER_BOOK_ID}&limit=${config.TRANSACTIONS_PER_PAGE}`,
   saleOffers: `accounts/${mockAccountId}/offers?is_buy=true&order_book_id=${+mockOrderBookId}`,
   currentOffers: `order_book?order_book_id=${+SECONDARY_MARKET_ORDER_BOOK_ID}&base_asset=${mockBaseTokenCode}&quote_asset=${mockQuoteTokenCode}&is_buy=true`,
   trades: `trades?base_asset=${mockBaseTokenCode}&quote_asset=${mockQuoteTokenCode}&order_book_id=${+SECONDARY_MARKET_ORDER_BOOK_ID}&limit=${config.TRANSACTIONS_PER_PAGE}`
@@ -64,14 +64,14 @@ export const offerResponses = {
 
 export const pricesResponses = {
   [`asset_pairs`]: 'request for asset pairs built!',
-  [ `asset_pairs/convert?amount=${mockConvertAmount}&source_asset=${mockBaseTokenCode}&dest_asset=${mockQuoteTokenCode}`]: 'request for convert asset built!'
+  [ `asset_pairs/convert?amount=${mockConvertAmount}&source_asset=${mockBaseTokenCode}&dest_asset=${mockQuoteTokenCode}` ]: 'request for convert asset built!'
 }
 
 export const reviewableRequestResponses = {
   [`request/assets?requestor=${mockAccountId}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`]: 'request for assets built!',
   [`request/withdrawals?requestor=${mockAccountId}&order=desc&limit=${config.TRANSACTIONS_PER_PAGE}`]: 'request for withdrawals built!',
   [`requests/${mockReviewableRequestId}`]: 'request by rr id built!',
-  [`request/sales?base_asset=${mockReviewableRequestTokenCode}&requestor=${mockAccountId}`]: { _embedded: { records:['some record!'] } },
+  [`request/sales?base_asset=${mockReviewableRequestTokenCode}&requestor=${mockAccountId}`]: { _embedded: { records: ['some record!'] } }
 }
 
 export const transactionResponses = {

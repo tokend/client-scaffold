@@ -14,7 +14,8 @@ export class IssuanceService extends Service {
    * @return {TransactionResponseBuilder}
    */
   createPreIssuanceRequest (opts) {
-    const operation = PreIssuanceRequestOpBuilder.createPreIssuanceRequestOp({ request: opts[0] })
+    const operation = PreIssuanceRequestOpBuilder
+      .createPreIssuanceRequestOp({ request: opts[0] })
     return this._operationBuilder
       .operation()
       .add(operation)
@@ -30,12 +31,15 @@ export class IssuanceService extends Service {
    * @param {string} opts.receiver - balance ID of the receiver
    * @param {string} opts.reference - Reference of the request
    * @param {object} opts.externalDetails - External details about issuance
-   * @param {string} [opts.source] - The source account for the payment. Defaults to the transaction's source account.
+   * @param {object|number} [opts.allTasks] - Issuance tasks
+   * @param {string} [opts.source] - The source account for the payment.
+   * Defaults to the transaction's source account.
    *
    * @return {TransactionResponseBuilder}
    */
   createIssuanceRequest (opts) {
-    const operation = CreateIssuanceRequestBuilder.createIssuanceRequest(_opts())
+    const operation = CreateIssuanceRequestBuilder
+      .createIssuanceRequest(_opts())
 
     return this._operationBuilder
       .operation()
@@ -45,13 +49,15 @@ export class IssuanceService extends Service {
     function _opts () {
       return {
         ...opts,
-        asset: opts.token
+        asset: opts.token,
+        allTasks: opts.allTasks || 0
       }
     }
   }
 
   bindExternalAccount (opts) {
-    const operation = BindExternalSystemAccountIdBuilder.createBindExternalSystemAccountIdOp(opts)
+    const operation = BindExternalSystemAccountIdBuilder
+      .createBindExternalSystemAccountIdOp(opts)
 
     return this._operationBuilder
       .operation()

@@ -1,18 +1,15 @@
 <template>
   <div class="searcher-wrapper">
-
     <div class="searcher-header">
       <h4 class="searcher-title"> Search filters </h4>
     </div>
 
     <div class="searcher__inner">
-
       <div class="searcher__filters">
         <input-field-unchained
           v-model="filters.token"
           class="searcher__filter"
           name="token-name"
-          :whiteAutofill="true"
           title="Token symbol"
           :label="i18n.lbl_token_code()"
         />
@@ -23,7 +20,7 @@
           class="searcher__filter"
           :title="i18n.lbl_state"
           v-model="filters.state"
-          :label="i18n.lbl_state()"/>
+          :label="i18n.lbl_state()" />
       </div>
       <div class="searcher__filters">
         <select-field-unchained
@@ -31,73 +28,75 @@
           class="searcher__filter"
           :title="i18n.lbl_sort_by"
           v-model="filters.sortBy"
-          :label="i18n.lbl_state()"/>
+          :label="i18n.lbl_state()" />
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-  import InputField from '../../../common/fields/InputField'
-  import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-  import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-  import { i18n } from '../../../../js/i18n'
-  import { commonEvents } from '../../../../js/events/common_events'
-  import debounce from 'lodash/debounce'
-  import { saleSortTypes, saleStates } from '../../../../js/const/const'
+import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+import { i18n } from '@/js/i18n'
+import { commonEvents } from '@/js/events/common_events'
+import debounce from 'lodash/debounce'
+import { saleSortTypes, saleStates } from '@/js/const/const'
 
-  export default {
-    name: 'searcher',
-
-    components: {
-      InputField,
-      SelectFieldUnchained,
-      InputFieldUnchained
-    },
-
-    props: [],
-
-    data () {
-      return {
-        filters: {
-          token: '',
-          state: saleStates.actual.str,
-          sortBy: saleSortTypes.created.str
-        },
-        eventEmitter: null,
-        i18n,
-        states: Object.values(saleStates).map(state => state.str),
-        sortTypes: Object.values(saleSortTypes).map(type => type.str)
-      }
-    },
-
-    methods: {
-      debounceSearchEvent () {
-        if (!this.eventEmitter) {
-          this.eventEmitter = debounce(() => this.$emit(commonEvents.searchInputEvent, this.composeFilters()), 450)
-        }
-        return this.eventEmitter()
+export default {
+  name: 'searcher',
+  components: {
+    SelectFieldUnchained,
+    InputFieldUnchained
+  },
+  data () {
+    return {
+      filters: {
+        token: '',
+        state: saleStates.actual.str,
+        sortBy: saleSortTypes.created.str
       },
-      emitSearchEvent () {
-        this.$emit(commonEvents.searchInputEvent, this.composeFilters())
-      },
-      composeFilters () {
-        const filters = {
-          token: this.filters.token.toUpperCase(),
-          state: Object.values(saleStates).find(state => state.str === this.filters.state),
-          sortBy: Object.values(saleSortTypes).find(type => type.str === this.filters.sortBy)
-        }
-        return filters
-      }
-    },
+      eventEmitter: null,
+      i18n,
+      states: Object.values(saleStates).map(state => state.str),
+      sortTypes: Object.values(saleSortTypes).map(type => type.str)
+    }
+  },
 
-    watch: {
-      'filters.token': function () { this.debounceSearchEvent() },
-      'filters.state': function () { this.emitSearchEvent() },
-      'filters.sortBy': function () { this.emitSearchEvent() }
+  watch: {
+    'filters.token': function () { this.debounceSearchEvent() },
+    'filters.state': function () { this.emitSearchEvent() },
+    'filters.sortBy': function () { this.emitSearchEvent() }
+  },
+
+  methods: {
+    debounceSearchEvent () {
+      if (!this.eventEmitter) {
+        this.eventEmitter = debounce(() =>
+          this.$emit(
+            commonEvents.searchInputEvent,
+            this.composeFilters()
+          ), 450
+        )
+      }
+      return this.eventEmitter()
+    },
+    emitSearchEvent () {
+      this.$emit(commonEvents.searchInputEvent, this.composeFilters())
+    },
+    composeFilters () {
+      const filters = {
+        token: this.filters.token.toUpperCase(),
+        state: Object.values(saleStates).find(state =>
+          state.str === this.filters.state
+        ),
+        sortBy: Object.values(saleSortTypes).find(type =>
+          type.str === this.filters.sortBy
+        )
+      }
+      return filters
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -122,10 +121,7 @@
   }
 
   .searcher-wrapper {
-    background: $col-block-bg;
-    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.08);
     margin: 0 0 1.5rem;
-    padding: 2.4 * $point 2.4 * $point;
   }
 
   .searcher__filters {

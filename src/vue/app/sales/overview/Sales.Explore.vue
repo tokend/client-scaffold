@@ -1,18 +1,22 @@
 <template>
   <div class="explore-sales">
     <searcher
-          class="sales-overview__searcher"
-          @search-input="loadFilteredSales"
+      class="sales-overview__searcher"
+      @search-input="loadFilteredSales"
     />
     <template v-if="sales.length > 0">
       <div class="sales-overview__sale-overview-inner">
-        <div class="sales-overview__card-wrapper-outer"
+        <div
+          class="sales-overview__card-wrapper-outer"
           v-for="sale in sales"
           :key="sale.id">
-          <router-link :to="{name: 'sales.sale-details', params: { id: sale.id }}"
-                      tag="button"
-                      class="sales-overview__card-wrapper">
-            <sale-card class="sales-overview__card" :sale="sale"/>
+          <router-link
+            :to="{name: 'sales.sale-details', params: { id: sale.id }}"
+            tag="button"
+            class="sales-overview__card-wrapper">
+            <sale-card
+              class="sales-overview__card"
+              :sale="sale" />
           </router-link>
         </div>
       </div>
@@ -20,7 +24,7 @@
     <template v-if="sales.length === 0 && isLoaded">
       <div class="sales-overview__no-sales-found-msg">
         <div class="icon">
-          <i class="mdi mdi-inbox"></i>
+          <i class="mdi mdi-inbox" />
         </div>
 
         <h2>No sales found</h2>
@@ -32,57 +36,57 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
-  import { vuexTypes } from '../../../../vuex/types'
-  import { i18n } from '../../../../js/i18n'
-  import SaleCard from '../sale_card/Sales.SaleCard'
-  import Searcher from './Sales.Searcher'
-  import FormMixin from '../../../common/mixins/form.mixin'
-  import { saleSortTypes, saleStates } from '../../../../js/const/const'
+import { mapGetters, mapActions } from 'vuex'
+import { vuexTypes } from '../../../../vuex/types'
+import { i18n } from '../../../../js/i18n'
+import SaleCard from '../sale_card/Sales.SaleCard'
+import Searcher from './Sales.Searcher'
+import FormMixin from '../../../common/mixins/form.mixin'
+import { saleSortTypes, saleStates } from '../../../../js/const/const'
 
-  const initialState = saleStates.actual
-  const initialSort = saleSortTypes.created
+const initialState = saleStates.actual
+const initialSort = saleSortTypes.created
 
-  export default {
-    name: 'SalesExplore',
-    mixins: [FormMixin],
-    components: { SaleCard, Searcher },
-    data: _ => ({
-      isLoaded: false,
-      filters: {
-        openOnly: initialState.openOnly,
-        upcoming: initialState.upcoming,
-        sortBy: initialSort.num,
-        order: initialSort.order,
-        baseAsset: ''
-      },
-      i18n
+export default {
+  name: 'sales-explore',
+  components: { SaleCard, Searcher },
+  mixins: [FormMixin],
+  data: _ => ({
+    isLoaded: false,
+    filters: {
+      openOnly: initialState.openOnly,
+      upcoming: initialState.upcoming,
+      sortBy: initialSort.num,
+      order: initialSort.order,
+      baseAsset: ''
+    },
+    i18n
+  }),
+  computed: {
+    ...mapGetters([
+      vuexTypes.sales
+    ])
+  },
+  async created () {
+    await this.loadFilteredSales()
+    this.isLoaded = true
+  },
+  methods: {
+    ...mapActions({
+      loadSales: vuexTypes.GET_SALES
     }),
-    async created () {
-      await this.loadFilteredSales()
-      this.isLoaded = true
-    },
-    computed: {
-      ...mapGetters([
-        vuexTypes.sales
-      ])
-    },
-    methods: {
-      ...mapActions({
-        loadSales: vuexTypes.GET_SALES
-      }),
-      loadFilteredSales (filters) {
-        if (filters) {
-          this.filters.openOnly = filters.state.openOnly
-          this.filters.upcoming = filters.state.upcoming
-          this.filters.sortBy = filters.sortBy.num
-          this.filters.order = filters.sortBy.order
-          this.filters.baseAsset = filters.token
-        }
-        return this.loadSales(this.filters)
+    loadFilteredSales (filters) {
+      if (filters) {
+        this.filters.openOnly = filters.state.openOnly
+        this.filters.upcoming = filters.state.upcoming
+        this.filters.sortBy = filters.sortBy.num
+        this.filters.order = filters.sortBy.order
+        this.filters.baseAsset = filters.token
       }
+      return this.loadSales(this.filters)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -94,6 +98,7 @@
     flex-direction: column;
     align-items: stretch;
     margin: auto;
+    width: 100%;
   }
 
   .sales-overview__sale-overview-inner {
