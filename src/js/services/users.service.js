@@ -1,5 +1,5 @@
 import { Service } from './service'
-import {errors} from '../errors/factory'
+import { errors } from '../errors/factory'
 
 export class UsersService extends Service {
   /**
@@ -38,14 +38,21 @@ export class UsersService extends Service {
    */
   checkIfUserExists () {
     return this.loadUser()
+      // eslint-disable-next-line promise/prefer-await-to-then
       .then(_ => true)
-      .catch(error => error instanceof errors.NotFoundError ? false : Promise.reject(error))
+      .catch(error =>
+        error instanceof errors.NotFoundError
+          ? false
+          : Promise.reject(error)
+      )
   }
 
   /**
-   * Changes user type to provided. Note: this works only if user have no specified type before
+   * Changes user type to provided. Note: this works only if user have no
+   * specified type before
    *
-   * @param {string} type, 'general' - for individual users, 'syndicate' - for corporations
+   * @param {string} type, 'general' - for individual users,
+   * 'syndicate' - for corporations
    *
    */
   patchUserType (type) {
@@ -71,16 +78,20 @@ export class UsersService extends Service {
   }
 
   /**
-   * Changes user details to provided. Note: user type will be changed only if user have no specified type before
+   * Changes user details to provided. Note: user type will be changed only if
+   * user have no specified type before
    *
-   * @param {string} type, 'general' - for individual users, 'syndicate' - for corporations
-   * @param {string} state, ('waiting_for_approval' is the only one needed in most cases)
-   * @param {number} sequence - sequence of KYC blob, you should increment it every time user changes his KYC
+   * @param {string} type, 'general' - for individual users, 'syndicate' - for
+   *        corporations
+   * @param {string} state, ('waiting_for_approval' is the only one needed in
+   *        most cases)
+   * @param {number} sequence - sequence of KYC blob, you should increment it
+   *        every time user changes his KYC
    *
    */
   patchUserDetails (type, state, sequence) {
-    const data = {type}
-    const attributes = {state, kyc_sequence: sequence}
+    const data = { type }
+    const attributes = { state, kyc_sequence: sequence }
 
     return this._apiRequestBuilder.users()
       .accountId(this._accountId)
@@ -150,6 +161,7 @@ export class UsersService extends Service {
         return blank
           .sign(_this._keypair)
           .get()
+          // eslint-disable-next-line promise/prefer-await-to-then
           .then(res => res.attributes().map(attr => JSON.parse(attr.value)))
       },
 
@@ -163,6 +175,7 @@ export class UsersService extends Service {
           .blobID(id)
           .sign(_this._keypair)
           .get()
+          // eslint-disable-next-line promise/prefer-await-to-then
           .then(res => JSON.parse(res.attribute('value')))
       },
 

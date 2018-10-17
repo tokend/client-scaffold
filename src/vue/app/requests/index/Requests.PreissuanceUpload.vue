@@ -11,46 +11,63 @@
         </md-table-row>
         <template v-for="(item, i) in list">
           <md-table-row class="tx-preissuance-upload__row" :key="i">
-            <md-table-cell class="tx-preissuance-upload__table-cell">{{ item.asset }}</md-table-cell>
-            <md-table-cell class="tx-preissuance-upload__table-cell">{{ i18n.c(item.amount) }}</md-table-cell>
-            <md-table-cell class="tx-preissuance-upload__table-cell">{{ item.state }}</md-table-cell>
-            <md-table-cell class="tx-preissuance-upload__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">
+              {{ item.asset }}
+            </md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">
+              {{ i18n.c(item.amount) }}
+            </md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">
+              {{ item.state }}
+            </md-table-cell>
+            <md-table-cell class="tx-preissuance-upload__table-cell">
+              {{ i18n.d(item.createdAt) }}
+            </md-table-cell>
             <md-table-cell class="tx-token-creation__table-cell">
-              <md-button class="tx-token-creation__open-details-btn md-icon-button"
-                         v-if="item.rejectReason">
+              <md-button
+                class="tx-token-creation__open-details-btn
+                       md-icon-button"
+                v-if="item.rejectReason">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
-          </md-table-cell>
+            </md-table-cell>
           </md-table-row>
-          <md-table-row class="th-preissuance-upload__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
+          <md-table-row
+            class="th-preissuance-upload__expandable-row"
+            v-if="isSelected(i)"
+            :key="'selected-'+i">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
                 <div class="details-column md-layout-item">
-                  <detail prop="Reject reason" :value="`${item.rejectReason}`"/>
+                  <detail
+                    prop="Reject reason"
+                    :value="`${item.rejectReason}`" />
                 </div>
               </md-card-content>
             </md-table-cell>
           </md-table-row>
         </template>
-         <md-table-row v-if="!isLoaded">
-            <md-table-cell colspan="7">
-                <div class="tx-history__btn-outer">
-                  <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
-                  </button>
-                </div>
-            </md-table-cell>
-         </md-table-row>
+        <md-table-row v-if="!isLoaded">
+          <md-table-cell colspan="7">
+            <div class="tx-history__btn-outer">
+              <button
+                v-ripple
+                @click="more"
+                class="app__button-flat"
+                :disabled="isLoading">
+                {{ i18n.lbl_view_more() }}
+              </button>
+            </div>
+          </md-table-cell>
+        </md-table-row>
       </template>
       <template v-else>
         <div class="tx-preissuance-upload__no-requests">
-          <no-data-message icon-name="trending_up"
+          <no-data-message
+            icon-name="trending_up"
             :msg-title="i18n.preis_no_token_creation_requests()"
-            :msg-message="i18n.preis_no_token_creation_requests_desc()"/>
+            :msg-message="i18n.preis_no_token_creation_requests_desc()" />
         </div>
       </template>
     </md-table>
@@ -64,24 +81,19 @@ import _get from 'lodash/get'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 import { mapGetters, mapActions } from 'vuex'
-import { i18n } from '../../../../js/i18n'
-import { vuexTypes } from '../../../../vuex/types'
+import { i18n } from '@/js/i18n'
+import { vuexTypes } from '@/vuex/types'
 
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
 
 export default {
-  mixins: [FormMixin],
   components: { Detail, NoDataMessage },
+  mixins: [FormMixin],
   data: _ => ({
     i18n,
     isLoading: false,
     index: -1
   }),
-
-  async created () {
-    await this.loadList()
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.preIssuanceUploadRequests
@@ -93,7 +105,9 @@ export default {
       return _get(this.preIssuanceUploadRequests, 'isLoaded')
     }
   },
-
+  async created () {
+    await this.loadList()
+  },
   methods: {
     ...mapActions({
       loadList: vuexTypes.GET_USER_PREISSUANCE_UPLOAD_REQUESTS,
@@ -123,8 +137,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/mixins";
-  @import "../../../../scss/variables";
+  @import "~@scss/mixins";
+  @import "~@scss/variables";
 
   $padding-vertical: 20px;
   $padding-horizontal: 25px;

@@ -1,6 +1,7 @@
 <template>
   <div class="legal">
     <div class="legal__inner">
+      <!-- eslint-disable max-len -->
       <h2 class="legal__top-heading">Terms</h2>
       <section class="legal__content-section">
         <p class="legal__paragraph">
@@ -35,7 +36,6 @@
           TokenD Site. Do not use the TokenD Site until you and TokenD have agreed upon new terms of use.
         </p>
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Customer Agreement</h3>
@@ -74,7 +74,6 @@
         </p>
       </section>
 
-
       <section class="legal__content-section">
         <h3 class="legal__question">Third Party Services</h3>
         <p class="legal__paragraph">
@@ -92,7 +91,6 @@
           customers.
         </p>
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Prohibited Uses and Intellectual Property</h3>
@@ -123,9 +121,7 @@
         </p>
       </section>
 
-
       <section class="legal__content-section">
-
         <h3 class="legal__question">Communication Services</h3>
         <p class="legal__paragraph">
           The TokenD Site may but need not contain bulletin board services, chat areas, news groups, forums, communities,
@@ -173,9 +169,7 @@
           Materials uploaded to a Communication Service may be subject to posted limitations on usage, reproduction and/or
           dissemination. You are responsible for adhering to such limitations if you upload the materials.
         </p>
-
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Materials</h3>
@@ -198,9 +192,7 @@
           own or otherwise control all of the rights to your Submissions as described in this section including, without
           limitation, all the rights necessary for you to provide, post, upload, input or submit the Submissions.
         </p>
-
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Third Party Accounts</h3>
@@ -211,7 +203,6 @@
           sites). If you do not want information about you to be shared in this manner, do not use this feature.
         </p>
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">International Users</h3>
@@ -225,7 +216,6 @@
       </section>
 
       <section class="legal__content-section">
-
         <h3 class="legal__question">Indemnification</h3>
         <p class="legal__paragraph">
           You agree to indemnify, defend and hold harmless TokenD, its officers, directors, employees, agents and third
@@ -236,13 +226,9 @@
           defense and control of any matter otherwise subject to indemnification by you, in which event you will fully
           cooperate with TokenD in asserting any available defenses.
         </p>
-
       </section>
 
-
       <section class="legal__content-section">
-
-
         <h3 class="legal__question">Disclaimer of Certain Liabilities</h3>
         <p class="legal__paragraph">
           THE INFORMATION, SOFTWARE, PRODUCTS, AND SERVICES INCLUDED IN OR AVAILABLE THROUGH THE TOKEND SITE MAY INCLUDE
@@ -270,12 +256,9 @@
           FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY TO YOU. IF YOU ARE DISSATISFIED WITH
           ANY PORTION OF THE SITE, YOUR SOLE AND EXCLUSIVE REMEDY IS TO DISCONTINUE USING THE SITE.
         </p>
-
       </section>
 
       <section class="legal__content-section">
-
-
         <h3 class="legal__question">Termination/access restriction</h3>
         <p class="legal__paragraph">
           TokenD reserves the right, in its sole discretion, to terminate your access to the TokenD Site and its related
@@ -305,11 +288,9 @@
           in printed form. It is the express wish to the parties that this agreement and all related documents be written
           in English.
         </p>
-
       </section>
 
       <section class="legal__content-section">
-
         <h3 class="legal__question">Reviews and Comments</h3>
         <p class="legal__paragraph">
           We may, from time to time, permit you or other visitors to post reviews, comments and other content; and submit
@@ -401,9 +382,7 @@
           OR RELATING TO THE SERVICE OR THESE TERMS MUST BE FILED WITHIN ONE (1) YEAR AFTER SUCH CLAIM OR CAUSE OF ACTION
           AROSE OR IT WILL BE FOREVER BARRED.
         </p>
-
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Digital Millennium Copyright Act</h3>
@@ -421,7 +400,8 @@
           Identify the copyrighted work claimed to have been infringed, or, if multiple copyrighted works at a single
           online site are covered by a single notice, a representative list of such works at that site. As an example, you
           might state that the copyrighted work that was infringed is located on Page 123 of the book “Parenting 1, 2, 3”
-          written by John Doe, published by Rainbow Publishing in 2007, ISBN 1231231231.</p>
+          written by John Doe, published by Rainbow Publishing in 2007, ISBN 1231231231.
+        </p>
         <p class="legal__paragraph">
           Identify the Content that is claimed to be infringing or to be the subject of infringing activity and that is to
           be removed or access to which is to be disabled and provide information reasonably sufficient to permit us to
@@ -437,7 +417,8 @@
           Include in your notice the following statement: “I swear, under penalty of perjury, that the information I have
           set forth in this notice is accurate, and I am either (1) the owner of the copyright; (2) someone authorized to
           act on behalf of the owner of the copyright; or (3) someone authorized to act on behalf of someone who holds an
-          exclusive right to use the copyright in the manner in which it has been infringed.”</p>
+          exclusive right to use the copyright in the manner in which it has been infringed.”
+        </p>
         <p class="legal__paragraph">
           We cannot take action unless you give us all required information, and you acknowledge that if you fail to
           comply with all of the requirements of this Section, your DMCA notice may not be valid.
@@ -467,9 +448,7 @@
           notice that such person has filed an action seeking a court order to restrain the owner of the removed Content
           from engaging in infringing activity relating to such Content.
         </p>
-
       </section>
-
 
       <section class="legal__content-section">
         <h3 class="legal__question">Contact Us</h3>
@@ -478,16 +457,15 @@
           <a href="mailto:sales@tokend.org">sales@tokend.org</a>
         </p>
       </section>
-
-
     </div>
+    <!-- eslint-enable max-len -->
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'terms'
-  }
+export default {
+  name: 'terms'
+}
 </script>
 
 <style lang="scss" scoped>

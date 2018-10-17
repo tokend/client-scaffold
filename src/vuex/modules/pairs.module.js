@@ -15,7 +15,9 @@ export const mutations = {
 export const actions = {
   async GET_ASSET_PAIRS ({ commit }) {
     const records = await pairsService.loadAssetPairs()
-    const pairs = records.map(record => RecordFactory.createAssetPairRecord(record))
+    const pairs = records.map(record =>
+      RecordFactory.createAssetPairRecord(record)
+    )
     commit(vuexTypes.SET_ASSET_PAIRS, pairs)
   }
 }

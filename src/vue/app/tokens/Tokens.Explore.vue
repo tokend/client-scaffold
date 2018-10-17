@@ -10,14 +10,16 @@
 
     <div class="tokens">
       <template v-if="!tokens.length && !isLoading">
-        <h2 class="app__page-heading">{{ i18n.tokens_no_tokens_heading() }}</h2>
+        <h2 class="app__page-heading">
+          {{ i18n.tokens_no_tokens_heading() }}
+        </h2>
         <p class="app__page-explanations app__page-explanations--secondary">
           {{ i18n.tokens_no_tokens() }}
         </p>
       </template>
 
       <template v-if="isLoading">
-        <loader :message="i18n.tokens_loading()"/>
+        <loader :message="i18n.tokens_loading()" />
       </template>
 
       <div class="" v-else>
@@ -28,19 +30,29 @@
                 <md-list class="tokens__md-list md-double-line">
                   <md-content class="tokens__md-scrollbar md-scrollbar">
                     <template v-for="token in filteredTokens">
-                      <md-list-item class="tokens__md-list-item"
+                      <md-list-item
+                        class="tokens__md-list-item"
                         @click="selectToken(token)"
                         :key="`explore-tokens-token-${token.code}`"
-                        :class="{ 'tokens__md-list-item--selected': selected.code === token.code }">
-                        <div class="explore-tokens__list-item-avatar"
-                             :class="`${hasBalance(token)
-                                      ? 'explore-tokens__list-item-avatar--success'
-                                      : 'explore-tokens__list-item-avatar--default'}`">
+                        :class="{
+                          'tokens__md-list-item--selected':
+                            selected.code === token.code
+                        }"
+                      >
+                        <div
+                          class="explore-tokens__list-item-avatar"
+                          :class="`${hasBalance(token)
+                            ? 'explore-tokens__list-item-avatar--success'
+                          : 'explore-tokens__list-item-avatar--default'}`">
                           <template v-if="token.logoUrl">
-                            <img :src="token.logoUrl" :alt="avatar(token.code)">
+                            <img
+                              :src="token.logoUrl"
+                              :alt="avatar(token.code)">
                           </template>
 
-                          <template v-else>{{ avatar(token.code) }}</template>
+                          <template v-else>
+                            {{ avatar(token.code) }}
+                          </template>
                         </div>
 
                         <div class="explore-tokens__token-li-details">
@@ -48,11 +60,17 @@
                             <span class="explore-tokens__token-code">
                               {{ token.code }}
                             </span>
-                            <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized"
-                                   v-if="hasBalance(token)"
-                            >check_circle</md-icon>
+                            <md-icon
+                              class="explore-tokens__balance-exists-icon
+                                     md-icon--half-sized"
+                              v-if="hasBalance(token)"
+                            >
+                              check_circle
+                            </md-icon>
                           </span>
-                          <span class="explore-tokens__token-name">{{ token.name }}</span>
+                          <span class="explore-tokens__token-name">
+                            {{ token.name }}
+                          </span>
                         </div>
                       </md-list-item>
                     </template>
@@ -64,32 +82,49 @@
 
           <template v-if="selected">
             <div class="explore-tokens__token-ctn">
-              <div class="app__card-content explore-tokens__token-details">
-
+              <div
+                class="app__card-content
+                       explore-tokens__token-details">
                 <div class="tokens__details-header">
-                  <md-avatar class="tokens__details-avatar-icon"
-                            :class="`${hasBalance(selected)
-                              ? 'tokens__details-avatar-icon--success'
-                              : 'tokens__details-avatar-icon--default'}`"
+                  <md-avatar
+                    class="tokens__details-avatar-icon"
+                    :class="`${hasBalance(selected)
+                      ? 'tokens__details-avatar-icon--success'
+                    : 'tokens__details-avatar-icon--default'}`"
                   >
                     <template v-if="selected.logoUrl">
-                      <img :src="selected.logoUrl" :alt="avatar(selected.code)">
+                      <img
+                        :src="selected.logoUrl"
+                        :alt="avatar(selected.code)">
                     </template>
 
-                    <template v-else>{{ avatar(selected.code) }}</template>
-
+                    <template v-else>
+                      {{ avatar(selected.code) }}
+                    </template>
                   </md-avatar>
                   <div>
-                    <p class="tokens__details-heading">{{ selected.code }}</p>
-                    <p class="tokens__details-subheading">{{ selected.name }}</p>
-                    <p class="explore-tokens__balance-exists-msg" v-if="hasBalance(selected)">
+                    <p class="tokens__details-heading">
+                      {{ selected.code }}
+                    </p>
+                    <p class="tokens__details-subheading">
+                      {{ selected.name }}
+                    </p>
+                    <p
+                      class="explore-tokens__balance-exists-msg"
+                      v-if="hasBalance(selected)">
                       {{ i18n.lbl_balance_exists() }}
-                      <md-icon class="explore-tokens__balance-exists-icon md-icon--half-sized">check_circle</md-icon>
+                      <md-icon
+                        class="explore-tokens__balance-exists-icon
+                               md-icon--half-sized">
+                        check_circle
+                      </md-icon>
                     </p>
                   </div>
                 </div>
 
-                <h4 class="tokens__props-heading">{{ i18n.lbl_token_details() }}</h4>
+                <h4 class="tokens__props-heading">
+                  {{ i18n.lbl_token_details() }}
+                </h4>
                 <div class="explore-tokens__token-details-inner">
                   <table class="app__table-details">
                     <tr>
@@ -98,7 +133,9 @@
                     </tr>
                     <tr>
                       <td>{{ i18n.lbl_name() }}</td>
-                      <td>{{ selected.name || i18n.tokens_no_name() }}</td>
+                      <td>
+                        {{ selected.name || i18n.tokens_no_name() }}
+                      </td>
                     </tr>
                     <tr>
                       <td>{{ i18n.lbl_max_issuance() }}</td>
@@ -115,8 +152,12 @@
                     <tr>
                       <td>{{ i18n.lbl_terms() }}</td>
                       <td v-if="selected.termsUrl">
-                        <a class="tokens__open-doc-link" target='_blank' rel='noopener' :href="selected.termsUrl">
-                          {{i18n.tokens_open_doc()}}
+                        <a
+                          class="tokens__open-doc-link"
+                          target="_blank"
+                          rel="noopener"
+                          :href="selected.termsUrl">
+                          {{ i18n.tokens_open_doc() }}
                         </a>
                       </td>
                       <td v-else>
@@ -127,11 +168,12 @@
                 </div>
 
                 <div class="tokens__actions">
-                  <button v-ripple
-                          @click="createBalance"
-                          v-if="!hasBalance(selected)"
-                          class="app__button-raised"
-                          :disabled="isPending">
+                  <button
+                    v-ripple
+                    @click="createBalance"
+                    v-if="!hasBalance(selected)"
+                    class="app__button-raised"
+                    :disabled="isPending">
                     {{ i18n.lbl_add_to_balances() }}
                   </button>
                 </div>
@@ -139,7 +181,6 @@
             </div>
           </template>
         </div>
-
       </div>
     </div>
   </div>
@@ -156,29 +197,19 @@ import { vuexTypes } from '@/vuex/types'
 import { confirmAction } from '@/js/modals/confirmation_message'
 import { i18n } from '@/js/i18n'
 
-import Detail from '@/vue/app/common/Detail.Row'
 import Loader from '@/vue/app/common/Loader'
 import SubmitterMixin from '../../common/mixins/submitter.mixin'
 
 export default {
-  name: 'TokensExplore',
+  name: 'tokens-explore',
+  components: { Loader },
   mixins: [SubmitterMixin, formMixin],
-  components: { Detail, Loader },
   data: _ => ({
     selected: null,
     isLoading: false,
     filtrationCriteria: '',
     i18n
   }),
-  async created () {
-    this.selectToken(this.tokens[0])
-    this.isLoading = true
-    await Promise.all([
-      this.loadTokens(),
-      this.loadBalances()
-    ])
-    this.isLoading = false
-  },
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
@@ -196,6 +227,23 @@ export default {
         })
         : this.tokens || []
     }
+  },
+  watch: {
+    tokens () {
+      this.selectToken(this.tokens[0])
+    },
+    filteredTokens () {
+      this.selectToken(this.filteredTokens[0])
+    }
+  },
+  async created () {
+    this.selectToken(this.tokens[0])
+    this.isLoading = true
+    await Promise.all([
+      this.loadTokens(),
+      this.loadBalances()
+    ])
+    this.isLoading = false
   },
   methods: {
     ...mapActions({
@@ -219,27 +267,39 @@ export default {
       try {
         await accountsService.createBalance(code)
         await this.loadBalances()
-        EventDispatcher.dispatchShowSuccessEvent(i18n.cm_balance_created({ code }))
+        EventDispatcher.dispatchShowSuccessEvent(
+          i18n.cm_balance_created({ code })
+        )
       } catch (e) {
         ErrorHandler.processUnexpected(e)
       }
       this.enable()
     },
     goHistory () {
-      this.$router.push({ name: 'history.index', params: { tokenCode: this.selected.code } })
-    }
-  },
-  watch: {
-    filteredTokens () {
-      this.selectToken(this.filteredTokens[0])
+      this.$router.push({
+        name: 'history.index',
+        params: { tokenCode: this.selected.code }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/variables";
-@import "../../../scss/mixins";
+@import "~@scss/variables";
+@import "~@scss/mixins";
+
+.token-search-form {
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 40px;
+}
+
+.token-search-form {
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 40px;
+}
 
 .token-search-form {
   width: 100%;

@@ -59,10 +59,14 @@ export class StateHelper {
 
   static defineLatestKycRequest (state) {
     const requests = state.kycRequests
-    console.log(requests)
-    return requests.find(request => request.state === REQUEST_STATES_STR.pending) ||
-           requests.find(request => request.state === REQUEST_STATES_STR.rejected) ||
-           requests.find(request => request.state === REQUEST_STATES_STR.approved) ||
-           {}
+    return requests.find(request =>
+      request.state === REQUEST_STATES_STR.pending
+    ) ||
+    requests.find(request =>
+      request.state === REQUEST_STATES_STR.rejected
+    ) ||
+    requests.find(request =>
+      request.state === REQUEST_STATES_STR.approved
+    ) || {}
   }
 }

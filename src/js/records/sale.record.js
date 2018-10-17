@@ -39,19 +39,31 @@ export class SaleRecord {
   }
 
   get quoteAssetPrices () {
-    return this.quoteAssets.reduce((prices, asset) => { prices[asset.asset] = asset.price; return prices }, {})
+    return this.quoteAssets.reduce((prices, asset) => {
+      prices[asset.asset] = asset.price
+      return prices
+    }, {})
   }
 
   get currentCaps () {
-    return this.quoteAssets.reduce((caps, asset) => { caps[asset.asset] = asset.current_cap; return caps }, {})
+    return this.quoteAssets.reduce((caps, asset) => {
+      caps[asset.asset] = asset.current_cap
+      return caps
+    }, {})
   }
 
   get totalCurrentCaps () {
-    return this.quoteAssets.reduce((caps, asset) => { caps[asset.asset] = asset.total_current_cap; return caps }, {})
+    return this.quoteAssets.reduce((caps, asset) => {
+      caps[asset.asset] = asset.total_current_cap
+      return caps
+    }, {})
   }
 
   get hardCaps () {
-    return this.quoteAssets.reduce((caps, asset) => { caps[asset.asset] = asset.hard_cap; return caps }, {})
+    return this.quoteAssets.reduce((caps, asset) => {
+      caps[asset.asset] = asset.hard_cap
+      return caps
+    }, {})
   }
 
   get acceptsBTC () {

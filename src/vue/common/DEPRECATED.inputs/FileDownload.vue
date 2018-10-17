@@ -1,50 +1,60 @@
 <template>
   <div class="file-download">
-
-    <a :href="url" class="file-download__link" download>
-      <i class="mdi mdi-download"></i>
-      <span class="file-download__file-name" :title="file.name">{{ file.name }}</span>
+    <a
+      :href="url"
+      class="file-download__link"
+      download>
+      <i class="mdi mdi-download" />
+      <span
+        class="file-download__file-name"
+        :title="file.name">
+        {{ file.name }}
+      </span>
     </a>
 
-    <a :href="url" class="view-btn" target="_blank" rel="noopener">
-      <span>View  <i class="mdi mdi-open-in-new"></i></span>
+    <a
+      :href="url"
+      class="view-btn"
+      target="_blank"
+      rel="noopener">
+      <span>View  <i class="mdi mdi-open-in-new" /></span>
     </a>
   </div>
 </template>
 
 <script>
-  import { commonEvents } from '../../../js/events/common_events'
-  import { dispatchAppEvent } from '../../../js/events/helpers'
-  import config from '../../../config'
+import { commonEvents } from '@/js/events/common_events'
+import { dispatchAppEvent } from '@/js/events/helpers'
+import config from '@/config'
 
-  export default {
-    name: 'file-download',
+export default {
+  name: 'file-download',
 
-    props: {
-      file: {
-        type: Object,
-        required: true
-      }
-    },
+  props: {
+    file: {
+      type: Object,
+      required: true
+    }
+  },
 
-    computed: {
-      url () {
-        if (this.file.key) return `${config.FILE_STORAGE}/${this.file.key}`
-        if (this.file.url) return this.file.url
-      }
-    },
+  computed: {
+    url () {
+      if (this.file.key) return `${config.FILE_STORAGE}/${this.file.key}`
+      if (this.file.url) return this.file.url
+    }
+  },
 
-    methods: {
-      view () {
-        dispatchAppEvent(commonEvents.openFileViewEvent, this.file)
-      }
+  methods: {
+    view () {
+      dispatchAppEvent(commonEvents.openFileViewEvent, this.file)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
 
   .file-download {
     display: flex;
@@ -71,7 +81,6 @@
     font-size: .8rem;
     margin-left: 15px;
     text-decoration: underline;
-
 
     i {
       font-size: .8rem;

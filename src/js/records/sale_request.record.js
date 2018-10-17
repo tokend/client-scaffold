@@ -4,7 +4,7 @@ import _get from 'lodash/get'
 import { DocumentContainer } from '../../js/helpers/DocumentContainer'
 import { Keypair } from 'tokend-js-sdk'
 export class SaleRequestRecord extends RequestRecord {
-  constructor (record = {details: {sale: {}}}) {
+  constructor (record = { details: { sale: {} } }) {
     super(record)
     this._details = record.details['sale']
     this.baseAsset = this._details.base_asset || ''
@@ -18,9 +18,12 @@ export class SaleRequestRecord extends RequestRecord {
     this.name = _get(this._details, 'details.name') || ''
     this.description = _get(this._details, 'details.description') || ''
     this.descriptionID = _get(this._details, 'details.description') || ''
-    this.shortDescription = _get(this._details, 'details.short_description') || ''
+    this.shortDescription =
+      _get(this._details, 'details.short_description') || ''
     this.youtubeId = _get(this._details, 'details.youtube_video_id') || ''
-    this.logo = _get(this._details, 'details.logo') ? new DocumentContainer(_get(this._details, 'details.logo')) : null
+    this.logo = _get(this._details, 'details.logo')
+      ? new DocumentContainer(_get(this._details, 'details.logo'))
+      : null
     this.logoUrl = this._getLogoUrl() || ''
 
     this.saleIndex = this._getIndex()

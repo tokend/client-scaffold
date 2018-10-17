@@ -17,6 +17,7 @@ export const PAGES_NAMES = Object.freeze({
   settings: 'Settings',
   help: 'Help',
   downloads: 'TokenD downloads',
+  iosInstallGuide: 'iOS install guide',
   terms: 'Terms',
   massTransfer: 'Mass transfer'
 })

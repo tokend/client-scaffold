@@ -1,19 +1,18 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
-  export default {
-    name: 'app-content',
+export default {
+  name: 'app-content',
 
-    computed: {
-      isLoggedIn () {
-        return this.$store.getters.isLoggedIn
-      }
+  computed: {
+    isLoggedIn () {
+      return this.$store.getters.isLoggedIn
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

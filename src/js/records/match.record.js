@@ -1,13 +1,16 @@
 import get from 'lodash/get'
 import { TxRecord } from './tx.record'
-import store from '../../vuex'
+import store from '@/vuex'
 
-import { PricesHelper } from '../../vuex/helpers/prices.helper'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
 export class MatchRecord extends TxRecord {
   constructor (record, asset) {
-    super(record, record.type_i === 16 ? RECORDS_VERBOSE.match : RECORDS_VERBOSE.investment)
+    super(
+      record, record.type_i === 16
+        ? RECORDS_VERBOSE.match
+        : RECORDS_VERBOSE.investment
+    )
     this.asset = asset
     this.participants = record.participants
     this.participant = this._getParticipant()
@@ -16,9 +19,14 @@ export class MatchRecord extends TxRecord {
   }
 
   _getParticipant () {
-    const balance = get(store.getters.accountBalances, `[${this.asset}].balance_id`)
+    const balance = get(
+      store.getters.accountBalances,
+      `[${this.asset}].balance_id`
+    )
     return this.participants
-      .filter(participant => participant.account_id === store.getters.accountId)
+      .filter(participant =>
+        participant.account_id === store.getters.accountId
+      )
       .filter(participant => participant.balance_id === balance)[0]
   }
 
@@ -57,7 +65,6 @@ export class MatchTransaction {
     this.feePaid = this._getTxFeePaid()
     this.amount = this._getTxAmount()
     this.direction = this._getTxDirection()
-    this.amountSUN = this._getTxAmountSUN()
   }
 
   _getTxBaseAsset () {
@@ -77,11 +84,15 @@ export class MatchTransaction {
   }
 
   _getTxQuoteAmount () {
-    return this._effect.matches.reduce((sum, match) => match.quote_amount + sum, 0)
+    return this._effect.matches.reduce((sum, match) =>
+      match.quote_amount + sum, 0
+    )
   }
 
   _getTxBaseAmount () {
-    return this._effect.matches.reduce((sum, match) => match.base_amount + sum, 0)
+    return this._effect.matches.reduce((sum, match) =>
+      match.base_amount + sum, 0
+    )
   }
 
   _getCounterparty () {
@@ -93,10 +104,6 @@ export class MatchTransaction {
       return this.quoteAmount
     }
     return this.baseAmount
-  }
-
-  _getTxAmountSUN () {
-    return PricesHelper.baseToQuote(this.amount, this.asset, 'SUN')
   }
 
   _getTxPrice () {

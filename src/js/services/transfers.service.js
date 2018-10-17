@@ -68,7 +68,9 @@ export class TransferService extends Service {
    * @returns {TransactionBuilder}
    */
   createMassTransfer (transfers) {
-    const operations = transfers.map(transfer => PaymentV2Builder.paymentV2(_opts(transfer)))
+    const operations = transfers.map(transfer =>
+      PaymentV2Builder.paymentV2(_opts(transfer))
+    )
 
     return this._operationBuilder
       .operation()

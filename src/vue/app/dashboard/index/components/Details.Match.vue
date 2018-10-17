@@ -28,17 +28,17 @@
 </template>
 
 <script>
-  import DetailsMixin from './details.mixin'
+import DetailsMixin from './details.mixin'
 
-  export default {
-    name: 'issuance-details',
-    mixins: [DetailsMixin],
-    computed: {
-      id () {
-        return this._uid
-      }
+export default {
+  name: 'issuance-details',
+  mixins: [DetailsMixin],
+  computed: {
+    id () {
+      return this._uid
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

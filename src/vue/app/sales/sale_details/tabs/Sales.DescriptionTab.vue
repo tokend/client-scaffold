@@ -1,38 +1,35 @@
 <template>
   <div class="overview">
     <template v-if="description">
-      <markdown-formatter class="description__markdown-formatter"
-                          :source="description"/>
+      <markdown
+        class="description__markdown-formatter"
+        :source="description"
+      />
     </template>
 
     <template v-else>
       <p class="text danger">
-        {{ i18n.cm_error_occured() }}
+        {{ 'sale_no_overview' | translate }}
       </p>
     </template>
   </div>
 </template>
 
 <script>
-  import MarkdownFormatter from '../components/DescriptionTab.MarkDownFormatter'
-  import { i18n } from '../../../../../js/i18n'
-  export default {
-    components: {
-      MarkdownFormatter
-    },
-    props: ['description'],
-    data: _ => ({
-      i18n
-    })
-  }
+import Markdown from '@/vue/app/common/Markdown'
+
+export default {
+  components: { Markdown },
+  props: { description: { type: String, default: '' } }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../scss/variables';
-  @import '../../../../../scss/mixins';
+@import "~@scss/variables";
+@import "~@scss/mixins";
 
-  .description__markdown-formatter {
-    text-align: justify;
-    color: $col-text-page-explanations;
-  }
+.description__markdown-formatter {
+  text-align: justify;
+  color: $col-text-page-explanations;
+}
 </style>

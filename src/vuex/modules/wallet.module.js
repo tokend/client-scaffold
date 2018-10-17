@@ -21,7 +21,6 @@ export const actions = {
       kdf.attributes().salt,
       kdf.attributes()
     )
-    console.log(walletKey)
     const wallet = await walletService.loadWallet(walletId)
     dispatch(
       vuexTypes.STORE_USER_DATA_FROM_WALLET,

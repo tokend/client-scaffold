@@ -12,9 +12,10 @@ export class AuthService extends WalletService {
    * @param credentials
    * @param credentials.email
    * @param credentials.password
-   * @param recoveryKeypair - random keypair containing recovery seed. IMPORTANT: User will need to copy this seed to make account
-   *                          recovery possible. Seed itself is NOT being stored anywhere, so user should know he has the
-   *                          only possibility to save it
+   * @param recoveryKeypair - random keypair containing recovery seed.
+   *        IMPORTANT: User will need to copy this seed to make account
+   *        recovery possible. Seed itself is NOT being stored anywhere, so
+   *        user should know he has the only possibility to save it
    * @returns {string} walletId - wallet id of created wallet
    */
   async signup (credentials, recoveryKeypair) {
@@ -44,7 +45,13 @@ export class AuthService extends WalletService {
       recoveryKeypair.accountId()
     )
 
-    const wallet = await this.createWallet(walletAttributes, kdf.data(), factorAttributes, recoveryAttributes)
+    const wallet =
+      await this.createWallet(
+        walletAttributes,
+        kdf.data(),
+        factorAttributes,
+        recoveryAttributes
+      )
     return wallet.data('id')
   }
 
@@ -151,7 +158,10 @@ export class AuthService extends WalletService {
     const email = opts.email
     const currentPassword = opts.currentPassword
 
-    const keychainData = { seed: keypair.secret(), accountId: keypair.accountId() }
+    const keychainData = {
+      seed: keypair.secret(),
+      accountId: keypair.accountId()
+    }
     const transactionAttributes = { data: { attributes: { envelope } } }
     const kdfAttributes = kdf.data()
 

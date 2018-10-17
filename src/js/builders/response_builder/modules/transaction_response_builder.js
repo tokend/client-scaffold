@@ -10,12 +10,20 @@ export class TransactionResponseBuilder extends ResponseBuilder {
 
   result () {
     const resultXDR = this._parsedData.result_xdr
-    /*eslint-disable*/
+    /* eslint-disable */
     return xdr.TransactionResult.fromXDR(new Buffer(resultXDR, 'base64'))
-    /*eslint-enable*/
+    /* eslint-enable */
   }
 
   requestID () {
-    return this.result().result().results()[0].tr().manageAssetResult().success().requestId().toString()
+    return this
+      .result()
+      .result()
+      .results()[0]
+      .tr()
+      .manageAssetResult()
+      .success()
+      .requestId()
+      .toString()
   }
 }

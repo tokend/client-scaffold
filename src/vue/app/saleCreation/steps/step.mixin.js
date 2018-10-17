@@ -15,11 +15,14 @@ export default {
 
   methods: {
     async uploadDocuments () {
-      await Promise.all(Object.values(this.documents).map(document => uploadSingleDocument.apply(this, [document])))
+      await Promise.all(Object.values(this.documents).map(document =>
+        uploadSingleDocument.apply(this, [document]))
+      )
 
       async function uploadSingleDocument (document) {
         if (document.isUploaded) return
-        this.documents[document.type] = await fileService.uploadSingleDocument(document)
+        this.documents[document.type] =
+          await fileService.uploadSingleDocument(document)
       }
     }
   }

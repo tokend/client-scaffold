@@ -3,13 +3,19 @@ import { RecordFactory } from '../../js/records/factory'
 import { Paginator } from '../../js/helpers/paginator'
 
 const state = {
-  withdrawals: new Paginator(RecordFactory.createWithdrawRecord.bind(RecordFactory))
+  withdrawals: new Paginator(
+    RecordFactory.createWithdrawRecord.bind(RecordFactory)
+  )
 }
 
 const actions = {
   async GET_ALL_WITHDRAWALS ({ state }) {
     const withdrawalsPaginator = state.withdrawals
-    withdrawalsPaginator.attachInitLoader(reviewableRequestsService.loadWithdrawalsReviewableRequests.bind(reviewableRequestsService))
+    withdrawalsPaginator.attachInitLoader(
+      reviewableRequestsService
+        .loadWithdrawalsReviewableRequests
+        .bind(reviewableRequestsService)
+    )
     await withdrawalsPaginator.init()
   },
 

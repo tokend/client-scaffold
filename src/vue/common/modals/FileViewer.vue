@@ -1,51 +1,56 @@
 <template>
-  <div class="file-viewer" v-if="url">
-
-    <md-dialog :md-active.sync="isOpened" @md-closed="close">
-      <embed class="file-viewer__embed"
-             :src="url"
-             title
-      />
+  <div
+    class="file-viewer"
+    v-if="url">
+    <md-dialog
+      :md-active.sync="isOpened"
+      @md-closed="close">
+      <embed
+        class="file-viewer__embed"
+        :src="url"
+        title
+      >
     </md-dialog>
-
   </div>
 </template>
 
 <script>
-  import { commonEvents } from '../../../js/events/common_events'
-  import { attachEventHandler } from '../../../js/events/helpers'
+import { commonEvents } from '@/js/events/common_events'
+import { attachEventHandler } from '@/js/events/helpers'
 
-  export default {
-    name: 'file-viewer',
+export default {
+  name: 'file-viewer',
 
-    data () {
-      return {
-        url: null,
-        isOpened: false
-      }
+  data () {
+    return {
+      url: null,
+      isOpened: false
+    }
+  },
+
+  created () {
+    attachEventHandler(commonEvents.openFileViewEvent, this.open)
+    attachEventHandler(commonEvents.closeFileViewEvent, this.close)
+  },
+
+  methods: {
+    open (url) {
+      this.url = url
+      this.isOpened = true
     },
-
-    created () {
-      attachEventHandler(commonEvents.openFileViewEvent, this.open)
-      attachEventHandler(commonEvents.closeFileViewEvent, this.close)
-    },
-
-    methods: {
-      open (url) {
-        this.url = url
-        this.isOpened = true
-      },
-      close () {
-        this.isOpened = false
-        this.url = null
-      }
+    close () {
+      this.isOpened = false
+      this.url = null
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../scss/variables';
-  @import '../../../scss/mixins';
+  @import '~@scss/variables';
+  @import '~@scss/mixins';
+
+  $custom-z-index: 45;
 
   $custom-z-index: 45;
 
@@ -56,7 +61,6 @@
     height: 100vh;
     width: 100vw;
     z-index: $custom-z-index;
-
 
     .file-viewer__embed {
       @include center;

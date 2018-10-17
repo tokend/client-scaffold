@@ -36,14 +36,18 @@ const mutations = {
 const actions = {
   async GET_SALES ({ commit }, filters) {
     const response = await salesService.loadSales(filters)
-    commit(vuexTypes.SET_SALES, response.records.map(record => RecordFactory.createSaleRecord(record)))
+    commit(vuexTypes.SET_SALES, response.records.map(record =>
+      RecordFactory.createSaleRecord(record))
+    )
   },
 
   async GET_OWNERS ({ commit }, sales) {
     const owners = sales
       .map(sale => sale.owner)
       .filter(owner => Keypair.isValidPublicKey(owner))
-    const details = (await accountsService.loadMultipleAccountDetails(owners)).data('users')
+    const details = (
+      await accountsService.loadMultipleAccountDetails(owners)
+    ).data('users')
     sales.forEach(sale => {
       const owner = sale.owner
       if (details[owner]) {
@@ -56,8 +60,9 @@ const actions = {
   async GET_STARRED_SALES ({ commit, dispatch, rootGetters }) {
     const tokenCodes = rootGetters.userFavorites.map(item => item.key)
     const sales =
-      (await Promise.all(tokenCodes.map(code => salesService.loadSaleByTokenCode(code))))
-        .map(sale => RecordFactory.createSaleRecord(sale))
+        (await Promise.all(tokenCodes.map(code =>
+          salesService.loadSaleByTokenCode(code)))
+        ).map(sale => RecordFactory.createSaleRecord(sale))
 
     await dispatch('GET_OWNERS', sales)
     commit(vuexTypes.RESET_STARRED_SALES)
@@ -69,7 +74,9 @@ const getters = {
   sales: state => state.sales,
   // saleIds: _ => StateHelper.getSaleIdWhereUSerParticipated(),
   starredSales: state => state.starred,
-  salesOwned: (state, getters) => state.sales.filter(sale => sale.owner === getters.accountId)
+  salesOwned: (state, getters) => state.sales.filter(sale =>
+    sale.owner === getters.accountId
+  )
 }
 
 export default {

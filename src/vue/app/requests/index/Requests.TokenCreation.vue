@@ -6,78 +6,137 @@
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head class="tx-token-creation__hide-md">{{ i18n.lbl_updated_at() }}</md-table-head>
+          <md-table-head class="tx-token-creation__hide-md">
+            {{ i18n.lbl_updated_at() }}
+          </md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
-          <md-table-row class="tx-token-creation__row" @click.native="toggleDetails(i)" :key="i">
-            <md-table-cell class="tx-token-creation__table-cell">{{ item.reference }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ item.state }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">{{ i18n.d(item.createdAt) }}</md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell tx-token-creation__hide-md">{{ i18n.d(item.updatedAt) }}</md-table-cell>
-
+          <md-table-row
+            class="tx-token-creation__row"
+            @click.native="toggleDetails(i)"
+            :key="i">
             <md-table-cell class="tx-token-creation__table-cell">
-              <md-button class="tx-token-creation__open-details-btn md-icon-button">
+              {{ item.reference }}
+            </md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">
+              {{ item.state }}
+            </md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">
+              {{ i18n.d(item.createdAt) }}
+            </md-table-cell>
+            <md-table-cell
+              class="tx-token-creation__table-cell
+                     tx-token-creation__hide-md">
+              {{ i18n.d(item.updatedAt) }}
+            </md-table-cell>
+            <md-table-cell class="tx-token-creation__table-cell">
+              <md-button
+                class="tx-token-creation__open-details-btn
+                       md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
               </md-button>
             </md-table-cell>
-
           </md-table-row>
-          <md-table-row class="th-token-creation__expandable-row" v-if="isSelected(i)" :key="'selected-'+i">
+          <md-table-row
+            class="th-token-creation__expandable-row"
+            v-if="isSelected(i)"
+            :key="'selected-'+i">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
-                <div class="icon-column md-layout-item md-size-35 md-layout md-alignment-center-center">
-                  <img class="token-icon" v-if="item.logoUrl" :src='item.logoUrl' :alt="documentTypes.tokenIcon">
-                  <div class="token-icon" v-else>{{ item.reference.substr(0, 1).toUpperCase() }}</div>
+                <div
+                  class="icon-column
+                         md-layout-item
+                         md-size-35
+                         md-layout
+                         md-alignment-center-center">
+                  <img
+                    class="token-icon"
+                    v-if="item.logoUrl"
+                    :src="item.logoUrl"
+                    :alt="documentTypes.tokenIcon">
+                  <div class="token-icon" v-else>
+                    {{ item.reference.substr(0, 1).toUpperCase() }}
+                  </div>
                 </div>
                 <div class="details-column md-layout-item">
-                  <detail prop="Request type" :value="`${getFancyName(item.details.request_type)}`"/>
-                  <detail prop="Max issuance amount" :value="`${i18n.c(item.maxIssuanceAmount)}`"/>
-                  <detail prop="Initial preissued amount" :value="`${i18n.c(item.initialPreissuedAmount)}`"/>
-                  <detail prop="Token name" :value="`${item.tokenName}`"/>
-                  <detail prop="Terms" v-if="item.termsUrl" :value="`<a href='${item.termsUrl}' target='_blank'>Open file</a>`"/>
+                  <detail
+                    prop="Request type"
+                    :value="`${getFancyName(item.details.request_type)}`" />
+                  <detail
+                    prop="Max issuance amount"
+                    :value="`${i18n.c(item.maxIssuanceAmount)}`" />
+                  <detail
+                    prop="Initial preissued amount"
+                    :value="`${i18n.c(item.initialPreissuedAmount)}`" />
+                  <detail
+                    prop="Token name"
+                    :value="`${item.tokenName}`" />
+                  <detail
+                    prop="Terms"
+                    v-if="item.termsUrl"
+                    :value="''">
+                    <a href="${item.termsUrl}" target="_blank">
+                      Open file
+                    </a>
+                  </detail>
                   <detail prop="Terms" v-else />
-                  <detail prop="Policies" :value="`${getPolicies(item.policies)}`"/>
-                  <detail prop="Reject reason" v-if="item.isRejected || item.isPermanentlyRejected"
-                                               :value="`${item.rejectReason}`"/>
-
+                  <detail
+                    prop="Policies"
+                    :value="`${getPolicies(item.policies)}`" />
+                  <detail
+                    prop="Reject reason"
+                    v-if="item.isRejected || item.isPermanentlyRejected"
+                    :value="`${item.rejectReason}`" />
                 </div>
               </md-card-content>
               <md-card-actions>
-                <button v-ripple
-                        @click="cancelRequest(item.id)"
-                        class="app__button-flat"
-                        :disabled="!item.isPending || isPending">
+                <button
+                  v-ripple
+                  @click="cancelRequest(item.id)"
+                  class="app__button-flat"
+                  :disabled="!item.isPending || isPending">
                   {{ i18n.lbl_cancel() }}
                 </button>
-                <router-link :to="{name: 'token-creation.index', params: { id: item.id }}"
-                             tag="button"
-                             v-ripple
-                             class="app__button-flat"
-                             :disabled="(!item.isPending && !item.isRejected) || isPending">{{ i18n.lbl_update() }}</router-link>
+                <router-link
+                  :to="{
+                    name: 'token-creation.index',
+                    params: { id: item.id }
+                  }"
+                  tag="button"
+                  v-ripple
+                  class="app__button-flat"
+                  :disabled="
+                    (!item.isPending && !item.isRejected) || isPending
+                  "
+                >
+                  {{ i18n.lbl_update() }}
+                </router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
         </template>
-         <md-table-row v-if="!isLoaded">
-            <md-table-cell colspan="7">
-                <div class="tx-history__btn-outer">
-                  <button v-ripple
-                          @click="more"
-                          class="app__button-flat"
-                          :disabled="isLoading">
-                    {{ i18n.lbl_view_more() }}
-                  </button>
-                </div>
-            </md-table-cell>
-         </md-table-row>
+        <md-table-row v-if="!isLoaded">
+          <md-table-cell colspan="7">
+            <div class="tx-history__btn-outer">
+              <button
+                v-ripple
+                @click="more"
+                class="app__button-flat"
+                :disabled="isLoading">
+                {{ i18n.lbl_view_more() }}
+              </button>
+            </div>
+          </md-table-cell>
+        </md-table-row>
       </template>
       <template v-else>
         <div class="tx-token-creation__no-requests">
-          <no-data-message icon-name="trending_up"
+          <no-data-message
+            icon-name="trending_up"
             :msg-title="i18n.lbl_no_token_creation_requests()"
-            :msg-message="i18n.lbl_no_token_creation_requests_desc()"/>
+            :msg-message="i18n.lbl_no_token_creation_requests_desc()" />
         </div>
       </template>
     </md-table>
@@ -91,17 +150,17 @@ import _get from 'lodash/get'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 
 import { mapGetters, mapActions } from 'vuex'
-import { i18n } from '../../../../js/i18n'
-import { documentTypes, ASSET_POLICIES_VERBOSE } from '../../../../js/const/const'
-import { vuexTypes } from '../../../../vuex/types'
+import { i18n } from '@/js/i18n'
+import { documentTypes, ASSET_POLICIES_VERBOSE } from '@/js/const/const'
+import { vuexTypes } from '@/vuex/types'
 
-import { tokensService } from '../../../../js/services/tokens.service'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
+import { tokensService } from '@/js/services/tokens.service'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
 
 export default {
-  mixins: [FormMixin],
   components: { Detail, NoDataMessage },
+  mixins: [FormMixin],
   data: _ => ({
     i18n,
     documentTypes,
@@ -109,12 +168,6 @@ export default {
     index: -1,
     ASSET_POLICIES_VERBOSE
   }),
-
-  async created () {
-    await this.loadList()
-    this.$emit('loaded')
-  },
-
   computed: {
     ...mapGetters([
       vuexTypes.tokenCreationRequests
@@ -126,7 +179,10 @@ export default {
       return _get(this.tokenCreationRequests, 'isLoaded')
     }
   },
-
+  async created () {
+    await this.loadList()
+    this.$emit('loaded')
+  },
   methods: {
     ...mapActions({
       loadList: vuexTypes.GET_USER_TOKENS_CREATION_REQUESTS,
@@ -150,7 +206,7 @@ export default {
         this.loadList()
         EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
       } catch (error) {
-        console.log(error)
+        console.error(error)
         ErrorHandler.processUnexpected(error)
       }
       this.enable()
@@ -179,8 +235,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../../scss/mixins";
-  @import "../../../../scss/variables";
+  @import "~@scss/mixins";
+  @import "~@scss/variables";
 
   $padding-vertical: 20px;
   $padding-horizontal: 25px;

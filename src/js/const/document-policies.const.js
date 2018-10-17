@@ -6,9 +6,9 @@ const POLICIES = {
 }
 
 export const DOCUMENT_POLICIES = Object.freeze({
-  [documentTypes.kycIdDocument]: POLICIES.public,
-  [documentTypes.kycProofOfAddress]: POLICIES.public,
-  [documentTypes.kycSelfie]: POLICIES.public,
+  [documentTypes.kycIdDocument]: POLICIES.private,
+  [documentTypes.kycProofOfAddress]: POLICIES.private,
+  [documentTypes.kycSelfie]: POLICIES.private,
   [documentTypes.fundLogo]: POLICIES.public,
   [documentTypes.fundDocument]: POLICIES.public,
   [documentTypes.navReport]: POLICIES.public,

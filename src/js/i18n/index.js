@@ -24,6 +24,7 @@ import fileUpload from './views/file-upload'
 import trade from './views/trade_view'
 import companyView from './views/company_view'
 import preissuanceView from './views/preissuance_view'
+import fees from './views/fees'
 import common from './views/common'
 import auth from './views/auth_view'
 import formConfirmation from './views/form_confirmation_view'
@@ -33,6 +34,7 @@ import sidebarView from './views/sidebar_view'
 import supportedBrowsersView from './views/supported_browsers_view'
 import downloadsView from './views/downloads_view'
 import limitsView from './views/limits_view'
+import iosInstallGuide from './views/ios_install_guide'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
@@ -75,7 +77,9 @@ const dictionary = {
   ...sidebarView,
   ...supportedBrowsersView,
   ...downloadsView,
-  ...limitsView
+  ...limitsView,
+  ...fees,
+  ...iosInstallGuide
 }
 
 polyglot.extend(dictionary)

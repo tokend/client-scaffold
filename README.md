@@ -1,4 +1,4 @@
-# Introduction
+# Introduction()
 
 The TokenD web-client is written on [Vue v2](https://vuejs.org/v2/guide/)
 

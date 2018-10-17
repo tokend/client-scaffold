@@ -15,6 +15,7 @@ import Recovery from '@/vue/auth/Recovery'
 import EmailResend from '@/vue/auth/ConfirmEmail'
 import Terms from '@/vue/public/legals/Legal.Terms'
 import Downloads from '@/vue/public/Public.Downloads'
+import iosInstallGuide from '@/vue/public/Public.IosInstallGuide'
 
 import AppContent from '@/vue/root/AppContent'
 
@@ -63,6 +64,9 @@ import SaleCreationIndex from '@/vue/app/saleCreation/SaleCreation.Index'
 import Requests from '@/vue/app/requests/Requests.Entry'
 import RequestsIndex from '@/vue/app/requests/index/Requests.Index'
 
+import Fee from '@/vue/app/fee/Fee.Entry'
+import FeeIndex from '@/vue/app/fee/index/Fee.Index'
+
 import Sales from '@/vue/app/sales/Sales.Entry'
 import SalesDetails from '@/vue/app/sales/sale_details/Sales.Details'
 import SalesExplore from '@/vue/app/sales/overview/Sales.Explore'
@@ -105,6 +109,12 @@ const router = new Router({
       name: 'downloads',
       component: Downloads,
       meta: { pageName: PAGES_NAMES.downloads }
+    },
+    {
+      path: '/ios-install-guide',
+      name: 'ios-install-guide',
+      component: iosInstallGuide,
+      meta: { pageName: PAGES_NAMES.iosInstallGuide }
     },
     {
       path: '/auth',
@@ -182,7 +192,7 @@ const router = new Router({
           name: 'app.limits',
           path: '/limits',
           component: Limits,
-          redirect: {path: '/limits/index'},
+          redirect: { path: '/limits/index' },
           children: [
             {
               path: '/limits/index',
@@ -416,6 +426,20 @@ const router = new Router({
           ]
         },
         {
+          feature_flag: config.FEATURE_FLAGS.feesExplorer,
+          name: 'app.fees',
+          path: '/fee',
+          component: Fee,
+          redirect: { path: '/fee/index' },
+          children: [
+            {
+              path: '/fee/index',
+              name: 'fee.index',
+              component: FeeIndex
+            }
+          ]
+        },
+        {
           feature_flag: config.FEATURE_FLAGS.sales,
           name: 'app.sales',
           path: '/sales',
@@ -501,7 +525,11 @@ function scrollBehavior (to, from, savedPosition) {
 }
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.routeWithFeatures)) to.meta.routeWithFeatures = true
-  if (to.matched.some(record => record.meta.routeWithAuth)) to.meta.routeWithAuth = true
+  if (to.matched.some(record => record.meta.routeWithFeatures)) {
+    to.meta.routeWithFeatures = true
+  }
+  if (to.matched.some(record => record.meta.routeWithAuth)) {
+    to.meta.routeWithAuth = true
+  }
   next()
 })

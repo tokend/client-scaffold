@@ -1,28 +1,36 @@
 <template>
-  <div class="sale-details" v-if="this.sale && this.token">
+  <div
+    class="sale-details"
+    v-if="sale && token">
     <div class="sale-details__header">
-      <h1 class="sale-details__heading"> {{ sale.name }} ({{ sale.baseAsset }})</h1>
+      <h1 class="sale-details__heading">
+        {{ sale.name }} ({{ sale.baseAsset }})
+      </h1>
       <p class="sale-details__description">{{ sale.shortDescription }}</p>
     </div>
     <div class="sale-details__content">
       <div class="sale-details__banner">
-        <img class="sale-details__banner-image"
-             :src="sale.image"
-             alt="crowdfund banner">
+        <img
+          class="sale-details__banner-image"
+          :src="sale.image"
+          alt="crowdfund banner">
       </div>
       <div class="sale-details__information">
         <div class="sale-details__information-item">
-          <invest-progress-bar class="invest-progress-bar"
-                               :sale="sale"
-                               :barHeight="'1.2rem'"/>
+          <invest-progress-bar
+            class="invest-progress-bar"
+            :sale="sale"
+            :bar-height="'1.2rem'" />
         </div>
         <div class="sale-details__information-item">
-          <sale-invest :sale="sale"
-                       @invest-in-sale="loadDetails" />
+          <sale-invest
+            :sale="sale"
+            @invest-in-sale="loadDetails" />
         </div>
       </div>
     </div>
-    <sale-tabs class="sale-details__tabs"
+    <sale-tabs
+      class="sale-details__tabs"
       :sale="sale"
       :description="description"
       :syndicate="syndicate"
@@ -32,25 +40,24 @@
 </template>
 
 <script>
-import { salesService } from '../../../../js/services/sales.service'
-import { tokensService } from '../../../../js/services/tokens.service'
-import { SaleRecord } from '../../../../js/records/sale.record'
-import { TokenRecord } from '../../../../js/records/token.record'
+import { salesService } from '@/js/services/sales.service'
+import { tokensService } from '@/js/services/tokens.service'
+import { SaleRecord } from '@/js/records/sale.record'
+import { TokenRecord } from '@/js/records/token.record'
 import { i18n } from '@/js/i18n'
-
-import BackButton from '@/vue/common/back-button/BackButton'
 import SaleInvest from './components/Sales.Invest'
 import SaleTabs from './Sales.Tabs'
 import InvestProgressBar from '../sale_card/Sales.ProgressBar'
 
 export default {
   name: 'sale-details',
-  props: ['id'],
   components: {
     SaleInvest,
     InvestProgressBar,
-    SaleTabs,
-    BackButton
+    SaleTabs
+  },
+  props: {
+    id: { type: String, required: true }
   },
 
   data: _ => ({
@@ -73,8 +80,14 @@ export default {
     async loadDetails () {
       this.sale = new SaleRecord(await salesService.loadSaleById(this.id))
       await Promise.all([
-        this.token = new TokenRecord(await tokensService.loadTokenByCode(this.sale.baseAsset)),
-        this.description = await salesService.loadSaleDescription(this.sale.owner, this.sale.descriptionID)
+        this.token = new TokenRecord(
+          await tokensService.loadTokenByCode(this.sale.baseAsset)
+        ),
+        this.description =
+          await salesService.loadSaleDescription(
+            this.sale.owner,
+            this.sale.descriptionID
+          )
       ])
     }
   }
@@ -82,8 +95,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../../scss/variables";
-@import "../../../../scss/mixins";
+@import "~@scss/variables";
+@import "~@scss/mixins";
 $ratio_16: 370px;
 $ratio_9: $ratio_16 * (9/16);
 

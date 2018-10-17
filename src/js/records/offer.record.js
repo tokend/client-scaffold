@@ -21,7 +21,9 @@ export class OfferRecord {
   }
 
   get offerType () {
-    return +this.orderBookId === 0 ? RECORDS_VERBOSE.offer : RECORDS_VERBOSE.investment
+    return +this.orderBookId === 0
+      ? RECORDS_VERBOSE.offer
+      : RECORDS_VERBOSE.investment
   }
 
   get isInvestment () {

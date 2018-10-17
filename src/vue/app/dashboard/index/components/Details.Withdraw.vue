@@ -6,7 +6,11 @@
     </tr>
     <tr>
       <td>{{ `${tx.destinationAsset} ${i18n.lbl_wallet()}` }}</td>
-      <td :id="`el-${id}`" class="app__table-details-counterparty">{{ tx.counterparty }}</td>
+      <td
+        :id="`el-${id}`"
+        class="app__table-details-counterparty">
+        {{ tx.counterparty }}
+      </td>
     </tr>
     <tr>
       <td>{{ i18n.lbl_amount() }}</td>
@@ -29,19 +33,18 @@
       <td>{{ tx.date }}</td>
     </tr>
   </table>
-
 </template>
 
 <script>
-  import DetailsMixin from './details.mixin'
+import DetailsMixin from './details.mixin'
 
-  export default {
-    name: 'withdraw-details',
-    mixins: [DetailsMixin],
-    computed: {
-      id () {
-        return this._uid
-      }
+export default {
+  name: 'withdraw-details',
+  mixins: [DetailsMixin],
+  computed: {
+    id () {
+      return this._uid
     }
   }
+}
 </script>

@@ -57,6 +57,10 @@ $field-to-field-gap: 2 * $point;
     margin-left: 1 * $point;
   }
 
+  &--right {
+    justify-content: flex-end;
+  }
+
   & > .app__form-field {
     flex: 1;
 

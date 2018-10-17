@@ -6,7 +6,9 @@ export class FileHelper {
   }
 
   static async readFileAsBinaryString (file) {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise(function (resolve) {
+      // eslint-disable-next-line no-undef
       const reader = new FileReader()
 
       reader.onload = function (event) {
@@ -18,7 +20,9 @@ export class FileHelper {
   }
 
   static async readFileAsArrayBuffer (file) {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise(function (resolve) {
+      // eslint-disable-next-line no-undef
       const reader = new FileReader()
 
       reader.onload = function (event) {
@@ -30,9 +34,10 @@ export class FileHelper {
   }
 
   static async readFileAsText (file) {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise(function (resolve) {
+      // eslint-disable-next-line no-undef
       const reader = new FileReader()
-
       reader.onload = function (event) {
         resolve(event.target.result)
       }
@@ -42,7 +47,9 @@ export class FileHelper {
   }
 
   static async readFileAsDataURL (file) {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-undef
       const reader = new FileReader()
       reader.onloadend = (event) => {
         const dataURL = event.target.result
@@ -62,7 +69,9 @@ export class FileHelper {
   }
 
   static async readBlobAsDataURL (blob) {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-undef
       const reader = new FileReader()
       reader.onloadend = (event) => {
         const dataURL = event.target.result
@@ -77,14 +86,15 @@ export class FileHelper {
   }
 
   static async readImage (file) {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-undef
       const image = new Image()
       image.src = file
       image.onload = () => {
         return resolve(image)
       }
       image.onerror = (error) => {
-        console.log(error)
         return reject(error)
       }
     })

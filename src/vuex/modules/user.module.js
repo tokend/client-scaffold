@@ -34,7 +34,7 @@ export const actions = {
     const response = await usersService.loadUserFavorites()
     const favorites = response
       .data()
-      .map(item => ({id: get(item, 'data.id'), key: get(item, 'data.attributes.key')}))
+      .map(item => ({ id: get(item, 'data.id'), key: get(item, 'data.attributes.key') }))
     commit(vuexTypes.SET_FAVORITES, favorites)
   }
 }

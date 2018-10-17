@@ -2,6 +2,7 @@ import request from '../builders/request_builder'
 import store from '../../vuex'
 
 import { initHorizonServer } from '../helpers/server.helper'
+// eslint-disable-next-line
 import { operationBuilder } from '../builders/operation_builder/operation_builder'
 import get from 'lodash/get'
 
@@ -18,7 +19,8 @@ export class Service {
    */
   constructor (opts) {
     this._apiRequestBuilder = get(opts, 'apiRequestBuilder') || request
-    this._horizonRequestBuilder = get(opts, 'horizonRequestBuider') || initHorizonServer()
+    this._horizonRequestBuilder =
+      get(opts, 'horizonRequestBuider') || initHorizonServer()
     this._operationBuilder = operationBuilder
 
     this._overwrittenKeypair = get(opts, 'keypair')

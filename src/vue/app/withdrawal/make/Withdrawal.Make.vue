@@ -3,21 +3,34 @@
     <template v-if="tokenCodes.length">
       <div class="app__page-content-wrp">
         <h2 class="app__page-heading">{{ i18n.withdraw_heading() }}</h2>
-        <form @submit.prevent="processTransfer"
+        <form
+          @submit.prevent="processTransfer"
           id="withdrawal-form"
-          v-if="view.mode === VIEW_MODES.submit || view.mode === VIEW_MODES.confirm">
+          v-if="view.mode === VIEW_MODES.submit ||
+          view.mode === VIEW_MODES.confirm">
           <div class="app__form-row">
             <div class="app__form-field">
-              <select-field-unchained :values="tokenCodes"
+              <select-field-unchained
+                :values="tokenCodes"
                 v-model="form.tokenCode"
                 :label="i18n.lbl_asset()"
-                :readonly="view.mode === VIEW_MODES.confirm"/>
+                :readonly="view.mode === VIEW_MODES.confirm" />
               <div class="app__form-field-description">
                 <p v-if="minAmounts[form.tokenCode]">
-                  {{ i18n.withdraw_how_much({ asset: form.tokenCode, value: minAmounts[form.tokenCode] }) }}
+                  {{
+                    i18n.withdraw_how_much({
+                      asset: form.tokenCode,
+                      value: minAmounts[form.tokenCode]
+                    })
+                  }}
                 </p>
                 <p>
-                  {{ i18n.withdraw_balance({ amount: balance.balance, asset: form.tokenCode }) }}
+                  {{
+                    i18n.withdraw_balance({
+                      amount: balance.balance,
+                      asset: form.tokenCode
+                    })
+                  }}
                 </p>
               </div>
             </div>
@@ -27,39 +40,53 @@
             <div class="app__form-field">
               <input-field-unchained
                 v-model.trim="form.amount"
-                step="0.000001"
+                :step="config.MINIMAL_NUMBER_INPUT_STEP"
                 :label="i18n.lbl_amount()"
                 name="amount"
                 type="number"
                 title="Amount"
                 :readonly="view.mode === VIEW_MODES.confirm"
-                vvValidateOn="change"
+                vv-validate-on="change"
                 v-validate="'required|amount'"
-                :errorMessage="errors.first('amount') ||
-                            (isLimitExceeded ? i18n.withdraw_error_insufficient_funds() : '') ||
-                            (lessThenMinimumAmount ? i18n.withdraw_error_minimum_amount({
-                                                      value: minAmounts[form.tokenCode],
-                                                      asset: form.tokenCode })
-                                                    : '')"
+                :error-message="errors.first('amount') ||
+                  (isLimitExceeded
+                  ? i18n.withdraw_error_insufficient_funds() : '') ||
+                  (lessThenMinimumAmount
+                    ? i18n.withdraw_error_minimum_amount({
+                      value: minAmounts[form.tokenCode],
+                      asset: form.tokenCode })
+                : '')"
               />
 
-              <div class="withdraw__fees-container app__form-field-description" :class="{ loading: isFeesLoadPending }">
+              <div
+                class="withdraw__fees-container app__form-field-description"
+                :class="{ loading: isFeesLoadPending }">
                 <p>
                   - {{ i18n.withdraw_network_fee_prefix() }}
-                  <span class="fee__fee-type">{{ i18n.withdraw_network_fee() }}</span>
-                  <hint-wrapper :hint="i18n.withdraw_network_fee_hint()" :decorated="false">
-                    <span class="fee__hint-icon"><md-icon>help_outline</md-icon></span>
+                  <span class="fee__fee-type">
+                    {{ i18n.withdraw_network_fee() }}
+                  </span>
+                  <hint-wrapper
+                    :hint="i18n.withdraw_network_fee_hint()"
+                    :decorated="false">
+                    <span class="fee__hint-icon">
+                      <md-icon>help_outline</md-icon>
+                    </span>
                   </hint-wrapper>
                 </p>
 
                 <p v-if="fixedFee">
                   - {{ fixedFee }} {{ form.tokenCode }}
-                  <span class="fee__fee-type">{{ i18n.withdraw_fixed_fee() }}</span>
+                  <span class="fee__fee-type">
+                    {{ i18n.withdraw_fixed_fee() }}
+                  </span>
                 </p>
 
                 <p v-if="percentFee">
                   - {{ percentFee }} {{ form.tokenCode }}
-                  <span class="fee__fee-type">{{ i18n.withdraw_percent_fee() }}</span>
+                  <span class="fee__fee-type">
+                    {{ i18n.withdraw_percent_fee() }}
+                  </span>
                 </p>
               </div>
             </div>
@@ -73,16 +100,19 @@
               name="wallet-address"
               :readonly="view.mode === VIEW_MODES.confirm"
               v-validate="'required|wallet_address'"
-              :errorMessage="
+              :error-message="
                 errors.first('wallet-address') ||
-                (isTryingToSendToYourself ? i18n.withdraw_error_is_trying_to_send_to_yourself() : '')
+                  (isTryingToSendToYourself
+                    ? i18n.withdraw_error_is_trying_to_send_to_yourself()
+                    : '')
               "
             />
           </div>
         </form>
 
         <div class="app__form-actions">
-          <button v-ripple
+          <button
+            v-ripple
             v-if="view.mode === VIEW_MODES.submit"
             type="submit"
             class="app__form-submit-btn"
@@ -102,11 +132,16 @@
     </template>
 
     <template v-else>
-      <h2 class="app__page-heading">{{ i18n.withdraw_no_assets_heading() }}</h2>
+      <h2 class="app__page-heading">
+        {{ i18n.withdraw_no_assets_heading() }}
+      </h2>
       <p class="app__page-explanations app__page-explanations--secondary">
         {{ i18n.withdraw_no_assets() }}
       </p>
-      <router-link to="/tokens" tag="button" class="app__button-raised">
+      <router-link
+        to="/tokens"
+        tag="button"
+        class="app__button-raised">
         {{ i18n.withdraw_discover_assets_btn() }}
       </router-link>
     </template>
@@ -114,24 +149,25 @@
 </template>
 
 <script>
-import formMixin from '../../../common/mixins/form.mixin'
+import formMixin from '@/vue/common/mixins/form.mixin'
 import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
 import HintWrapper from '@/vue/common/hint-wrapper/HintWrapper'
 import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
-import InputFieldUnchained from '../../../common/fields/InputFieldUnchained'
+import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '../../../../vuex/types'
+import { vuexTypes } from '@/vuex/types'
 
-import { i18n } from '../../../../js/i18n'
-import { feeService } from '../../../../js/services/fees.service'
-import { withdrawService } from '../../../../js/services/withdraw.service'
-import { EventDispatcher } from '../../../../js/events/event_dispatcher'
-import { ErrorHandler } from '../../../../js/errors/error_handler'
-import { errors } from '../../../../js/errors/factory'
+import { i18n } from '@/js/i18n'
+import { feeService } from '@/js/services/fees.service'
+import { withdrawService } from '@/js/services/withdraw.service'
+import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { ErrorHandler } from '@/js/errors/error_handler'
+import { errors } from '@/js/errors/factory'
+import config from '@/config'
 
 const VIEW_MODES = {
   submit: 'submit',
@@ -140,14 +176,14 @@ const VIEW_MODES = {
 }
 
 export default {
-  name: 'Withdraw',
-  mixins: [formMixin],
+  name: 'withdraw',
   components: {
     HintWrapper,
     SelectFieldUnchained,
     InputFieldUnchained,
     FormConfirmation
   },
+  mixins: [formMixin],
   data: _ => ({
     form: {
       tokenCode: null,
@@ -168,12 +204,9 @@ export default {
     isFeesLoadFailed: false,
     feesDebouncedRequest: null,
     i18n,
+    config,
     VIEW_MODES
   }),
-  created () {
-    this.form.tokenCode = this.tokenCodes[0] || null
-    this.loadBalances()
-  },
   computed: {
     ...mapGetters([
       vuexTypes.userWithdrawableTokens,
@@ -187,13 +220,19 @@ export default {
       return this.accountBalances[this.form.tokenCode]
     },
     isLimitExceeded () {
-      return Number(this.form.amount) > Number(get(this.balance, 'balance') || 0)
+      const amount = Number(this.form.amount)
+      const balance = Number(get(this.balance, 'balance') || 0)
+      return amount > balance
     },
     isTryingToSendToYourself () {
-      return this.form.wallet === this.accountDepositAddresses[this.form.tokenCode]
+      const wallet = this.form.wallet
+      const address = this.accountDepositAddresses[this.form.tokenCode]
+      return wallet === address
     },
     lessThenMinimumAmount () {
-      return this.form.amount !== '' ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode] : false
+      return this.form.amount !== ''
+        ? Number(this.form.amount) < this.minAmounts[this.form.tokenCode]
+        : false
     },
     isAllowedToSubmit () {
       return !this.isFeesLoadPending &&
@@ -201,6 +240,24 @@ export default {
         !this.isTryingToSendToYourself &&
         !this.lessThenMinimumAmount
     }
+  },
+  watch: {
+    'form.amount' (value) {
+      if (this.isLimitExceeded) return
+      if (value === '' || value < this.minAmounts[this.form.tokenCode]) {
+        this.fixedFee = '0.0000'
+        this.percentFee = '0.0000'
+        return
+      }
+      this.tryGetFees()
+    },
+    'form.tokenCode' (value) {
+      this.tryGetFees()
+    }
+  },
+  created () {
+    this.form.tokenCode = this.tokenCodes[0] || null
+    this.loadBalances()
   },
   methods: {
     ...mapActions({
@@ -258,7 +315,10 @@ export default {
     },
     async getFees () {
       try {
-        const fees = await feeService.loadWithdrawalFeeByAmount(this.form.tokenCode, this.form.amount)
+        const fees = await feeService.loadWithdrawalFeeByAmount(
+          this.form.tokenCode,
+          this.form.amount
+        )
         this.fixedFee = fees.fixed
         this.percentFee = fees.percent
         this.isFeesLoadFailed = false
@@ -285,20 +345,6 @@ export default {
     rerenderForm () {
       this.updateView(null)
       setTimeout(() => this.updateView(VIEW_MODES.submit, true), 1)
-    }
-  },
-  watch: {
-    'form.amount' (value) {
-      if (this.isLimitExceeded) return
-      if (value === '' || value < this.minAmounts[this.form.tokenCode]) {
-        this.fixedFee = '0.0000'
-        this.percentFee = '0.0000'
-        return
-      }
-      this.tryGetFees()
-    },
-    'form.tokenCode' (value) {
-      this.tryGetFees()
     }
   }
 }

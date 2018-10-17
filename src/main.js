@@ -27,6 +27,12 @@ import { extendValidator } from './validator/validator'
 import tableScrollShadow from './directives/tableScrollShadow'
 import rippleEffect from './directives/rippleEffect'
 
+// filters
+import { translate } from './vue/common/filters/translate'
+import { localizeFeeType } from './vue/common/filters/localizeFeeType'
+import { localizeFeeSubType } from './vue/common/filters/localizeFeeSubType'
+import { formatDate } from './vue/common/filters/formatDate'
+
 // ripple effects:
 rippleEffect.color = 'rgba(58, 65, 128, .2)'
 
@@ -41,11 +47,17 @@ Vue.use(VueSimpleMDE)
 
 VeeValidate.Validator = extendValidator(VeeValidate.Validator)
 
+/* Vue filters */
+Vue.filter('localizeFeeType', localizeFeeType)
+Vue.filter('localizeFeeSubType', localizeFeeSubType)
+Vue.filter('translate', translate)
+Vue.filter('formatDate', formatDate)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
-  template: '<App/>',
-  components: { App }
+  components: { App },
+  template: '<App/>'
 })
