@@ -1,0 +1,17 @@
+pipeline:
+  docker:
+    image: docker:latest
+    secrets: [ docker_username, docker_password, rsa_key ]
+    commands:
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.gitlab.com
+      - docker build --build-arg RSA_KEY="$RSA_KEY" --build-arg BUILD_ENV=config/default.env.js --pull -t registry.gitlab.com/tokend/client-scaffold/github:${DRONE_COMMIT_SHA} .
+      - docker push registry.gitlab.com/tokend/client-scaffold/github:${DRONE_COMMIT_SHA}
+    environment:
+      - RSA_KEY=$$RSA_KEY
+      - DOCKER_USERNAME=$$DOCKER_USERNAME
+      - DOCKER_PASSWORD=$$DOCKER_PASSWORD
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    when:
+      branch: master
+event: push
