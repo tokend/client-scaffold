@@ -154,7 +154,7 @@ export default {
 
 .app__navbar {
   position: relative;
-  z-index: 100;
+  z-index: 4;
   min-height: 64px;
   display: flex;
   align-items: center;
