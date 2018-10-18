@@ -1,5 +1,6 @@
 import { Service } from './service'
 import Vue from 'vue'
+import config from '../../config'
 
 export class FileService extends Service {
   /**
@@ -85,22 +86,21 @@ export class FileService extends Service {
   /**
    * Uploads file sending multipart/form-data request to the server
    * @param file {ArrayBuffer}
-   * @param config {config}
+   * @param policy {policy}
    * @param mimeString
    * @return {*}
    * @private
    */
-  _uploadFile (file, config, mimeString) {
+  _uploadFile (file, policy, mimeString) {
     const formData = new FormData()
-    const url = config.url
-    delete config.url
-    for (const key in config) {
-      formData.append(key, config[key])
+    delete policy.url
+    for (const key in policy) {
+      formData.append(key, policy[key])
     }
     const blob = new Blob([file], { type: mimeString })
     formData.append('file', blob)
     // TODO: posting should not be on this lvl of abstraction
-    return Vue.http.post(url, formData)
+    return Vue.http.post(config.FILE_STORAGE, formData)
   }
 }
 
