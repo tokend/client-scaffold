@@ -9,7 +9,9 @@ export function parseTransaction (transaction, asset) {
         transaction, store.getters.accountId
       )
     case 3:
-      return RecordFactory.createIssuanceRecord(transaction)
+      return RecordFactory.createIssuanceRecord(
+        transaction, store.getters.accountId
+      )
     case 7:
       return RecordFactory.createWithdrawRecord(transaction)
     case 20:
