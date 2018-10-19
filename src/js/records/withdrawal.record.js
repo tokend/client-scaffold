@@ -14,4 +14,25 @@ export class WithdrawalRecord extends TxRecord {
     this.destinationAmount = record.dest_amount
     this.asset = record.dest_asset
   }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      counterparty: { type: 'raw' },
+      destinationAsset: { type: 'raw' },
+      amount: { type: 'formatAmount', asset: this.asset },
+      fixedFee: { type: 'formatAmount', asset: this.asset },
+      percentFee: { type: 'formatAmount', asset: this.asset },
+      destinationAmount: { type: 'formatAmount', asset: this.destinationAmount },
+      date: { type: 'formatDate' }
+    }
+  }
 }

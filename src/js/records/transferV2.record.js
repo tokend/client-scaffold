@@ -15,6 +15,8 @@ export class TransferV2Record extends TxRecord {
     this.counterparty = this._getCounterParty()
     this.direction = this._getDirection()
     this.fees = this._getFees()
+    this.sourceFees = this.fees.source
+    this.destinationFees = this.fees.destination
     this.sourcePaysForDest = record.source_pays_for_dest
     this.sourceFeeAsset = _safeGet(
       record,
@@ -58,6 +60,29 @@ export class TransferV2Record extends TxRecord {
       destination: add(
         _safeGet(this._record, 'destination_fee_data.actual_payment_fee'),
         _safeGet(this._record, 'destination_fee_data.fixed_fee'))
+    }
+  }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      counterparty: { type: 'raw' },
+      amount: { type: 'formatAmount', asset: this.asset },
+      sourceFees: { type: 'formatAmount', asset: '' },
+      destinationFees: { type: 'formatAmount', asset: '' },
+      sourceFeeAsset: { type: 'raw' },
+      destinationFeeAsset: { type: 'raw' },
+      sourcePaysForDest: { type: 'raw' },
+      date: { type: 'formatDate' },
+      subject: { type: 'raw' }
     }
   }
 }
