@@ -1,0 +1,21 @@
+export default {
+  tx_counterparty: 'Sender',
+  tx_amount: 'Amount',
+  tx_fixed_fee: 'Fixed fee',
+  tx_percent_fee: 'Percent fee',
+  tx_asset: 'Asset',
+  tx_date: 'Date',
+  tx_source_fees: 'Sender fees',
+  tx_destination_fees: 'Recipient fees',
+  tx_source_fee_asset: 'Sender fee asset',
+  tx_destination_fee_asset: 'Recipient fee asset',
+  tx_source_pays_for_dest: 'Sender paid fees',
+  tx_subject: 'Subject',
+  tx_base_amount: 'Base amount',
+  tx_quote_amount: 'Quote amount',
+  tx_order: 'Order',
+  tx_price: 'Price',
+  tx_fee: 'Fee',
+  tx_destination_asset: 'Destination asset',
+  tx_destination_amount: 'Destination amount'
+}

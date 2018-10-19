@@ -35,6 +35,7 @@ import supportedBrowsersView from './views/supported_browsers_view'
 import downloadsView from './views/downloads_view'
 import limitsView from './views/limits_view'
 import iosInstallGuide from './views/ios_install_guide'
+import txView from './views/tx_view'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
@@ -79,7 +80,8 @@ const dictionary = {
   ...downloadsView,
   ...limitsView,
   ...fees,
-  ...iosInstallGuide
+  ...iosInstallGuide,
+  ...txView
 }
 
 polyglot.extend(dictionary)
