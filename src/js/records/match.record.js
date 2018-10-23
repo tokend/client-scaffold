@@ -1,6 +1,7 @@
 import get from 'lodash/get'
 import { TxRecord } from './tx.record'
 import store from '@/vuex'
+import { i18n } from '@/js/i18n'
 
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
@@ -39,7 +40,6 @@ export class MatchRecord extends TxRecord {
       asset: this.asset,
       date: this.date,
       feeAsset: '',
-      name: this.name,
       state: this.state,
       id: this.id
     }))
@@ -50,7 +50,6 @@ export class MatchTransaction {
   constructor (effect, opts) {
     this._effect = effect
     this.asset = opts.asset
-    this.name = opts.name
     this.date = opts.date
     this.feeAsset = ''
     this.state = opts.state
@@ -61,6 +60,7 @@ export class MatchTransaction {
     this.counterparty = this._getFundName()
     this.fundName = this._getFundName()
     this.isBuy = this._getTxIsBuy()
+    this.name = this.isBuy ? i18n.lbl_buy() : i18n.lbl_sell()
     this.matches = this._getTxMatches()
     this.quoteAmount = this._getTxQuoteAmount()
     this.baseAmount = this._getTxBaseAmount()
