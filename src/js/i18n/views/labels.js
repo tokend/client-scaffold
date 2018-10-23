@@ -240,5 +240,6 @@ export default {
   lbl_time: 'Time',
   lbl_total: 'Total',
   lbl_trade_pair: 'Trade pair',
-  lbl_locked: 'locked'
+  lbl_locked: 'locked',
+  lbl_offering_memorandum: 'Offering memorandum'
 }
