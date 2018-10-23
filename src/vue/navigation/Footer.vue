@@ -2,19 +2,20 @@
   <footer
     class="footer"
     :class="{ 'footer--private': isLoggedIn }">
-    <span class="footer__item footer__text">{{ i18n.auth_copyright() }}</span>
-    <span class="footer__links">
-      <router-link
-        class="footer__item footer__link"
-        :to="vueRoutes.terms">
-        {{ i18n.auth_terms() }}
-      </router-link>
-      <router-link
-        class="footer__item footer__link"
-        :to="vueRoutes.downloads">
-        {{ i18n.auth_download_apps() }}
-      </router-link>
-    </span>
+    <!--<span class="footer__item footer__text">{{ i18n.auth_copyright() }}
+    </span>-->
+    <!--<span class="footer__links">-->
+    <!--<router-link-->
+    <!--class="footer__item footer__link"-->
+    <!--:to="vueRoutes.terms">-->
+    <!--{{ i18n.auth_terms() }}-->
+    <!--</router-link>-->
+    <!--<router-link-->
+    <!--class="footer__item footer__link"-->
+    <!--:to="vueRoutes.downloads">-->
+    <!--{{ i18n.auth_download_apps() }}-->
+    <!--</router-link>-->
+    <!--</span>-->
   </footer>
 </template>
 
