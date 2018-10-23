@@ -56,7 +56,8 @@ export class MatchTransaction {
 
     this.baseAsset = this._getTxBaseAsset()
     this.quoteAsset = this._getTxQuoteAsset()
-    this.counterparty = this._getCounterparty()
+    this.counterparty = this._getFundName()
+    this.fundName = this._getFundName()
     this.isBuy = this._getTxIsBuy()
     this.matches = this._getTxMatches()
     this.quoteAmount = this._getTxQuoteAmount()
@@ -95,7 +96,7 @@ export class MatchTransaction {
     )
   }
 
-  _getCounterparty () {
+  _getFundName () {
     return `${this.baseAsset} token fund`
   }
 
@@ -119,5 +120,25 @@ export class MatchTransaction {
       return this.isBuy ? DIRECTION_VERBOSE.out : DIRECTION_VERBOSE.in
     }
     return this.isBuy ? DIRECTION_VERBOSE.in : DIRECTION_VERBOSE.out
+  }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      fundName: { processor: 'processedValue', processorArg: { value: this.fundName } },
+      baseAsset: { processor: 'formatAmount', processorArg: { asset: '' } },
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      feePaid: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      price: { processor: 'formatAmount', processorArg: { asset: this.quoteAsset } },
+      date: { processor: 'formatDate' }
+    }
   }
 }

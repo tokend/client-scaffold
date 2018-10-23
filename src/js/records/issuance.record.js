@@ -39,12 +39,12 @@ export class IssuanceRecord extends TxRecord {
 
   get detailsView () {
     return {
-      counterparty: { type: 'raw' },
-      amount: { type: 'formatAmount', asset: '' },
-      fixedFee: { type: 'formatAmount', asset: '' },
-      percentFee: { type: 'formatAmount', asset: '' },
-      asset: { type: 'raw' },
-      date: { type: 'formatDate' }
+      sender: { processor: 'processedValue', processorArg: { value: this.counterparty } },
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      fixedFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      percentFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      asset: { processor: 'raw' },
+      date: { processor: 'formatDate' }
     }
   }
 }

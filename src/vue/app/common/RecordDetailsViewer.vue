@@ -5,12 +5,11 @@
       v-for="(value, key) in tx.detailsView"
       :key="key"
     >
-      <!-- {{ snakeCase(key) }} -->
       <td class="record-viewer__td" v-if="value">
         {{ getLabel(key) | translate }}
       </td>
       <td class="record-viewer__td" v-if="value">
-        {{ tx | processor({value, key}) }}
+        {{ tx | processor({name: value, arg: key}) }}
       </td>
     </tr>
   </table>
@@ -25,32 +24,32 @@ import snakeCase from 'lodash/snakeCase'
 
 export default {
   filters: {
-    processor (tx, { value, key }) {
+    processor (tx, { name, arg }) {
       // TODO: handle locale change
       let result = ''
-      switch (value.type) {
+      switch (name.processor) {
         case 'formatAmount':
-          result = formatAmount(tx[key]) + ' ' + value.asset
+          result = formatAmount(tx[arg]) + ' ' + name.processorArg.asset
           break
 
         case 'translate':
-          result = translate(tx[key])
+          result = translate(tx[arg])
           break
 
         case 'formatDate':
-          result = getDateByDMY(tx[key])
+          result = getDateByDMY(tx[arg])
           break
 
         case 'formatDateTime':
-          result = humanizePastDate(tx[key])
+          result = humanizePastDate(tx[arg])
           break
 
-        case 'boolean':
-          result = value.value
+        case 'processedValue':
+          result = name.processorArg.value
           break
 
         default:
-          result = result = cloneDeep(tx[key])
+          result = result = cloneDeep(tx[arg])
           break
       }
       return result

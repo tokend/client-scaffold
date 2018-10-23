@@ -26,13 +26,16 @@ export class WithdrawalRecord extends TxRecord {
 
   get detailsView () {
     return {
-      counterparty: { type: 'raw' },
-      destinationAsset: { type: 'raw' },
-      amount: { type: 'formatAmount', asset: this.asset },
-      fixedFee: { type: 'formatAmount', asset: this.asset },
-      percentFee: { type: 'formatAmount', asset: this.asset },
-      destinationAmount: { type: 'formatAmount', asset: this.destinationAmount },
-      date: { type: 'formatDate' }
+      counterparty: { processor: 'raw' },
+      destinationAsset: { processor: 'raw' },
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      fixedFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      percentFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      destinationAmount: {
+        processor: 'formatAmount',
+        processorArg: { asset: this.destinationAmount }
+      },
+      date: { processor: 'formatDate' }
     }
   }
 }

@@ -56,12 +56,17 @@ export class OfferRecord {
 
   get detailsView () {
     return {
-      baseAmount: { type: 'formatAmount', asset: this.baseAssetCode },
-      quoteAmount: { type: 'formatAmount', asset: this.quoteAssetCode },
-      order: { type: 'boolean', value: this.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell() },
-      price: { type: 'formatAmount', asset: this.quoteAssetCode },
-      fee: { type: 'formatAmount', asset: this.baseAssetCode },
-      date: { type: 'formatDateTime' }
+      baseAmount: { processor: 'formatAmount', processorArg: { asset: this.baseAssetCode } },
+      quoteAmount: { processor: 'formatAmount', processorArg: { asset: this.quoteAssetCode } },
+      order: {
+        processor: 'processedValue',
+        processorArg: {
+          value: this.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell()
+        }
+      },
+      price: { processor: 'formatAmount', processorArg: { asset: this.quoteAssetCode } },
+      fee: { processor: 'formatAmount', processorArg: { asset: this.baseAssetCode } },
+      date: { processor: 'formatDateTime' }
     }
   }
 }

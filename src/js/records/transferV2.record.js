@@ -74,15 +74,17 @@ export class TransferV2Record extends TxRecord {
 
   get detailsView () {
     return {
-      counterparty: { type: 'raw' },
-      amount: { type: 'formatAmount', asset: this.asset },
-      sourceFees: { type: 'formatAmount', asset: '' },
-      destinationFees: { type: 'formatAmount', asset: '' },
-      sourceFeeAsset: { type: 'raw' },
-      destinationFeeAsset: { type: 'raw' },
-      sourcePaysForDest: { type: 'raw' },
-      date: { type: 'formatDate' },
-      subject: { type: 'raw' }
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      sourceFees: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      destinationFees: { processor: 'formatAmount', processorArg: { asset: '' } },
+      sourceFeeAsset: { processor: 'raw' },
+      destinationFeeAsset: { processor: 'raw' },
+      sourcePaysForDest: { processor: 'raw' },
+      date: { processor: 'formatDate' },
+      subject: { processor: 'raw' },
+      ...(this._getDirection === DIRECTION_VERBOSE.in
+        ? { sender: { processor: 'raw' } }
+        : { receiver: { processor: 'raw' } })
     }
   }
 }
