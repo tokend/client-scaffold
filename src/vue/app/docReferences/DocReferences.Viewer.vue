@@ -116,8 +116,10 @@
 
         <div class="doc-viewer__state-viewer-wrp">
           <state-viewer
-            :is-verified="isReferenceVerified"
-            :is-pending="isPending"
+            :is-reference-verified="isReferenceVerified"
+            :is-reference-broken="isReferenceBroken"
+            :is-file-missing="isFileMissing"
+            :is-meta-modified="isMetaModified"
           />
         </div>
       </div>
@@ -169,15 +171,7 @@ export default {
     this.isPending = true
     try {
       await this.loadReference(this.id)
-      if (this.reference.isBroken || this.reference.isModified) {
-        this.isReferenceVerified = false
-        this.isPending = false
-        return
-      }
-      await this.verifyReference(
-        this.reference.fileKey,
-        this.reference.reference
-      )
+      await this.verifyReference(this.reference)
     } catch (e) {
       console.error(e)
       this.isFailed = true

@@ -2,7 +2,7 @@
   <div :class="classObj">
     <div class="state-viewer__inner">
       <div class="state-viewer__icon">
-        <template v-if="isVerified">
+        <template v-if="isReferenceVerified">
           <md-icon class="md-size-4x">verified_user</md-icon>
         </template>
         <template v-else>
@@ -10,13 +10,24 @@
         </template>
       </div>
       <div class="state-viewer__text">
-        <template v-if="isVerified">
+        <template v-if="isReferenceVerified">
           <h3 class="state-viewer__heading">{{ i18n.doc_verified() }}</h3>
           <p class="state-viewer__msg">{{ i18n.doc_verified_exp() }}</p>
         </template>
         <template v-else>
           <h3 class="state-viewer__heading">{{ i18n.doc_hash_mismatch() }}</h3>
-          <p class="state-viewer__msg">{{ i18n.doc_hash_mismatch_exp() }}</p>
+          <p v-if="isFileMissing" class="state-viewer__msg">
+            {{ i18n.doc_file_not_found() }}
+          </p>
+          <p v-else-if="isMetaModified" class="state-viewer__msg">
+            {{ i18n.doc_meta_modified() }}
+          </p>
+          <p v-else-if="isReferenceBroken" class="state-viewer__msg">
+            {{ i18n.doc_reference_broken() }}
+          </p>
+          <p v-else class="state-viewer__msg">
+            {{ i18n.doc_hash_mismatch_exp() }}
+          </p>
         </template>
       </div>
     </div>
@@ -25,16 +36,13 @@
 
 <script>
 import { i18n } from '../../../js/i18n'
+
 export default {
   props: {
-    isVerified: {
-      type: Boolean,
-      default: false
-    },
-    isPending: {
-      type: Boolean,
-      default: false
-    }
+    isReferenceVerified: { type: Boolean },
+    isReferenceBroken: { type: Boolean },
+    isFileMissing: { type: Boolean },
+    isMetaModified: { type: Boolean }
   },
   data: _ => ({
     i18n
@@ -43,8 +51,8 @@ export default {
     classObj () {
       return {
         'state-viewer': true,
-        'state-viewer--verified': this.isVerified,
-        'state-viewer--not-verified': !this.isVerified
+        'state-viewer--verified': this.isReferenceVerified,
+        'state-viewer--not-verified': !this.isReferenceVerified
       }
     }
   }

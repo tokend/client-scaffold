@@ -12,12 +12,10 @@ export default {
   doc_lbl_document_type: 'Document type',
   doc_lbl_counterparty: 'Counterparty',
   doc_uploaded: 'Document successfully uploaded',
-  doc_hash_mismatch: 'Document hash mismatched',
-  doc_hash_mismatch_exp: `The file was corrupted or became subject to malicious
-  actions`,
+  doc_hash_mismatch: 'Document is not verified',
+  doc_hash_mismatch_exp: `File has been changed`,
   doc_verified: 'Document is verified',
-  doc_verified_exp: `We can guarantee that document hasn't became a subject to
-  any malicious action`,
+  doc_verified_exp: `We can guarantee that document hasn't been changed after its upload`,
   docs_loading: 'Verifying the document',
   docs_creator: 'About creator',
   docs_file_details: 'File details',
@@ -25,5 +23,8 @@ export default {
   docs_check_meta: 'Search by meta information',
   docs_search_btn: 'Search',
   docs_check_not_found: 'Document not found',
-  docs_check_checking: 'Checking'
+  docs_check_checking: 'Checking',
+  doc_file_not_found: 'File not found',
+  doc_meta_modified: 'Meta information has been modified',
+  doc_reference_broken: 'The file has been corrupted'
 }
