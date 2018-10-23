@@ -150,7 +150,7 @@
                       <td>{{ i18n.c(selected.available) }}</td>
                     </tr>
                     <tr>
-                      <td>{{ i18n.lbl_terms() }}</td>
+                      <td>{{ i18n.lbl_offering_memorandum() }}</td>
                       <td v-if="selected.termsUrl">
                         <a
                           class="tokens__open-doc-link"
@@ -163,6 +163,10 @@
                       <td v-else>
                         {{ i18n.tokens_no_doc() }}
                       </td>
+                    </tr>
+                    <tr>
+                      <td>{{ i18n.lbl_token_preissued_asset_signer() }}</td>
+                      <td>{{ selected.signer }}</td>
                     </tr>
                   </table>
                 </div>

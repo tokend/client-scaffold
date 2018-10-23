@@ -73,17 +73,20 @@
                     :value="`${i18n.c(item.initialPreissuedAmount)}`"
                     v-if="item.details.request_type !== 'asset_update'" />
                   <detail
+                    prop="Preissued asset signer"
+                    :value="`${item.signer}`" />
+                  <detail
                     prop="Token name"
                     :value="`${item.tokenName}`" />
                   <detail
-                    prop="Terms"
+                    prop="Offering memorandum"
                     v-if="item.termsUrl"
                     :value="''">
                     <a href="${item.termsUrl}" target="_blank">
                       Open file
                     </a>
                   </detail>
-                  <detail prop="Terms" v-else />
+                  <detail prop="Offering memorandum" v-else />
                   <detail
                     prop="Policies"
                     :value="`${getPolicies(item.policies)}`" />
