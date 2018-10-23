@@ -26,6 +26,7 @@ export class WithdrawalRecord extends TxRecord {
 
   get detailsView () {
     return {
+      id: { processor: 'raw' },
       counterparty: { processor: 'raw' },
       destinationAsset: { processor: 'raw' },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },

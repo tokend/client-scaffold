@@ -22,5 +22,6 @@ export default {
   tx_fee_paid: 'Fee paid',
   tx_fund_name: 'Fund name',
   tx_counterparty: 'Counterparty',
-  tx_base_asset: 'Base asset'
+  tx_base_asset: 'Base asset',
+  tx_id: 'Transaction ID'
 }

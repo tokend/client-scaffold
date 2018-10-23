@@ -40,7 +40,8 @@ export class MatchRecord extends TxRecord {
       date: this.date,
       feeAsset: '',
       name: this.name,
-      state: this.state
+      state: this.state,
+      id: this.id
     }))
   }
 }
@@ -53,6 +54,7 @@ export class MatchTransaction {
     this.date = opts.date
     this.feeAsset = ''
     this.state = opts.state
+    this.id = opts.id
 
     this.baseAsset = this._getTxBaseAsset()
     this.quoteAsset = this._getTxQuoteAsset()
@@ -133,6 +135,7 @@ export class MatchTransaction {
 
   get detailsView () {
     return {
+      id: { processor: 'raw' },
       fundName: { processor: 'processedValue', processorArg: { value: this.fundName } },
       baseAsset: { processor: 'formatAmount', processorArg: { asset: '' } },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },

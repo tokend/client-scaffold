@@ -39,6 +39,7 @@ export class IssuanceRecord extends TxRecord {
 
   get detailsView () {
     return {
+      id: { processor: 'raw' },
       sender: { processor: 'processedValue', processorArg: { value: this.counterparty } },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       fixedFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },

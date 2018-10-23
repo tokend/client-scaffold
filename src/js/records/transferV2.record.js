@@ -74,6 +74,7 @@ export class TransferV2Record extends TxRecord {
 
   get detailsView () {
     return {
+      id: { processor: 'raw' },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       sourceFees: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       destinationFees: { processor: 'formatAmount', processorArg: { asset: '' } },

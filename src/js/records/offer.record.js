@@ -56,6 +56,7 @@ export class OfferRecord {
 
   get detailsView () {
     return {
+      id: { processor: 'raw' },
       baseAmount: { processor: 'formatAmount', processorArg: { asset: this.baseAssetCode } },
       quoteAmount: { processor: 'formatAmount', processorArg: { asset: this.quoteAssetCode } },
       order: {
