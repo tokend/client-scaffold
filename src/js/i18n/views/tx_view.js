@@ -1,5 +1,4 @@
 export default {
-  tx_counterparty: 'Sender',
   tx_amount: 'Amount',
   tx_fixed_fee: 'Fixed fee',
   tx_percent_fee: 'Percent fee',
@@ -17,5 +16,11 @@ export default {
   tx_price: 'Price',
   tx_fee: 'Fee',
   tx_destination_asset: 'Destination asset',
-  tx_destination_amount: 'Destination amount'
+  tx_destination_amount: 'Destination amount',
+  tx_sender: 'Sender',
+  tx_receiver: 'Receiver',
+  tx_fee_paid: 'Fee paid',
+  tx_fund_name: 'Fund name',
+  tx_counterparty: 'Counterparty',
+  tx_base_asset: 'Base asset'
 }
