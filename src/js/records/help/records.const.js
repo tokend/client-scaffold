@@ -1,5 +1,5 @@
 export const RECORDS_VERBOSE = Object.freeze({
-  issuance: 'Deposit',
+  issuance: 'Tokens received',
   investment: 'Investment',
   match: 'Order match',
   withdrawal: 'Withdrawal',
