@@ -18,8 +18,8 @@
         <input-field-unchained
           v-model="filters.name"
           class="searcher__filter"
-          name="fund-name"
-          title="Fund name"
+          name="sale-name"
+          title="Sale name"
           :label="i18n.lbl_sale_name()"
         />
       </div>
