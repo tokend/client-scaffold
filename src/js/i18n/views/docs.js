@@ -17,6 +17,8 @@ export default {
   doc_verified: 'Document is verified',
   doc_verified_exp: `We can guarantee that document hasn't been changed after its upload`,
   docs_loading: 'Verifying the document',
+  doc_passport: 'Passport',
+  doc_tax_id: 'Tax ID',
   docs_creator: 'About creator',
   docs_file_details: 'File details',
   docs_check_file: 'Search by file',

@@ -2,20 +2,28 @@
   <footer
     class="footer"
     :class="{ 'footer--private': isLoggedIn }">
-    <!--<span class="footer__item footer__text">{{ i18n.auth_copyright() }}
-    </span>-->
-    <!--<span class="footer__links">-->
-    <!--<router-link-->
-    <!--class="footer__item footer__link"-->
-    <!--:to="vueRoutes.terms">-->
-    <!--{{ i18n.auth_terms() }}-->
-    <!--</router-link>-->
-    <!--<router-link-->
-    <!--class="footer__item footer__link"-->
-    <!--:to="vueRoutes.downloads">-->
-    <!--{{ i18n.auth_download_apps() }}-->
-    <!--</router-link>-->
-    <!--</span>-->
+    <span class="footer__links">
+      <button
+        class="footer__item footer__link"
+        :class="{
+          'footer__link--selected': locale === 'en'
+        }"
+        @click="changeLocale('en')"
+        :disabled="locale === 'en'"
+      >
+        EN
+      </button>
+      <button
+        class="footer__item footer__link"
+        :class="{
+          'footer__link--selected': locale === 'ru'
+        }"
+        @click="changeLocale('ru')"
+        :disabled="locale === 'ru'"
+      >
+        RU
+      </button>
+    </span>
   </footer>
 </template>
 
@@ -29,12 +37,22 @@ export default {
   name: 'app-footer',
   data: _ => ({
     vueRoutes,
-    i18n
+    i18n,
+    locale: 'en'
   }),
   computed: {
     ...mapGetters([
       vuexTypes.isLoggedIn
     ])
+  },
+  created () {
+    this.locale = localStorage.getItem('divs-locale') || 'en'
+  },
+  methods: {
+    changeLocale (l) {
+      localStorage.setItem('divs-locale', l)
+      location.reload()
+    }
   }
 }
 </script>
@@ -60,9 +78,23 @@ export default {
   }
 
   .footer__link {
+    border: none;
+    padding: 1 * $point .5 * $point;
+    cursor: pointer;
+    color: $col-text;
+    background: none;
+    font-size: 1.4 * $point;
     $margin: 1 * $point;
     margin: 0 $margin;
     &:not(:first-child) { margin-left: 0 }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--selected {
+      font-weight: 600;
+    }
   }
 
 </style>
