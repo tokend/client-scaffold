@@ -23,10 +23,10 @@ export default {
     i18n
   }),
   created () {
-    this.getEmail()
+    this.getConverted()
   },
   methods: {
-    async getEmail () {
+    async getConverted () {
       this.isLoading = true
       try {
         this.converted = await pairsService.loadConvertedAmount(
