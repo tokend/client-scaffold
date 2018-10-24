@@ -221,31 +221,31 @@ export default {
   },
 
   async created () {
-    if (this.id) {
-      this.makeAdditional = true
-      this.request = new TokenCreationRecord(
-        await reviewableRequestsService.loadReviewableRequestById(this.id)
-      )
-      this.token = await tokensService.loadTokenByCode(this.request.tokenCode)
-      if (this.token) {
-        this.request = {
-          ...this.request,
-          preissuedAssetSigner: this.token.preissued_asset_signer,
-          maxIssuanceAmount: this.token.max_issuance_amount,
-          initialPreissuedAmount: this.token.issued
+    if (this.id || this.code) {
+      if (this.id) {
+        this.request = new TokenCreationRecord(
+          await reviewableRequestsService.loadReviewableRequestById(this.id)
+        )
+        try {
+          this.token = await tokensService
+            .loadTokenByCode(this.request.tokenCode)
+          if (this.token) {
+            this.request = {
+              ...this.request,
+              preissuedAssetSigner: this.token.preissued_asset_signer,
+              maxIssuanceAmount: this.token.max_issuance_amount,
+              initialPreissuedAmount: this.token.issued
+            }
+          }
+        } catch (e) {
+          console.error(e)
         }
+      } else if (this.code) {
+        this.request = new TokenCreationRecord(
+          await tokensService.loadTokenByCode(this.code)
+        )
       }
-      this.documents[documentTypes.tokenTerms] = get(this.request, 'terms.key')
-        ? new DocumentContainer(this.request.terms)
-        : null
-      this.documents[documentTypes.tokenIcon] = get(this.request, 'logo.key')
-        ? new DocumentContainer(this.request.logo)
-        : null
-    } else if (this.code) {
       this.makeAdditional = true
-      this.request = new TokenCreationRecord(
-        await tokensService.loadTokenByCode(this.code)
-      )
       this.documents[documentTypes.tokenTerms] = get(this.request, 'terms.key')
         ? new DocumentContainer(this.request.terms)
         : null
@@ -295,30 +295,25 @@ export default {
         )
         termsContainer.setKey(termsKey)
       }
-      if (this.id && !this.token) {
+      const opts = {
+        requestID: this.request.id ? this.request.id : '0',
+        code: this.request.tokenCode,
+        policies: (this.request.policies).reduce((a, b) => (a | b), 0),
+        details: {
+          name: this.request.tokenName,
+          logo: logoContainer ? logoContainer.getDetailsForSave() : {},
+          terms: termsContainer ? termsContainer.getDetailsForSave() : {}
+        }
+      }
+
+      if (this.code || this.token) {
+        await tokensService.createTokenUpdateRequest(opts)
+      } else {
         await tokensService.createTokenCreationRequest({
-          requestID: this.request.id ? this.request.id : '0',
-          code: this.request.tokenCode,
+          ...opts,
           preissuedAssetSigner: preissuedAssetSigner,
           maxIssuanceAmount: this.request.maxIssuanceAmount,
-          policies: (this.request.policies).reduce((a, b) => (a | b), 0),
-          initialPreissuedAmount: initialPreissuedAmount,
-          details: {
-            name: this.request.tokenName,
-            logo: logoContainer ? logoContainer.getDetailsForSave() : {},
-            terms: termsContainer ? termsContainer.getDetailsForSave() : {}
-          }
-        })
-      } else if (this.code || this.token) {
-        await tokensService.createTokenUpdateRequest({
-          requestID: this.request.id ? this.request.id : '0',
-          code: this.request.tokenCode,
-          policies: (this.request.policies).reduce((a, b) => (a | b), 0),
-          details: {
-            name: this.request.tokenName,
-            logo: logoContainer ? logoContainer.getDetailsForSave() : {},
-            terms: termsContainer ? termsContainer.getDetailsForSave() : {}
-          }
+          initialPreissuedAmount: initialPreissuedAmount
         })
       }
     }
