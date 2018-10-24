@@ -41,5 +41,7 @@ export default {
   tr_found_errors: 'Found errors',
   tr_not_valid_file: 'Operation failed, uploaded file\'s data are not valid',
   transfer_total: 'Total',
-  transfer_total_fee_amount: 'Total fee amount'
+  transfer_total_fee_amount: 'Total fee amount',
+  transfer_total_sender_fee: 'Total sender fee',
+  transfer_total_receiver_fee: 'Total receiver fee'
 }

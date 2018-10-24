@@ -175,11 +175,20 @@
           <h3 class="transfer__fee-box-heading">
             {{ i18n.transfer_total() }}
           </h3>
+
           <p class="transfer__fee">
-            <!-- eslint-disable-next-line -->
-            - {{ +(fees.destination.fixed) + +(fees.destination.percent) }} {{ fees.source.feeAsset }}
+            - {{ +(fees.source.fixed) + +(fees.source.percent) }}
+            {{ fees.source.feeAsset }}
             <span class="transfer__fee-type">
-              {{ i18n.transfer_total_fee_amount() }}
+              {{ i18n.transfer_total_sender_fee() }}
+            </span>
+          </p>
+
+          <p class="transfer__fee">
+            - {{ +(fees.destination.fixed) + +(fees.destination.percent) }}
+            {{ fees.destination.feeAsset }}
+            <span class="transfer__fee-type">
+              {{ i18n.transfer_total_receiver_fee() }}
             </span>
           </p>
 
