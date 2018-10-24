@@ -43,6 +43,13 @@ export class IssuanceRecord extends TxRecord {
       sender: { processor: 'processedValue', processorArg: { value: this.counterparty } },
       senderEmail: { processor: 'email', processorArg: { id: this.counterparty } },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      convertedAmount: {
+        processor: 'convert',
+        processorArg: {
+          amount: this.amount,
+          asset: this.asset
+        }
+      },
       fixedFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       percentFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       asset: { processor: 'raw' },

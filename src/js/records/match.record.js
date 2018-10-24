@@ -139,6 +139,13 @@ export class MatchTransaction {
       fundName: { processor: 'processedValue', processorArg: { value: this.fundName } },
       baseAsset: { processor: 'formatAmount', processorArg: { asset: '' } },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      convertedAmount: {
+        processor: 'convert',
+        processorArg: {
+          amount: this.amount,
+          asset: this.asset
+        }
+      },
       feePaid: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       price: { processor: 'formatAmount', processorArg: { asset: this.quoteAsset } },
       date: { processor: 'formatDate' }

@@ -76,6 +76,13 @@ export class TransferV2Record extends TxRecord {
     return {
       id: { processor: 'raw' },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      convertedAmount: {
+        processor: 'convert',
+        processorArg: {
+          amount: this.amount,
+          asset: this.asset
+        }
+      },
       sourceFees: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       destinationFees: { processor: 'formatAmount', processorArg: { asset: '' } },
       sourceFeeAsset: { processor: 'raw' },
