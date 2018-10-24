@@ -22,7 +22,7 @@ export class ErrorHandler {
   static tryGetNewSdkErrorMessage (e) {
     const message = _get(e, 'originalError.response.data.extras.result_codes.messages[0]')
     if (message === 'Entry already exists') {
-      return 'Such document already exists in the system'
+      return i18n.doc_exist_in_the_system()
     }
     return message
   }

@@ -10,5 +10,6 @@ export default {
   fi_upload_file: 'image/pdf (Max %{size}Mb)',
   fi_view_file: 'View file',
   fi_upload_iss_file: 'Pre-issuance asset file .iss',
-  fi_upload_csv_file: 'csv file (Max %{size}Mb)'
+  fi_upload_csv_file: 'csv file (Max %{size}Mb)',
+  fi_select_file: 'Select file(s)'
 }

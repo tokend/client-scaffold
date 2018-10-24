@@ -26,5 +26,16 @@ export default {
   docs_check_checking: 'Checking',
   doc_file_not_found: 'File not found',
   doc_meta_modified: 'Meta information has been modified',
-  doc_reference_broken: 'The file has been corrupted'
+  doc_reference_broken: 'The file has been corrupted',
+  doc_exist_in_the_system: 'Such document already exists in the system',
+  doc_other: 'Other',
+  doc_please_upload: 'Please upload the file first',
+  doc_no_such_file: 'There is no such document in the system',
+  doc_please_fill_one_field: 'Please fill at least one form field',
+  doc_lbl_file_name: 'File name',
+  doc_lbl_mime_type: 'Mime type',
+  doc_failed_to_load_reference: 'Failed to load reference',
+  doc_lbl_public_key: 'Public Key',
+  doc_lbl_download: 'Download file',
+  doc_document_hash: 'Document hash'
 }

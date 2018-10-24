@@ -20,6 +20,7 @@
 <script>
 import { commonEvents } from '../../../js/events/common_events'
 import { attachEventHandler } from '../../../js/events/helpers'
+import { i18n } from '../../../js/i18n'
 
 export default {
   name: 'snackbar',
@@ -27,7 +28,7 @@ export default {
   data: () => ({
     isActive: false,
     config: {
-      msg: 'Processing...',
+      msg: i18n.lbl_processing(),
       position: 'left',
       isInfinity: true,
       showButton: false,

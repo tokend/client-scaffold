@@ -231,5 +231,6 @@ export default {
   lbl_upload_document: 'Upload document',
   lbl_view_document: 'View document',
   lbl_explore_documents: 'Explore document',
-  lbl_find_document: 'Find document'
+  lbl_find_document: 'Find document',
+  lbl_processing: 'Processing...'
 }

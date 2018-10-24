@@ -17,7 +17,7 @@
       @click="toggleListVisibility()"
     >
       <button class="select-field__selected-value" type="button">
-        {{ currentValue || '&nbsp;' }}
+        {{ currentLabel || currentValue || '&nbsp;' }}
       </button>
       <div>
         <md-icon
@@ -33,15 +33,35 @@
       ref="list"
       :class="{ 'select-field__list--active': showList }"
     >
-      <template v-for="(val, i) in values">
-        <button
-          class="select-field__list-item"
-          :key="i"
-          :class="{ 'select-field__list-item--selected': selected === val }"
-          @click="selectItem(val)"
-        >
-          {{ val }}
-        </button>
+      <template v-if="values.length">
+        <template v-for="(val, i) in values">
+          <button
+            class="select-field__list-item"
+            :key="i"
+            :class="{
+              'select-field__list-item--selected': selected === val
+            }"
+            type="button"
+            @click="selectItem(val)"
+          >
+            {{ val }}
+          </button>
+        </template>
+      </template>
+      <template v-else-if="labeledValues.length">
+        <template v-for="entry of labeledValues">
+          <button
+            class="select-field__list-item"
+            :key="entry.val"
+            :class="{
+              'select-field__list-item--selected': selected === entry.val
+            }"
+            type="button"
+            @click="selectItem(entry.val)"
+          >
+            {{ entry.lbl }}
+          </button>
+        </template>
       </template>
     </div>
   </div>
@@ -61,6 +81,7 @@ export default {
       default: ''
     },
     values: { type: Array, default: _ => [] },
+    labeledValues: { type: Array, default: _ => {} },
     label: { type: String, default: '' },
     disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false }
@@ -71,6 +92,16 @@ export default {
     showList: false,
     KEY_CODES
   }),
+  computed: {
+    currentLabel () {
+      if (this.labeledValues.length === 0) return null
+      const entry = this
+        .labeledValues
+        .find(e => e.val === this.currentValue)
+      if (!entry) return null
+      return entry.lbl
+    }
+  },
   watch: {
     showList (value) {
       closeElement('select__list', value, this.closelist)
@@ -95,7 +126,9 @@ export default {
     },
     openList () {
       const list = this.$refs.list
-      const index = this.values.indexOf(this.currentValue)
+      const index = this.labeledValues.length
+        ? this.labeledValues.findIndex(e => e.val === this.currentValue)
+        : this.values.indexOf(this.currentValue)
       // eslint-disable-next-line
       list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
       this.showList = true
@@ -106,7 +139,9 @@ export default {
     },
     keyDownEvents (event) {
       let index = this.values.indexOf(this.selected)
-      const valuesList = this.values
+      const valuesList = this.labeledValues.length
+        ? this.labeledValues
+        : this.values
       const childrenList = this.$refs.list
 
       if (event.which === KEY_CODES.enter) {

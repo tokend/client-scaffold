@@ -6,7 +6,10 @@
 
     <template v-else-if="reference && !isFailed">
       <div class="doc-viewer__hash-wrp">
-        <h2>Document hash: <clipboard-field :value="reference.reference" /></h2>
+        <h2>
+          {{ i18n.doc_document_hash() }}:
+          <clipboard-field :value="reference.reference" />
+        </h2>
       </div>
 
       <div class="doc-viewer__header">
@@ -24,7 +27,7 @@
                 :href="`${config.FILE_STORAGE}/${reference.fileKey}`"
                 :download="reference.fileName"
               >
-                Download file
+                {{ i18n.doc_lbl_download() }}
               </a>
             </p>
           </template>
@@ -38,44 +41,58 @@
             </h3>
 
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Public Key:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_public_key() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.creator }}
               </span>
             </p>
 
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">First name:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_first_name() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.firstName }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Last name:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_last_name() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.lastName }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Date of Birth:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_date_of_birth() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.dateOfBirth }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Passport:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_serial_number() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.serialNumber }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Tax ID:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_tax_id() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.taxId }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Mobile phone:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_mobile_phone() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.mobilePhone }}
               </span>
@@ -86,27 +103,35 @@
             </h3>
 
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">File name:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_file_name() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.fileName }}
               </span>
             </p>
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Mime type:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_mime_type() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.mimeType }}
               </span>
             </p>
 
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Document Type:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_document_type() }}:
+              </span>
               <span class="doc-viewer__detail-value">
-                {{ reference.documentType }}
+                {{ DOC_TYPE_NAMES[reference.documentType] }}
               </span>
             </p>
 
             <p class="doc-viewer__detail">
-              <span class="doc-viewer__detail-key">Counterparty:</span>
+              <span class="doc-viewer__detail-key">
+                {{ i18n.doc_lbl_counterparty() }}:
+              </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.counterparty }}
               </span>
@@ -126,7 +151,7 @@
     </template>
 
     <template v-else>
-      Failed to load reference
+      {{ i18n.doc_failed_to_load_reference() }}
     </template>
   </div>
 </template>
@@ -143,6 +168,12 @@ import Loader from '@/vue/app/common/Loader'
 import { i18n } from '../../../js/i18n'
 
 import config from '../../../config'
+
+const DOC_TYPE_NAMES = Object.freeze({
+  'Passport': i18n.doc_passport(),
+  'Tax identification': i18n.doc_tax_id(),
+  'Other': i18n.doc_other()
+})
 
 export default {
   components: {
@@ -165,7 +196,8 @@ export default {
     i18n,
     config,
     isPending: false,
-    isFailed: false
+    isFailed: false,
+    DOC_TYPE_NAMES
   }),
   async created () {
     this.isPending = true
@@ -221,7 +253,7 @@ export default {
   }
 
   .doc-viewer__detail-key {
-    min-width: 15 * $point;
+    min-width: 20 * $point;
   }
 
   .doc-viewer__detail-value {

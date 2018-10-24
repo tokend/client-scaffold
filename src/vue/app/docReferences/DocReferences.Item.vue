@@ -9,7 +9,9 @@
         <p class="reference-item__file-name">
           {{ item.firstName }} {{ item.lastName }}
         </p>
-        <p class="reference-item__doc-type">{{ item.documentType }}</p>
+        <p class="reference-item__doc-type">
+          {{ DOC_TYPE_NAMES[item.documentType] }}
+        </p>
         <p class="reference-item__created-at">{{ item.createdAt }}</p>
       </div>
     </div>
@@ -20,6 +22,12 @@
 import DocIcon from './DocReferences.Icon'
 import { i18n } from '../../../js/i18n'
 
+const DOC_TYPE_NAMES = Object.freeze({
+  'Passport': i18n.doc_passport(),
+  'Tax identification': i18n.doc_tax_id(),
+  'Other': i18n.doc_other()
+})
+
 export default {
   components: { DocIcon },
   props: {
@@ -29,7 +37,8 @@ export default {
     }
   },
   data: _ => ({
-    i18n
+    i18n,
+    DOC_TYPE_NAMES
   })
 }
 </script>

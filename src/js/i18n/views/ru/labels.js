@@ -54,7 +54,7 @@ export default {
   lbl_go_to_website: 'Перейти на сайт',
   lbl_tx_type: 'Тип операции',
   lbl_status: 'Статус',
-  lbl_counterparty: 'Контрагент',
+  lbl_counterparty: 'Противоположная сторона',
   lbl_sender: 'Отправитель',
   lbl_receiver: 'Получатель',
   lbl_fixed_fee: 'Фиксированная плата',
@@ -231,5 +231,6 @@ export default {
   lbl_upload_document: 'Загрузить документ',
   lbl_view_document: 'Посмотреть документ',
   lbl_explore_documents: 'Список документов',
-  lbl_find_document: 'Найти документ'
+  lbl_find_document: 'Найти документ',
+  lbl_processing: 'Обрабатываем запрос...'
 }

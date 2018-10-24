@@ -10,7 +10,7 @@
           v-model="document"
           v-validate="'required'"
           :type="DOCUMENT_TYPES.delta"
-          label="Select File(s)"
+          :label="i18n.fi_select_file()"
           class="ref-checker__upload-field"
           name="file-to-upload"
           id="file-to-upload"
@@ -120,7 +120,7 @@ export default {
   methods: {
     async checkFile () {
       if (!this.document) { // deprecated if
-        EventDispatcher.dispatchShowErrorEvent('Please upload the file first')
+        EventDispatcher.dispatchShowErrorEvent(i18n.doc_please_upload())
         return
       }
       this.fileSearchFailed = false
@@ -136,7 +136,7 @@ export default {
         })
       } catch (e) {
         this.fileSearchFailed = true
-        EventDispatcher.dispatchShowErrorEvent('There is no such document in the system')
+        EventDispatcher.dispatchShowErrorEvent(i18n.doc_no_such_file())
       }
       this.enable()
     },
@@ -147,9 +147,7 @@ export default {
         !this.form.mobilePhone &&
         !this.form.serialNumber
       ) {
-        EventDispatcher.dispatchShowErrorEvent(
-          'Please fill at least one form field'
-        )
+        EventDispatcher.dispatchShowErrorEvent(i18n.doc_please_fill_one_field())
         return
       }
       this.disable()
@@ -174,7 +172,7 @@ export default {
           throw new Error('Not found')
         }
       } catch (e) {
-        EventDispatcher.dispatchShowErrorEvent('There is no such document in the system')
+        EventDispatcher.dispatchShowErrorEvent(i18n.doc_no_such_file())
       }
       this.enable()
     }

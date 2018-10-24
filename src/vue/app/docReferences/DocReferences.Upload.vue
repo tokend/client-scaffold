@@ -15,7 +15,7 @@
               v-model="document"
               v-validate="'required'"
               :type="DOCUMENT_TYPES.delta"
-              label="Select File(s)"
+              :label="i18n.fi_select_file()"
               class="docs-manager__upload-field"
               name="file-to-upload"
               id="file-to-upload"
@@ -107,7 +107,7 @@
                   name="documentType"
                   v-model="form.documentType"
                   v-validate="'required'"
-                  :values="DOC_TYPE_VALUES"
+                  :labeled-values="DOC_TYPE_NAMES"
                   :title="i18n.doc_lbl_document_type"
                   :label="i18n.doc_lbl_document_type()"
                   :readonly="view.mode === VIEW_MODES.confirm"
@@ -136,7 +136,7 @@
               :disabled="isPending"
               form="upload-form"
             >
-              {{ i18n.transfer_continue_btn() }}
+              {{ i18n.lbl_continue() }}
             </button>
 
             <form-confirmation
@@ -184,6 +184,12 @@ const VIEW_MODES = Object.freeze({
   success: 'success'
 })
 
+const DOC_TYPE_NAMES = Object.freeze([
+  { lbl: i18n.doc_passport(), val: 'Passport' },
+  { lbl: i18n.doc_tax_id(), val: 'Tax identification' },
+  { lbl: i18n.doc_other(), val: 'Other' }
+])
+
 const DOC_TYPE_VALUES = Object.freeze([
   'Passport',
   'Tax identification',
@@ -211,13 +217,14 @@ export default {
       serialNumber: '',
       dateOfBirth: '',
       counterparty: '',
-      documentType: DOC_TYPE_VALUES[0]
+      documentType: DOC_TYPE_NAMES[0].val
     },
     document: null,
     view: {
       mode: VIEW_MODES.submit
     },
     DOC_TYPE_VALUES,
+    DOC_TYPE_NAMES,
     DOCUMENT_TYPES,
     VIEW_MODES,
     i18n

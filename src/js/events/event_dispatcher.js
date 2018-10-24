@@ -1,5 +1,6 @@
 import { dispatchAppEvent } from './helpers'
 import { commonEvents } from './common_events'
+import { i18n } from '../i18n'
 
 const duration = 7000
 
@@ -33,7 +34,7 @@ export class EventDispatcher {
       position: 'center',
       isInfinity: false,
       showButton: true,
-      btnText: 'Close',
+      btnText: i18n.lbl_close(),
       type: 'error',
       duration,
       msg
