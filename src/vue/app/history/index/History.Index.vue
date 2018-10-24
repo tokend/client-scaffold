@@ -44,7 +44,7 @@
             <md-table-cell
               class="tx-history__table-cell
                      tx-history__table-cell--counterparty">
-              {{ tx.counterparty }}
+              <email-getter :id="tx.counterparty" />
             </md-table-cell>
 
             <md-table-cell>
@@ -103,10 +103,15 @@ import { vuexTypes } from '../../../../vuex/types'
 import { RecordTypes } from '../../../../js/records/types'
 import { i18n } from '../../../../js/i18n'
 import get from 'lodash/get'
+import EmailGetter from '@/vue/app/common/EmailGetter'
 
 export default {
   name: 'history-index',
-  components: { TxDetails, SelectFieldCustom },
+  components: {
+    TxDetails,
+    SelectFieldCustom,
+    EmailGetter
+  },
   data: _ => ({
     isLoading: false,
     tokenCode: null,

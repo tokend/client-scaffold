@@ -77,7 +77,7 @@
                     :title="tx.counterparty"
                     class="info-widget__list-body-item
                            info-widget__list-body-item--counterparty">
-                    {{ tx.counterparty }}
+                    <email-getter :id="tx.counterparty" />
                   </div>
                   <div
                     :title="tx.state"
@@ -137,6 +137,7 @@ import { TX_STATES } from '@/js/const/const'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
 import { humanizePastDate } from '@/js/utils/dates.util'
 import TxDetails from './Dashboard.TxDetails'
+import EmailGetter from '@/vue/app/common/EmailGetter'
 
 import get from 'lodash/get'
 
@@ -144,7 +145,8 @@ export default {
   name: 'info-widget',
   components: {
     NoDataMessage,
-    TxDetails
+    TxDetails,
+    EmailGetter
   },
   props: {
     currentAsset: { type: String, required: true }
