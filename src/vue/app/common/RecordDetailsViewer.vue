@@ -12,6 +12,11 @@
         <template v-if="value.processor === 'email'">
           <email-getter :id="value.processorArg.id" />
         </template>
+        <template v-else-if="value.processor === 'convert'">
+          <converted-amount-getter
+            :amount="value.processorArg.amount"
+            :asset="value.processorArg.asset" />
+        </template>
         <template v-else>
           {{ tx | processor({name: value, arg: key}) }}
         </template>
@@ -28,9 +33,13 @@ import cloneDeep from 'lodash/cloneDeep'
 import snakeCase from 'lodash/snakeCase'
 
 import EmailGetter from '@/vue/app/common/EmailGetter'
+import ConvertedAmountGetter from '@/vue/app/common/ConvertedAmountGetter'
 
 export default {
-  components: { EmailGetter },
+  components: {
+    EmailGetter,
+    ConvertedAmountGetter
+  },
   filters: {
     processor (tx, { name, arg }) {
       // TODO: handle locale change
