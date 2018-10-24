@@ -28,6 +28,7 @@ export class WithdrawalRecord extends TxRecord {
     return {
       id: { processor: 'raw' },
       counterparty: { processor: 'raw' },
+      counterpartyEmail: { processor: 'email', processorArg: { id: this.counterparty } },
       destinationAsset: { processor: 'raw' },
       amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
       fixedFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },

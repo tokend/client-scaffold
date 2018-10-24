@@ -9,7 +9,12 @@
         {{ getLabel(key) | translate }}
       </td>
       <td class="record-viewer__td" v-if="value">
-        {{ tx | processor({name: value, arg: key}) }}
+        <template v-if="value.processor === 'email'">
+          <email-getter :id="value.processorArg.id" />
+        </template>
+        <template v-else>
+          {{ tx | processor({name: value, arg: key}) }}
+        </template>
       </td>
     </tr>
   </table>
@@ -22,7 +27,10 @@ import { humanizePastDate, getDateByDMY } from '@/js/utils/dates.util'
 import cloneDeep from 'lodash/cloneDeep'
 import snakeCase from 'lodash/snakeCase'
 
+import EmailGetter from '@/vue/app/common/EmailGetter'
+
 export default {
+  components: { EmailGetter },
   filters: {
     processor (tx, { name, arg }) {
       // TODO: handle locale change

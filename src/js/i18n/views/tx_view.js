@@ -23,5 +23,8 @@ export default {
   tx_fund_name: 'Fund name',
   tx_counterparty: 'Counterparty',
   tx_base_asset: 'Base asset',
-  tx_id: 'Transaction ID'
+  tx_id: 'Transaction ID',
+  tx_sender_email: 'Sender email',
+  tx_receiver_email: 'Receiver email',
+  tx_counterparty_email: 'Counterparty email'
 }

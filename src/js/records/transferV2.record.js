@@ -85,7 +85,10 @@ export class TransferV2Record extends TxRecord {
       subject: { processor: 'raw' },
       ...(this._getDirection === DIRECTION_VERBOSE.in
         ? { sender: { processor: 'raw' } }
-        : { receiver: { processor: 'raw' } })
+        : { receiver: { processor: 'raw' } }),
+      ...(this._getDirection === DIRECTION_VERBOSE.in
+        ? { senderEmail: { processor: 'email', processorArg: { id: this.counterparty } } }
+        : { receiverEmail: { processor: 'email', processorArg: { id: this.counterparty } } })
     }
   }
 }
