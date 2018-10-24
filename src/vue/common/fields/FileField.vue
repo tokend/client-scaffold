@@ -301,7 +301,11 @@ export default {
     position: relative;
     left: 1rem;
     top: .85rem;
-    color: $field-color-unfocused
+    color: $field-color-unfocused;
+    max-width: 10 * $point;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .link-btn {
