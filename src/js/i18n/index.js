@@ -35,6 +35,7 @@ import supportedBrowsersView from './views/supported_browsers_view'
 import downloadsView from './views/downloads_view'
 import limitsView from './views/limits_view'
 import docs from './views/ru/docs'
+import pagesNames from './views/pages_names'
 
 import { formatConvertedCurrency, formatCurrency, formatNumber } from './numbers'
 import { humanizePastDate, getDateByDMY } from '../utils/dates.util'
@@ -78,6 +79,7 @@ const dictionary = {
   ...supportedBrowsersView,
   ...downloadsView,
   ...limitsView,
+  ...pagesNames,
   ...fees,
   ...docs
 }
