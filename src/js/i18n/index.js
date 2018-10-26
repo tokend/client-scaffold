@@ -86,6 +86,8 @@ const dictionary = {
 
 polyglot.extend(dictionary)
 
+export { polyglot }
+
 export const i18n = {
   ...Object.keys(dictionary)
     .reduce((obj, key) => {

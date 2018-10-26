@@ -12,11 +12,13 @@
         <template v-if="value.processor === 'email'">
           <email-getter :id="value.processorArg.id" />
         </template>
+
         <template v-else-if="value.processor === 'convert'">
           <converted-amount-getter
             :amount="value.processorArg.amount"
             :asset="value.processorArg.asset" />
         </template>
+
         <template v-else>
           {{ tx | processor({name: value, arg: key}) }}
         </template>
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-import { formatAmount } from '@/vue/common/filters/formatAmount'
+import { formatMoney } from '@/vue/common/filters/formatMoney'
 import { translate } from '@/vue/common/filters/translate'
 import { humanizePastDate, getDateByDMY } from '@/js/utils/dates.util'
 import cloneDeep from 'lodash/cloneDeep'
@@ -46,7 +48,7 @@ export default {
       let result = ''
       switch (name.processor) {
         case 'formatAmount':
-          result = formatAmount(tx[arg]) + ' ' + name.processorArg.asset
+          result = formatMoney(tx[arg], { currency: name.processorArg.asset })
           break
 
         case 'translate':
