@@ -1,6 +1,6 @@
 <template>
   <span class="email-getter" v-if="isLoading">{{ i18n.lbl_loading() }}</span>
-  <span class="email-getter" v-else>{{ email || id }}</span>
+  <span class="email-getter" v-else>{{ email || fallback || id }}</span>
 </template>
 
 <script>
@@ -8,7 +8,8 @@ import { accountsService } from '@/js/services/accounts.service'
 import { i18n } from '@/js/i18n'
 export default {
   props: {
-    id: { type: String, required: true }
+    id: { type: String, required: true },
+    fallback: { type: String, default: '' }
   },
   data: _ => ({
     email: null,

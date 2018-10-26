@@ -10,7 +10,7 @@
       </td>
       <td class="record-viewer__td" v-if="value">
         <template v-if="value.processor === 'email'">
-          <email-getter :id="value.processorArg.id" />
+          <email-getter :id="value.processorArg.id" fallback="—" />
         </template>
 
         <template v-else-if="value.processor === 'convert'">
