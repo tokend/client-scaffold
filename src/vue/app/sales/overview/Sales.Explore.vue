@@ -181,8 +181,10 @@ export default {
     color: $col-text-accented;
     padding: 1 * $point 2 * $point;
     font-size: 1.4 * $point;
-    margin: 2 * $point 0 1 * $point;
+    margin: 2 * $point 0 3 * $point;
     cursor: pointer;
+    background: none;
+    border: none;
 
     &:disabled {
       opacity: .75;
