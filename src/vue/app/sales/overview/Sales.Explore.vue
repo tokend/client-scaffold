@@ -4,11 +4,11 @@
       class="sales-overview__searcher"
       @search-input="loadFilteredSales"
     />
-    <template v-if="sales.length > 0">
+    <template v-if="sales.records.length > 0">
       <div class="sales-overview__sale-overview-inner">
         <div
           class="sales-overview__card-wrapper-outer"
-          v-for="sale in sales"
+          v-for="sale in sales.records"
           :key="sale.id">
           <router-link
             :to="{name: 'sales.sale-details', params: { id: sale.id }}"
@@ -20,8 +20,16 @@
           </router-link>
         </div>
       </div>
+      <template v-if="sales.nextPageCaller">
+        <button
+          class="sales-overview__btn"
+          :disabled="isPending"
+          @click="loadNextPage">
+          {{ i18n.lbl_more() }}
+        </button>
+      </template>
     </template>
-    <template v-if="sales.length === 0 && isLoaded">
+    <template v-if="sales.records.length === 0 && isLoaded">
       <div class="sales-overview__no-sales-found-msg">
         <div class="icon">
           <i class="mdi mdi-inbox" />
@@ -36,13 +44,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../../../vuex/types'
 import { i18n } from '../../../../js/i18n'
 import SaleCard from '../sale_card/Sales.SaleCard'
 import Searcher from './Sales.Searcher'
 import FormMixin from '../../../common/mixins/form.mixin'
 import { saleSortTypes, saleStates } from '../../../../js/const/const'
+
+import { salesService } from '../../../../js/services/sales.service'
+
+import config from '../../../../config'
 
 const initialState = saleStates.actual
 const initialSort = saleSortTypes.created
@@ -53,6 +65,7 @@ export default {
   mixins: [FormMixin],
   data: _ => ({
     isLoaded: false,
+    isPending: false,
     filters: {
       openOnly: initialState.openOnly,
       upcoming: initialState.upcoming,
@@ -60,11 +73,15 @@ export default {
       order: initialSort.order,
       baseAsset: ''
     },
-    i18n
+    i18n,
+    sales: {
+      records: [],
+      nextPageCaller: null
+    }
   }),
   computed: {
     ...mapGetters([
-      vuexTypes.sales
+      vuexTypes.accountKeypair
     ])
   },
   async created () {
@@ -72,10 +89,12 @@ export default {
     this.isLoaded = true
   },
   methods: {
-    ...mapActions({
-      loadSales: vuexTypes.GET_SALES
-    }),
-    loadFilteredSales (filters) {
+    async loadSales () {
+      const response = await salesService.loadSales(this.filters)
+      this.parseResponse(response)
+    },
+    async loadFilteredSales (filters) {
+      this.isPending = false
       if (filters) {
         this.filters.openOnly = filters.state.openOnly
         this.filters.upcoming = filters.state.upcoming
@@ -83,7 +102,21 @@ export default {
         this.filters.order = filters.sortBy.order
         this.filters.baseAsset = filters.token
       }
-      return this.loadSales(this.filters)
+      await this.loadSales(this.filters)
+      this.isPending = false
+    },
+    async loadNextPage () {
+      this.isPending = true
+      const response = await this.sales.nextPageCaller(this.accountKeypair)
+      this.parseResponse(response)
+      this.isPending = false
+    },
+    parseResponse (response) {
+      this.sales.records = this.sales.records.concat(response.records)
+      this.sales.nextPageCaller =
+        response.records.length === config.TRANSACTIONS_PER_PAGE
+          ? response.next
+          : null
     }
   }
 }
@@ -146,6 +179,16 @@ export default {
 
   .sales-overview__btn {
     color: $col-text-accented;
+    padding: 1 * $point 2 * $point;
+    font-size: 1.4 * $point;
+    margin: 2 * $point 0 3 * $point;
+    cursor: pointer;
+    background: none;
+    border: none;
+
+    &:disabled {
+      opacity: .75;
+    }
   }
 
   .sales-overview__no-sales-found-msg {
