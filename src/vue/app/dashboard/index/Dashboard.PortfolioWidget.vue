@@ -34,7 +34,7 @@
             </span>
             <span class="portfolio-widget__asset-value-secondary">
               <!-- eslint-disable-next-line -->
-              &asymp; {{ convertedBalance | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET }) }}
+              &asymp; {{ convertedBalance | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET, symbolAllowed: true }) }}
             </span>
           </div>
           <div class="portfolio-widget__asset-subvalue">
@@ -44,7 +44,7 @@
             </span>
             <span class="portfolio-widget__asset-value-secondary">
               <!-- eslint-disable-next-line -->
-              &asymp; {{ convertedLocked | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET }) }}
+              &asymp; {{ convertedLocked | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET, symbolAllowed: true }) }}
             </span>
           </div>
         </div>

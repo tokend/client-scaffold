@@ -38,15 +38,21 @@ function isCrypto (currency = '') {
   return getSymbol(currency).toUpperCase() === currency.toUpperCase()
 }
 
-function getMoneyFormatterSettings ({ currency }) {
+function getFormatterSettings ({ currency, symbolAllowed }) {
   const locale = polyglot.locale()
   const settings = ACCOUNTING_SETTINGS[locale]
-  const symbol = getSymbol(currency)
-  return isCrypto(currency)
-    ? { ...settings, symbol, ...DEFAULT_CRYPTO_CURRENCY_SETTINGS }
-    : { ...settings, symbol }
+
+  if (symbolAllowed) {
+    const symbol = getSymbol(currency)
+    return isCrypto(currency)
+      ? { ...settings, symbol, ...DEFAULT_CRYPTO_CURRENCY_SETTINGS }
+      : { ...settings, symbol }
+  } else {
+    const symbol = currency
+    return { ...settings, symbol, ...DEFAULT_CRYPTO_CURRENCY_SETTINGS }
+  }
 }
 
-export function formatMoney (value, { currency }) {
-  return accounting.formatMoney(value, getMoneyFormatterSettings({ currency }))
+export function formatMoney (value, opts) {
+  return accounting.formatMoney(value, getFormatterSettings(opts))
 }
