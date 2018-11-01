@@ -1,28 +1,12 @@
 <template>
   <div>
-    <detail
-      :prop="'Base amount'"
-      :value="`${tx.baseAmount} ${tx.baseAssetCode}`" />
-    <detail
-      :prop="'Quote amount'"
-      :value="`${tx.quoteAmount} ${tx.quoteAssetCode}`" />
-    <detail
-      :prop="'Order'"
-      :value="tx.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell()" />
-    <detail
-      :prop="'Price'"
-      :value="`${tx.price} ${tx.quoteAssetCode}`" />
-    <detail
-      :prop="'Fee'"
-      :value="`${tx.fee} ${tx.baseAssetCode}`" />
-    <detail
-      :prop="'Date'"
-      :value="i18n.d(tx.createdAt)" />
+    <record-details-viewer :tx="tx" />
     <button
       v-ripple
       @click="cancelOffer"
       class="cancel-button"
-      :disabled="isPending">
+      :disabled="isPending"
+    >
       {{ i18n.trd_cancel_order() }}
     </button>
   </div>
@@ -41,12 +25,16 @@ import { EventDispatcher } from '../../../../../../js/events/event_dispatcher'
 import { dispatchAppEvent } from '../../../../../../js/events/helpers'
 import { commonEvents } from '../../../../../../js/events/common_events'
 import { confirmAction } from '../../../../../../js/modals/confirmation_message'
+import RecordDetailsViewer from '@/vue/app/common/RecordDetailsViewer'
 
 export default {
   name: 'manage-orders',
+  components: {
+    RecordDetailsViewer
+  },
   mixins: [DetailsMixin, SubmitterMixin],
   props: {
-    tx: { type: Object, require: true, default: () => {} }
+    tx: { type: Object, require: true, default: () => { } }
   },
   data () {
     return {
@@ -82,17 +70,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/mixins";
+@import "~@scss/mixins";
 
-  .cancel-button {
-    @include button-accent();
-    margin-left: -16px;
-    margin-top: 24px;
-    display: block;
+.cancel-button {
+  @include button-accent();
+  margin-left: -16px;
+  margin-top: 24px;
+  display: block;
 
-    @include respond-to-custom(760px) {
-      margin-left: 0;
-      margin-right: auto;
-    }
+  @include respond-to-custom(760px) {
+    margin-left: 0;
+    margin-right: auto;
   }
+}
 </style>

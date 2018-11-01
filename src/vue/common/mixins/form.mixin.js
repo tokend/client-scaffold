@@ -5,6 +5,7 @@ import TextareaFieldUnchained from '@/vue/common/fields/TextareaFieldUnchained'
 import DateField from '@/vue/common/fields/DateField'
 import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
 import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+import SelectFieldObjectUnchained from '@/vue/common/fields/SelectFieldObjectUnchained'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
 import DateFieldFlatpickr from '@/vue/common/fields/DateFieldFlatpickr'
 import TickField from '@/vue/common/fields/TickField'
@@ -31,6 +32,7 @@ export default {
     SelectFieldCustom,
     InputFieldUnchained,
     SelectFieldUnchained,
+    SelectFieldObjectUnchained,
     TextareaField,
     DateField,
     ImageInput,

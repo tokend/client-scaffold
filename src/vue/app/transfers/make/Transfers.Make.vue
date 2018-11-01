@@ -172,9 +172,38 @@
             </p>
           </template>
 
+          <h3 class="transfer__fee-box-heading">
+            {{ i18n.transfer_total() }}
+          </h3>
+
+          <p class="transfer__fee">
+            - {{ +(fees.source.fixed) + +(fees.source.percent) }}
+            {{ fees.source.feeAsset }}
+            <span class="transfer__fee-type">
+              {{ i18n.transfer_total_sender_fee() }}
+            </span>
+          </p>
+
+          <p class="transfer__fee">
+            - {{ +(fees.destination.fixed) + +(fees.destination.percent) }}
+            {{ fees.destination.feeAsset }}
+            <span class="transfer__fee-type">
+              {{ i18n.transfer_total_receiver_fee() }}
+            </span>
+          </p>
+
+          <p class="transfer__fee">
+            - {{ form.amount }} {{ form.tokenCode }}
+            <span class="transfer__fee-type">
+              {{ i18n.tr_total_amount() }}
+            </span>
+          </p>
+
+          <!-- eslint-disable-next-line -->
           <div
             class="app__form-row"
-            v-if="+fees.destination.fixed || +fees.destination.percent">
+            v-if="+fees.destination.fixed || +fees.destination.percent"
+          >
             <tick-field v-model="form.isPaidForRecipient">
               {{ i18n.transfer_pay_fees_for_recipient() }}
             </tick-field>

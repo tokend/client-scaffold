@@ -20,14 +20,18 @@ export class ReviewableRequestsService extends Service {
   /**
    * Loads all withdrawal reviewable requests for current user
    *
+   * @param opts {Object}
+   * @param opts.state {String} – filter requests by state
+   *
    * @return {Promise<object>} - Promise object representing rr
    */
-  loadWithdrawalsReviewableRequests () {
+  loadWithdrawalsReviewableRequests (opts = {}) {
     return this._horizonRequestBuilder
       .reviewableRequestsHelper()
       .withdrawals()
       .forRequestor(this._accountId)
       .order('desc')
+      .forState(opts.state)
       .limit(config.TRANSACTIONS_PER_PAGE)
       .callWithSignature(this._keypair)
   }

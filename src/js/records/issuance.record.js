@@ -27,4 +27,33 @@ export class IssuanceRecord extends TxRecord {
   _getDirection () {
     return DIRECTION_VERBOSE.in
   }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      id: { processor: 'raw' },
+      sender: { processor: 'processedValue', processorArg: { value: this.counterparty } },
+      senderEmail: { processor: 'email', processorArg: { id: this.counterparty } },
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      convertedAmount: {
+        processor: 'convert',
+        processorArg: {
+          amount: this.amount,
+          asset: this.asset
+        }
+      },
+      fixedFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      percentFee: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      asset: { processor: 'raw' },
+      date: { processor: 'formatDate' }
+    }
+  }
 }

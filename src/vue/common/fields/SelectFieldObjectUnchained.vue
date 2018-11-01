@@ -11,14 +11,14 @@
     <template v-if="label">
       <div class="select-field__label">{{ label }}</div>
     </template>
-    <button
+    <div
       class="select-field__selected"
       :class="{'select-field__selected--focused': showList}"
-      @click.prevent="toggleListVisibility()"
+      @click="toggleListVisibility()"
     >
-      <span class="select-field__selected-value">
-        {{ currentValue || '&nbsp;' }}
-      </span>
+      <button class="select-field__selected-value">
+        {{ selected.translationId | translate }}
+      </button>
       <div>
         <md-icon
           class="select-field__selected-icon"
@@ -26,7 +26,7 @@
           keyboard_arrow_down
         </md-icon>
       </div>
-    </button>
+    </div>
     <div
       class="select-field__list"
       ref="list"
@@ -34,11 +34,12 @@
       <template v-for="(val, i) in values">
         <button
           class="select-field__list-item"
-          :key="i"
-          :class="{ 'select-field__list-item--selected': selected === val }"
-          @click.prevent="selectItem(val)"
-        >
-          {{ val }}
+          :key="`select-field-object-${i}-${val.value}`"
+          :class="{
+            'select-field__list-item--selected': selected === val
+          }"
+          @click="selectItem(val)">
+          {{ val.translationId | translate }}
         </button>
       </template>
     </div>
@@ -50,6 +51,7 @@ import { commonEvents } from '@/js/events/common_events'
 import { onKeyDown } from '@/js/helpers/onKeyDown'
 import { closeElement } from '@/js/helpers/closeElement'
 import { KEY_CODES } from '@/js/const/const'
+import { isObject } from '@/js/utils/isObject.util'
 
 export default {
   name: 'select-field-unchained',
@@ -65,7 +67,8 @@ export default {
   },
   data: _ => ({
     currentValue: '', // selected item in the list
-    selected: '', // active element but not selected (for arrow navigation)
+    // WARN: required for arrow navigation (looks like currentValue)
+    selected: {},
     showList: false,
     KEY_CODES
   }),
@@ -79,6 +82,7 @@ export default {
     this.currentValue = this.value
   },
   methods: {
+    isObject,
     selectItem (item) {
       if (this.readonly || this.disabled) return null
       this.selected = item
@@ -93,13 +97,18 @@ export default {
     },
     openList () {
       const list = this.$refs.list
-      const index = this.values.indexOf(this.currentValue)
-      // eslint-disable-next-line
-      list.scrollTop = list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
+      const index =
+        this.values.indexOf(this.selected) >= 0
+          ? this.values.indexOf(this.selected)
+          : 0
+      list.scrollTop =
+        list.childNodes[index].offsetTop - (list.offsetHeight / 2) + 18
       this.showList = true
     },
     closelist () {
-      this.selected = this.currentValue // set active element as selected
+      // set active element as selected
+      this.selected =
+        this.values.filter((item) => item === this.currentValue)[0]
       this.showList = false
     },
     keyDownEvents (event) {

@@ -353,6 +353,13 @@ const router = new Router({
               meta: { pageName: PAGES_NAMES.createToken },
               component: TokenCreationIndex,
               props: true
+            },
+            {
+              path: '/token-creation/index/:code',
+              name: 'token-creation.index.code',
+              meta: { pageName: PAGES_NAMES.updateToken },
+              component: TokenCreationIndex,
+              props: true
             }
           ]
         },

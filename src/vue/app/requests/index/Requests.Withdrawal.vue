@@ -1,38 +1,47 @@
 <template>
-  <div class="tx-token-creation">
-    <md-table md-card class="tx-token-creation__table">
+  <div class="withdrawal-requests">
+    <md-table md-card class="withdrawal-requests__table">
+      <md-table-toolbar class="withdrawal-requests__table-toolbar">
+        <div class="withdrawal-requests__select-outer">
+          <select-field-object-unchained
+            :label="i18n.lbl_asset()"
+            v-model="withdrawalState"
+            :values="withdrawalStates"
+          />
+        </div>
+      </md-table-toolbar>
       <template v-if="list.length">
-        <md-table-row class="tx-token-creation__row">
+        <md-table-row class="withdrawal-requests__row">
           <md-table-head>{{ i18n.lbl_token_code() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_request_state() }}</md-table-head>
           <md-table-head>{{ i18n.lbl_created_at() }}</md-table-head>
-          <md-table-head class="tx-token-creation__hide-md">
+          <md-table-head class="withdrawal-requests__hide-md">
             {{ i18n.lbl_updated_at() }}
           </md-table-head>
           <md-table-head><!--Button--></md-table-head>
         </md-table-row>
         <template v-for="(item, i) in list">
           <md-table-row
-            class="tx-token-creation__row"
+            class="withdrawal-requests__row"
             @click.native="toggleDetails(i)"
             :key="i">
-            <md-table-cell class="tx-token-creation__table-cell">
-              {{ item.reference }}
+            <md-table-cell class="withdrawal-requests__table-cell">
+              {{ item.tokenName }} ({{ item.tokenCode }})
             </md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">
+            <md-table-cell class="withdrawal-requests__table-cell">
               {{ item.state }}
             </md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">
+            <md-table-cell class="withdrawal-requests__table-cell">
               {{ i18n.d(item.createdAt) }}
             </md-table-cell>
             <md-table-cell
-              class="tx-token-creation__table-cell
-                     tx-token-creation__hide-md">
+              class="withdrawal-requests__table-cell
+                     withdrawal-requests__hide-md">
               {{ i18n.d(item.updatedAt) }}
             </md-table-cell>
-            <md-table-cell class="tx-token-creation__table-cell">
+            <md-table-cell class="withdrawal-requests__table-cell">
               <md-button
-                class="tx-token-creation__open-details-btn
+                class="withdrawal-requests__open-details-btn
                        md-icon-button">
                 <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
                 <md-icon v-else>keyboard_arrow_down</md-icon>
@@ -42,58 +51,11 @@
           <md-table-row
             class="th-token-creation__expandable-row"
             v-if="isSelected(i)"
-            :key="'selected-'+i">
+            :key="`selected-${i}`">
             <md-table-cell colspan="7">
               <md-card-content class="md-layout md-gutter">
-                <div
-                  class="icon-column
-                         md-layout-item
-                         md-size-35
-                         md-layout
-                         md-alignment-center-center">
-                  <img
-                    class="token-icon"
-                    v-if="item.logoUrl"
-                    :src="item.logoUrl"
-                    :alt="documentTypes.tokenIcon">
-                  <div class="token-icon" v-else>
-                    {{ item.reference.substr(0, 1).toUpperCase() }}
-                  </div>
-                </div>
                 <div class="details-column md-layout-item">
-                  <detail
-                    prop="Request type"
-                    :value="`${getFancyName(item.details.request_type)}`" />
-                  <detail
-                    prop="Max issuance amount"
-                    :value="`${i18n.c(item.maxIssuanceAmount)}`"
-                    v-if="item.details.request_type !== 'asset_update'" />
-                  <detail
-                    prop="Initial preissued amount"
-                    :value="`${i18n.c(item.initialPreissuedAmount)}`"
-                    v-if="item.details.request_type !== 'asset_update'" />
-                  <detail
-                    prop="Preissued asset signer"
-                    :value="`${item.signer}`" />
-                  <detail
-                    prop="Token name"
-                    :value="`${item.tokenName}`" />
-                  <detail
-                    prop="Offering memorandum"
-                    v-if="item.termsUrl"
-                    :value="''">
-                    <a href="${item.termsUrl}" target="_blank">
-                      Open file
-                    </a>
-                  </detail>
-                  <detail prop="Offering memorandum" v-else />
-                  <detail
-                    prop="Policies"
-                    :value="`${getPolicies(item.policies)}`" />
-                  <detail
-                    prop="Reject reason"
-                    v-if="item.isRejected || item.isPermanentlyRejected"
-                    :value="`${item.rejectReason}`" />
+                  <details-reader :details="item" />
                 </div>
               </md-card-content>
               <md-card-actions>
@@ -104,27 +66,13 @@
                   :disabled="!item.isPending || isPending">
                   {{ i18n.lbl_cancel() }}
                 </button>
-                <router-link
-                  :to="{
-                    name: 'token-creation.index',
-                    params: { id: item.id }
-                  }"
-                  tag="button"
-                  v-ripple
-                  class="app__button-flat"
-                  :disabled="
-                    (!item.isPending && !item.isRejected) || isPending
-                  "
-                >
-                  {{ i18n.lbl_update() }}
-                </router-link>
               </md-card-actions>
             </md-table-cell>
           </md-table-row>
         </template>
         <md-table-row v-if="!isLoaded">
           <md-table-cell colspan="7">
-            <div class="tx-history__btn-outer">
+            <div>
               <button
                 v-ripple
                 @click="more"
@@ -137,11 +85,11 @@
         </md-table-row>
       </template>
       <template v-else>
-        <div class="tx-token-creation__no-requests">
+        <div class="withdrawal-requests__no-requests">
           <no-data-message
             icon-name="trending_up"
-            :msg-title="i18n.lbl_no_token_creation_requests()"
-            :msg-message="i18n.lbl_no_token_creation_requests_desc()" />
+            :msg-title="i18n.lbl_no_withdrawal_requests()"
+            :msg-message="i18n.lbl_no_withdrawal_requests_desc()" />
         </div>
       </template>
     </md-table>
@@ -149,14 +97,19 @@
 </template>
 
 <script>
-import FormMixin from '../../../common/mixins/form.mixin'
-import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
+import FormMixin from '@/vue/common/mixins/form.mixin'
 import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import DetailsReader from '@/vue/app/common/DetailsReader'
 
 import { mapGetters, mapActions } from 'vuex'
 import { i18n } from '@/js/i18n'
-import { documentTypes, ASSET_POLICIES_VERBOSE } from '@/js/const/const'
+import {
+  documentTypes,
+  ASSET_POLICIES_VERBOSE,
+  REQUEST_STATES_STR,
+  REQUEST_STATES
+} from '@/js/const/const'
 import { vuexTypes } from '@/vuex/types'
 
 import { tokensService } from '@/js/services/tokens.service'
@@ -164,51 +117,88 @@ import { EventDispatcher } from '@/js/events/event_dispatcher'
 import { ErrorHandler } from '@/js/errors/error_handler'
 
 export default {
-  components: { Detail, NoDataMessage },
+  components: {
+    NoDataMessage,
+    DetailsReader
+  },
   mixins: [FormMixin],
   data: _ => ({
     i18n,
     documentTypes,
     isLoading: false,
     index: -1,
-    ASSET_POLICIES_VERBOSE
+    ASSET_POLICIES_VERBOSE,
+    REQUEST_STATES_STR,
+    REQUEST_STATES,
+    withdrawalStates: [
+      {
+        value: '',
+        translationId: 'lbl_all'
+      },
+      {
+        value: REQUEST_STATES.pending,
+        translationId: 'lbl_pending'
+      },
+      {
+        value: REQUEST_STATES.approved,
+        translationId: 'lbl_approved'
+      },
+      {
+        value: REQUEST_STATES.rejected,
+        translationId: 'lbl_rejected'
+      },
+      {
+        value: REQUEST_STATES.cancelled,
+        translationId: 'lbl_cancelled'
+      },
+      {
+        value: REQUEST_STATES.permanentlyRejected,
+        translationId: 'lbl_permanently_rejected'
+      }
+    ],
+    withdrawalState: {
+      value: '',
+      translationId: 'lbl_all'
+    }
   }),
   computed: {
     ...mapGetters([
-      vuexTypes.tokenCreationRequests
+      vuexTypes.withdrawalRequests
     ]),
     list () {
-      return _get(this.tokenCreationRequests, 'records', [])
+      return _get(this.withdrawalRequests, 'records', [])
     },
     isLoaded () {
-      return _get(this.tokenCreationRequests, 'isLoaded')
+      return _get(this.withdrawalRequests, 'isLoaded')
+    }
+  },
+  watch: {
+    'withdrawalState.value' (val) {
+      this.loadList({ state: this.withdrawalState.value })
     }
   },
   async created () {
-    await this.loadList()
+    await this.loadList({ state: this.withdrawalState.value })
     this.$emit('loaded')
   },
   methods: {
     ...mapActions({
-      loadList: vuexTypes.GET_USER_TOKENS_CREATION_REQUESTS,
-      loadNext: vuexTypes.NEXT_USER_TOKENS_CREATION_REQUESTS
+      loadList: vuexTypes.GET_USER_WITHDRAWAL_REQUESTS,
+      loadNext: vuexTypes.NEXT_USER_WITHDRAWAL_REQUESTS
     }),
-
     toggleDetails (index) {
       this.index = this.index === index ? -1 : index
     },
-
     isSelected (i) {
       return this.index === i
     },
-
     async cancelRequest (requestID) {
       this.disable()
       try {
         await tokensService.cancelTokenCreationRequest({
           requestID: requestID
         })
-        this.loadList()
+        this.loadList({ state: this.withdrawalState.value })
         EventDispatcher.dispatchShowSuccessEvent('Cancel request success')
       } catch (error) {
         console.error(error)
@@ -216,22 +206,19 @@ export default {
       }
       this.enable()
     },
-
     async more () {
       this.isLoading = true
       try {
         await this.loadNext()
-      } catch (e) {
-        console.error(e)
+      } catch (error) {
+        console.error(error)
         EventDispatcher.dispatchShowErrorEvent(i18n.th_failed_to_load_tx())
       }
       this.isLoading = false
     },
-
     getPolicies (item) {
       return item.map(policy => ASSET_POLICIES_VERBOSE[policy]).join(', ')
     },
-
     getFancyName (item) {
       return item.replace('_', ' ')
     }
@@ -247,15 +234,15 @@ export default {
   $padding-horizontal: 25px;
   $padding: $padding-vertical $padding-horizontal;
 
-  .tx-token-creation {
+  .withdrawal-requests {
     width: 100%;
   }
 
-  .tx-token-creation__table {
+  .withdrawal-requests__table {
     margin: 0 !important;
   }
 
-  .tx-token-creation__table-toolbar {
+  .withdrawal-requests__table-toolbar {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -266,11 +253,11 @@ export default {
     }
   }
 
-  .tx-token-creation__row {
+  .withdrawal-requests__row {
     cursor: pointer;
   }
 
-  .tx-token-creation__table-cell {
+  .withdrawal-requests__table-cell {
     overflow: hidden;
     white-space: nowrap;
 
@@ -282,25 +269,25 @@ export default {
     }
   }
 
-  .tx-token-creation__open-details-btn {
+  .withdrawal-requests__open-details-btn {
     margin-right: .65rem;
   }
 
-  .tx-token-creation__select-outer {
+  .withdrawal-requests__select-outer {
     padding: 5px $padding-horizontal;
   }
 
-  .tx-token-creation__details {
+  .withdrawal-requests__details {
     padding: $padding;
     max-width: 25rem;
     width: 100%;
   }
 
-  .tx-token-creation__btn-outer {
+  .withdrawal-requests__btn-outer {
     text-align: center;
   }
 
-  .tx-token-creation__no-requests {
+  .withdrawal-requests__no-requests {
     padding: 0 16px 32px;
     text-align: center;
 
@@ -309,12 +296,12 @@ export default {
     }
   }
 
-  .tx-token-creation__table-title {
+  .withdrawal-requests__table-title {
     padding: 24px;
     font-size: 24px;
   }
 
-  .tx-token-creation__no-requests {
+  .withdrawal-requests__no-requests {
     padding: 0 16px 32px;
     text-align: center;
 
@@ -345,7 +332,7 @@ export default {
     margin-right: .2rem;
   }
 
-  .tx-token-creation__hide-md {
+  .withdrawal-requests__hide-md {
     @include respond-to(medium) {
       display: none;
     }

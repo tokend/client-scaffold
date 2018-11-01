@@ -15,6 +15,15 @@
         />
       </div>
       <div class="searcher__filters">
+        <input-field-unchained
+          v-model="filters.name"
+          class="searcher__filter"
+          name="sale-name"
+          title="Sale name"
+          :label="i18n.lbl_sale_name()"
+        />
+      </div>
+      <div class="searcher__filters">
         <select-field-unchained
           :values="states"
           class="searcher__filter"
@@ -53,7 +62,8 @@ export default {
       filters: {
         token: '',
         state: saleStates.actual.str,
-        sortBy: saleSortTypes.created.str
+        sortBy: saleSortTypes.created.str,
+        name: ''
       },
       eventEmitter: null,
       i18n,
@@ -65,7 +75,8 @@ export default {
   watch: {
     'filters.token': function () { this.debounceSearchEvent() },
     'filters.state': function () { this.emitSearchEvent() },
-    'filters.sortBy': function () { this.emitSearchEvent() }
+    'filters.sortBy': function () { this.emitSearchEvent() },
+    'filters.name': function () { this.debounceSearchEvent() }
   },
 
   methods: {
@@ -91,7 +102,8 @@ export default {
         ),
         sortBy: Object.values(saleSortTypes).find(type =>
           type.str === this.filters.sortBy
-        )
+        ),
+        name: this.filters.name
       }
       return filters
     }

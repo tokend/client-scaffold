@@ -4,8 +4,10 @@
  * @param {object} opts
  * @param {function} opts.action - action to dispatch
  * @param {*} opts.actionPayload - payload action will be dispatched with
- * @param {Array<object>} opts.expectedMutations - mutations expected to be committed inside action call
- * @param {Array<object>} opts.expectedActions - actions expected to be dispatched inside action call
+ * @param {Array<object>} opts.expectedMutations - mutations expected to be
+ *        committed inside action call
+ * @param {Array<object>} opts.expectedActions - actions expected to be
+ *        dispatched inside action call
  * @param {Array<*>} opts.expectedMutationPayloads - expected mutations payloads
  * @param {Array<*>} opts.expectedActionsPayloads - expected actions payloads
  * @param {object} opts.state

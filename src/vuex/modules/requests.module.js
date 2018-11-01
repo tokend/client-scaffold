@@ -14,6 +14,10 @@ const state = {
     txPerPage: config.REQUESTS_PER_PAGE,
     recordWrp: RecordFactory.createTokenСreationRecord.bind(RecordFactory)
   }),
+  withdrawalUploadRequests: new Paginator({
+    txPerPage: config.REQUESTS_PER_PAGE,
+    recordWrp: RecordFactory.createWithdrawRecord.bind(RecordFactory)
+  }),
   preIssuanceUploadRequests: new Paginator({
     txPerPage: config.REQUESTS_PER_PAGE,
     recordWrp: RecordFactory.createPreIssuanceRequestRecord.bind(RecordFactory)
@@ -64,6 +68,20 @@ const actions = {
 
   async NEXT_USER_TOKENS_CREATION_REQUESTS ({ state }) {
     return state.tokenCreationRequests.next()
+  },
+
+  async GET_USER_WITHDRAWAL_REQUESTS ({ state }, opts) {
+    state.withdrawalUploadRequests.attachInitLoader(
+      () => reviewableRequestsService.loadWithdrawalsReviewableRequests(opts)
+    )
+    return state.withdrawalUploadRequests.init()
+  },
+
+  async NEXT_USER_WITHDRAWAL_REQUESTS ({ state }) {
+    state.withdrawalRequests.attachInitLoader(
+      () => reviewableRequestsService.loadWithdrawalsReviewableRequests()
+    )
+    return state.withdrawalRequests.next()
   },
 
   async GET_USER_PREISSUANCE_UPLOAD_REQUESTS ({ state }) {
@@ -126,6 +144,7 @@ const actions = {
 
 const getters = {
   tokenCreationRequests: state => state.tokenCreationRequests,
+  withdrawalRequests: state => state.withdrawalRequests,
   preIssuanceUploadRequests: state => state.preIssuanceUploadRequests,
   saleCreationRequests: state => state.saleCreationRequests,
   limitsRequests: state => state.limitsRequests.records,

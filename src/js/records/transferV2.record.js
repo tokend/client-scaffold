@@ -15,6 +15,8 @@ export class TransferV2Record extends TxRecord {
     this.counterparty = this._getCounterParty()
     this.direction = this._getDirection()
     this.fees = this._getFees()
+    this.sourceFees = this.fees.source
+    this.destinationFees = this.fees.destination
     this.sourcePaysForDest = record.source_pays_for_dest
     this.sourceFeeAsset = _safeGet(
       record,
@@ -58,6 +60,42 @@ export class TransferV2Record extends TxRecord {
       destination: add(
         _safeGet(this._record, 'destination_fee_data.actual_payment_fee'),
         _safeGet(this._record, 'destination_fee_data.fixed_fee'))
+    }
+  }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      id: { processor: 'raw' },
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      convertedAmount: {
+        processor: 'convert',
+        processorArg: {
+          amount: this.amount,
+          asset: this.asset
+        }
+      },
+      sourceFees: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      destinationFees: { processor: 'formatAmount', processorArg: { asset: '' } },
+      sourceFeeAsset: { processor: 'raw' },
+      destinationFeeAsset: { processor: 'raw' },
+      sourcePaysForDest: { processor: 'raw' },
+      date: { processor: 'formatDate' },
+      subject: { processor: 'raw' },
+      ...(this._getDirection === DIRECTION_VERBOSE.in
+        ? { sender: { processor: 'raw' } }
+        : { receiver: { processor: 'raw' } }),
+      ...(this._getDirection === DIRECTION_VERBOSE.in
+        ? { senderEmail: { processor: 'email', processorArg: { id: this.counterparty } } }
+        : { receiverEmail: { processor: 'email', processorArg: { id: this.counterparty } } })
     }
   }
 }

@@ -1,6 +1,7 @@
 import get from 'lodash/get'
 import { TxRecord } from './tx.record'
 import store from '@/vuex'
+import { i18n } from '@/js/i18n'
 
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 
@@ -39,8 +40,8 @@ export class MatchRecord extends TxRecord {
       asset: this.asset,
       date: this.date,
       feeAsset: '',
-      name: this.name,
-      state: this.state
+      state: this.state,
+      id: this.id
     }))
   }
 }
@@ -49,15 +50,17 @@ export class MatchTransaction {
   constructor (effect, opts) {
     this._effect = effect
     this.asset = opts.asset
-    this.name = opts.name
     this.date = opts.date
     this.feeAsset = ''
     this.state = opts.state
+    this.id = opts.id
 
     this.baseAsset = this._getTxBaseAsset()
     this.quoteAsset = this._getTxQuoteAsset()
-    this.counterparty = this._getCounterparty()
+    this.counterparty = this._getFundName()
+    this.fundName = this._getFundName()
     this.isBuy = this._getTxIsBuy()
+    this.name = this.isBuy ? i18n.lbl_buy() : i18n.lbl_sell()
     this.matches = this._getTxMatches()
     this.quoteAmount = this._getTxQuoteAmount()
     this.baseAmount = this._getTxBaseAmount()
@@ -95,7 +98,7 @@ export class MatchTransaction {
     )
   }
 
-  _getCounterparty () {
+  _getFundName () {
     return `${this.baseAsset} token fund`
   }
 
@@ -119,5 +122,33 @@ export class MatchTransaction {
       return this.isBuy ? DIRECTION_VERBOSE.out : DIRECTION_VERBOSE.in
     }
     return this.isBuy ? DIRECTION_VERBOSE.in : DIRECTION_VERBOSE.out
+  }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      id: { processor: 'raw' },
+      fundName: { processor: 'processedValue', processorArg: { value: this.fundName } },
+      baseAsset: { processor: 'formatAmount', processorArg: { asset: '' } },
+      amount: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      convertedAmount: {
+        processor: 'convert',
+        processorArg: {
+          amount: this.amount,
+          asset: this.asset
+        }
+      },
+      feePaid: { processor: 'formatAmount', processorArg: { asset: this.asset } },
+      price: { processor: 'formatAmount', processorArg: { asset: this.quoteAsset } },
+      date: { processor: 'formatDate' }
+    }
   }
 }

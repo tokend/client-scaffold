@@ -1,16 +1,18 @@
 <template>
   <div class="create-token app__page-content-wrp">
-    <div
-      v-if="accountTypeI === ACCOUNT_TYPES.notVerified ||
-      accountTypeI !== ACCOUNT_TYPES.syndicate">
+    <!-- eslint-disable-next-line max-len -->
+    <div v-if="accountTypeI === ACCOUNT_TYPES.notVerified || accountTypeI !== ACCOUNT_TYPES.syndicate">
       <no-data-message
         icon-name="work"
         :msg-title="i18n.lbl_not_available()"
-        :msg-message="i18n.lbl_token_not_available_exp()" />
+        :msg-message="i18n.lbl_token_not_available_exp()"
+      />
     </div>
     <token-creation-manager
       v-else
-      :id="id" />
+      :id="id"
+      :code="code"
+    />
   </div>
 </template>
 
@@ -24,7 +26,8 @@ import { mapGetters } from 'vuex'
 export default {
   components: { TokenCreationManager, NoDataMessage },
   props: {
-    id: { type: String, default: '' }
+    id: { type: String, default: '' },
+    code: { type: String, default: '' }
   },
   data: _ => ({
     i18n,

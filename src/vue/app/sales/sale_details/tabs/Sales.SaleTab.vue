@@ -3,25 +3,35 @@
     <div class="crowdfund-sale-main">
       <div class="details-column md-layout-item">
         <detail-row
+          :prop="i18n.sale_state()"
+          :value="`${sale.state}`"
+        />
+        <detail-row
           :prop="i18n.sale_start_time()"
-          :value="`${i18n.d(sale.startTime)}`" />
+          :value="`${i18n.d(sale.startTime)}`"
+        />
         <detail-row
           :prop="i18n.sale_close_time()"
-          :value="`${i18n.d(sale.endTime)}`" />
+          :value="`${i18n.d(sale.endTime)}`"
+        />
         <detail-row
           :prop="i18n.sale_base_asset_for_hard_cap()"
-          :value="`${sale.defaultQuoteAsset}`" />
+          :value="`${sale.defaultQuoteAsset}`"
+        />
         <detail-row
           :prop="i18n.sale_soft_cap()"
-          :value="`${i18n.cc(sale.softCap)}`" />
+          :value="`${i18n.cc(sale.softCap)}`"
+        />
         <detail-row
           :prop="i18n.sale_hard_cap()"
-          :value="`${i18n.cc(sale.hardCap)}`" />
+          :value="`${i18n.cc(sale.hardCap)}`"
+        />
         <detail-row
           :prop="`${i18n.sale_base_asset_hard_cap_to_sell({
             asset:sale.baseAsset
           })}`"
-          :value="`${i18n.c(sale.baseHardCap)}`" />
+          :value="`${i18n.c(sale.baseHardCap)}`"
+        />
       </div>
     </div>
   </div>
@@ -35,7 +45,7 @@ export default {
     DetailRow
   },
   props: {
-    sale: { type: Object, default: () => {} }
+    sale: { type: Object, default: () => { } }
   },
   data: _ => ({
     i18n

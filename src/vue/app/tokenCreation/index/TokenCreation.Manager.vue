@@ -3,7 +3,8 @@
     <h2 class="app__page-heading">{{ i18n.tokens_form_creation() }}</h2>
     <form
       novalidate
-      @submit.prevent="submit">
+      @submit.prevent="submit"
+    >
       <div class="kyc-form__content-item">
         <div class="md-layout-item">
           <file-field
@@ -13,7 +14,8 @@
             :min-width="120"
             :min-height="120"
             :accept="'image/*'"
-            :type="documentTypes.tokenIcon" />
+            :type="documentTypes.tokenIcon"
+          />
         </div>
       </div>
       <div class="kyc-form__content-item">
@@ -25,6 +27,7 @@
               v-validate="'required'"
               :label="i18n.lbl_token_name()"
               name="token name"
+              :disabled="isExistingAsset || isPending"
               :error-message="errorMessage('token name')"
             />
           </div>
@@ -35,6 +38,7 @@
               v-validate="'required'"
               :label="i18n.lbl_token_code()"
               name="token code"
+              :disabled="isExistingAsset || isPending"
               :error-message="errorMessage('token code')"
             />
           </div>
@@ -47,6 +51,7 @@
             v-validate="'required|amount'"
             :label="i18n.lbl_token_max_issuance_amount()"
             name="max issuance amount"
+            :disabled="isExistingAsset || isPending"
             :error-message="errorMessage('max issuance amount')"
           />
         </div>
@@ -59,7 +64,8 @@
               :cb-value="ASSET_POLICIES.transferable"
               name="policy-transferable"
               id="policy-transferable"
-              class="md-primary">
+              class="md-primary"
+            >
               {{ i18n.lbl_transferable() }}
             </tick-field>
           </div>
@@ -69,7 +75,8 @@
               :cb-value="ASSET_POLICIES.requiresKyc"
               name="policy-requiresKyc"
               id="policy-requiresKyc"
-              class="md-primary">
+              class="md-primary"
+            >
               {{ i18n.lbl_requires_kyc() }}
             </tick-field>
           </div>
@@ -91,13 +98,15 @@
         <tick-field
           v-model="makeAdditional"
           name="additional-issuance"
-          id="additional-issuance">
+          id="additional-issuance"
+        >
           {{ i18n.tokens_want_to_make_additional_issuance_later() }}
         </tick-field>
       </div>
       <div
         class="kyc-form__content-item"
-        v-if="makeAdditional">
+        v-if="makeAdditional"
+      >
         <!-- Transfrom to Boolean -->
         <div class="app__form-row">
           <input-field-unchained
@@ -105,6 +114,7 @@
             v-model="request.preissuedAssetSigner"
             v-validate="'required|account_id'"
             :label="i18n.lbl_token_preissued_asset_signer()"
+            :disabled="isExistingAsset || isPending"
             :error-message="errorMessage('preissued asset signer')"
           />
         </div>
@@ -120,6 +130,7 @@
               max_value: request.maxIssuanceAmount
             }"
             :label="i18n.lbl_token_initial_preissued_amount()"
+            :disabled="isExistingAsset || isPending"
             :error-message="errorMessage('initial preissued amount')"
           />
         </div>
@@ -129,7 +140,8 @@
           v-ripple
           type="submit"
           class="app__form-submit-btn"
-          :disabled="isPending">
+          :disabled="isPending"
+        >
           {{ i18n.lbl_submit() }}
         </button>
       </div>
@@ -149,7 +161,8 @@
         <button
           v-ripple
           @click="showDialog = false"
-          class="app__button-flat">
+          class="app__button-flat"
+        >
           {{ i18n.lbl_close() }}
         </button>
       </md-dialog-actions>
@@ -176,17 +189,20 @@ import {
 import { fileService } from '@/js/services/file.service'
 import { TokenCreationRecord } from '@/js/records/token_creation.record'
 import config from '@/config'
+import get from 'lodash/get'
 
 export default {
   components: { FileField },
   mixins: [FormMixin],
   props: {
-    id: { type: String, default: '' }
+    id: { type: String, default: '' },
+    code: { type: String, default: '' }
   },
   data: _ => ({
     request: {
       policies: []
     },
+    token: null,
     documents: {
       [documentTypes.tokenTerms]: null,
       [documentTypes.tokenIcon]: null
@@ -199,18 +215,41 @@ export default {
   }),
 
   computed: {
+    isExistingAsset () {
+      return !!this.code || !!this.token
+    }
   },
 
   async created () {
-    if (this.id) {
+    if (this.id || this.code) {
+      if (this.id) {
+        this.request = new TokenCreationRecord(
+          await reviewableRequestsService.loadReviewableRequestById(this.id)
+        )
+        try {
+          this.token = await tokensService
+            .loadTokenByCode(this.request.tokenCode)
+          if (this.token) {
+            this.request = {
+              ...this.request,
+              preissuedAssetSigner: this.token.preissued_asset_signer,
+              maxIssuanceAmount: this.token.max_issuance_amount,
+              initialPreissuedAmount: this.token.issued
+            }
+          }
+        } catch (e) {
+          console.error(e)
+        }
+      } else if (this.code) {
+        this.request = new TokenCreationRecord(
+          await tokensService.loadTokenByCode(this.code)
+        )
+      }
       this.makeAdditional = true
-      this.request = new TokenCreationRecord(
-        await reviewableRequestsService.loadReviewableRequestById(this.id)
-      )
-      this.documents[documentTypes.tokenTerms] = this.request.terms.key
+      this.documents[documentTypes.tokenTerms] = get(this.request, 'terms.key')
         ? new DocumentContainer(this.request.terms)
         : null
-      this.documents[documentTypes.tokenIcon] = this.request.logo.key
+      this.documents[documentTypes.tokenIcon] = get(this.request, 'logo.key')
         ? new DocumentContainer(this.request.logo)
         : null
     }
@@ -256,26 +295,34 @@ export default {
         )
         termsContainer.setKey(termsKey)
       }
-      await tokensService.createTokenCreationRequest({
+      const opts = {
         requestID: this.request.id ? this.request.id : '0',
         code: this.request.tokenCode,
-        preissuedAssetSigner: preissuedAssetSigner,
-        maxIssuanceAmount: this.request.maxIssuanceAmount,
         policies: (this.request.policies).reduce((a, b) => (a | b), 0),
-        initialPreissuedAmount: initialPreissuedAmount,
         details: {
           name: this.request.tokenName,
           logo: logoContainer ? logoContainer.getDetailsForSave() : {},
           terms: termsContainer ? termsContainer.getDetailsForSave() : {}
         }
-      })
+      }
+
+      if (this.code || this.token) {
+        await tokensService.createTokenUpdateRequest(opts)
+      } else {
+        await tokensService.createTokenCreationRequest({
+          ...opts,
+          preissuedAssetSigner: preissuedAssetSigner,
+          maxIssuanceAmount: this.request.maxIssuanceAmount,
+          initialPreissuedAmount: initialPreissuedAmount
+        })
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .kyc-form__content-item:not(:last-child) {
-    margin-bottom: 24px;
-  }
+.kyc-form__content-item:not(:last-child) {
+  margin-bottom: 24px;
+}
 </style>

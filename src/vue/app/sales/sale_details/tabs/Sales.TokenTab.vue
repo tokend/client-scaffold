@@ -30,13 +30,16 @@
           :prop="i18n.lbl_avalilable_for_iss()"
           :value="`${i18n.c(token.available)}`" />
         <detail-row
+          :prop="i18n.lbl_token_preissued_asset_signer()"
+          :value="`${ token.signer }`" />
+        <detail-row
           :prop="i18n.lbl_terms()"
           v-if="token.termsUrl"
           :value="''">
           <a href="${token.termsUrl}" target="_blank">Open file</a>
         </detail-row>
         <detail-row
-          :prop="i18n.lbl_terms()"
+          :prop="i18n.lbl_offering_memorandum()"
           v-else />
         <detail-row
           :prop="i18n.lbl_policies()"

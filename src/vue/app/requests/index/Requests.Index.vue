@@ -9,12 +9,16 @@
     <tab :name="i18n.preis_upload()" id="pre-issuance-upload">
       <pre-issuance-upload />
     </tab>
+    <tab :name="'Withdrawal requests'" id="withdrawal-requests">
+      <withdrawal-requests />
+    </tab>
   </tabs>
 </template>
 
 <script>
 import TokenCreation from './Requests.TokenCreation'
 import PreIssuanceUpload from './Requests.PreissuanceUpload'
+import WithdrawalRequests from './Requests.Withdrawal'
 import SaleCreation from './Requests.SaleCreation'
 import { i18n } from '@/js/i18n'
 import Tabs from '@/vue/app/common/tabs/Tabs'
@@ -25,6 +29,7 @@ export default {
     TokenCreation,
     SaleCreation,
     PreIssuanceUpload,
+    WithdrawalRequests,
     Tabs,
     Tab
   },

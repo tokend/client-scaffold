@@ -22,7 +22,10 @@
         <loader :message="i18n.tokens_loading()" />
       </template>
 
-      <div class="" v-else>
+      <div
+        class=""
+        v-else
+      >
         <div class="explore-tokens__inner">
           <div class="explore-tokens__list-wrp">
             <div class="explore-tokens__list">
@@ -43,11 +46,13 @@
                           class="explore-tokens__list-item-avatar"
                           :class="`${hasBalance(token)
                             ? 'explore-tokens__list-item-avatar--success'
-                          : 'explore-tokens__list-item-avatar--default'}`">
+                          : 'explore-tokens__list-item-avatar--default'}`"
+                        >
                           <template v-if="token.logoUrl">
                             <img
                               :src="token.logoUrl"
-                              :alt="avatar(token.code)">
+                              :alt="avatar(token.code)"
+                            >
                           </template>
 
                           <template v-else>
@@ -95,7 +100,8 @@
                     <template v-if="selected.logoUrl">
                       <img
                         :src="selected.logoUrl"
-                        :alt="avatar(selected.code)">
+                        :alt="avatar(selected.code)"
+                      >
                     </template>
 
                     <template v-else>
@@ -111,7 +117,8 @@
                     </p>
                     <p
                       class="explore-tokens__balance-exists-msg"
-                      v-if="hasBalance(selected)">
+                      v-if="hasBalance(selected)"
+                    >
                       {{ i18n.lbl_balance_exists() }}
                       <md-icon
                         class="explore-tokens__balance-exists-icon
@@ -150,19 +157,24 @@
                       <td>{{ i18n.c(selected.available) }}</td>
                     </tr>
                     <tr>
-                      <td>{{ i18n.lbl_terms() }}</td>
+                      <td>{{ i18n.lbl_offering_memorandum() }}</td>
                       <td v-if="selected.termsUrl">
                         <a
                           class="tokens__open-doc-link"
                           target="_blank"
                           rel="noopener"
-                          :href="selected.termsUrl">
+                          :href="selected.termsUrl"
+                        >
                           {{ i18n.tokens_open_doc() }}
                         </a>
                       </td>
                       <td v-else>
                         {{ i18n.tokens_no_doc() }}
                       </td>
+                    </tr>
+                    <tr>
+                      <td>{{ i18n.lbl_token_preissued_asset_signer() }}</td>
+                      <td>{{ selected.signer }}</td>
                     </tr>
                   </table>
                 </div>
@@ -173,9 +185,23 @@
                     @click="createBalance"
                     v-if="!hasBalance(selected)"
                     class="app__button-raised"
-                    :disabled="isPending">
+                    :disabled="isPending"
+                  >
                     {{ i18n.lbl_add_to_balances() }}
                   </button>
+                  <router-link
+                    tag="button"
+                    :to="{
+                      name: 'token-creation.index.code',
+                      params: { code: selected.code }
+                    }"
+                    v-if="isTokenOwner"
+                    :disabled="isPending"
+                    class="app__button-raised"
+                    v-ripple
+                  >
+                    {{ i18n.lbl_update() }}
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -213,7 +239,8 @@ export default {
   computed: {
     ...mapGetters([
       vuexTypes.accountBalances,
-      vuexTypes.tokens
+      vuexTypes.tokens,
+      vuexTypes.accountId
     ]),
     filteredTokens () {
       return this.filtrationCriteria
@@ -226,6 +253,9 @@ export default {
           }
         })
         : this.tokens || []
+    },
+    isTokenOwner () {
+      return this.selected.owner === this.accountId
     }
   },
   watch: {
@@ -401,7 +431,7 @@ export default {
 }
 .tokens__md-scrollbar.md-scrollbar {
   background-color: $col-token-list-background;
-  box-shadow: inset 0px 0px 20px 0 rgba(0, 0, 0, 0.03)
+  box-shadow: inset 0px 0px 20px 0 rgba(0, 0, 0, 0.03);
 }
 
 .explore-tokens__token-code {

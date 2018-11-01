@@ -81,6 +81,18 @@
             v-ripple
             class="sidebar__list-item"
             @click.native="closeSidebar"
+            to="/history"
+            tag="li"
+            v-if="config.FEATURE_FLAGS.history"
+          >
+            <md-icon class="sidebar__list-item-icon">calendar_view_day</md-icon>
+            <span class="md-list-item-text">{{ i18n.lbl_history() }}</span>
+          </router-link>
+
+          <router-link
+            v-ripple
+            class="sidebar__list-item"
+            @click.native="closeSidebar"
             to="/limits"
             tag="li"
             v-if="config.FEATURE_FLAGS.limits"

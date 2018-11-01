@@ -1,6 +1,7 @@
 import { offersService } from '../services/offer.service'
 import { SECONDARY_MARKET_ORDER_BOOK_ID } from '../const/const'
 import { RECORDS_VERBOSE } from './help/records.const'
+import { i18n } from '@/js/i18n'
 
 export class OfferRecord {
   constructor (record) {
@@ -16,7 +17,7 @@ export class OfferRecord {
     this.fee = record.fee
     this.isBuy = record.is_buy
     this.price = record.price
-    this.createdAt = record.created_at
+    this.date = record.created_at
     this.orderBookId = record.order_book_id
   }
 
@@ -41,6 +42,32 @@ export class OfferRecord {
       offerId: this.id,
       price: this.price,
       orderBookId: SECONDARY_MARKET_ORDER_BOOK_ID
+    }
+  }
+
+  get listView () {
+    return {
+      email: 'raw',
+      amount: 'formatAmount',
+      type: 'translate',
+      direction: 'raw'
+    }
+  }
+
+  get detailsView () {
+    return {
+      id: { processor: 'raw' },
+      baseAmount: { processor: 'formatAmount', processorArg: { asset: this.baseAssetCode } },
+      quoteAmount: { processor: 'formatAmount', processorArg: { asset: this.quoteAssetCode } },
+      order: {
+        processor: 'processedValue',
+        processorArg: {
+          value: this.isBuy ? i18n.trd_order_buy() : i18n.trd_order_sell()
+        }
+      },
+      price: { processor: 'formatAmount', processorArg: { asset: this.quoteAssetCode } },
+      fee: { processor: 'formatAmount', processorArg: { asset: this.baseAssetCode } },
+      date: { processor: 'formatDateTime' }
     }
   }
 }

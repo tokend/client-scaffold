@@ -1,95 +1,96 @@
 <template>
   <div class="tx-history">
-    <md-table class="tx-history__table app__card">
-      <md-table-toolbar class="tx-history__table-toolbar">
+    <div class="app__card">
+      <div class="tx-history__table-toolbar">
         <div class="tx-history__select-outer">
           <select-field-custom
             :label="i18n.lbl_asset()"
             v-model="tokenCode"
             :values="tokens" />
         </div>
-      </md-table-toolbar>
-
-      <template v-if="tokenCode && list.length">
-        <md-table-row class="tx-history__row">
-          <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_tx_type() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_status() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_asset() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_amount() }}</md-table-head>
-          <md-table-head>{{ i18n.lbl_counterparty() }}</md-table-head>
-          <md-table-head><!--Button--></md-table-head>
-        </md-table-row>
-
-        <template v-for="(tx, i) in list">
-          <md-table-row
-            class="tx-history__row"
-            @click="toggleDetails(i)"
-            :key="`tx-history-row-${i}`">
-            <md-table-cell class="tx-history__table-cell">
-              {{ tx.date }}
-            </md-table-cell>
-            <md-table-cell class="tx-history__table-cell">
-              {{ tx.name }}
-            </md-table-cell>
-            <md-table-cell class="tx-history__table-cell">
-              {{ tx.state }}
-            </md-table-cell>
-            <md-table-cell class="tx-history__table-cell">
-              {{ tx.asset }}
-            </md-table-cell>
-            <md-table-cell class="tx-history__table-cell">
-              {{ tx.amount }}
-            </md-table-cell>
-            <md-table-cell
-              class="tx-history__table-cell
-                     tx-history__table-cell--counterparty">
-              {{ tx.counterparty }}
-            </md-table-cell>
-
-            <md-table-cell>
-              <md-button class="tx-history__open-details-btn md-icon-button">
-                <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
-                <md-icon v-else>keyboard_arrow_down</md-icon>
-              </md-button>
-            </md-table-cell>
+      </div>
+      <md-table class="tx-history__table">
+        <template v-if="tokenCode && list.length">
+          <md-table-row class="tx-history__row">
+            <md-table-head>{{ i18n.lbl_date() }}</md-table-head>
+            <md-table-head>{{ i18n.lbl_tx_type() }}</md-table-head>
+            <md-table-head>{{ i18n.lbl_status() }}</md-table-head>
+            <md-table-head>{{ i18n.lbl_asset() }}</md-table-head>
+            <md-table-head>{{ i18n.lbl_amount() }}</md-table-head>
+            <md-table-head>{{ i18n.lbl_counterparty() }}</md-table-head>
+            <md-table-head><!--Button--></md-table-head>
           </md-table-row>
 
-          <md-table-row
-            class="th-history__expandable-row"
-            v-if="isSelected(i)"
-            :key="`history-index-${i}-${i}`">
+          <template v-for="(tx, i) in list">
+            <md-table-row
+              class="tx-history__row"
+              @click.native="toggleDetails(i)"
+              :key="`tx-history-row-${i}`">
+              <md-table-cell class="tx-history__table-cell">
+                {{ tx.date }}
+              </md-table-cell>
+              <md-table-cell class="tx-history__table-cell">
+                {{ tx.name }}
+              </md-table-cell>
+              <md-table-cell class="tx-history__table-cell">
+                {{ tx.state }}
+              </md-table-cell>
+              <md-table-cell class="tx-history__table-cell">
+                {{ tx.asset }}
+              </md-table-cell>
+              <md-table-cell class="tx-history__table-cell">
+                {{ tx.amount }}
+              </md-table-cell>
+              <md-table-cell
+                class="tx-history__table-cell
+                      tx-history__table-cell--counterparty">
+                <email-getter :id="tx.counterparty" />
+              </md-table-cell>
+
+              <md-table-cell>
+                <md-button class="tx-history__open-details-btn md-icon-button">
+                  <md-icon v-if="isSelected(i)">keyboard_arrow_up</md-icon>
+                  <md-icon v-else>keyboard_arrow_down</md-icon>
+                </md-button>
+              </md-table-cell>
+            </md-table-row>
+
+            <md-table-row
+              class="tx-history__expandable-row"
+              v-if="isSelected(i)"
+              :key="`history-index-${i}-${i}`">
+              <md-table-cell colspan="7">
+                <tx-details
+                  class="tx-history__details"
+                  :tx="tx" />
+              </md-table-cell>
+            </md-table-row>
+          </template>
+
+          <md-table-row v-if="!isLoaded">
             <md-table-cell colspan="7">
-              <tx-details
-                class="tx-history__details"
-                :tx="tx" />
+              <div class="tx-history__more-btn-outer">
+                <button
+                  v-ripple
+                  @click="more"
+                  class="app__button-flat"
+                  :disabled="isLoading">
+                  {{ i18n.lbl_more() }}
+                </button>
+              </div>
             </md-table-cell>
           </md-table-row>
         </template>
 
-        <md-table-row v-if="!isLoaded">
-          <md-table-cell colspan="7">
-            <div class="tx-history__btn-outer">
-              <button
-                v-ripple
-                @click="more"
-                class="app__button-flat"
-                :disabled="isLoading">
-                {{ i18n.lbl_more() }}
-              </button>
-            </div>
-          </md-table-cell>
-        </md-table-row>
-      </template>
-
-      <template v-else>
-        <div class="tx-history__no-transactions">
-          <md-icon class="md-size-4x">trending_up</md-icon>
-          <h2>{{ i18n.th_no_transaction_history() }}</h2>
-          <p>{{ i18n.th_here_will_be_the_list() }}</p>
-        </div>
-      </template>
-    </md-table>
+        <template v-else>
+          <div class="tx-history__no-transactions">
+            <md-icon class="md-size-4x">trending_up</md-icon>
+            <h2>{{ i18n.th_no_transaction_history() }}</h2>
+            <p>{{ i18n.th_here_will_be_the_list() }}</p>
+          </div>
+        </template>
+      </md-table>
+    </div>
   </div>
 </template>
 
@@ -103,10 +104,15 @@ import { vuexTypes } from '../../../../vuex/types'
 import { RecordTypes } from '../../../../js/records/types'
 import { i18n } from '../../../../js/i18n'
 import get from 'lodash/get'
+import EmailGetter from '@/vue/app/common/EmailGetter'
 
 export default {
   name: 'history-index',
-  components: { TxDetails, SelectFieldCustom },
+  components: {
+    TxDetails,
+    SelectFieldCustom,
+    EmailGetter
+  },
   data: _ => ({
     isLoading: false,
     tokenCode: null,
@@ -172,7 +178,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../../../../scss/variables';
 
   $padding-vertical: 20px;
@@ -191,7 +197,7 @@ export default {
   .tx-history__table-toolbar {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-end;
+    justify-content: flex-start;
 
     @media (max-width: 840px) {
       flex-direction: column;
@@ -210,6 +216,12 @@ export default {
     &--counterparty {
       max-width: 10rem;
     }
+
+    & > .md-table-cell-container {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .tx-history__select-outer {
@@ -222,7 +234,7 @@ export default {
     width: 100%;
   }
 
-  .tx-history__btn-outer {
+  .tx-history__more-btn-outer {
     text-align: center;
   }
 
@@ -239,5 +251,4 @@ export default {
     padding: 24px;
     font-size: 24px;
   }
-
 </style>

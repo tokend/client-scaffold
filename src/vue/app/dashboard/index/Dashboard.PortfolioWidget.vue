@@ -8,7 +8,8 @@
         <div class="portfolio-widget__select-picture">
           <img
             class="portfolio-widget__asset"
-            :src="imgUrl">
+            :src="imgUrl"
+          >
         </div>
         <div class="portfolio-widget__select-field">
           <!--
@@ -28,10 +29,23 @@
       <div class="portfolio-widget__wrapper portfolio-widget__wrapper--values">
         <div class="portfolio-widget__asset-available">
           <div class="portfolio-widget__asset-value">
-            {{ balance }} {{ currentAsset }}
+            <span class="portfolio-widget__asset-value-main">
+              {{ balance | formatMoney({ currency: currentAsset }) }}
+            </span>
+            <span class="portfolio-widget__asset-value-secondary">
+              <!-- eslint-disable-next-line -->
+              &asymp; {{ convertedBalance | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET, symbolAllowed: true }) }}
+            </span>
           </div>
-          <div class="portfolio-widget__asset-usd">
-            {{ convertedBalance }} {{ config.DEFAULT_QUOTE_ASSET }}
+          <div class="portfolio-widget__asset-subvalue">
+            <span class="portfolio-widget__asset-value-secondary">
+              <!-- eslint-disable-next-line -->
+              {{ i18n.lbl_locked() }} {{ locked | formatMoney({ currency: currentAsset }) }}
+            </span>
+            <span class="portfolio-widget__asset-value-secondary">
+              <!-- eslint-disable-next-line -->
+              &asymp; {{ convertedLocked | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET, symbolAllowed: true }) }}
+            </span>
           </div>
         </div>
       </div>
@@ -87,14 +101,14 @@ export default {
     ASSET_POLICIES
   }),
   computed: {
-    ...mapGetters([
-      vuexTypes.accountBalances,
-      vuexTypes.userTransferableTokens,
-      vuexTypes.tokens
-    ]),
+    ...mapGetters({
+      balances: vuexTypes.accountBalances,
+      userTransferableTokens: vuexTypes.userTransferableTokens,
+      tokens: vuexTypes.tokens
+    }),
     tokensList () {
       const tokens = this.tokens
-        .filter(token => Object.keys(this.accountBalances).includes(token.code))
+        .filter(token => Object.keys(this.balances).includes(token.code))
       const baseAssets = tokens
         .filter(token => token.policies.includes(ASSET_POLICIES.baseAsset))
         .sort((a, b) => a.code.localeCompare(b.code))
@@ -111,18 +125,20 @@ export default {
         .map(item => `${item.name} (${item.code})`)[0]
     },
     balance () {
-      return i18n.c(
-        get(this.accountBalances, `${this.currentAsset}.balance`) || 0
-      )
+      return get(this.balances, `${this.currentAsset}.balance`) || 0
     },
     convertedBalance () {
-      return i18n.cc(
-        get(this.accountBalances, `${this.currentAsset}.converted_balance`) || 0
-      )
+      return get(this.balances, `${this.currentAsset}.converted_balance`) || 0
+    },
+    locked () {
+      return get(this.balances, `${this.currentAsset}.locked`) || 0
+    },
+    convertedLocked () {
+      return get(this.balances, `${this.currentAsset}.converted_locked`) || 0
     },
     imgUrl () {
       const logoKey = get(
-        this.accountBalances,
+        this.balances,
         `${this.currentAsset}.asset_details.details.logo.key`
       )
       if (logoKey) {
@@ -216,9 +232,13 @@ $custom-breakpoint: 800px;
   color: $col-details-value;
 }
 
-.portfolio-widget__asset-usd {
+.portfolio-widget__asset-subvalue {
   margin-top: 8px;
   font-size: 16px;
+  color: $col-details-label;
+}
+
+.portfolio-widget__asset-value-secondary {
   color: $col-details-label;
 }
 </style>

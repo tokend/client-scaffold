@@ -51,5 +51,6 @@ export default {
   trd_no_pairs: 'No tradable pairs',
   trd_no_pairs_exp: 'This feature will be available once any tradable pair appears',
   trd_balance_label: 'Balances',
-  trd_balance: '%{base} / %{quote}'
+  trd_balance: '%{base} / %{quote}',
+  trd_order_id: 'Order ID'
 }

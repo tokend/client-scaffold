@@ -13,6 +13,7 @@
                    app__card--shadow-none
                    manage-orders__table">
             <md-table-row class="manage-orders__row">
+              <md-table-head>{{ i18n.trd_order_id() }}</md-table-head>
               <md-table-head>{{ i18n.trd_manage_date() }}</md-table-head>
               <md-table-head>
                 {{ i18n.trd_manahe_order() }}
@@ -30,6 +31,9 @@
                 class="manage-orders__row"
                 @click.native="toggleDetails(i)"
                 :key="`${i}-row`">
+                <md-table-cell class="manage-orders__table-cell">
+                  {{ order.id }}
+                </md-table-cell>
                 <md-table-cell class="manage-orders__table-cell">
                   {{ i18n.dmy(order.createdAt) }}
                 </md-table-cell>
