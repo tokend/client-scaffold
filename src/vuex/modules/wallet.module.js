@@ -2,6 +2,9 @@ import { walletService } from '../../js/services/wallet.service'
 import { WalletHelper } from '../../js/helpers/wallet.helper'
 import { vuexTypes } from '../types'
 
+import { Sdk } from '@/sdk'
+import { Wallet } from '@tokend/js-sdk'
+
 export const state = {
   id: ''
 }
@@ -36,6 +39,12 @@ export const actions = {
       publicKey: userData.publicKey,
       seed: userData.seed
     })
+    Sdk.sdk.useWallet(new Wallet(
+      userData.email,
+      userData.seed,
+      userData.accountId,
+      userData.walletId
+    ))
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="isAppInitialized">
     <template v-if="isLoggedIn && $route.meta.routeWithFeatures">
       <warning-banner
         v-if="isNotSupportedBrowser"
@@ -56,6 +56,10 @@ import { i18n } from '@/js/i18n'
 
 import moment from 'moment'
 
+import { Sdk } from '@/sdk'
+import { Wallet } from '@tokend/js-sdk'
+import config from '../../config'
+
 export default {
   name: 'app',
 
@@ -70,6 +74,7 @@ export default {
 
   data: () => ({
     isNotSupportedBrowser: false,
+    isAppInitialized: false,
     i18n
   }),
 
@@ -77,7 +82,10 @@ export default {
     ...mapGetters([
       vuexTypes.userAccountId,
       vuexTypes.isLoggedIn,
-      vuexTypes.userEmail
+      vuexTypes.userEmail,
+      vuexTypes.accountSeed,
+      vuexTypes.walletId,
+      vuexTypes.accountId
     ]),
     year () {
       return moment().year() // can use in footer, ex: (c) TokenD 2018
@@ -92,7 +100,17 @@ export default {
     }
   },
 
-  created () {
+  async created () {
+    await this.initApp()
+    if (this.accountSeed) {
+      Sdk.sdk
+        .useWallet(new Wallet(
+          '',
+          this.accountSeed,
+          this.accountId,
+          this.walletId
+        ))
+    }
     window.setTimeout(() => {
       this.$store.commit(vuexTypes.KEEP_SESSION)
     }, 1000)
@@ -105,6 +123,9 @@ export default {
       loadAccount: vuexTypes.GET_ACCOUNT_DETAILS,
       loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
     }),
+    async initApp () {
+      await Sdk.init(config.HORIZON_SERVER)
+    },
     detectIE () {
       const edge = window.navigator.userAgent.indexOf('Edge/')
 

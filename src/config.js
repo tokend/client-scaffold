@@ -22,7 +22,7 @@ const featureFlags = {
 
 export default Object.assign(
   {
-    HORIZON_SERVER: '',
+    HORIZON_SERVER: process.env.HORIZON_SERVER,
     FILE_STORAGE: '',
     NETWORK_PASSPHRASE: '',
     TRANSACTIONS_PER_PAGE: 12,
