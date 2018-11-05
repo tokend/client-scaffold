@@ -116,6 +116,7 @@ export default {
     }, 1000)
     this.subscribeToUserLogout()
     this.detectIE()
+    this.isAppInitialized = true
   },
 
   methods: {
