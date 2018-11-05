@@ -2,12 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import Vue from 'vue'
-import App from './vue/root/App'
-import './scss/app.scss'
+import App from '../legacy/vue/root/App'
+import '../legacy/scss/app.scss'
 
 // vue default plugins
-import router from './vue-router'
-import store from './vuex'
+import router from '../legacy/vue-router'
+import store from '../legacy/vuex'
 
 // vue http-client
 import VueResource from 'vue-resource'
@@ -21,18 +21,18 @@ import 'vue-material/dist/vue-material.min.css'
 
 // validator:
 import VeeValidate from 'vee-validate'
-import { extendValidator } from './validator/validator'
+import { extendValidator } from '../legacy/validator/validator'
 
 // directives
-import tableScrollShadow from './directives/tableScrollShadow'
-import rippleEffect from './directives/rippleEffect'
+import tableScrollShadow from '../legacy/directives/tableScrollShadow'
+import rippleEffect from '../legacy/directives/rippleEffect'
 
 // filters
-import { translate } from './vue/common/filters/translate'
-import { localizeFeeType } from './vue/common/filters/localizeFeeType'
-import { localizeFeeSubType } from './vue/common/filters/localizeFeeSubType'
-import { formatDate } from './vue/common/filters/formatDate'
-import { formatMoney } from './vue/common/filters/formatMoney'
+import { translate } from '../legacy/vue/common/filters/translate'
+import { localizeFeeType } from '../legacy/vue/common/filters/localizeFeeType'
+import { localizeFeeSubType } from '../legacy/vue/common/filters/localizeFeeSubType'
+import { formatDate } from '../legacy/vue/common/filters/formatDate'
+import { formatMoney } from '../legacy/vue/common/filters/formatMoney'
 
 // ripple effects:
 rippleEffect.color = 'rgba(58, 65, 128, .2)'
