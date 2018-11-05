@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import DetailRow from '@/vue/app/common/Detail.Row'
-import { i18n } from '@/js/i18n'
-import { ASSET_POLICIES } from '@/js/const/xdr.const'
-import { documentTypes } from '@/js/const/documents.const'
+import DetailRow from 'L@/vue/app/common/Detail.Row'
+import { i18n } from 'L@/js/i18n'
+import { ASSET_POLICIES } from 'L@/js/const/xdr.const'
+import { documentTypes } from 'L@/js/const/documents.const'
 export default {
   components: {
     DetailRow
@@ -80,8 +80,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .crowdfund-token-header {
     display: flex;

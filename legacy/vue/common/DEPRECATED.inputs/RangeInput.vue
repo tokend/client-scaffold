@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
+import { commonEvents } from 'L@/js/events/common_events'
 import config from '@/config'
 
 export default {

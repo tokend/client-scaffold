@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import Markdown from '@/vue/app/common/Markdown'
-import Logotype from '@/vue/app/common/Logotype'
+import Markdown from 'L@/vue/app/common/Markdown'
+import Logotype from 'L@/vue/app/common/Logotype'
 export default {
   name: 'ios-install-guide',
   components: { Markdown, Logotype }
@@ -67,8 +67,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .ios-guide {
   padding: 4 * $point $content-side-paddings;

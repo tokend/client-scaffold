@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
 
   .timeline-item__date {
     color: lighten($col-text-field-hint, 10%);

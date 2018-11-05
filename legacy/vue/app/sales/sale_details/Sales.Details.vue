@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import { salesService } from '@/js/services/sales.service'
-import { tokensService } from '@/js/services/tokens.service'
-import { SaleRecord } from '@/js/records/sale.record'
-import { TokenRecord } from '@/js/records/token.record'
-import { i18n } from '@/js/i18n'
+import { salesService } from 'L@/js/services/sales.service'
+import { tokensService } from 'L@/js/services/tokens.service'
+import { SaleRecord } from 'L@/js/records/sale.record'
+import { TokenRecord } from 'L@/js/records/token.record'
+import { i18n } from 'L@/js/i18n'
 import SaleInvest from './components/Sales.Invest'
 import SaleTabs from './Sales.Tabs'
 import InvestProgressBar from '../sale_card/Sales.ProgressBar'
@@ -95,8 +95,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 $ratio_16: 370px;
 $ratio_9: $ratio_16 * (9/16);
 

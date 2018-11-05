@@ -243,8 +243,8 @@ export default {
 
 <style lang="scss" scoped>
   @import 'settings';
-  @import "~@scss/variables";
-  @import "~@scss/mixins";
+  @import "~L@scss/variables";
+  @import "~L@scss/mixins";
 
   .md-dialog {
     width: 25rem;

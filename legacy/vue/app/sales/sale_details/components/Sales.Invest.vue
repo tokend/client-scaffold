@@ -115,24 +115,24 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
-import { i18n } from '@/js/i18n'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
+import { i18n } from 'L@/js/i18n'
 import config from '@/config'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 import _get from 'lodash/get'
-import { offersService } from '@/js/services/offer.service'
-import { accountsService } from '@/js/services/accounts.service'
-import { pairsService } from '@/js/services/pairs.service'
-import { feeService } from '@/js/services/fees.service'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { add, subtract, multiply } from '@/js/utils/math.util'
-import { RecordFactory } from '@/js/records/factory'
-import { commonEvents } from '@/js/events/common_events'
-import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-import HintWrapper from '@/vue/common/hint-wrapper/HintWrapper'
+import { offersService } from 'L@/js/services/offer.service'
+import { accountsService } from 'L@/js/services/accounts.service'
+import { pairsService } from 'L@/js/services/pairs.service'
+import { feeService } from 'L@/js/services/fees.service'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { add, subtract, multiply } from 'L@/js/utils/math.util'
+import { RecordFactory } from 'L@/js/records/factory'
+import { commonEvents } from 'L@/js/events/common_events'
+import InputFieldUnchained from 'L@/vue/common/fields/InputFieldUnchained'
+import SelectFieldUnchained from 'L@/vue/common/fields/SelectFieldUnchained'
+import HintWrapper from 'L@/vue/common/hint-wrapper/HintWrapper'
 
 export default {
   name: 'sale-invest',
@@ -327,8 +327,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .invest__header {
   font-weight: bold;

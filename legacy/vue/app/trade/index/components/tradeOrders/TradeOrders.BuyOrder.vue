@@ -65,12 +65,12 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
 import OrderMakerMixin from '../order-maker.mixin'
 
-import { confirmAction } from '@/js/modals/confirmation_message'
-import { multiply } from '@/js/utils/math.util'
-import { i18n } from '@/js/i18n'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
+import { multiply } from 'L@/js/utils/math.util'
+import { i18n } from 'L@/js/i18n'
 import config from '@/config'
 
 export default {

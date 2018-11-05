@@ -54,17 +54,17 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { issuanceService } from '@/js/services/issuances.service'
-import { FileHelper } from '@/js/helpers/file.helper'
+import { vuexTypes } from 'L@/vuex/types'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { issuanceService } from 'L@/js/services/issuances.service'
+import { FileHelper } from 'L@/js/helpers/file.helper'
 import { PreIssuanceRequest, xdr } from 'tokend-js-sdk'
-import FormMixin from '@/vue/common/mixins/form.mixin'
-import FileField from '@/vue/common/fields/FileField'
-import Markdown from '@/vue/app/common/Markdown'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
+import FileField from 'L@/vue/common/fields/FileField'
+import Markdown from 'L@/vue/app/common/Markdown'
 import config from '@/config'
 
 export default {
@@ -179,8 +179,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/mixins";
-  @import "~@scss/variables";
+  @import "~L@scss/mixins";
+  @import "~L@scss/variables";
 
   .preissuance-form__upload-wrp {
     margin-top: 1rem;

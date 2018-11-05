@@ -30,10 +30,10 @@
 <script>
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
-import { attachEventHandler } from '@/js/events/helpers'
-import { commonEvents } from '@/js/events/common_events'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
+import { attachEventHandler } from 'L@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
 
 const popupShowLimit = 15 * 60
 const idleDelay = 60
@@ -141,8 +141,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .inactivity-message__popup {
     @include center;

@@ -213,17 +213,17 @@
 </template>
 
 <script>
-import formMixin from '@/vue/common/mixins/form.mixin'
+import formMixin from 'L@/vue/common/mixins/form.mixin'
 
 import { mapGetters, mapActions } from 'vuex'
-import { accountsService } from '@/js/services/accounts.service'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { vuexTypes } from '@/vuex/types'
-import { confirmAction } from '@/js/modals/confirmation_message'
-import { i18n } from '@/js/i18n'
+import { accountsService } from 'L@/js/services/accounts.service'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { vuexTypes } from 'L@/vuex/types'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
+import { i18n } from 'L@/js/i18n'
 
-import Loader from '@/vue/app/common/Loader'
+import Loader from 'L@/vue/app/common/Loader'
 import SubmitterMixin from '../../common/mixins/submitter.mixin'
 
 export default {
@@ -316,8 +316,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .token-search-form {
   width: 100%;

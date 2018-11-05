@@ -62,14 +62,14 @@
 
 <script>
 import config from '@/config'
-import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
-import { ASSET_POLICIES } from '@/js/const/const'
+import SelectFieldCustom from 'L@/vue/common/fields/SelectFieldCustom'
+import NoDataMessage from 'L@/vue/common/messages/NoDataMessage'
+import { ASSET_POLICIES } from 'L@/js/const/const'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
-import { commonEvents } from '@/js/events/common_events'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
+import { commonEvents } from 'L@/js/events/common_events'
 import get from 'lodash/get'
 
 export default {
@@ -165,8 +165,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables.scss";
-@import "~@scss/mixins.scss";
+@import "~L@scss/variables.scss";
+@import "~L@scss/mixins.scss";
 
 $custom-breakpoint: 800px;
 

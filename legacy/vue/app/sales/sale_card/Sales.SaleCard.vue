@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { humanizeFutureDate } from '@/js/utils/dates.util'
+import { humanizeFutureDate } from 'L@/js/utils/dates.util'
 import config from '@/config'
 import _get from 'lodash/get'
 import InvestProgressBar from './Sales.ProgressBar'
@@ -59,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   $padding-side: 20px;
 

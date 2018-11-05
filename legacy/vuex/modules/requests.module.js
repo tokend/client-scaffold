@@ -1,10 +1,10 @@
-import { tokensService } from '@/js/services/tokens.service'
+import { tokensService } from 'L@/js/services/tokens.service'
 import {
   reviewableRequestsService
-} from '@/js/services/reviewable_requests.service'
-import { salesService } from '@/js/services/sales.service'
-import { RecordFactory } from '@/js/records/factory'
-import { Paginator } from '@/js/helpers/paginator'
+} from 'L@/js/services/reviewable_requests.service'
+import { salesService } from 'L@/js/services/sales.service'
+import { RecordFactory } from 'L@/js/records/factory'
+import { Paginator } from 'L@/js/helpers/paginator'
 import { vuexTypes } from '../types'
 import config from '@/config'
 import cloneDeep from 'lodash/cloneDeep'

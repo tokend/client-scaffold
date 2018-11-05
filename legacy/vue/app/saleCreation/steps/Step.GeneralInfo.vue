@@ -132,12 +132,12 @@
 
 <script>
 import StepMixin from './step.mixin'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { commonEvents } from '@/js/events/common_events'
-import { ASSET_POLICIES, documentTypes } from '@/js/const/const'
-import { i18n } from '@/js/i18n'
-import { vuexTypes } from '@/vuex/types'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { commonEvents } from 'L@/js/events/common_events'
+import { ASSET_POLICIES, documentTypes } from 'L@/js/const/const'
+import { i18n } from 'L@/js/i18n'
+import { vuexTypes } from 'L@/vuex/types'
 import { mapGetters } from 'vuex'
 import _pick from 'lodash/pick'
 import config from '@/config'
@@ -216,7 +216,7 @@ export default {
 
 <style scoped lang="scss">
   @import 'step';
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
 
   .app__form-row {
     display: flex;

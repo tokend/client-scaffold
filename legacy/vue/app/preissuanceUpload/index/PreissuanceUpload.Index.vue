@@ -37,11 +37,11 @@
 <script>
 import PreissuanceUploadManager from './PreissuanceUpload.Manager'
 
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 import { mapGetters } from 'vuex'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 
-import { ACCOUNT_TYPES } from '@/js/const/const'
+import { ACCOUNT_TYPES } from 'L@/js/const/const'
 
 export default {
   components: {

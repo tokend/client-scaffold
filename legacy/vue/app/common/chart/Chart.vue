@@ -22,8 +22,8 @@
 import ChartRenderer from './Chart.Renderer'
 import ScaleTabs from './Chart.Tabs'
 
-import { chartsService } from '@/js/services/charts.service'
-import { errors } from '@/js/errors/factory'
+import { chartsService } from 'L@/js/services/charts.service'
+import { errors } from 'L@/js/errors/factory'
 import config from '@/config'
 
 export default {

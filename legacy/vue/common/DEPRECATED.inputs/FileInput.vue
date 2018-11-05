@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import { FileHelper } from '@/js/helpers/file.helper'
-import { commonEvents } from '@/js/events/common_events'
-import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from '@/js/const/const'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { FileHelper } from 'L@/js/helpers/file.helper'
+import { commonEvents } from 'L@/js/events/common_events'
+import { MAX_FILE_MEGABYTES, MAX_FILE_BYTES } from 'L@/js/const/const'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
 
 export default {
   name: 'file-input',
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@/scss/variables';
+  @import '~L@/scss/variables';
 
   .file-input {
     display: inline-block;

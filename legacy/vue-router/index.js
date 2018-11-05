@@ -1,83 +1,83 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import store from '@/vuex'
+import store from 'L@/vuex'
 import config from '@/config'
-import { PAGES_NAMES } from '@/js/const/const'
+import { PAGES_NAMES } from 'L@/js/const/const'
 
 import { resolveRedirect } from './redirect'
 
 // route components:
-import Auth from '@/vue/auth/Auth'
-import Login from '@/vue/auth/Login'
-import Signup from '@/vue/auth/Signup'
-import Recovery from '@/vue/auth/Recovery'
-import EmailResend from '@/vue/auth/ConfirmEmail'
-import Terms from '@/vue/public/legals/Legal.Terms'
-import Downloads from '@/vue/public/Public.Downloads'
-import iosInstallGuide from '@/vue/public/Public.IosInstallGuide'
+import Auth from 'L@/vue/auth/Auth'
+import Login from 'L@/vue/auth/Login'
+import Signup from 'L@/vue/auth/Signup'
+import Recovery from 'L@/vue/auth/Recovery'
+import EmailResend from 'L@/vue/auth/ConfirmEmail'
+import Terms from 'L@/vue/public/legals/Legal.Terms'
+import Downloads from 'L@/vue/public/Public.Downloads'
+import iosInstallGuide from 'L@/vue/public/Public.IosInstallGuide'
 
-import AppContent from '@/vue/root/AppContent'
+import AppContent from 'L@/vue/root/AppContent'
 
-import Dashboard from '@/vue/app/dashboard/Dashboard.Entry'
-import DashboardIndex from '@/vue/app/dashboard/index/Dashboard.Index'
+import Dashboard from 'L@/vue/app/dashboard/Dashboard.Entry'
+import DashboardIndex from 'L@/vue/app/dashboard/index/Dashboard.Index'
 
-import Deposit from '@/vue/app/deposit/Deposit.Entry'
-import DepositMake from '@/vue/app/deposit/make/Deposit.Make'
+import Deposit from 'L@/vue/app/deposit/Deposit.Entry'
+import DepositMake from 'L@/vue/app/deposit/make/Deposit.Make'
 
-import Transfers from '@/vue/app/transfers/Transfers.Entry'
-import TransfersMake from '@/vue/app/transfers/make/Transfers.Make'
+import Transfers from 'L@/vue/app/transfers/Transfers.Entry'
+import TransfersMake from 'L@/vue/app/transfers/make/Transfers.Make'
 
-import MassTransfers from '@/vue/app/massTransfers/MassTransfers.Entry'
-import MassTransfersMake from '@/vue/app/massTransfers/MassTransfers.Make'
+import MassTransfers from 'L@/vue/app/massTransfers/MassTransfers.Entry'
+import MassTransfersMake from 'L@/vue/app/massTransfers/MassTransfers.Make'
 
-import Withdrawal from '@/vue/app/withdrawal/Withdrawal.Entry'
-import WithdrawalMake from '@/vue/app/withdrawal/make/Withdrawal.Make'
+import Withdrawal from 'L@/vue/app/withdrawal/Withdrawal.Entry'
+import WithdrawalMake from 'L@/vue/app/withdrawal/make/Withdrawal.Make'
 
-import Tokens from '@/vue/app/tokens/Tokens.Entry'
-import TokensExplore from '@/vue/app/tokens/Tokens.Explore'
+import Tokens from 'L@/vue/app/tokens/Tokens.Entry'
+import TokensExplore from 'L@/vue/app/tokens/Tokens.Explore'
 
-import History from '@/vue/app/history/History.Entry'
-import HistoryIndex from '@/vue/app/history/index/History.Index'
+import History from 'L@/vue/app/history/History.Entry'
+import HistoryIndex from 'L@/vue/app/history/index/History.Index'
 
-import Limits from '@/vue/app/limits/Limits.Entry'
-import LimitsIndex from '@/vue/app/limits/Limits.Index'
+import Limits from 'L@/vue/app/limits/Limits.Entry'
+import LimitsIndex from 'L@/vue/app/limits/Limits.Index'
 
-import Trade from '@/vue/app/trade/Trade.Entry'
-import TradeIndex from '@/vue/app/trade/index/Trade.Index'
+import Trade from 'L@/vue/app/trade/Trade.Entry'
+import TradeIndex from 'L@/vue/app/trade/index/Trade.Index'
 
-import Settings from '@/vue/app/settings/Settings.Entry'
-import SettingsSecurity from '@/vue/app/settings/security/Settings.Security'
+import Settings from 'L@/vue/app/settings/Settings.Entry'
+import SettingsSecurity from 'L@/vue/app/settings/security/Settings.Security'
 
-import Verification from '@/vue/app/verification/Verification.Entry'
-import VerificationMake from '@/vue/app/verification/make/Verification.Make'
+import Verification from 'L@/vue/app/verification/Verification.Entry'
+import VerificationMake from 'L@/vue/app/verification/make/Verification.Make'
 
-import TokenCreation from '@/vue/app/tokenCreation/TokenCreation.Entry'
-import TokenCreationIndex from '@/vue/app/tokenCreation/index/TokenCreation.Index'
+import TokenCreation from 'L@/vue/app/tokenCreation/TokenCreation.Entry'
+import TokenCreationIndex from 'L@/vue/app/tokenCreation/index/TokenCreation.Index'
 
-import IssuanceCreation from '@/vue/app/issuanceCreation/IssuanceCreation.Entry'
-import IssuanceCreationIndex from '@/vue/app/issuanceCreation/index/IssuanceCreation.Index'
+import IssuanceCreation from 'L@/vue/app/issuanceCreation/IssuanceCreation.Entry'
+import IssuanceCreationIndex from 'L@/vue/app/issuanceCreation/index/IssuanceCreation.Index'
 
-import SaleCreation from '@/vue/app/saleCreation/SaleCreation.Entry'
-import SaleCreationIndex from '@/vue/app/saleCreation/SaleCreation.Index'
+import SaleCreation from 'L@/vue/app/saleCreation/SaleCreation.Entry'
+import SaleCreationIndex from 'L@/vue/app/saleCreation/SaleCreation.Index'
 
-import Requests from '@/vue/app/requests/Requests.Entry'
-import RequestsIndex from '@/vue/app/requests/index/Requests.Index'
+import Requests from 'L@/vue/app/requests/Requests.Entry'
+import RequestsIndex from 'L@/vue/app/requests/index/Requests.Index'
 
-import Fee from '@/vue/app/fee/Fee.Entry'
-import FeeIndex from '@/vue/app/fee/index/Fee.Index'
+import Fee from 'L@/vue/app/fee/Fee.Entry'
+import FeeIndex from 'L@/vue/app/fee/index/Fee.Index'
 
-import Sales from '@/vue/app/sales/Sales.Entry'
-import SalesDetails from '@/vue/app/sales/sale_details/Sales.Details'
-import SalesExplore from '@/vue/app/sales/overview/Sales.Explore'
+import Sales from 'L@/vue/app/sales/Sales.Entry'
+import SalesDetails from 'L@/vue/app/sales/sale_details/Sales.Details'
+import SalesExplore from 'L@/vue/app/sales/overview/Sales.Explore'
 
-import SalesOwned from '@/vue/app/salesOwned/SalesOwned.Entry'
-import SalesOwnedIndex from '@/vue/app/salesOwned/SalesOwned.Index'
+import SalesOwned from 'L@/vue/app/salesOwned/SalesOwned.Entry'
+import SalesOwnedIndex from 'L@/vue/app/salesOwned/SalesOwned.Index'
 
-import PreissuanceUpload from '@/vue/app/preissuanceUpload/PreissuanceUpload.Entry'
-import PreissuanceUploadIndex from '@/vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
+import PreissuanceUpload from 'L@/vue/app/preissuanceUpload/PreissuanceUpload.Entry'
+import PreissuanceUploadIndex from 'L@/vue/app/preissuanceUpload/index/PreissuanceUpload.Index'
 
-import SupportedBrowsers from '@/vue/common/SupportedBrowsers'
+import SupportedBrowsers from 'L@/vue/common/SupportedBrowsers'
 
 Vue.use(Router)
 

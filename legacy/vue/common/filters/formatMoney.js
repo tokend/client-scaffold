@@ -1,5 +1,5 @@
-import { polyglot } from '@/js/i18n'
-import { DEFAULT_PRECISION } from '@/js/const/configs.const'
+import { polyglot } from 'L@/js/i18n'
+import { DEFAULT_PRECISION } from 'L@/js/const/configs.const'
 
 /*
  * accounting.js docs: http://openexchangerates.github.io/accounting.js/

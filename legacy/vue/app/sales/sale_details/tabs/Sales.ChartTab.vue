@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Chart from '@/vue/app/common/chart/Chart'
+import Chart from 'L@/vue/app/common/chart/Chart'
 import config from '@/config'
 
 export default {

@@ -35,9 +35,9 @@ import DocumentsTab from './tabs/Sales.DocumentsTab'
 import UpdatesTab from './tabs/Sales.UpdatesTab'
 import SaleTab from './tabs/Sales.SaleTab'
 import SaleChart from './tabs/Sales.ChartTab'
-import Tabs from '@/vue/app/common/tabs/Tabs'
-import Tab from '@/vue/app/common/tabs/Tab'
-import { i18n } from '@/js/i18n'
+import Tabs from 'L@/vue/app/common/tabs/Tabs'
+import Tab from 'L@/vue/app/common/tabs/Tab'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   name: 'sale-details-tabs',
@@ -69,8 +69,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .sales-tabs {
     @include box-shadow;

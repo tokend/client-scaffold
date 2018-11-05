@@ -74,7 +74,7 @@ export default {
 
 <style lang="scss">
   @import '../../../../../node_modules/simplemde/dist/simplemde.min.css';
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
   // @import '../../../../../assets/style/md';
 
   .description-editor {

@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import { accountsService } from '@/js/services/accounts.service'
-import { i18n } from '@/js/i18n'
+import { accountsService } from 'L@/js/services/accounts.service'
+import { i18n } from 'L@/js/i18n'
 export default {
   props: {
     id: { type: String, required: true },

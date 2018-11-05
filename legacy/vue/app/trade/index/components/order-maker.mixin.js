@@ -1,17 +1,17 @@
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { dispatchAppEvent } from '@/js/events/helpers'
-import { commonEvents } from '@/js/events/common_events'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { dispatchAppEvent } from 'L@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
 
-import { SECONDARY_MARKET_ORDER_BOOK_ID } from '@/js/const/offers.const'
-import { i18n } from '@/js/i18n'
+import { SECONDARY_MARKET_ORDER_BOOK_ID } from 'L@/js/const/offers.const'
+import { i18n } from 'L@/js/i18n'
 
-import { offersService } from '@/js/services/offer.service'
-import { accountsService } from '@/js/services/accounts.service'
-import { feeService } from '@/js/services/fees.service'
+import { offersService } from 'L@/js/services/offer.service'
+import { accountsService } from 'L@/js/services/accounts.service'
+import { feeService } from 'L@/js/services/fees.service'
 
 import { mapActions, mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 
 export default {
   computed: {

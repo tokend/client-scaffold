@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   props: {
@@ -72,8 +72,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@scss/variables.scss";
-@import "~@scss/mixins.scss";
+@import "~L@scss/variables.scss";
+@import "~L@scss/mixins.scss";
 
 .form-confirmation {
   display: flex;

@@ -26,21 +26,21 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
 import steps from '../spec/kyc-steps.syndicate.schema'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { accountsService } from '@/js/services/accounts.service'
+import { vuexTypes } from 'L@/vuex/types'
+import { accountsService } from 'L@/js/services/accounts.service'
 import {
   userTypes,
   blobTypes,
   ACCOUNT_TYPES,
   ACCOUNT_STATES
-} from '@/js/const/const'
-import { confirmAction } from '@/js/modals/confirmation_message'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
+} from 'L@/js/const/const'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
 import { KycTemplateParser } from '../spec/kyc-template-parser'
 
 const KYC_LEVEL_TO_SET = 0

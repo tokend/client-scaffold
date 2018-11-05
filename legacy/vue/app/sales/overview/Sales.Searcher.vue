@@ -44,12 +44,12 @@
 </template>
 
 <script>
-import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import { i18n } from '@/js/i18n'
-import { commonEvents } from '@/js/events/common_events'
+import SelectFieldUnchained from 'L@/vue/common/fields/SelectFieldUnchained'
+import InputFieldUnchained from 'L@/vue/common/fields/InputFieldUnchained'
+import { i18n } from 'L@/js/i18n'
+import { commonEvents } from 'L@/js/events/common_events'
 import debounce from 'lodash/debounce'
-import { saleSortTypes, saleStates } from '@/js/const/const'
+import { saleSortTypes, saleStates } from 'L@/js/const/const'
 
 export default {
   name: 'searcher',
@@ -112,8 +112,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .searcher-header {
     width: 100%;

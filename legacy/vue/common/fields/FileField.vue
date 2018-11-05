@@ -91,13 +91,13 @@
 
 <script>
 import FieldMixin from './field.mixin'
-import { DocumentContainer } from '@/js/helpers/DocumentContainer'
-import { MAX_FILE_MEGABYTES } from '@/js/const/documents.const'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { dispatchAppEvent } from '@/js/events/helpers'
-import { commonEvents } from '@/js/events/common_events'
-import { i18n } from '@/js/i18n'
-import { FileHelper } from '@/js/helpers/file.helper'
+import { DocumentContainer } from 'L@/js/helpers/DocumentContainer'
+import { MAX_FILE_MEGABYTES } from 'L@/js/const/documents.const'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { dispatchAppEvent } from 'L@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
+import { i18n } from 'L@/js/i18n'
+import { FileHelper } from 'L@/js/helpers/file.helper'
 
 export default {
   name: 'file-field',
@@ -256,7 +256,7 @@ export default {
 
 <style lang="scss" scoped>
   @import "scss/fields-variables";
-  @import '~@scss/mixins';
+  @import '~L@scss/mixins';
 
   .file-field__outer {
     display: flex;

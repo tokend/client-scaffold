@@ -30,11 +30,11 @@
 <script>
 import PortfolioWidget from './Dashboard.PortfolioWidget'
 import InfoWidget from './Dashboard.InfoWidget'
-import Chart from '@/vue/app/common/chart/Chart'
+import Chart from 'L@/vue/app/common/chart/Chart'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
-import Loader from '@/vue/app/common/Loader'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
+import Loader from 'L@/vue/app/common/Loader'
 import config from '@/config'
 
 export default {
@@ -87,8 +87,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 $custom-breakpoint: 800px;
 

@@ -30,8 +30,8 @@
 
 <script>
 import Clipboard from 'clipboard'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { i18n } from '@/js/i18n'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   name: 'detail-row',
@@ -59,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .detail-row {
     display: flex;

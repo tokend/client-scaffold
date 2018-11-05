@@ -66,12 +66,12 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
-import { ORDER_TYPES } from '@/js/const/order-types'
+import { i18n } from 'L@/js/i18n'
+import { ORDER_TYPES } from 'L@/js/const/order-types'
 import OrderMakerMixin from '../order-maker.mixin'
-import SubmitterMixin from '@/vue/common/mixins/submitter.mixin'
+import SubmitterMixin from 'L@/vue/common/mixins/submitter.mixin'
 
-import { confirmAction } from '@/js/modals/confirmation_message'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
 
 export default {
   name: 'order-list',
@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/mixins";
+@import "~L@scss/mixins";
 
 .order-list {
   max-height: 400px;

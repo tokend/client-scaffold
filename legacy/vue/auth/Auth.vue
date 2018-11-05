@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import Logotype from '../app/common/Logotype'
 import AppFooter from '../navigation/Footer'
-import Markdown from '@/vue/app/common/Markdown'
+import Markdown from 'L@/vue/app/common/Markdown'
 
 export default {
   components: {

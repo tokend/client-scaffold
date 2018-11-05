@@ -152,16 +152,16 @@
 import FormMixin from '../../../common/mixins/form.mixin'
 import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import NoDataMessage from 'L@/vue/common/messages/NoDataMessage'
 
 import { mapGetters, mapActions } from 'vuex'
-import { i18n } from '@/js/i18n'
-import { documentTypes, ASSET_POLICIES_VERBOSE } from '@/js/const/const'
-import { vuexTypes } from '@/vuex/types'
+import { i18n } from 'L@/js/i18n'
+import { documentTypes, ASSET_POLICIES_VERBOSE } from 'L@/js/const/const'
+import { vuexTypes } from 'L@/vuex/types'
 
-import { tokensService } from '@/js/services/tokens.service'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
+import { tokensService } from 'L@/js/services/tokens.service'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
 
 export default {
   components: { Detail, NoDataMessage },
@@ -240,8 +240,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/mixins";
-  @import "~@scss/variables";
+  @import "~L@scss/mixins";
+  @import "~L@scss/variables";
 
   $padding-vertical: 20px;
   $padding-horizontal: 25px;

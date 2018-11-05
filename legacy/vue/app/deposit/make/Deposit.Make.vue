@@ -74,16 +74,16 @@
 </template>
 
 <script>
-import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
+import SelectFieldUnchained from 'L@/vue/common/fields/SelectFieldUnchained'
 import Qrcode from 'vue-qrcode-component'
-import ClipboardField from '@/vue/common/fields/ClipboardField'
+import ClipboardField from 'L@/vue/common/fields/ClipboardField'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
-import { ACCOUNT_TYPES } from '@/js/const/xdr.const'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
+import { ACCOUNT_TYPES } from 'L@/js/const/xdr.const'
 
-import { issuanceService } from '@/js/services/issuances.service'
+import { issuanceService } from 'L@/js/services/issuances.service'
 
 export default {
   name: 'deposit-make',
@@ -157,7 +157,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/scss/variables';
+@import '~L@/scss/variables';
 
 .deposit__qr-outer {
   margin: 4 * $point auto 0;

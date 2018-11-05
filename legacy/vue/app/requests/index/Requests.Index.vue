@@ -20,9 +20,9 @@ import TokenCreation from './Requests.TokenCreation'
 import PreIssuanceUpload from './Requests.PreissuanceUpload'
 import WithdrawalRequests from './Requests.Withdrawal'
 import SaleCreation from './Requests.SaleCreation'
-import { i18n } from '@/js/i18n'
-import Tabs from '@/vue/app/common/tabs/Tabs'
-import Tab from '@/vue/app/common/tabs/Tab'
+import { i18n } from 'L@/js/i18n'
+import Tabs from 'L@/vue/app/common/tabs/Tabs'
+import Tab from 'L@/vue/app/common/tabs/Tab'
 
 export default {
   components: {
@@ -40,8 +40,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .requests__tabs {
   .md-title,

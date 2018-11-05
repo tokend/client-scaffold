@@ -47,11 +47,11 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
-import { onKeyDown } from '@/js/helpers/onKeyDown'
-import { closeElement } from '@/js/helpers/closeElement'
-import { KEY_CODES } from '@/js/const/const'
-import { isObject } from '@/js/utils/isObject.util'
+import { commonEvents } from 'L@/js/events/common_events'
+import { onKeyDown } from 'L@/js/helpers/onKeyDown'
+import { closeElement } from 'L@/js/helpers/closeElement'
+import { KEY_CODES } from 'L@/js/const/const'
+import { isObject } from 'L@/js/utils/isObject.util'
 
 export default {
   name: 'select-field-unchained',

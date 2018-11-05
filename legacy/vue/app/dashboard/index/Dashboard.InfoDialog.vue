@@ -24,7 +24,7 @@
 
 <script>
 import TxDetails from '../../history/index/History.TxDetails'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   name: 'info-dialog',
@@ -49,8 +49,8 @@ export default {
 
 <style lang="scss" scoped>
 
-  @import '~@scss/variables.scss';
-  @import '~@scss/mixins.scss';
+  @import '~L@scss/variables.scss';
+  @import '~L@scss/mixins.scss';
 
   .info-dialog {
     padding: 8px 16px;

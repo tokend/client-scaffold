@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
-import { dispatchAppEvent } from '@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
+import { dispatchAppEvent } from 'L@/js/events/helpers'
 import config from '@/config'
 
 export default {
@@ -53,8 +53,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .file-download {
     display: flex;

@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
   .token-list__char {
     color: $col-primary-txt;
   }

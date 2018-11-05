@@ -22,10 +22,10 @@
 
 <script>
 import TimelineItem from './UpdatesTab.Timeline.Item'
-import { commonEvents } from '@/js/events/common_events'
-import { i18n } from '@/js/i18n'
+import { commonEvents } from 'L@/js/events/common_events'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 export default {
   name: 'updates-tab-timeline',
   components: {
@@ -59,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/mixins";
-@import "~@scss/variables";
+@import "~L@scss/mixins";
+@import "~L@scss/variables";
 
 .timeline {
   position: relative;

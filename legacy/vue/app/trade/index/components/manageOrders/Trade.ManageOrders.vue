@@ -87,7 +87,7 @@
 
 <script>
 import OrderDetails from './ManageOrders.OrderDetails'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   name: 'manage-orders',

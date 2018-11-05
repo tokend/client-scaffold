@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 
 import * as d3Array from 'd3-array'
 import * as d3Selection from 'd3-selection'
@@ -480,7 +480,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
 
    .chart-renderer {
     position: relative;

@@ -295,10 +295,10 @@ import config from '@/config'
 
 import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../vuex/types'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import Logotype from '../app/common/Logotype'
 import AppFooter from './Footer'
-import { ACCOUNT_TYPES } from '@/js/const/const'
+import { ACCOUNT_TYPES } from 'L@/js/const/const'
 
 export default {
   name: 'sidebar',
@@ -335,8 +335,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .sidebar {
   position: relative;

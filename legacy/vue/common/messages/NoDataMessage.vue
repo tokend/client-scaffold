@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
+@import "~L@scss/variables";
 
 .no-data-message {
   text-align: center;

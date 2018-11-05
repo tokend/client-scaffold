@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@scss/variables";
+@import "~L@scss/variables";
 
 .back-button {
   width: 3.2 * $point;

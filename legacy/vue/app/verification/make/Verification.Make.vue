@@ -89,12 +89,12 @@ import SyndicateForm from './Verification.Syndicate'
 import StateBanner from './Verification.StateBanner'
 import SyndicateBanner from './Verification.SyndicateBanner'
 import UserTypeSelector from './Verification.Selector'
-import Loader from '@/vue/app/common/Loader'
+import Loader from 'L@/vue/app/common/Loader'
 
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '@/js/const/const'
+import { vuexTypes } from 'L@/vuex/types'
+import { userTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from 'L@/js/const/const'
 
 export default {
   name: 'verification-make',
@@ -183,8 +183,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .verification {
     flex-direction: column;

@@ -36,21 +36,21 @@
 
 <script>
 import AssetSelector from './components/asset-selector/Trade.AssetSelector'
-import Chart from '@/vue/app/common/chart/Chart'
+import Chart from 'L@/vue/app/common/chart/Chart'
 import TradeHistory from './components/tradeHistory/Trade.TradeHistory'
 import TradeOrders from './components/tradeOrders/Trade.TradeOrders'
 import Orders from './components/orders/Trade.Orders'
 import ManageOrders from './components/manageOrders/Trade.ManageOrders'
 
-import { chartsService } from '@/js/services/charts.service'
-import { errors } from '@/js/errors/factory'
+import { chartsService } from 'L@/js/services/charts.service'
+import { errors } from 'L@/js/errors/factory'
 import config from '@/config'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { attachEventHandler } from '@/js/events/helpers'
-import { commonEvents } from '@/js/events/common_events'
-import { ErrorHandler } from '@/js/errors/error_handler'
+import { vuexTypes } from 'L@/vuex/types'
+import { attachEventHandler } from 'L@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
 
 export default {
   name: 'trade-index',
@@ -134,8 +134,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
   $large-breakpoint: 1374px;
   $medium-breakpoint: 1374px;
 

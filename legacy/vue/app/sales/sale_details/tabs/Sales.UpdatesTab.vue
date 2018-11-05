@@ -37,11 +37,11 @@
 import Timeline from './components/UpdatesTab.Timeline'
 import AddUpdateForm from './components/UpdatesTab.Timeline.AddForm'
 
-import { blobTypes, blobFilters } from '@/js/const/const'
-import { usersService } from '@/js/services/users.service'
-import { i18n } from '@/js/i18n'
+import { blobTypes, blobFilters } from 'L@/js/const/const'
+import { usersService } from 'L@/js/services/users.service'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 
 export default {
   components: {
@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
   .updates-tab {
     min-height: 300px;
   }

@@ -106,18 +106,18 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
-import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import { i18n } from '@/js/i18n'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
+import SelectFieldUnchained from 'L@/vue/common/fields/SelectFieldUnchained'
+import InputFieldUnchained from 'L@/vue/common/fields/InputFieldUnchained'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { issuanceService } from '@/js/services/issuances.service'
-import { accountsService } from '@/js/services/accounts.service'
-import { ACCOUNT_TYPES } from '@/js/const/const'
-import { errors } from '@/js/errors/factory'
+import { vuexTypes } from 'L@/vuex/types'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { issuanceService } from 'L@/js/services/issuances.service'
+import { accountsService } from 'L@/js/services/accounts.service'
+import { ACCOUNT_TYPES } from 'L@/js/const/const'
+import { errors } from 'L@/js/errors/factory'
 
 export default {
   components: { SelectFieldUnchained, InputFieldUnchained },

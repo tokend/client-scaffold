@@ -43,16 +43,16 @@ import Sidebar from '../navigation/Sidebar.vue'
 import Snackbar from '../common/messages/Snackbar'
 import FileViewer from '../common/modals/FileViewer'
 import LoaderBar from '../common/messages/LoaderBar'
-import WarningBanner from '@/vue/app/common/WarningBanner'
+import WarningBanner from 'L@/vue/app/common/WarningBanner'
 
-import { vueRoutes } from '@/vue-router/const'
+import { vueRoutes } from 'L@/vue-router/const'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 
-import { dispatchAppEvent } from '@/js/events/helpers'
-import { commonEvents } from '@/js/events/common_events'
-import { i18n } from '@/js/i18n'
+import { dispatchAppEvent } from 'L@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
+import { i18n } from 'L@/js/i18n'
 
 import moment from 'moment'
 
@@ -159,8 +159,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/mixins";
-@import "~@scss/variables";
+@import "~L@scss/mixins";
+@import "~L@scss/variables";
 
 .app__container {
   display: flex;

@@ -100,8 +100,8 @@
 </template>
 
 <script>
-import Logotype from '@/vue/app/common/Logotype'
-import { i18n } from '@/js/i18n'
+import Logotype from 'L@/vue/app/common/Logotype'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   name: 'supported-browsers',
@@ -116,8 +116,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~@scss/mixins';
-  @import '~@scss/variables';
+  @import '~L@scss/mixins';
+  @import '~L@scss/variables';
 
   $custom-medium-breakpoint: 767px;
   $custom-small-breakpoint: 470px;

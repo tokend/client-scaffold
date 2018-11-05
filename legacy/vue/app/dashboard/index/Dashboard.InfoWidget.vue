@@ -128,16 +128,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { RecordTypes } from '@/js/records/types'
-import { PricesHelper } from '@/vuex/helpers/prices.helper'
-import { DEFAULT_CONVERSION_ASSET } from '@/js/const/configs.const'
-import { i18n } from '@/js/i18n'
-import { TX_STATES } from '@/js/const/const'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
-import { humanizePastDate } from '@/js/utils/dates.util'
+import { vuexTypes } from 'L@/vuex/types'
+import { RecordTypes } from 'L@/js/records/types'
+import { PricesHelper } from 'L@/vuex/helpers/prices.helper'
+import { DEFAULT_CONVERSION_ASSET } from 'L@/js/const/configs.const'
+import { i18n } from 'L@/js/i18n'
+import { TX_STATES } from 'L@/js/const/const'
+import NoDataMessage from 'L@/vue/common/messages/NoDataMessage'
+import { humanizePastDate } from 'L@/js/utils/dates.util'
 import TxDetails from './Dashboard.TxDetails'
-import EmailGetter from '@/vue/app/common/EmailGetter'
+import EmailGetter from 'L@/vue/app/common/EmailGetter'
 
 import get from 'lodash/get'
 
@@ -207,8 +207,8 @@ export default {
 
 <style lang="scss" scoped>
 
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .info-widget__list {
     padding: 0 4px 6px 4px;

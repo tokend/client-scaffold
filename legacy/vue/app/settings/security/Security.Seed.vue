@@ -14,10 +14,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
 
-import ClipboardField from '@/vue/common/fields/ClipboardField'
+import ClipboardField from 'L@/vue/common/fields/ClipboardField'
 
 export default {
   name: 'account-seed',
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/mixins';
+  @import '~L@scss/mixins';
 
   .account-seed__description {
     margin-bottom: 16px;

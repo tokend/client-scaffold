@@ -29,10 +29,10 @@
 
 <script>
 import form from '../common/mixins/form.mixin'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { emailService } from '@/js/services/email.service'
-import { i18n } from '@/js/i18n'
-import { vueRoutes } from '@/vue-router/const'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { emailService } from 'L@/js/services/email.service'
+import { i18n } from 'L@/js/i18n'
+import { vueRoutes } from 'L@/vue-router/const'
 
 export default {
   name: 'email-resend',

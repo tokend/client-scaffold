@@ -121,8 +121,8 @@ export default {
 
 <style scoped lang="scss">
   @import 'step';
-  @import '~@scss/mixins';
-  @import '~@scss/variables';
+  @import '~L@scss/mixins';
+  @import '~L@scss/variables';
 
   .step-row {
     display: flex;

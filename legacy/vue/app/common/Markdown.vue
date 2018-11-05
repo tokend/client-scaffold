@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
+@import "~L@scss/variables";
 
 .markdown {
   line-height: 1.5;

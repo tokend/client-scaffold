@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import FormMixin from '@/vue/common/mixins/form.mixin'
-import { i18n } from '@/js/i18n'
+import InputFieldUnchained from 'L@/vue/common/fields/InputFieldUnchained'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
+import { i18n } from 'L@/js/i18n'
 import moment from 'moment'
-import { commonEvents } from '@/js/events/common_events'
-import { confirmAction } from '@/js/modals/confirmation_message'
-import { blobTypes, blobFilters } from '@/js/const/const'
-import { usersService } from '@/js/services/users.service'
+import { commonEvents } from 'L@/js/events/common_events'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
+import { blobTypes, blobFilters } from 'L@/js/const/const'
+import { usersService } from 'L@/js/services/users.service'
 export default {
   name: 'add-update-form',
   components: {
@@ -100,7 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
 
   .add-update-form {
     padding-top: 1.5rem;

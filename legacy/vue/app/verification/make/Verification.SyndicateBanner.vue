@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import { i18n } from 'L@/js/i18n'
+import NoDataMessage from 'L@/vue/common/messages/NoDataMessage'
 
 export default {
   name: 'verification-syndicate-banner',

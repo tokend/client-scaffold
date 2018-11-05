@@ -24,7 +24,7 @@ import ChangePassword from './Security.ChangePassword'
 import TfaSettings from './Security.TfaSettings'
 import AccountId from './Security.AccountId'
 import Seed from './Security.Seed'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 
 import config from '@/config'
 
@@ -45,8 +45,8 @@ export default {
 
 <style lang="scss">
   @import 'settings';
-  @import "~@scss/variables";
-  @import "~@scss/mixins";
+  @import "~L@scss/variables";
+  @import "~L@scss/mixins";
 
   .security-settings-tabs {
     min-width: 48rem;

@@ -58,9 +58,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
-import { multiply } from '@/js/utils/math.util'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
+import { multiply } from 'L@/js/utils/math.util'
 
 export default {
   name: 'trade-history',
@@ -123,8 +123,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .trade-history {
   .md-table-head-label,

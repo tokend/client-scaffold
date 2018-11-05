@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 export default {
   name: 'invest-progress-bar',
   props: {
@@ -62,8 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .invest-progress-bar {
     color: $col-fund-card-text;

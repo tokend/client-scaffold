@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import { pairsService } from '@/js/services/pairs.service'
-import { i18n } from '@/js/i18n'
+import { pairsService } from 'L@/js/services/pairs.service'
+import { i18n } from 'L@/js/i18n'
 import config from '@/config'
 export default {
   props: {

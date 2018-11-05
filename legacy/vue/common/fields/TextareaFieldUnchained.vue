@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
   @import "scss/fields-variables";
 
   .text-field__label {

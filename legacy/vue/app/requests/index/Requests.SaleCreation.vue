@@ -199,15 +199,15 @@ import Detail from '../../common/Detail.Row'
 import _get from 'lodash/get'
 
 import { mapGetters, mapActions } from 'vuex'
-import { i18n } from '@/js/i18n'
-import { REQUEST_STATES_STR, documentTypes } from '@/js/const/const'
-import { vuexTypes } from '@/vuex/types'
-import { vueRoutes } from '@/vue-router/const'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import { i18n } from 'L@/js/i18n'
+import { REQUEST_STATES_STR, documentTypes } from 'L@/js/const/const'
+import { vuexTypes } from 'L@/vuex/types'
+import { vueRoutes } from 'L@/vue-router/const'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import NoDataMessage from 'L@/vue/common/messages/NoDataMessage'
 
-import { salesService } from '@/js/services/sales.service'
-import { ErrorHandler } from '@/js/errors/error_handler'
+import { salesService } from 'L@/js/services/sales.service'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
 
 export default {
   components: { Detail, NoDataMessage },
@@ -305,8 +305,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/mixins";
-  @import "~@scss/variables";
+  @import "~L@scss/mixins";
+  @import "~L@scss/variables";
 
   $padding-vertical: 20px;
   $padding-horizontal: 25px;

@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
 
   .textarea-field {
     label {

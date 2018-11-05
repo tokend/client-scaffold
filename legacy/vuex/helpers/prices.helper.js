@@ -1,5 +1,5 @@
 import store from '../index'
-import { multiply, divide } from '@/js/utils/math.util'
+import { multiply, divide } from 'L@/js/utils/math.util'
 
 export class PricesHelper {
   static baseToQuote (amount, fromBase, toQuote) {

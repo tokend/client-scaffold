@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import { TxRecord } from './tx.record'
-import store from '@/vuex'
-import { i18n } from '@/js/i18n'
+import store from 'L@/vuex'
+import { i18n } from 'L@/js/i18n'
 
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 

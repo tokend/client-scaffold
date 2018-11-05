@@ -149,24 +149,24 @@
 </template>
 
 <script>
-import formMixin from '@/vue/common/mixins/form.mixin'
+import formMixin from 'L@/vue/common/mixins/form.mixin'
 import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 
-import SelectFieldUnchained from '@/vue/common/fields/SelectFieldUnchained'
-import HintWrapper from '@/vue/common/hint-wrapper/HintWrapper'
-import FormConfirmation from '@/vue/common/form-confirmation/FormConfirmation'
-import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
+import SelectFieldUnchained from 'L@/vue/common/fields/SelectFieldUnchained'
+import HintWrapper from 'L@/vue/common/hint-wrapper/HintWrapper'
+import FormConfirmation from 'L@/vue/common/form-confirmation/FormConfirmation'
+import InputFieldUnchained from 'L@/vue/common/fields/InputFieldUnchained'
 
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 
-import { i18n } from '@/js/i18n'
-import { feeService } from '@/js/services/fees.service'
-import { withdrawService } from '@/js/services/withdraw.service'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { errors } from '@/js/errors/factory'
+import { i18n } from 'L@/js/i18n'
+import { feeService } from 'L@/js/services/fees.service'
+import { withdrawService } from 'L@/js/services/withdraw.service'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { errors } from 'L@/js/errors/factory'
 import config from '@/config'
 
 const VIEW_MODES = {
@@ -351,8 +351,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables.scss";
-@import "~@scss/mixins.scss";
+@import "~L@scss/variables.scss";
+@import "~L@scss/mixins.scss";
 
 .withdraw__fees-container {
   &.loading {

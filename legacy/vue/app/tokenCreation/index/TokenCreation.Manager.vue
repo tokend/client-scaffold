@@ -171,23 +171,23 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
-import FileField from '@/vue/common/fields/FileField'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
+import FileField from 'L@/vue/common/fields/FileField'
 
-import { i18n } from '@/js/i18n'
-import { documentTypes } from '@/js/const/documents.const'
+import { i18n } from 'L@/js/i18n'
+import { documentTypes } from 'L@/js/const/documents.const'
 
-import { tokensService } from '@/js/services/tokens.service'
-import { ASSET_POLICIES } from '@/js/const/xdr.const'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { ErrorHandler } from '@/js/errors/error_handler'
+import { tokensService } from 'L@/js/services/tokens.service'
+import { ASSET_POLICIES } from 'L@/js/const/xdr.const'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
 
-import { DocumentContainer } from '@/js/helpers/DocumentContainer'
+import { DocumentContainer } from 'L@/js/helpers/DocumentContainer'
 import {
   reviewableRequestsService
-} from '@/js/services/reviewable_requests.service'
-import { fileService } from '@/js/services/file.service'
-import { TokenCreationRecord } from '@/js/records/token_creation.record'
+} from 'L@/js/services/reviewable_requests.service'
+import { fileService } from 'L@/js/services/file.service'
+import { TokenCreationRecord } from 'L@/js/records/token_creation.record'
 import config from '@/config'
 import get from 'lodash/get'
 

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { verbozify } from '@/js/utils/verbozify'
+import { verbozify } from 'L@/js/utils/verbozify'
 
 export default {
   name: 'details-reader',

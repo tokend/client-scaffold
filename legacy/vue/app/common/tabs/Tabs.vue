@@ -115,8 +115,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~@scss/variables.scss';
-  @import '~@scss/mixins.scss';
+  @import '~L@scss/variables.scss';
+  @import '~L@scss/mixins.scss';
   .app-tabs__tabs {
     display: flex;
     justify-content: flex-start;

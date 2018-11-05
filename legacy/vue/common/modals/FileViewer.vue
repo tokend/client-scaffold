@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
-import { attachEventHandler } from '@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
+import { attachEventHandler } from 'L@/js/events/helpers'
 
 export default {
   name: 'file-viewer',
@@ -47,8 +47,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   $custom-z-index: 45;
 

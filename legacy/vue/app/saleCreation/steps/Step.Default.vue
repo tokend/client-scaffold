@@ -88,9 +88,9 @@
 <script>
 import StepMixin from './step.mixin'
 import _pick from 'lodash/pick'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { commonEvents } from '@/js/events/common_events'
-import { documentTypes } from '@/js/const/documents.const'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { commonEvents } from 'L@/js/events/common_events'
+import { documentTypes } from 'L@/js/const/documents.const'
 export default {
   name: 'step-default',
   mixins: [ StepMixin ],

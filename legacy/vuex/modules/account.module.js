@@ -1,17 +1,17 @@
-import { DocumentContainer } from '@/js/helpers/DocumentContainer'
-import { usersService } from '@/js/services/users.service'
+import { DocumentContainer } from 'L@/js/helpers/DocumentContainer'
+import { usersService } from 'L@/js/services/users.service'
 import { StateHelper } from '../helpers/state.helper'
 import { vuexTypes } from '../types'
 import { Keypair } from 'tokend-js-sdk'
-import { RecordFactory } from '@/js/records/factory'
+import { RecordFactory } from 'L@/js/records/factory'
 
-import { accountsService } from '@/js/services/accounts.service'
+import { accountsService } from 'L@/js/services/accounts.service'
 import {
   reviewableRequestsService
-} from '@/js/services/reviewable_requests.service'
-import { fileService } from '@/js/services/file.service'
+} from 'L@/js/services/reviewable_requests.service'
+import { fileService } from 'L@/js/services/file.service'
 
-import { ACCOUNT_STATES } from '@/js/const/account.const'
+import { ACCOUNT_STATES } from 'L@/js/const/account.const'
 
 export const state = {
   account: {

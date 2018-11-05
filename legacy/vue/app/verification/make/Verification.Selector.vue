@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
-import { userTypes } from '@/js/const/const'
-import { i18n } from '@/js/i18n/index'
+import { commonEvents } from 'L@/js/events/common_events'
+import { userTypes } from 'L@/js/const/const'
+import { i18n } from 'L@/js/i18n/index'
 
 export default {
   name: 'user-type-selector',
@@ -87,8 +87,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .user-type-selector {
     display: flex;

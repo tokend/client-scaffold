@@ -96,7 +96,7 @@
 
 <script>
 import TxDetails from './History.TxDetails'
-import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+import SelectFieldCustom from 'L@/vue/common/fields/SelectFieldCustom'
 
 import { mapGetters, mapActions } from 'vuex'
 import { EventDispatcher } from '../../../../js/events/event_dispatcher'
@@ -104,7 +104,7 @@ import { vuexTypes } from '../../../../vuex/types'
 import { RecordTypes } from '../../../../js/records/types'
 import { i18n } from '../../../../js/i18n/index'
 import get from 'lodash/get'
-import EmailGetter from '@/vue/app/common/EmailGetter'
+import EmailGetter from 'L@/vue/app/common/EmailGetter'
 
 export default {
   name: 'history-index',

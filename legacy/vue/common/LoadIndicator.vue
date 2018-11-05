@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
-import { attachEventHandler } from '@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
+import { attachEventHandler } from 'L@/js/events/helpers'
 
 export default {
   name: 'load-indicator',
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
 
   .load-indicator {
     height: 5px;

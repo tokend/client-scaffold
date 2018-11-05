@@ -18,7 +18,7 @@
 
 <script>
 import TokenCreationManager from './TokenCreation.Manager'
-import NoDataMessage from '@/vue/common/messages/NoDataMessage'
+import NoDataMessage from 'L@/vue/common/messages/NoDataMessage'
 import { vuexTypes } from '../../../../vuex/types'
 import { ACCOUNT_TYPES } from '../../../../js/const/const'
 import { i18n } from '../../../../js/i18n/index'

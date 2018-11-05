@@ -107,11 +107,11 @@
 <script>
 import StepMixin from '../spec/step.mixin'
 import _pick from 'lodash/pick'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { commonEvents } from '@/js/events/common_events'
-import { ACCOUNT_STATES } from '@/js/const/const'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { commonEvents } from 'L@/js/events/common_events'
+import { ACCOUNT_STATES } from 'L@/js/const/const'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
+import { vuexTypes } from 'L@/vuex/types'
 export default {
   name: 'step-default',
   mixins: [ StepMixin ],

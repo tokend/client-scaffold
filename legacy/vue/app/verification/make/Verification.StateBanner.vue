@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { ACCOUNT_STATES } from '@/js/const/account.const'
+import { vuexTypes } from 'L@/vuex/types'
+import { ACCOUNT_STATES } from 'L@/js/const/account.const'
 
 export default {
   name: 'state-banner',
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
 
   .state-banner {
     font-size: .8rem;

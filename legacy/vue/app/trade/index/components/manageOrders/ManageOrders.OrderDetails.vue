@@ -25,7 +25,7 @@ import { EventDispatcher } from '../../../../../../js/events/event_dispatcher'
 import { dispatchAppEvent } from '../../../../../../js/events/helpers'
 import { commonEvents } from '../../../../../../js/events/common_events'
 import { confirmAction } from '../../../../../../js/modals/confirmation_message'
-import RecordDetailsViewer from '@/vue/app/common/RecordDetailsViewer'
+import RecordDetailsViewer from 'L@/vue/app/common/RecordDetailsViewer'
 
 export default {
   name: 'manage-orders',
@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/mixins";
+@import "~L@scss/mixins";
 
 .cancel-button {
   @include button-accent();

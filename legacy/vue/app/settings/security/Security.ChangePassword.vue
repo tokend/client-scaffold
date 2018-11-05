@@ -61,7 +61,7 @@ import { EventDispatcher } from '../../../../js/events/event_dispatcher'
 import { authService } from '../../../../js/services/auth.service'
 import { vuexTypes } from '../../../../vuex/types'
 import { i18n } from '../../../../js/i18n/index'
-import { AuthStateHelper } from '@/vuex/helpers/auth.helper'
+import { AuthStateHelper } from 'L@/vuex/helpers/auth.helper'
 
 import Form from '../../../common/mixins/form.mixin'
 

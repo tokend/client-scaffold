@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Markdown from '@/vue/app/common/Markdown'
+import Markdown from 'L@/vue/app/common/Markdown'
 
 export default {
   components: { Markdown },
@@ -25,8 +25,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@scss/variables";
-@import "~@scss/mixins";
+@import "~L@scss/variables";
+@import "~L@scss/mixins";
 
 .description__markdown-formatter {
   text-align: justify;

@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import { commonEvents } from '@/js/events/common_events'
-import { onKeyDown } from '@/js/helpers/onKeyDown'
-import { closeElement } from '@/js/helpers/closeElement'
-import { KEY_CODES } from '@/js/const/const'
+import { commonEvents } from 'L@/js/events/common_events'
+import { onKeyDown } from 'L@/js/helpers/onKeyDown'
+import { closeElement } from 'L@/js/helpers/closeElement'
+import { KEY_CODES } from 'L@/js/const/const'
 
 export default {
   name: 'select-field-custom',
@@ -129,7 +129,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
   @import "scss/fields-variables";
 
   .select {

@@ -77,17 +77,17 @@
 
 <script>
 import formMixin from '../common/mixins/form.mixin'
-import { ErrorFactory, errorTypes, errors } from '@/js/errors/factory'
-import { ErrorHandler } from '@/js/errors/error_handler'
+import { ErrorFactory, errorTypes, errors } from 'L@/js/errors/factory'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { vueRoutes } from '@/vue-router/const'
+import { vuexTypes } from 'L@/vuex/types'
+import { vueRoutes } from 'L@/vue-router/const'
 import { Keypair } from 'tokend-js-sdk'
-import { showRememberSeedMessage } from '@/js/modals/remember_seed.modal'
+import { showRememberSeedMessage } from 'L@/js/modals/remember_seed.modal'
 import config from '@/config'
-import { emailService } from '@/js/services/email.service'
-import { authService } from '@/js/services/auth.service'
-import { i18n } from '@/js/i18n'
+import { emailService } from 'L@/js/services/email.service'
+import { authService } from 'L@/js/services/auth.service'
+import { i18n } from 'L@/js/i18n'
 
 export default {
   mixins: [formMixin],

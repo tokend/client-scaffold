@@ -21,13 +21,13 @@
 </template>
 
 <script>
-import SelectFieldCustom from '@/vue/common/fields/SelectFieldCustom'
+import SelectFieldCustom from 'L@/vue/common/fields/SelectFieldCustom'
 
-import { dispatchAppEvent } from '@/js/events/helpers'
-import { commonEvents } from '@/js/events/common_events'
+import { dispatchAppEvent } from 'L@/js/events/helpers'
+import { commonEvents } from 'L@/js/events/common_events'
 import { mapGetters } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
 import config from '@/config'
 
 export default {
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@scss/variables";
+  @import "~L@scss/variables";
 
   .assets-select {
     margin-bottom: -70px;

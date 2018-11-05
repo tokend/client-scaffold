@@ -28,14 +28,14 @@
 </template>
 
 <script>
-import { formatMoney } from '@/vue/common/filters/formatMoney'
-import { translate } from '@/vue/common/filters/translate'
-import { humanizePastDate, getDateByDMY } from '@/js/utils/dates.util'
+import { formatMoney } from 'L@/vue/common/filters/formatMoney'
+import { translate } from 'L@/vue/common/filters/translate'
+import { humanizePastDate, getDateByDMY } from 'L@/js/utils/dates.util'
 import cloneDeep from 'lodash/cloneDeep'
 import snakeCase from 'lodash/snakeCase'
 
-import EmailGetter from '@/vue/app/common/EmailGetter'
-import ConvertedAmountGetter from '@/vue/app/common/ConvertedAmountGetter'
+import EmailGetter from 'L@/vue/app/common/EmailGetter'
+import ConvertedAmountGetter from 'L@/vue/app/common/ConvertedAmountGetter'
 
 export default {
   components: {

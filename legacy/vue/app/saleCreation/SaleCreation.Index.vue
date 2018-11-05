@@ -67,26 +67,26 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
 import RequestList from './SaleCreation.RequestList'
 import NotAvailableCard from '../common/NotAvailableCard'
-import Loader from '@/vue/app/common/Loader'
+import Loader from 'L@/vue/app/common/Loader'
 import steps from './specs/steps.schema'
 import config from '@/config'
-import { i18n } from '@/js/i18n'
-import { SaleRequestRecord } from '@/js/records/sale_request.record'
+import { i18n } from 'L@/js/i18n'
+import { SaleRequestRecord } from 'L@/js/records/sale_request.record'
 import { SaleListManager } from './specs/sale-list-manager'
 import { mapGetters, mapActions } from 'vuex'
-import { vuexTypes } from '@/vuex/types'
-import { salesService } from '@/js/services/sales.service'
-import { DateHelper } from '@/js/helpers/date.helper'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { ACCOUNT_TYPES } from '@/js/const/const'
-import { confirmAction } from '@/js/modals/confirmation_message'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
+import { vuexTypes } from 'L@/vuex/types'
+import { salesService } from 'L@/js/services/sales.service'
+import { DateHelper } from 'L@/js/helpers/date.helper'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { ACCOUNT_TYPES } from 'L@/js/const/const'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
 import {
   reviewableRequestsService
-} from '@/js/services/reviewable_requests.service'
+} from 'L@/js/services/reviewable_requests.service'
 import _get from 'lodash/get'
 
 const VIEW_MODES = {
@@ -218,7 +218,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@scss/variables";
+@import "~L@scss/variables";
 
 .create-sale__steppers.md-steppers.md-theme-default {
   margin-left: -10px;

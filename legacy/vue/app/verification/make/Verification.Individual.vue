@@ -32,20 +32,20 @@
 </template>
 
 <script>
-import FormMixin from '@/vue/common/mixins/form.mixin'
+import FormMixin from 'L@/vue/common/mixins/form.mixin'
 import steps from '../spec/kyc-steps.general.schema'
 
 import { mapGetters, mapActions } from 'vuex'
-import { ErrorHandler } from '@/js/errors/error_handler'
-import { EventDispatcher } from '@/js/events/event_dispatcher'
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
+import { ErrorHandler } from 'L@/js/errors/error_handler'
+import { EventDispatcher } from 'L@/js/events/event_dispatcher'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
 
 import { KycTemplateParser } from '../spec/kyc-template-parser'
-import { accountsService } from '@/js/services/accounts.service'
+import { accountsService } from 'L@/js/services/accounts.service'
 
-import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from '@/js/const/const'
-import { confirmAction } from '@/js/modals/confirmation_message'
+import { userTypes, blobTypes, ACCOUNT_TYPES, ACCOUNT_STATES } from 'L@/js/const/const'
+import { confirmAction } from 'L@/js/modals/confirmation_message'
 
 const KYC_LEVEL_TO_SET = 0
 
@@ -143,7 +143,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
 
   .kyc-form__verification-key {
     font-size: 2rem;

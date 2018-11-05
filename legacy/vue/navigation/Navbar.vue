@@ -105,14 +105,14 @@
 </template>
 
 <script>
-import { vuexTypes } from '@/vuex/types'
-import { i18n } from '@/js/i18n'
+import { vuexTypes } from 'L@/vuex/types'
+import { i18n } from 'L@/js/i18n'
 import { mapActions, mapGetters } from 'vuex'
-import { commonEvents } from '@/js/events/common_events'
-import { attachEventHandler } from '@/js/events/helpers'
-import { vueRoutes } from '@/vue-router/const'
-import { ACCOUNT_TYPES } from '@/js/const/xdr.const'
-import { closeElement } from '@/js/helpers/closeElement'
+import { commonEvents } from 'L@/js/events/common_events'
+import { attachEventHandler } from 'L@/js/events/helpers'
+import { vueRoutes } from 'L@/vue-router/const'
+import { ACCOUNT_TYPES } from 'L@/js/const/xdr.const'
+import { closeElement } from 'L@/js/helpers/closeElement'
 
 export default {
   name: 'root-navbar',
@@ -189,8 +189,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@scss/mixins";
-@import "~@scss/variables";
+@import "~L@scss/mixins";
+@import "~L@scss/variables";
 
 $custom-breakpoint: 800px;
 

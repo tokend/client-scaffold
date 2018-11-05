@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '~@scss/variables';
+  @import '~L@scss/variables';
 
   .snackbar__btn {
     color: $col-snackbar-text;

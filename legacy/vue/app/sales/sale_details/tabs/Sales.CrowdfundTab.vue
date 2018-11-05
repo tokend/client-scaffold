@@ -50,7 +50,7 @@
 
 <script>
 import DetailRow from '../../../common/Detail.Row'
-import { i18n } from '@/js/i18n'
+import { i18n } from 'L@/js/i18n'
 import config from '@/config'
 import _get from 'lodash/get'
 export default {
@@ -73,8 +73,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@scss/variables';
-  @import '~@scss/mixins';
+  @import '~L@scss/variables';
+  @import '~L@scss/mixins';
 
   .crowdfund-details {
     margin-bottom: 1rem;
