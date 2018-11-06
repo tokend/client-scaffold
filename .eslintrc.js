@@ -42,6 +42,10 @@ module.exports = {
     }]
   },
   globals: {
-    Elm: true
+    sinon: true,
+    expect: true,
+    describe: true,
+    it: true,
+    beforeEach: true
   }
 }
