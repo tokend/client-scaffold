@@ -1,4 +1,4 @@
-const webpackConfig = require('./build/webpack.base.conf')
+const webpackConfig = require('./build/webpack.dev.conf')
 
 module.exports = function (config) {
   config.set({
@@ -6,12 +6,12 @@ module.exports = function (config) {
     singleRun: true,
     browsers: ['ChromeHeadless'],
     files: [
-      'src/vuex/account.spec.js'
-      // 'src/**/*.e2e.js'
+      'src/**/*.spec.js',
+      'src/**/*.e2e.js'
     ],
     preprocessors: {
-      // 'src/**/*.spec.js': [ 'webpack' ],
-      'src/vuex/account.spec.js': [ 'webpack' ]
+      'src/**/*.spec.js': [ 'webpack' ],
+      'src/**/*.e2e.js': [ 'webpack' ]
     },
 
     webpack: webpackConfig,

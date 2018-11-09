@@ -84,7 +84,7 @@ describe('factors.module end-to-end test', () => {
         .equal(responseDefaultParsed.slice(0, 1))
     })
 
-    it('factorsTotpEnabled', async () => {
+    it('factorsTotpEnabled with enabled totp factor', async () => {
       mockHelper.mockEndpoint(`/wallets/${walletId}/factors`, {
         data: [
           { type: 'email', id: 785, attributes: { priority: 1 } },
@@ -96,7 +96,9 @@ describe('factors.module end-to-end test', () => {
       expect(store.getters.factorsTotpEnabled).to.deep.equal([
         { resourceType: 'totp', id: 991, priority: 1 }
       ])
+    })
 
+    it('factorsTotpEnabled when no enabled totp factor', async () => {
       mockHelper.mockEndpoint(`/wallets/${walletId}/factors`, {
         data: [
           { type: 'password', id: 652, attributes: { priority: 1 } },
@@ -108,7 +110,7 @@ describe('factors.module end-to-end test', () => {
       expect(store.getters.factorsTotpEnabled).to.deep.equal([])
     })
 
-    it('isTotpEnabled', async () => {
+    it('isTotpEnabled with enabled totp factor', async () => {
       mockHelper.mockEndpoint(`/wallets/${walletId}/factors`, {
         data: [
           { type: 'email', id: 785, attributes: { priority: 1 } },
@@ -116,15 +118,19 @@ describe('factors.module end-to-end test', () => {
           { type: 'totp', id: 991, attributes: { priority: 1 } }
         ]
       })
+
       await store.dispatch(vuexTypes.LOAD_FACTORS)
       expect(store.getters.isTotpEnabled).to.equal(true)
+    })
 
+    it('isTotpEnabled whe no enabled totp factor', async () => {
       mockHelper.mockEndpoint(`/wallets/${walletId}/factors`, {
         data: [
           { type: 'password', id: 652, attributes: { priority: 1 } },
           { type: 'totp', id: 991, attributes: { priority: 0 } }
         ]
       })
+
       await store.dispatch(vuexTypes.LOAD_FACTORS)
       expect(store.getters.isTotpEnabled).to.equal(false)
     })

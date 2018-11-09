@@ -91,7 +91,6 @@
     "karma-webpack": "^3.0.5",
     "mini-css-extract-plugin": "^0.4.2",
     "mocha": "^5.2.0",
-    "nock": "^9.6.1",
     "node-sass": "^4.9.3",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
@@ -110,7 +109,8 @@
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dev-middleware": "^3.2.0",
     "webpack-hot-middleware": "^2.23.1",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "xhr-mock": "^2.4.1"
   },
   "engines": {
     "node": ">= 8.0.0",

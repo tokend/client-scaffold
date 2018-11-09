@@ -1,7 +1,7 @@
 import { MockWrapper } from './index'
 import { Sdk } from '../sdk'
 import { Wallet } from '@tokend/js-sdk'
-import nock from 'nock'
+import mock from 'xhr-mock'
 
 let sdkInstance = null
 
@@ -9,6 +9,8 @@ export class MockHelper {
   constructor () {
     Sdk.initSync('https://test.api.com')
     sdkInstance = Sdk.getInstance()
+    mock.setup()
+    mock.reset()
   }
 
   mockHorizonMethod (resource, method, mock) {
@@ -41,13 +43,14 @@ export class MockHelper {
     ))
   }
 
-  mockEndpoint (url, response) {
-    // FIXME: WON'T WORK IN BROWSER, because nock is overriding only node.http
-    // implementation. We still need some stuff to override native
-    // XmlHttpRequest implementation
+  mockEndpoint (endpoint, response) {
+    const url = `https://test.api.com${endpoint}`
+      .replace('@', '%40') // FIXME sorry
 
-    nock('https://test.api.com')
-      .get(url)
-      .reply(200, response)
+    mock.get(url, {
+      status: 200,
+      reason: 'OK',
+      body: JSON.stringify(response)
+    })
   }
 }

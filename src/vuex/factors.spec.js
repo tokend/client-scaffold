@@ -131,7 +131,7 @@ describe('factors.module', () => {
         .equal([])
     })
 
-    it('isTfaEnabled', () => {
+    it('isTotpEnabled', () => {
       let _getters
 
       _getters = {
