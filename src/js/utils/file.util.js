@@ -26,7 +26,7 @@ export class FileUtil {
   }
 
   static readFile (file, readFnName) {
-    // eslint-disable-next-line promise/avoid-new
+    /* eslint-disable-next-line promise/avoid-new */
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
 
@@ -72,6 +72,7 @@ export class FileUtil {
   }
 
   static async readImage (file) {
+    /* eslint-disable-next-line promise/avoid-new */
     return new Promise((resolve, reject) => {
       const image = new Image()
       image.src = file

@@ -6,7 +6,7 @@
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "./git-hooks/pre-commit.sh"
+      "pre-commit": "npm run lint"
     }
   },
   "scripts": {
@@ -17,7 +17,7 @@
     "build.staging": "node build/build.js staging",
     "build.dev": "node build/build.js dev",
     "test": "karma start",
-    "lint": "eslint '{src,config}/**/*.{js,vue}' --fix"
+    "lint": "eslint '{src,config}/**/*.{js,vue}' --cache --fix --max-warnings=0"
   },
   "dependencies": {
     "@mdi/font": "^2.7.94",
