@@ -1,6 +1,6 @@
 import { RecordWrapper } from '../js/records'
 import { vuexTypes } from './types'
-import { Sdk } from '../js/sdk/sdk-importer'
+import { Sdk } from '@/sdk'
 
 /**
  * @module

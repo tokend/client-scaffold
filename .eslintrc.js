@@ -41,11 +41,11 @@ module.exports = {
       }
     }]
   },
+  env: {
+    mocha: true
+  },
   globals: {
     sinon: true,
-    expect: true,
-    describe: true,
-    it: true,
-    beforeEach: true
+    expect: true
   }
 }
