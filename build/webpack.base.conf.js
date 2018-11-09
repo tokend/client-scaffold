@@ -2,9 +2,8 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
 const { VueLoaderPlugin } = require('vue-loader')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -30,7 +29,7 @@ module.exports = {
       '@static': resolve('static'),
       '@ui': resolve('src/vue/common/ui-components'),
       '@scss': resolve('src/scss'),
-      'L@scss': resolve('legacy/scss'),
+      'L@scss': resolve('legacy/scss')
     }
   },
   module: {
@@ -46,8 +45,7 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
