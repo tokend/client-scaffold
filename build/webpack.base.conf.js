@@ -83,6 +83,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new webpack.IgnorePlugin(/ed25519/)
   ]
 }

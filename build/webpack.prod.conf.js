@@ -70,7 +70,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       // CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
-    new webpack.IgnorePlugin(/ed25519/),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // copy custom static assets
