@@ -7,20 +7,25 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-var env = process.env.CONFIG_PATH
+let env = process.env.CONFIG_PATH
   ? require(path.resolve(process.env.CONFIG_PATH))
   : {}
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
   module: {
-    rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: true
-    })
+    rules: [
+      {
+        test: /\.css?$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
+      }
+    ]
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -35,8 +40,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // extracts CSS into separate files
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -58,10 +63,11 @@ const webpackConfig = merge(baseWebpackConfig, {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
-    // more options:
-    // https://github.com/kangax/html-minifier#options-quick-reference
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
       },
-    // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      // necessary to consistently work with multiple chunks via
+      // CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
     new webpack.IgnorePlugin(/ed25519/),

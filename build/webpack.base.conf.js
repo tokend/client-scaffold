@@ -3,7 +3,6 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const { VueLoaderPlugin } = require('vue-loader')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -78,17 +77,7 @@ module.exports = {
       },
       {
         test: /\.s[a|c]ss$/,
-        loader: 'style-loader'
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          process.env.NODE_ENV !== 'production'
-            ? 'vue-style-loader'
-            : MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
+        loader: 'style-loader!css-loader!sass-loader'
       }
     ]
   },
