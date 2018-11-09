@@ -1,5 +1,4 @@
 'use strict'
-require('./check-versions')()
 
 const config = require('../config')
 if (!process.env.NODE_ENV) {
@@ -65,22 +64,25 @@ app.use(require('connect-history-api-fallback')())
 app.use(devMiddleware)
 
 // serve pure static assets
-const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+const staticPath = path.posix.join(
+  config.dev.assetsPublicPath,
+  config.dev.assetsSubDirectory
+)
 app.use(staticPath, express.static('./static'))
 
-const uri = 'http://localhost:' + port
-
-var _resolve
-var _reject
-var readyPromise = new Promise((resolve, reject) => {
+let _resolve
+let _reject
+/* eslint-disable-next-line promise/avoid-new */
+let readyPromise = new Promise((resolve, reject) => {
   _resolve = resolve
   _reject = reject
 })
 
-var server
-var portfinder = require('portfinder')
+let server
+let portfinder = require('portfinder')
 portfinder.basePort = port
 
+/* eslint-disable-next-line no-console */
 console.log('> Starting dev server...')
 devMiddleware.waitUntilValid(() => {
   portfinder.getPort((err, port) => {
@@ -88,7 +90,8 @@ devMiddleware.waitUntilValid(() => {
       _reject(err)
     }
     process.env.PORT = port
-    var uri = 'http://localhost:' + port
+    let uri = 'http://localhost:' + port
+    /* eslint-disable-next-line no-console */
     console.log('> Listening at ' + uri + '\n')
     // when env is testing, don't need open it
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
