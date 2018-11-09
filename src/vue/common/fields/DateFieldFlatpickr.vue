@@ -1,23 +1,21 @@
 <template>
-  <div class="date-field-flatpickr">
+  <div class="date-field">
     <label
-      class="date-field-flatpickr__label"
-      :class="{
-        'date-field-flatpickr__label--focus': isCalendarOpen || flatpickrDate
-      }"
-    >
+      class="date-field__label"
+      :class="{ 'date-field__label--focus': isCalendarOpen || value }">
       {{ label }}
     </label>
 
-    <div class="date-field-flatpickr__field">
+    <div class="date-field__field">
       <flat-pickr
         :id="id"
-        class="date-field-flatpickr__input"
-        :class="{ 'date-field-flatpickr__input--disabled': disabled }"
+        class="date-field__input"
+        :class="{ 'date-field__input--disabled': disabled }"
         :config="config"
-        :value="flatpickrDate"
+        :value="value"
         :placeholder="placeholder || ' '"
-        :key="flatpickrDate + disabled"
+        :enable-time="enableTime"
+        :key="`${value}-${disabled}`"
         :disabled="disabled"
         @input.native="dateFieldUpdated"
         @on-close="onClose"
@@ -27,7 +25,7 @@
     </div>
 
     <div
-      class="date-field-flatpickr__err-mes"
+      class="date-field__err-mes"
       v-if="errorMessage"
     >
       {{ errorMessage }}
@@ -41,7 +39,7 @@ import moment from 'moment'
 import field from './field.mixin'
 
 export default {
-  name: 'date-field-flatpickr',
+  name: 'date-field',
 
   components: {
     FlatPickr
@@ -58,12 +56,10 @@ export default {
     label: { type: String, default: '' }
   },
 
-  data () {
-    return {
-      flatpickrDate: '',
-      isCalendarOpen: false
-    }
-  },
+  data: () => ({
+    flatpickrDate: '',
+    isCalendarOpen: false
+  }),
 
   computed: {
     config () {
@@ -125,13 +121,13 @@ export default {
 <style lang="scss">
 @import "./scss/fields-variables";
 
-.date-field-flatpickr {
+.date-field {
   position: relative;
   width: 100%;
   flex: 1;
 }
 
-.date-field-flatpickr__input {
+.date-field__input {
   width: 100%;
   background-color: transparent;
   border: none;
@@ -195,7 +191,7 @@ export default {
   }
 }
 
-.date-field-flatpickr__input--disabled {
+.date-field__input--disabled {
   cursor: default;
   filter: grayscale(100%);
   -webkit-text-fill-color: $field-color-unfocused;
@@ -206,7 +202,7 @@ export default {
   }
 }
 
-.date-field-flatpickr__label {
+.date-field__label {
   position: absolute;
   left: 0;
   top: $field-input-padding-top;
@@ -216,12 +212,12 @@ export default {
   @include text-font-sizes;
 }
 
-.date-field-flatpickr__label--focus {
+.date-field__label--focus {
   top: 0;
   @include label-font-sizes;
 }
 
-.date-field-flatpickr__err-mes {
+.date-field__err-mes {
   color: $field-color-error;
   margin-top: $field-error-margin-top;
   font-size: $field-error-font-size;
