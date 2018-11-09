@@ -1,7 +1,7 @@
 'use strict'
 const path = require('path')
 const utils = require('./utils')
-const config = require('../config')
+const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 
 function resolve (dir) {
@@ -13,11 +13,12 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: config.build.assetsRoot,
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: '/'
+  },
+  optimization: {
+    noEmitOnErrors: true
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.css', '.scss'],
