@@ -29,6 +29,8 @@ import rippleEffect from '../legacy/directives/rippleEffect'
 
 // filters
 import { translate } from '@/vue/filters/translate'
+import { humanDate } from '@/vue/filters/humanDate'
+
 import { localizeFeeType } from '../legacy/vue/common/filters/localizeFeeType'
 import { localizeFeeSubType } from '../legacy/vue/common/filters/localizeFeeSubType'
 import { formatDate } from '../legacy/vue/common/filters/formatDate'
@@ -49,9 +51,10 @@ Vue.use(VueSimpleMDE)
 VeeValidate.Validator = extendValidator(VeeValidate.Validator)
 
 /* Vue filters */
+Vue.filter('translate', translate)
+Vue.filter('humanDate', humanDate)
 Vue.filter('localizeFeeType', localizeFeeType)
 Vue.filter('localizeFeeSubType', localizeFeeSubType)
-Vue.filter('translate', translate)
 Vue.filter('formatDate', formatDate)
 Vue.filter('formatMoney', formatMoney)
 
