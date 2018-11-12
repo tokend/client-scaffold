@@ -313,7 +313,7 @@ export default {
           ...this.form,
           custom: this.form.custom.reduce((res, entry) => {
             res[entry.label] = entry.value
-            return entry
+            return res
           }, {})
         })
         EventDispatcher.dispatchShowSuccessEvent(i18n.doc_uploaded())
