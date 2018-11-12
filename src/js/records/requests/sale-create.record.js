@@ -1,5 +1,4 @@
 import { RequestRecord } from '../request-record'
-import { DateUtil } from '../../utils/date.util'
 import _get from 'lodash/get'
 
 export class SaleRequestRecord extends RequestRecord {
@@ -40,35 +39,7 @@ export class SaleRequestRecord extends RequestRecord {
       this._record, 'details.sale.details.youtubeVideoId'
     )
 
-    this.returnOfInvestment = _get(
-      record, 'details.sale.details.returnOfInvestment'
-    )
-    this.returnOfInvestmentFrom = _get(
-      record, 'details.sale.details.returnOfInvestment.from'
-    )
-    this.returnOfInvestmentTo = _get(
-      record, 'details.sale.details.returnOfInvestment.to'
-    )
-
     this.quoteAssets = this._getQuoteAssets()
-  }
-
-  get returnOfInvestmentStr () {
-    if (!this.returnOfInvestmentFrom && !this.returnOfInvestmentTo) {
-      return ''
-    }
-
-    if (this.returnOfInvestmentFrom && !this.returnOfInvestmentTo) {
-      return `${this.returnOfInvestmentFrom}%+`
-    }
-
-    if (!this.returnOfInvestmentFrom && this.returnOfInvestmentTo) {
-      return `under ${this.returnOfInvestmentTo}%`
-    }
-
-    if (this.returnOfInvestmentFrom && this.returnOfInvestmentTo) {
-      return `${this.returnOfInvestmentFrom}—${this.returnOfInvestmentTo}`
-    }
   }
 
   logoUrl (storageUrl) {
@@ -78,31 +49,5 @@ export class SaleRequestRecord extends RequestRecord {
   _getQuoteAssets () {
     return _get(this._record, 'details.sale.quoteAssets', [])
       .map(asset => asset.quoteAsset)
-  }
-
-  opts () {
-    return {
-      requestID: this.id,
-      baseAsset: this.baseAsset,
-      defaultQuoteAsset: this.defaultQuoteAsset,
-      startTime: DateUtil.toTimestamp(this.startTime),
-      endTime: DateUtil.toTimestamp(this.endTime),
-      softCap: this.softCap,
-      hardCap: this.hardCap,
-      saleState: this.saleState,
-      baseAssetForHardCap: this.baseAssetForHardCap,
-      details: {
-        name: this.name,
-        short_description: this.shortDescription,
-        description: this.description,
-        logo: this.logo,
-        return_of_investment: {
-          to: this.returnOfInvestmentTo,
-          from: this.returnOfInvestmentFrom
-        }
-      },
-      quoteAssets: this.quoteAssets.map(asset => ({ asset, price: '1' })),
-      saleType: this.saleType
-    }
   }
 }

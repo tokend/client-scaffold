@@ -95,33 +95,4 @@ export class AssetCreateRequestRecord extends RequestRecord {
   get isWithdrawable () {
     return !!(this.policy & ASSET_POLICIES.withdrawable)
   }
-
-  /**
-   * Composes opts for operation {@link ManageAssetBuilder.assetCreationRequest}
-   *
-   * @returns {object}
-   */
-  opts () {
-    return {
-      requestID: this.id,
-      code: this.assetCode,
-      preissuedAssetSigner: this.preissuedAssetSigner,
-      maxIssuanceAmount: this.maxIssuanceAmount,
-      policies: this.policy,
-      initialPreissuedAmount: this.initialPreissuedAmount,
-      details: {
-        name: this.assetName,
-        logo: {
-          key: this.logoKey,
-          name: this.logoName,
-          type: this.logoType
-        },
-        terms: {
-          key: this.termsKey,
-          name: this.termsName,
-          type: this.termsType
-        }
-      }
-    }
-  }
 }
