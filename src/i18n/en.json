@@ -1,4 +1,12 @@
 {
+  "Starts in": "Starts in",
+  "Starts": "Starts",
+  "days": "days",
+  "Finished": "Finished",
+  "Canceled": "Canceled",
+  "ends": "ends",
+  "days left": "days left",
+
   "auth_disposable_mail_error": "Email is not from allowed domain",
   "auth_invalid_email_error": "Email is invalid in some way",
   "auth_expired_signature": "Expired signature error. Please check if the time on your device is correct and try again",

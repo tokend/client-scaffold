@@ -1,8 +1,6 @@
 import moment from 'moment'
 import _get from 'lodash/get'
 
-import { DateUtil } from '../../utils/date.util'
-
 const STATES = {
   Open: 1,
   Closed: 2,
@@ -121,47 +119,5 @@ export class SaleRecord {
 
   get softCapProgress () {
     return Math.round(this.currentCap / this.softCap / 100) * 10000
-  }
-
-  get left () {
-    if (this.isUpcoming) {
-      if (this.startsIn === 0) {
-        return `Starts today at ${DateUtil.toHuman(this.startTime)}`
-      }
-      return `Starts in ${this.startsIn} day${this.startsIn === 1 ? '' : 's'}`
-    }
-
-    if (this.isClosed) return `Finished`
-    if (this.isCanceled) return 'Canceled'
-
-    if (this.daysToGo === 0) return `Ends ${DateUtil.toHuman(this.endTime)}`
-    if (this.daysToGo > 0) return `${this.daysToGo} days left`
-  }
-
-  get leftHtml () {
-    const span = txt => `<span class="left-number">${txt}</span>`
-
-    if (this.isUpcoming) {
-      if (this.startsIn === 0) {
-        return `Starts today at ${span(DateUtil.toHuman(this.startTime))}`
-      }
-      return `Starts in ${span(`${this.startsIn} day${this.startsIn === 1 ? '' : 's'}`)}`
-    }
-
-    if (this.isClosed) {
-      return `Finished`
-    }
-
-    if (this.isCanceled) {
-      return 'Canceled'
-    }
-
-    if (this.daysToGo === 0) {
-      return `Ends ${span(DateUtil.toHuman(this.endTime))}`
-    }
-
-    if (this.daysToGo > 0) {
-      return `${span(this.daysToGo)} days left`
-    }
   }
 }
