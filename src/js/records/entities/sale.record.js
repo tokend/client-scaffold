@@ -90,7 +90,7 @@ export class SaleRecord {
   /** states: **/
 
   _isInState (state) {
-    return this.state === state
+    return this.state.value === state
   }
 
   get isPromotion () { return this._isInState(STATES.Promotion) }
