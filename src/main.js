@@ -28,7 +28,7 @@ import tableScrollShadow from '../legacy/directives/tableScrollShadow'
 import rippleEffect from '../legacy/directives/rippleEffect'
 
 // filters
-import { translate } from '../legacy/vue/common/filters/translate'
+import { translate } from '@/vue/filters/translate'
 import { localizeFeeType } from '../legacy/vue/common/filters/localizeFeeType'
 import { localizeFeeSubType } from '../legacy/vue/common/filters/localizeFeeSubType'
 import { formatDate } from '../legacy/vue/common/filters/formatDate'

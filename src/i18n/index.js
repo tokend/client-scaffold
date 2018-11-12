@@ -1,6 +1,10 @@
+import Polyglot from 'node-polyglot'
 import en from './en'
 
 const locale = 'en'
 const translations = { en }
+const polyglot = new Polyglot()
 
-export const i18n = translations[locale]
+polyglot.extend(translations[locale])
+
+export { polyglot }
