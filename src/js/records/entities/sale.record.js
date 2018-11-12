@@ -89,15 +89,15 @@ export class SaleRecord {
 
   /** states: **/
 
-  isInState (state) {
+  _isInState (state) {
     return this.state === state
   }
 
-  get isPromotion () { return this.isInState(STATES.Promotion) }
-  get isVoting () { return this.isInState(STATES.Voting) }
-  get isOpened () { return this.isInState(STATES.Open) }
-  get isClosed () { return this.isInState(STATES.Closed) }
-  get isCanceled () { return this.isInState(STATES.Cancelled) }
+  get isPromotion () { return this._isInState(STATES.Promotion) }
+  get isVoting () { return this._isInState(STATES.Voting) }
+  get isOpened () { return this._isInState(STATES.Open) }
+  get isClosed () { return this._isInState(STATES.Closed) }
+  get isCanceled () { return this._isInState(STATES.Cancelled) }
   get isUpcoming () { return moment(this.startTime).isAfter(moment()) }
 
   /** progress info: **/

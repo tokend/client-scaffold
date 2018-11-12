@@ -26,15 +26,8 @@ export class ManageOfferRecord extends OpRecord {
     this.counterparty = this.baseAsset
   }
 
-  get direction () {
+  get isIncoming () {
+    // cancelling offer results in returning funds back to owner
     return this.state === STATES.canceled
-      ? 'in'
-      : 'out'
-  }
-
-  get name () {
-    return this.state === STATES.canceled
-      ? 'Canceled allocation'
-      : 'Allocation'
   }
 }

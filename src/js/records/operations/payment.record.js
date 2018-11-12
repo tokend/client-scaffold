@@ -10,13 +10,19 @@ export class PaymentRecord extends OpRecord {
    */
   constructor (record, details = {}) {
     super(record)
-    this.name = 'Transfer'
+
+    if (!details.accountId) {
+      throw new Error(
+        'The details.accountId is required to properly ' +
+        'define the direction of the payment'
+      )
+    }
+
+    this.accountId = details.accountId
 
     this.amount = record.amount
     this.asset = record.asset
-    this.direction = this._checkDirection(details.accountId)
-    this.counterparty = this._parseCounterParty()
-    this.fees = this._calculateFees()
+
     this.sourcePaysForDest = record.sourcePaysForDest
     this.sourceFeeAsset = _get(
       record, 'sourceFeeData.actualPaymentFeeAssetCode'
@@ -24,17 +30,25 @@ export class PaymentRecord extends OpRecord {
     this.destinationFeeAsset = _get(
       record, 'destinationFeeData.actualPaymentFeeAssetCode'
     )
-    this.participants = this._parseParticipants()
+
+    this.participants = record.participants
+
     this.receiver = record.to
     this.sender = record.from
     this.subject = record.subject
+
+    this.details = details
   }
 
-  _checkDirection (accountId) {
-    return this.sender === accountId ? 'out' : 'in'
+  get isIncoming () {
+    return this.sender === this.accountId
   }
 
-  _calculateFees () {
+  get counterparty () {
+    return this.isIncoming ? this.sender : this.receiver
+  }
+
+  get fees () {
     return {
       source: MathUtil.add(
         _get(this._record, 'sourceFeeData.actualPaymentFee'),
@@ -43,14 +57,5 @@ export class PaymentRecord extends OpRecord {
         _get(this._record, 'destinationFeeData.actualPaymentFee'),
         _get(this._record, 'destinationFeeData.fixedFee'))
     }
-  }
-
-  _parseParticipants () {
-    return this._record.participants.map(participant => participant.account_id)
-  }
-
-  _parseCounterParty () {
-    const direction = this._checkDirection()
-    return direction === 'in' ? this._record.from : this._record.to
   }
 }
