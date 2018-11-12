@@ -39,5 +39,9 @@ export default {
   doc_failed_to_load_reference: 'Failed to load reference',
   doc_lbl_public_key: 'Public Key',
   doc_lbl_download: 'Download file',
-  doc_document_hash: 'Document hash'
+  doc_document_hash: 'Document hash',
+  doc_lbl_label: 'Field label',
+  doc_lbl_value: 'Field value',
+  doc_add_custom: 'Add custom meta-field',
+  docs_custom_fields: 'Custom meta-information'
 }

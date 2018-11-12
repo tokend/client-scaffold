@@ -37,12 +37,18 @@ $xlarge: 1920px;
 @mixin button-icon () {
   @include button();
 
+  cursor: pointer;
   padding: 8px;
   border-radius: 50%;
   transition: .3s ease-out;
 
   &:hover {
     background-color: $col-button-flat-hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
 

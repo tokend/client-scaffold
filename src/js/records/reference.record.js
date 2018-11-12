@@ -1,4 +1,5 @@
 import _get from 'lodash/get'
+import _isEmpty from 'lodash/isEmpty'
 
 export class ReferenceRecord {
   constructor (record) {
@@ -19,6 +20,10 @@ export class ReferenceRecord {
     this.fileKey = _get(record, 'meta.key')
     this.createdAt = record.createdAt
     this.isModified = record.isModified
+
+    if (!_isEmpty(_get(record, 'meta.custom'))) {
+      this.custom = _get(record, 'meta.custom')
+    }
   }
 
   get isBroken () {

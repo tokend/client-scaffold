@@ -127,6 +127,61 @@
             </div>
           </div>
 
+          <div
+            v-for="(item, i) in form.custom"
+            class="app__form-row"
+            :key="i"
+          >
+            <div class="app__form-field">
+              <input-field-unchained
+                :name="`custom-field-label${i}`"
+                v-model.trim="item.label"
+                v-validate="'required'"
+                :label="i18n.doc_lbl_label()"
+                :data-vv-as="i18n.doc_lbl_label()"
+                :error-message="errorMessage(`custom-field-label${i}`)"
+                :readonly="view.mode === VIEW_MODES.confirm"
+              />
+            </div>
+            <div class="app__form-field">
+              <input-field-unchained
+                :name="`custom-field-value${i}`"
+                v-model.trim="item.value"
+                v-validate="'required'"
+                :label="i18n.doc_lbl_value()"
+                :data-vv-as="i18n.doc_lbl_value()"
+                :error-message="errorMessage(`custom-field-value${i}`)"
+                :readonly="view.mode === VIEW_MODES.confirm"
+              />
+            </div>
+
+            <button
+              type="button"
+              class="app__button-icon"
+              @click="removeCustomMetaField(i)"
+            >
+              <md-icon class="docs-manager__remove-icon">close</md-icon>
+            </button>
+          </div>
+
+          <div class="docs-manager__add-btn-wrp">
+            <button
+              type="button"
+              class="app__button-icon"
+              :disabled="!isCustomMetaFulfilled"
+              @click="addCustomMetaField"
+            >
+              <md-icon
+                class="docs-manager__add-icon"
+              >
+                add_circle
+              </md-icon>
+              <!--<md-tooltip>-->
+              <!--{{ i18n.doc_add_custom() }}-->
+              <!--</md-tooltip>-->
+            </button>
+          </div>
+
           <div class="app__form-actions">
             <button
               v-ripple
@@ -217,7 +272,8 @@ export default {
       serialNumber: '',
       dateOfBirth: '',
       counterparty: '',
-      documentType: DOC_TYPE_NAMES[0].val
+      documentType: DOC_TYPE_NAMES[0].val,
+      custom: []
     },
     document: null,
     view: {
@@ -232,7 +288,12 @@ export default {
   computed: {
     ...mapGetters([
       vuexTypes.accountId
-    ])
+    ]),
+    isCustomMetaFulfilled () {
+      return !(this.form.custom
+        .filter(i => !i.label || !i.value)
+        .length)
+    }
   },
   async created () {
     await this.loadReferenceList()
@@ -249,7 +310,11 @@ export default {
           document_type: this.form.documentType,
           mimeType: this.document.mimeType,
           creator: this.accountId,
-          ...this.form
+          ...this.form,
+          custom: this.form.custom.reduce((res, entry) => {
+            res[entry.label] = entry.value
+            return entry
+          }, {})
         })
         EventDispatcher.dispatchShowSuccessEvent(i18n.doc_uploaded())
       } catch (e) {
@@ -268,6 +333,15 @@ export default {
         this.clear()
         this.setTokenCode()
       }
+    },
+    addCustomMetaField () {
+      this.form.custom.push({
+        label: '',
+        value: ''
+      })
+    },
+    removeCustomMetaField (i) {
+      this.form.custom.splice(i, 1)
     }
   }
 }
@@ -282,5 +356,15 @@ export default {
 
   .docs-manager__form-wrp {
     margin-right: 5 * $point !important;
+  }
+
+  .docs-manager__add-btn-wrp {
+    margin-top: 3 * $point;
+    text-align: center;
+  }
+
+  .docs-manager__add-icon:not(:disabled),
+  .docs-manager__remove-icon {
+    color: $col-primary !important;
   }
 </style>

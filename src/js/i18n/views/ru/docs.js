@@ -39,5 +39,9 @@ export default {
   doc_failed_to_load_reference: 'Ошибка при загрузке',
   doc_lbl_public_key: 'Публичный ключ',
   doc_lbl_download: 'Скачать файл',
-  doc_document_hash: 'Хэш документа'
+  doc_document_hash: 'Хэш документа',
+  doc_lbl_label: 'Название поля',
+  doc_lbl_value: 'Значение поля',
+  doc_add_custom: 'Добавить дополнительную мета-информацию',
+  docs_custom_fields: 'Дополнительная мета-информация'
 }

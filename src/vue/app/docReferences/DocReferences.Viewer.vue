@@ -136,6 +136,25 @@
                 {{ reference.counterparty }}
               </span>
             </p>
+
+            <template v-if="reference.custom">
+              <h3 class="doc-viewer__details-heading">
+                {{ i18n.docs_custom_fields() }}
+              </h3>
+
+              <p
+                v-for="[label, value] in Object.entries(reference.custom)"
+                class="doc-viewer__detail"
+                :key="`${label}-${value}`"
+              >
+                <span class="doc-viewer__detail-key">
+                  {{ label }}:
+                </span>
+                <span class="doc-viewer__detail-value">
+                  {{ value }}
+                </span>
+              </p>
+            </template>
           </div>
         </div>
 
