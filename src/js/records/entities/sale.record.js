@@ -49,22 +49,6 @@ export class SaleRecord {
     this.logoType = _get(this._record, 'details.logo.type')
   }
 
-  get returnOfInvestmentStr () {
-    if (!this.returnOfInvestmentFrom && !this.returnOfInvestmentTo) {
-      return ''
-    }
-    if (this.returnOfInvestmentFrom && !this.returnOfInvestmentTo) {
-      return `${this.returnOfInvestmentFrom}%+`
-    }
-    if (!this.returnOfInvestmentFrom && this.returnOfInvestmentTo) {
-      return `under ${this.returnOfInvestmentTo}%`
-    }
-    if (this.returnOfInvestmentFrom && this.returnOfInvestmentTo) {
-      return `${this.returnOfInvestmentFrom}—${this.returnOfInvestmentTo}`
-    }
-    return ''
-  }
-
   /** quote assets: **/
 
   get quoteAssetCodes () {
