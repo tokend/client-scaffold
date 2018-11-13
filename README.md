@@ -1,4 +1,4 @@
-# Introduction()
+# Introduction
 
 The TokenD web-client is written on [Vue v2](https://vuejs.org/v2/guide/)
 
@@ -10,7 +10,7 @@ The TokenD web-client is written on [Vue v2](https://vuejs.org/v2/guide/)
 3. Clone the repository: `git clone https://github.com/tokend/client-scaffold.git`
 4. In project folder, execute: `npm install`
 5. [Configure your instance](#configure-instance)
-6. To start project on local server in development mode, execute: `npm run dev`
+6. To start project on local server the development mode, execute: `npm run dev`
 7. Open http://localhost:8095 in browser.
 
 To stop local server, press `Ctrl + C` in terminal.
@@ -25,8 +25,8 @@ to change the hostnames of `horizon`, `api` and `storage` servers and `network_p
 - `default.env.js` contains default configuration of the application and may be included
   and merged into other `.env` files
 
-To run the application in local development mode run `npm run dev`  
-To build the application for production run `npm run build.prod`
+To run the application in local development mode, run `npm run dev`  
+To build the application for production, run `npm run build.prod`
 
 ## Customize Crowdsale
 
@@ -52,11 +52,11 @@ Also on admin panel:
 - Crowdsale requests page
 (`src/components/User/Sales/SaleRequests`)
 
-Any changes to crowdsale model should be done alongside with changes to the views mentioned above. The most trickiest part is adding fields to crowdsale creation page.
+Any changes to crowdsale model should be done alongside with changes to the views mentioned above. The trickiest part is adding fields to crowdsale creation page.
 
-In `SaleCreation.Index.vue` file you can see usage of `md-steppers` of [Vue material framework](https://vuematerial.io/) in combination with so-called schemas. To modify set of fields on a step you can edit the appropriate `.schema.js` file located in `/src/vue/app/saleCreation/specs/` directory.
+In `SaleCreation.Index.vue` file you can see usage of `md-steppers` of [Vue material framework](https://vuematerial.io/) in combination with so-called schemas. To modify set of fields on a step, you can edit the appropriate `.schema.js` file located in `/src/vue/app/saleCreation/specs/` directory.
 
-Currently there are three steps:
+Currently, there are three steps:
 - General info
 - Image and short description
 - Video and long description
