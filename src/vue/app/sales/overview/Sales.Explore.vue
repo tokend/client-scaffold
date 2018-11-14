@@ -53,6 +53,7 @@ import FormMixin from '../../../common/mixins/form.mixin'
 import { saleSortTypes, saleStates } from '../../../../js/const/const'
 
 import { salesService } from '../../../../js/services/sales.service'
+import { SaleRecord } from '@/js/records/sale.record'
 
 import config from '../../../../config'
 
@@ -113,7 +114,9 @@ export default {
       this.isPending = false
     },
     parseResponse (response) {
-      this.sales.records = this.sales.records.concat(response.records)
+      this.sales.records = this.sales.records.concat(
+        response.records.map(r => new SaleRecord(r))
+      )
       this.sales.nextPageCaller =
         response.records.length === config.TRANSACTIONS_PER_PAGE
           ? response.next
