@@ -53,7 +53,7 @@ export class SaleRequestRecord extends RequestRecord {
           soft_cap: this.softCap,
           hard_cap: this.hardCap,
           quote_assets: this.quoteAssets.filter(i => i).map((item) => ({
-            quote_asset: item,
+            asset: item,
             price: '1'
           })),
           details: {
