@@ -24,7 +24,7 @@
   "dependencies": {
     "@mdi/font": "^2.7.94",
     "@std/esm": "^0.18.0",
-    "@tokend/js-sdk": "https://gitlab.com/tokend/new-js-sdk.git#feature/manage_reference",
+    "@tokend/js-sdk": "https://github.com/tokend/new-js-sdk.git#feature/manage_reference",
     "@tokend/wallet.js": "git+https://github.com/tokend/wallet.js.git",
     "@vue/test-utils": "^1.0.0-beta.24",
     "accounting": "^0.4.1",
