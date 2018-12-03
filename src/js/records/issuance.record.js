@@ -14,6 +14,16 @@ export class IssuanceRecord extends TxRecord {
     this.subject = record.reference
     this.counterparty = this._getCounterparty()
     this.direction = this._getDirection()
+
+    this.timeLeft = this._calculateTimeout()
+    this.address = get(record, 'external_details.address')
+    this.confirmations = get(record, 'external_details.confirmations')
+  }
+
+  _calculateTimeout () {
+    const timeout = get(this._record, 'external_details.timeout')
+
+    return timeout
   }
 
   _getCounterparty () {

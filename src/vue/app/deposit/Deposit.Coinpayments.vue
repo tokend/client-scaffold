@@ -30,45 +30,13 @@
         </div>
 
         <template v-if="resultDetails.address">
-          <p class="app__page-explanations deposit__warn-msg">
-            {{
-              i18n.dep_ready_cp({
-                asset: form.tokenCode,
-                amount: i18n.c(resultDetails.amount)
-              })
-            }}
-          </p>
-
-          <div class="app__form-row">
-            <clipboard-field
-              :value="resultDetails.address"
-              :label="i18n.dep_where_to({ asset: form.tokenCode })"
-              :monospaced="true"
-            />
-          </div>
-
-          <div class="deposit__qr-outer">
-            <span class="deposit__qr-code-hint">
-              {{ i18n.deposit_qr_code_hint() }}
-            </span>
-            <!--TODO: use vue-qr instead for consistency-->
-            <qrcode
-              class="deposit__qr-code"
-              :text="resultDetails.address"
-              :size="225"
-              color="#3f4244"
-            />
-          </div>
-
-          <div class="deposit__timeout-ticker-wrp">
-            <timeout-ticker
-              class="deposit__timeout-ticker"
+          <div class="deposit__address-viewer-wrp">
+            <address-viewer
+              :asset="form.tokenCode"
+              :amount="resultDetails.amount"
+              :address="resultDetails.address"
               :timeout="resultDetails.timeout"
             />
-
-            <p class="deposit__timeout-warn">
-              {{ i18n.dep_timeout_warn() }}
-            </p>
           </div>
         </template>
 
@@ -104,14 +72,20 @@
         {{ i18n.deposit_discover_assets_btn() }}
       </router-link>
     </template>
+
+    <div class="deposit__list-wrp">
+      <deposit-list />
+    </div>
   </div>
 </template>
 
 <script>
 import DepositMakerMixin from './deposit-maker.mixin'
+
+import DepositList from './Deposit.List'
 import FormMixin from '@/vue/common/mixins/form.mixin'
 import InputFieldUnchained from '@/vue/common/fields/InputFieldUnchained'
-import TimeoutTicker from './TimeoutTicker'
+import AddressViewer from './Deposit.AddressViewer'
 
 import { i18n } from '@/js/i18n'
 import { depositService } from '@/js/services/deposit.service'
@@ -121,7 +95,8 @@ import { vuexTypes } from '@/vuex/types'
 export default {
   components: {
     InputFieldUnchained,
-    TimeoutTicker
+    DepositList,
+    AddressViewer
   },
   mixins: [DepositMakerMixin, FormMixin],
   data: _ => ({
@@ -194,18 +169,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "./deposit";
-
-.deposit__timeout-ticker {
-  text-align: center;
-  margin: 2.5 * $point auto 0;
-  font-size: 2 * $point;
-  color: $col-pending;
-  font-weight: 500;
-}
-
-.deposit__timeout-warn {
-  text-align: center;
-  color: $col-pending;
-  font-size: 1 * $point;
-}
 </style>

@@ -1,3 +1,4 @@
+import config from '@/config'
 import { Service } from './service'
 import { BindExternalSystemAccountIdBuilder,
   PreIssuanceRequestOpBuilder,
@@ -63,6 +64,22 @@ export class IssuanceService extends Service {
       .operation()
       .add(operation)
       .submit(this._accountId, this._keypair)
+  }
+
+  loadPendingIssuances () {
+    // TODO: will be rewritten in new version, sorry:
+    const builder = this._horizonRequestBuilder
+      .payments()
+      .forAccount(this._accountId)
+      .forAsset()
+      .order('desc')
+      .limit(config.TRANSACTIONS_PER_PAGE)
+
+    builder.url.addQuery('pending_only', true)
+    builder.url.addQuery('completed_only', false)
+    builder.url.addQuery('operation_type', 3) // issuance
+
+    return builder.callWithSignature(this._keypair)
   }
 }
 

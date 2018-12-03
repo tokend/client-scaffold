@@ -77,6 +77,22 @@ export class ReviewableRequestsService extends Service {
   }
 
   /**
+   * Loads all preissuance upload requests for current user
+   *
+   * @return {Promise<object>} - Promise object representing rr
+   */
+  loadIssuanceRequests (opts) {
+    return this._horizonRequestBuilder
+      .reviewableRequestsHelper()
+      .issuances()
+      .forState(opts.state)
+      .forRequestor(this._accountId)
+      .order('desc')
+      .limit(config.TRANSACTIONS_PER_PAGE)
+      .callWithSignature(this._keypair)
+  }
+
+  /**
    * Load token creation reviewable request by id
    *
    * @param {string} id - id of reviewable requests
