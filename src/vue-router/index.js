@@ -23,7 +23,7 @@ import Dashboard from '@/vue/app/dashboard/Dashboard.Entry'
 import DashboardIndex from '@/vue/app/dashboard/index/Dashboard.Index'
 
 import Deposit from '@/vue/app/deposit/Deposit.Entry'
-import DepositMake from '@/vue/app/deposit/make/Deposit.Make'
+import DepositMake from '@/vue/app/deposit/Deposit.Make'
 
 import Transfers from '@/vue/app/transfers/Transfers.Entry'
 import TransfersMake from '@/vue/app/transfers/make/Transfers.Make'
