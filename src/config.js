@@ -22,6 +22,7 @@ const featureFlags = {
 
 export default Object.assign(
   {
+    PSIM_SERVER: '',
     HORIZON_SERVER: '',
     FILE_STORAGE: '',
     NETWORK_PASSPHRASE: '',
