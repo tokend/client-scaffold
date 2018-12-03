@@ -1,3 +1,4 @@
+import { DepositRequestBuilder } from '@/js/builders/request_builder/modules/deposit_requests_builder'
 import { DetailsRequestBuilder } from './modules/details_requests_builder'
 import { KDFRequestBuilder } from './modules/kdf_request_builder'
 import { WalletRequestBuilder } from './modules/wallet_request_builder'
@@ -25,6 +26,10 @@ export class Request {
 
   commonData () {
     return new DataRequestBuider(config.HORIZON_SERVER)
+  }
+
+  deposit () {
+    return new DepositRequestBuilder(config.PSIM_SERVER)
   }
 
   integrations () {
