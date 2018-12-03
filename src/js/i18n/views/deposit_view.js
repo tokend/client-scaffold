@@ -10,5 +10,12 @@ export default {
   deposit_no_assets_heading: 'Oh dear...',
   deposit_discover_assets_btn: 'Discover assets',
   dep_no_address: 'No available addresses to deposit yet. Please try again later.',
-  deposit_qr_code_hint: 'The address also available in QR code:'
+  deposit_qr_code_hint: 'The address also available in QR code:',
+
+  dep_heading_cp: 'Deposit with coinpayments',
+  dep_how_to_cp: 'Enter the amount to the field below and click submit. You\'ll get the address where to send your coins to fund your account.',
+  dep_request_cp: 'Request the address',
+  dep_no_address_cp: 'No available addresses to deposit yet. Please try again later.',
+  dep_ready_cp: 'Please send %{amount} %{asset} to the address provided below. Note that any other token sent to this address will be irretrievably lost.',
+  dep_timeout_warn: 'Anything deposited later will be lost'
 }

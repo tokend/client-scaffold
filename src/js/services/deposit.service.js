@@ -10,8 +10,11 @@ export class DepositService extends Service {
   requestDeposit (params) {
     return this._apiRequestBuilder
       .deposit()
-      .params(params)
-      .sign()
+      .setParams(params)
+      .sign(this._keypair)
+      .json()
       .post()
   }
 }
+
+export const depositService = new DepositService()

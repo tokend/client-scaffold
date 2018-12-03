@@ -22,6 +22,8 @@ export class TokenRecord {
     this.logoUrl = this._getLogoUrl()
     this.externalSystemType = get(record, 'details.external_system_type')
 
+    this.isCoinpayments = get(record, 'details.is_coinpayments')
+
     this.attachedDetails = attachedDetails
   }
 

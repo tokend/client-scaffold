@@ -12,6 +12,7 @@
       <div class="select-field__label">{{ label }}</div>
     </template>
     <button
+      type="button"
       class="select-field__selected"
       :class="{'select-field__selected--focused': showList}"
       @click.prevent="toggleListVisibility()"
@@ -34,6 +35,7 @@
       <template v-for="(val, i) in values">
         <button
           class="select-field__list-item"
+          type="button"
           :key="i"
           :class="{ 'select-field__list-item--selected': selected === val }"
           @click.prevent="selectItem(val)"

@@ -1,0 +1,28 @@
+@import '~@/scss/variables';
+
+.deposit__qr-outer {
+  margin: 4 * $point auto 0;
+  text-align: center;
+}
+
+.deposit__progress-wrp {
+  text-align: center;
+}
+
+.deposit__warn-msg {
+  margin: 4 * $point 0 0 0 !important;
+}
+
+.deposit__qr-code {
+  width: 225px;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+.deposit__qr-code-hint {
+  color: rgba($col-text-field-hint, .7);
+  text-align: center;
+  font-size: 1.4 * $point;
+  margin-bottom: 1 * $point;
+  display: inline-block;
+}

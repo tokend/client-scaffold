@@ -74,45 +74,28 @@
 </template>
 
 <script>
-import SelectFieldUnchained from '../../common/fields/SelectFieldUnchained'
-import Qrcode from 'vue-qrcode-component'
-import ClipboardField from '../../common/fields/ClipboardField'
+import DepositMakerMixin from './deposit-maker.mixin'
 
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import { vuexTypes } from '../../../vuex/types'
 import { i18n } from '../../../js/i18n'
-import { ACCOUNT_TYPES } from '../../../js/const/xdr.const'
 
 import { issuanceService } from '../../../js/services/issuances.service'
 
 export default {
   name: 'deposit-make',
-  components: {
-    SelectFieldUnchained,
-    Qrcode,
-    ClipboardField
-  },
+  mixins: [DepositMakerMixin],
   data: _ => ({
-    form: {
-      tokenCode: null
-    },
-    isPending: false,
-    ACCOUNT_TYPES,
     i18n
   }),
   computed: {
     ...mapGetters([
-      vuexTypes.userAcquiredTokens,
       vuexTypes.accountDepositAddresses
     ]),
     tokenCodes () {
       return this.userAcquiredTokens
         .filter(token => token.isDepositable)
         .map(token => token.code)
-    },
-    selectedToken () {
-      return this.userAcquiredTokens
-        .find(token => token.code === this.form.tokenCode) || null
     },
     address () {
       if (!this.selectedToken) return ''
@@ -121,22 +104,12 @@ export default {
     }
   },
   watch: {
-    tokenCodes: {
-      handler: 'setTokenCode',
-      immediate: true
-    },
     selectedToken: {
       handler: 'tryBindAddress',
       immediate: true
     }
   },
   methods: {
-    ...mapActions({
-      loadAccount: vuexTypes.GET_ACCOUNT_DETAILS
-    }),
-    setTokenCode () {
-      this.form.tokenCode = this.tokenCodes[0] || null
-    },
     async tryBindAddress (token) {
       if (!token || !token.externalSystemType) {
         return
@@ -157,32 +130,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@/scss/variables';
-
-  .deposit__qr-outer {
-    margin: 4 * $point auto 0;
-    text-align: center;
-  }
-
-  .deposit__progress-wrp {
-    text-align: center;
-  }
-
-  .deposit__warn-msg {
-    margin: 4 * $point 0 0 0 !important;
-  }
-
-  .deposit__qr-code {
-    width: 225px;
-    overflow: visible;
-    margin: 0 auto;
-  }
-
-  .deposit__qr-code-hint {
-    color: rgba($col-text-field-hint, .7);
-    text-align: center;
-    font-size: 1.4 * $point;
-    margin-bottom: 1 * $point;
-    display: inline-block;
-  }
+  @import "./deposit";
 </style>
