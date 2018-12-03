@@ -1,6 +1,7 @@
 import { TxRecord } from './tx.record'
 import { RECORDS_VERBOSE, DIRECTION_VERBOSE } from './help/records.const'
 import get from 'lodash/get'
+import moment from 'moment'
 
 export class IssuanceRecord extends TxRecord {
   constructor (record, userAccountId) {
@@ -22,8 +23,13 @@ export class IssuanceRecord extends TxRecord {
 
   _calculateTimeout () {
     const timeout = get(this._record, 'external_details.timeout')
+    const margin = 600 // seconds
 
-    return timeout
+    const now = moment()
+    const ledgerCloseTime = moment(get(this._record, 'ledger_close_time'))
+    const diff = now.diff(ledgerCloseTime) / 1000
+
+    return timeout - diff - margin
   }
 
   _getCounterparty () {
