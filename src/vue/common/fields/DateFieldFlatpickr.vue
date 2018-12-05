@@ -73,7 +73,7 @@ export default {
     config () {
       return {
         altInput: true,
-        allowInput: true,
+        allowInput: false,
         altFormat: this.enableTime ? 'Y-m-d at H:i' : 'F j, Y',
         disableMobile: true,
         disable: [
@@ -107,6 +107,7 @@ export default {
   methods: {
     dateFieldUpdated (event) {
       if (event) {
+        this.flatpickrDate = event.target.value
         this.onInput(event.target.value)
       }
     },
