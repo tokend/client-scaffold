@@ -41,7 +41,9 @@ export const getters = {
   userTransferableTokens: _ =>
     StateHelper.deriveTokensFromBalancesDetails(token => token.isTransferable),
   userWithdrawableTokens: _ =>
-    StateHelper.deriveTokensFromBalancesDetails(token => token.isWithdrawable)
+    StateHelper.deriveTokensFromBalancesDetails(
+      token => token.isWithdrawable || token.isWithdrawableV2
+    )
 }
 
 export default {

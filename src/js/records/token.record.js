@@ -49,6 +49,10 @@ export class TokenRecord {
     return !!(this.policy & ASSET_POLICIES.baseAsset)
   }
 
+  get isWithdrawableV2 () {
+    return !!(this.policy & ASSET_POLICIES.withdrawableV2)
+  }
+
   get isWithdrawable () {
     return this._record.policies &&
            this._record.policies.map(policy => policy.value)
