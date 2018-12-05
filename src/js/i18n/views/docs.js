@@ -43,5 +43,6 @@ export default {
   doc_lbl_label: 'Field label',
   doc_lbl_value: 'Field value',
   doc_add_custom: 'Add custom meta-field',
-  docs_custom_fields: 'Custom meta-information'
+  docs_custom_fields: 'Custom meta-information',
+  docs_lbl_file_key: 'Document key'
 }

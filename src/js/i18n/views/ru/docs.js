@@ -43,5 +43,6 @@ export default {
   doc_lbl_label: 'Название поля',
   doc_lbl_value: 'Значение поля',
   doc_add_custom: 'Добавить дополнительную мета-информацию',
-  docs_custom_fields: 'Дополнительная мета-информация'
+  docs_custom_fields: 'Дополнительная мета-информация',
+  docs_lbl_file_key: 'Ключ документа'
 }

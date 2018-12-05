@@ -17,9 +17,15 @@
           <doc-icon :mime-type="reference.mimeType" :size="'4x'" />
         </div>
         <div class="doc-viewer__main-details-wrp">
-          <p class="doc-viewer__main-detail">{{ reference.fileName }}</p>
-          <p class="doc-viewer__main-detail">{{ reference.documentType }}</p>
-          <p class="doc-viewer__main-detail">{{ reference.createdAt }}</p>
+          <p class="doc-viewer__main-detail">
+            {{ reference.fileName }}
+          </p>
+          <p class="doc-viewer__main-detail">
+            {{ reference.documentType }}
+          </p>
+          <p class="doc-viewer__main-detail">
+            {{ reference.createdAt }}
+          </p>
 
           <template v-if="isReferenceVerified">
             <p class="doc-viewer__download-link-wrp">
@@ -104,12 +110,22 @@
 
             <p class="doc-viewer__detail">
               <span class="doc-viewer__detail-key">
+                {{ i18n.docs_lbl_file_key() }}:
+              </span>
+              <span class="doc-viewer__detail-value">
+                {{ reference.fileKey }}
+              </span>
+            </p>
+
+            <p class="doc-viewer__detail">
+              <span class="doc-viewer__detail-key">
                 {{ i18n.doc_lbl_file_name() }}:
               </span>
               <span class="doc-viewer__detail-value">
                 {{ reference.fileName }}
               </span>
             </p>
+
             <p class="doc-viewer__detail">
               <span class="doc-viewer__detail-key">
                 {{ i18n.doc_lbl_mime_type() }}:
