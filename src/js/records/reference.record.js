@@ -12,11 +12,11 @@ export class ReferenceRecord {
     this.documentType = _get(record, 'meta.documentType')
     this.mimeType = _get(record, 'meta.mimeType')
     this.fileName = _get(record, 'meta.fileName')
-    this.firstName = _get(record, 'meta.firstName')
-    this.lastName = _get(record, 'meta.lastName')
+    this.firstName = String(_get(record, 'meta.firstName'))
+    this.lastName = String(_get(record, 'meta.lastName'))
     this.mobilePhone = _get(record, 'meta.mobilePhone')
-    this.serialNumber = _get(record, 'meta.serialNumber')
-    this.taxId = _get(record, 'meta.taxId')
+    this.serialNumber = String(_get(record, 'meta.serialNumber'))
+    this.taxId = String(_get(record, 'meta.taxId'))
     this.fileKey = _get(record, 'meta.key')
     this.createdAt = record.createdAt
     this.isModified = record.isModified
