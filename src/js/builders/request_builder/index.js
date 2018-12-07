@@ -29,7 +29,7 @@ export class Request {
   }
 
   deposit () {
-    return new DepositRequestBuilder(config.PSIM_SERVER)
+    return new DepositRequestBuilder(config.HORIZON_SERVER)
   }
 
   integrations () {
