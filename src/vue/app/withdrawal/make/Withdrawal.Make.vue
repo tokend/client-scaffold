@@ -99,7 +99,7 @@
               :monospaced="true"
               name="wallet-address"
               :readonly="view.mode === VIEW_MODES.confirm"
-              v-validate="'required|wallet_address'"
+              v-validate="'required'"
               :error-message="
                 errors.first('wallet-address') ||
                   (isTryingToSendToYourself
