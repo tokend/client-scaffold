@@ -11,9 +11,11 @@
         :scale="scale"
       />
       <template v-if="currentAsset">
-        <div class="dashboard__chart">
+        <div
+          class="dashboard__chart"
+          v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
+        >
           <chart
-            v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
             :base-asset="currentAsset"
             :quote-asset="config.DEFAULT_QUOTE_ASSET"
           />
@@ -99,7 +101,14 @@ $custom-breakpoint: 800px;
 
 .dashboard__chart {
   margin-bottom: 24px;
+}
+
+.dashboard__portfolio + .dashboard__chart {
   margin-top: -40px;
+}
+
+.dashboard__portfolio + .dashboard__activity {
+  margin-top: 40px;
 }
 
 .dashboard__activity {
