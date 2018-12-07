@@ -26,10 +26,7 @@ export class IssuanceRecord extends TxRecord {
     const margin = 600 // seconds
 
     const now = moment()
-    const ledgerCloseTime = moment(
-      '2018-12-07T16:12:25Z'
-      // get(this._record, 'ledger_close_time')
-    )
+    const ledgerCloseTime = moment(get(this._record, 'ledger_close_time'))
     const diff = now.diff(ledgerCloseTime) / 1000
 
     return timeout - diff - margin

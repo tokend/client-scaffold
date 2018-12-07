@@ -2,7 +2,7 @@
   <div class="app__page-content-wrp">
     <h2 class="app__page-heading">{{ i18n.dep_heading_cp() }}</h2>
     <p class="app__page-explanations">
-      {{ i18n.dep_how_to_cp() }}<br>
+      {{ isCoinayments ? i18n.dep_how_to_cp() : i18n.dep_how_to() }}<br>
     </p>
 
     <template v-if="tokenCode">

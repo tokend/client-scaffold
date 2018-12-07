@@ -31,7 +31,7 @@ export default {
       }
 
       return moment
-        .utc(timeLeft).asMilliseconds()
+        .utc(timeLeft)
         .format('HH:mm:ss')
     }
   },
