@@ -22,8 +22,16 @@ export default {
   }),
   computed: {
     timeLeftFormatted () {
+      const timeLeft = moment
+        .duration(this.timeLeft, 'seconds')
+        .asMilliseconds()
+
+      if (timeLeft <= 0) {
+        return '00:00:00'
+      }
+
       return moment
-        .utc(moment.duration(this.timeLeft, 'seconds').asMilliseconds())
+        .utc(timeLeft).asMilliseconds()
         .format('HH:mm:ss')
     }
   },

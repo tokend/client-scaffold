@@ -23,7 +23,7 @@ import Dashboard from '@/vue/app/dashboard/Dashboard.Entry'
 import DashboardIndex from '@/vue/app/dashboard/index/Dashboard.Index'
 
 import Deposit from '@/vue/app/deposit/Deposit.Entry'
-import DepositMake from '@/vue/app/deposit/Deposit.Make'
+import DepositIndex from '@/vue/app/deposit/Deposit.Index'
 
 import Transfers from '@/vue/app/transfers/Transfers.Entry'
 import TransfersMake from '@/vue/app/transfers/make/Transfers.Make'
@@ -183,7 +183,7 @@ const router = new Router({
               path: '/deposit/make',
               name: 'deposit.make',
               meta: { pageName: PAGES_NAMES.deposit },
-              component: DepositMake
+              component: DepositIndex
             }
           ]
         },

@@ -1,115 +1,91 @@
 <template>
   <div class="deposit">
-    <template v-if="form.tokenCode">
-      <h2 class="app__page-heading">
-        {{ i18n.dep_heading() }}
-      </h2>
-
-      <p class="app__page-explanations">
-        {{ i18n.dep_how_to({ asset: form.tokenCode }) }}<br>
+    <template v-if="address">
+      <p class="app__page-explanations deposit__warn-msg">
+        <strong>{{ i18n.dep_asset_only_prefix() }}</strong>
+        {{ i18n.dep_asset_only({ asset: token.code }) }}
       </p>
 
       <div class="app__form-row">
-        <select-field-unchained
-          :values="tokenCodes"
-          v-model="form.tokenCode"
-          :label="i18n.lbl_asset()" />
+        <clipboard-field
+          :value="address"
+          :label="i18n.dep_where_to({ asset: token.code })"
+          :monospaced="true"
+        />
       </div>
 
-      <template v-if="address">
-        <p class="app__page-explanations deposit__warn-msg">
-          <strong>{{ i18n.dep_asset_only_prefix() }}</strong>
-          {{ i18n.dep_asset_only({ asset: form.tokenCode }) }}
-        </p>
+      <div class="deposit__qr-outer">
+        <span class="deposit__qr-code-hint">
+          {{ i18n.deposit_qr_code_hint() }}
+        </span>
+        <!--TODO: use vue-qr instead for consistency-->
+        <qrcode
+          class="deposit__qr-code"
+          :text="address"
+          :size="225"
+          color="#3f4244"
+        />
+      </div>
+    </template>
 
-        <div class="app__form-row">
-          <clipboard-field
-            :value="address"
-            :label="i18n.dep_where_to({ asset: form.tokenCode })"
-            :monospaced="true"
-          />
-        </div>
-
-        <div class="deposit__qr-outer">
-          <span class="deposit__qr-code-hint">
-            {{ i18n.deposit_qr_code_hint() }}
-          </span>
-          <!--TODO: use vue-qr instead for consistency-->
-          <qrcode
-            class="deposit__qr-code"
-            :text="address"
-            :size="225"
-            color="#3f4244"
-          />
-        </div>
-      </template>
-
-      <template v-else-if="isPending">
-        <!-- TODO: add a spinner -->
-        <p class="app__page-explanations app__page-explanations--secondary">
-          {{ i18n.dep_binding_address() }}
-        </p>
-      </template>
-
-      <template v-else>
-        <p class="app__page-explanations app__page-explanations--secondary">
-          {{ i18n.dep_no_address() }}
-        </p>
-      </template>
+    <template v-else-if="isPending">
+      <!-- TODO: add a spinner -->
+      <p class="app__page-explanations app__page-explanations--secondary">
+        {{ i18n.dep_binding_address() }}
+      </p>
     </template>
 
     <template v-else>
-      <h2 class="app__page-heading">{{ i18n.deposit_no_assets_heading() }}</h2>
       <p class="app__page-explanations app__page-explanations--secondary">
-        {{ i18n.deposit_no_assets() }}
+        {{ i18n.dep_no_address() }}
       </p>
-      <router-link
-        to="/tokens"
-        tag="button"
-        class="app__button-raised">
-        {{ i18n.deposit_discover_assets_btn() }}
-      </router-link>
     </template>
   </div>
 </template>
 
 <script>
-import DepositMakerMixin from './deposit-maker.mixin'
+import ClipboardField from '../../common/fields/ClipboardField'
+import Qrcode from 'vue-qrcode-component'
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { vuexTypes } from '../../../vuex/types'
 import { i18n } from '../../../js/i18n'
 
 import { issuanceService } from '../../../js/services/issuances.service'
 
 export default {
-  name: 'deposit-make',
-  mixins: [DepositMakerMixin],
+  name: 'deposit-bind',
+  components: {
+    ClipboardField,
+    Qrcode
+  },
+  props: {
+    token: {
+      type: Object,
+      required: true
+    }
+  },
   data: _ => ({
-    i18n
+    i18n,
+    isPending: false
   }),
   computed: {
     ...mapGetters([
       vuexTypes.accountDepositAddresses
     ]),
-    tokenCodes () {
-      return this.userAcquiredTokens
-        .filter(token => token.isDepositable)
-        .map(token => token.code)
-    },
     address () {
-      if (!this.selectedToken) return ''
-      const externalSystemType = this.selectedToken.externalSystemType
+      if (!this.token) return ''
+      const externalSystemType = this.token.externalSystemType
       return this.accountDepositAddresses[externalSystemType]
     }
   },
-  watch: {
-    selectedToken: {
-      handler: 'tryBindAddress',
-      immediate: true
-    }
+  created () {
+    this.tryBindAddress(this.token)
   },
   methods: {
+    ...mapActions({
+      loadAccount: vuexTypes.GET_ACCOUNT_DETAILS
+    }),
     async tryBindAddress (token) {
       if (!token || !token.externalSystemType) {
         return
