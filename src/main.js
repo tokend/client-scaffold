@@ -40,7 +40,7 @@ rippleEffect.color = 'rgba(58, 65, 128, .2)'
 Vue.directive('table-scroll-shadow', tableScrollShadow)
 Vue.directive('ripple', rippleEffect)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = process.env.NODE_ENV === 'production'
 Vue.use(VueResource)
 Vue.use(VeeValidate)
 Vue.use(VueMaterial)
