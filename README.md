@@ -90,3 +90,45 @@ How are schemas work with the components (`SaleCreation.Index`):
 Component applied with `:is` attribute in the `<component>`. Component from `step.component` will take `:schema` as the prop. Implementations of all used components are located in `/src/vue/app/saleCreation/steps/`.
 
 All the other actions should be familiar to developers who had experience with Vue before.
+
+## Customize KYC
+
+Now we are expecting general users to upload proof of thier identity while verifying KYC. The flow is almost same as described in crowdsale customization. We are just need to update KYC model & KYC view.
+
+### Changes to the model
+Navigate to `/src/vue/app/verification/make/Verification.Individual.vue`.
+
+To update the kyc model, you can modify the object passed to `accountsService.createKycRequest` call. Only `details` property is changeable, otherwise back-end will reject your request.
+
+### Changes to views
+
+KYC details is shown on following pages:
+- KYC submitting page (`/src/vue/app/verification/make/Verification.Individual.vue`)
+
+Also on admin panel:
+- General KYC details page (`src/components/User/Users/components/UserDetails/UserDetails.Kyc.vue`)
+
+Any changes to KYC model should be done alongside with changes to the views mentioned above.
+
+## Customize Token creation
+
+Assume we need to add Token description. The flow is almost same as mentioned above customization guides, but much simpler, as we don't need Token view doesn't use schema.
+
+### Changes to the model
+Navigate to `/src/vue/app/tokenCreation/index/TokenCreation.Index.vue`.
+
+To update the token model, you can modify the object passed to `tokensService.createTokenCreationRequest` call. Only `details` property is changeable, otherwise back-end will reject your request.
+
+### Changes to views
+
+Token is shown on following pages:
+- Token creation page (`src/vue/app/tokenCreation`)
+- Token creation requests page
+(`src/vue/app/requests/index/Requests.TokenCreation.vue`)
+- Token list & details page(`src/vue/app/tokens/Tokens.Explore.vue`)
+
+Also on admin panel:
+- Token list page (`src/components/User/Tokens/TokenRequests/components/TokenRequestList.vue`)
+- Token details page(`src/components/User/Tokens/TokenRequests/TokenRequests.Show.vue`)
+
+Any changes to token model should be done alongside with changes to the views mentioned above.
