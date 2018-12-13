@@ -98,7 +98,7 @@ Now we are expecting general users to upload proof of their identity while verif
 ### Changes to the model
 Navigate to `/src/vue/app/verification/make/Verification.Individual.vue`.
 
-To update the kyc model, you can modify the object passed to `accountsService.createKycRequest` call. Only `details` property is changeable, otherwise back-end will reject your request.
+To update the KYC model, you can modify the object passed to `accountsService.createKycRequest` call. Only `details` property is changeable, otherwise back-end will reject your request.
 
 ### Changes to views
 
