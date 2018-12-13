@@ -93,7 +93,7 @@ All the other actions should be familiar to developers who had experience with V
 
 ## Customize KYC
 
-Now we are expecting general users to upload proof of thier identity while verifying KYC. The flow is almost same as described in crowdsale customization. We are just need to update KYC model & KYC view.
+Now we are expecting general users to upload proof of their identity while verifying KYC. The flow is almost same as described in crowdsale customization. We just need to update KYC model & KYC view.
 
 ### Changes to the model
 Navigate to `/src/vue/app/verification/make/Verification.Individual.vue`.
@@ -102,7 +102,7 @@ To update the kyc model, you can modify the object passed to `accountsService.cr
 
 ### Changes to views
 
-KYC details is shown on following pages:
+KYC details are shown on following pages:
 - KYC submitting page (`/src/vue/app/verification/make/Verification.Individual.vue`)
 
 Also on admin panel:
@@ -112,12 +112,12 @@ Any changes to KYC model should be done alongside with changes to the views ment
 
 ## Customize Token creation
 
-Assume we need to add Token description. The flow is almost same as mentioned above customization guides, but much simpler, as we don't need Token view doesn't use schema.
+Assume we need to add Token description. The flow is similar to mentioned above customization guides, but much simpler, as `Token view` doesn't use schema.
 
 ### Changes to the model
 Navigate to `/src/vue/app/tokenCreation/index/TokenCreation.Index.vue`.
 
-To update the token model, you can modify the object passed to `tokensService.createTokenCreationRequest` call. Only `details` property is changeable, otherwise back-end will reject your request.
+Token model is updateable by modifying the object passed to `tokensService.createTokenCreationRequest` call. Remember, only `details` property is changeable, otherwise back-end will reject your request!
 
 ### Changes to views
 
