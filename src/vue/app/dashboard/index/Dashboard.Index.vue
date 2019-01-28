@@ -11,9 +11,11 @@
         :scale="scale"
       />
       <template v-if="currentAsset">
-        <div class="dashboard__chart">
+        <div
+          class="dashboard__chart"
+          v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
+        >
           <chart
-            v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
             :base-asset="currentAsset"
             :quote-asset="config.DEFAULT_QUOTE_ASSET"
           />
@@ -73,7 +75,7 @@ export default {
       loadBalances: vuexTypes.GET_ACCOUNT_BALANCES
     }),
     setCurrentAsset (value) {
-      const regExp = /\(([^)]+)\)/
+      const regExp = /\s/g.test(value) ? /\(([^)]+)\)/ : /(\w+)/
       if (value) {
         this.currentAsset = regExp.exec(value)[1]
       } else {
@@ -98,11 +100,11 @@ $custom-breakpoint: 800px;
 }
 
 .dashboard__chart {
-  margin-bottom: 24px;
   margin-top: -40px;
 }
 
 .dashboard__activity {
+  margin-top: 48px;
   width: 100%;
 }
 </style>

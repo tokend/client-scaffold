@@ -32,7 +32,10 @@
             <span class="portfolio-widget__asset-value-main">
               {{ balance | formatMoney({ currency: currentAsset }) }}
             </span>
-            <span class="portfolio-widget__asset-value-secondary">
+            <span
+              class="portfolio-widget__asset-value-secondary"
+              v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
+            >
               <!-- eslint-disable-next-line -->
               &asymp; {{ convertedBalance | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET, symbolAllowed: true }) }}
             </span>
@@ -42,7 +45,10 @@
               <!-- eslint-disable-next-line -->
               {{ i18n.lbl_locked() }} {{ locked | formatMoney({ currency: currentAsset }) }}
             </span>
-            <span class="portfolio-widget__asset-value-secondary">
+            <span
+              class="portfolio-widget__asset-value-secondary"
+              v-if="currentAsset !== config.DEFAULT_QUOTE_ASSET"
+            >
               <!-- eslint-disable-next-line -->
               &asymp; {{ convertedLocked | formatMoney({ currency: config.DEFAULT_QUOTE_ASSET, symbolAllowed: true }) }}
             </span>
@@ -118,11 +124,11 @@ export default {
       return [
         ...baseAssets,
         ...otherAssets
-      ].map(item => `${item.name} (${item.code})`)
+      ].map(item => item.name1 ? `${item.name} (${item.code})` : item.code)
     },
     currentAssetForSelect () {
       return this.tokens.filter(token => token.code === this.currentAsset)
-        .map(item => `${item.name} (${item.code})`)[0]
+        .map(item => item.name1 ? `${item.name} (${item.code})` : item.code)[0]
     },
     balance () {
       return get(this.balances, `${this.currentAsset}.balance`) || 0

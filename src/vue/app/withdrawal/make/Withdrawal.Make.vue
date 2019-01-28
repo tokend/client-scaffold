@@ -99,13 +99,8 @@
               :monospaced="true"
               name="wallet-address"
               :readonly="view.mode === VIEW_MODES.confirm"
-              v-validate="'required|wallet_address'"
-              :error-message="
-                errors.first('wallet-address') ||
-                  (isTryingToSendToYourself
-                    ? i18n.withdraw_error_is_trying_to_send_to_yourself()
-                    : '')
-              "
+              v-validate="'required'"
+              :error-message="errorMessage('wallet-address')"
             />
           </div>
         </form>
