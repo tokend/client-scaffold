@@ -3,6 +3,7 @@ services:
 
 variables:
   GITHUB_REF: $CI_COMMIT_SHA
+  DH_IMAGE: tokend/web-client
 
 stages:
   - build
