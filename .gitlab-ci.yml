@@ -22,8 +22,8 @@ build:
     - ci-little-helper set-state $STATE build && exit $STATE
 
 publish dockerhub:
-  image: registry.gitlab.com/tokend/deployment/js-build:latest
-  stage: build
+  image: registry.gitlab.com/tokend/deployment/docker-build:latest
+  stage: publish
   tags:
     - tokend
   only:
