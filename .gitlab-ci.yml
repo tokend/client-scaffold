@@ -23,7 +23,7 @@ build:
 
 publish dockerhub:
   image: registry.gitlab.com/tokend/deployment/docker-build:latest
-  stage: build
+  stage: publish
   tags:
     - tokend
   only:
