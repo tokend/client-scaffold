@@ -24,7 +24,7 @@
   "dependencies": {
     "@mdi/font": "^2.7.94",
     "@std/esm": "^0.18.0",
-    "@tokend/wallet.js": "git+https://github.com/tokend/wallet.js.git",
+    "@tokend/wallet.js": "git+https://github.com/tokend/wallet.js.git#semver:^1.0.0",
     "@vue/test-utils": "^1.0.0-beta.24",
     "accounting": "^0.4.1",
     "axios": "^0.18.0",
@@ -44,7 +44,7 @@
     "node-polyglot": "^2.3.0",
     "raven-js": "^3.27.0",
     "sjcl": "^1.0.7",
-    "tokend-js-sdk": "git+https://github.com/tokend/js-sdk.git",
+    "tokend-js-sdk": "git+https://github.com/tokend/js-sdk.git#semver:^1.0.0",
     "ua-parser-js": "^0.7.18",
     "vee-validate": "^2.1.0-beta.8",
     "vue": "^2.5.17",
