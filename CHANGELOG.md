@@ -7,6 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Please check our [developers guide](https://gitlab.com/tokend/developers-guide)
 for further information about branching and tagging conventions.
 
-## [1.0.5](https://github.com/tokend/client-scaffold/compare/1.0.4...1.0.5)
+## [1.0.6](https://github.com/tokend/client-scaffold/compare/1.0.4...1.0.6)
 ### Fixed
 - Fix some missing translations
