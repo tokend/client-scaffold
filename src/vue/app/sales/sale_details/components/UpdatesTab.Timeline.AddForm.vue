@@ -87,7 +87,7 @@ export default {
         this.$emit(commonEvents.closeEvent)
       } catch (error) {
         console.error(error)
-        error.showBanner(i18n.unexpected_error)
+        error.showBanner(i18n.unexpected_error())
       }
       this.enable()
     }

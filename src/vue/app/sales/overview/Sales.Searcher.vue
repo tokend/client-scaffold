@@ -27,7 +27,7 @@
         <select-field-unchained
           :values="states"
           class="searcher__filter"
-          :title="i18n.lbl_state"
+          :title="i18n.lbl_state()"
           v-model="filters.state"
           :label="i18n.lbl_state()" />
       </div>
@@ -35,7 +35,7 @@
         <select-field-unchained
           :values="sortTypes"
           class="searcher__filter"
-          :title="i18n.lbl_sort_by"
+          :title="i18n.lbl_sort_by()"
           v-model="filters.sortBy"
           :label="i18n.lbl_state()" />
       </div>
