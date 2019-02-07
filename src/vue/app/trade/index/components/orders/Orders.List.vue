@@ -4,7 +4,7 @@
       <h2>
         {{
           type === ORDER_TYPES.buy
-            ? i18n.trd_ask ()
+            ? i18n.trd_ask()
             : i18n.trd_bid()
         }}
       </h2>
