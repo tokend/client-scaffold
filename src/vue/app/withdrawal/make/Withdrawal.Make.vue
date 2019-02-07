@@ -305,7 +305,8 @@ export default {
         fee: {
           fixed: this.fixedFee,
           percent: this.percentFee
-        }
+        },
+        allTasks: '0'
       }
     },
     async getFees () {
